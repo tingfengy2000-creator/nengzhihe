@@ -1,16 +1,16 @@
 {
   "packages": [
     {
-      "archive": "nengzhihe_round4_review_v2.zip",
-      "sha256": "6ad50651d28eaede6bdca9138176184086dd001bc6540b75e12317bee2c1ea58",
+      "archive": "nengzhihe_round4_review.zip",
+      "sha256": "6398ec7d75b0bc03ee495b177b703ffd1f76f6d8ebf06740850c992d5eb36422",
       "bytes": 6014893,
       "files": 21,
       "all_member_hashes_verified": true
     },
     {
-      "archive": "nengzhihe_round4_workbench_study_v2.zip",
-      "sha256": "b33ed866f9cc1778144de4ec363b5221634271c6def1121648c158d5f2a96086",
-      "bytes": 12151835,
+      "archive": "nengzhihe_round4_workbench_study.zip",
+      "sha256": "bafe0fdb16dda05f92e4b9721600943804e009206ab0ddb8febd5d366e8198b7",
+      "bytes": 12151679,
       "files": 254,
       "all_member_hashes_verified": true
     }
@@ -19,6 +19,6 @@
   "extracted_study_checks": 21,
   "local_relative_links_verified": 22,
   "portal_browser_preview": "Not performed: browser file URL policy blocked local-file navigation. Static local references checked; constituent PDFs/video/cards independently inspected.",
-  "retained_extraction": "delivery/unpack_check_1790918762156392500",
+  "retained_extraction": "delivery/unpack_check_1790918271730173000",
   "purpose": "Stage review and invitation readiness; no real participant or benefit result."
 }

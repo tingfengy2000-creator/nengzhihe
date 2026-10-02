@@ -2,7 +2,7 @@
 from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import unquote
-import hashlib,json,zipfile,subprocess,shutil,sys,time
+import hashlib,json,zipfile,subprocess,shutil,sys,time,argparse
 ROOT=Path(__file__).resolve().parents[1];REPO=ROOT.parent
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 class Links(HTMLParser):
@@ -10,6 +10,8 @@ class Links(HTMLParser):
  def handle_starttag(self,tag,attrs):
   self.refs += [v for k,v in attrs if k in ['href','src','poster'] and v]
 def main():
+ args=argparse.ArgumentParser();args.add_argument('--suffix',default='');suffix=args.parse_args().suffix
+ assert suffix in ['', '_v2'], 'Explicit bounded review versions only'
  dest=ROOT/'delivery';dest.mkdir(exist_ok=True)
  parser=Links();parser.feed((dest/'review/index.html').read_text(encoding='utf8'))
  for ref in parser.refs:
@@ -18,7 +20,7 @@ def main():
  raw=subprocess.check_output(['git','ls-files','-z','--cached','--others','--exclude-standard'],cwd=REPO)
  all_files=sorted(set(REPO/x.decode() for x in raw.split(b'\0') if x.startswith(b'round4/')))
  source=[p for p in all_files if p.is_file() and not p.relative_to(ROOT).as_posix().startswith(('delivery/','materials/qa/','presentation/qa/','video/qa/'))]
- packages=[('nengzhihe_round4_review.zip',[(p,'review/'+p.relative_to(dest/'review').as_posix()) for p in sorted((dest/'review').rglob('*')) if p.is_file()]),('nengzhihe_round4_workbench_study.zip',[(p,'round4/'+p.relative_to(ROOT).as_posix()) for p in source])]
+ packages=[('nengzhihe_round4_review'+suffix+'.zip',[(p,'review/'+p.relative_to(dest/'review').as_posix()) for p in sorted((dest/'review').rglob('*')) if p.is_file()]),('nengzhihe_round4_workbench_study'+suffix+'.zip',[(p,'round4/'+p.relative_to(ROOT).as_posix()) for p in source])]
  receipts=[]
  for name,files in packages:
   archive=dest/name;assert not archive.exists(),'Immutable package exists; use a new version instead.'

@@ -56,6 +56,8 @@ Thumbs.db
 /round4/study/results/participants/
 /round4/study/results/manual_scores.csv
 /round4/study_process.json
+/round4/output/study_process.json
+/round4/delivery/working/
 /round4/video/working/*
 !/round4/video/working/capture.json
 !/round4/video/working/captions.ass

@@ -25,7 +25,7 @@ def main():
   check(t['id']+' valid time/units and no labels in participant case',q['time_valid'] and not q['unit_errors'] and not any(k in c for k in ['label','source_file','severity','source_declared_severity']))
  demo=s.begin_session({'demo':True,'condition':'A'});session=s.SESSIONS[demo['token']];v=s.task_view(session);started=session['monotonic_start'];s.task_view(session)
  check('Refreshing task does not reset server timer',session['monotonic_start']==started)
- check('Training source is distinct from formal task dates',v['case']['timestamps'][0][:10] not in manifest['dates'])
+ check('Training is distinct and participant payload omits perturbation hints',v['case']['timestamps'][0][:10] not in manifest['dates'] and 'perturbation' not in v['case'])
  session['monotonic_start']-=301
  result=s.submit(session,{'answer':{'quality':'software check','device':'software check','evidence':'software check','next_action':'software check'}})
  check('Late submission is capped and explicitly marked timeout',session['answers'][0]['timeout'] and session['answers'][0]['capped_seconds']==300)

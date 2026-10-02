@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "checked": "Live HTTP participant payload excludes artificial perturbation type/count and private generation metadata",
+  "real_participants_created": 0,
+  "source": "software demonstration only"
+}

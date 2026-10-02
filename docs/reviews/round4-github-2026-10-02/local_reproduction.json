@@ -1,39 +1,39 @@
 {
   "status": "passed",
-  "timestamp_utc": "2026-10-02T05:19:01.375295+00:00",
+  "timestamp_utc": "2026-10-02T05:26:18.811673+00:00",
   "commands": [
     {
       "script": "run_comparison.py",
       "exit_code": 0,
-      "seconds": 11.44
+      "seconds": 11.844
     },
     {
       "script": "test_reliability.py",
       "exit_code": 0,
-      "seconds": 0.928
+      "seconds": 0.918
     },
     {
       "script": "test_standalone.py",
       "exit_code": 0,
-      "seconds": 1.114
+      "seconds": 1.018
     },
     {
       "script": "test_study.py",
       "exit_code": 0,
-      "seconds": 0.26
+      "seconds": 0.262
     },
     {
       "script": "analyze_study.py",
       "exit_code": 0,
-      "seconds": 0.044
+      "seconds": 0.043
     },
     {
       "script": "demo_import.py",
       "exit_code": 0,
-      "seconds": 0.404
+      "seconds": 0.419
     }
   ],
-  "elapsed_seconds": 14.603,
+  "elapsed_seconds": 14.864,
   "reliability_checks": 29,
   "isolated_http_checks": 13,
   "study_software_checks": 21,
@@ -48,7 +48,7 @@
   "real_participants": 0,
   "value_study_status": "pending_independent_review_and_recruitment",
   "original_files_unchanged": true,
-  "source_manifest_sha256": "a76628dcf8be94870dab42359b505d40e3d922eb3bbe5d941538f7c1ba692430",
-  "retained_workdir": ".review-work/round4_1790918326667225900",
+  "source_manifest_sha256": "796071133902037bb092c98db44031103b685d444eac0d707358e36ca20518af",
+  "retained_workdir": ".review-work/round4_1790918763841588800",
   "scope": "Historical reproducibility and software checks only, not a new performance or human-value experiment."
 }

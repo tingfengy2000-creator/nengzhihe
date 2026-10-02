@@ -68,7 +68,9 @@ def task_view(s,resume=False):
  if s['current'] is None:
   s['current']=s['assignment'][s['position']].copy();s['monotonic_start']=time.monotonic();s['current']['started_utc']=now();s['current']['events']=[]
  c=current_case(s)
- return {'case':c,'condition':s['current']['mode'],'number':s['position']+1,'total':len(s['assignment']),
+ # Generation metadata is for the host, never a hint in participant input.
+ public={k:v for k,v in c.items() if k in ['id','title','description','family','timestamps','series','units','sample_interval_minutes','origin','split']}
+ return {'case':public,'condition':s['current']['mode'],'number':s['position']+1,'total':len(s['assignment']),
          'remaining_seconds':max(0,300-(time.monotonic()-s['monotonic_start'])),'demo':s['mode']=='demo',
          'checklist':read(STUDY/'public/checklist.json'),'reference':read(ROOT/'data/calibration.json')['air_envelope']}
 

@@ -1,6 +1,6 @@
 # 阶段评审索引
 
-当前固定评审版：**round4-review-v1**。从 [Release](https://github.com/tingfengy2000-creator/nengzhihe/releases/tag/round4-review-v1) 下载 `nengzhihe_round4_review.zip`，解压后双击 `review/index.html`。视频、PDF和核查卡无需安装；GitHub不会直接运行仓库HTML。
+当前固定评审版：**round4-review-v2**。从 [Release](https://github.com/tingfengy2000-creator/nengzhihe/releases/tag/round4-review-v2) 下载 `nengzhihe_round4_review_v2.zip`，解压后双击 `review/index.html`。视频、PDF和核查卡无需安装；GitHub不会直接运行仓库HTML。
 
 | 阶段 | 说明 / 原始证据 | 交付 |
 | --- | --- | --- |

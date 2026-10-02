@@ -2,7 +2,7 @@
 
 **告警之后，先查什么？** 核对数据质量，检查当前工况是否可检验，再把支持证据、限制与补证动作交给下一位核查人员。参赛方向：智慧能源与环境。
 
-当前版本为 **round4**。先看 [固定版本评审入口](https://github.com/tingfengy2000-creator/nengzhihe/releases/tag/round4-review-v1)，下载 `nengzhihe_round4_review.zip` 后双击 `review/index.html`，无需安装即可查看三分钟实际操作视频、10页答辩PDF、三份材料及真实核查卡。私有仓库需被授予访问权限。
+当前版本为 **round4**。先看 [固定版本评审入口](https://github.com/tingfengy2000-creator/nengzhihe/releases/tag/round4-review-v2)，下载 `nengzhihe_round4_review_v2.zip` 后双击 `review/index.html`，无需安装即可查看三分钟实际操作视频、10页答辩PDF、三份材料及真实核查卡。私有仓库需被授予访问权限。
 
 ![实际工作台](round4/output/ui/workbench_top.png)
 

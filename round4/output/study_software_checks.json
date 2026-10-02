@@ -18,7 +18,7 @@
     "T4A valid time/units and no labels in participant case",
     "T4B valid time/units and no labels in participant case",
     "Refreshing task does not reset server timer",
-    "Training source is distinct from formal task dates",
+    "Training is distinct and participant payload omits perturbation hints",
     "Late submission is capped and explicitly marked timeout",
     "Software exercise is never a real participant",
     "Duplicate submission cannot create another task response"
