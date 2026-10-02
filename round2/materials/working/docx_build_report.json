@@ -1,0 +1,29 @@
+[
+  {
+    "file": "附件1_项目简表_待视觉复检.docx",
+    "sha256": "bfd95b1b0fc4ff06094ea14e790d329f172a482ca18ef5f62f32f4c5d5020aae",
+    "reference_sha256": "c1f280161f0037b477528b65372672c003806457f4923be773ef456cd1010697",
+    "preserve_only_parts_unchanged": true,
+    "section_geometry_unchanged": true,
+    "render_verified": false,
+    "submission_ready": false
+  },
+  {
+    "file": "附件2_项目说明书_待视觉复检.docx",
+    "sha256": "c76d86de3108dfaa95dc9fa2160e47b8f981c141a94a2f648eda5963ec622aac",
+    "reference_sha256": "bf0347f12f93bba3280e2c0ca384727fd7ad2360c64201fb6d1c1cb648f655cf",
+    "preserve_only_parts_unchanged": true,
+    "section_geometry_unchanged": true,
+    "render_verified": false,
+    "submission_ready": false
+  },
+  {
+    "file": "附件3_项目商业计划书_待视觉复检.docx",
+    "sha256": "c16dc20770e943db4814352262041ab4a8b20d9d9b49adab72c4ee8dc8733984",
+    "reference_sha256": "777f66a29204f6a9470da43f0b23d1e3c76f08a4891c08718c81c27dfd91e01b",
+    "preserve_only_parts_unchanged": true,
+    "section_geometry_unchanged": true,
+    "render_verified": false,
+    "submission_ready": false
+  }
+]

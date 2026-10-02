@@ -1,0 +1,9 @@
+{
+  "started_at_utc": "2026-09-30T09:33:25.465798+00:00",
+  "freeze_sha256": "98e5e2d8e3e5ef4b58674a982397a6ab5678e730c61099e67c6503dadbd713b9",
+  "first_holdout_payload_read_after_freeze": true,
+  "labels_opened_at_utc": "2026-09-30T09:34:22.343631+00:00",
+  "predictions_completed_at_utc": "2026-09-30T09:34:22.343631+00:00",
+  "completed_at_utc": "2026-09-30T09:34:25.507777+00:00",
+  "integrity_verified": true
+}

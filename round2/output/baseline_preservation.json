@@ -1,0 +1,23 @@
+{
+  "checked_at_utc": "2026-09-30T10:10:47.194026+00:00",
+  "first_package_sha256": "a51f010a1cf6c3dcacbad9d15ba3c266b3e6ff960f3d9e0677d49a9088848a3a",
+  "first_package_member_files_verified": 572,
+  "first_frozen_files": {
+    "engine.py": true,
+    "policies.py": true,
+    "model_client.py": true,
+    "scripts/prepare_engine.py": true,
+    "scripts/run_benchmark.py": true,
+    "scripts/freeze.py": true,
+    "scripts/test_contracts.py": true,
+    "data/calibration.json": true,
+    "data/policy_config.json": true,
+    "data/holdout_seal.json": true,
+    "data/data_contract.json": true,
+    "runtime/local_model_config.json": true,
+    "protocol_draft.json": true
+  },
+  "original_files_unchanged": true,
+  "copy_engine_sha256": "c4ac027f55efaf7e701c8e555faddc730f63ccd375cb06ba72cd37865597df01",
+  "copy_calibration_sha256": "bd0015f29d09f879c5fea5e81a750aab46d885e93da0d3d1066c591f98ab98d9"
+}

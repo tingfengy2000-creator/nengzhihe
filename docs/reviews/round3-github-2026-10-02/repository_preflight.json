@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "files": 2056,
+  "total_bytes": 139695120,
+  "groups": {
+    "(root)": 12,
+    ".github": 3,
+    "data": 86,
+    "delivery": 6,
+    "docs": 15,
+    "materials": 15,
+    "output": 440,
+    "round2": 1215,
+    "round3": 223,
+    "runtime": 25,
+    "scripts": 10,
+    "tools": 2,
+    "web": 4
+  },
+  "failures": [],
+  "scope": "Pattern and size preflight, not a comprehensive security audit."
+}

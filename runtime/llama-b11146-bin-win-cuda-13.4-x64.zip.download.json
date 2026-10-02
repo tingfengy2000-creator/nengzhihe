@@ -1,0 +1,8 @@
+{
+  "name": "llama-b11146-bin-win-cuda-13.4-x64.zip",
+  "source": "https://github.com/ggml-org/llama.cpp/releases/download/b11146/llama-b11146-bin-win-cuda-13.4-x64.zip",
+  "bytes": 149758833,
+  "sha256": "b1866c0ce76bc7bfb0c24b33e9a37e9669f1be18539b12c74ce361f81c41f047",
+  "download_seconds": 426.998,
+  "ranges": 18
+}

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#112c3a">
+  <title>能智核 · 公共建筑用能异常核验</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="nav-rail">
+    <a class="brand" href="#workbench" aria-label="能智核首页"><span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 23V13l7-4v14m3 0V5l7 4v14m3 0V15l4 2v6"/><path d="m8 26 7-8 5 3 8-12"/></svg></span><span>能智核<small>NENGZHIHE</small></span></a>
+    <div class="nav-caption">核验空间</div>
+    <nav aria-label="主导航">
+      <button class="nav-item active" data-page="workbench"><span class="nav-icon">◫</span>核验工作台<span class="nav-arrow">↗</span></button>
+      <button class="nav-item" data-page="benchmark"><span class="nav-icon">▥</span>对照实验</button>
+      <button class="nav-item" data-page="protocol"><span class="nav-icon">⌘</span>证据与边界</button>
+    </nav>
+    <div class="rail-project"><span class="rail-mini">研究方向</span><strong>智慧能源与环境</strong><p>公共建筑用能异常核验</p><span class="rail-tag">首轮验证 · 本地运行</span></div>
+    <div class="rail-bottom"><span class="status-dot" id="service-dot"></span><span id="service-label">正在连接数据服务</span><small>数据可追溯 · 结论可复核</small></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar"><div class="breadcrumb">能智核 <span>/</span> <strong id="breadcrumb-label">核验工作台</strong></div><div class="topbar-right"><span class="local-badge"><span class="status-dot"></span>LOCAL WORKSPACE</span><button class="icon-button" id="refresh-btn" title="刷新数据" aria-label="刷新数据">↻</button></div></header>
+    <section class="page active" id="page-workbench">
+      <div class="page-heading"><div><div class="eyebrow">ENERGY VERIFICATION WORKSPACE</div><h1>让每一个异常，都有据可查<span class="heading-dot">.</span></h1><p>从用能曲线到可复核证据，找到下一步值得核查的问题。</p></div><div class="heading-note"><span class="tiny-square"></span> 节能机会筛查作为附属能力</div></div>
+      <div id="global-notice" class="notice hidden" role="status"></div>
+      <div class="overview-row">
+        <div class="overview-item"><span class="overview-icon">⌁</span><div><span class="mini-label">实测回放</span><strong>BDG2 建筑电表</strong><small>历史用能 · 无设备故障标签</small></div></div>
+        <div class="overview-item"><span class="overview-icon">▦</span><div><span class="mini-label">有标签验证</span><strong>LBNL 单风道空调机组</strong><small>仿真设备 · 独立验证任务</small></div></div>
+        <div class="overview-item"><span class="overview-icon">⊕</span><div><span class="mini-label">本地模型</span><strong id="model-name">正在读取模型状态</strong><small id="model-status">数值由分析程序计算</small></div></div>
+      </div>
+      <div class="workspace-grid">
+        <section class="card case-panel" aria-label="案例选择">
+          <div class="panel-title"><h2>核验案例</h2><span class="count-badge" id="case-count">—</span></div>
+          <p class="panel-description">选择一个案例，开始核查</p>
+          <div class="case-filter" role="group" aria-label="案例类型"><button class="active" data-filter="all">全部</button><button data-filter="measured">实测</button><button data-filter="simulated">仿真</button></div>
+          <div id="case-list" class="case-list"><div class="empty-state compact"><span class="loading-ring"></span><p>正在读取案例</p></div></div>
+          <button id="case-library-toggle" class="case-library-toggle hidden">展开开发案例 <span>＋</span></button>
+          <div class="source-note"><span>ⓘ</span><p>数据来源分别标注。不同数据集的结果不拼接为真实楼宇故障定位证据。</p></div>
+        </section>
+
+        <div class="analysis-column">
+          <section class="card chart-card">
+            <div class="case-heading"><div><div id="case-badges" class="badges"></div><h2 id="case-title">选择核验案例</h2><p id="case-description">加载后可查看原始曲线、质量状态和核查证据。</p></div><span class="case-id" id="case-id"></span></div>
+            <div class="chart-toolbar"><div><span class="chart-title">观测曲线</span><span class="chart-subtitle" id="chart-unit"></span></div><select id="series-select" aria-label="选择观测序列" class="select-small"><option value="">暂无序列</option></select></div>
+            <div class="chart-wrap" id="chart"><div class="empty-state"><span class="empty-glyph">⌁</span><p>等待观测数据</p></div></div>
+            <div class="chart-footer"><span><i class="legend-line"></i><span id="chart-legend">原始观测</span></span><span id="chart-caption">来源与时间范围随案例展示</span></div>
+          </section>
+
+          <div class="state-grid">
+            <section class="card state-card" id="quality-card"><div class="state-top"><span class="state-label">01 / 数据可信度</span><span class="state-indicator neutral" id="quality-indicator"></span></div><h3 id="quality-status">待检查</h3><p id="quality-detail">识别记录缺失、错位与异常读数。</p><button id="repair-btn" class="text-button" disabled>修正数据问题 <span>↗</span></button></section>
+            <section class="card state-card" id="operation-card"><div class="state-top"><span class="state-label">02 / 设备与运行疑点</span><span class="state-indicator neutral" id="operation-indicator"></span></div><h3 id="operation-status">待核验</h3><p id="operation-detail">数据修正后，运行疑点仍须独立核查。</p><span class="state-footnote">两项状态独立判断</span></section>
+          </div>
+
+          <section class="card strategy-card">
+            <div class="panel-title"><h2 id="strategy-title">核验策略</h2><span class="subtle-text" id="strategy-hint">共享证据池与预算</span></div>
+            <div class="strategy-grid" role="group" aria-label="选择核验策略">
+              <button class="strategy-option" data-strategy="fixed"><span class="strategy-icon">≡</span><strong>固定流程</strong><small>按固定顺序取证</small><i></i></button>
+              <button class="strategy-option active" data-strategy="adaptive_rule"><span class="strategy-icon">⌘</span><strong>自适应规则</strong><small>不使用大模型</small><i></i></button>
+              <button class="strategy-option" data-strategy="local_model"><span class="strategy-icon">✧</span><strong>本地模型</strong><small>选择下一步证据</small><i></i></button>
+              <button class="strategy-option" data-strategy="full_information"><span class="strategy-icon">⊞</span><strong>完整信息</strong><small>信息充分参照</small><i></i></button>
+            </div>
+            <div class="run-controls"><div class="budget-control"><label for="budget-input">查询预算 <strong id="budget-value">3</strong><span>单位</span></label><input id="budget-input" type="range" min="1" max="4" value="3" step="1"><div class="range-labels"><span>1</span><span>2</span><span>3</span><span>4</span></div></div><button id="run-btn" class="primary-button" disabled><span>开始核验</span><span>→</span></button></div>
+            <p class="budget-note" id="budget-note">记录检查固定计 1 单位，另有 3 组分析证据；现场补采单独记账。</p>
+          </section>
+        </div>
+
+        <section class="card evidence-panel">
+          <div class="panel-title"><h2>核验证据</h2><span class="live-pill" id="run-state">尚未运行</span></div>
+          <p class="panel-description" id="evidence-description">每一步都有来源，每项结论都有依据。</p>
+          <div class="evidence-timeline" id="evidence-list"><div class="empty-state evidence-empty"><div class="evidence-illustration"><span></span><span></span><span></span><b>✓</b></div><h3>从一条证据开始</h3><p>选择案例与策略后开始核验。<br>这里将展示真实计算返回的证据。</p></div></div>
+          <div id="final-result" class="final-result hidden"></div>
+          <div class="evidence-actions"><button id="step-btn" class="secondary-button" disabled>查看下一步证据 <span>↓</span></button><button id="export-btn" class="export-button" disabled>↓ 导出核验记录</button></div>
+          <div class="cost-strip"><div><span>查询成本</span><strong id="query-cost">—</strong></div><div><span>现场补采</span><strong id="field-cost">—</strong></div><div><span>运行耗时</span><strong id="latency-cost">—</strong></div></div>
+        </section>
+      </div>
+      <footer class="page-footer"><span>公开数据验证工作台</span><span>当前结论用于辅助核查；实际节能收益需要干预后验证。</span><span>NENGZHIHE / 01</span></footer>
+    </section>
+
+    <section class="page" id="page-benchmark">
+      <div class="page-heading"><div><div class="eyebrow">FROZEN HOLDOUT EVALUATION</div><h1>主动补证，是否值得<span class="heading-dot">?</span></h1><p>在未参与调试的案例上比较四种策略，依据实际结果决定继续或收缩。</p></div><button class="secondary-button" id="benchmark-refresh">↻ 刷新结果</button></div>
+      <div id="benchmark-content"><div class="card empty-state"><span class="loading-ring"></span><p>正在读取冻结评测结果</p></div></div>
+      <footer class="page-footer"><span>同证据池 · 同预算 · 独立留出案例</span><span>仅展示本地已完成评测，不预填性能或节能收益。</span></footer>
+    </section>
+
+    <section class="page" id="page-protocol">
+      <div class="page-heading"><div><div class="eyebrow">EVIDENCE BY DESIGN</div><h1>明确证据，才能明确结论<span class="heading-dot">.</span></h1><p>用可追溯的数据和一致的实验边界，支持每一次核查判断。</p></div></div>
+      <div class="protocol-hero card"><div class="protocol-mark">核</div><div><span class="eyebrow">项目定位</span><h2>公共建筑用能异常核验</h2><p>发现异常、核查数据、补充证据、形成可复核结论。节能机会筛查作为附属能力，不将异常电量直接认定为可实现的节能收益。</p></div></div>
+      <div class="protocol-grid">
+        <article class="card protocol-card"><span class="protocol-number">01</span><h2>来源明确区分</h2><div class="protocol-line"><span class="badge measured">实测</span><p>BDG2 真实建筑历史用能回放。没有设备故障真值，不能据此验证故障定位准确率。</p></div><div class="protocol-line"><span class="badge simulated">仿真</span><p>LBNL 单风道空调机组。正常与故障标签只用于独立评价，不提供给核验策略。</p></div><div class="protocol-line"><span class="badge perturbed">人为扰动</span><p>明确记录扰动方式及原始数据来源。修正数据问题后，设备疑点仍需继续核查。</p></div></article>
+        <article class="card protocol-card"><span class="protocol-number">02</span><h2>比较遵守同一条件</h2><ul class="check-list"><li>固定流程、自适应规则、本地模型共享证据池。</li><li>完整信息只在预算覆盖全部证据时参与公平比较。</li><li>数据查询与现场补采分开计量。</li><li>排除故障文件标签、实际阀位等非 Basic 点位。</li><li>未参与调试的案例用于冻结评测。</li></ul></article>
+        <article class="card protocol-card"><span class="protocol-number">03</span><h2>计算与解释各有职责</h2><ul class="check-list"><li>统计量、诊断数值和评测指标由程序计算。</li><li>本地免费模型仅参与证据选择。</li><li>模型不可用时如实标注，不冒充模型运行。</li><li>每条证据保留查询动作、计算结果与来源。</li><li>主动策略无实际增益则调整创新表述。</li></ul></article>
+        <article class="card protocol-card"><span class="protocol-number">04</span><h2>可复核的核验过程</h2><div class="protocol-flow"><span>原始观测</span><b>↓</b><span>数据质量与设备疑点</span><b>↓</b><span>按预算查询证据</span><b>↓</b><span>结论 · 缺证项 · 下一步</span></div><p class="subtle-text">运行完成后可导出结构化记录，复核工具输出与成本。</p></article>
+      </div>
+      <div class="card protocol-disclaimer"><span>ⓘ</span><p>本工作台的证据限定在公开数据和明确标注的扰动实验中。当前不声称真实楼宇故障定位能力、试点合作或已实现的节能收益。</p></div>
+    </section>
+  </main>
+</div>
+<div id="toast" class="toast hidden" role="status"></div>
+<script src="/app.js"></script>
+</body>
+</html>

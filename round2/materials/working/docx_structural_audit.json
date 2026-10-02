@@ -1,0 +1,35 @@
+[
+  {
+    "file": "附件1_项目简表_待视觉复检.docx",
+    "zip_crc_valid": true,
+    "python_docx_loads": true,
+    "required_chapters_and_native_editable_text_present": true,
+    "anonymous_metadata": true,
+    "no_local_identity_paths": true,
+    "official_table_topology_preserved": true,
+    "ooxml_part_fidelity_verified": true,
+    "visual_layout_reviewed": false
+  },
+  {
+    "file": "附件2_项目说明书_待视觉复检.docx",
+    "zip_crc_valid": true,
+    "python_docx_loads": true,
+    "required_chapters_and_native_editable_text_present": true,
+    "anonymous_metadata": true,
+    "no_local_identity_paths": true,
+    "official_table_topology_preserved": true,
+    "ooxml_part_fidelity_verified": true,
+    "visual_layout_reviewed": false
+  },
+  {
+    "file": "附件3_项目商业计划书_待视觉复检.docx",
+    "zip_crc_valid": true,
+    "python_docx_loads": true,
+    "required_chapters_and_native_editable_text_present": true,
+    "anonymous_metadata": true,
+    "no_local_identity_paths": true,
+    "official_table_topology_preserved": true,
+    "ooxml_part_fidelity_verified": true,
+    "visual_layout_reviewed": false
+  }
+]

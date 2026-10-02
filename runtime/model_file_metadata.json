@@ -1,0 +1,45 @@
+{
+  "type": "file",
+  "oid": "1206cf64b64392ba533af8e1e6d793ac290c8111",
+  "size": 2497280256,
+  "lfs": {
+    "oid": "7485fe6f11af29433bc51cab58009521f205840f5b4ae3a32fa7f92e8534fdf5",
+    "size": 2497280256,
+    "pointerSize": 135
+  },
+  "xetHash": "9375c1fd02b321abc3f51b69ff7fcdd187af17f0d694c5b05000b54664292e17",
+  "path": "Qwen3-4B-Q4_K_M.gguf",
+  "lastCommit": {
+    "id": "a9a60d009fa7ff9606305047c2bf77ac25dbec49",
+    "title": "Upload folder using huggingface_hub",
+    "date": "2025-05-05T09:13:18Z"
+  },
+  "securityFileStatus": {
+    "status": "safe",
+    "protectAiScan": {
+      "status": "safe",
+      "message": "This file has no security findings.",
+      "reportLink": "https://insights-db.paloaltonetworks.com/models/Qwen/Qwen3-4B-GGUF/bc640142c66e1fdd12af0bd68f40445458f3869b/files?blob-id=1206cf64b64392ba533af8e1e6d793ac290c8111&utm_source=huggingface"
+    },
+    "avScan": {
+      "status": "unscanned",
+      "message": "",
+      "version": "1.5.2/27953"
+    },
+    "pickleImportScan": {
+      "status": "unscanned",
+      "pickleImports": [],
+      "version": "0.0.0"
+    },
+    "virusTotalScan": {
+      "status": "safe",
+      "message": "0/74 engines detect it as malicious.",
+      "reportLink": "https://www.virustotal.com/gui/file/7485fe6f11af29433bc51cab58009521f205840f5b4ae3a32fa7f92e8534fdf5?utm_source=huggingface"
+    },
+    "jFrogScan": {
+      "status": "safe",
+      "message": "Safe GGUF model",
+      "reportLink": "https://research.jfrog.com/model-threats/gguf-ssti?utm_source=huggingface"
+    }
+  }
+}

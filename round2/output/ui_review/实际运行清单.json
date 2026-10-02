@@ -1,0 +1,396 @@
+{
+  "generated_utc": "2026-09-30T10:13:26.4749812Z",
+  "method": "Actual browser interaction via CUA; fields read from persisted server run files; not held-out performance.",
+  "scope": "Public demo cases only; no final payload or label access.",
+  "responsive_check": {
+    "main_scroll_width": 328,
+    "viewport_css_width": 390,
+    "body_scroll_width": 375,
+    "temporary_viewport_reset": true
+  },
+  "runs": [
+    {
+      "demo": 1,
+      "step": "实测回放",
+      "run_id": "2cff586af9fa4b2e",
+      "case_id": "NZH-CFF0E57369E1",
+      "strategy": "fixed",
+      "config": {
+        "available_evidence": [
+          "quality",
+          "operating_context",
+          "air_path",
+          "coil_response"
+        ],
+        "requested_budget": 4,
+        "budget": 4,
+        "complete_pool": false,
+        "selected_window": null
+      },
+      "diagnosis": "building_review",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 840,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "cost": {
+        "query_units": 4,
+        "field_acquisition_units": 0,
+        "latency_ms": 11.032,
+        "model_calls": 0
+      },
+      "actions": [
+        "quality",
+        "air_path",
+        "operating_context",
+        "coil_response"
+      ],
+      "run_file": "E:\\比赛\\nengzhihe\\round2\\output\\runs\\2cff586af9fa4b2e.json",
+      "run_sha256": "05B86A2406F3C90C489DC65066DB30DB395CE998F2FD4D3A35382D30C5342706",
+      "screenshots": [
+        "demo1_measured.png",
+        "demo1_reference.png"
+      ]
+    },
+    {
+      "demo": 2,
+      "step": "有效证据支持正常开发演示",
+      "run_id": "89a3ebba20304287",
+      "case_id": "NZH-90C933F3C475",
+      "strategy": "adaptive_rule",
+      "config": {
+        "available_evidence": [
+          "quality",
+          "operating_context",
+          "air_path",
+          "coil_response"
+        ],
+        "requested_budget": 4,
+        "budget": 4,
+        "complete_pool": false,
+        "selected_window": null
+      },
+      "diagnosis": "normal",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "cost": {
+        "query_units": 4,
+        "field_acquisition_units": 0,
+        "latency_ms": 19.4374,
+        "model_calls": 0
+      },
+      "actions": [
+        "quality",
+        "operating_context",
+        "coil_response",
+        "air_path"
+      ],
+      "run_file": "E:\\比赛\\nengzhihe\\round2\\output\\runs\\89a3ebba20304287.json",
+      "run_sha256": "028641A328D997681AC408C9C3F5651CB842AB305E9F7D50119A90CAC2D071BF",
+      "screenshots": [
+        "demo2_supported.png"
+      ]
+    },
+    {
+      "demo": 2,
+      "step": "关闭盘管证据转未决",
+      "run_id": "41f26b7ea70144ea",
+      "case_id": "NZH-90C933F3C475",
+      "strategy": "adaptive_rule",
+      "config": {
+        "available_evidence": [
+          "quality",
+          "operating_context",
+          "air_path"
+        ],
+        "requested_budget": 4,
+        "budget": 3,
+        "complete_pool": false,
+        "selected_window": null
+      },
+      "diagnosis": "unresolved",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "cost": {
+        "query_units": 3,
+        "field_acquisition_units": 0,
+        "latency_ms": 14.7864,
+        "model_calls": 0
+      },
+      "actions": [
+        "quality",
+        "operating_context",
+        "air_path"
+      ],
+      "run_file": "E:\\比赛\\nengzhihe\\round2\\output\\runs\\41f26b7ea70144ea.json",
+      "run_sha256": "39DB1B77447710AD8AA4BECC5977160073B5888632E7C0C46F05DBB3E12257BF",
+      "screenshots": [
+        "demo2_missing_coil.png"
+      ]
+    },
+    {
+      "demo": 2,
+      "step": "预算1仅记录检查",
+      "run_id": "b8e47819f95141c9",
+      "case_id": "NZH-90C933F3C475",
+      "strategy": "adaptive_rule",
+      "config": {
+        "available_evidence": [
+          "quality",
+          "operating_context",
+          "air_path",
+          "coil_response"
+        ],
+        "requested_budget": 1,
+        "budget": 1,
+        "complete_pool": false,
+        "selected_window": null
+      },
+      "diagnosis": "unresolved",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "cost": {
+        "query_units": 1,
+        "field_acquisition_units": 0,
+        "latency_ms": 4.7022,
+        "model_calls": 0
+      },
+      "actions": [
+        "quality"
+      ],
+      "run_file": "E:\\比赛\\nengzhihe\\round2\\output\\runs\\b8e47819f95141c9.json",
+      "run_sha256": "6A697359E13CC32D0B3E74EF0A79E1603E133CD9519185C488F0CEB63558184B",
+      "screenshots": [
+        "demo2_budget1.png"
+      ]
+    },
+    {
+      "demo": 2,
+      "step": "完整信息不受预算1截断",
+      "run_id": "851d053340e4465c",
+      "case_id": "NZH-90C933F3C475",
+      "strategy": "full_information",
+      "config": {
+        "available_evidence": [
+          "quality",
+          "operating_context",
+          "air_path",
+          "coil_response"
+        ],
+        "requested_budget": 1,
+        "budget": 4,
+        "complete_pool": true,
+        "selected_window": null
+      },
+      "diagnosis": "normal",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "cost": {
+        "query_units": 4,
+        "field_acquisition_units": 0,
+        "latency_ms": 19.7612,
+        "model_calls": 0
+      },
+      "actions": [
+        "quality",
+        "air_path",
+        "operating_context",
+        "coil_response"
+      ],
+      "run_file": "E:\\比赛\\nengzhihe\\round2\\output\\runs\\851d053340e4465c.json",
+      "run_sha256": "1DE2215CAFD77AA1D53B1700EE9D3ECE059EA1160C542038D2FC8D0E13F12A48",
+      "screenshots": [
+        "demo2_full_after_budget1.png"
+      ]
+    },
+    {
+      "demo": 3,
+      "step": "修正前重复12",
+      "run_id": "1eff4f6e9ec14f64",
+      "case_id": "NZH-76889C2BA896",
+      "strategy": "adaptive_rule",
+      "config": {
+        "available_evidence": [
+          "quality",
+          "operating_context",
+          "air_path",
+          "coil_response"
+        ],
+        "requested_budget": 4,
+        "budget": 4,
+        "complete_pool": false,
+        "selected_window": null
+      },
+      "diagnosis": "damper_stuck",
+      "quality": {
+        "status": "needs_review",
+        "label": "存在记录问题",
+        "issues": [
+          {
+            "code": "duplicate_timestamp",
+            "label": "时间戳重复",
+            "count": 12,
+            "detail": "仅能自动删除同一时间戳且所有通道值完全一致的重复记录。"
+          }
+        ],
+        "duplicates": 12,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 300,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "cost": {
+        "query_units": 3,
+        "field_acquisition_units": 0,
+        "latency_ms": 13.8429,
+        "model_calls": 0
+      },
+      "actions": [
+        "quality",
+        "operating_context",
+        "air_path"
+      ],
+      "run_file": "E:\\比赛\\nengzhihe\\round2\\output\\runs\\1eff4f6e9ec14f64.json",
+      "run_sha256": "9DED4A9E72DEA733DF6073037AF056EB826A04E7E8848868A3C1E0E06A581420",
+      "screenshots": [
+        "demo3_before_repair.png"
+      ]
+    },
+    {
+      "demo": 3,
+      "step": "修正后仍风阀候选",
+      "run_id": "b8e8b823a5134c0d",
+      "case_id": "NZH-76889C2BA896__repaired",
+      "strategy": "adaptive_rule",
+      "config": {
+        "available_evidence": [
+          "quality",
+          "operating_context",
+          "air_path",
+          "coil_response"
+        ],
+        "requested_budget": 4,
+        "budget": 4,
+        "complete_pool": false,
+        "selected_window": null
+      },
+      "diagnosis": "damper_stuck",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "cost": {
+        "query_units": 3,
+        "field_acquisition_units": 0,
+        "latency_ms": 13.7991,
+        "model_calls": 0
+      },
+      "actions": [
+        "quality",
+        "operating_context",
+        "air_path"
+      ],
+      "run_file": "E:\\比赛\\nengzhihe\\round2\\output\\runs\\b8e8b823a5134c0d.json",
+      "run_sha256": "F5E8FB0341CF19F3C6340C018C25C9412A498938D66AC91055B081EEBCFDF01A",
+      "screenshots": [
+        "demo3_after_repair.png"
+      ]
+    },
+    {
+      "demo": 3,
+      "step": "修正后关闭风路转未决",
+      "run_id": "44c7742aebc34ac0",
+      "case_id": "NZH-76889C2BA896__repaired",
+      "strategy": "adaptive_rule",
+      "config": {
+        "available_evidence": [
+          "quality",
+          "operating_context",
+          "coil_response"
+        ],
+        "requested_budget": 4,
+        "budget": 3,
+        "complete_pool": false,
+        "selected_window": null
+      },
+      "diagnosis": "unresolved",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "cost": {
+        "query_units": 3,
+        "field_acquisition_units": 0,
+        "latency_ms": 11.7996,
+        "model_calls": 0
+      },
+      "actions": [
+        "quality",
+        "operating_context",
+        "coil_response"
+      ],
+      "run_file": "E:\\比赛\\nengzhihe\\round2\\output\\runs\\44c7742aebc34ac0.json",
+      "run_sha256": "9B956479F5B494302B701D01E8E589157890CCEB5D3041DE83CF58F827784FFC",
+      "screenshots": [
+        "demo3_missing_air.png"
+      ]
+    }
+  ]
+}

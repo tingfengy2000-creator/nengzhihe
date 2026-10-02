@@ -1,0 +1,287 @@
+{
+  "run_id": "63d85d1018e843b2",
+  "case_id": "NZH-5AA09FB01728",
+  "strategy": "adaptive_rule",
+  "strategy_label": "自适应规则",
+  "budget": 4,
+  "family": "lbnl",
+  "origin": "simulated",
+  "perturbation": {
+    "type": "duplicate_records_12",
+    "origin": "human_generated",
+    "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+  },
+  "repair": null,
+  "initial_summary": {
+    "record_rows": 300,
+    "duplicate_records": 12,
+    "missing_fraction": 0.0,
+    "supply_setpoint_delta_mean_C": -0.002399,
+    "fan_on_fraction": 0.68,
+    "unique_operating_minutes": 960,
+    "measurement_type": "simulated_single_duct_ahu",
+    "note": "Shared initial screening summary, identical for all strategies."
+  },
+  "steps": [
+    {
+      "index": 1,
+      "action": "quality",
+      "label": "核查记录完整性",
+      "reason": "所有策略共享并计费的记录完整性检查；数据问题与设备疑点可并存。",
+      "cost": 1,
+      "latency_ms": 0.287,
+      "selection_latency_ms": 0,
+      "evidence": [
+        {
+          "label": "重复记录",
+          "value": 12,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-5AA09FB01728 / quality / duplicates"
+        },
+        {
+          "label": "缺失比例",
+          "value": 0.0,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-5AA09FB01728 / quality / missing_fraction"
+        },
+        {
+          "label": "记录条数",
+          "value": 300,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-5AA09FB01728 / quality / rows"
+        }
+      ],
+      "features": {
+        "duplicates": 12,
+        "missing_fraction": 0.0,
+        "rows": 300
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "unresolved",
+        "name": "证据不足",
+        "status": "insufficient",
+        "rule_evidence": {
+          "air_response": "unknown",
+          "coil_response": "unknown"
+        },
+        "thresholds": {
+          "mix_std_boundary": 0.060753,
+          "mix_correlation_boundary": 0.624152,
+          "closed_drop_boundary_C": -0.120259
+        },
+        "detail": "尚未取得足够设备过程证据；记录检查通过不能推出设备正常。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+      },
+      "quality": {
+        "status": "needs_review",
+        "label": "存在记录问题",
+        "issues": [
+          {
+            "code": "duplicate_timestamp",
+            "label": "时间戳重复",
+            "count": 12,
+            "detail": "仅能自动删除同一时间戳且所有通道值完全一致的重复记录。"
+          }
+        ],
+        "duplicates": 12,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 300,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      }
+    },
+    {
+      "index": 2,
+      "action": "coil_response",
+      "label": "核查盘管热响应",
+      "reason": "送风低于设定，优先查看盘管指令与温降。",
+      "cost": 1,
+      "latency_ms": 0.349,
+      "selection_latency_ms": 0,
+      "evidence": [
+        {
+          "label": "送风与设定温差均值 °C",
+          "value": -0.002399,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-5AA09FB01728 / coil_response / supply_delta_mean"
+        },
+        {
+          "label": "送风设定偏差绝对值 °C",
+          "value": 0.08318,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-5AA09FB01728 / coil_response / supply_delta_abs"
+        },
+        {
+          "label": "混合至送风温降 °C",
+          "value": -0.025173,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-5AA09FB01728 / coil_response / coil_drop_mean"
+        },
+        {
+          "label": "零冷阀指令时温降 °C",
+          "value": -0.025173,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-5AA09FB01728 / coil_response / closed_valve_drop"
+        },
+        {
+          "label": "零冷阀指令样本比例",
+          "value": 1.0,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-5AA09FB01728 / coil_response / closed_valve_fraction"
+        },
+        {
+          "label": "冷阀指令均值",
+          "value": 0.0,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-5AA09FB01728 / coil_response / coil_cmd_mean"
+        },
+        {
+          "label": "冷阀指令波动",
+          "value": 0.0,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-5AA09FB01728 / coil_response / coil_cmd_std"
+        },
+        {
+          "label": "温降与冷阀指令相关",
+          "value": null,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-5AA09FB01728 / coil_response / coil_drop_cmd_corr"
+        },
+        {
+          "label": "送风设定温差 P90 °C",
+          "value": 0.089381,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-5AA09FB01728 / coil_response / supply_delta_p90"
+        },
+        {
+          "label": "有效零冷阀指令独立时刻数",
+          "value": 192,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-5AA09FB01728 / coil_response / valid_closed_samples"
+        }
+      ],
+      "features": {
+        "supply_delta_mean": -0.002399,
+        "supply_delta_abs": 0.08318,
+        "coil_drop_mean": -0.025173,
+        "closed_valve_drop": -0.025173,
+        "closed_valve_fraction": 1.0,
+        "coil_cmd_mean": 0.0,
+        "coil_cmd_std": 0.0,
+        "coil_drop_cmd_corr": null,
+        "supply_delta_p90": 0.089381,
+        "valid_closed_samples": 192
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "coil_leakage",
+        "name": "盘管阀泄漏候选",
+        "status": "supported",
+        "rule_evidence": {
+          "air_response": "unknown",
+          "coil_response": "leak_candidate"
+        },
+        "thresholds": {
+          "mix_std_boundary": 0.060753,
+          "mix_correlation_boundary": 0.624152,
+          "closed_drop_boundary_C": -0.120259
+        },
+        "detail": "足够零冷阀指令时段的温降偏离正常开发参考，支持盘管阀泄漏疑点。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+      },
+      "quality": {
+        "status": "needs_review",
+        "label": "存在记录问题",
+        "issues": [
+          {
+            "code": "duplicate_timestamp",
+            "label": "时间戳重复",
+            "count": 12,
+            "detail": "仅能自动删除同一时间戳且所有通道值完全一致的重复记录。"
+          }
+        ],
+        "duplicates": 12,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 300,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      }
+    }
+  ],
+  "final": {
+    "confidence": null,
+    "support_score": null,
+    "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+    "label": "coil_leakage",
+    "name": "盘管阀泄漏候选",
+    "status": "supported",
+    "rule_evidence": {
+      "air_response": "unknown",
+      "coil_response": "leak_candidate"
+    },
+    "thresholds": {
+      "mix_std_boundary": 0.060753,
+      "mix_correlation_boundary": 0.624152,
+      "closed_drop_boundary_C": -0.120259
+    },
+    "detail": "足够零冷阀指令时段的温降偏离正常开发参考，支持盘管阀泄漏疑点。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。",
+    "quality": {
+      "status": "needs_review",
+      "label": "存在记录问题",
+      "issues": [
+        {
+          "code": "duplicate_timestamp",
+          "label": "时间戳重复",
+          "count": 12,
+          "detail": "仅能自动删除同一时间戳且所有通道值完全一致的重复记录。"
+        }
+      ],
+      "duplicates": 12,
+      "missing": 0,
+      "missing_fraction": 0.0,
+      "rows": 300,
+      "valid_schema": true,
+      "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+    },
+    "operation": {
+      "confidence": null,
+      "support_score": null,
+      "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+      "label": "coil_leakage",
+      "name": "盘管阀泄漏候选",
+      "status": "supported",
+      "rule_evidence": {
+        "air_response": "unknown",
+        "coil_response": "leak_candidate"
+      },
+      "thresholds": {
+        "mix_std_boundary": 0.060753,
+        "mix_correlation_boundary": 0.624152,
+        "closed_drop_boundary_C": -0.120259
+      },
+      "detail": "足够零冷阀指令时段的温降偏离正常开发参考，支持盘管阀泄漏疑点。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+    }
+  },
+  "cost": {
+    "query_units": 2,
+    "field_acquisition_units": 0,
+    "latency_ms": 1.391,
+    "model_calls": 0,
+    "model_latency_ms": 0,
+    "cost_note": "查询单位是离线实验记账，不等于现场采集费用或实际人民币成本。"
+  },
+  "warnings": [
+    "记录问题与运行疑点分别保留；建议修正可验证的数据问题后重新核验设备。"
+  ],
+  "model_calls": [],
+  "summary": "足够零冷阀指令时段的温降偏离正常开发参考，支持盘管阀泄漏疑点。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。",
+  "data_hash": "c44e06d2c107ae4d1c489036d535ed0ab41c227e93f63487e3eefb4256f2f351",
+  "status": "completed",
+  "freeze_sha256": "98e5e2d8e3e5ef4b58674a982397a6ab5678e730c61099e67c6503dadbd713b9",
+  "unique_operating_minutes": 960
+}

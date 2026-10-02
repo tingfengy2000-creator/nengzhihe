@@ -1,0 +1,3507 @@
+{
+  "run_id": "f120b5f2ecec40b7",
+  "case_id": "NZH2-CE26B223228F",
+  "family": "lbnl",
+  "origin": "simulated",
+  "perturbation": {
+    "type": "none",
+    "origin": "none",
+    "description": "无额外人为扰动。"
+  },
+  "strategy": "adaptive_rule",
+  "strategy_label": "自适应规则",
+  "budget": 4,
+  "steps": [
+    {
+      "index": 1,
+      "action": "quality",
+      "label": "记录可信度",
+      "reason": "先检查记录完整性，数据问题与设备疑点独立处理。",
+      "cost": 1,
+      "evidence": [
+        {
+          "label": "原始记录条数",
+          "value": 288,
+          "detail": "由允许测点程序计算；窗口和开发参考均可复核。"
+        },
+        {
+          "label": "重复时间戳条数",
+          "value": 0,
+          "detail": "由允许测点程序计算；窗口和开发参考均可复核。"
+        },
+        {
+          "label": "缺失数",
+          "value": 0,
+          "detail": "由允许测点程序计算；窗口和开发参考均可复核。"
+        },
+        {
+          "label": "独立运行分钟",
+          "value": 955,
+          "detail": "由允许测点程序计算；窗口和开发参考均可复核。"
+        }
+      ],
+      "features": {
+        "family": "lbnl",
+        "action": "quality",
+        "unit_errors": [],
+        "conflicting_timestamps": 0,
+        "rows": 288,
+        "unique_rows": 288,
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "unique_operating_minutes": 955,
+        "valid_schema": true,
+        "quality_status": "passed",
+        "windows": [],
+        "control_modes": {}
+      },
+      "windows": [],
+      "mode": {},
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "确定性证据规则；无未经校准的故障概率。",
+        "label": "unresolved",
+        "status": "insufficient",
+        "name": "待补证",
+        "detail": "已取得证据尚不能作三分类结论；保留未决并列出可改变判断的补证时段或点位。",
+        "support_evidence": [],
+        "refuting_evidence": [],
+        "next_actions": [
+          {
+            "action": "operating_context",
+            "text": "核实启停与控制工况",
+            "type": "data_query",
+            "query_cost": 1
+          },
+          {
+            "action": "air_path",
+            "text": "核查混风指令与热响应",
+            "type": "data_query",
+            "query_cost": 1
+          },
+          {
+            "action": "coil_response",
+            "text": "核查稳定关阀时段",
+            "type": "data_query",
+            "query_cost": 1
+          }
+        ],
+        "windows": [],
+        "current_mode": {},
+        "rule_evidence": {
+          "air_response": "unknown",
+          "coil_response": "unknown",
+          "context_qualified": false
+        },
+        "scope": "同一公开仿真单风道机组的正常/风阀卡滞/盘管阀泄漏候选；不能外推为真实楼宇定位。",
+        "supporting_evidence": [],
+        "mode": {}
+      }
+    },
+    {
+      "index": 2,
+      "action": "operating_context",
+      "label": "启停与控制工况",
+      "reason": "先确认实际启停与控制工况，避免在不适用时段判断设备。",
+      "cost": 1,
+      "evidence": [
+        {
+          "label": "稳定运行分钟",
+          "value": 925,
+          "detail": "由允许测点程序计算；窗口和开发参考均可复核。"
+        }
+      ],
+      "features": {
+        "family": "lbnl",
+        "action": "operating_context",
+        "unit_errors": [],
+        "conflicting_timestamps": 0,
+        "stable_minutes": 925,
+        "startup_excluded_minutes": 30,
+        "fan_command_median": 0.79519,
+        "return_supply_command_ratio": 0.899999,
+        "control_modes": {
+          "economizer_with_mechanical_enable": 25,
+          "mechanical_or_minimum_air": 900,
+          "off": 485,
+          "startup": 30
+        },
+        "context_qualified": true,
+        "mode_basis": "Observed fan status + OA temperature + commands; not calendar occupancy or SYS_CTL.",
+        "zone_temperature_median_C": 20.80906,
+        "windows": [
+          {
+            "start": "2018-06-06T06:35:00",
+            "end": "2018-06-06T07:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.794965
+          },
+          {
+            "start": "2018-06-06T07:05:00",
+            "end": "2018-06-06T07:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79231
+          },
+          {
+            "start": "2018-06-06T07:35:00",
+            "end": "2018-06-06T08:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79165
+          },
+          {
+            "start": "2018-06-06T08:05:00",
+            "end": "2018-06-06T08:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.791405
+          },
+          {
+            "start": "2018-06-06T08:35:00",
+            "end": "2018-06-06T09:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79139
+          },
+          {
+            "start": "2018-06-06T09:05:00",
+            "end": "2018-06-06T09:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "start": "2018-06-06T09:35:00",
+            "end": "2018-06-06T10:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "start": "2018-06-06T10:05:00",
+            "end": "2018-06-06T10:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "start": "2018-06-06T10:35:00",
+            "end": "2018-06-06T11:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "start": "2018-06-06T11:05:00",
+            "end": "2018-06-06T11:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "start": "2018-06-06T11:35:00",
+            "end": "2018-06-06T12:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "start": "2018-06-06T12:05:00",
+            "end": "2018-06-06T12:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "start": "2018-06-06T12:35:00",
+            "end": "2018-06-06T13:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.817425
+          },
+          {
+            "start": "2018-06-06T13:05:00",
+            "end": "2018-06-06T13:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.821985
+          },
+          {
+            "start": "2018-06-06T13:35:00",
+            "end": "2018-06-06T14:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.82159
+          },
+          {
+            "start": "2018-06-06T14:05:00",
+            "end": "2018-06-06T14:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.80037
+          },
+          {
+            "start": "2018-06-06T14:35:00",
+            "end": "2018-06-06T15:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79504
+          },
+          {
+            "start": "2018-06-06T15:05:00",
+            "end": "2018-06-06T15:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.795095
+          },
+          {
+            "start": "2018-06-06T15:35:00",
+            "end": "2018-06-06T16:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.795185
+          },
+          {
+            "start": "2018-06-06T16:05:00",
+            "end": "2018-06-06T16:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "start": "2018-06-06T16:35:00",
+            "end": "2018-06-06T17:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "start": "2018-06-06T17:05:00",
+            "end": "2018-06-06T17:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "start": "2018-06-06T17:35:00",
+            "end": "2018-06-06T18:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "start": "2018-06-06T18:05:00",
+            "end": "2018-06-06T18:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "start": "2018-06-06T18:35:00",
+            "end": "2018-06-06T19:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "start": "2018-06-06T19:05:00",
+            "end": "2018-06-06T19:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "start": "2018-06-06T19:35:00",
+            "end": "2018-06-06T20:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.81481
+          },
+          {
+            "start": "2018-06-06T20:05:00",
+            "end": "2018-06-06T20:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.82179
+          },
+          {
+            "start": "2018-06-06T20:35:00",
+            "end": "2018-06-06T21:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.82162
+          },
+          {
+            "start": "2018-06-06T21:05:00",
+            "end": "2018-06-06T21:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.821495
+          }
+        ]
+      },
+      "windows": [
+        {
+          "start": "2018-06-06T06:35:00",
+          "end": "2018-06-06T07:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.794965
+        },
+        {
+          "start": "2018-06-06T07:05:00",
+          "end": "2018-06-06T07:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79231
+        },
+        {
+          "start": "2018-06-06T07:35:00",
+          "end": "2018-06-06T08:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79165
+        },
+        {
+          "start": "2018-06-06T08:05:00",
+          "end": "2018-06-06T08:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.791405
+        },
+        {
+          "start": "2018-06-06T08:35:00",
+          "end": "2018-06-06T09:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79139
+        },
+        {
+          "start": "2018-06-06T09:05:00",
+          "end": "2018-06-06T09:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.7914
+        },
+        {
+          "start": "2018-06-06T09:35:00",
+          "end": "2018-06-06T10:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.7914
+        },
+        {
+          "start": "2018-06-06T10:05:00",
+          "end": "2018-06-06T10:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.7914
+        },
+        {
+          "start": "2018-06-06T10:35:00",
+          "end": "2018-06-06T11:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.7914
+        },
+        {
+          "start": "2018-06-06T11:05:00",
+          "end": "2018-06-06T11:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.7914
+        },
+        {
+          "start": "2018-06-06T11:35:00",
+          "end": "2018-06-06T12:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.7914
+        },
+        {
+          "start": "2018-06-06T12:05:00",
+          "end": "2018-06-06T12:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.7914
+        },
+        {
+          "start": "2018-06-06T12:35:00",
+          "end": "2018-06-06T13:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.817425
+        },
+        {
+          "start": "2018-06-06T13:05:00",
+          "end": "2018-06-06T13:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.821985
+        },
+        {
+          "start": "2018-06-06T13:35:00",
+          "end": "2018-06-06T14:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.82159
+        },
+        {
+          "start": "2018-06-06T14:05:00",
+          "end": "2018-06-06T14:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.80037
+        },
+        {
+          "start": "2018-06-06T14:35:00",
+          "end": "2018-06-06T15:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79504
+        },
+        {
+          "start": "2018-06-06T15:05:00",
+          "end": "2018-06-06T15:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.795095
+        },
+        {
+          "start": "2018-06-06T15:35:00",
+          "end": "2018-06-06T16:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.795185
+        },
+        {
+          "start": "2018-06-06T16:05:00",
+          "end": "2018-06-06T16:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79519
+        },
+        {
+          "start": "2018-06-06T16:35:00",
+          "end": "2018-06-06T17:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79519
+        },
+        {
+          "start": "2018-06-06T17:05:00",
+          "end": "2018-06-06T17:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79519
+        },
+        {
+          "start": "2018-06-06T17:35:00",
+          "end": "2018-06-06T18:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79519
+        },
+        {
+          "start": "2018-06-06T18:05:00",
+          "end": "2018-06-06T18:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79519
+        },
+        {
+          "start": "2018-06-06T18:35:00",
+          "end": "2018-06-06T19:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79519
+        },
+        {
+          "start": "2018-06-06T19:05:00",
+          "end": "2018-06-06T19:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79519
+        },
+        {
+          "start": "2018-06-06T19:35:00",
+          "end": "2018-06-06T20:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.81481
+        },
+        {
+          "start": "2018-06-06T20:05:00",
+          "end": "2018-06-06T20:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.82179
+        },
+        {
+          "start": "2018-06-06T20:35:00",
+          "end": "2018-06-06T21:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.82162
+        },
+        {
+          "start": "2018-06-06T21:05:00",
+          "end": "2018-06-06T21:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.821495
+        }
+      ],
+      "mode": {
+        "economizer_with_mechanical_enable": 25,
+        "mechanical_or_minimum_air": 900,
+        "off": 485,
+        "startup": 30
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "确定性证据规则；无未经校准的故障概率。",
+        "label": "unresolved",
+        "status": "insufficient",
+        "name": "待补证",
+        "detail": "已取得证据尚不能作三分类结论；保留未决并列出可改变判断的补证时段或点位。",
+        "support_evidence": [],
+        "refuting_evidence": [],
+        "next_actions": [
+          {
+            "action": "air_path",
+            "text": "核查混风指令与热响应",
+            "type": "data_query",
+            "query_cost": 1
+          },
+          {
+            "action": "coil_response",
+            "text": "核查稳定关阀时段",
+            "type": "data_query",
+            "query_cost": 1
+          }
+        ],
+        "windows": [
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T06:35:00",
+            "end": "2018-06-06T07:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.794965
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T07:05:00",
+            "end": "2018-06-06T07:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79231
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T07:35:00",
+            "end": "2018-06-06T08:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79165
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T08:05:00",
+            "end": "2018-06-06T08:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.791405
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T08:35:00",
+            "end": "2018-06-06T09:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79139
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T09:05:00",
+            "end": "2018-06-06T09:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T09:35:00",
+            "end": "2018-06-06T10:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T10:05:00",
+            "end": "2018-06-06T10:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T10:35:00",
+            "end": "2018-06-06T11:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T11:05:00",
+            "end": "2018-06-06T11:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T11:35:00",
+            "end": "2018-06-06T12:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T12:05:00",
+            "end": "2018-06-06T12:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T12:35:00",
+            "end": "2018-06-06T13:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.817425
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T13:05:00",
+            "end": "2018-06-06T13:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.821985
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T13:35:00",
+            "end": "2018-06-06T14:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.82159
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T14:05:00",
+            "end": "2018-06-06T14:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.80037
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T14:35:00",
+            "end": "2018-06-06T15:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79504
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T15:05:00",
+            "end": "2018-06-06T15:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.795095
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T15:35:00",
+            "end": "2018-06-06T16:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.795185
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T16:05:00",
+            "end": "2018-06-06T16:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T16:35:00",
+            "end": "2018-06-06T17:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T17:05:00",
+            "end": "2018-06-06T17:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T17:35:00",
+            "end": "2018-06-06T18:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T18:05:00",
+            "end": "2018-06-06T18:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T18:35:00",
+            "end": "2018-06-06T19:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T19:05:00",
+            "end": "2018-06-06T19:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T19:35:00",
+            "end": "2018-06-06T20:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.81481
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T20:05:00",
+            "end": "2018-06-06T20:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.82179
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T20:35:00",
+            "end": "2018-06-06T21:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.82162
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T21:05:00",
+            "end": "2018-06-06T21:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.821495
+          }
+        ],
+        "current_mode": {
+          "economizer_with_mechanical_enable": 25,
+          "mechanical_or_minimum_air": 900,
+          "off": 485,
+          "startup": 30
+        },
+        "rule_evidence": {
+          "air_response": "unknown",
+          "coil_response": "unknown",
+          "context_qualified": true
+        },
+        "scope": "同一公开仿真单风道机组的正常/风阀卡滞/盘管阀泄漏候选；不能外推为真实楼宇定位。",
+        "supporting_evidence": [],
+        "mode": {
+          "economizer_with_mechanical_enable": 25,
+          "mechanical_or_minimum_air": 900,
+          "off": 485,
+          "startup": 30
+        }
+      }
+    },
+    {
+      "index": 3,
+      "action": "air_path",
+      "label": "混风与风阀响应",
+      "reason": "按当前证据缺口选择下一项核查。",
+      "cost": 1,
+      "evidence": [
+        {
+          "label": "合格证据窗口分钟",
+          "value": 750,
+          "detail": "由允许测点程序计算；窗口和开发参考均可复核。"
+        },
+        {
+          "label": "混风不一致分钟",
+          "value": 750,
+          "detail": "由允许测点程序计算；窗口和开发参考均可复核。"
+        },
+        {
+          "label": "正常包络内分钟",
+          "value": 0,
+          "detail": "由允许测点程序计算；窗口和开发参考均可复核。"
+        },
+        {
+          "label": "温度推算混风比例",
+          "value": 0.6743,
+          "detail": "由允许测点程序计算；窗口和开发参考均可复核。"
+        },
+        {
+          "label": "风阀指令中位数",
+          "value": 0.1,
+          "detail": "由允许测点程序计算；窗口和开发参考均可复核。"
+        }
+      ],
+      "features": {
+        "family": "lbnl",
+        "action": "air_path",
+        "unit_errors": [],
+        "conflicting_timestamps": 0,
+        "qualified_minutes": 750,
+        "mismatch_minutes": 750,
+        "compatible_minutes": 0,
+        "valid_temperature_minutes": 795,
+        "uncalibrated_command_minutes": 0,
+        "mix_fraction_median": 0.6743,
+        "damper_command_median": 0.1,
+        "mix_state": "stuck_candidate",
+        "qualification": "稳定双风机运行且室外/回风温差至少3°C；对照开发正常指令响应包络，非把指令当实测阀位。",
+        "windows": [
+          {
+            "start": "2018-06-06T06:35:00",
+            "end": "2018-06-06T07:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 1.0,
+            "inferred_mix_fraction": 0.679727,
+            "reference_low": 0.869393,
+            "reference_high": 1.035175,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T09:40:00",
+            "end": "2018-06-06T10:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.668679,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T10:10:00",
+            "end": "2018-06-06T10:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.668034,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T10:40:00",
+            "end": "2018-06-06T11:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.669602,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T11:10:00",
+            "end": "2018-06-06T11:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.673054,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T11:40:00",
+            "end": "2018-06-06T12:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.673164,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T12:10:00",
+            "end": "2018-06-06T12:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.672602,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T12:40:00",
+            "end": "2018-06-06T13:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.672792,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T13:10:00",
+            "end": "2018-06-06T13:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.674322,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T13:40:00",
+            "end": "2018-06-06T14:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.674356,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T14:10:00",
+            "end": "2018-06-06T14:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.674261,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T14:40:00",
+            "end": "2018-06-06T15:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.674297,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T15:10:00",
+            "end": "2018-06-06T15:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.674438,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T15:40:00",
+            "end": "2018-06-06T16:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.674465,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T16:10:00",
+            "end": "2018-06-06T16:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.677692,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T16:40:00",
+            "end": "2018-06-06T17:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.677929,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T17:10:00",
+            "end": "2018-06-06T17:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.676703,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T17:40:00",
+            "end": "2018-06-06T18:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.676754,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T18:10:00",
+            "end": "2018-06-06T18:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.67896,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T18:40:00",
+            "end": "2018-06-06T19:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.679336,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T19:10:00",
+            "end": "2018-06-06T19:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.677589,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T19:40:00",
+            "end": "2018-06-06T20:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.677807,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T20:10:00",
+            "end": "2018-06-06T20:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.672585,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T20:40:00",
+            "end": "2018-06-06T21:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.672739,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "start": "2018-06-06T21:10:00",
+            "end": "2018-06-06T21:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.673986,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          }
+        ],
+        "control_modes": {
+          "economizer_with_mechanical_enable": 25,
+          "mechanical_or_minimum_air": 900,
+          "off": 485,
+          "startup": 30
+        }
+      },
+      "windows": [
+        {
+          "start": "2018-06-06T06:35:00",
+          "end": "2018-06-06T07:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 1.0,
+          "inferred_mix_fraction": 0.679727,
+          "reference_low": 0.869393,
+          "reference_high": 1.035175,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T09:40:00",
+          "end": "2018-06-06T10:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.668679,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T10:10:00",
+          "end": "2018-06-06T10:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.668034,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T10:40:00",
+          "end": "2018-06-06T11:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.669602,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T11:10:00",
+          "end": "2018-06-06T11:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.673054,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T11:40:00",
+          "end": "2018-06-06T12:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.673164,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T12:10:00",
+          "end": "2018-06-06T12:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.672602,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T12:40:00",
+          "end": "2018-06-06T13:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.672792,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T13:10:00",
+          "end": "2018-06-06T13:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.674322,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T13:40:00",
+          "end": "2018-06-06T14:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.674356,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T14:10:00",
+          "end": "2018-06-06T14:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.674261,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T14:40:00",
+          "end": "2018-06-06T15:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.674297,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T15:10:00",
+          "end": "2018-06-06T15:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.674438,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T15:40:00",
+          "end": "2018-06-06T16:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.674465,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T16:10:00",
+          "end": "2018-06-06T16:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.677692,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T16:40:00",
+          "end": "2018-06-06T17:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.677929,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T17:10:00",
+          "end": "2018-06-06T17:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.676703,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T17:40:00",
+          "end": "2018-06-06T18:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.676754,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T18:10:00",
+          "end": "2018-06-06T18:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.67896,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T18:40:00",
+          "end": "2018-06-06T19:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.679336,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T19:10:00",
+          "end": "2018-06-06T19:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.677589,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T19:40:00",
+          "end": "2018-06-06T20:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.677807,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T20:10:00",
+          "end": "2018-06-06T20:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.672585,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T20:40:00",
+          "end": "2018-06-06T21:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.672739,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "start": "2018-06-06T21:10:00",
+          "end": "2018-06-06T21:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.673986,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        }
+      ],
+      "mode": {
+        "economizer_with_mechanical_enable": 25,
+        "mechanical_or_minimum_air": 900,
+        "off": 485,
+        "startup": 30
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "确定性证据规则；无未经校准的故障概率。",
+        "label": "damper_stuck",
+        "status": "supported",
+        "name": "风阀卡滞候选",
+        "detail": "存在持续的指令—混风热响应矛盾，形成风阀卡滞候选；需现场核实传感器及执行器，未使用实测阀位。",
+        "support_evidence": [
+          "混风热响应在750分钟窗口偏离同指令正常参考，支持风阀卡滞候选。"
+        ],
+        "refuting_evidence": [],
+        "next_actions": [
+          {
+            "action": "coil_response",
+            "text": "核查稳定关阀时段",
+            "type": "data_query",
+            "query_cost": 1
+          }
+        ],
+        "windows": [
+          {
+            "action": "air_path",
+            "start": "2018-06-06T06:35:00",
+            "end": "2018-06-06T07:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 1.0,
+            "inferred_mix_fraction": 0.679727,
+            "reference_low": 0.869393,
+            "reference_high": 1.035175,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T09:40:00",
+            "end": "2018-06-06T10:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.668679,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T10:10:00",
+            "end": "2018-06-06T10:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.668034,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T10:40:00",
+            "end": "2018-06-06T11:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.669602,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T11:10:00",
+            "end": "2018-06-06T11:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.673054,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T11:40:00",
+            "end": "2018-06-06T12:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.673164,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T12:10:00",
+            "end": "2018-06-06T12:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.672602,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T12:40:00",
+            "end": "2018-06-06T13:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.672792,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T13:10:00",
+            "end": "2018-06-06T13:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.674322,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T13:40:00",
+            "end": "2018-06-06T14:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.674356,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T14:10:00",
+            "end": "2018-06-06T14:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.674261,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T14:40:00",
+            "end": "2018-06-06T15:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.674297,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T15:10:00",
+            "end": "2018-06-06T15:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.674438,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T15:40:00",
+            "end": "2018-06-06T16:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.674465,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T16:10:00",
+            "end": "2018-06-06T16:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.677692,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T16:40:00",
+            "end": "2018-06-06T17:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.677929,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T17:10:00",
+            "end": "2018-06-06T17:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.676703,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T17:40:00",
+            "end": "2018-06-06T18:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.676754,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T18:10:00",
+            "end": "2018-06-06T18:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.67896,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T18:40:00",
+            "end": "2018-06-06T19:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.679336,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T19:10:00",
+            "end": "2018-06-06T19:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.677589,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T19:40:00",
+            "end": "2018-06-06T20:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.677807,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T20:10:00",
+            "end": "2018-06-06T20:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.672585,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T20:40:00",
+            "end": "2018-06-06T21:05:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.672739,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "air_path",
+            "start": "2018-06-06T21:10:00",
+            "end": "2018-06-06T21:35:00",
+            "minutes": 30,
+            "samples": 6,
+            "command": 0.1,
+            "inferred_mix_fraction": 0.673986,
+            "reference_low": -0.016737,
+            "reference_high": 0.060479,
+            "compatible_fraction": 0.0,
+            "mismatch_fraction": 1.0,
+            "state": "mismatch"
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T06:35:00",
+            "end": "2018-06-06T07:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.794965
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T07:05:00",
+            "end": "2018-06-06T07:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79231
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T07:35:00",
+            "end": "2018-06-06T08:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79165
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T08:05:00",
+            "end": "2018-06-06T08:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.791405
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T08:35:00",
+            "end": "2018-06-06T09:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79139
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T09:05:00",
+            "end": "2018-06-06T09:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T09:35:00",
+            "end": "2018-06-06T10:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T10:05:00",
+            "end": "2018-06-06T10:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T10:35:00",
+            "end": "2018-06-06T11:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T11:05:00",
+            "end": "2018-06-06T11:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T11:35:00",
+            "end": "2018-06-06T12:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T12:05:00",
+            "end": "2018-06-06T12:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.7914
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T12:35:00",
+            "end": "2018-06-06T13:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.817425
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T13:05:00",
+            "end": "2018-06-06T13:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.821985
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T13:35:00",
+            "end": "2018-06-06T14:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.82159
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T14:05:00",
+            "end": "2018-06-06T14:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.80037
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T14:35:00",
+            "end": "2018-06-06T15:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79504
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T15:05:00",
+            "end": "2018-06-06T15:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.795095
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T15:35:00",
+            "end": "2018-06-06T16:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.795185
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T16:05:00",
+            "end": "2018-06-06T16:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T16:35:00",
+            "end": "2018-06-06T17:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T17:05:00",
+            "end": "2018-06-06T17:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T17:35:00",
+            "end": "2018-06-06T18:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T18:05:00",
+            "end": "2018-06-06T18:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T18:35:00",
+            "end": "2018-06-06T19:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T19:05:00",
+            "end": "2018-06-06T19:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.79519
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T19:35:00",
+            "end": "2018-06-06T20:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.81481
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T20:05:00",
+            "end": "2018-06-06T20:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.82179
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T20:35:00",
+            "end": "2018-06-06T21:00:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.82162
+          },
+          {
+            "action": "operating_context",
+            "start": "2018-06-06T21:05:00",
+            "end": "2018-06-06T21:30:00",
+            "minutes": 30,
+            "samples": 6,
+            "fan_command": 0.821495
+          }
+        ],
+        "current_mode": {
+          "economizer_with_mechanical_enable": 25,
+          "mechanical_or_minimum_air": 900,
+          "off": 485,
+          "startup": 30
+        },
+        "rule_evidence": {
+          "air_response": "stuck_candidate",
+          "coil_response": "unknown",
+          "context_qualified": true
+        },
+        "scope": "同一公开仿真单风道机组的正常/风阀卡滞/盘管阀泄漏候选；不能外推为真实楼宇定位。",
+        "supporting_evidence": [
+          "混风热响应在750分钟窗口偏离同指令正常参考，支持风阀卡滞候选。"
+        ],
+        "mode": {
+          "economizer_with_mechanical_enable": 25,
+          "mechanical_or_minimum_air": 900,
+          "off": 485,
+          "startup": 30
+        }
+      }
+    }
+  ],
+  "final": {
+    "confidence": null,
+    "support_score": null,
+    "score_note": "确定性证据规则；无未经校准的故障概率。",
+    "label": "damper_stuck",
+    "status": "supported",
+    "name": "风阀卡滞候选",
+    "detail": "存在持续的指令—混风热响应矛盾，形成风阀卡滞候选；需现场核实传感器及执行器，未使用实测阀位。",
+    "support_evidence": [
+      "混风热响应在750分钟窗口偏离同指令正常参考，支持风阀卡滞候选。"
+    ],
+    "refuting_evidence": [],
+    "next_actions": [
+      {
+        "action": "coil_response",
+        "text": "核查稳定关阀时段",
+        "type": "data_query",
+        "query_cost": 1
+      }
+    ],
+    "windows": [
+      {
+        "action": "air_path",
+        "start": "2018-06-06T06:35:00",
+        "end": "2018-06-06T07:00:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 1.0,
+        "inferred_mix_fraction": 0.679727,
+        "reference_low": 0.869393,
+        "reference_high": 1.035175,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T09:40:00",
+        "end": "2018-06-06T10:05:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.668679,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T10:10:00",
+        "end": "2018-06-06T10:35:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.668034,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T10:40:00",
+        "end": "2018-06-06T11:05:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.669602,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T11:10:00",
+        "end": "2018-06-06T11:35:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.673054,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T11:40:00",
+        "end": "2018-06-06T12:05:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.673164,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T12:10:00",
+        "end": "2018-06-06T12:35:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.672602,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T12:40:00",
+        "end": "2018-06-06T13:05:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.672792,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T13:10:00",
+        "end": "2018-06-06T13:35:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.674322,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T13:40:00",
+        "end": "2018-06-06T14:05:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.674356,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T14:10:00",
+        "end": "2018-06-06T14:35:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.674261,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T14:40:00",
+        "end": "2018-06-06T15:05:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.674297,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T15:10:00",
+        "end": "2018-06-06T15:35:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.674438,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T15:40:00",
+        "end": "2018-06-06T16:05:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.674465,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T16:10:00",
+        "end": "2018-06-06T16:35:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.677692,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T16:40:00",
+        "end": "2018-06-06T17:05:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.677929,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T17:10:00",
+        "end": "2018-06-06T17:35:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.676703,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T17:40:00",
+        "end": "2018-06-06T18:05:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.676754,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T18:10:00",
+        "end": "2018-06-06T18:35:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.67896,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T18:40:00",
+        "end": "2018-06-06T19:05:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.679336,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T19:10:00",
+        "end": "2018-06-06T19:35:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.677589,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T19:40:00",
+        "end": "2018-06-06T20:05:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.677807,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T20:10:00",
+        "end": "2018-06-06T20:35:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.672585,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T20:40:00",
+        "end": "2018-06-06T21:05:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.672739,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "air_path",
+        "start": "2018-06-06T21:10:00",
+        "end": "2018-06-06T21:35:00",
+        "minutes": 30,
+        "samples": 6,
+        "command": 0.1,
+        "inferred_mix_fraction": 0.673986,
+        "reference_low": -0.016737,
+        "reference_high": 0.060479,
+        "compatible_fraction": 0.0,
+        "mismatch_fraction": 1.0,
+        "state": "mismatch"
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T06:35:00",
+        "end": "2018-06-06T07:00:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.794965
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T07:05:00",
+        "end": "2018-06-06T07:30:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.79231
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T07:35:00",
+        "end": "2018-06-06T08:00:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.79165
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T08:05:00",
+        "end": "2018-06-06T08:30:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.791405
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T08:35:00",
+        "end": "2018-06-06T09:00:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.79139
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T09:05:00",
+        "end": "2018-06-06T09:30:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.7914
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T09:35:00",
+        "end": "2018-06-06T10:00:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.7914
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T10:05:00",
+        "end": "2018-06-06T10:30:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.7914
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T10:35:00",
+        "end": "2018-06-06T11:00:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.7914
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T11:05:00",
+        "end": "2018-06-06T11:30:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.7914
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T11:35:00",
+        "end": "2018-06-06T12:00:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.7914
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T12:05:00",
+        "end": "2018-06-06T12:30:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.7914
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T12:35:00",
+        "end": "2018-06-06T13:00:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.817425
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T13:05:00",
+        "end": "2018-06-06T13:30:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.821985
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T13:35:00",
+        "end": "2018-06-06T14:00:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.82159
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T14:05:00",
+        "end": "2018-06-06T14:30:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.80037
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T14:35:00",
+        "end": "2018-06-06T15:00:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.79504
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T15:05:00",
+        "end": "2018-06-06T15:30:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.795095
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T15:35:00",
+        "end": "2018-06-06T16:00:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.795185
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T16:05:00",
+        "end": "2018-06-06T16:30:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.79519
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T16:35:00",
+        "end": "2018-06-06T17:00:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.79519
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T17:05:00",
+        "end": "2018-06-06T17:30:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.79519
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T17:35:00",
+        "end": "2018-06-06T18:00:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.79519
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T18:05:00",
+        "end": "2018-06-06T18:30:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.79519
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T18:35:00",
+        "end": "2018-06-06T19:00:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.79519
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T19:05:00",
+        "end": "2018-06-06T19:30:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.79519
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T19:35:00",
+        "end": "2018-06-06T20:00:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.81481
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T20:05:00",
+        "end": "2018-06-06T20:30:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.82179
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T20:35:00",
+        "end": "2018-06-06T21:00:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.82162
+      },
+      {
+        "action": "operating_context",
+        "start": "2018-06-06T21:05:00",
+        "end": "2018-06-06T21:30:00",
+        "minutes": 30,
+        "samples": 6,
+        "fan_command": 0.821495
+      }
+    ],
+    "current_mode": {
+      "economizer_with_mechanical_enable": 25,
+      "mechanical_or_minimum_air": 900,
+      "off": 485,
+      "startup": 30
+    },
+    "rule_evidence": {
+      "air_response": "stuck_candidate",
+      "coil_response": "unknown",
+      "context_qualified": true
+    },
+    "scope": "同一公开仿真单风道机组的正常/风阀卡滞/盘管阀泄漏候选；不能外推为真实楼宇定位。",
+    "supporting_evidence": [
+      "混风热响应在750分钟窗口偏离同指令正常参考，支持风阀卡滞候选。"
+    ],
+    "mode": {
+      "economizer_with_mechanical_enable": 25,
+      "mechanical_or_minimum_air": 900,
+      "off": 485,
+      "startup": 30
+    },
+    "quality": {
+      "status": "passed",
+      "label": "记录检查通过",
+      "issues": [],
+      "duplicates": 0,
+      "missing": 0,
+      "missing_fraction": 0.0,
+      "rows": 288,
+      "valid_schema": true,
+      "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+    },
+    "operation": {
+      "confidence": null,
+      "support_score": null,
+      "score_note": "确定性证据规则；无未经校准的故障概率。",
+      "label": "damper_stuck",
+      "status": "supported",
+      "name": "风阀卡滞候选",
+      "detail": "存在持续的指令—混风热响应矛盾，形成风阀卡滞候选；需现场核实传感器及执行器，未使用实测阀位。",
+      "support_evidence": [
+        "混风热响应在750分钟窗口偏离同指令正常参考，支持风阀卡滞候选。"
+      ],
+      "refuting_evidence": [],
+      "next_actions": [
+        {
+          "action": "coil_response",
+          "text": "核查稳定关阀时段",
+          "type": "data_query",
+          "query_cost": 1
+        }
+      ],
+      "windows": [
+        {
+          "action": "air_path",
+          "start": "2018-06-06T06:35:00",
+          "end": "2018-06-06T07:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 1.0,
+          "inferred_mix_fraction": 0.679727,
+          "reference_low": 0.869393,
+          "reference_high": 1.035175,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T09:40:00",
+          "end": "2018-06-06T10:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.668679,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T10:10:00",
+          "end": "2018-06-06T10:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.668034,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T10:40:00",
+          "end": "2018-06-06T11:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.669602,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T11:10:00",
+          "end": "2018-06-06T11:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.673054,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T11:40:00",
+          "end": "2018-06-06T12:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.673164,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T12:10:00",
+          "end": "2018-06-06T12:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.672602,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T12:40:00",
+          "end": "2018-06-06T13:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.672792,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T13:10:00",
+          "end": "2018-06-06T13:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.674322,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T13:40:00",
+          "end": "2018-06-06T14:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.674356,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T14:10:00",
+          "end": "2018-06-06T14:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.674261,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T14:40:00",
+          "end": "2018-06-06T15:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.674297,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T15:10:00",
+          "end": "2018-06-06T15:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.674438,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T15:40:00",
+          "end": "2018-06-06T16:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.674465,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T16:10:00",
+          "end": "2018-06-06T16:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.677692,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T16:40:00",
+          "end": "2018-06-06T17:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.677929,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T17:10:00",
+          "end": "2018-06-06T17:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.676703,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T17:40:00",
+          "end": "2018-06-06T18:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.676754,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T18:10:00",
+          "end": "2018-06-06T18:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.67896,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T18:40:00",
+          "end": "2018-06-06T19:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.679336,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T19:10:00",
+          "end": "2018-06-06T19:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.677589,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T19:40:00",
+          "end": "2018-06-06T20:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.677807,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T20:10:00",
+          "end": "2018-06-06T20:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.672585,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T20:40:00",
+          "end": "2018-06-06T21:05:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.672739,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "air_path",
+          "start": "2018-06-06T21:10:00",
+          "end": "2018-06-06T21:35:00",
+          "minutes": 30,
+          "samples": 6,
+          "command": 0.1,
+          "inferred_mix_fraction": 0.673986,
+          "reference_low": -0.016737,
+          "reference_high": 0.060479,
+          "compatible_fraction": 0.0,
+          "mismatch_fraction": 1.0,
+          "state": "mismatch"
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T06:35:00",
+          "end": "2018-06-06T07:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.794965
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T07:05:00",
+          "end": "2018-06-06T07:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79231
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T07:35:00",
+          "end": "2018-06-06T08:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79165
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T08:05:00",
+          "end": "2018-06-06T08:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.791405
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T08:35:00",
+          "end": "2018-06-06T09:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79139
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T09:05:00",
+          "end": "2018-06-06T09:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.7914
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T09:35:00",
+          "end": "2018-06-06T10:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.7914
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T10:05:00",
+          "end": "2018-06-06T10:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.7914
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T10:35:00",
+          "end": "2018-06-06T11:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.7914
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T11:05:00",
+          "end": "2018-06-06T11:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.7914
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T11:35:00",
+          "end": "2018-06-06T12:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.7914
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T12:05:00",
+          "end": "2018-06-06T12:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.7914
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T12:35:00",
+          "end": "2018-06-06T13:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.817425
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T13:05:00",
+          "end": "2018-06-06T13:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.821985
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T13:35:00",
+          "end": "2018-06-06T14:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.82159
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T14:05:00",
+          "end": "2018-06-06T14:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.80037
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T14:35:00",
+          "end": "2018-06-06T15:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79504
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T15:05:00",
+          "end": "2018-06-06T15:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.795095
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T15:35:00",
+          "end": "2018-06-06T16:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.795185
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T16:05:00",
+          "end": "2018-06-06T16:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79519
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T16:35:00",
+          "end": "2018-06-06T17:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79519
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T17:05:00",
+          "end": "2018-06-06T17:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79519
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T17:35:00",
+          "end": "2018-06-06T18:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79519
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T18:05:00",
+          "end": "2018-06-06T18:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79519
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T18:35:00",
+          "end": "2018-06-06T19:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79519
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T19:05:00",
+          "end": "2018-06-06T19:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.79519
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T19:35:00",
+          "end": "2018-06-06T20:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.81481
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T20:05:00",
+          "end": "2018-06-06T20:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.82179
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T20:35:00",
+          "end": "2018-06-06T21:00:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.82162
+        },
+        {
+          "action": "operating_context",
+          "start": "2018-06-06T21:05:00",
+          "end": "2018-06-06T21:30:00",
+          "minutes": 30,
+          "samples": 6,
+          "fan_command": 0.821495
+        }
+      ],
+      "current_mode": {
+        "economizer_with_mechanical_enable": 25,
+        "mechanical_or_minimum_air": 900,
+        "off": 485,
+        "startup": 30
+      },
+      "rule_evidence": {
+        "air_response": "stuck_candidate",
+        "coil_response": "unknown",
+        "context_qualified": true
+      },
+      "scope": "同一公开仿真单风道机组的正常/风阀卡滞/盘管阀泄漏候选；不能外推为真实楼宇定位。",
+      "supporting_evidence": [
+        "混风热响应在750分钟窗口偏离同指令正常参考，支持风阀卡滞候选。"
+      ],
+      "mode": {
+        "economizer_with_mechanical_enable": 25,
+        "mechanical_or_minimum_air": 900,
+        "off": 485,
+        "startup": 30
+      }
+    }
+  },
+  "cost": {
+    "query_units": 3,
+    "field_acquisition_units": 0,
+    "latency_ms": 12.1726,
+    "model_calls": 0,
+    "end_to_end_ms": 13.835999881848693
+  },
+  "config": {
+    "available_evidence": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ],
+    "requested_budget": 4,
+    "budget": 4,
+    "complete_pool": false,
+    "selected_window": null
+  },
+  "repair": null,
+  "warnings": [],
+  "status": "completed",
+  "data_hash": "8d69a95d6ddb78d90a36fbbc37c7c0f7d94663b9819dbba021defe2ae5d9b003",
+  "method": "adaptive_rule",
+  "input_file_sha256": "da9e74ed8538593b6c76d0cabe21007bb72fcd20bfcb3ef4db736c495fb25b6f",
+  "freeze_sha256": "1e4cc5e5bf77bcbc2f7085cfceb8e66d9349897e8ea5d7a2b457caab51ceb48e"
+}

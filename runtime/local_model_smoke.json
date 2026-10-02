@@ -1,0 +1,39 @@
+{
+  "purpose": "interface_smoke_only_not_energy_validation",
+  "created_utc": "2026-09-30T09:29:10.161962+00:00",
+  "client_sha256": "fe57307fceb099efd27dbcc62b10046d46496d8e4d916c784d7fa0b340af4812",
+  "system_prompt_sha256": "946fb60651c94da50c27e635e9ea39ceeab50e619fd77520fc421ec109f75f54",
+  "request_payload": {
+    "purpose": "synthetic interface smoke test; not an energy dataset or performance evaluation",
+    "remaining_budget": {
+      "data_query": 2,
+      "site_acquisition": 0
+    },
+    "revealed_evidence": [
+      "No equipment feedback has been queried yet."
+    ],
+    "actions": {
+      "query_available_feedback": {
+        "description": "Query an already logged feedback channel.",
+        "data_query_cost": 1,
+        "site_acquisition_cost": 0
+      },
+      "stop_insufficient": {
+        "description": "Stop with insufficient evidence.",
+        "data_query_cost": 0,
+        "site_acquisition_cost": 0
+      }
+    }
+  },
+  "allowed_actions": [
+    "query_available_feedback",
+    "stop_insufficient"
+  ],
+  "result": {
+    "action": "query_available_feedback",
+    "reason": "No equipment feedback has been queried yet, and querying available feedback is the next logical step in the verification process.",
+    "latency_ms": 212.376,
+    "raw": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"action\\\": \\\"query_available_feedback\\\", \\\"reason\\\": \\\"No equipment feedback has been queried yet, and querying available feedback is the next logical step in the verification process.\\\"}\"}}],\"created\":1790760550,\"model\":\"nengzhihe-qwen3-4b-q4km\",\"system_fingerprint\":\"b11146-7fe450e19\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":36,\"prompt_tokens\":316,\"total_tokens\":352,\"prompt_tokens_details\":{\"cached_tokens\":0}},\"id\":\"chatcmpl-xcUQnXpRCLo5eHfS9Z6Uy1sM1sc2SBjT\",\"timings\":{\"cache_n\":0,\"prompt_n\":316,\"prompt_ms\":57.776,\"prompt_per_token_ms\":0.1828354430379747,\"prompt_per_second\":5469.399058432567,\"predicted_n\":36,\"predicted_ms\":123.331,\"predicted_per_token_ms\":3.523742857142857,\"predicted_per_second\":283.78915276775507}}",
+    "response_valid": true
+  }
+}

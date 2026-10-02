@@ -1,0 +1,590 @@
+[
+  {
+    "id": "NZH-CD3572559FF2",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-CD3572559FF2.json"
+  },
+  {
+    "id": "NZH-7793C4D6A005",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-7793C4D6A005.json"
+  },
+  {
+    "id": "NZH-AEEE5AC0D409",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-AEEE5AC0D409.json"
+  },
+  {
+    "id": "NZH-793C6886FB1B",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-793C6886FB1B.json"
+  },
+  {
+    "id": "NZH-78E32954EE01",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-78E32954EE01.json"
+  },
+  {
+    "id": "NZH-11511CAD08E9",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-11511CAD08E9.json"
+  },
+  {
+    "id": "NZH-6C7195C246DD",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-6C7195C246DD.json"
+  },
+  {
+    "id": "NZH-56BD5E768BC4",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-56BD5E768BC4.json"
+  },
+  {
+    "id": "NZH-F33AE77B7E2A",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-F33AE77B7E2A.json"
+  },
+  {
+    "id": "NZH-9508779EDB2F",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-9508779EDB2F.json"
+  },
+  {
+    "id": "NZH-0FB7E7737273",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-0FB7E7737273.json"
+  },
+  {
+    "id": "NZH-974A0771072A",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-974A0771072A.json"
+  },
+  {
+    "id": "NZH-E5A72AD87F14",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-E5A72AD87F14.json"
+  },
+  {
+    "id": "NZH-09B07D15CD52",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-09B07D15CD52.json"
+  },
+  {
+    "id": "NZH-840814A7385E",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-840814A7385E.json"
+  },
+  {
+    "id": "NZH-E36FB5B68C8A",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-E36FB5B68C8A.json"
+  },
+  {
+    "id": "NZH-84428C37A805",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-84428C37A805.json"
+  },
+  {
+    "id": "NZH-E0F0B9E287BC",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-E0F0B9E287BC.json"
+  },
+  {
+    "id": "NZH-FA8C086D8A04",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-FA8C086D8A04.json"
+  },
+  {
+    "id": "NZH-9541898E02DD",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-9541898E02DD.json"
+  },
+  {
+    "id": "NZH-FF360B107907",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-FF360B107907.json"
+  },
+  {
+    "id": "NZH-D511D886A70B",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-D511D886A70B.json"
+  },
+  {
+    "id": "NZH-5287CA438EB4",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-5287CA438EB4.json"
+  },
+  {
+    "id": "NZH-561EF07C8E79",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-561EF07C8E79.json"
+  },
+  {
+    "id": "NZH-26FA7FB33D60",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-26FA7FB33D60.json"
+  },
+  {
+    "id": "NZH-803235884737",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-803235884737.json"
+  },
+  {
+    "id": "NZH-9ADECAB0DE99",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-9ADECAB0DE99.json"
+  },
+  {
+    "id": "NZH-C78F75E78625",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-C78F75E78625.json"
+  },
+  {
+    "id": "NZH-C3F197FB725B",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-C3F197FB725B.json"
+  },
+  {
+    "id": "NZH-C3E39552A84D",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-C3E39552A84D.json"
+  },
+  {
+    "id": "NZH-0DCE5526AFCF",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-0DCE5526AFCF.json"
+  },
+  {
+    "id": "NZH-42D53754C70C",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-42D53754C70C.json"
+  },
+  {
+    "id": "NZH-40330547115D",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-40330547115D.json"
+  },
+  {
+    "id": "NZH-0B2FC7D59767",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-0B2FC7D59767.json"
+  },
+  {
+    "id": "NZH-E4D911DE2129",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-E4D911DE2129.json"
+  },
+  {
+    "id": "NZH-2196861214D4",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-2196861214D4.json"
+  },
+  {
+    "id": "NZH-A3E7324BABA0",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-A3E7324BABA0.json"
+  },
+  {
+    "id": "NZH-5AA09FB01728",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-5AA09FB01728.json"
+  },
+  {
+    "id": "NZH-37D2C56DBDFC",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-37D2C56DBDFC.json"
+  },
+  {
+    "id": "NZH-CFF90C730686",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-CFF90C730686.json"
+  },
+  {
+    "id": "NZH-A455D02AFAAD",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/private/holdout_cases/NZH-A455D02AFAAD.json"
+  },
+  {
+    "id": "NZH-0CBEA29F5D20",
+    "split": "holdout",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/private/holdout_cases/NZH-0CBEA29F5D20.json"
+  }
+]

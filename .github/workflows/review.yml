@@ -1,0 +1,38 @@
+name: Stage review checks
+on:
+  push:
+    branches: [main]
+    tags: ['*-review-*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: round3/requirements.txt
+      - name: Install current workbench dependencies
+        run: python -m pip install -r round3/requirements.txt
+      - name: Check repository files and links
+        run: python tools/check_repository.py
+      - name: Reproduce round3 in an isolated directory
+        run: python tools/verify_round3.py
+      - name: Upload actual check receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: round3-review-checks
+          include-hidden-files: true
+          path: |
+            .review-work/latest.json
+            .review-work/*/logs/
+          retention-days: 30

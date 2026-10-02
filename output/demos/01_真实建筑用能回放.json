@@ -1,0 +1,291 @@
+{
+  "run_id": "4560b7202eeb431c",
+  "case_id": "NZH-CFF0E57369E1",
+  "strategy": "fixed",
+  "strategy_label": "固定流程",
+  "budget": 4,
+  "family": "bdg2",
+  "origin": "measured",
+  "perturbation": {
+    "type": "none",
+    "origin": "none",
+    "description": "无额外人为扰动；保留原始缺测。"
+  },
+  "repair": null,
+  "initial_summary": {
+    "record_rows": 840,
+    "duplicate_records": 0,
+    "measurement_type": "measured_building_meter",
+    "note": "No equipment fault labels; building replay cannot identify a device root cause."
+  },
+  "steps": [
+    {
+      "index": 1,
+      "action": "quality",
+      "label": "核查记录完整性",
+      "reason": "所有策略共享并计费的记录完整性检查；数据问题与设备疑点可并存。",
+      "cost": 1,
+      "latency_ms": 0.134,
+      "selection_latency_ms": 0,
+      "evidence": [
+        {
+          "label": "重复记录",
+          "value": 0,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-CFF0E57369E1 / quality / duplicates"
+        },
+        {
+          "label": "缺失比例",
+          "value": 0.0,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-CFF0E57369E1 / quality / missing_fraction"
+        },
+        {
+          "label": "记录条数",
+          "value": 840,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-CFF0E57369E1 / quality / rows"
+        }
+      ],
+      "features": {
+        "duplicates": 0,
+        "missing_fraction": 0.0,
+        "rows": 840
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "building_review",
+        "name": "建筑用能变化待核查",
+        "status": "needs_review",
+        "detail": "实测建筑回放仅提供用能变化线索；没有设备点位和故障真值，不能定位设备故障。"
+      },
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 840,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      }
+    },
+    {
+      "index": 2,
+      "action": "air_path",
+      "label": "核查混风与风阀指令",
+      "reason": "按开发阶段冻结的固定核验顺序查询。",
+      "cost": 1,
+      "latency_ms": 7.707,
+      "selection_latency_ms": 0,
+      "evidence": [
+        {
+          "label": "mean_meter_kwh",
+          "value": 39.690036,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-CFF0E57369E1 / air_path / mean_meter_kwh"
+        },
+        {
+          "label": "p90_meter_kwh",
+          "value": 41.0479,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-CFF0E57369E1 / air_path / p90_meter_kwh"
+        },
+        {
+          "label": "outdoor_temperature_mean_C",
+          "value": 24.346429,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-CFF0E57369E1 / air_path / outdoor_temperature_mean_C"
+        },
+        {
+          "label": "meter_weather_correlation",
+          "value": 0.104471,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-CFF0E57369E1 / air_path / meter_weather_correlation"
+        }
+      ],
+      "features": {
+        "mean_meter_kwh": 39.690036,
+        "p90_meter_kwh": 41.0479,
+        "outdoor_temperature_mean_C": 24.346429,
+        "meter_weather_correlation": 0.104471
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "building_review",
+        "name": "建筑用能变化待核查",
+        "status": "needs_review",
+        "detail": "实测建筑回放仅提供用能变化线索；没有设备点位和故障真值，不能定位设备故障。"
+      },
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 840,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      }
+    },
+    {
+      "index": 3,
+      "action": "coil_response",
+      "label": "核查盘管热响应",
+      "reason": "按开发阶段冻结的固定核验顺序查询。",
+      "cost": 1,
+      "latency_ms": 0.142,
+      "selection_latency_ms": 0,
+      "evidence": [
+        {
+          "label": "mean_reference_kwh",
+          "value": 37.240757,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-CFF0E57369E1 / coil_response / mean_reference_kwh"
+        },
+        {
+          "label": "mean_abs_reference_difference_kwh",
+          "value": 3.060824,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-CFF0E57369E1 / coil_response / mean_abs_reference_difference_kwh"
+        },
+        {
+          "label": "mean_signed_reference_difference_kwh",
+          "value": 2.449279,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-CFF0E57369E1 / coil_response / mean_signed_reference_difference_kwh"
+        }
+      ],
+      "features": {
+        "mean_reference_kwh": 37.240757,
+        "mean_abs_reference_difference_kwh": 3.060824,
+        "mean_signed_reference_difference_kwh": 2.449279
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "building_review",
+        "name": "建筑用能变化待核查",
+        "status": "needs_review",
+        "detail": "实测建筑回放仅提供用能变化线索；没有设备点位和故障真值，不能定位设备故障。"
+      },
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 840,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      }
+    },
+    {
+      "index": 4,
+      "action": "operating_context",
+      "label": "核查运行与区域温度",
+      "reason": "按开发阶段冻结的固定核验顺序查询。",
+      "cost": 1,
+      "latency_ms": 0.143,
+      "selection_latency_ms": 0,
+      "evidence": [
+        {
+          "label": "observed_kwh",
+          "value": 6667.9261,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-CFF0E57369E1 / operating_context / observed_kwh"
+        },
+        {
+          "label": "positive_reference_difference_kwh",
+          "value": 462.84865,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-CFF0E57369E1 / operating_context / positive_reference_difference_kwh"
+        },
+        {
+          "label": "sample_count",
+          "value": 168,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-CFF0E57369E1 / operating_context / sample_count"
+        }
+      ],
+      "features": {
+        "observed_kwh": 6667.9261,
+        "positive_reference_difference_kwh": 462.84865,
+        "sample_count": 168
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "building_review",
+        "name": "建筑用能变化待核查",
+        "status": "needs_review",
+        "detail": "实测建筑回放仅提供用能变化线索；没有设备点位和故障真值，不能定位设备故障。"
+      },
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 840,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      }
+    }
+  ],
+  "final": {
+    "confidence": null,
+    "support_score": null,
+    "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+    "label": "building_review",
+    "name": "建筑用能变化待核查",
+    "status": "needs_review",
+    "detail": "实测建筑回放仅提供用能变化线索；没有设备点位和故障真值，不能定位设备故障。",
+    "quality": {
+      "status": "passed",
+      "label": "记录检查通过",
+      "issues": [],
+      "duplicates": 0,
+      "missing": 0,
+      "missing_fraction": 0.0,
+      "rows": 840,
+      "valid_schema": true,
+      "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+    },
+    "operation": {
+      "confidence": null,
+      "support_score": null,
+      "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+      "label": "building_review",
+      "name": "建筑用能变化待核查",
+      "status": "needs_review",
+      "detail": "实测建筑回放仅提供用能变化线索；没有设备点位和故障真值，不能定位设备故障。"
+    }
+  },
+  "cost": {
+    "query_units": 4,
+    "field_acquisition_units": 0,
+    "latency_ms": 8.862,
+    "model_calls": 0,
+    "model_latency_ms": 0,
+    "cost_note": "查询单位是离线实验记账，不等于现场采集费用或实际人民币成本。"
+  },
+  "warnings": [
+    "实测建筑回放没有设备故障真值；结果不能用于证明真实楼宇故障定位或实际节能收益。",
+    "本案例采用确定性统计回放，不参与主动补证策略性能比较。正向基线差额不是已实现节能量。"
+  ],
+  "model_calls": [],
+  "summary": "实测建筑回放仅提供用能变化线索；没有设备点位和故障真值，不能定位设备故障。",
+  "data_hash": "227770650113288b9fc28e644ef7f2227cd02cfd3c899ffa9ad9b8f6f4b3e1fe",
+  "status": "completed"
+}

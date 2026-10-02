@@ -1,0 +1,13 @@
+{
+  "version": "round2-dates-declared-before-new-payload-inspection",
+  "development_blocks": [["2018-05-07", "2018-05-13"], ["2018-05-21", "2018-05-27"]],
+  "final_blocks": [["2018-06-04", "2018-06-10"], ["2018-07-09", "2018-07-15"]],
+  "sources": ["AHU_annual.csv", "damper_stuck_025_annual.csv", "damper_stuck_075_annual.csv", "coi_leakage_025_annual.csv"],
+  "variants": ["none", "duplicate_records_12"],
+  "grouping": "All source fault classes, severities and artificial perturbations for a date stay in the same split. No random window split.",
+  "old_42_status": "development_and_regression_only",
+  "public_demos": "Existing BDG2, normal SDAHU and duplicate-corrupted SDAHU demos retained; never counted as final evaluation.",
+  "scope": "Same simulated SDAHU system, new-date temporal holdout only. Neither cross-equipment nor real-building fault validation.",
+  "expected_each_new_split": {"date_blocks": 14, "base_day_scenarios": 56, "paired_records": 112},
+  "final_access_rule": "Preparation process may serialize and seal; no diagnostic development reads or summarizes final sensor values or labels. After all code/thresholds/metrics frozen, evaluation writes predictions before labels are read."
+}

@@ -1,0 +1,945 @@
+{
+  "note": "Development and demonstration checks only, not held-out performance.",
+  "results": [
+    {
+      "id": "NZH-53F45186C216",
+      "split": "dev",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "unresolved",
+        "name": "证据不足",
+        "status": "inactive",
+        "detail": "去重后有效风机运行不足60分钟；缺乏足够设备响应，不从停机记录推断正常或故障。",
+        "quality": {
+          "status": "passed",
+          "label": "记录检查通过",
+          "issues": [],
+          "duplicates": 0,
+          "missing": 0,
+          "missing_fraction": 0.0,
+          "rows": 288,
+          "valid_schema": true,
+          "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+        },
+        "operation": {
+          "confidence": null,
+          "support_score": null,
+          "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+          "label": "unresolved",
+          "name": "证据不足",
+          "status": "inactive",
+          "detail": "去重后有效风机运行不足60分钟；缺乏足够设备响应，不从停机记录推断正常或故障。"
+        }
+      },
+      "cost": {
+        "query_units": 4,
+        "field_acquisition_units": 0,
+        "latency_ms": 32.298,
+        "model_calls": 0,
+        "model_latency_ms": 0,
+        "cost_note": "查询单位是离线实验记账，不等于现场采集费用或实际人民币成本。"
+      }
+    },
+    {
+      "id": "NZH-7C6AFE50C963",
+      "split": "dev",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "normal",
+        "name": "正常工况",
+        "status": "supported",
+        "rule_evidence": {
+          "air_response": "responsive",
+          "coil_response": "no_leak_evidence"
+        },
+        "thresholds": {
+          "mix_std_boundary": 0.060753,
+          "mix_correlation_boundary": 0.624152,
+          "closed_drop_boundary_C": -0.120259
+        },
+        "detail": "混风比例随风阀指令响应，未见本规则定义的卡滞证据。 零冷阀指令时温降处于正常开发参考一侧。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。",
+        "quality": {
+          "status": "passed",
+          "label": "记录检查通过",
+          "issues": [],
+          "duplicates": 0,
+          "missing": 0,
+          "missing_fraction": 0.0,
+          "rows": 288,
+          "valid_schema": true,
+          "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+        },
+        "operation": {
+          "confidence": null,
+          "support_score": null,
+          "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+          "label": "normal",
+          "name": "正常工况",
+          "status": "supported",
+          "rule_evidence": {
+            "air_response": "responsive",
+            "coil_response": "no_leak_evidence"
+          },
+          "thresholds": {
+            "mix_std_boundary": 0.060753,
+            "mix_correlation_boundary": 0.624152,
+            "closed_drop_boundary_C": -0.120259
+          },
+          "detail": "混风比例随风阀指令响应，未见本规则定义的卡滞证据。 零冷阀指令时温降处于正常开发参考一侧。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+        }
+      },
+      "cost": {
+        "query_units": 4,
+        "field_acquisition_units": 0,
+        "latency_ms": 2.37,
+        "model_calls": 0,
+        "model_latency_ms": 0,
+        "cost_note": "查询单位是离线实验记账，不等于现场采集费用或实际人民币成本。"
+      }
+    },
+    {
+      "id": "NZH-1C8F1B2AFDF5",
+      "split": "dev",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "normal",
+        "name": "正常工况",
+        "status": "supported",
+        "rule_evidence": {
+          "air_response": "responsive",
+          "coil_response": "no_leak_evidence"
+        },
+        "thresholds": {
+          "mix_std_boundary": 0.060753,
+          "mix_correlation_boundary": 0.624152,
+          "closed_drop_boundary_C": -0.120259
+        },
+        "detail": "混风比例随风阀指令响应，未见本规则定义的卡滞证据。 零冷阀指令时温降处于正常开发参考一侧。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。",
+        "quality": {
+          "status": "passed",
+          "label": "记录检查通过",
+          "issues": [],
+          "duplicates": 0,
+          "missing": 0,
+          "missing_fraction": 0.0,
+          "rows": 288,
+          "valid_schema": true,
+          "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+        },
+        "operation": {
+          "confidence": null,
+          "support_score": null,
+          "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+          "label": "normal",
+          "name": "正常工况",
+          "status": "supported",
+          "rule_evidence": {
+            "air_response": "responsive",
+            "coil_response": "no_leak_evidence"
+          },
+          "thresholds": {
+            "mix_std_boundary": 0.060753,
+            "mix_correlation_boundary": 0.624152,
+            "closed_drop_boundary_C": -0.120259
+          },
+          "detail": "混风比例随风阀指令响应，未见本规则定义的卡滞证据。 零冷阀指令时温降处于正常开发参考一侧。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+        }
+      },
+      "cost": {
+        "query_units": 4,
+        "field_acquisition_units": 0,
+        "latency_ms": 1.987,
+        "model_calls": 0,
+        "model_latency_ms": 0,
+        "cost_note": "查询单位是离线实验记账，不等于现场采集费用或实际人民币成本。"
+      }
+    },
+    {
+      "id": "NZH-6EB35BB07FA1",
+      "split": "dev",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "normal",
+        "name": "正常工况",
+        "status": "supported",
+        "rule_evidence": {
+          "air_response": "responsive",
+          "coil_response": "no_leak_evidence"
+        },
+        "thresholds": {
+          "mix_std_boundary": 0.060753,
+          "mix_correlation_boundary": 0.624152,
+          "closed_drop_boundary_C": -0.120259
+        },
+        "detail": "混风比例随风阀指令响应，未见本规则定义的卡滞证据。 零冷阀指令时温降处于正常开发参考一侧。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。",
+        "quality": {
+          "status": "passed",
+          "label": "记录检查通过",
+          "issues": [],
+          "duplicates": 0,
+          "missing": 0,
+          "missing_fraction": 0.0,
+          "rows": 288,
+          "valid_schema": true,
+          "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+        },
+        "operation": {
+          "confidence": null,
+          "support_score": null,
+          "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+          "label": "normal",
+          "name": "正常工况",
+          "status": "supported",
+          "rule_evidence": {
+            "air_response": "responsive",
+            "coil_response": "no_leak_evidence"
+          },
+          "thresholds": {
+            "mix_std_boundary": 0.060753,
+            "mix_correlation_boundary": 0.624152,
+            "closed_drop_boundary_C": -0.120259
+          },
+          "detail": "混风比例随风阀指令响应，未见本规则定义的卡滞证据。 零冷阀指令时温降处于正常开发参考一侧。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+        }
+      },
+      "cost": {
+        "query_units": 4,
+        "field_acquisition_units": 0,
+        "latency_ms": 1.994,
+        "model_calls": 0,
+        "model_latency_ms": 0,
+        "cost_note": "查询单位是离线实验记账，不等于现场采集费用或实际人民币成本。"
+      }
+    },
+    {
+      "id": "NZH-90C933F3C475",
+      "split": "demo",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "normal",
+        "name": "正常工况",
+        "status": "supported",
+        "rule_evidence": {
+          "air_response": "responsive",
+          "coil_response": "no_leak_evidence"
+        },
+        "thresholds": {
+          "mix_std_boundary": 0.060753,
+          "mix_correlation_boundary": 0.624152,
+          "closed_drop_boundary_C": -0.120259
+        },
+        "detail": "混风比例随风阀指令响应，未见本规则定义的卡滞证据。 零冷阀指令时温降处于正常开发参考一侧。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。",
+        "quality": {
+          "status": "passed",
+          "label": "记录检查通过",
+          "issues": [],
+          "duplicates": 0,
+          "missing": 0,
+          "missing_fraction": 0.0,
+          "rows": 288,
+          "valid_schema": true,
+          "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+        },
+        "operation": {
+          "confidence": null,
+          "support_score": null,
+          "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+          "label": "normal",
+          "name": "正常工况",
+          "status": "supported",
+          "rule_evidence": {
+            "air_response": "responsive",
+            "coil_response": "no_leak_evidence"
+          },
+          "thresholds": {
+            "mix_std_boundary": 0.060753,
+            "mix_correlation_boundary": 0.624152,
+            "closed_drop_boundary_C": -0.120259
+          },
+          "detail": "混风比例随风阀指令响应，未见本规则定义的卡滞证据。 零冷阀指令时温降处于正常开发参考一侧。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+        }
+      },
+      "cost": {
+        "query_units": 4,
+        "field_acquisition_units": 0,
+        "latency_ms": 2.069,
+        "model_calls": 0,
+        "model_latency_ms": 0,
+        "cost_note": "查询单位是离线实验记账，不等于现场采集费用或实际人民币成本。"
+      }
+    },
+    {
+      "id": "NZH-73479F740C6B",
+      "split": "dev",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "unresolved",
+        "name": "证据不足",
+        "status": "inactive",
+        "detail": "去重后有效风机运行不足60分钟；缺乏足够设备响应，不从停机记录推断正常或故障。",
+        "quality": {
+          "status": "passed",
+          "label": "记录检查通过",
+          "issues": [],
+          "duplicates": 0,
+          "missing": 0,
+          "missing_fraction": 0.0,
+          "rows": 288,
+          "valid_schema": true,
+          "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+        },
+        "operation": {
+          "confidence": null,
+          "support_score": null,
+          "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+          "label": "unresolved",
+          "name": "证据不足",
+          "status": "inactive",
+          "detail": "去重后有效风机运行不足60分钟；缺乏足够设备响应，不从停机记录推断正常或故障。"
+        }
+      },
+      "cost": {
+        "query_units": 4,
+        "field_acquisition_units": 0,
+        "latency_ms": 1.57,
+        "model_calls": 0,
+        "model_latency_ms": 0,
+        "cost_note": "查询单位是离线实验记账，不等于现场采集费用或实际人民币成本。"
+      }
+    },
+    {
+      "id": "NZH-87E9B8C44269",
+      "split": "dev",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "damper_stuck",
+        "name": "风阀卡滞候选",
+        "status": "supported",
+        "rule_evidence": {
+          "air_response": "stuck_candidate",
+          "coil_response": "unknown"
+        },
+        "thresholds": {
+          "mix_std_boundary": 0.060753,
+          "mix_correlation_boundary": 0.624152,
+          "closed_drop_boundary_C": -0.120259
+        },
+        "detail": "风阀指令变化而温度推算混风比例近乎不动，支持风阀卡滞疑点。 零冷阀指令有效时刻不足，不能据少量温降判断泄漏。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。",
+        "quality": {
+          "status": "passed",
+          "label": "记录检查通过",
+          "issues": [],
+          "duplicates": 0,
+          "missing": 0,
+          "missing_fraction": 0.0,
+          "rows": 288,
+          "valid_schema": true,
+          "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+        },
+        "operation": {
+          "confidence": null,
+          "support_score": null,
+          "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+          "label": "damper_stuck",
+          "name": "风阀卡滞候选",
+          "status": "supported",
+          "rule_evidence": {
+            "air_response": "stuck_candidate",
+            "coil_response": "unknown"
+          },
+          "thresholds": {
+            "mix_std_boundary": 0.060753,
+            "mix_correlation_boundary": 0.624152,
+            "closed_drop_boundary_C": -0.120259
+          },
+          "detail": "风阀指令变化而温度推算混风比例近乎不动，支持风阀卡滞疑点。 零冷阀指令有效时刻不足，不能据少量温降判断泄漏。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+        }
+      },
+      "cost": {
+        "query_units": 4,
+        "field_acquisition_units": 0,
+        "latency_ms": 2.074,
+        "model_calls": 0,
+        "model_latency_ms": 0,
+        "cost_note": "查询单位是离线实验记账，不等于现场采集费用或实际人民币成本。"
+      }
+    },
+    {
+      "id": "NZH-E9236C5845C5",
+      "split": "dev",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "damper_stuck",
+        "name": "风阀卡滞候选",
+        "status": "supported",
+        "rule_evidence": {
+          "air_response": "stuck_candidate",
+          "coil_response": "unknown"
+        },
+        "thresholds": {
+          "mix_std_boundary": 0.060753,
+          "mix_correlation_boundary": 0.624152,
+          "closed_drop_boundary_C": -0.120259
+        },
+        "detail": "风阀指令变化而温度推算混风比例近乎不动，支持风阀卡滞疑点。 零冷阀指令有效时刻不足，不能据少量温降判断泄漏。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。",
+        "quality": {
+          "status": "passed",
+          "label": "记录检查通过",
+          "issues": [],
+          "duplicates": 0,
+          "missing": 0,
+          "missing_fraction": 0.0,
+          "rows": 288,
+          "valid_schema": true,
+          "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+        },
+        "operation": {
+          "confidence": null,
+          "support_score": null,
+          "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+          "label": "damper_stuck",
+          "name": "风阀卡滞候选",
+          "status": "supported",
+          "rule_evidence": {
+            "air_response": "stuck_candidate",
+            "coil_response": "unknown"
+          },
+          "thresholds": {
+            "mix_std_boundary": 0.060753,
+            "mix_correlation_boundary": 0.624152,
+            "closed_drop_boundary_C": -0.120259
+          },
+          "detail": "风阀指令变化而温度推算混风比例近乎不动，支持风阀卡滞疑点。 零冷阀指令有效时刻不足，不能据少量温降判断泄漏。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+        }
+      },
+      "cost": {
+        "query_units": 4,
+        "field_acquisition_units": 0,
+        "latency_ms": 2.067,
+        "model_calls": 0,
+        "model_latency_ms": 0,
+        "cost_note": "查询单位是离线实验记账，不等于现场采集费用或实际人民币成本。"
+      }
+    },
+    {
+      "id": "NZH-622517528F39",
+      "split": "dev",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "damper_stuck",
+        "name": "风阀卡滞候选",
+        "status": "supported",
+        "rule_evidence": {
+          "air_response": "stuck_candidate",
+          "coil_response": "unknown"
+        },
+        "thresholds": {
+          "mix_std_boundary": 0.060753,
+          "mix_correlation_boundary": 0.624152,
+          "closed_drop_boundary_C": -0.120259
+        },
+        "detail": "风阀指令变化而温度推算混风比例近乎不动，支持风阀卡滞疑点。 零冷阀指令有效时刻不足，不能据少量温降判断泄漏。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。",
+        "quality": {
+          "status": "passed",
+          "label": "记录检查通过",
+          "issues": [],
+          "duplicates": 0,
+          "missing": 0,
+          "missing_fraction": 0.0,
+          "rows": 288,
+          "valid_schema": true,
+          "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+        },
+        "operation": {
+          "confidence": null,
+          "support_score": null,
+          "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+          "label": "damper_stuck",
+          "name": "风阀卡滞候选",
+          "status": "supported",
+          "rule_evidence": {
+            "air_response": "stuck_candidate",
+            "coil_response": "unknown"
+          },
+          "thresholds": {
+            "mix_std_boundary": 0.060753,
+            "mix_correlation_boundary": 0.624152,
+            "closed_drop_boundary_C": -0.120259
+          },
+          "detail": "风阀指令变化而温度推算混风比例近乎不动，支持风阀卡滞疑点。 零冷阀指令有效时刻不足，不能据少量温降判断泄漏。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+        }
+      },
+      "cost": {
+        "query_units": 4,
+        "field_acquisition_units": 0,
+        "latency_ms": 2.134,
+        "model_calls": 0,
+        "model_latency_ms": 0,
+        "cost_note": "查询单位是离线实验记账，不等于现场采集费用或实际人民币成本。"
+      }
+    },
+    {
+      "id": "NZH-76889C2BA896",
+      "split": "demo",
+      "quality": {
+        "status": "needs_review",
+        "label": "存在记录问题",
+        "issues": [
+          {
+            "code": "duplicate_timestamp",
+            "label": "时间戳重复",
+            "count": 12,
+            "detail": "仅能自动删除同一时间戳且所有通道值完全一致的重复记录。"
+          }
+        ],
+        "duplicates": 12,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 300,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "damper_stuck",
+        "name": "风阀卡滞候选",
+        "status": "supported",
+        "rule_evidence": {
+          "air_response": "stuck_candidate",
+          "coil_response": "unknown"
+        },
+        "thresholds": {
+          "mix_std_boundary": 0.060753,
+          "mix_correlation_boundary": 0.624152,
+          "closed_drop_boundary_C": -0.120259
+        },
+        "detail": "风阀指令变化而温度推算混风比例近乎不动，支持风阀卡滞疑点。 零冷阀指令有效时刻不足，不能据少量温降判断泄漏。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。",
+        "quality": {
+          "status": "needs_review",
+          "label": "存在记录问题",
+          "issues": [
+            {
+              "code": "duplicate_timestamp",
+              "label": "时间戳重复",
+              "count": 12,
+              "detail": "仅能自动删除同一时间戳且所有通道值完全一致的重复记录。"
+            }
+          ],
+          "duplicates": 12,
+          "missing": 0,
+          "missing_fraction": 0.0,
+          "rows": 300,
+          "valid_schema": true,
+          "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+        },
+        "operation": {
+          "confidence": null,
+          "support_score": null,
+          "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+          "label": "damper_stuck",
+          "name": "风阀卡滞候选",
+          "status": "supported",
+          "rule_evidence": {
+            "air_response": "stuck_candidate",
+            "coil_response": "unknown"
+          },
+          "thresholds": {
+            "mix_std_boundary": 0.060753,
+            "mix_correlation_boundary": 0.624152,
+            "closed_drop_boundary_C": -0.120259
+          },
+          "detail": "风阀指令变化而温度推算混风比例近乎不动，支持风阀卡滞疑点。 零冷阀指令有效时刻不足，不能据少量温降判断泄漏。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+        }
+      },
+      "cost": {
+        "query_units": 4,
+        "field_acquisition_units": 0,
+        "latency_ms": 2.457,
+        "model_calls": 0,
+        "model_latency_ms": 0,
+        "cost_note": "查询单位是离线实验记账，不等于现场采集费用或实际人民币成本。"
+      }
+    },
+    {
+      "id": "NZH-95AD7971DD55",
+      "split": "dev",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "unresolved",
+        "name": "证据不足",
+        "status": "inactive",
+        "detail": "去重后有效风机运行不足60分钟；缺乏足够设备响应，不从停机记录推断正常或故障。",
+        "quality": {
+          "status": "passed",
+          "label": "记录检查通过",
+          "issues": [],
+          "duplicates": 0,
+          "missing": 0,
+          "missing_fraction": 0.0,
+          "rows": 288,
+          "valid_schema": true,
+          "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+        },
+        "operation": {
+          "confidence": null,
+          "support_score": null,
+          "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+          "label": "unresolved",
+          "name": "证据不足",
+          "status": "inactive",
+          "detail": "去重后有效风机运行不足60分钟；缺乏足够设备响应，不从停机记录推断正常或故障。"
+        }
+      },
+      "cost": {
+        "query_units": 4,
+        "field_acquisition_units": 0,
+        "latency_ms": 1.528,
+        "model_calls": 0,
+        "model_latency_ms": 0,
+        "cost_note": "查询单位是离线实验记账，不等于现场采集费用或实际人民币成本。"
+      }
+    },
+    {
+      "id": "NZH-DCD5F6996123",
+      "split": "dev",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "coil_leakage",
+        "name": "盘管阀泄漏候选",
+        "status": "supported",
+        "rule_evidence": {
+          "air_response": "responsive",
+          "coil_response": "leak_candidate"
+        },
+        "thresholds": {
+          "mix_std_boundary": 0.060753,
+          "mix_correlation_boundary": 0.624152,
+          "closed_drop_boundary_C": -0.120259
+        },
+        "detail": "混风比例随风阀指令响应，未见本规则定义的卡滞证据。 足够零冷阀指令时段的温降偏离正常开发参考，支持盘管阀泄漏疑点。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。",
+        "quality": {
+          "status": "passed",
+          "label": "记录检查通过",
+          "issues": [],
+          "duplicates": 0,
+          "missing": 0,
+          "missing_fraction": 0.0,
+          "rows": 288,
+          "valid_schema": true,
+          "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+        },
+        "operation": {
+          "confidence": null,
+          "support_score": null,
+          "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+          "label": "coil_leakage",
+          "name": "盘管阀泄漏候选",
+          "status": "supported",
+          "rule_evidence": {
+            "air_response": "responsive",
+            "coil_response": "leak_candidate"
+          },
+          "thresholds": {
+            "mix_std_boundary": 0.060753,
+            "mix_correlation_boundary": 0.624152,
+            "closed_drop_boundary_C": -0.120259
+          },
+          "detail": "混风比例随风阀指令响应，未见本规则定义的卡滞证据。 足够零冷阀指令时段的温降偏离正常开发参考，支持盘管阀泄漏疑点。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+        }
+      },
+      "cost": {
+        "query_units": 4,
+        "field_acquisition_units": 0,
+        "latency_ms": 2.024,
+        "model_calls": 0,
+        "model_latency_ms": 0,
+        "cost_note": "查询单位是离线实验记账，不等于现场采集费用或实际人民币成本。"
+      }
+    },
+    {
+      "id": "NZH-872D57D19DFD",
+      "split": "dev",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "coil_leakage",
+        "name": "盘管阀泄漏候选",
+        "status": "supported",
+        "rule_evidence": {
+          "air_response": "responsive",
+          "coil_response": "leak_candidate"
+        },
+        "thresholds": {
+          "mix_std_boundary": 0.060753,
+          "mix_correlation_boundary": 0.624152,
+          "closed_drop_boundary_C": -0.120259
+        },
+        "detail": "混风比例随风阀指令响应，未见本规则定义的卡滞证据。 足够零冷阀指令时段的温降偏离正常开发参考，支持盘管阀泄漏疑点。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。",
+        "quality": {
+          "status": "passed",
+          "label": "记录检查通过",
+          "issues": [],
+          "duplicates": 0,
+          "missing": 0,
+          "missing_fraction": 0.0,
+          "rows": 288,
+          "valid_schema": true,
+          "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+        },
+        "operation": {
+          "confidence": null,
+          "support_score": null,
+          "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+          "label": "coil_leakage",
+          "name": "盘管阀泄漏候选",
+          "status": "supported",
+          "rule_evidence": {
+            "air_response": "responsive",
+            "coil_response": "leak_candidate"
+          },
+          "thresholds": {
+            "mix_std_boundary": 0.060753,
+            "mix_correlation_boundary": 0.624152,
+            "closed_drop_boundary_C": -0.120259
+          },
+          "detail": "混风比例随风阀指令响应，未见本规则定义的卡滞证据。 足够零冷阀指令时段的温降偏离正常开发参考，支持盘管阀泄漏疑点。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+        }
+      },
+      "cost": {
+        "query_units": 4,
+        "field_acquisition_units": 0,
+        "latency_ms": 2.056,
+        "model_calls": 0,
+        "model_latency_ms": 0,
+        "cost_note": "查询单位是离线实验记账，不等于现场采集费用或实际人民币成本。"
+      }
+    },
+    {
+      "id": "NZH-E90E7F14230F",
+      "split": "dev",
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "coil_leakage",
+        "name": "盘管阀泄漏候选",
+        "status": "supported",
+        "rule_evidence": {
+          "air_response": "responsive",
+          "coil_response": "leak_candidate"
+        },
+        "thresholds": {
+          "mix_std_boundary": 0.060753,
+          "mix_correlation_boundary": 0.624152,
+          "closed_drop_boundary_C": -0.120259
+        },
+        "detail": "混风比例随风阀指令响应，未见本规则定义的卡滞证据。 足够零冷阀指令时段的温降偏离正常开发参考，支持盘管阀泄漏疑点。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。",
+        "quality": {
+          "status": "passed",
+          "label": "记录检查通过",
+          "issues": [],
+          "duplicates": 0,
+          "missing": 0,
+          "missing_fraction": 0.0,
+          "rows": 288,
+          "valid_schema": true,
+          "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+        },
+        "operation": {
+          "confidence": null,
+          "support_score": null,
+          "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+          "label": "coil_leakage",
+          "name": "盘管阀泄漏候选",
+          "status": "supported",
+          "rule_evidence": {
+            "air_response": "responsive",
+            "coil_response": "leak_candidate"
+          },
+          "thresholds": {
+            "mix_std_boundary": 0.060753,
+            "mix_correlation_boundary": 0.624152,
+            "closed_drop_boundary_C": -0.120259
+          },
+          "detail": "混风比例随风阀指令响应，未见本规则定义的卡滞证据。 足够零冷阀指令时段的温降偏离正常开发参考，支持盘管阀泄漏疑点。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+        }
+      },
+      "cost": {
+        "query_units": 4,
+        "field_acquisition_units": 0,
+        "latency_ms": 2.097,
+        "model_calls": 0,
+        "model_latency_ms": 0,
+        "cost_note": "查询单位是离线实验记账，不等于现场采集费用或实际人民币成本。"
+      }
+    }
+  ]
+}

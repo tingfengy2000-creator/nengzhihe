@@ -1,0 +1,18 @@
+{
+  "verified_at_utc": "2026-09-30T09:40:51.064905+00:00",
+  "frozen_files_match": true,
+  "three_demo_entries": true,
+  "holdout_api_rejected": true,
+  "export_exactly_matches_saved_run": true,
+  "local_model_actual_ui_run": true,
+  "ui_run_id": "0d470b036d7d4735",
+  "ui_checks": [
+    "actual timeseries rendered",
+    "repair 300 to 288 while damper suspicion remains",
+    "local model demo returned three steps and normal verdict",
+    "primary and secondary results with unresolved denominator visible",
+    "no raw JSON in comparison page"
+  ],
+  "automated_contract_tests_passed": 8,
+  "note": "Browser checks were conducted through actual UI. Independent metric recheck is a separate artifact."
+}

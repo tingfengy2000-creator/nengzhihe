@@ -1,0 +1,7922 @@
+[
+  {
+    "case_id": "NZH2-3B1FB482754B",
+    "base_case_id": "NZH2-3B1FB482754B",
+    "day": "2018-06-08",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 10.40860009379685,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-3B1FB482754B",
+    "base_case_id": "NZH2-3B1FB482754B",
+    "day": "2018-06-08",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.57949995994568,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-3B1FB482754B",
+    "base_case_id": "NZH2-3B1FB482754B",
+    "day": "2018-06-08",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.991900073364377,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-3B1FB482754B",
+    "base_case_id": "NZH2-3B1FB482754B",
+    "day": "2018-06-08",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.208300160244107,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-A7EB664E3E5D",
+    "base_case_id": "NZH2-A7EB664E3E5D",
+    "day": "2018-06-09",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8939999863505363,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-A7EB664E3E5D",
+    "base_case_id": "NZH2-A7EB664E3E5D",
+    "day": "2018-06-09",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 18.54970003478229,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-A7EB664E3E5D",
+    "base_case_id": "NZH2-A7EB664E3E5D",
+    "day": "2018-06-09",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.364299898967147,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-A7EB664E3E5D",
+    "base_case_id": "NZH2-A7EB664E3E5D",
+    "day": "2018-06-09",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.211000012233853,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-020610C4AE2B",
+    "base_case_id": "NZH2-020610C4AE2B",
+    "day": "2018-06-05",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 2.0343998912721872,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-020610C4AE2B",
+    "base_case_id": "NZH2-020610C4AE2B",
+    "day": "2018-06-05",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.175600096583366,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-020610C4AE2B",
+    "base_case_id": "NZH2-020610C4AE2B",
+    "day": "2018-06-05",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.3767001144588,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-020610C4AE2B",
+    "base_case_id": "NZH2-020610C4AE2B",
+    "day": "2018-06-05",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.89499998651445,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-CA1F3C609785",
+    "base_case_id": "NZH2-CA1F3C609785",
+    "day": "2018-06-04",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 1.1811999138444662,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-CA1F3C609785",
+    "base_case_id": "NZH2-CA1F3C609785",
+    "day": "2018-06-04",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 14.666000148281455,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-CA1F3C609785",
+    "base_case_id": "NZH2-CA1F3C609785",
+    "day": "2018-06-04",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.412799840793014,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-CA1F3C609785",
+    "base_case_id": "NZH2-CA1F3C609785",
+    "day": "2018-06-04",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.248700104653835,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-D59E2E5B78A3",
+    "base_case_id": "NZH2-D59E2E5B78A3",
+    "day": "2018-07-12",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9351998344063759,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-D59E2E5B78A3",
+    "base_case_id": "NZH2-D59E2E5B78A3",
+    "day": "2018-07-12",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.309299997985363,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-D59E2E5B78A3",
+    "base_case_id": "NZH2-D59E2E5B78A3",
+    "day": "2018-07-12",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.085000036284328,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-D59E2E5B78A3",
+    "base_case_id": "NZH2-D59E2E5B78A3",
+    "day": "2018-07-12",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.608199898153543,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-3F8877DF2AF8",
+    "base_case_id": "NZH2-877B18044AF8",
+    "day": "2018-07-15",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.882100012153387,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-3F8877DF2AF8",
+    "base_case_id": "NZH2-877B18044AF8",
+    "day": "2018-07-15",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.11010011099279,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-3F8877DF2AF8",
+    "base_case_id": "NZH2-877B18044AF8",
+    "day": "2018-07-15",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.53350007534027,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-3F8877DF2AF8",
+    "base_case_id": "NZH2-877B18044AF8",
+    "day": "2018-07-15",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.4277999214828,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-891288077FEC",
+    "base_case_id": "NZH2-891288077FEC",
+    "day": "2018-07-15",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.7853998579084873,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-891288077FEC",
+    "base_case_id": "NZH2-891288077FEC",
+    "day": "2018-07-15",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.038999918848276,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-891288077FEC",
+    "base_case_id": "NZH2-891288077FEC",
+    "day": "2018-07-15",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.059900030493736,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-891288077FEC",
+    "base_case_id": "NZH2-891288077FEC",
+    "day": "2018-07-15",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.084699986502528,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-C0A45F730F67",
+    "base_case_id": "NZH2-E130C5108164",
+    "day": "2018-07-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9306999165564775,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-C0A45F730F67",
+    "base_case_id": "NZH2-E130C5108164",
+    "day": "2018-07-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.520599998533726,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-C0A45F730F67",
+    "base_case_id": "NZH2-E130C5108164",
+    "day": "2018-07-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.601799918338656,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-C0A45F730F67",
+    "base_case_id": "NZH2-E130C5108164",
+    "day": "2018-07-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.570599913597107,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-E34434A653A4",
+    "base_case_id": "NZH2-E34434A653A4",
+    "day": "2018-07-11",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.858399948105216,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-E34434A653A4",
+    "base_case_id": "NZH2-E34434A653A4",
+    "day": "2018-07-11",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.355899956077337,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-E34434A653A4",
+    "base_case_id": "NZH2-E34434A653A4",
+    "day": "2018-07-11",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.080899957567453,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-E34434A653A4",
+    "base_case_id": "NZH2-E34434A653A4",
+    "day": "2018-07-11",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.59130011871457,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-3902981D4CBD",
+    "base_case_id": "NZH2-3902981D4CBD",
+    "day": "2018-07-12",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.7430000007152557,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-3902981D4CBD",
+    "base_case_id": "NZH2-3902981D4CBD",
+    "day": "2018-07-12",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 19.287600181996822,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-3902981D4CBD",
+    "base_case_id": "NZH2-3902981D4CBD",
+    "day": "2018-07-12",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.633799972012639,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-3902981D4CBD",
+    "base_case_id": "NZH2-3902981D4CBD",
+    "day": "2018-07-12",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.315800111740828,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-33D018B5668B",
+    "base_case_id": "NZH2-33D018B5668B",
+    "day": "2018-06-06",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9153000321239233,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-33D018B5668B",
+    "base_case_id": "NZH2-33D018B5668B",
+    "day": "2018-06-06",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.105599960312247,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-33D018B5668B",
+    "base_case_id": "NZH2-33D018B5668B",
+    "day": "2018-06-06",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.36190016567707,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-33D018B5668B",
+    "base_case_id": "NZH2-33D018B5668B",
+    "day": "2018-06-06",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.07969987951219,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-38EFAA4CD0D7",
+    "base_case_id": "NZH2-CA1F3C609785",
+    "day": "2018-06-04",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 1.2890000361949205,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-38EFAA4CD0D7",
+    "base_case_id": "NZH2-CA1F3C609785",
+    "day": "2018-06-04",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 15.587500063702464,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-38EFAA4CD0D7",
+    "base_case_id": "NZH2-CA1F3C609785",
+    "day": "2018-06-04",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.364099819213152,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-38EFAA4CD0D7",
+    "base_case_id": "NZH2-CA1F3C609785",
+    "day": "2018-06-04",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.829299869015813,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-9E1AFEB1C163",
+    "base_case_id": "NZH2-9E1AFEB1C163",
+    "day": "2018-06-07",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.824100036174059,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-9E1AFEB1C163",
+    "base_case_id": "NZH2-9E1AFEB1C163",
+    "day": "2018-06-07",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 18.843899946659803,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-9E1AFEB1C163",
+    "base_case_id": "NZH2-9E1AFEB1C163",
+    "day": "2018-06-07",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.553099939599633,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-9E1AFEB1C163",
+    "base_case_id": "NZH2-9E1AFEB1C163",
+    "day": "2018-06-07",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.397800037637353,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-8BBE4262EF4B",
+    "base_case_id": "NZH2-8BBE4262EF4B",
+    "day": "2018-06-10",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9078999757766724,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-8BBE4262EF4B",
+    "base_case_id": "NZH2-8BBE4262EF4B",
+    "day": "2018-06-10",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 18.791399896144867,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-8BBE4262EF4B",
+    "base_case_id": "NZH2-8BBE4262EF4B",
+    "day": "2018-06-10",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.64420005120337,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-8BBE4262EF4B",
+    "base_case_id": "NZH2-8BBE4262EF4B",
+    "day": "2018-06-10",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.633700087666512,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-5A237233984B",
+    "base_case_id": "NZH2-8EC44B73F95F",
+    "day": "2018-07-14",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8819000106304884,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-5A237233984B",
+    "base_case_id": "NZH2-8EC44B73F95F",
+    "day": "2018-07-14",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.504400039091706,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-5A237233984B",
+    "base_case_id": "NZH2-8EC44B73F95F",
+    "day": "2018-07-14",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 37.2252999804914,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-5A237233984B",
+    "base_case_id": "NZH2-8EC44B73F95F",
+    "day": "2018-07-14",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.593800021335483,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-BDE2FD749B0B",
+    "base_case_id": "NZH2-BDE2FD749B0B",
+    "day": "2018-06-08",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8712999299168587,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-BDE2FD749B0B",
+    "base_case_id": "NZH2-BDE2FD749B0B",
+    "day": "2018-06-08",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 18.790599890053272,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-BDE2FD749B0B",
+    "base_case_id": "NZH2-BDE2FD749B0B",
+    "day": "2018-06-08",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 14.124099863693118,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-BDE2FD749B0B",
+    "base_case_id": "NZH2-BDE2FD749B0B",
+    "day": "2018-06-08",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 14.06179997138679,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-7883AC93751D",
+    "base_case_id": "NZH2-46EA1D599E86",
+    "day": "2018-07-12",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8916998524218798,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-7883AC93751D",
+    "base_case_id": "NZH2-46EA1D599E86",
+    "day": "2018-07-12",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.610000075772405,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-7883AC93751D",
+    "base_case_id": "NZH2-46EA1D599E86",
+    "day": "2018-07-12",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.574900088831782,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-7883AC93751D",
+    "base_case_id": "NZH2-46EA1D599E86",
+    "day": "2018-07-12",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.02860007248819,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-AFA37864D55A",
+    "base_case_id": "NZH2-9F99935D8899",
+    "day": "2018-06-07",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9753000233322382,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-AFA37864D55A",
+    "base_case_id": "NZH2-9F99935D8899",
+    "day": "2018-06-07",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.668800126761198,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-AFA37864D55A",
+    "base_case_id": "NZH2-9F99935D8899",
+    "day": "2018-06-07",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.896200228482485,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-AFA37864D55A",
+    "base_case_id": "NZH2-9F99935D8899",
+    "day": "2018-06-07",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.509099889546633,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-CE26B223228F",
+    "base_case_id": "NZH2-CE26B223228F",
+    "day": "2018-06-06",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 1.8939001020044088,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-CE26B223228F",
+    "base_case_id": "NZH2-CE26B223228F",
+    "day": "2018-06-06",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 19.16739996522665,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-CE26B223228F",
+    "base_case_id": "NZH2-CE26B223228F",
+    "day": "2018-06-06",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 14.891700120642781,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-CE26B223228F",
+    "base_case_id": "NZH2-CE26B223228F",
+    "day": "2018-06-06",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 14.945500064641237,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-04E4E19F6C74",
+    "base_case_id": "NZH2-1B88FA54C2F2",
+    "day": "2018-06-07",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9951998256146908,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-04E4E19F6C74",
+    "base_case_id": "NZH2-1B88FA54C2F2",
+    "day": "2018-06-07",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.296000013127923,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-04E4E19F6C74",
+    "base_case_id": "NZH2-1B88FA54C2F2",
+    "day": "2018-06-07",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.413999980315566,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-04E4E19F6C74",
+    "base_case_id": "NZH2-1B88FA54C2F2",
+    "day": "2018-06-07",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.0894000697881,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-5C227024F79D",
+    "base_case_id": "NZH2-5C227024F79D",
+    "day": "2018-07-09",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 1.2656999751925468,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-5C227024F79D",
+    "base_case_id": "NZH2-5C227024F79D",
+    "day": "2018-07-09",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 15.729600097984076,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-5C227024F79D",
+    "base_case_id": "NZH2-5C227024F79D",
+    "day": "2018-07-09",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.4866998214274645,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-5C227024F79D",
+    "base_case_id": "NZH2-5C227024F79D",
+    "day": "2018-07-09",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.282699897885323,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-79628B019966",
+    "base_case_id": "NZH2-79628B019966",
+    "day": "2018-07-15",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.943300012499094,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-79628B019966",
+    "base_case_id": "NZH2-79628B019966",
+    "day": "2018-07-15",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.527100095525384,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-79628B019966",
+    "base_case_id": "NZH2-79628B019966",
+    "day": "2018-07-15",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.85749981738627,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-79628B019966",
+    "base_case_id": "NZH2-79628B019966",
+    "day": "2018-07-15",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.31689989194274,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-75F6BA6F6E87",
+    "base_case_id": "NZH2-75F6BA6F6E87",
+    "day": "2018-06-10",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.799499848857522,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-75F6BA6F6E87",
+    "base_case_id": "NZH2-75F6BA6F6E87",
+    "day": "2018-06-10",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.95409992337227,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-75F6BA6F6E87",
+    "base_case_id": "NZH2-75F6BA6F6E87",
+    "day": "2018-06-10",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 30.20440018735826,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-75F6BA6F6E87",
+    "base_case_id": "NZH2-75F6BA6F6E87",
+    "day": "2018-06-10",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.420000026002526,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-8EC44B73F95F",
+    "base_case_id": "NZH2-8EC44B73F95F",
+    "day": "2018-07-14",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9755000248551369,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-8EC44B73F95F",
+    "base_case_id": "NZH2-8EC44B73F95F",
+    "day": "2018-07-14",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.971500055864453,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-8EC44B73F95F",
+    "base_case_id": "NZH2-8EC44B73F95F",
+    "day": "2018-07-14",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.260299926623702,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-8EC44B73F95F",
+    "base_case_id": "NZH2-8EC44B73F95F",
+    "day": "2018-07-14",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.44999992661178,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-4F583F0C8638",
+    "base_case_id": "NZH2-F94F05EB1C6F",
+    "day": "2018-07-13",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9048000685870647,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-4F583F0C8638",
+    "base_case_id": "NZH2-F94F05EB1C6F",
+    "day": "2018-07-13",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.359400030225515,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-4F583F0C8638",
+    "base_case_id": "NZH2-F94F05EB1C6F",
+    "day": "2018-07-13",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.637799985706806,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-4F583F0C8638",
+    "base_case_id": "NZH2-F94F05EB1C6F",
+    "day": "2018-07-13",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.802400143817067,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-F8104962EDBA",
+    "base_case_id": "NZH2-F8104962EDBA",
+    "day": "2018-07-14",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9219000823795795,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-F8104962EDBA",
+    "base_case_id": "NZH2-F8104962EDBA",
+    "day": "2018-07-14",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 17.749799881130457,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-F8104962EDBA",
+    "base_case_id": "NZH2-F8104962EDBA",
+    "day": "2018-07-14",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 12.750399997457862,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-F8104962EDBA",
+    "base_case_id": "NZH2-F8104962EDBA",
+    "day": "2018-07-14",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 12.801700038835406,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-83CA56DFAF4F",
+    "base_case_id": "NZH2-47D1BAEAE4AC",
+    "day": "2018-06-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9072999712079763,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-83CA56DFAF4F",
+    "base_case_id": "NZH2-47D1BAEAE4AC",
+    "day": "2018-06-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.967099953442812,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-83CA56DFAF4F",
+    "base_case_id": "NZH2-47D1BAEAE4AC",
+    "day": "2018-06-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.560600001364946,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-83CA56DFAF4F",
+    "base_case_id": "NZH2-47D1BAEAE4AC",
+    "day": "2018-06-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.28920003026724,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-234FB3E11026",
+    "base_case_id": "NZH2-2B10BA7D658B",
+    "day": "2018-07-11",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8874001689255238,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-234FB3E11026",
+    "base_case_id": "NZH2-2B10BA7D658B",
+    "day": "2018-07-11",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 18.77199998125434,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-234FB3E11026",
+    "base_case_id": "NZH2-2B10BA7D658B",
+    "day": "2018-07-11",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.6160000693053,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-234FB3E11026",
+    "base_case_id": "NZH2-2B10BA7D658B",
+    "day": "2018-07-11",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.387699844315648,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-BA3E5D8AC077",
+    "base_case_id": "NZH2-BDE2FD749B0B",
+    "day": "2018-06-08",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9668000750243664,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-BA3E5D8AC077",
+    "base_case_id": "NZH2-BDE2FD749B0B",
+    "day": "2018-06-08",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 19.896999932825565,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-BA3E5D8AC077",
+    "base_case_id": "NZH2-BDE2FD749B0B",
+    "day": "2018-06-08",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 14.169200090691447,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-BA3E5D8AC077",
+    "base_case_id": "NZH2-BDE2FD749B0B",
+    "day": "2018-06-08",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 14.034599997103214,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-75B46DD3C3CD",
+    "base_case_id": "NZH2-420EF0E0C05C",
+    "day": "2018-07-13",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 2.053799806162715,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-75B46DD3C3CD",
+    "base_case_id": "NZH2-420EF0E0C05C",
+    "day": "2018-07-13",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.635000033304095,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-75B46DD3C3CD",
+    "base_case_id": "NZH2-420EF0E0C05C",
+    "day": "2018-07-13",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.941899925470352,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-75B46DD3C3CD",
+    "base_case_id": "NZH2-420EF0E0C05C",
+    "day": "2018-07-13",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.474000204354525,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-161F7F86A733",
+    "base_case_id": "NZH2-EB6E54CFEBAC",
+    "day": "2018-06-07",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8871999345719814,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-161F7F86A733",
+    "base_case_id": "NZH2-EB6E54CFEBAC",
+    "day": "2018-06-07",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.409099826589227,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-161F7F86A733",
+    "base_case_id": "NZH2-EB6E54CFEBAC",
+    "day": "2018-06-07",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 31.79979999549687,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-161F7F86A733",
+    "base_case_id": "NZH2-EB6E54CFEBAC",
+    "day": "2018-06-07",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.218800123780966,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-BB1B1032E7BE",
+    "base_case_id": "NZH2-BB1B1032E7BE",
+    "day": "2018-06-08",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 2.0498998928815126,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-BB1B1032E7BE",
+    "base_case_id": "NZH2-BB1B1032E7BE",
+    "day": "2018-06-08",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.009699812158942,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-BB1B1032E7BE",
+    "base_case_id": "NZH2-BB1B1032E7BE",
+    "day": "2018-06-08",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.334299955517054,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-BB1B1032E7BE",
+    "base_case_id": "NZH2-BB1B1032E7BE",
+    "day": "2018-06-08",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.200399914756417,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-291E67A29FA5",
+    "base_case_id": "NZH2-2469535CC676",
+    "day": "2018-07-11",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 2.1928998176008463,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-291E67A29FA5",
+    "base_case_id": "NZH2-2469535CC676",
+    "day": "2018-07-11",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.936200067400932,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-291E67A29FA5",
+    "base_case_id": "NZH2-2469535CC676",
+    "day": "2018-07-11",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.69649991951883,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-291E67A29FA5",
+    "base_case_id": "NZH2-2469535CC676",
+    "day": "2018-07-11",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.0851001534611,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-0E09873C5F24",
+    "base_case_id": "NZH2-3697FE8148DA",
+    "day": "2018-06-05",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9509999547153711,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-0E09873C5F24",
+    "base_case_id": "NZH2-3697FE8148DA",
+    "day": "2018-06-05",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 19.231499871239066,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-0E09873C5F24",
+    "base_case_id": "NZH2-3697FE8148DA",
+    "day": "2018-06-05",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 14.100899919867516,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-0E09873C5F24",
+    "base_case_id": "NZH2-3697FE8148DA",
+    "day": "2018-06-05",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 14.200699981302023,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-EB6E54CFEBAC",
+    "base_case_id": "NZH2-EB6E54CFEBAC",
+    "day": "2018-06-07",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.7901998944580555,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-EB6E54CFEBAC",
+    "base_case_id": "NZH2-EB6E54CFEBAC",
+    "day": "2018-06-07",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.312500022351742,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-EB6E54CFEBAC",
+    "base_case_id": "NZH2-EB6E54CFEBAC",
+    "day": "2018-06-07",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.78649997524917,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-EB6E54CFEBAC",
+    "base_case_id": "NZH2-EB6E54CFEBAC",
+    "day": "2018-06-07",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.23440000973642,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-2C0F05A4B454",
+    "base_case_id": "NZH2-2C0F05A4B454",
+    "day": "2018-07-10",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8700999207794666,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-2C0F05A4B454",
+    "base_case_id": "NZH2-2C0F05A4B454",
+    "day": "2018-07-10",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.25889991596341,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-2C0F05A4B454",
+    "base_case_id": "NZH2-2C0F05A4B454",
+    "day": "2018-07-10",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.21169995330274,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-2C0F05A4B454",
+    "base_case_id": "NZH2-2C0F05A4B454",
+    "day": "2018-07-10",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.924899933859706,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-D844B11A96C1",
+    "base_case_id": "NZH2-D59E2E5B78A3",
+    "day": "2018-07-12",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8726000562310219,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-D844B11A96C1",
+    "base_case_id": "NZH2-D59E2E5B78A3",
+    "day": "2018-07-12",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.5335000064224,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-D844B11A96C1",
+    "base_case_id": "NZH2-D59E2E5B78A3",
+    "day": "2018-07-12",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.072799874469638,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-D844B11A96C1",
+    "base_case_id": "NZH2-D59E2E5B78A3",
+    "day": "2018-07-12",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.485400058329105,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-F94F05EB1C6F",
+    "base_case_id": "NZH2-F94F05EB1C6F",
+    "day": "2018-07-13",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9278000108897686,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-F94F05EB1C6F",
+    "base_case_id": "NZH2-F94F05EB1C6F",
+    "day": "2018-07-13",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.501400180161,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-F94F05EB1C6F",
+    "base_case_id": "NZH2-F94F05EB1C6F",
+    "day": "2018-07-13",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 32.267099944874644,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-F94F05EB1C6F",
+    "base_case_id": "NZH2-F94F05EB1C6F",
+    "day": "2018-07-13",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.486800068989396,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-1E0081F23A39",
+    "base_case_id": "NZH2-1E0081F23A39",
+    "day": "2018-07-10",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8511998932808638,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-1E0081F23A39",
+    "base_case_id": "NZH2-1E0081F23A39",
+    "day": "2018-07-10",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.95880007557571,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-1E0081F23A39",
+    "base_case_id": "NZH2-1E0081F23A39",
+    "day": "2018-07-10",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.369699897244573,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-1E0081F23A39",
+    "base_case_id": "NZH2-1E0081F23A39",
+    "day": "2018-07-10",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.469200072810054,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-5EE5C8622479",
+    "base_case_id": "NZH2-5EE5C8622479",
+    "day": "2018-06-09",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9310000352561474,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-5EE5C8622479",
+    "base_case_id": "NZH2-5EE5C8622479",
+    "day": "2018-06-09",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.160999985411763,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-5EE5C8622479",
+    "base_case_id": "NZH2-5EE5C8622479",
+    "day": "2018-06-09",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.086500000208616,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-5EE5C8622479",
+    "base_case_id": "NZH2-5EE5C8622479",
+    "day": "2018-06-09",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.05650000460446,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-74BD1597814F",
+    "base_case_id": "NZH2-3902981D4CBD",
+    "day": "2018-07-12",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9155999179929495,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-74BD1597814F",
+    "base_case_id": "NZH2-3902981D4CBD",
+    "day": "2018-07-12",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 19.235000014305115,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-74BD1597814F",
+    "base_case_id": "NZH2-3902981D4CBD",
+    "day": "2018-07-12",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 14.47529997676611,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-74BD1597814F",
+    "base_case_id": "NZH2-3902981D4CBD",
+    "day": "2018-07-12",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 14.300300041213632,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-57BCB726E502",
+    "base_case_id": "NZH2-57BCB726E502",
+    "day": "2018-06-05",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 1.8608998507261276,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-57BCB726E502",
+    "base_case_id": "NZH2-57BCB726E502",
+    "day": "2018-06-05",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 18.886800156906247,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-57BCB726E502",
+    "base_case_id": "NZH2-57BCB726E502",
+    "day": "2018-06-05",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.478999957442284,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-57BCB726E502",
+    "base_case_id": "NZH2-57BCB726E502",
+    "day": "2018-06-05",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.889600057154894,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-6F6B66627EDB",
+    "base_case_id": "NZH2-6F6B66627EDB",
+    "day": "2018-07-11",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.998799853026867,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-6F6B66627EDB",
+    "base_case_id": "NZH2-6F6B66627EDB",
+    "day": "2018-07-11",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.56160000897944,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-6F6B66627EDB",
+    "base_case_id": "NZH2-6F6B66627EDB",
+    "day": "2018-07-11",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.557999981567264,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-6F6B66627EDB",
+    "base_case_id": "NZH2-6F6B66627EDB",
+    "day": "2018-07-11",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.423600122332573,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-9EA8B56575C0",
+    "base_case_id": "NZH2-3B1FB482754B",
+    "day": "2018-06-08",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 2.088000066578388,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-9EA8B56575C0",
+    "base_case_id": "NZH2-3B1FB482754B",
+    "day": "2018-06-08",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.492100225761533,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-9EA8B56575C0",
+    "base_case_id": "NZH2-3B1FB482754B",
+    "day": "2018-06-08",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.61179985664785,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-9EA8B56575C0",
+    "base_case_id": "NZH2-3B1FB482754B",
+    "day": "2018-06-08",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.76469997316599,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-54076E94A45C",
+    "base_case_id": "NZH2-F7D859956DAB",
+    "day": "2018-07-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.922900089994073,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-54076E94A45C",
+    "base_case_id": "NZH2-F7D859956DAB",
+    "day": "2018-07-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.399200005456805,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-54076E94A45C",
+    "base_case_id": "NZH2-F7D859956DAB",
+    "day": "2018-07-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.80460006557405,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-54076E94A45C",
+    "base_case_id": "NZH2-F7D859956DAB",
+    "day": "2018-07-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.99519988708198,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-62EA95C64926",
+    "base_case_id": "NZH2-5EE5C8622479",
+    "day": "2018-06-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 2.1030998323112726,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-62EA95C64926",
+    "base_case_id": "NZH2-5EE5C8622479",
+    "day": "2018-06-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.122199922800064,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-62EA95C64926",
+    "base_case_id": "NZH2-5EE5C8622479",
+    "day": "2018-06-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.545799888670444,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-62EA95C64926",
+    "base_case_id": "NZH2-5EE5C8622479",
+    "day": "2018-06-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.89670011587441,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-0488CE76FEE1",
+    "base_case_id": "NZH2-5C89D19F8121",
+    "day": "2018-06-05",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 2.2946998942643404,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-0488CE76FEE1",
+    "base_case_id": "NZH2-5C89D19F8121",
+    "day": "2018-06-05",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.71579995006323,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-0488CE76FEE1",
+    "base_case_id": "NZH2-5C89D19F8121",
+    "day": "2018-06-05",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.657099852338433,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-0488CE76FEE1",
+    "base_case_id": "NZH2-5C89D19F8121",
+    "day": "2018-06-05",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.870299914851785,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-4438B76CC7CA",
+    "base_case_id": "NZH2-CB776332844A",
+    "day": "2018-06-04",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 1.2097000144422054,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-4438B76CC7CA",
+    "base_case_id": "NZH2-CB776332844A",
+    "day": "2018-06-04",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 15.333699993789196,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-4438B76CC7CA",
+    "base_case_id": "NZH2-CB776332844A",
+    "day": "2018-06-04",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.374100128188729,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-4438B76CC7CA",
+    "base_case_id": "NZH2-CB776332844A",
+    "day": "2018-06-04",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.273799946531653,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-CB776332844A",
+    "base_case_id": "NZH2-CB776332844A",
+    "day": "2018-06-04",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 1.209199894219637,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-CB776332844A",
+    "base_case_id": "NZH2-CB776332844A",
+    "day": "2018-06-04",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 15.548000112175941,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-CB776332844A",
+    "base_case_id": "NZH2-CB776332844A",
+    "day": "2018-06-04",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.171599866822362,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-CB776332844A",
+    "base_case_id": "NZH2-CB776332844A",
+    "day": "2018-06-04",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.301999928429723,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-AAE87F6C6F43",
+    "base_case_id": "NZH2-AAE87F6C6F43",
+    "day": "2018-06-06",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 2.088900189846754,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-AAE87F6C6F43",
+    "base_case_id": "NZH2-AAE87F6C6F43",
+    "day": "2018-06-06",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.306600093841553,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-AAE87F6C6F43",
+    "base_case_id": "NZH2-AAE87F6C6F43",
+    "day": "2018-06-06",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.72749992273748,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-AAE87F6C6F43",
+    "base_case_id": "NZH2-AAE87F6C6F43",
+    "day": "2018-06-06",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.748700015246868,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-3697FE8148DA",
+    "base_case_id": "NZH2-3697FE8148DA",
+    "day": "2018-06-05",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8444000743329525,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-3697FE8148DA",
+    "base_case_id": "NZH2-3697FE8148DA",
+    "day": "2018-06-05",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 18.359600100666285,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-3697FE8148DA",
+    "base_case_id": "NZH2-3697FE8148DA",
+    "day": "2018-06-05",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 14.518700074404478,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-3697FE8148DA",
+    "base_case_id": "NZH2-3697FE8148DA",
+    "day": "2018-06-05",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.269900111481547,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-A2CFAC3DAF90",
+    "base_case_id": "NZH2-57BCB726E502",
+    "day": "2018-06-05",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 1.8480001017451286,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-A2CFAC3DAF90",
+    "base_case_id": "NZH2-57BCB726E502",
+    "day": "2018-06-05",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 19.732699962332845,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-A2CFAC3DAF90",
+    "base_case_id": "NZH2-57BCB726E502",
+    "day": "2018-06-05",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 14.602800132706761,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-A2CFAC3DAF90",
+    "base_case_id": "NZH2-57BCB726E502",
+    "day": "2018-06-05",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.511799974367023,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-9FBC82B89E28",
+    "base_case_id": "NZH2-9FBC82B89E28",
+    "day": "2018-06-08",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.823799917474389,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-9FBC82B89E28",
+    "base_case_id": "NZH2-9FBC82B89E28",
+    "day": "2018-06-08",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.677200121805072,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-9FBC82B89E28",
+    "base_case_id": "NZH2-9FBC82B89E28",
+    "day": "2018-06-08",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.034599816426635,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-9FBC82B89E28",
+    "base_case_id": "NZH2-9FBC82B89E28",
+    "day": "2018-06-08",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.107700023800135,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-EAA393ED8062",
+    "base_case_id": "NZH2-1E0081F23A39",
+    "day": "2018-07-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 2.1171998232603073,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-EAA393ED8062",
+    "base_case_id": "NZH2-1E0081F23A39",
+    "day": "2018-07-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.789999885484576,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-EAA393ED8062",
+    "base_case_id": "NZH2-1E0081F23A39",
+    "day": "2018-07-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.081000005826354,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-EAA393ED8062",
+    "base_case_id": "NZH2-1E0081F23A39",
+    "day": "2018-07-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.663600087165833,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-F559C7A07743",
+    "base_case_id": "NZH2-F559C7A07743",
+    "day": "2018-06-10",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8853000365197659,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-F559C7A07743",
+    "base_case_id": "NZH2-F559C7A07743",
+    "day": "2018-06-10",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.964099999517202,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-F559C7A07743",
+    "base_case_id": "NZH2-F559C7A07743",
+    "day": "2018-06-10",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.42199987731874,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-F559C7A07743",
+    "base_case_id": "NZH2-F559C7A07743",
+    "day": "2018-06-10",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.4388000741601,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-6244A2B2E58E",
+    "base_case_id": "NZH2-AAE87F6C6F43",
+    "day": "2018-06-06",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 2.5104000233113766,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-6244A2B2E58E",
+    "base_case_id": "NZH2-AAE87F6C6F43",
+    "day": "2018-06-06",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.906300120055676,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-6244A2B2E58E",
+    "base_case_id": "NZH2-AAE87F6C6F43",
+    "day": "2018-06-06",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.024399971589446,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-6244A2B2E58E",
+    "base_case_id": "NZH2-AAE87F6C6F43",
+    "day": "2018-06-06",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.950299989432096,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-C700E395C743",
+    "base_case_id": "NZH2-3D6F6EEDF281",
+    "day": "2018-07-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 1.281999982893467,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-C700E395C743",
+    "base_case_id": "NZH2-3D6F6EEDF281",
+    "day": "2018-07-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 16.18820009753108,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-C700E395C743",
+    "base_case_id": "NZH2-3D6F6EEDF281",
+    "day": "2018-07-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.237300017848611,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-C700E395C743",
+    "base_case_id": "NZH2-3D6F6EEDF281",
+    "day": "2018-07-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.390399903059006,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-2469535CC676",
+    "base_case_id": "NZH2-2469535CC676",
+    "day": "2018-07-11",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8149998504668474,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-2469535CC676",
+    "base_case_id": "NZH2-2469535CC676",
+    "day": "2018-07-11",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.333100015297532,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-2469535CC676",
+    "base_case_id": "NZH2-2469535CC676",
+    "day": "2018-07-11",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.42120010405779,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-2469535CC676",
+    "base_case_id": "NZH2-2469535CC676",
+    "day": "2018-07-11",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.454300006851554,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-D46756E4FBFB",
+    "base_case_id": "NZH2-020610C4AE2B",
+    "day": "2018-06-05",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 2.0029000006616116,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-D46756E4FBFB",
+    "base_case_id": "NZH2-020610C4AE2B",
+    "day": "2018-06-05",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.797899993136525,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-D46756E4FBFB",
+    "base_case_id": "NZH2-020610C4AE2B",
+    "day": "2018-06-05",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.590700045228004,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-D46756E4FBFB",
+    "base_case_id": "NZH2-020610C4AE2B",
+    "day": "2018-06-05",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.86680000461638,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-E403E63E723E",
+    "base_case_id": "NZH2-E403E63E723E",
+    "day": "2018-07-14",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 2.2046000231057405,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-E403E63E723E",
+    "base_case_id": "NZH2-E403E63E723E",
+    "day": "2018-07-14",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.130400080233812,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-E403E63E723E",
+    "base_case_id": "NZH2-E403E63E723E",
+    "day": "2018-07-14",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.50359986908734,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-E403E63E723E",
+    "base_case_id": "NZH2-E403E63E723E",
+    "day": "2018-07-14",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.444799982011318,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-7FA3071D0858",
+    "base_case_id": "NZH2-CE26B223228F",
+    "day": "2018-06-06",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 1.8827999010682106,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-7FA3071D0858",
+    "base_case_id": "NZH2-CE26B223228F",
+    "day": "2018-06-06",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 19.77050001733005,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-7FA3071D0858",
+    "base_case_id": "NZH2-CE26B223228F",
+    "day": "2018-06-06",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 14.782099984586239,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-7FA3071D0858",
+    "base_case_id": "NZH2-CE26B223228F",
+    "day": "2018-06-06",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 14.443899970501661,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-C655B4B4A5FF",
+    "base_case_id": "NZH2-610FF2C39357",
+    "day": "2018-07-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 1.2529001105576754,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-C655B4B4A5FF",
+    "base_case_id": "NZH2-610FF2C39357",
+    "day": "2018-07-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 15.717600006610155,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-C655B4B4A5FF",
+    "base_case_id": "NZH2-610FF2C39357",
+    "day": "2018-07-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.320899955928326,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-C655B4B4A5FF",
+    "base_case_id": "NZH2-610FF2C39357",
+    "day": "2018-07-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.21390007250011,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-75F5C21FDCE7",
+    "base_case_id": "NZH2-33D018B5668B",
+    "day": "2018-06-06",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.91730004735291,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-75F5C21FDCE7",
+    "base_case_id": "NZH2-33D018B5668B",
+    "day": "2018-06-06",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.2609000261873,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-75F5C21FDCE7",
+    "base_case_id": "NZH2-33D018B5668B",
+    "day": "2018-06-06",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.83320014551282,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-75F5C21FDCE7",
+    "base_case_id": "NZH2-33D018B5668B",
+    "day": "2018-06-06",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.15860006213188,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-2B10BA7D658B",
+    "base_case_id": "NZH2-2B10BA7D658B",
+    "day": "2018-07-11",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8470999784767628,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-2B10BA7D658B",
+    "base_case_id": "NZH2-2B10BA7D658B",
+    "day": "2018-07-11",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 18.27760017476976,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-2B10BA7D658B",
+    "base_case_id": "NZH2-2B10BA7D658B",
+    "day": "2018-07-11",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 12.811299879103899,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-2B10BA7D658B",
+    "base_case_id": "NZH2-2B10BA7D658B",
+    "day": "2018-07-11",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.225099770352244,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-E6AAC02D4090",
+    "base_case_id": "NZH2-E63488243D71",
+    "day": "2018-06-06",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 2.010200172662735,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-E6AAC02D4090",
+    "base_case_id": "NZH2-E63488243D71",
+    "day": "2018-06-06",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 21.196299931034446,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-E6AAC02D4090",
+    "base_case_id": "NZH2-E63488243D71",
+    "day": "2018-06-06",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.095499930903316,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-E6AAC02D4090",
+    "base_case_id": "NZH2-E63488243D71",
+    "day": "2018-06-06",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.198400132358074,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-877B18044AF8",
+    "base_case_id": "NZH2-877B18044AF8",
+    "day": "2018-07-15",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8138999585062265,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-877B18044AF8",
+    "base_case_id": "NZH2-877B18044AF8",
+    "day": "2018-07-15",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.944100011140108,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-877B18044AF8",
+    "base_case_id": "NZH2-877B18044AF8",
+    "day": "2018-07-15",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.267699982970953,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-877B18044AF8",
+    "base_case_id": "NZH2-877B18044AF8",
+    "day": "2018-07-15",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.35400005802512,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-A35CB5473842",
+    "base_case_id": "NZH2-AB6554EE3C69",
+    "day": "2018-07-12",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 2.0298000890761614,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-A35CB5473842",
+    "base_case_id": "NZH2-AB6554EE3C69",
+    "day": "2018-07-12",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.19320009276271,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-A35CB5473842",
+    "base_case_id": "NZH2-AB6554EE3C69",
+    "day": "2018-07-12",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.650200080126524,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-A35CB5473842",
+    "base_case_id": "NZH2-AB6554EE3C69",
+    "day": "2018-07-12",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.20409989543259,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-A1EA99F11F0C",
+    "base_case_id": "NZH2-6F6B66627EDB",
+    "day": "2018-07-11",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9090999849140644,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-A1EA99F11F0C",
+    "base_case_id": "NZH2-6F6B66627EDB",
+    "day": "2018-07-11",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.424700014293194,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-A1EA99F11F0C",
+    "base_case_id": "NZH2-6F6B66627EDB",
+    "day": "2018-07-11",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.997199833393097,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-A1EA99F11F0C",
+    "base_case_id": "NZH2-6F6B66627EDB",
+    "day": "2018-07-11",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.366899970918894,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-1B88FA54C2F2",
+    "base_case_id": "NZH2-1B88FA54C2F2",
+    "day": "2018-06-07",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.7529998440295458,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-1B88FA54C2F2",
+    "base_case_id": "NZH2-1B88FA54C2F2",
+    "day": "2018-06-07",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.69309996254742,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-1B88FA54C2F2",
+    "base_case_id": "NZH2-1B88FA54C2F2",
+    "day": "2018-06-07",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.24729999154806,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-1B88FA54C2F2",
+    "base_case_id": "NZH2-1B88FA54C2F2",
+    "day": "2018-06-07",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.2645998429507,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-8978D0F85A49",
+    "base_case_id": "NZH2-2DCCA26672FD",
+    "day": "2018-07-13",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 2.158900024369359,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-8978D0F85A49",
+    "base_case_id": "NZH2-2DCCA26672FD",
+    "day": "2018-07-13",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.435199908912182,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-8978D0F85A49",
+    "base_case_id": "NZH2-2DCCA26672FD",
+    "day": "2018-07-13",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.01939993351698,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-8978D0F85A49",
+    "base_case_id": "NZH2-2DCCA26672FD",
+    "day": "2018-07-13",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.18240007944405,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-71E66FE5E5B0",
+    "base_case_id": "NZH2-371F77DE73A3",
+    "day": "2018-07-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 1.3512999285012484,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-71E66FE5E5B0",
+    "base_case_id": "NZH2-371F77DE73A3",
+    "day": "2018-07-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 16.779999947175384,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-71E66FE5E5B0",
+    "base_case_id": "NZH2-371F77DE73A3",
+    "day": "2018-07-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.495499888435006,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-71E66FE5E5B0",
+    "base_case_id": "NZH2-371F77DE73A3",
+    "day": "2018-07-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.408800043165684,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-F7D859956DAB",
+    "base_case_id": "NZH2-F7D859956DAB",
+    "day": "2018-07-10",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.845699967816472,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-F7D859956DAB",
+    "base_case_id": "NZH2-F7D859956DAB",
+    "day": "2018-07-10",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.876500030979514,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-F7D859956DAB",
+    "base_case_id": "NZH2-F7D859956DAB",
+    "day": "2018-07-10",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.98969996161759,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-F7D859956DAB",
+    "base_case_id": "NZH2-F7D859956DAB",
+    "day": "2018-07-10",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.629699781537056,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-EAC0CFF58BA9",
+    "base_case_id": "NZH2-BB1B1032E7BE",
+    "day": "2018-06-08",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8956998828798532,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-EAC0CFF58BA9",
+    "base_case_id": "NZH2-BB1B1032E7BE",
+    "day": "2018-06-08",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.551000092178583,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-EAC0CFF58BA9",
+    "base_case_id": "NZH2-BB1B1032E7BE",
+    "day": "2018-06-08",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.283000146970153,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-EAC0CFF58BA9",
+    "base_case_id": "NZH2-BB1B1032E7BE",
+    "day": "2018-06-08",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.778600031509995,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-7D7F3DFAA7A0",
+    "base_case_id": "NZH2-7D7F3DFAA7A0",
+    "day": "2018-07-13",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.7999999690800905,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-7D7F3DFAA7A0",
+    "base_case_id": "NZH2-7D7F3DFAA7A0",
+    "day": "2018-07-13",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 19.498000154271722,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-7D7F3DFAA7A0",
+    "base_case_id": "NZH2-7D7F3DFAA7A0",
+    "day": "2018-07-13",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 14.36430006287992,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-7D7F3DFAA7A0",
+    "base_case_id": "NZH2-7D7F3DFAA7A0",
+    "day": "2018-07-13",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.758100103586912,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-83D3A9C42313",
+    "base_case_id": "NZH2-5E102A7F1003",
+    "day": "2018-06-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9863999914377928,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-83D3A9C42313",
+    "base_case_id": "NZH2-5E102A7F1003",
+    "day": "2018-06-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.52150005288422,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-83D3A9C42313",
+    "base_case_id": "NZH2-5E102A7F1003",
+    "day": "2018-06-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.381499918177724,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-83D3A9C42313",
+    "base_case_id": "NZH2-5E102A7F1003",
+    "day": "2018-06-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.60890001989901,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-47DF7820A2DE",
+    "base_case_id": "NZH2-47DF7820A2DE",
+    "day": "2018-06-04",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 1.2403998989611864,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-47DF7820A2DE",
+    "base_case_id": "NZH2-47DF7820A2DE",
+    "day": "2018-06-04",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 15.555799938738346,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-47DF7820A2DE",
+    "base_case_id": "NZH2-47DF7820A2DE",
+    "day": "2018-06-04",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.507699981331825,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-47DF7820A2DE",
+    "base_case_id": "NZH2-47DF7820A2DE",
+    "day": "2018-06-04",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.330799914896488,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-46EA1D599E86",
+    "base_case_id": "NZH2-46EA1D599E86",
+    "day": "2018-07-12",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8167998641729355,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-46EA1D599E86",
+    "base_case_id": "NZH2-46EA1D599E86",
+    "day": "2018-07-12",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.808599958196282,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-46EA1D599E86",
+    "base_case_id": "NZH2-46EA1D599E86",
+    "day": "2018-07-12",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.920699832960963,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-46EA1D599E86",
+    "base_case_id": "NZH2-46EA1D599E86",
+    "day": "2018-07-12",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.361900001764297,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-9F99935D8899",
+    "base_case_id": "NZH2-9F99935D8899",
+    "day": "2018-06-07",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8094000406563282,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-9F99935D8899",
+    "base_case_id": "NZH2-9F99935D8899",
+    "day": "2018-06-07",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.81520007736981,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-9F99935D8899",
+    "base_case_id": "NZH2-9F99935D8899",
+    "day": "2018-06-07",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.516400130465627,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-9F99935D8899",
+    "base_case_id": "NZH2-9F99935D8899",
+    "day": "2018-06-07",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.24630005285144,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-4464986E901E",
+    "base_case_id": "NZH2-9E1AFEB1C163",
+    "day": "2018-06-07",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8775002099573612,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-4464986E901E",
+    "base_case_id": "NZH2-9E1AFEB1C163",
+    "day": "2018-06-07",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 18.842999823391438,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-4464986E901E",
+    "base_case_id": "NZH2-9E1AFEB1C163",
+    "day": "2018-06-07",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.488800032064319,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-4464986E901E",
+    "base_case_id": "NZH2-9E1AFEB1C163",
+    "day": "2018-06-07",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.847900088876486,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-0703803D0669",
+    "base_case_id": "NZH2-D33CB100E4ED",
+    "day": "2018-07-14",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9083002116531134,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-0703803D0669",
+    "base_case_id": "NZH2-D33CB100E4ED",
+    "day": "2018-07-14",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.397900111973286,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-0703803D0669",
+    "base_case_id": "NZH2-D33CB100E4ED",
+    "day": "2018-07-14",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.95519981533289,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-0703803D0669",
+    "base_case_id": "NZH2-D33CB100E4ED",
+    "day": "2018-07-14",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.259599804878235,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-5C89D19F8121",
+    "base_case_id": "NZH2-5C89D19F8121",
+    "day": "2018-06-05",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8768999725580215,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-5C89D19F8121",
+    "base_case_id": "NZH2-5C89D19F8121",
+    "day": "2018-06-05",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.667399883270264,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-5C89D19F8121",
+    "base_case_id": "NZH2-5C89D19F8121",
+    "day": "2018-06-05",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.009199924767017,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-5C89D19F8121",
+    "base_case_id": "NZH2-5C89D19F8121",
+    "day": "2018-06-05",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.509600078687072,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-3FBD38E1EE97",
+    "base_case_id": "NZH2-3FBD38E1EE97",
+    "day": "2018-06-04",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 1.1858001817017794,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-3FBD38E1EE97",
+    "base_case_id": "NZH2-3FBD38E1EE97",
+    "day": "2018-06-04",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 14.640500070527196,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-3FBD38E1EE97",
+    "base_case_id": "NZH2-3FBD38E1EE97",
+    "day": "2018-06-04",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.436499904841185,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-3FBD38E1EE97",
+    "base_case_id": "NZH2-3FBD38E1EE97",
+    "day": "2018-06-04",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.192999796941876,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-E88B8FEFCB30",
+    "base_case_id": "NZH2-2C0F05A4B454",
+    "day": "2018-07-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9208001904189587,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-E88B8FEFCB30",
+    "base_case_id": "NZH2-2C0F05A4B454",
+    "day": "2018-07-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.608199967071414,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-E88B8FEFCB30",
+    "base_case_id": "NZH2-2C0F05A4B454",
+    "day": "2018-07-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.837299965322018,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-E88B8FEFCB30",
+    "base_case_id": "NZH2-2C0F05A4B454",
+    "day": "2018-07-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.903100000694394,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-47D1BAEAE4AC",
+    "base_case_id": "NZH2-47D1BAEAE4AC",
+    "day": "2018-06-09",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8618002068251371,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-47D1BAEAE4AC",
+    "base_case_id": "NZH2-47D1BAEAE4AC",
+    "day": "2018-06-09",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.995599890127778,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-47D1BAEAE4AC",
+    "base_case_id": "NZH2-47D1BAEAE4AC",
+    "day": "2018-06-09",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.935300013050437,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-47D1BAEAE4AC",
+    "base_case_id": "NZH2-47D1BAEAE4AC",
+    "day": "2018-06-09",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.057400058954954,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-4B48577B152F",
+    "base_case_id": "NZH2-7D7F3DFAA7A0",
+    "day": "2018-07-13",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.944500021636486,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-4B48577B152F",
+    "base_case_id": "NZH2-7D7F3DFAA7A0",
+    "day": "2018-07-13",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 20.567400148138404,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-4B48577B152F",
+    "base_case_id": "NZH2-7D7F3DFAA7A0",
+    "day": "2018-07-13",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 14.878100017085671,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-4B48577B152F",
+    "base_case_id": "NZH2-7D7F3DFAA7A0",
+    "day": "2018-07-13",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 14.815700007602572,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-A14BD46BA54D",
+    "base_case_id": "NZH2-5C227024F79D",
+    "day": "2018-07-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 1.2430001515895128,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-A14BD46BA54D",
+    "base_case_id": "NZH2-5C227024F79D",
+    "day": "2018-07-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 16.10749983228743,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-A14BD46BA54D",
+    "base_case_id": "NZH2-5C227024F79D",
+    "day": "2018-07-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.641900071874261,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-A14BD46BA54D",
+    "base_case_id": "NZH2-5C227024F79D",
+    "day": "2018-07-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.486299818381667,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-E130C5108164",
+    "base_case_id": "NZH2-E130C5108164",
+    "day": "2018-07-10",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8972998950630426,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-E130C5108164",
+    "base_case_id": "NZH2-E130C5108164",
+    "day": "2018-07-10",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.400600016117096,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-E130C5108164",
+    "base_case_id": "NZH2-E130C5108164",
+    "day": "2018-07-10",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.166099976748228,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-E130C5108164",
+    "base_case_id": "NZH2-E130C5108164",
+    "day": "2018-07-10",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.93009997345507,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-610FF2C39357",
+    "base_case_id": "NZH2-610FF2C39357",
+    "day": "2018-07-09",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 1.181500032544136,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-610FF2C39357",
+    "base_case_id": "NZH2-610FF2C39357",
+    "day": "2018-07-09",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 14.803400030359626,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-610FF2C39357",
+    "base_case_id": "NZH2-610FF2C39357",
+    "day": "2018-07-09",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.305899841710925,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-610FF2C39357",
+    "base_case_id": "NZH2-610FF2C39357",
+    "day": "2018-07-09",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.1646999306976795,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-420EF0E0C05C",
+    "base_case_id": "NZH2-420EF0E0C05C",
+    "day": "2018-07-13",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9580000080168247,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-420EF0E0C05C",
+    "base_case_id": "NZH2-420EF0E0C05C",
+    "day": "2018-07-13",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.112300127744675,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-420EF0E0C05C",
+    "base_case_id": "NZH2-420EF0E0C05C",
+    "day": "2018-07-13",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.82990007288754,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-420EF0E0C05C",
+    "base_case_id": "NZH2-420EF0E0C05C",
+    "day": "2018-07-13",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.762700026854873,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-70FFBFD2704B",
+    "base_case_id": "NZH2-E34434A653A4",
+    "day": "2018-07-11",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9065998494625092,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-70FFBFD2704B",
+    "base_case_id": "NZH2-E34434A653A4",
+    "day": "2018-07-11",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.11689999885857,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-70FFBFD2704B",
+    "base_case_id": "NZH2-E34434A653A4",
+    "day": "2018-07-11",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.706899834796786,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-70FFBFD2704B",
+    "base_case_id": "NZH2-E34434A653A4",
+    "day": "2018-07-11",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.10819998010993,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-7FBFA45339E4",
+    "base_case_id": "NZH2-9FBC82B89E28",
+    "day": "2018-06-08",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 2.0480998791754246,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-7FBFA45339E4",
+    "base_case_id": "NZH2-9FBC82B89E28",
+    "day": "2018-06-08",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.45360004901886,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-7FBFA45339E4",
+    "base_case_id": "NZH2-9FBC82B89E28",
+    "day": "2018-06-08",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.99569993838668,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-7FBFA45339E4",
+    "base_case_id": "NZH2-9FBC82B89E28",
+    "day": "2018-06-08",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.42240004427731,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-3BFB28EBBD9E",
+    "base_case_id": "NZH2-891288077FEC",
+    "day": "2018-07-15",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.7838000785559416,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-3BFB28EBBD9E",
+    "base_case_id": "NZH2-891288077FEC",
+    "day": "2018-07-15",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.73799995519221,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-3BFB28EBBD9E",
+    "base_case_id": "NZH2-891288077FEC",
+    "day": "2018-07-15",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.622000003233552,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-3BFB28EBBD9E",
+    "base_case_id": "NZH2-891288077FEC",
+    "day": "2018-07-15",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.847699975594878,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-0DE0F53D1F07",
+    "base_case_id": "NZH2-F8104962EDBA",
+    "day": "2018-07-14",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8210001289844513,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-0DE0F53D1F07",
+    "base_case_id": "NZH2-F8104962EDBA",
+    "day": "2018-07-14",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 17.55240000784397,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-0DE0F53D1F07",
+    "base_case_id": "NZH2-F8104962EDBA",
+    "day": "2018-07-14",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 12.489099986851215,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-0DE0F53D1F07",
+    "base_case_id": "NZH2-F8104962EDBA",
+    "day": "2018-07-14",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 12.837399961426854,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-35E96EEF4D9B",
+    "base_case_id": "NZH2-E403E63E723E",
+    "day": "2018-07-14",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8829999025911093,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-35E96EEF4D9B",
+    "base_case_id": "NZH2-E403E63E723E",
+    "day": "2018-07-14",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.85030006431043,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-35E96EEF4D9B",
+    "base_case_id": "NZH2-E403E63E723E",
+    "day": "2018-07-14",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.47269998304546,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-35E96EEF4D9B",
+    "base_case_id": "NZH2-E403E63E723E",
+    "day": "2018-07-14",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.932499991729856,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-C41837D35CC4",
+    "base_case_id": "NZH2-C41837D35CC4",
+    "day": "2018-07-15",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8093998078256845,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-C41837D35CC4",
+    "base_case_id": "NZH2-C41837D35CC4",
+    "day": "2018-07-15",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 18.00470007583499,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-C41837D35CC4",
+    "base_case_id": "NZH2-C41837D35CC4",
+    "day": "2018-07-15",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.35990009829402,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-C41837D35CC4",
+    "base_case_id": "NZH2-C41837D35CC4",
+    "day": "2018-07-15",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.053199974820018,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-20F4F8E88D54",
+    "base_case_id": "NZH2-A7EB664E3E5D",
+    "day": "2018-06-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 2.019300125539303,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-20F4F8E88D54",
+    "base_case_id": "NZH2-A7EB664E3E5D",
+    "day": "2018-06-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 18.56050011701882,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-20F4F8E88D54",
+    "base_case_id": "NZH2-A7EB664E3E5D",
+    "day": "2018-06-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 12.90019997395575,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-20F4F8E88D54",
+    "base_case_id": "NZH2-A7EB664E3E5D",
+    "day": "2018-06-09",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.521899934858084,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-D33CB100E4ED",
+    "base_case_id": "NZH2-D33CB100E4ED",
+    "day": "2018-07-14",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.826500054448843,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-D33CB100E4ED",
+    "base_case_id": "NZH2-D33CB100E4ED",
+    "day": "2018-07-14",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.204799922183156,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-D33CB100E4ED",
+    "base_case_id": "NZH2-D33CB100E4ED",
+    "day": "2018-07-14",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.725199926644564,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-D33CB100E4ED",
+    "base_case_id": "NZH2-D33CB100E4ED",
+    "day": "2018-07-14",
+    "perturbation": "none",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.9647000040859,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-DBBBC39C2E91",
+    "base_case_id": "NZH2-F559C7A07743",
+    "day": "2018-06-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8231000285595655,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-DBBBC39C2E91",
+    "base_case_id": "NZH2-F559C7A07743",
+    "day": "2018-06-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.58140015974641,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-DBBBC39C2E91",
+    "base_case_id": "NZH2-F559C7A07743",
+    "day": "2018-06-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.403800204396248,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-DBBBC39C2E91",
+    "base_case_id": "NZH2-F559C7A07743",
+    "day": "2018-06-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.03580005839467,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-3D6F6EEDF281",
+    "base_case_id": "NZH2-3D6F6EEDF281",
+    "day": "2018-07-09",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 1.2246000114828348,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-3D6F6EEDF281",
+    "base_case_id": "NZH2-3D6F6EEDF281",
+    "day": "2018-07-09",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 14.540100004523993,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-3D6F6EEDF281",
+    "base_case_id": "NZH2-3D6F6EEDF281",
+    "day": "2018-07-09",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.336100071668625,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-3D6F6EEDF281",
+    "base_case_id": "NZH2-3D6F6EEDF281",
+    "day": "2018-07-09",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.246300086379051,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-371F77DE73A3",
+    "base_case_id": "NZH2-371F77DE73A3",
+    "day": "2018-07-09",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 1.1792001314461231,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-371F77DE73A3",
+    "base_case_id": "NZH2-371F77DE73A3",
+    "day": "2018-07-09",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 14.79489984922111,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-371F77DE73A3",
+    "base_case_id": "NZH2-371F77DE73A3",
+    "day": "2018-07-09",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.22720005735755,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-371F77DE73A3",
+    "base_case_id": "NZH2-371F77DE73A3",
+    "day": "2018-07-09",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.241100046783686,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-A331C3BED247",
+    "base_case_id": "NZH2-3FBD38E1EE97",
+    "day": "2018-06-04",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 1.2191999703645706,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-A331C3BED247",
+    "base_case_id": "NZH2-3FBD38E1EE97",
+    "day": "2018-06-04",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 15.657000010833144,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-A331C3BED247",
+    "base_case_id": "NZH2-3FBD38E1EE97",
+    "day": "2018-06-04",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.228200064972043,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-A331C3BED247",
+    "base_case_id": "NZH2-3FBD38E1EE97",
+    "day": "2018-06-04",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.442400066182017,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-2DCCA26672FD",
+    "base_case_id": "NZH2-2DCCA26672FD",
+    "day": "2018-07-13",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9031998235732317,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-2DCCA26672FD",
+    "base_case_id": "NZH2-2DCCA26672FD",
+    "day": "2018-07-13",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.787299981340766,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-2DCCA26672FD",
+    "base_case_id": "NZH2-2DCCA26672FD",
+    "day": "2018-07-13",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.155600108206272,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-2DCCA26672FD",
+    "base_case_id": "NZH2-2DCCA26672FD",
+    "day": "2018-07-13",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.211700186133385,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-E63488243D71",
+    "base_case_id": "NZH2-E63488243D71",
+    "day": "2018-06-06",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 1.9441000185906887,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-E63488243D71",
+    "base_case_id": "NZH2-E63488243D71",
+    "day": "2018-06-06",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.565599970519543,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-E63488243D71",
+    "base_case_id": "NZH2-E63488243D71",
+    "day": "2018-06-06",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.994499929249287,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-E63488243D71",
+    "base_case_id": "NZH2-E63488243D71",
+    "day": "2018-06-06",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.972899997606874,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-733C8FB13239",
+    "base_case_id": "NZH2-79628B019966",
+    "day": "2018-07-15",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.877899980172515,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-733C8FB13239",
+    "base_case_id": "NZH2-79628B019966",
+    "day": "2018-07-15",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.458900041878223,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-733C8FB13239",
+    "base_case_id": "NZH2-79628B019966",
+    "day": "2018-07-15",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.753400003537536,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-733C8FB13239",
+    "base_case_id": "NZH2-79628B019966",
+    "day": "2018-07-15",
+    "perturbation": "duplicate_records_12",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.640399910509586,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-AB6554EE3C69",
+    "base_case_id": "NZH2-AB6554EE3C69",
+    "day": "2018-07-12",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8016998656094074,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-AB6554EE3C69",
+    "base_case_id": "NZH2-AB6554EE3C69",
+    "day": "2018-07-12",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.78980011679232,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-AB6554EE3C69",
+    "base_case_id": "NZH2-AB6554EE3C69",
+    "day": "2018-07-12",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 19.086299929767847,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-AB6554EE3C69",
+    "base_case_id": "NZH2-AB6554EE3C69",
+    "day": "2018-07-12",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.780400045216084,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-CE086971DD01",
+    "base_case_id": "NZH2-A204D5144300",
+    "day": "2018-06-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8670998979359865,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-CE086971DD01",
+    "base_case_id": "NZH2-A204D5144300",
+    "day": "2018-06-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.71880004182458,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-CE086971DD01",
+    "base_case_id": "NZH2-A204D5144300",
+    "day": "2018-06-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.426400143653154,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-CE086971DD01",
+    "base_case_id": "NZH2-A204D5144300",
+    "day": "2018-06-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.43539997935295,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-A204D5144300",
+    "base_case_id": "NZH2-A204D5144300",
+    "day": "2018-06-10",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8125998321920633,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-A204D5144300",
+    "base_case_id": "NZH2-A204D5144300",
+    "day": "2018-06-10",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.694100039079785,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-A204D5144300",
+    "base_case_id": "NZH2-A204D5144300",
+    "day": "2018-06-10",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.92010013014078,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-A204D5144300",
+    "base_case_id": "NZH2-A204D5144300",
+    "day": "2018-06-10",
+    "perturbation": "none",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 17.742800060659647,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-91D86936E7EB",
+    "base_case_id": "NZH2-8BBE4262EF4B",
+    "day": "2018-06-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8482001032680273,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-91D86936E7EB",
+    "base_case_id": "NZH2-8BBE4262EF4B",
+    "day": "2018-06-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 18.488399917259812,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-91D86936E7EB",
+    "base_case_id": "NZH2-8BBE4262EF4B",
+    "day": "2018-06-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.632399961352348,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-91D86936E7EB",
+    "base_case_id": "NZH2-8BBE4262EF4B",
+    "day": "2018-06-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.328799977898598,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-F42492FE3902",
+    "base_case_id": "NZH2-C41837D35CC4",
+    "day": "2018-07-15",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.9151000306010246,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-F42492FE3902",
+    "base_case_id": "NZH2-C41837D35CC4",
+    "day": "2018-07-15",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 4,
+    "end_to_end_ms": 18.674999941140413,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-F42492FE3902",
+    "base_case_id": "NZH2-C41837D35CC4",
+    "day": "2018-07-15",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.979899929836392,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-F42492FE3902",
+    "base_case_id": "NZH2-C41837D35CC4",
+    "day": "2018-07-15",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "damper_stuck",
+    "raw_status": "supported",
+    "query_units": 3,
+    "end_to_end_ms": 13.750399928539991,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path"
+    ]
+  },
+  {
+    "case_id": "NZH2-6467F31CF87E",
+    "base_case_id": "NZH2-47DF7820A2DE",
+    "day": "2018-06-04",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 1.1921999976038933,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-6467F31CF87E",
+    "base_case_id": "NZH2-47DF7820A2DE",
+    "day": "2018-06-04",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 4,
+    "end_to_end_ms": 15.620600199326873,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-6467F31CF87E",
+    "base_case_id": "NZH2-47DF7820A2DE",
+    "day": "2018-06-04",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.325400106608868,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-6467F31CF87E",
+    "base_case_id": "NZH2-47DF7820A2DE",
+    "day": "2018-06-04",
+    "perturbation": "duplicate_records_12",
+    "truth": "damper_stuck",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "inactive",
+    "query_units": 1,
+    "end_to_end_ms": 4.1772001422941685,
+    "actions": [
+      "quality"
+    ]
+  },
+  {
+    "case_id": "NZH2-5E102A7F1003",
+    "base_case_id": "NZH2-5E102A7F1003",
+    "day": "2018-06-09",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 1.8772000912576914,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-5E102A7F1003",
+    "base_case_id": "NZH2-5E102A7F1003",
+    "day": "2018-06-09",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.186500063166022,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-5E102A7F1003",
+    "base_case_id": "NZH2-5E102A7F1003",
+    "day": "2018-06-09",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.86059995740652,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-5E102A7F1003",
+    "base_case_id": "NZH2-5E102A7F1003",
+    "day": "2018-06-09",
+    "perturbation": "none",
+    "truth": "coil_leakage",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.013800028711557,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-4481162A0FE3",
+    "base_case_id": "NZH2-75F6BA6F6E87",
+    "day": "2018-06-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "old_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 2.0158998668193817,
+    "actions": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ]
+  },
+  {
+    "case_id": "NZH2-4481162A0FE3",
+    "base_case_id": "NZH2-75F6BA6F6E87",
+    "day": "2018-06-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "new_full",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.066699849441648,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-4481162A0FE3",
+    "base_case_id": "NZH2-75F6BA6F6E87",
+    "day": "2018-06-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "fixed",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 20.55120002478361,
+    "actions": [
+      "quality",
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ]
+  },
+  {
+    "case_id": "NZH2-4481162A0FE3",
+    "base_case_id": "NZH2-75F6BA6F6E87",
+    "day": "2018-06-10",
+    "perturbation": "duplicate_records_12",
+    "truth": "normal",
+    "method": "adaptive_rule",
+    "prediction": "unresolved",
+    "raw_status": "insufficient",
+    "query_units": 4,
+    "end_to_end_ms": 18.13340000808239,
+    "actions": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ]
+  }
+]

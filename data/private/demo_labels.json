@@ -1,0 +1,34 @@
+{
+  "NZH-90C933F3C475": {
+    "id": "NZH-90C933F3C475",
+    "target": "normal",
+    "label": "normal",
+    "fault_class": "normal",
+    "severity": null,
+    "source_declared_severity": null,
+    "severity_verified": true,
+    "source_file": "AHU_annual.csv",
+    "day": "2018-04-10",
+    "base_case_id": "NZH-90C933F3C475",
+    "perturbation": "none",
+    "source_origin": "simulated",
+    "group": "single_simulated_system|2018-04-10",
+    "is_actual_building_fault_evidence": false
+  },
+  "NZH-76889C2BA896": {
+    "id": "NZH-76889C2BA896",
+    "target": "damper_stuck",
+    "label": "damper_stuck",
+    "fault_class": "damper_stuck",
+    "severity": 0.25,
+    "source_declared_severity": 0.25,
+    "severity_verified": true,
+    "source_file": "damper_stuck_025_annual.csv",
+    "day": "2018-04-10",
+    "base_case_id": "NZH-D9DFAF47509A",
+    "perturbation": "duplicate_records_12",
+    "source_origin": "simulated",
+    "group": "single_simulated_system|2018-04-10",
+    "is_actual_building_fault_evidence": false
+  }
+}

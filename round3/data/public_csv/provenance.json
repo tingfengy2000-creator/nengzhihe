@@ -1,0 +1,13 @@
+{
+  "source_url": "https://fdddata.lbl.gov/data/Simulated_LBNL_FDD_Data_Sets_SDAHU/LBNL_FDD_Data_Sets_SDAHU.zip",
+  "source_member": "LBNL_FDD_Dataset_SDAHU/AHU_annual.csv",
+  "source_zip_sha256": "8295fcf0f55bc955937cb4ec0198512c28e5ede32e6bbf735257b0df55426471",
+  "source_date": "2018-04-10",
+  "excerpt_policy": "Original header and source row bytes kept exactly; date subset only, not a full annual file; all original columns retained. No values transformed.",
+  "rows": 1440,
+  "file": "LBNL_SDAHU_2018-04-10_raw_excerpt.csv",
+  "sha256": "ebc73213a52426a562f0409eeb1ad65ea5c608f4321105bdd95f5970e4b8a434",
+  "origin": "simulated",
+  "role": "Existing development demonstration only; not a new accuracy sample. Source member name stays provenance metadata, never features.",
+  "license": "CC BY 4.0; Granderson et al. LBNL FDD datasets"
+}

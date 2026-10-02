@@ -1,0 +1,71 @@
+{
+  "final": {
+    "confidence": null,
+    "support_score": null,
+    "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+    "label": "unresolved",
+    "name": "证据不足",
+    "status": "inactive",
+    "detail": "去重后有效风机运行不足60分钟；缺乏足够设备响应，不从停机记录推断正常或故障。"
+  },
+  "steps": [
+    {
+      "action": "quality",
+      "features": {
+        "duplicates": 12,
+        "missing_fraction": 0.0,
+        "rows": 300
+      }
+    },
+    {
+      "action": "air_path",
+      "features": {
+        "oa_mean": null,
+        "mixed_return_mean": null,
+        "mix_fraction_med": null,
+        "mix_fraction_std": null,
+        "damper_cmd_mean": null,
+        "damper_cmd_std": null,
+        "mix_cmd_corr": null,
+        "mix_low_cmd": null,
+        "mix_high_cmd": null,
+        "valid_mix_samples": 0
+      }
+    },
+    {
+      "action": "coil_response",
+      "features": {
+        "supply_delta_mean": null,
+        "supply_delta_abs": null,
+        "coil_drop_mean": null,
+        "closed_valve_drop": null,
+        "closed_valve_fraction": null,
+        "coil_cmd_mean": null,
+        "coil_cmd_std": null,
+        "coil_drop_cmd_corr": null,
+        "supply_delta_p90": null,
+        "valid_closed_samples": 0
+      }
+    },
+    {
+      "action": "operating_context",
+      "features": {
+        "fan_on_fraction": 0.0,
+        "fan_cmd_mean": null,
+        "zone_mean": null,
+        "zone_spread": null,
+        "zone_p90": null,
+        "zone_std": null
+      }
+    }
+  ],
+  "cost": {
+    "query_units": 4,
+    "field_acquisition_units": 0,
+    "model_calls": 0,
+    "end_to_end_ms": 1.3580999802798033
+  },
+  "method": "old_full",
+  "input_file_sha256": "3e3de5c53445a34d34cc5de750e977f7339050d72f6e17a78bdf1b93e873f064",
+  "freeze_sha256": "1e4cc5e5bf77bcbc2f7085cfceb8e66d9349897e8ea5d7a2b457caab51ceb48e"
+}

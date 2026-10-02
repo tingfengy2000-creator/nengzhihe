@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024" viewBox="0 0 1280 1024" role="img" aria-labelledby="title desc">
+<title id="title">能智核公共建筑用能异常核验工作台架构</title>
+<desc id="desc">工作台、固定与自适应核验流程、程序数值诊断、分离的证据池四层架构。LBNL仅作仿真设备时间留出验证，BDG2独立作真实用能统计回放。本轮不调用大模型。</desc>
+<defs>
+ <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#358D85"/></marker>
+ <style>text{font-family:'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#183449}.title{font-size:34px;font-weight:700}.sub{font-size:18px;fill:#526E7E}.label{font-size:21px;font-weight:700}.body{font-size:18px}.small{font-size:16px;fill:#55707D}.white{fill:#fff}.mono{font-family:Consolas,monospace;font-size:15px}</style>
+</defs>
+<rect width="1280" height="1024" fill="#F3F7F9"/>
+<rect width="1280" height="10" fill="#1B7770"/>
+<text x="42" y="65" class="title">能智核 · 告警之后，先查什么？</text>
+<text x="42" y="100" class="sub">公共建筑用能异常核验 ｜ 数值由程序计算 ｜ 本轮不调用大模型</text>
+
+<!-- 1. Workbench -->
+<rect x="42" y="135" width="1196" height="150" rx="16" fill="#15384D"/>
+<text x="68" y="174" class="label white">01  核验工作台</text>
+<text x="68" y="211" class="body white">当前工况 → 支持与反驳证据 → 判断状态 → 下一步动作</text>
+<text x="68" y="245" class="small white">预算、证据开关、时间窗、数据修正均触发程序重算；保留逐次运行记录。</text>
+<rect x="895" y="156" width="315" height="44" rx="8" fill="#23645F"/>
+<text x="918" y="185" class="body white">数据质量：通过 / 待修正</text>
+<rect x="895" y="215" width="315" height="44" rx="8" fill="#345A72"/>
+<text x="918" y="244" class="body white">设备判断：候选 / 正常 / 未决</text>
+
+<!-- Query orchestration: one bounded rule, no agents -->
+<path d="M463 327V296" stroke="#358D85" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="42" y="330" width="870" height="135" rx="14" fill="#fff" stroke="#C6D8DF"/>
+<text x="66" y="367" class="label">02  核验流程 · 共用证据与停止条件</text>
+<rect x="67" y="389" width="240" height="52" rx="8" fill="#ECF3F6"/>
+<text x="89" y="421" class="body">固定流程：开发集选序</text>
+<rect x="321" y="389" width="264" height="52" rx="8" fill="#E6F4EF"/>
+<text x="342" y="421" class="body">自适应规则：按工况补证</text>
+<rect x="599" y="389" width="287" height="52" rx="8" fill="#ECF3F6"/>
+<text x="620" y="421" class="body">完整信息：取得全部允许证据</text>
+
+<!-- Numerical engine -->
+<path d="M463 507V477" stroke="#358D85" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="42" y="510" width="870" height="202" rx="14" fill="#fff" stroke="#C6D8DF"/>
+<text x="66" y="548" class="label">03  数值诊断程序 · 工况与证据窗口修复</text>
+<text x="67" y="585" class="body">单位与启停检查 → 启动剔除 / 连续稳定窗口 → 指令响应参考</text>
+<text x="67" y="621" class="body">混风响应 + 稳定关阀温降 + 运行资格 → 有依据的候选或未决</text>
+<text x="67" y="655" class="small">正常需两类正向证据；响应重叠、缺点位、缺有效时段时拒绝硬判。</text>
+<text x="67" y="684" class="small">开发配置冻结后再验证新日期；诊断入口只接收已查询证据，不接触标签。</text>
+
+<!-- Separate meter-only path -->
+<rect x="948" y="330" width="290" height="382" rx="14" fill="#F0EEF8" stroke="#D2CDE3"/>
+<text x="973" y="369" class="label">真实用能回放通道</text>
+<text x="973" y="409" class="body">BDG2 电表与天气</text>
+<text x="973" y="444" class="body">历史参考及变化统计</text>
+<text x="973" y="488" class="small">仅提出建筑用能核查线索</text>
+<text x="973" y="519" class="small">不提供设备故障真值</text>
+<text x="973" y="550" class="small">不推算已实现节能收益</text>
+<path d="M1094 329V295" stroke="#8C82AE" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="973" y="616" class="label" style="fill:#706091">两条证据通道保持分离</text>
+<text x="973" y="653" class="small">不拼成真实楼宇故障定位证据</text>
+
+<!-- Evidence pool -->
+<path d="M463 753V724" stroke="#358D85" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M1094 753V724" stroke="#8C82AE" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="42" y="756" width="1196" height="193" rx="14" fill="#E4EFF1" stroke="#BCD1D7"/>
+<text x="67" y="793" class="label">04  允许证据池 · 来源与成本明确</text>
+<rect x="67" y="813" width="819" height="111" rx="9" fill="#fff"/>
+<text x="86" y="842" class="body" font-weight="700">LBNL 单风道空调机组仿真</text>
+<text x="86" y="873" class="small">记录质量 / 混风与指令 / 关阀热响应 / 运行工况，4 组查询各计 1 单位</text>
+<text x="86" y="903" class="small">原始仿真与人为重复记录明确标识；排除实际阀位、标签及故障注入参数</text>
+<rect x="948" y="813" width="264" height="111" rx="9" fill="#fff"/>
+<text x="969" y="846" class="body" font-weight="700">BDG2 实测公开数据</text>
+<text x="969" y="880" class="small">总表 / 天气 / 历史参考</text>
+<text x="969" y="909" class="small">与仿真设备诊断互不拼接</text>
+
+<text x="43" y="986" class="small">验证范围：同一仿真系统的新日期留出，不是跨设备或真实建筑验证。现场补采未实施，成本未测量。</text>
+</svg>

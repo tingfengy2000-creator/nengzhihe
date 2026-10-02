@@ -1,0 +1,223 @@
+{
+  "run_id": "25514f0f73f54d81",
+  "case_id": "NZH2-3D6F6EEDF281",
+  "family": "lbnl",
+  "origin": "simulated",
+  "perturbation": {
+    "type": "none",
+    "origin": "none",
+    "description": "无额外人为扰动。"
+  },
+  "strategy": "fixed",
+  "strategy_label": "固定流程",
+  "budget": 4,
+  "steps": [
+    {
+      "index": 1,
+      "action": "quality",
+      "label": "记录可信度",
+      "reason": "先检查记录完整性，数据问题与设备疑点独立处理。",
+      "cost": 1,
+      "evidence": [
+        {
+          "label": "原始记录条数",
+          "value": 288,
+          "detail": "由允许测点程序计算；窗口和开发参考均可复核。"
+        },
+        {
+          "label": "重复时间戳条数",
+          "value": 0,
+          "detail": "由允许测点程序计算；窗口和开发参考均可复核。"
+        },
+        {
+          "label": "缺失数",
+          "value": 0,
+          "detail": "由允许测点程序计算；窗口和开发参考均可复核。"
+        },
+        {
+          "label": "独立运行分钟",
+          "value": 0,
+          "detail": "由允许测点程序计算；窗口和开发参考均可复核。"
+        }
+      ],
+      "features": {
+        "family": "lbnl",
+        "action": "quality",
+        "unit_errors": [],
+        "conflicting_timestamps": 0,
+        "rows": 288,
+        "unique_rows": 288,
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "unique_operating_minutes": 0,
+        "valid_schema": true,
+        "quality_status": "passed",
+        "windows": [],
+        "control_modes": {}
+      },
+      "windows": [],
+      "mode": {},
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "确定性证据规则；无未经校准的故障概率。",
+        "label": "unresolved",
+        "status": "inactive",
+        "name": "待补证",
+        "detail": "已取得证据尚不能作三分类结论；保留未决并列出可改变判断的补证时段或点位。",
+        "support_evidence": [],
+        "refuting_evidence": [],
+        "next_actions": [
+          {
+            "action": "operating_context",
+            "text": "核实启停与控制工况",
+            "type": "data_query",
+            "query_cost": 1
+          },
+          {
+            "action": "air_path",
+            "text": "核查混风指令与热响应",
+            "type": "data_query",
+            "query_cost": 1
+          },
+          {
+            "action": "coil_response",
+            "text": "核查稳定关阀时段",
+            "type": "data_query",
+            "query_cost": 1
+          }
+        ],
+        "windows": [],
+        "current_mode": {},
+        "rule_evidence": {
+          "air_response": "unknown",
+          "coil_response": "unknown",
+          "context_qualified": false
+        },
+        "scope": "同一公开仿真单风道机组的正常/风阀卡滞/盘管阀泄漏候选；不能外推为真实楼宇定位。",
+        "supporting_evidence": [],
+        "mode": {}
+      }
+    }
+  ],
+  "final": {
+    "confidence": null,
+    "support_score": null,
+    "score_note": "确定性证据规则；无未经校准的故障概率。",
+    "label": "unresolved",
+    "status": "inactive",
+    "name": "待补证",
+    "detail": "已取得证据尚不能作三分类结论；保留未决并列出可改变判断的补证时段或点位。",
+    "support_evidence": [],
+    "refuting_evidence": [],
+    "next_actions": [
+      {
+        "action": "operating_context",
+        "text": "核实启停与控制工况",
+        "type": "data_query",
+        "query_cost": 1
+      },
+      {
+        "action": "air_path",
+        "text": "核查混风指令与热响应",
+        "type": "data_query",
+        "query_cost": 1
+      },
+      {
+        "action": "coil_response",
+        "text": "核查稳定关阀时段",
+        "type": "data_query",
+        "query_cost": 1
+      }
+    ],
+    "windows": [],
+    "current_mode": {},
+    "rule_evidence": {
+      "air_response": "unknown",
+      "coil_response": "unknown",
+      "context_qualified": false
+    },
+    "scope": "同一公开仿真单风道机组的正常/风阀卡滞/盘管阀泄漏候选；不能外推为真实楼宇定位。",
+    "supporting_evidence": [],
+    "mode": {},
+    "quality": {
+      "status": "passed",
+      "label": "记录检查通过",
+      "issues": [],
+      "duplicates": 0,
+      "missing": 0,
+      "missing_fraction": 0.0,
+      "rows": 288,
+      "valid_schema": true,
+      "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+    },
+    "operation": {
+      "confidence": null,
+      "support_score": null,
+      "score_note": "确定性证据规则；无未经校准的故障概率。",
+      "label": "unresolved",
+      "status": "inactive",
+      "name": "待补证",
+      "detail": "已取得证据尚不能作三分类结论；保留未决并列出可改变判断的补证时段或点位。",
+      "support_evidence": [],
+      "refuting_evidence": [],
+      "next_actions": [
+        {
+          "action": "operating_context",
+          "text": "核实启停与控制工况",
+          "type": "data_query",
+          "query_cost": 1
+        },
+        {
+          "action": "air_path",
+          "text": "核查混风指令与热响应",
+          "type": "data_query",
+          "query_cost": 1
+        },
+        {
+          "action": "coil_response",
+          "text": "核查稳定关阀时段",
+          "type": "data_query",
+          "query_cost": 1
+        }
+      ],
+      "windows": [],
+      "current_mode": {},
+      "rule_evidence": {
+        "air_response": "unknown",
+        "coil_response": "unknown",
+        "context_qualified": false
+      },
+      "scope": "同一公开仿真单风道机组的正常/风阀卡滞/盘管阀泄漏候选；不能外推为真实楼宇定位。",
+      "supporting_evidence": [],
+      "mode": {}
+    }
+  },
+  "cost": {
+    "query_units": 1,
+    "field_acquisition_units": 0,
+    "latency_ms": 2.9689,
+    "model_calls": 0,
+    "end_to_end_ms": 4.186700098216534
+  },
+  "config": {
+    "available_evidence": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ],
+    "requested_budget": 4,
+    "budget": 4,
+    "complete_pool": false,
+    "selected_window": null
+  },
+  "repair": null,
+  "warnings": [],
+  "status": "completed",
+  "data_hash": "f33fe1f521a87469c10a3a631d68baa5b707d6a118dfa59c0b07298c2dae2329",
+  "method": "fixed",
+  "input_file_sha256": "824e2efba95312c0fa2cc5af4317a6ad0f95b655789a337576df7817744dc65d",
+  "freeze_sha256": "1e4cc5e5bf77bcbc2f7085cfceb8e66d9349897e8ea5d7a2b457caab51ceb48e"
+}

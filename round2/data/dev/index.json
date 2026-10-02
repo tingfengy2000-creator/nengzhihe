@@ -1,0 +1,1458 @@
+[
+  {
+    "id": "NZH2-D9A288336CF1",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-D9A288336CF1.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-E2171FEF5766",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-E2171FEF5766.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-DAEC7F3478EE",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-DAEC7F3478EE.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-F6ACA3F5683E",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-F6ACA3F5683E.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-4FAB29C47C64",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-4FAB29C47C64.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-D1F427F5D26D",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-D1F427F5D26D.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-C395ADA08BF2",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-C395ADA08BF2.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-6F1A0A0CA601",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-6F1A0A0CA601.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-F0CB5418970F",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-F0CB5418970F.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-F530C8819A2A",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-F530C8819A2A.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-65FA20643B24",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-65FA20643B24.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-0ACB6EB0F79B",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-0ACB6EB0F79B.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-5288BB51091E",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-5288BB51091E.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-2A72AA03D1FA",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-2A72AA03D1FA.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-BA998FCD0A7A",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-BA998FCD0A7A.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-41DE49DD0BA1",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-41DE49DD0BA1.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-242BD91AB86C",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-242BD91AB86C.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-AC149599D10D",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-AC149599D10D.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-90D0BC4B622E",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-90D0BC4B622E.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-598D0EA7753B",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-598D0EA7753B.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-451ED11E8FB2",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-451ED11E8FB2.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-706449BAD5D8",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-706449BAD5D8.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-10F8AE894141",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-10F8AE894141.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-168CF0957E00",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-168CF0957E00.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-B07A6B3CD036",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-B07A6B3CD036.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-F785312C4AA8",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-F785312C4AA8.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-0957BD0EB588",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-0957BD0EB588.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-236BA3159198",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-236BA3159198.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-19EC7D73838C",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-19EC7D73838C.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-B6207341F108",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-B6207341F108.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-3C8EB8DD4AC8",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-3C8EB8DD4AC8.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-F9436F2E9D6C",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-F9436F2E9D6C.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-945047533EF5",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-945047533EF5.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-61990892BC4E",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-61990892BC4E.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-1D174EE3BBA8",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-1D174EE3BBA8.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-517CA584BD7C",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-517CA584BD7C.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-7991D525B8E1",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-7991D525B8E1.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-201B2A9D5E01",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-201B2A9D5E01.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-990FCCFD6D21",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-990FCCFD6D21.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-51B97C3B70AA",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-51B97C3B70AA.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-DA2FB5505A61",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-DA2FB5505A61.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-9B3DCBD46F8B",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-9B3DCBD46F8B.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-77F44F864D04",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-77F44F864D04.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-46A0D9D1B053",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-46A0D9D1B053.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-DF23D20EE844",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-DF23D20EE844.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-DC68CD3BC397",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-DC68CD3BC397.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-1DAEE34686BF",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-1DAEE34686BF.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-F469B2CFB1E2",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-F469B2CFB1E2.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-F37CC4873D66",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-F37CC4873D66.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-9A97314E09FD",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-9A97314E09FD.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-27F50E6A3D18",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-27F50E6A3D18.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-F05D7BF0BEE7",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-F05D7BF0BEE7.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-A4E50CAC2F25",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-A4E50CAC2F25.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-F8435CC8C35E",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-F8435CC8C35E.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-F7C412B5FCA6",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-F7C412B5FCA6.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-3F19687D23C4",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-3F19687D23C4.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-74EB79DEBACF",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-74EB79DEBACF.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-BA8340A706C5",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-BA8340A706C5.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-E0D1E5358A0D",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-E0D1E5358A0D.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-D2A0B750E16B",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-D2A0B750E16B.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-CC3C43E4CE44",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-CC3C43E4CE44.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-80BE37A86F81",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-80BE37A86F81.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-A199C5A39943",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-A199C5A39943.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-11BC52445AE8",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-11BC52445AE8.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-C807178B9E46",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-C807178B9E46.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-D20309D24633",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-D20309D24633.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-A85252314B39",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-A85252314B39.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-5D67E906271D",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-5D67E906271D.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-8B408F9BFC38",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-8B408F9BFC38.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-F57912A9FF75",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-F57912A9FF75.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-BF86101F2E3A",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-BF86101F2E3A.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-67285003560C",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-67285003560C.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-241C07D5EDA9",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-241C07D5EDA9.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-977735513840",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-977735513840.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-0376670068B4",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-0376670068B4.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-E24952FADECD",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-E24952FADECD.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-59511C6C8655",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-59511C6C8655.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-77D00C56833A",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-77D00C56833A.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-E07B252F91A9",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-E07B252F91A9.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-BF65AE2F8A68",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-BF65AE2F8A68.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-D1313D39ED8A",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-D1313D39ED8A.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-51AF1FC6B249",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-51AF1FC6B249.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-2E761F389144",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-2E761F389144.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-BB56DB012A67",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-BB56DB012A67.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-46E91BAF93ED",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-46E91BAF93ED.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-35649ABEE30B",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-35649ABEE30B.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-3296C8BACFA1",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-3296C8BACFA1.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-FBF5F6839249",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-FBF5F6839249.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-58D599EE8FEC",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-58D599EE8FEC.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-8AECB4073F8B",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-8AECB4073F8B.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-AD0C34D222AA",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-AD0C34D222AA.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-83904A3BB44B",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-83904A3BB44B.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-D5E63D7FF0E8",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-D5E63D7FF0E8.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-587FBCD7A269",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-587FBCD7A269.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-A54082878FC0",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-A54082878FC0.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-B40691FB8C16",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-B40691FB8C16.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-ADBF3E4719B2",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-ADBF3E4719B2.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-04DC4D795B95",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-04DC4D795B95.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-195BB39B17CE",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-195BB39B17CE.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-98B734AB5C2C",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-98B734AB5C2C.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-772FD2646524",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-772FD2646524.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-68FD17EFAAFA",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-68FD17EFAAFA.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-6D03A4E2F420",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-6D03A4E2F420.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-559220C99F66",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-559220C99F66.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-984ACA7CE14D",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-984ACA7CE14D.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-7A42765E2DA8",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-7A42765E2DA8.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-DB8AFC8BA01B",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-DB8AFC8BA01B.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-4A7A748565E7",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-4A7A748565E7.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-781EFE3A836C",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-781EFE3A836C.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-A1EE25D18AF5",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-A1EE25D18AF5.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-4D697CFBFEC0",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-4D697CFBFEC0.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-CA94F3B264C7",
+    "split": "dev",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/dev/cases/NZH2-CA94F3B264C7.json",
+    "title": "新日期开发案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  }
+]

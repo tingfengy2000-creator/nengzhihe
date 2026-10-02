@@ -1,0 +1,232 @@
+{
+  "run_id": "cf5f73c81f4a4d1e",
+  "case_id": "NZH2-A14BD46BA54D",
+  "family": "lbnl",
+  "origin": "simulated",
+  "perturbation": {
+    "type": "duplicate_records_12",
+    "origin": "human_generated",
+    "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+  },
+  "strategy": "adaptive_rule",
+  "strategy_label": "自适应规则",
+  "budget": 4,
+  "steps": [
+    {
+      "index": 1,
+      "action": "quality",
+      "label": "记录可信度",
+      "reason": "先检查记录完整性，数据问题与设备疑点独立处理。",
+      "cost": 1,
+      "evidence": [
+        {
+          "label": "原始记录条数",
+          "value": 300,
+          "detail": "由允许测点程序计算；窗口和开发参考均可复核。"
+        },
+        {
+          "label": "重复时间戳条数",
+          "value": 12,
+          "detail": "由允许测点程序计算；窗口和开发参考均可复核。"
+        },
+        {
+          "label": "缺失数",
+          "value": 0,
+          "detail": "由允许测点程序计算；窗口和开发参考均可复核。"
+        },
+        {
+          "label": "独立运行分钟",
+          "value": 0,
+          "detail": "由允许测点程序计算；窗口和开发参考均可复核。"
+        }
+      ],
+      "features": {
+        "family": "lbnl",
+        "action": "quality",
+        "unit_errors": [],
+        "conflicting_timestamps": 0,
+        "rows": 300,
+        "unique_rows": 288,
+        "duplicates": 12,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "unique_operating_minutes": 0,
+        "valid_schema": true,
+        "quality_status": "needs_review",
+        "windows": [],
+        "control_modes": {}
+      },
+      "windows": [],
+      "mode": {},
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "确定性证据规则；无未经校准的故障概率。",
+        "label": "unresolved",
+        "status": "inactive",
+        "name": "待补证",
+        "detail": "已取得证据尚不能作三分类结论；保留未决并列出可改变判断的补证时段或点位。",
+        "support_evidence": [],
+        "refuting_evidence": [],
+        "next_actions": [
+          {
+            "action": "operating_context",
+            "text": "核实启停与控制工况",
+            "type": "data_query",
+            "query_cost": 1
+          },
+          {
+            "action": "air_path",
+            "text": "核查混风指令与热响应",
+            "type": "data_query",
+            "query_cost": 1
+          },
+          {
+            "action": "coil_response",
+            "text": "核查稳定关阀时段",
+            "type": "data_query",
+            "query_cost": 1
+          }
+        ],
+        "windows": [],
+        "current_mode": {},
+        "rule_evidence": {
+          "air_response": "unknown",
+          "coil_response": "unknown",
+          "context_qualified": false
+        },
+        "scope": "同一公开仿真单风道机组的正常/风阀卡滞/盘管阀泄漏候选；不能外推为真实楼宇定位。",
+        "supporting_evidence": [],
+        "mode": {}
+      }
+    }
+  ],
+  "final": {
+    "confidence": null,
+    "support_score": null,
+    "score_note": "确定性证据规则；无未经校准的故障概率。",
+    "label": "unresolved",
+    "status": "inactive",
+    "name": "待补证",
+    "detail": "已取得证据尚不能作三分类结论；保留未决并列出可改变判断的补证时段或点位。",
+    "support_evidence": [],
+    "refuting_evidence": [],
+    "next_actions": [
+      {
+        "action": "operating_context",
+        "text": "核实启停与控制工况",
+        "type": "data_query",
+        "query_cost": 1
+      },
+      {
+        "action": "air_path",
+        "text": "核查混风指令与热响应",
+        "type": "data_query",
+        "query_cost": 1
+      },
+      {
+        "action": "coil_response",
+        "text": "核查稳定关阀时段",
+        "type": "data_query",
+        "query_cost": 1
+      }
+    ],
+    "windows": [],
+    "current_mode": {},
+    "rule_evidence": {
+      "air_response": "unknown",
+      "coil_response": "unknown",
+      "context_qualified": false
+    },
+    "scope": "同一公开仿真单风道机组的正常/风阀卡滞/盘管阀泄漏候选；不能外推为真实楼宇定位。",
+    "supporting_evidence": [],
+    "mode": {},
+    "quality": {
+      "status": "needs_review",
+      "label": "存在记录问题",
+      "issues": [
+        {
+          "code": "duplicate_timestamp",
+          "label": "时间戳重复",
+          "count": 12,
+          "detail": "仅能自动删除同一时间戳且所有通道值完全一致的重复记录。"
+        }
+      ],
+      "duplicates": 12,
+      "missing": 0,
+      "missing_fraction": 0.0,
+      "rows": 300,
+      "valid_schema": true,
+      "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+    },
+    "operation": {
+      "confidence": null,
+      "support_score": null,
+      "score_note": "确定性证据规则；无未经校准的故障概率。",
+      "label": "unresolved",
+      "status": "inactive",
+      "name": "待补证",
+      "detail": "已取得证据尚不能作三分类结论；保留未决并列出可改变判断的补证时段或点位。",
+      "support_evidence": [],
+      "refuting_evidence": [],
+      "next_actions": [
+        {
+          "action": "operating_context",
+          "text": "核实启停与控制工况",
+          "type": "data_query",
+          "query_cost": 1
+        },
+        {
+          "action": "air_path",
+          "text": "核查混风指令与热响应",
+          "type": "data_query",
+          "query_cost": 1
+        },
+        {
+          "action": "coil_response",
+          "text": "核查稳定关阀时段",
+          "type": "data_query",
+          "query_cost": 1
+        }
+      ],
+      "windows": [],
+      "current_mode": {},
+      "rule_evidence": {
+        "air_response": "unknown",
+        "coil_response": "unknown",
+        "context_qualified": false
+      },
+      "scope": "同一公开仿真单风道机组的正常/风阀卡滞/盘管阀泄漏候选；不能外推为真实楼宇定位。",
+      "supporting_evidence": [],
+      "mode": {}
+    }
+  },
+  "cost": {
+    "query_units": 1,
+    "field_acquisition_units": 0,
+    "latency_ms": 3.2301,
+    "model_calls": 0,
+    "end_to_end_ms": 4.466499900445342
+  },
+  "config": {
+    "available_evidence": [
+      "quality",
+      "operating_context",
+      "air_path",
+      "coil_response"
+    ],
+    "requested_budget": 4,
+    "budget": 4,
+    "complete_pool": false,
+    "selected_window": null
+  },
+  "repair": null,
+  "warnings": [
+    "数据问题仍需处理；设备证据独立判断。"
+  ],
+  "status": "completed",
+  "data_hash": "061ae1e1c7dcf7f73cf6abf3018a2485fc4e4f7f175fc009a2248ff4c66ef312",
+  "method": "adaptive_rule",
+  "input_file_sha256": "5c25cd17ac537606c144b136267668a67eab3a9f2e31b46695807c46da4d6aca",
+  "freeze_sha256": "1e4cc5e5bf77bcbc2f7085cfceb8e66d9349897e8ea5d7a2b457caab51ceb48e"
+}

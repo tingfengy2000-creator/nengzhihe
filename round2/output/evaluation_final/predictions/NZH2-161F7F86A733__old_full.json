@@ -1,0 +1,80 @@
+{
+  "final": {
+    "confidence": null,
+    "support_score": null,
+    "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+    "label": "unresolved",
+    "name": "证据不足",
+    "status": "insufficient",
+    "rule_evidence": {
+      "air_response": "unknown",
+      "coil_response": "unknown"
+    },
+    "thresholds": {
+      "mix_std_boundary": 0.060753,
+      "mix_correlation_boundary": 0.624152,
+      "closed_drop_boundary_C": -0.120259
+    },
+    "detail": "混风有效温差、独立时刻或指令变化不足，无法核验卡滞。 零冷阀指令有效时刻不足，不能据少量温降判断泄漏。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+  },
+  "steps": [
+    {
+      "action": "quality",
+      "features": {
+        "duplicates": 12,
+        "missing_fraction": 0.0,
+        "rows": 300
+      }
+    },
+    {
+      "action": "air_path",
+      "features": {
+        "oa_mean": 24.000036,
+        "mixed_return_mean": 0.036699,
+        "mix_fraction_med": 0.015835,
+        "mix_fraction_std": 0.00059,
+        "damper_cmd_mean": 0.099902,
+        "damper_cmd_std": 0.001397,
+        "mix_cmd_corr": null,
+        "mix_low_cmd": 0.01573,
+        "mix_high_cmd": null,
+        "valid_mix_samples": 100
+      }
+    },
+    {
+      "action": "coil_response",
+      "features": {
+        "supply_delta_mean": 0.01611,
+        "supply_delta_abs": 0.019247,
+        "coil_drop_mean": 8.260494,
+        "closed_valve_drop": 5.78535,
+        "closed_valve_fraction": 0.004902,
+        "coil_cmd_mean": 0.609585,
+        "coil_cmd_std": 0.04863,
+        "coil_drop_cmd_corr": 0.624832,
+        "supply_delta_p90": 0.002053,
+        "valid_closed_samples": 1
+      }
+    },
+    {
+      "action": "operating_context",
+      "features": {
+        "fan_on_fraction": 0.68,
+        "fan_cmd_mean": 0.712226,
+        "zone_mean": 20.929102,
+        "zone_spread": 1.46413,
+        "zone_p90": 21.789376,
+        "zone_std": 1.07451
+      }
+    }
+  ],
+  "cost": {
+    "query_units": 4,
+    "field_acquisition_units": 0,
+    "model_calls": 0,
+    "end_to_end_ms": 1.8855000380426645
+  },
+  "method": "old_full",
+  "input_file_sha256": "a986abe55df440ea4fce987f9379469d8d40dbc1673deab7c16fd30dc77d2803",
+  "freeze_sha256": "1e4cc5e5bf77bcbc2f7085cfceb8e66d9349897e8ea5d7a2b457caab51ceb48e"
+}

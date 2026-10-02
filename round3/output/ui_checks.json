@@ -1,0 +1,34 @@
+{
+  "method": "Actual in-app browser interactions against localhost:18193; not mocked UI or synthetic screenshots",
+  "original_csv_file_chooser": {
+    "file": "data/public_csv/LBNL_SDAHU_2018-04-10_raw_excerpt.csv",
+    "input_rows": 1440,
+    "input_columns": 31,
+    "output_rows": 288,
+    "run_id": "32991d3a3a744f28",
+    "case_id": "IMP-C54151B2D6604837",
+    "mapping_verified": true,
+    "readable_card_download_clicked": true,
+    "card_opened_and_dom_read": true,
+    "false_source_interval_rejected": true
+  },
+  "duplicate_repair": {
+    "before_run": "2f725f8823964950",
+    "after_run": "84668bd3bfd64e03",
+    "before_rows": 300,
+    "after_rows": 288,
+    "removed_exact_duplicates": 12,
+    "quality_after": "passed",
+    "equipment_before_and_after": "damper_stuck"
+  },
+  "actual_recomputation": {
+    "fixed_budget1_run": "89f0cd4c17ce4c66",
+    "fixed_budget1_label": "unresolved",
+    "wind_evidence_removed_run": "ec84679181c842ef",
+    "wind_evidence_removed_label": "unresolved",
+    "complete_evidence_restored_run": "41d3bd73f5734743",
+    "complete_evidence_restored_label": "damper_stuck"
+  },
+  "screenshots": ["import_mapping.png", "import_rejected.png", "local_file_import.png", "workbench_top.png", "demo3_before.png", "demo3_after.png", "missing_evidence.png"],
+  "scope": "Functional UI checks only. One existing development day for original CSV. No human-efficiency or new diagnostic performance claims."
+}

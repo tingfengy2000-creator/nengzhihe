@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "allowed_lbnl_channels": [
+    "SA_TEMP",
+    "SA_TEMPSPT",
+    "OA_TEMP",
+    "MA_TEMP",
+    "RA_TEMP",
+    "SF_SPD_DM",
+    "RF_SPD_DM",
+    "SF_CS",
+    "RF_CS",
+    "OA_DMPR_DM",
+    "RA_DMPR_DM",
+    "CHWC_VLV_DM",
+    "ZONE_TEMP_1",
+    "ZONE_TEMP_2",
+    "ZONE_TEMP_3",
+    "ZONE_TEMP_4",
+    "ZONE_TEMP_5"
+  ],
+  "temperature_conversion": "(F-32)*5/9",
+  "sampling": "LBNL 5-minute mean; BDG2 source hourly unchanged",
+  "splits": {
+    "dev": [
+      "2018-04-02",
+      "2018-04-05"
+    ],
+    "demo": [
+      "2018-04-10"
+    ],
+    "holdout": [
+      "2018-04-16",
+      "2018-04-22"
+    ]
+  },
+  "isolation": "Every source scenario on the same calendar day has the same split. All perturbations preserve base split. No holdout content used for development.",
+  "privacy": "Source fault filenames, classes, severities are in data/private only; no diagnostic route exposes them.",
+  "costs": "Existing archived-data queries only. No on-site acquisition was performed; field collection cost is unmeasured and must be reported separately.",
+  "licenses": {
+    "BDG2": "CC BY-SA 4.0 per repository LICENSE",
+    "LBNL SDAHU": "CC BY 4.0 per official Figshare article 22338283 metadata"
+  },
+  "limitations": [
+    "One simulated HVAC system and one held-out calendar week.",
+    "Repeated leakage severity files are deduplicated; paired perturbations are not independent samples.",
+    "BDG2 replay has no equipment fault ground truth.",
+    "No measured savings, field deployment or real building equipment localization has been established."
+  ]
+}

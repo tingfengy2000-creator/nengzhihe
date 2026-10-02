@@ -1,0 +1,29 @@
+{
+  "status": "PENDING_VISUAL_REVIEW_MISSING_BUNDLED_RENDERER",
+  "documents": [
+    {
+      "file": "附件1_项目简表_待视觉复检.docx",
+      "returncode": 1,
+      "log": "working\\附件1_项目简表_待视觉复检_render.log",
+      "pages": [],
+      "visually_reviewed": false
+    },
+    {
+      "file": "附件2_项目说明书_待视觉复检.docx",
+      "returncode": 1,
+      "log": "working\\附件2_项目说明书_待视觉复检_render.log",
+      "pages": [],
+      "visually_reviewed": false
+    },
+    {
+      "file": "附件3_项目商业计划书_待视觉复检.docx",
+      "returncode": 1,
+      "log": "working\\附件3_项目商业计划书_待视觉复检_render.log",
+      "pages": [],
+      "visually_reviewed": false
+    }
+  ],
+  "desktop_libreoffice_used": false,
+  "submission_ready": false,
+  "note": "用户明确要求先交可编辑DOCX；缺少允许的捆绑渲染器时标为待视觉复检，不阻塞产品开发。"
+}

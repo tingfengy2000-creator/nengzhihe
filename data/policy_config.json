@@ -1,0 +1,72 @@
+{
+  "fixed_order": [
+    "air_path",
+    "coil_response",
+    "operating_context"
+  ],
+  "selection": "Development-only leave-day-out threshold calibration, selecting order at budgets 2 and 3. These are tuning counts, not validation performance.",
+  "candidate_counts": [
+    {
+      "order": [
+        "air_path",
+        "coil_response",
+        "operating_context"
+      ],
+      "correct": 12,
+      "wrong": 0,
+      "score": 12
+    },
+    {
+      "order": [
+        "coil_response",
+        "air_path",
+        "operating_context"
+      ],
+      "correct": 12,
+      "wrong": 0,
+      "score": 12
+    },
+    {
+      "order": [
+        "air_path",
+        "operating_context",
+        "coil_response"
+      ],
+      "correct": 6,
+      "wrong": 0,
+      "score": 6
+    },
+    {
+      "order": [
+        "coil_response",
+        "operating_context",
+        "air_path"
+      ],
+      "correct": 6,
+      "wrong": 0,
+      "score": 6
+    },
+    {
+      "order": [
+        "operating_context",
+        "air_path",
+        "coil_response"
+      ],
+      "correct": 3,
+      "wrong": 0,
+      "score": 3
+    },
+    {
+      "order": [
+        "operating_context",
+        "coil_response",
+        "air_path"
+      ],
+      "correct": 3,
+      "wrong": 0,
+      "score": 3
+    }
+  ],
+  "mandatory_first_action": "quality",
+  "same_initial_screening_for_all": true
+}

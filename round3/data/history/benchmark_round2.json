@@ -1,0 +1,2429 @@
+{
+  "status": "completed",
+  "freeze_sha256": "1e4cc5e5bf77bcbc2f7085cfceb8e66d9349897e8ea5d7a2b457caab51ceb48e",
+  "diagnosis_comparison": [
+    {
+      "method": "old_full",
+      "label": "首轮诊断器·完整信息",
+      "budget": 4,
+      "n": 112,
+      "correct": 6,
+      "wrong": 0,
+      "unresolved": 106,
+      "accuracy": 0.05357142857142857,
+      "recall": {
+        "normal": 0.0,
+        "damper_stuck": 0.10714285714285714,
+        "coil_leakage": 0.0
+      },
+      "coverage": 0.05357142857142857,
+      "error_rate": 0.0,
+      "macro_f1": 0.06451612903225806,
+      "avg_queries": 4,
+      "avg_latency_ms": 1.9018365959969483,
+      "p95_latency_ms": 2.1081999875605106,
+      "field_acquisition_units": 0,
+      "confusion": {
+        "normal": {
+          "unresolved": 28
+        },
+        "damper_stuck": {
+          "unresolved": 50,
+          "damper_stuck": 6
+        },
+        "coil_leakage": {
+          "unresolved": 28
+        }
+      }
+    },
+    {
+      "method": "new_full",
+      "label": "修复诊断器·完整信息",
+      "budget": 4,
+      "n": 112,
+      "correct": 24,
+      "wrong": 0,
+      "unresolved": 88,
+      "accuracy": 0.21428571428571427,
+      "recall": {
+        "normal": 0.0,
+        "damper_stuck": 0.42857142857142855,
+        "coil_leakage": 0.0
+      },
+      "coverage": 0.21428571428571427,
+      "error_rate": 0.0,
+      "macro_f1": 0.19999999999999998,
+      "avg_queries": 4,
+      "avg_latency_ms": 18.45001518293949,
+      "p95_latency_ms": 19.952300004661083,
+      "field_acquisition_units": 0,
+      "confusion": {
+        "normal": {
+          "unresolved": 28
+        },
+        "damper_stuck": {
+          "damper_stuck": 24,
+          "unresolved": 32
+        },
+        "coil_leakage": {
+          "unresolved": 28
+        }
+      }
+    }
+  ],
+  "policy_comparison": [
+    {
+      "method": "fixed",
+      "label": "修复诊断器·固定流程",
+      "budget": 4,
+      "n": 112,
+      "correct": 24,
+      "wrong": 0,
+      "unresolved": 88,
+      "accuracy": 0.21428571428571427,
+      "recall": {
+        "normal": 0.0,
+        "damper_stuck": 0.42857142857142855,
+        "coil_leakage": 0.0
+      },
+      "coverage": 0.21428571428571427,
+      "error_rate": 0.0,
+      "macro_f1": 0.19999999999999998,
+      "avg_queries": 3.357142857142857,
+      "avg_latency_ms": 15.80532499896695,
+      "p95_latency_ms": 19.916099961847067,
+      "field_acquisition_units": 0,
+      "confusion": {
+        "normal": {
+          "unresolved": 28
+        },
+        "damper_stuck": {
+          "damper_stuck": 24,
+          "unresolved": 32
+        },
+        "coil_leakage": {
+          "unresolved": 28
+        }
+      }
+    },
+    {
+      "method": "adaptive_rule",
+      "label": "修复诊断器·自适应规则",
+      "budget": 4,
+      "n": 112,
+      "correct": 24,
+      "wrong": 0,
+      "unresolved": 88,
+      "accuracy": 0.21428571428571427,
+      "recall": {
+        "normal": 0.0,
+        "damper_stuck": 0.42857142857142855,
+        "coil_leakage": 0.0
+      },
+      "coverage": 0.21428571428571427,
+      "error_rate": 0.0,
+      "macro_f1": 0.19999999999999998,
+      "avg_queries": 3.357142857142857,
+      "avg_latency_ms": 15.819797319376708,
+      "p95_latency_ms": 19.8212000541389,
+      "field_acquisition_units": 0,
+      "confusion": {
+        "normal": {
+          "unresolved": 28
+        },
+        "damper_stuck": {
+          "damper_stuck": 24,
+          "unresolved": 32
+        },
+        "coil_leakage": {
+          "unresolved": 28
+        }
+      }
+    },
+    {
+      "method": "new_full",
+      "label": "修复诊断器·完整信息",
+      "budget": 4,
+      "n": 112,
+      "correct": 24,
+      "wrong": 0,
+      "unresolved": 88,
+      "accuracy": 0.21428571428571427,
+      "recall": {
+        "normal": 0.0,
+        "damper_stuck": 0.42857142857142855,
+        "coil_leakage": 0.0
+      },
+      "coverage": 0.21428571428571427,
+      "error_rate": 0.0,
+      "macro_f1": 0.19999999999999998,
+      "avg_queries": 4,
+      "avg_latency_ms": 18.45001518293949,
+      "p95_latency_ms": 19.952300004661083,
+      "field_acquisition_units": 0,
+      "confusion": {
+        "normal": {
+          "unresolved": 28
+        },
+        "damper_stuck": {
+          "damper_stuck": 24,
+          "unresolved": 32
+        },
+        "coil_leakage": {
+          "unresolved": 28
+        }
+      }
+    }
+  ],
+  "scope": {
+    "records": 112,
+    "base_scenarios": 56,
+    "dates": 14,
+    "contiguous_blocks": 2,
+    "systems": 1,
+    "origin": "simulated",
+    "validation": "new-date temporal holdout only"
+  },
+  "decision": "新诊断器在本次时间留出中提高结论覆盖，且错误率满足预先定义的相近范围；可表述为工况与证据窗口工程修复的收益。未证实自适应规则相对固定流程的查询收益；不追加新方法。",
+  "diagnosis_gain": true,
+  "policy_gain": false,
+  "slices": {
+    "none": [
+      {
+        "method": "old_full",
+        "label": "首轮诊断器·完整信息",
+        "budget": 4,
+        "n": 56,
+        "correct": 3,
+        "wrong": 0,
+        "unresolved": 53,
+        "accuracy": 0.05357142857142857,
+        "recall": {
+          "normal": 0.0,
+          "damper_stuck": 0.10714285714285714,
+          "coil_leakage": 0.0
+        },
+        "coverage": 0.05357142857142857,
+        "error_rate": 0.0,
+        "macro_f1": 0.06451612903225806,
+        "avg_queries": 4,
+        "avg_latency_ms": 1.9550392836598414,
+        "p95_latency_ms": 2.0961000118404627,
+        "field_acquisition_units": 0,
+        "confusion": {
+          "normal": {
+            "unresolved": 14
+          },
+          "damper_stuck": {
+            "unresolved": 25,
+            "damper_stuck": 3
+          },
+          "coil_leakage": {
+            "unresolved": 14
+          }
+        }
+      },
+      {
+        "method": "new_full",
+        "label": "修复诊断器·完整信息",
+        "budget": 4,
+        "n": 56,
+        "correct": 12,
+        "wrong": 0,
+        "unresolved": 44,
+        "accuracy": 0.21428571428571427,
+        "recall": {
+          "normal": 0.0,
+          "damper_stuck": 0.42857142857142855,
+          "coil_leakage": 0.0
+        },
+        "coverage": 0.21428571428571427,
+        "error_rate": 0.0,
+        "macro_f1": 0.19999999999999998,
+        "avg_queries": 4,
+        "avg_latency_ms": 18.425248209885986,
+        "p95_latency_ms": 19.700600067153573,
+        "field_acquisition_units": 0,
+        "confusion": {
+          "normal": {
+            "unresolved": 14
+          },
+          "damper_stuck": {
+            "damper_stuck": 12,
+            "unresolved": 16
+          },
+          "coil_leakage": {
+            "unresolved": 14
+          }
+        }
+      },
+      {
+        "method": "fixed",
+        "label": "修复诊断器·固定流程",
+        "budget": 4,
+        "n": 56,
+        "correct": 12,
+        "wrong": 0,
+        "unresolved": 44,
+        "accuracy": 0.21428571428571427,
+        "recall": {
+          "normal": 0.0,
+          "damper_stuck": 0.42857142857142855,
+          "coil_leakage": 0.0
+        },
+        "coverage": 0.21428571428571427,
+        "error_rate": 0.0,
+        "macro_f1": 0.19999999999999998,
+        "avg_queries": 3.357142857142857,
+        "avg_latency_ms": 15.724257141950407,
+        "p95_latency_ms": 19.568599993363023,
+        "field_acquisition_units": 0,
+        "confusion": {
+          "normal": {
+            "unresolved": 14
+          },
+          "damper_stuck": {
+            "damper_stuck": 12,
+            "unresolved": 16
+          },
+          "coil_leakage": {
+            "unresolved": 14
+          }
+        }
+      },
+      {
+        "method": "adaptive_rule",
+        "label": "修复诊断器·自适应规则",
+        "budget": 4,
+        "n": 56,
+        "correct": 12,
+        "wrong": 0,
+        "unresolved": 44,
+        "accuracy": 0.21428571428571427,
+        "recall": {
+          "normal": 0.0,
+          "damper_stuck": 0.42857142857142855,
+          "coil_leakage": 0.0
+        },
+        "coverage": 0.21428571428571427,
+        "error_rate": 0.0,
+        "macro_f1": 0.19999999999999998,
+        "avg_queries": 3.357142857142857,
+        "avg_latency_ms": 16.02948393389982,
+        "p95_latency_ms": 19.98990005813539,
+        "field_acquisition_units": 0,
+        "confusion": {
+          "normal": {
+            "unresolved": 14
+          },
+          "damper_stuck": {
+            "damper_stuck": 12,
+            "unresolved": 16
+          },
+          "coil_leakage": {
+            "unresolved": 14
+          }
+        }
+      }
+    ],
+    "duplicate_records_12": [
+      {
+        "method": "old_full",
+        "label": "首轮诊断器·完整信息",
+        "budget": 4,
+        "n": 56,
+        "correct": 3,
+        "wrong": 0,
+        "unresolved": 53,
+        "accuracy": 0.05357142857142857,
+        "recall": {
+          "normal": 0.0,
+          "damper_stuck": 0.10714285714285714,
+          "coil_leakage": 0.0
+        },
+        "coverage": 0.05357142857142857,
+        "error_rate": 0.0,
+        "macro_f1": 0.06451612903225806,
+        "avg_queries": 4,
+        "avg_latency_ms": 1.848633908334055,
+        "p95_latency_ms": 2.1081999875605106,
+        "field_acquisition_units": 0,
+        "confusion": {
+          "normal": {
+            "unresolved": 14
+          },
+          "damper_stuck": {
+            "unresolved": 25,
+            "damper_stuck": 3
+          },
+          "coil_leakage": {
+            "unresolved": 14
+          }
+        }
+      },
+      {
+        "method": "new_full",
+        "label": "修复诊断器·完整信息",
+        "budget": 4,
+        "n": 56,
+        "correct": 12,
+        "wrong": 0,
+        "unresolved": 44,
+        "accuracy": 0.21428571428571427,
+        "recall": {
+          "normal": 0.0,
+          "damper_stuck": 0.42857142857142855,
+          "coil_leakage": 0.0
+        },
+        "coverage": 0.21428571428571427,
+        "error_rate": 0.0,
+        "macro_f1": 0.19999999999999998,
+        "avg_queries": 4,
+        "avg_latency_ms": 18.474782155992994,
+        "p95_latency_ms": 19.96930013410747,
+        "field_acquisition_units": 0,
+        "confusion": {
+          "normal": {
+            "unresolved": 14
+          },
+          "damper_stuck": {
+            "unresolved": 16,
+            "damper_stuck": 12
+          },
+          "coil_leakage": {
+            "unresolved": 14
+          }
+        }
+      },
+      {
+        "method": "fixed",
+        "label": "修复诊断器·固定流程",
+        "budget": 4,
+        "n": 56,
+        "correct": 12,
+        "wrong": 0,
+        "unresolved": 44,
+        "accuracy": 0.21428571428571427,
+        "recall": {
+          "normal": 0.0,
+          "damper_stuck": 0.42857142857142855,
+          "coil_leakage": 0.0
+        },
+        "coverage": 0.21428571428571427,
+        "error_rate": 0.0,
+        "macro_f1": 0.19999999999999998,
+        "avg_queries": 3.357142857142857,
+        "avg_latency_ms": 15.886392855983493,
+        "p95_latency_ms": 20.05039993673563,
+        "field_acquisition_units": 0,
+        "confusion": {
+          "normal": {
+            "unresolved": 14
+          },
+          "damper_stuck": {
+            "unresolved": 16,
+            "damper_stuck": 12
+          },
+          "coil_leakage": {
+            "unresolved": 14
+          }
+        }
+      },
+      {
+        "method": "adaptive_rule",
+        "label": "修复诊断器·自适应规则",
+        "budget": 4,
+        "n": 56,
+        "correct": 12,
+        "wrong": 0,
+        "unresolved": 44,
+        "accuracy": 0.21428571428571427,
+        "recall": {
+          "normal": 0.0,
+          "damper_stuck": 0.42857142857142855,
+          "coil_leakage": 0.0
+        },
+        "coverage": 0.21428571428571427,
+        "error_rate": 0.0,
+        "macro_f1": 0.19999999999999998,
+        "avg_queries": 3.357142857142857,
+        "avg_latency_ms": 15.610110704853598,
+        "p95_latency_ms": 19.733899971470237,
+        "field_acquisition_units": 0,
+        "confusion": {
+          "normal": {
+            "unresolved": 14
+          },
+          "damper_stuck": {
+            "unresolved": 16,
+            "damper_stuck": 12
+          },
+          "coil_leakage": {
+            "unresolved": 14
+          }
+        }
+      }
+    ]
+  },
+  "per_day": [
+    {
+      "day": "2018-06-04",
+      "metrics": [
+        {
+          "method": "old_full",
+          "label": "首轮诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 4,
+          "avg_latency_ms": 1.274374983040616,
+          "p95_latency_ms": 1.2961998581886292,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "new_full",
+          "label": "修复诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 4,
+          "avg_latency_ms": 15.055112511618063,
+          "p95_latency_ms": 15.280999941751361,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "fixed",
+          "label": "修复诊断器·固定流程",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 1,
+          "avg_latency_ms": 4.393337439978495,
+          "p95_latency_ms": 4.655699944123626,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "adaptive_rule",
+          "label": "修复诊断器·自适应规则",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 1,
+          "avg_latency_ms": 4.441112512722611,
+          "p95_latency_ms": 4.57830005325377,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2018-06-05",
+      "metrics": [
+        {
+          "method": "old_full",
+          "label": "首轮诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 4,
+          "avg_latency_ms": 1.9327124755363911,
+          "p95_latency_ms": 1.9850998651236296,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 2,
+              "damper_stuck": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "new_full",
+          "label": "修复诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 4,
+          "wrong": 0,
+          "unresolved": 4,
+          "accuracy": 0.5,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 1.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.5,
+          "error_rate": 0.0,
+          "macro_f1": 0.3333333333333333,
+          "avg_queries": 4,
+          "avg_latency_ms": 18.977462546899915,
+          "p95_latency_ms": 19.271800061687827,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "fixed",
+          "label": "修复诊断器·固定流程",
+          "budget": 4,
+          "n": 8,
+          "correct": 4,
+          "wrong": 0,
+          "unresolved": 4,
+          "accuracy": 0.5,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 1.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.5,
+          "error_rate": 0.0,
+          "macro_f1": 0.3333333333333333,
+          "avg_queries": 3.5,
+          "avg_latency_ms": 16.24762505525723,
+          "p95_latency_ms": 18.916500033810735,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "adaptive_rule",
+          "label": "修复诊断器·自适应规则",
+          "budget": 4,
+          "n": 8,
+          "correct": 4,
+          "wrong": 0,
+          "unresolved": 4,
+          "accuracy": 0.5,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 1.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.5,
+          "error_rate": 0.0,
+          "macro_f1": 0.3333333333333333,
+          "avg_queries": 3.5,
+          "avg_latency_ms": 16.30676258355379,
+          "p95_latency_ms": 18.801300087943673,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2018-06-06",
+      "metrics": [
+        {
+          "method": "old_full",
+          "label": "首轮诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 4,
+          "wrong": 0,
+          "unresolved": 4,
+          "accuracy": 0.5,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 1.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.5,
+          "error_rate": 0.0,
+          "macro_f1": 0.3333333333333333,
+          "avg_queries": 4,
+          "avg_latency_ms": 1.9785999902524054,
+          "p95_latency_ms": 2.0160998683422804,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "new_full",
+          "label": "修复诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 4,
+          "avg_latency_ms": 21.209149999776855,
+          "p95_latency_ms": 20.3078999184072,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "fixed",
+          "label": "修复诊断器·固定流程",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 18.473549949703738,
+          "p95_latency_ms": 20.032799802720547,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "adaptive_rule",
+          "label": "修复诊断器·自适应规则",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 18.11448749504052,
+          "p95_latency_ms": 19.98990005813539,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2018-06-07",
+      "metrics": [
+        {
+          "method": "old_full",
+          "label": "首轮诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 4,
+          "avg_latency_ms": 2.0844500104431063,
+          "p95_latency_ms": 2.0490000024437904,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "new_full",
+          "label": "修复诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 4,
+          "avg_latency_ms": 19.195287517504767,
+          "p95_latency_ms": 19.76879988797009,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "fixed",
+          "label": "修复诊断器·固定流程",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 19.269175041699782,
+          "p95_latency_ms": 19.3809000775218,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "adaptive_rule",
+          "label": "修复诊断器·自适应规则",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 17.55446250899695,
+          "p95_latency_ms": 19.2886998411268,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2018-06-08",
+      "metrics": [
+        {
+          "method": "old_full",
+          "label": "首轮诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 4,
+          "avg_latency_ms": 2.8351250221021473,
+          "p95_latency_ms": 1.976700033992529,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "new_full",
+          "label": "修复诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 4,
+          "avg_latency_ms": 19.056837452808395,
+          "p95_latency_ms": 19.224599935114384,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "fixed",
+          "label": "修复诊断器·固定流程",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 18.153624987462536,
+          "p95_latency_ms": 19.426099956035614,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "adaptive_rule",
+          "label": "修复诊断器·自适应规则",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 17.79223748599179,
+          "p95_latency_ms": 19.20159999281168,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2018-06-09",
+      "metrics": [
+        {
+          "method": "old_full",
+          "label": "首轮诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 4,
+          "avg_latency_ms": 1.9683499704115093,
+          "p95_latency_ms": 2.1679000928997993,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "new_full",
+          "label": "修复诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 4,
+          "avg_latency_ms": 18.423162458930165,
+          "p95_latency_ms": 18.6381998937577,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "fixed",
+          "label": "修复诊断器·固定流程",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 17.1061500441283,
+          "p95_latency_ms": 18.42680014669895,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "adaptive_rule",
+          "label": "修复诊断器·自适应规则",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 18.46754996222444,
+          "p95_latency_ms": 18.324599834159017,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2018-06-10",
+      "metrics": [
+        {
+          "method": "old_full",
+          "label": "首轮诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 4,
+          "avg_latency_ms": 1.9117750052828342,
+          "p95_latency_ms": 1.9882000051438808,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "new_full",
+          "label": "修复诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 4,
+          "avg_latency_ms": 18.41516251442954,
+          "p95_latency_ms": 18.857999937608838,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "fixed",
+          "label": "修复诊断器·固定流程",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 17.61480001732707,
+          "p95_latency_ms": 18.737700069323182,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "adaptive_rule",
+          "label": "修复诊断器·自适应规则",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 16.930437501287088,
+          "p95_latency_ms": 18.225899897515774,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2018-07-09",
+      "metrics": [
+        {
+          "method": "old_full",
+          "label": "首轮诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 4,
+          "avg_latency_ms": 1.2383374851197004,
+          "p95_latency_ms": 1.2903001625090837,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "new_full",
+          "label": "修复诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 4,
+          "avg_latency_ms": 15.101175027666613,
+          "p95_latency_ms": 15.232600038871169,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "fixed",
+          "label": "修复诊断器·固定流程",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 1,
+          "avg_latency_ms": 4.313987476052716,
+          "p95_latency_ms": 4.458099836483598,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "adaptive_rule",
+          "label": "修复诊断器·自适应规则",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 1,
+          "avg_latency_ms": 4.319324943935499,
+          "p95_latency_ms": 4.466499900445342,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2018-07-10",
+      "metrics": [
+        {
+          "method": "old_full",
+          "label": "首轮诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 4,
+          "avg_latency_ms": 1.9274875230621547,
+          "p95_latency_ms": 1.9776001572608948,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "new_full",
+          "label": "修复诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 4,
+          "avg_latency_ms": 17.735150002408773,
+          "p95_latency_ms": 18.242800142616034,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "fixed",
+          "label": "修复诊断器·固定流程",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 4,
+          "avg_latency_ms": 17.791374993976206,
+          "p95_latency_ms": 18.25039996765554,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "adaptive_rule",
+          "label": "修复诊断器·自适应规则",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 4,
+          "avg_latency_ms": 20.96287501626648,
+          "p95_latency_ms": 30.767899937927723,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2018-07-11",
+      "metrics": [
+        {
+          "method": "old_full",
+          "label": "首轮诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 4,
+          "avg_latency_ms": 1.9068249966949224,
+          "p95_latency_ms": 1.945100026205182,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "new_full",
+          "label": "修复诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 4,
+          "avg_latency_ms": 18.393324979115278,
+          "p95_latency_ms": 18.6383998952806,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "fixed",
+          "label": "修复诊断器·固定流程",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 17.37857499392703,
+          "p95_latency_ms": 18.95719999447465,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "adaptive_rule",
+          "label": "修复诊断器·自适应规则",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 17.107924941228703,
+          "p95_latency_ms": 18.61619995906949,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2018-07-12",
+      "metrics": [
+        {
+          "method": "old_full",
+          "label": "首轮诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 4,
+          "avg_latency_ms": 1.8653874867595732,
+          "p95_latency_ms": 1.949199941009283,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "new_full",
+          "label": "修复诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 4,
+          "avg_latency_ms": 20.771600014995784,
+          "p95_latency_ms": 19.69500002451241,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "fixed",
+          "label": "修复诊断器·固定流程",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 17.98175004660152,
+          "p95_latency_ms": 19.568599993363023,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "adaptive_rule",
+          "label": "修复诊断器·自适应规则",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 17.847537499619648,
+          "p95_latency_ms": 19.8212000541389,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2018-07-13",
+      "metrics": [
+        {
+          "method": "old_full",
+          "label": "首轮诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 4,
+          "avg_latency_ms": 1.9324124150443822,
+          "p95_latency_ms": 2.013599965721369,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "new_full",
+          "label": "修复诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 4,
+          "avg_latency_ms": 19.334525015437976,
+          "p95_latency_ms": 19.952300004661083,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 2,
+              "damper_stuck": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "fixed",
+          "label": "修复诊断器·固定流程",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 18.370325007708743,
+          "p95_latency_ms": 19.789600046351552,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 2,
+              "damper_stuck": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "adaptive_rule",
+          "label": "修复诊断器·自适应规则",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 17.82923747668974,
+          "p95_latency_ms": 19.25510005094111,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 2,
+              "damper_stuck": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2018-07-14",
+      "metrics": [
+        {
+          "method": "old_full",
+          "label": "首轮诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 4,
+          "avg_latency_ms": 1.871237502200529,
+          "p95_latency_ms": 1.9214998465031385,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "new_full",
+          "label": "修复诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 4,
+          "avg_latency_ms": 18.02164997207001,
+          "p95_latency_ms": 18.4003000613302,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "fixed",
+          "label": "修复诊断器·固定流程",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 16.699174972018227,
+          "p95_latency_ms": 18.63690000027418,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "adaptive_rule",
+          "label": "修复诊断器·自适应规则",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 16.612737497780472,
+          "p95_latency_ms": 17.925700172781944,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "damper_stuck": 2,
+              "unresolved": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day": "2018-07-15",
+      "metrics": [
+        {
+          "method": "old_full",
+          "label": "首轮诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 8,
+          "accuracy": 0.0,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.0,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.0,
+          "error_rate": null,
+          "macro_f1": 0.0,
+          "avg_queries": 4,
+          "avg_latency_ms": 1.8986374780070037,
+          "p95_latency_ms": 1.9670999608933926,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 4
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "new_full",
+          "label": "修复诊断器·完整信息",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 4,
+          "avg_latency_ms": 18.610612547490746,
+          "p95_latency_ms": 18.982900073751807,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 2,
+              "damper_stuck": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "fixed",
+          "label": "修复诊断器·固定流程",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 17.48109995969571,
+          "p95_latency_ms": 18.90209992416203,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 2,
+              "damper_stuck": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        },
+        {
+          "method": "adaptive_rule",
+          "label": "修复诊断器·自适应规则",
+          "budget": 4,
+          "n": 8,
+          "correct": 2,
+          "wrong": 0,
+          "unresolved": 6,
+          "accuracy": 0.25,
+          "recall": {
+            "normal": 0.0,
+            "damper_stuck": 0.5,
+            "coil_leakage": 0.0
+          },
+          "coverage": 0.25,
+          "error_rate": 0.0,
+          "macro_f1": 0.2222222222222222,
+          "avg_queries": 3.75,
+          "avg_latency_ms": 17.190475045936182,
+          "p95_latency_ms": 18.844899954274297,
+          "field_acquisition_units": 0,
+          "confusion": {
+            "normal": {
+              "unresolved": 2
+            },
+            "damper_stuck": {
+              "unresolved": 2,
+              "damper_stuck": 2
+            },
+            "coil_leakage": {
+              "unresolved": 2
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "completed_at_utc": "2026-09-30T10:08:38.327937+00:00",
+  "notes": [
+    "未决与异常未定位均计入整体分母，不能算三分类正确。",
+    "同一仿真系统新日期验证，不是跨设备或真实建筑故障验证。",
+    "没有使用实际阀位、故障文件名、真实标签或注入设置做诊断；温度推算混风响应不是阀位反馈。",
+    "完整信息参照读取全部4组允许证据，独立于常规预算循环；固定与自适应主预算均为4。",
+    "查询成本为离线证据组记账；没有现场补采，未测量现场成本或人工工时节省。",
+    "端到端耗时为本机输入文件读取解析至结果JSON编码，包含预处理、查询和诊断；单轮顺序轮换测量，不含网络传输、日志落盘或前端绘制。",
+    "本轮未调用或优化大模型；旧42条已用于开发回归，不作为验证成绩。"
+  ]
+}

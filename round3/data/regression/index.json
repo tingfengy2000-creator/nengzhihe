@@ -1,0 +1,1458 @@
+[
+  {
+    "id": "NZH2-3FBD38E1EE97",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-3FBD38E1EE97.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-A331C3BED247",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-A331C3BED247.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-5C89D19F8121",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-5C89D19F8121.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-0488CE76FEE1",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-0488CE76FEE1.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-33D018B5668B",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-33D018B5668B.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-75F5C21FDCE7",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-75F5C21FDCE7.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-EB6E54CFEBAC",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-EB6E54CFEBAC.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-161F7F86A733",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-161F7F86A733.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-3B1FB482754B",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-3B1FB482754B.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-9EA8B56575C0",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-9EA8B56575C0.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-5EE5C8622479",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-5EE5C8622479.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-62EA95C64926",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-62EA95C64926.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-75F6BA6F6E87",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-75F6BA6F6E87.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-4481162A0FE3",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-4481162A0FE3.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-5C227024F79D",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-5C227024F79D.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-A14BD46BA54D",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-A14BD46BA54D.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-F7D859956DAB",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-F7D859956DAB.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-54076E94A45C",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-54076E94A45C.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-2469535CC676",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-2469535CC676.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-291E67A29FA5",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-291E67A29FA5.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-46EA1D599E86",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-46EA1D599E86.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-7883AC93751D",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-7883AC93751D.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-F94F05EB1C6F",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-F94F05EB1C6F.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-4F583F0C8638",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-4F583F0C8638.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-D33CB100E4ED",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-D33CB100E4ED.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-0703803D0669",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-0703803D0669.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-877B18044AF8",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-877B18044AF8.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-3F8877DF2AF8",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-3F8877DF2AF8.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-47DF7820A2DE",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-47DF7820A2DE.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-6467F31CF87E",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-6467F31CF87E.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-57BCB726E502",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-57BCB726E502.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-A2CFAC3DAF90",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-A2CFAC3DAF90.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-E63488243D71",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-E63488243D71.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-E6AAC02D4090",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-E6AAC02D4090.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-9F99935D8899",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-9F99935D8899.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-AFA37864D55A",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-AFA37864D55A.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-9FBC82B89E28",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-9FBC82B89E28.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-7FBFA45339E4",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-7FBFA45339E4.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-47D1BAEAE4AC",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-47D1BAEAE4AC.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-83CA56DFAF4F",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-83CA56DFAF4F.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-A204D5144300",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-A204D5144300.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-CE086971DD01",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-CE086971DD01.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-610FF2C39357",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-610FF2C39357.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-C655B4B4A5FF",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-C655B4B4A5FF.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-E130C5108164",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-E130C5108164.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-C0A45F730F67",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-C0A45F730F67.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-6F6B66627EDB",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-6F6B66627EDB.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-A1EA99F11F0C",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-A1EA99F11F0C.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-AB6554EE3C69",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-AB6554EE3C69.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-A35CB5473842",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-A35CB5473842.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-420EF0E0C05C",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-420EF0E0C05C.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-75B46DD3C3CD",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-75B46DD3C3CD.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-E403E63E723E",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-E403E63E723E.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-35E96EEF4D9B",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-35E96EEF4D9B.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-891288077FEC",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-891288077FEC.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-3BFB28EBBD9E",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-3BFB28EBBD9E.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-CB776332844A",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-CB776332844A.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-4438B76CC7CA",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-4438B76CC7CA.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-3697FE8148DA",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-3697FE8148DA.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-0E09873C5F24",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-0E09873C5F24.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-CE26B223228F",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-CE26B223228F.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-7FA3071D0858",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-7FA3071D0858.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-9E1AFEB1C163",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-9E1AFEB1C163.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-4464986E901E",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-4464986E901E.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-BDE2FD749B0B",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-BDE2FD749B0B.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-BA3E5D8AC077",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-BA3E5D8AC077.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-A7EB664E3E5D",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-A7EB664E3E5D.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-20F4F8E88D54",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-20F4F8E88D54.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-8BBE4262EF4B",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-8BBE4262EF4B.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-91D86936E7EB",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-91D86936E7EB.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-371F77DE73A3",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-371F77DE73A3.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-71E66FE5E5B0",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-71E66FE5E5B0.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-1E0081F23A39",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-1E0081F23A39.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-EAA393ED8062",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-EAA393ED8062.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-2B10BA7D658B",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-2B10BA7D658B.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-234FB3E11026",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-234FB3E11026.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-3902981D4CBD",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-3902981D4CBD.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-74BD1597814F",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-74BD1597814F.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-7D7F3DFAA7A0",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-7D7F3DFAA7A0.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-4B48577B152F",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-4B48577B152F.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-F8104962EDBA",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-F8104962EDBA.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-0DE0F53D1F07",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-0DE0F53D1F07.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-C41837D35CC4",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-C41837D35CC4.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-F42492FE3902",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-F42492FE3902.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-CA1F3C609785",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-CA1F3C609785.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-38EFAA4CD0D7",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-38EFAA4CD0D7.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-020610C4AE2B",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-020610C4AE2B.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-D46756E4FBFB",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-D46756E4FBFB.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-AAE87F6C6F43",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-AAE87F6C6F43.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-6244A2B2E58E",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-6244A2B2E58E.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-1B88FA54C2F2",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-1B88FA54C2F2.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-04E4E19F6C74",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-04E4E19F6C74.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-BB1B1032E7BE",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-BB1B1032E7BE.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-EAC0CFF58BA9",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-EAC0CFF58BA9.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-5E102A7F1003",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-5E102A7F1003.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-83D3A9C42313",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-83D3A9C42313.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-F559C7A07743",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-F559C7A07743.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-DBBBC39C2E91",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-DBBBC39C2E91.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-3D6F6EEDF281",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-3D6F6EEDF281.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-C700E395C743",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-C700E395C743.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-2C0F05A4B454",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-2C0F05A4B454.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-E88B8FEFCB30",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-E88B8FEFCB30.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-E34434A653A4",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-E34434A653A4.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-70FFBFD2704B",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-70FFBFD2704B.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-D59E2E5B78A3",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-D59E2E5B78A3.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-D844B11A96C1",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-D844B11A96C1.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-2DCCA26672FD",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-2DCCA26672FD.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-8978D0F85A49",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-8978D0F85A49.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-8EC44B73F95F",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-8EC44B73F95F.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-5A237233984B",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-5A237233984B.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  },
+  {
+    "id": "NZH2-79628B019966",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-79628B019966.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    }
+  },
+  {
+    "id": "NZH2-733C8FB13239",
+    "split": "final",
+    "family": "lbnl",
+    "origin": "simulated",
+    "path": "data/final/cases/NZH2-733C8FB13239.json",
+    "title": "封存评测案例",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    }
+  }
+]

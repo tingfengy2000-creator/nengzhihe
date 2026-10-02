@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1000" viewBox="0 0 1440 1000" style="max-width:100%;height:auto;display:block" role="img" aria-labelledby="t d">
+<title id="t">能智核首轮实际架构</title><desc id="d">实测建筑回放与仿真机组验证相互独立，四策略共享证据池，所有数值由程序计算，隐藏标签只用于冻结后的评分。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L8 3L0 6Z" fill="#559c97"/></marker><style>text{font-family:'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#173d49} .title{font-size:34px;font-weight:700}.head{font-size:23px;font-weight:700}.body{font-size:18px}.small{font-size:16px;fill:#53717b}.tag{font-size:15px;letter-spacing:2px;fill:#448e87}.box{fill:#fff;stroke:#dbe8e9;stroke-width:2}.line{fill:none;stroke:#559c97;stroke-width:2.5;marker-end:url(#arrow)} .dash{stroke-dasharray:7 6}</style></defs>
+<rect width="1440" height="1000" fill="#f2f7f7"/>
+<rect x="0" width="16" height="1000" fill="#173d49"/>
+<text x="64" y="56" class="tag">NENGZHIHE · ROUND 01 · IMPLEMENTED ARCHITECTURE</text>
+<text x="64" y="105" class="title">能智核｜公共建筑用能异常核验工作台</text>
+<text x="64" y="142" class="body">保留轻量架构：可操作演示、可复核证据、真实对照。模型只选择动作。</text>
+
+<rect x="64" y="180" width="400" height="154" rx="18" class="box"/>
+<text x="88" y="216" class="tag">A / 实测回放</text><text x="88" y="252" class="head">BDG2 建筑电表 + 天气</text>
+<text x="88" y="286" class="body">少量建筑 · 历史参考 · 无设备故障标签</text><text x="88" y="313" class="small">仅产生异常与节能机会筛查线索</text>
+<rect x="525" y="180" width="384" height="154" rx="18" class="box"/>
+<text x="550" y="216" class="tag">独立统计通道</text><text x="550" y="252" class="head">确定性用能回放</text>
+<text x="550" y="286" class="body">程序计算时序、参考偏差与缺测</text><text x="550" y="313" class="small">基线差额 ≠ 已实现节能收益</text>
+<path d="M464 257H519" class="line"/>
+
+<rect x="64" y="380" width="400" height="187" rx="18" class="box"/>
+<text x="88" y="416" class="tag">B / 仿真验证</text><text x="88" y="452" class="head">LBNL 单风道空调机组</text>
+<text x="88" y="486" class="body">温度 + 控制指令 · 标签隔离</text><text x="88" y="516" class="body">实际阀位与注入关联点位剔除</text><text x="88" y="544" class="small">后加重复记录扰动单独标识</text>
+<rect x="525" y="380" width="384" height="187" rx="18" class="box"/>
+<text x="550" y="416" class="tag">共享允许证据池</text><text x="550" y="452" class="head">记录 / 混风 / 盘管 / 运行</text>
+<text x="550" y="486" class="body">读取每组：1 查询单位</text><text x="550" y="516" class="body">所有策略使用相同初筛摘要</text><text x="550" y="544" class="small">现场补采未执行，费用不由查询数推算</text>
+<path d="M464 471H519" class="line"/>
+
+<rect x="64" y="612" width="845" height="155" rx="18" class="box"/>
+<text x="88" y="649" class="tag">C / 四策略 · 共同停止条件 · 共同数值引擎</text>
+<text x="88" y="688" class="head">固定流程</text><text x="273" y="688" class="head">自适应规则</text><text x="492" y="688" class="head">本地 Qwen3-4B</text><text x="751" y="688" class="head">完整信息</text>
+<text x="88" y="725" class="small">开发日选序</text><text x="273" y="725" class="small">无大模型 · 默认路线</text><text x="492" y="725" class="small">只选下一动作 · 实验选项</text><text x="751" y="725" class="small">固定支付4单位</text>
+<path d="M717 567V606" class="line"/>
+
+<rect x="972" y="180" width="400" height="387" rx="18" fill="#173d49"/>
+<text x="997" y="220" style="fill:#8ed0c6" class="tag">可操作核验工作台</text>
+<text x="997" y="263" style="fill:#fff" class="head">记录可信度 ｜ 设备疑点</text>
+<text x="997" y="307" style="fill:#d8eeee" class="body">两种状态独立保留</text>
+<text x="997" y="345" style="fill:#d8eeee" class="body">重复记录修正后继续设备核查</text>
+<text x="997" y="383" style="fill:#d8eeee" class="body">真实曲线、逐步证据、来源与成本</text>
+<text x="997" y="421" style="fill:#d8eeee" class="body">导出 JSON · 演示与评测分开</text>
+<text x="997" y="471" style="fill:#8ed0c6" class="small">原生网页 + Python / NumPy</text>
+<text x="997" y="502" style="fill:#8ed0c6" class="small">本机运行 · 无付费模型 API</text>
+<text x="997" y="535" style="fill:#8ed0c6" class="small">两套数据不拼成真实楼宇故障证据</text>
+<path d="M909 257H966" class="line"/>
+<path d="M1172 612V573" class="line"/>
+
+<rect x="972" y="612" width="400" height="155" rx="18" class="box"/>
+<text x="997" y="649" class="tag">数值判断与留痕</text><text x="997" y="688" class="head">开发期校准的证据规则</text>
+<text x="997" y="725" class="small">数值由代码计算；未决不强行归类</text><path d="M909 716H966" class="line"/>
+
+<rect x="64" y="817" width="1308" height="125" rx="18" fill="#e2eeec" stroke="#bfd5d2"/>
+<text x="88" y="856" class="head">冻结 → 保存全部预测 → 打开隐藏标签 → 评分 → 决定继续或收缩</text>
+<text x="88" y="892" class="body">42 条成对记录 / 21 个基础日工况 / 7 个日期块 / 1 套仿真系统；评测不等于真实楼宇试点。</text>
+<text x="88" y="920" class="small">首轮结果：主动模型未优于自适应规则。保留工作台，收缩模型创新表述；不追加复杂架构。</text>
+<path d="M1172 767V811" class="line dash"/>
+<text x="64" y="977" class="small">每一项输出可追溯到来源、规则与冻结版本。材料不虚构试点、合作、性能或节能收益。</text>
+</svg>

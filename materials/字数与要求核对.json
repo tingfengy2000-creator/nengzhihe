@@ -1,0 +1,106 @@
+{
+  "counting_rule": "Each non-whitespace Unicode code point counts as one, including Latin letters, numerals, punctuation and subsection labels. Conservative relative to ordinary Chinese word counts.",
+  "sections": [
+    {
+      "document": "附件1 项目简表",
+      "section": "项目背景",
+      "characters_including_punctuation": 146,
+      "limit": 300,
+      "passed": true
+    },
+    {
+      "document": "附件1 项目简表",
+      "section": "立项思路",
+      "characters_including_punctuation": 250,
+      "limit": 300,
+      "passed": true
+    },
+    {
+      "document": "附件1 项目简表",
+      "section": "解决方案",
+      "characters_including_punctuation": 280,
+      "limit": 600,
+      "passed": true
+    },
+    {
+      "document": "附件1 项目简表",
+      "section": "商业模式和预期效益",
+      "characters_including_punctuation": 134,
+      "limit": 300,
+      "passed": true
+    },
+    {
+      "document": "附件2 项目说明书",
+      "section": "一、立项依据",
+      "characters_including_punctuation": 642,
+      "limit": 2000,
+      "passed": true
+    },
+    {
+      "document": "附件2 项目说明书",
+      "section": "二、项目创新内容",
+      "characters_including_punctuation": 1166,
+      "limit": 3000,
+      "passed": true
+    },
+    {
+      "document": "附件2 项目说明书",
+      "section": "三、实施方案",
+      "characters_including_punctuation": 997,
+      "limit": 3000,
+      "passed": true
+    },
+    {
+      "document": "附件2 项目说明书",
+      "section": "四、应用前景分析",
+      "characters_including_punctuation": 186,
+      "limit": 500,
+      "passed": true
+    },
+    {
+      "document": "附件3 项目商业计划书",
+      "section": "一、项目方案概述",
+      "characters_including_punctuation": 120,
+      "limit": 200,
+      "passed": true
+    },
+    {
+      "document": "附件3 项目商业计划书",
+      "section": "二、项目团队",
+      "characters_including_punctuation": 136,
+      "limit": 200,
+      "passed": true
+    },
+    {
+      "document": "附件3 项目商业计划书",
+      "section": "三、项目产品（服务）化",
+      "characters_including_punctuation": 478,
+      "limit": 2000,
+      "passed": true
+    },
+    {
+      "document": "附件3 项目商业计划书",
+      "section": "四、项目产品（服务）市场与竞争",
+      "characters_including_punctuation": 694,
+      "limit": 2000,
+      "passed": true
+    },
+    {
+      "document": "附件3 项目商业计划书",
+      "section": "五、商业模式",
+      "characters_including_punctuation": 513,
+      "limit": 2000,
+      "passed": true
+    },
+    {
+      "document": "附件3 项目商业计划书",
+      "section": "六、预期经济效益分析",
+      "characters_including_punctuation": 178,
+      "limit": 500,
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "render_verified": false,
+  "submission_ready": false
+}

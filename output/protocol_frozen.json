@@ -1,0 +1,101 @@
+{
+  "frozen_at_utc": "2026-09-30T09:33:25.114551+00:00",
+  "protocol": {
+    "version": "round1-frozen-v1",
+    "objective": "Test whether local-model evidence selection adds value over a competent adaptive rule policy in public-data anomaly verification.",
+    "primary_budget": 4,
+    "secondary_budgets": [
+      2,
+      3
+    ],
+    "strategies": [
+      "fixed",
+      "adaptive_rule",
+      "local_model",
+      "full_information"
+    ],
+    "pool": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ],
+    "cost_model": {
+      "query_units_per_action": 1,
+      "field_acquisition_units": 0,
+      "field_cost_note": "No physical measurements are collected. Costs for real field acquisition are unknown and not inferred from query counts."
+    },
+    "full_information": "All four actions cost four units. Only budget-four comparisons are like-for-like; no free full-information baseline at lower budgets.",
+    "label_separation": "Anonymous case identifiers; original fault filenames and severity are unavailable to strategies.",
+    "excluded_channels": [
+      "CHWC_VLV",
+      "OA_CFM",
+      "OA_DMPR",
+      "RA_CFM",
+      "RA_DMPR",
+      "RF_SPD",
+      "RF_WAT",
+      "SA_CFM",
+      "SA_SP",
+      "SA_SPSPT",
+      "SF_SPD",
+      "SF_WAT",
+      "SYS_CTL"
+    ],
+    "data_tracks": {
+      "bdg2": "Measured historical replay without equipment fault truth; no fault accuracy claimed.",
+      "lbnl": "Single-system simulated fault/normal cases with isolated labels; not real building deployment.",
+      "perturbation": "Explicit post-hoc record corruption with separate provenance; not a simulated physical sensor intervention."
+    },
+    "metrics": [
+      "accuracy_with_abstentions_counted_as_unresolved",
+      "macro_f1",
+      "coverage",
+      "error_among_answered",
+      "mean_query_units",
+      "end_to_end_latency_ms",
+      "model_calls",
+      "invalid_model_response_rate"
+    ],
+    "numerics": "A shared deterministic feature and diagnosis engine supplies every number. The local model only selects a next allowed action.",
+    "freeze_gate": "Final protocol, code hashes, development calibration and case IDs must be frozen before holdout evaluation. Failures are retained; changes after opening holdout invalidate pristine-holdout claims.",
+    "decision_rule": "Retain an innovation claim only if improvement over adaptive rules is demonstrated at comparable information and cost. Otherwise narrow to a reproducible verification workbench and describe LLM selection as optional.",
+    "diagnosis": "Shared development-calibrated command/temperature response rules; model selects actions only.",
+    "evaluation_units": {
+      "cases": 42,
+      "paired_base_day_scenarios": 21,
+      "independent_date_blocks": 7,
+      "simulated_systems": 1
+    },
+    "shared_stopping": "All non-full policies stop at the first supported shared-rule result or insufficient unique fan operation; full policy always reads all 4 groups.",
+    "decision_threshold": "Primary budget 4 versus adaptive rules: either at least 2 more correct cases out of 42 without extra errors or queries, or nonlower accuracy with at least 0.25 fewer mean queries and no extra errors. This pragmatic gate does not establish statistical significance. Always report latency and all budgets.",
+    "interpretation": "42 paired records are not 42 independent buildings. Dates share one simulation system. A full-information result is a reference, not a guaranteed accuracy upper bound.",
+    "budgets": [
+      2,
+      3,
+      4
+    ],
+    "seed": 20260930,
+    "initial_free_summary": "All policies receive the same precomputed screening summary including supply-setpoint deviation and unique running time; its cost is common and excluded. Acquiring each full evidence group costs one query unit.",
+    "missing_and_failures": "Undefined statistics remain null. Model invalid output is unresolved with actual cost; no fallback substitution.",
+    "label_opening": "Holdout payloads are first read after this freeze; labels are opened only after all predictions have been saved. No parameter or prompt edits afterward."
+  },
+  "files_sha256": {
+    "engine.py": "c4ac027f55efaf7e701c8e555faddc730f63ccd375cb06ba72cd37865597df01",
+    "policies.py": "8f1768cda75d60ef3db469c874a5aab3caec3cf201c9d9cda0051cbcc04cf008",
+    "model_client.py": "fe57307fceb099efd27dbcc62b10046d46496d8e4d916c784d7fa0b340af4812",
+    "scripts/prepare_engine.py": "a55e06134b5c59372966596d1da50219182c3b789970496278c46dda05ecb0ac",
+    "scripts/run_benchmark.py": "5dc5a5ac3d5385fcd2fafe438a8a486b6b7d5e47b314156dca493fab78b6a962",
+    "scripts/freeze.py": "2b81e6bad432a806715dda53fafada0e3d41837ceb7dfd8a36c71fcda2e37966",
+    "scripts/test_contracts.py": "43fc9352cbc481a3a128431c5bf5c11b897dd436af8b2564c9feef17d7a1e307",
+    "data/calibration.json": "bd0015f29d09f879c5fea5e81a750aab46d885e93da0d3d1066c591f98ab98d9",
+    "data/policy_config.json": "a4612001598eb9bf20376c9013b440c82ff0c65652b069e6780474d0e40c5098",
+    "data/holdout_seal.json": "2e26c52d69839536725b3af8d5b16f295536e545d5d16fa9cc1a6e451f71c9cc",
+    "data/data_contract.json": "e8f82a8615c3d29b04e4956c2ae4a03af068778090748fb53f5c2ab20ae103a8",
+    "runtime/local_model_config.json": "d4072d312438279ce237548ed8cfec26cc0263467ab11ae244853b6781cce328",
+    "protocol_draft.json": "9d9ab3dfcbc4fbf3e5e89ec09a375802ed8f4e3d412a69a86bf640ba6794d1aa"
+  },
+  "python": "3.12.14",
+  "holdout_read_before_freeze": false,
+  "note": "This records the workflow and hashes; not a cryptographic proof of analyst blindness."
+}

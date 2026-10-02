@@ -1,0 +1,141 @@
+{
+  "run_id": "a47dfd55b9d24149",
+  "case_id": "NZH-E36FB5B68C8A",
+  "strategy": "adaptive_rule",
+  "strategy_label": "自适应规则",
+  "budget": 4,
+  "family": "lbnl",
+  "origin": "simulated",
+  "perturbation": {
+    "type": "duplicate_records_12",
+    "origin": "human_generated",
+    "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+  },
+  "repair": null,
+  "initial_summary": {
+    "record_rows": 300,
+    "duplicate_records": 12,
+    "missing_fraction": 0.0,
+    "supply_setpoint_delta_mean_C": null,
+    "fan_on_fraction": 0.0,
+    "unique_operating_minutes": 0,
+    "measurement_type": "simulated_single_duct_ahu",
+    "note": "Shared initial screening summary, identical for all strategies."
+  },
+  "steps": [
+    {
+      "index": 1,
+      "action": "quality",
+      "label": "核查记录完整性",
+      "reason": "所有策略共享并计费的记录完整性检查；数据问题与设备疑点可并存。",
+      "cost": 1,
+      "latency_ms": 0.247,
+      "selection_latency_ms": 0,
+      "evidence": [
+        {
+          "label": "重复记录",
+          "value": 12,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-E36FB5B68C8A / quality / duplicates"
+        },
+        {
+          "label": "缺失比例",
+          "value": 0.0,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-E36FB5B68C8A / quality / missing_fraction"
+        },
+        {
+          "label": "记录条数",
+          "value": 300,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-E36FB5B68C8A / quality / rows"
+        }
+      ],
+      "features": {
+        "duplicates": 12,
+        "missing_fraction": 0.0,
+        "rows": 300
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "unresolved",
+        "name": "证据不足",
+        "status": "inactive",
+        "detail": "去重后有效风机运行不足60分钟；缺乏足够设备响应，不从停机记录推断正常或故障。"
+      },
+      "quality": {
+        "status": "needs_review",
+        "label": "存在记录问题",
+        "issues": [
+          {
+            "code": "duplicate_timestamp",
+            "label": "时间戳重复",
+            "count": 12,
+            "detail": "仅能自动删除同一时间戳且所有通道值完全一致的重复记录。"
+          }
+        ],
+        "duplicates": 12,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 300,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      }
+    }
+  ],
+  "final": {
+    "confidence": null,
+    "support_score": null,
+    "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+    "label": "unresolved",
+    "name": "证据不足",
+    "status": "inactive",
+    "detail": "去重后有效风机运行不足60分钟；缺乏足够设备响应，不从停机记录推断正常或故障。",
+    "quality": {
+      "status": "needs_review",
+      "label": "存在记录问题",
+      "issues": [
+        {
+          "code": "duplicate_timestamp",
+          "label": "时间戳重复",
+          "count": 12,
+          "detail": "仅能自动删除同一时间戳且所有通道值完全一致的重复记录。"
+        }
+      ],
+      "duplicates": 12,
+      "missing": 0,
+      "missing_fraction": 0.0,
+      "rows": 300,
+      "valid_schema": true,
+      "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+    },
+    "operation": {
+      "confidence": null,
+      "support_score": null,
+      "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+      "label": "unresolved",
+      "name": "证据不足",
+      "status": "inactive",
+      "detail": "去重后有效风机运行不足60分钟；缺乏足够设备响应，不从停机记录推断正常或故障。"
+    }
+  },
+  "cost": {
+    "query_units": 1,
+    "field_acquisition_units": 0,
+    "latency_ms": 1.091,
+    "model_calls": 0,
+    "model_latency_ms": 0,
+    "cost_note": "查询单位是离线实验记账，不等于现场采集费用或实际人民币成本。"
+  },
+  "warnings": [
+    "记录问题与运行疑点分别保留；建议修正可验证的数据问题后重新核验设备。"
+  ],
+  "model_calls": [],
+  "summary": "去重后有效风机运行不足60分钟；缺乏足够设备响应，不从停机记录推断正常或故障。",
+  "data_hash": "b9dd4707dd5166ff86219f4cc23fa934a365544d5fd937c12cd5959ed8f33128",
+  "status": "completed",
+  "freeze_sha256": "98e5e2d8e3e5ef4b58674a982397a6ab5678e730c61099e67c6503dadbd713b9",
+  "unique_operating_minutes": 0
+}

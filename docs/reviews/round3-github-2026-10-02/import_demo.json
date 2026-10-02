@@ -1,0 +1,124 @@
+{
+  "case_id": "IMP-3641CD79DEA841DB",
+  "run_id": "9ea1e3b3b34343ad",
+  "source_file": "LBNL_SDAHU_2018-04-10_raw_excerpt.csv",
+  "source_sha256": "ebc73213a52426a562f0409eeb1ad65ea5c608f4321105bdd95f5970e4b8a434",
+  "input_rows": 1440,
+  "output_rows": 288,
+  "quality": {
+    "status": "passed",
+    "quality_status": "passed",
+    "label": "记录检查通过",
+    "issues": [],
+    "rows": 288,
+    "unique_rows": 288,
+    "duplicates": 0,
+    "missing": 0,
+    "missing_fraction": 0.0,
+    "valid_schema": true,
+    "valid_for_diagnosis": true,
+    "unit_errors": [],
+    "time_errors": [],
+    "time_valid": true,
+    "range_errors": [],
+    "conflicting_timestamps": 0,
+    "missing_points": {
+      "air_path": [],
+      "coil_response": [],
+      "operating_context": []
+    },
+    "declared_interval_minutes": 5,
+    "actual_interval_seconds": [
+      300.0
+    ],
+    "bad_interval_count": 0,
+    "gap_count": 0,
+    "timestamp_span_minutes": 1435.0,
+    "unique_operating_minutes": 955,
+    "duration_basis": "Only validated regular intervals count; final sample represents one declared interval. Gaps and duplicates add no duration.",
+    "note": "记录检查通过不代表设备正常；数据质量与设备证据分别判断。"
+  },
+  "device_label": "normal",
+  "branches": {
+    "air_path": {
+      "state": "testable",
+      "label": "可检验",
+      "reason": "当前窗口未发现足够的风路偏离证据；不能据此排除卡滞。",
+      "qualified_minutes": 900,
+      "missing_points": [],
+      "required_condition": "需要OA_TEMP、RA_TEMP、MA_TEMP、OA_DMPR_DM及双风机启停；启动30分钟后，室外/回风温差≥3°C，至少两个连续30分钟窗口且指令位于已校准范围。",
+      "eligibility_stages": {}
+    },
+    "coil_response": {
+      "state": "testable",
+      "label": "可检验",
+      "reason": "合格关阀窗口位于开发正常专属参考；只支持当前有限工况，不作普遍排除。",
+      "qualified_minutes": 270,
+      "missing_points": [],
+      "required_condition": "需要MA_TEMP、SA_TEMP、CHWC_VLV_DM、SF_CS及双风机启停；风机已稳定，零关阀指令（容差0.01%）持续至少75分钟，获得15分钟等待后的两个30分钟窗口；还需开发参考覆盖。",
+      "eligibility_stages": {
+        "fan_on_minutes": 955,
+        "post_startup_minutes": 925,
+        "zero_command_during_stable_minutes": 320,
+        "settled_closed_with_valid_sensors_minutes": 290,
+        "calibrated_closed_minutes": 290,
+        "contiguous_qualified_minutes": 270
+      }
+    },
+    "operating_context": {
+      "state": "testable",
+      "label": "可检验",
+      "reason": "已取得可用稳定运行工况；仍需分别核验风路和盘管。",
+      "qualified_minutes": 925,
+      "missing_points": [],
+      "required_condition": "需要双风机启停和转速指令、OA_TEMP、风阀与冷阀指令；连续运行至少90分钟可提供启动30分钟后的60分钟证据。",
+      "eligibility_stages": {}
+    }
+  },
+  "card": "output/cards/9ea1e3b3b34343ad.html",
+  "mapping": {
+    "mapping": {
+      "SA_TEMP": "SA_TEMP",
+      "SA_TEMPSPT": "SA_TEMPSPT",
+      "OA_TEMP": "OA_TEMP",
+      "MA_TEMP": "MA_TEMP",
+      "RA_TEMP": "RA_TEMP",
+      "SF_SPD_DM": "SF_SPD_DM",
+      "RF_SPD_DM": "RF_SPD_DM",
+      "SF_CS": "SF_CS",
+      "RF_CS": "RF_CS",
+      "OA_DMPR_DM": "OA_DMPR_DM",
+      "RA_DMPR_DM": "RA_DMPR_DM",
+      "CHWC_VLV_DM": "CHWC_VLV_DM",
+      "ZONE_TEMP_1": "ZONE_TEMP_1",
+      "ZONE_TEMP_2": "ZONE_TEMP_2",
+      "ZONE_TEMP_3": "ZONE_TEMP_3",
+      "ZONE_TEMP_4": "ZONE_TEMP_4",
+      "ZONE_TEMP_5": "ZONE_TEMP_5"
+    },
+    "time_column": "Datetime",
+    "units": {
+      "SA_TEMP": "degF",
+      "SA_TEMPSPT": "degF",
+      "OA_TEMP": "degF",
+      "MA_TEMP": "degF",
+      "RA_TEMP": "degF",
+      "SF_SPD_DM": "binary",
+      "RF_SPD_DM": "binary",
+      "SF_CS": "fraction",
+      "RF_CS": "fraction",
+      "OA_DMPR_DM": "fraction",
+      "RA_DMPR_DM": "fraction",
+      "CHWC_VLV_DM": "fraction",
+      "ZONE_TEMP_1": "degF",
+      "ZONE_TEMP_2": "degF",
+      "ZONE_TEMP_3": "degF",
+      "ZONE_TEMP_4": "degF",
+      "ZONE_TEMP_5": "degF"
+    },
+    "source_interval": 1,
+    "profile": "lbnl_sdahu_public_2022"
+  },
+  "elapsed_ms_including_file_parse_conversion_verification_and_export": 77.322,
+  "scope": "Existing development demonstration, not independent accuracy or human efficiency evidence."
+}

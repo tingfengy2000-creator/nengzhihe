@@ -1,0 +1,11 @@
+{
+  "frozen_files_unchanged": true,
+  "reproduced_run_count": 448,
+  "prediction_status_actions_costs_identical": true,
+  "timings_equal_required": false,
+  "all_predictions_before_labels": true,
+  "final_cases_unchanged": true,
+  "materials_length_checks": 14,
+  "materials_visual_review": "pending_renderer",
+  "numerical_and_integration_tests": 27
+}

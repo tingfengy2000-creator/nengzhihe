@@ -1,0 +1,20 @@
+{
+  "NZH-CFF0E57369E1": {
+    "building_id": "Panther_education_Misty",
+    "site_id": "Panther",
+    "origin": "measured",
+    "fault_label": null
+  },
+  "NZH-F01C60D9939B": {
+    "building_id": "Panther_education_Gina",
+    "site_id": "Panther",
+    "origin": "measured",
+    "fault_label": null
+  },
+  "NZH-0ED357072678": {
+    "building_id": "Panther_office_Karla",
+    "site_id": "Panther",
+    "origin": "measured",
+    "fault_label": null
+  }
+}

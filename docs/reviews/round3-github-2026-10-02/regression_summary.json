@@ -1,0 +1,48 @@
+{
+  "status": "historical_regression_only",
+  "records": 112,
+  "base_cases": 56,
+  "dates": 14,
+  "new_performance_claim": false,
+  "coil_first_blocker_counts": {
+    "无稳定运行工况": 16,
+    "等待后仅5分钟，无法形成30分钟窗口": 4,
+    "零关阀片段未通过15分钟等待及传感器联合条件": 6,
+    "稳定运行中无零关阀指令": 86
+  },
+  "round3_vs_round2_label_changes": [],
+  "source_groups": {
+    "AHU_annual.csv": {
+      "base_cases": 14,
+      "correct": 0,
+      "air_compatible": 11
+    },
+    "damper_stuck_025_annual.csv": {
+      "base_cases": 14,
+      "correct": 1,
+      "air_compatible": 9
+    },
+    "damper_stuck_075_annual.csv": {
+      "base_cases": 14,
+      "correct": 11,
+      "air_compatible": 0
+    },
+    "coi_leakage_025_annual.csv": {
+      "base_cases": 14,
+      "correct": 0,
+      "air_compatible": 12
+    }
+  },
+  "coil_qualified_zero_records": 112,
+  "stable_closed_minutes_distribution": {
+    "0": 108,
+    "5": 4
+  },
+  "historical_overlap": {
+    "shared": 4,
+    "added": 20,
+    "lost": 2
+  },
+  "explanation": "108条在风机稳定、零关阀持续等待、有效风机指令和温度的联合条件下0分钟；4条仅5分钟，均不成连续30分钟窗口。不是查询预算问题，也不是通过改序可解决。",
+  "scope": "One simulated system. Source settings 025/075 are retained as file-group provenance, never diagnostic input. All 112 now development/regression."
+}

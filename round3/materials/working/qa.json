@@ -1,0 +1,131 @@
+{
+  "renderer": "Packaged render_docx.py with task-private officially signed LibreOffice 26.2.6; local complete SimSun/SimHei",
+  "total_pages": 10,
+  "files": [
+    {
+      "file": "附件1_能智核_项目简表.docx",
+      "sha256": "386ad613e11d41031f909330c82c295dae90add111158eed385f4a17eed6381e",
+      "page_count": 3,
+      "rendered_pdf": "materials\\working\\render_final_1\\附件1_能智核_项目简表.pdf",
+      "font_table": [
+        "SimSun",
+        "SimHei"
+      ],
+      "embedded_font_parts": 0,
+      "anonymous_author_metadata": true,
+      "all_pages_visually_inspected": true,
+      "inspection_notes": [
+        "三页中文和所有选项完整；页1包含项目背景与立项思路；页2方案、商业及技术自评；页3三个指标与边界说明。没有表头孤行或缺字。"
+      ],
+      "page_png_sha256": {
+        "page-1.png": "0fecd277709c2be54ba7fb432089ef1890774d967d136f9c2f1940ca2f1e33f9",
+        "page-2.png": "2850712ff3354ff43602bf2a934308f02112fb4342428b78496af9f21fc93a9a",
+        "page-3.png": "41be4c41ad3176bcddb0b9c72ef4f36b24dafe57bb2529d669bf7fe32292a858"
+      }
+    },
+    {
+      "file": "附件2_能智核_项目说明书.docx",
+      "sha256": "af9b1b4d8ec360691deaf5fdb8d712b147af4a33e6b6f0df23ed6396c19dabf7",
+      "page_count": 4,
+      "rendered_pdf": "materials\\working\\render_final_2\\附件2_能智核_项目说明书.pdf",
+      "font_table": [
+        "SimSun",
+        "SimHei"
+      ],
+      "embedded_font_parts": 0,
+      "anonymous_author_metadata": true,
+      "all_pages_visually_inspected": true,
+      "inspection_notes": [
+        "四页完整；实际界面图和流程图清晰；功能结果表跨页重复表头，无行内断裂；分组结果表与应用前景完整，来源说明在第4页。"
+      ],
+      "page_png_sha256": {
+        "page-1.png": "e2bc23873a17cb9daf690b07b7feab00592b9f06c33193ac4bbe51e4fdcf60bc",
+        "page-2.png": "26492794c21675eaca71be3f3449b375605ccbd90e6048a7b91fbedda3bb415c",
+        "page-3.png": "e61ca03b4661c094d5524f59d4240d52ef16adbd5da7a6b1a97d66405783c889",
+        "page-4.png": "34c2b34f48adcbdb08a16ea5f8e2f68a1a81fdfec7bb109182cd2b77583b7ab8"
+      }
+    },
+    {
+      "file": "附件3_能智核_商业计划书.docx",
+      "sha256": "bf69e2ac4bb79fa35356759d0da1c2faeaf76a81aee31b99830dfdd1245e07c3",
+      "page_count": 3,
+      "rendered_pdf": "materials\\working\\render_final_3\\附件3_能智核_商业计划书.pdf",
+      "font_table": [
+        "SimSun",
+        "SimHei"
+      ],
+      "embedded_font_parts": 0,
+      "anonymous_author_metadata": true,
+      "all_pages_visually_inspected": true,
+      "inspection_notes": [
+        "三页完整；正文字体一致；标题均与后续正文同页起始，无小标题单独停在页末；末页经济效益和来源完整。"
+      ],
+      "page_png_sha256": {
+        "page-1.png": "388d86cbd4eddcdb7d13cc3f16f261098d18e8892e8e10171bbdefe26d9a55e6",
+        "page-2.png": "d7f12613f4e61bf92bb160c4abf13a805f839a65017cbb63bf25723913205688",
+        "page-3.png": "d78a796f0ec8a63049bddcd3a39f3c7170303ec8b7efa59e98dfbfe327870259"
+      }
+    }
+  ],
+  "word_limits": {
+    "简表": {
+      "6": {
+        "chars": 139,
+        "cap": 300
+      },
+      "8": {
+        "chars": 136,
+        "cap": 300
+      },
+      "10": {
+        "chars": 253,
+        "cap": 600
+      },
+      "12": {
+        "chars": 134,
+        "cap": 300
+      }
+    },
+    "说明书一": {
+      "chars": 373,
+      "cap": 2000
+    },
+    "说明书二": {
+      "chars": 539,
+      "cap": 3000
+    },
+    "说明书三": {
+      "chars": 1050,
+      "cap": 3000
+    },
+    "说明书四": {
+      "chars": 187,
+      "cap": 500
+    },
+    "商业一": {
+      "chars": 129,
+      "cap": 200
+    },
+    "商业二": {
+      "chars": 114,
+      "cap": 200
+    },
+    "商业三": {
+      "chars": 434,
+      "cap": 2000
+    },
+    "商业四": {
+      "chars": 553,
+      "cap": 2000
+    },
+    "商业五": {
+      "chars": 473,
+      "cap": 2000
+    },
+    "商业六": {
+      "chars": 189,
+      "cap": 500
+    }
+  },
+  "status": "Visually reviewed editable anonymous drafts; maturity and identity-field handling require organizer submission rules."
+}

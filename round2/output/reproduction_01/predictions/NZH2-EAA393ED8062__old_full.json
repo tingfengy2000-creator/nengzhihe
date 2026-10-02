@@ -1,0 +1,80 @@
+{
+  "final": {
+    "confidence": null,
+    "support_score": null,
+    "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+    "label": "unresolved",
+    "name": "证据不足",
+    "status": "insufficient",
+    "rule_evidence": {
+      "air_response": "unknown",
+      "coil_response": "unknown"
+    },
+    "thresholds": {
+      "mix_std_boundary": 0.060753,
+      "mix_correlation_boundary": 0.624152,
+      "closed_drop_boundary_C": -0.120259
+    },
+    "detail": "混风有效温差、独立时刻或指令变化不足，无法核验卡滞。 零冷阀指令有效时刻不足，不能据少量温降判断泄漏。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+  },
+  "steps": [
+    {
+      "action": "quality",
+      "features": {
+        "duplicates": 12,
+        "missing_fraction": 0.0,
+        "rows": 300
+      }
+    },
+    {
+      "action": "air_path",
+      "features": {
+        "oa_mean": 21.950202,
+        "mixed_return_mean": 0.296351,
+        "mix_fraction_med": 0.676305,
+        "mix_fraction_std": 0.080358,
+        "damper_cmd_mean": 0.099902,
+        "damper_cmd_std": 0.001397,
+        "mix_cmd_corr": 0.999504,
+        "mix_low_cmd": 0.648681,
+        "mix_high_cmd": null,
+        "valid_mix_samples": 9
+      }
+    },
+    {
+      "action": "coil_response",
+      "features": {
+        "supply_delta_mean": 0.017889,
+        "supply_delta_abs": 0.019969,
+        "coil_drop_mean": 8.918822,
+        "closed_valve_drop": 6.42975,
+        "closed_valve_fraction": 0.004902,
+        "coil_cmd_mean": 0.695068,
+        "coil_cmd_std": 0.066047,
+        "coil_drop_cmd_corr": 0.601657,
+        "supply_delta_p90": 0.005985,
+        "valid_closed_samples": 1
+      }
+    },
+    {
+      "action": "operating_context",
+      "features": {
+        "fan_on_fraction": 0.68,
+        "fan_cmd_mean": 0.769784,
+        "zone_mean": 21.115393,
+        "zone_spread": 1.623454,
+        "zone_p90": 22.17218,
+        "zone_std": 1.035038
+      }
+    }
+  ],
+  "cost": {
+    "query_units": 4,
+    "field_acquisition_units": 0,
+    "model_calls": 0,
+    "end_to_end_ms": 2.1171998232603073
+  },
+  "method": "old_full",
+  "input_file_sha256": "a443a2d1b6926b0da13ae0085a262257f53a97c88119ff31d705c5de4fe1e7ad",
+  "freeze_sha256": "1e4cc5e5bf77bcbc2f7085cfceb8e66d9349897e8ea5d7a2b457caab51ceb48e"
+}

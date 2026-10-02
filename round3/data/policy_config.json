@@ -1,0 +1,90 @@
+{
+  "fixed_order": [
+    "air_path",
+    "operating_context",
+    "coil_response"
+  ],
+  "selection": "One finite enumeration of six fixed orders on development only: fewer wrong, more correct, fewer queries, lexicographic tie-break.",
+  "adaptive_rule": "quality then operating_context; if economizer_lockout >=60min query coil first, otherwise air first; stop on supported, inactive or invalid evidence; no learned model.",
+  "development_selection": [
+    {
+      "order": [
+        "operating_context",
+        "air_path",
+        "coil_response"
+      ],
+      "correct": 60,
+      "wrong": 0,
+      "queries": 358,
+      "n": 112
+    },
+    {
+      "order": [
+        "operating_context",
+        "coil_response",
+        "air_path"
+      ],
+      "correct": 60,
+      "wrong": 0,
+      "queries": 400,
+      "n": 112
+    },
+    {
+      "order": [
+        "air_path",
+        "operating_context",
+        "coil_response"
+      ],
+      "correct": 60,
+      "wrong": 0,
+      "queries": 358,
+      "n": 112
+    },
+    {
+      "order": [
+        "air_path",
+        "coil_response",
+        "operating_context"
+      ],
+      "correct": 60,
+      "wrong": 0,
+      "queries": 400,
+      "n": 112
+    },
+    {
+      "order": [
+        "coil_response",
+        "operating_context",
+        "air_path"
+      ],
+      "correct": 60,
+      "wrong": 0,
+      "queries": 400,
+      "n": 112
+    },
+    {
+      "order": [
+        "coil_response",
+        "air_path",
+        "operating_context"
+      ],
+      "correct": 60,
+      "wrong": 0,
+      "queries": 400,
+      "n": 112
+    }
+  ],
+  "chosen": {
+    "order": [
+      "air_path",
+      "operating_context",
+      "coil_response"
+    ],
+    "correct": 60,
+    "wrong": 0,
+    "queries": 358,
+    "n": 112
+  },
+  "query_cost": 1,
+  "field_cost": "Not measured: no physical acquisition performed."
+}

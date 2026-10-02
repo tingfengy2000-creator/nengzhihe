@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#133d3b"><title>能智核 · 告警之后，先查什么？</title><link rel="stylesheet" href="/styles.css"></head>
+<body>
+<aside class="sidebar">
+ <a class="brand" href="#workbench"><span class="brand-symbol">核</span><span>能智核<small>NENGZHIHE</small></span></a>
+ <p class="nav-label">公共建筑用能异常核验</p>
+ <nav><button class="active" data-page="workbench"><span>◫</span>核验工作台</button><button data-page="benchmark"><span>▥</span>效果与对照</button><button data-page="boundary"><span>⌘</span>证据边界</button></nav>
+ <div class="sidebar-bottom"><span class="status-dot"></span><strong id="service-status">正在连接本地服务</strong><p>智慧能源与环境<br>公开CSV核验 · 第三轮</p><span class="version">数值程序计算 / 无付费 API</span></div>
+</aside>
+<main>
+ <header class="topbar"><span>能智核 <b>/</b> <strong id="page-name">核验工作台</strong></span><span class="local"><i></i> 本地核验环境</span></header>
+ <section class="page active" id="page-workbench">
+  <div class="hero"><div><div class="eyebrow">FROM ALERT TO EVIDENCE</div><h1>告警之后，<em>先查什么？</em></h1><p>先确定有效工况，再核查支持与反驳证据，让下一步行动有据可依。</p></div><button class="outline" id="demo-help">演示路线 <span>↗</span></button></div>
+  <div id="notice" class="notice hidden" role="status"></div>
+  <div id="demo-guide" class="demo-guide hidden"><div><strong>① 看真实用能</strong><p>选择实测回放，区分用能波动与设备故障。</p></div><div><strong>② 看有效证据</strong><p>切换证据或预算，观察程序重新计算后的判断。</p></div><div><strong>③ 修正后继续核查</strong><p>修正重复记录，检查设备疑点是否仍存在。</p></div><button id="close-guide" aria-label="关闭演示路线">×</button></div>
+  <div class="case-tabs" id="case-list" aria-label="选择演示案例"><div class="loading">正在读取演示案例…</div></div>
+  <div class="import-entry card"><div><h2>把一份公开CSV变成可读核查卡</h2><p class="muted">当前仅支持 LBNL 单风道机组仿真日片段。明确字段、单位与采样间隔，先查数据，再看各分支能否检验。</p></div><button id="open-import" class="primary">导入公开 CSV ↗</button></div>
+  <section id="import-panel" class="card hidden">
+   <div class="section-top"><div><div class="eyebrow">IMPORT · MAP · VERIFY · EXPORT</div><h2>01 选择数据并确认映射</h2></div><button id="close-import" class="text-button">收起 ×</button></div>
+   <div class="import-top"><button id="load-public-csv" class="outline">载入公开原始CSV日片段</button><label class="outline">选择本地CSV <input id="csv-file" type="file" accept=".csv,text/csv"></label></div>
+   <p id="import-status" class="muted">支持UTF-8、单日、最多3000行 / 8 MiB。示例为原始CSV的2018-04-10原样截取，未经数值改写。</p>
+   <div id="mapping-area" class="hidden">
+    <div class="mapping-settings"><label>时间列 <select id="source-time"></select></label><label>原始采样间隔 <select id="source-cadence"><option value="1">1分钟 → 完整5点均值为5分钟</option><option value="5">5分钟 → 校验后直接使用</option></select></label><span>时钟：仿真原生无时区时间，不自动换算</span></div>
+    <div class="mapping-scroll"><table><thead><tr><th>目标点位</th><th>CSV源列</th><th>原始单位</th></tr></thead><tbody id="mapping-body"></tbody></table></div>
+    <p class="muted">实际阀位、故障设置、标签及其他未映射字段不会进入诊断。温度显式按(F−32)×5/9转换；指令百分数除以100。缺点位不补零。</p>
+    <label class="scope-confirm"><input type="checkbox" id="confirm-profile"> 我确认这是当前 LBNL SDAHU 公开仿真配置；不作为真实建筑通用接入或新性能样本。</label>
+    <div class="run-bar"><p id="ignored-columns" class="muted"></p><button id="commit-import" class="primary">02 校验并开始核验 →</button></div>
+   </div>
+  </section>
+  <div id="import-receipt" class="notice hidden"></div>
+  <div class="workspace">
+   <div class="main-column">
+    <section class="card observations">
+     <div class="section-top"><div><div id="case-badges" class="badges"></div><h2 id="case-title">加载案例</h2><p id="case-description" class="muted">读取公开数据与观测曲线。</p></div><span class="case-code" id="case-id"></span></div>
+     <div class="chart-toolbar"><span>观测曲线 <small id="chart-unit"></small></span><select id="series-select" aria-label="选择观测序列"></select></div>
+     <div class="chart" id="chart"></div>
+     <div class="chart-foot"><span><i></i><span id="chart-legend">原始观测</span></span><span id="chart-range"></span></div>
+     <div class="mode-strip"><span class="mode-icon">◷</span><div><span class="micro">当前工况与有效时间窗</span><strong id="current-mode">等待本次计算</strong><p id="current-window">工况与诊断证据将在运行后显示。</p><details id="windows-details" class="windows-details hidden"><summary>查看本次全部诊断窗口</summary><div id="windows-list"></div></details></div></div>
+    </section>
+    <div class="dual-state">
+     <section class="card state-card"><div class="micro">维度 01 · 数据质量</div><div class="state-title"><i id="quality-dot"></i><h3 id="quality-status">待检查</h3></div><p id="quality-detail">记录问题与设备问题分别处理。</p><button class="text-button" id="repair-btn" disabled>修正完全重复记录并重算 <span>↗</span></button></section>
+     <section class="card state-card device-state"><div class="micro">维度 02 · 设备判断</div><div class="state-title"><i id="device-dot"></i><h3 id="device-status">待核验</h3></div><p id="device-detail">没有发现故障，不自动等于正常。</p><span class="state-note" id="device-footnote">结论只覆盖证据适用的工况</span></section>
+    </div>
+    <section class="card branch-card"><div class="section-top"><h2>当前能检验哪项疑点？</h2><span class="micro">适用条件先于结论</span></div><div id="branch-status"><p class="muted">运行后显示各分支缺少的点位、工况或证据。</p></div></section>
+    <section class="card controls-card">
+     <div class="section-top"><div><h2>核查设置</h2><p class="muted" id="control-subtitle">改变证据或预算，会重新执行核验程序。</p></div><span class="auto-tag">自动重算</span></div>
+     <div class="strategy-switch" role="group" aria-label="核验策略"><button data-strategy="fixed"><strong>固定流程</strong><small>预定顺序取证</small></button><button class="active" data-strategy="adaptive_rule"><strong>自适应规则</strong><small>依据已见证据选下一步</small></button><button data-strategy="full_information"><strong>完整信息</strong><small>获取全部允许证据</small></button></div>
+     <div class="control-grid"><div><div class="control-label">可用证据 <span>记录质量检查始终保留</span></div><div class="evidence-toggles"><label><input type="checkbox" value="air_path" checked><span>风路响应</span></label><label><input type="checkbox" value="coil_response" checked><span>盘管响应</span></label><label><input type="checkbox" value="operating_context" checked><span>运行工况</span></label></div></div><div class="budget-box"><label for="budget">查询预算 <strong id="budget-value">4</strong><span> 单位</span></label><input type="range" id="budget" min="1" max="4" step="1" value="4"><div class="range-ticks"><span>1</span><span>2</span><span>3</span><span>4</span></div></div></div>
+     <div class="run-bar"><p id="budget-note">现有数据查询与现场补采分开记账；本轮未实施现场补采。</p><button class="primary" id="run-btn" disabled>重新核验 <span>→</span></button></div>
+    </section>
+   </div>
+   <div class="decision-column">
+    <section class="card next-card"><div class="section-top"><div class="micro">下一步 · 可执行建议</div><span id="run-status" class="run-status">待计算</span></div><h2 id="next-headline">从证据开始核查</h2><div id="next-actions"><p class="muted">选择案例后，程序会返回需要的点位和运行时段。</p></div><div class="result-stamp" id="result-stamp">尚无本次结果</div></section>
+    <section class="card proof-card"><div class="section-top"><h2>这次判断依据什么？</h2><span class="micro">支持 / 反驳</span></div><div class="proof-group"><h3><i class="support-dot"></i>支持证据</h3><div id="support-evidence" class="proof-list"><p class="muted">等待本次计算</p></div></div><div class="proof-group"><h3><i class="refute-dot"></i>反驳与缺口</h3><div id="refute-evidence" class="proof-list"><p class="muted">等待本次计算</p></div></div></section>
+    <section class="card process-card"><div class="section-top"><h2>实际核查过程</h2><button class="text-button" id="export-btn" disabled>导出记录 ↓</button></div><button class="outline" id="export-card" disabled>03 导出可阅读核查卡 ↗</button><div id="process-list" class="process-list"><p class="muted">每次取证都记录动作、结果和成本。</p></div><div class="cost-grid"><div><span>数据查询</span><strong id="query-cost">—</strong></div><div><span>现场补采</span><strong id="field-cost">—</strong></div><div><span>核验计算耗时</span><strong id="latency-cost">—</strong></div></div></section>
+   </div>
+  </div>
+  <footer><span>实测、仿真、人为扰动始终分开标注</span><span>异常电量不等于可实现节能收益</span></footer>
+ </section>
+ <section class="page" id="page-benchmark"><div class="hero"><div><div class="eyebrow">FROZEN TIME-HOLDOUT EVALUATION</div><h1>修复，是否<em>真正有效？</em></h1><p>下列是第二轮原始对照，112条现仅用于回归与失败分析；本轮不新增性能主张。</p></div><button class="outline" id="refresh-benchmark">刷新结果 ↻</button></div><div id="benchmark-content"><div class="card loading">正在读取结果…</div></div></section>
+ <section class="page" id="page-boundary"><div class="hero"><div><div class="eyebrow">EVIDENCE AND SCOPE</div><h1>让结论，<em>停在证据边界内。</em></h1><p>“能智核”定位公共建筑用能异常核验，节能机会筛查作为附属能力。</p></div></div><div class="boundary-grid">
+  <article class="card"><span class="boundary-number">01</span><h2>真实用能回放</h2><p>BDG2 提供真实建筑历史电表与天气数据，用于展示用能变化和参考比较。没有设备故障真值，不参与空调故障定位准确率计算。</p><span class="badge measured">实测 · BDG2</span></article>
+  <article class="card"><span class="boundary-number">02</span><h2>设备核验验证</h2><p>LBNL 单风道空调机组为带标签仿真数据。新日期用于时间留出验证；同一仿真系统不等于跨设备或真实建筑验证。</p><span class="badge simulated">仿真 · LBNL</span></article>
+  <article class="card"><span class="boundary-number">03</span><h2>明确保留未决</h2><p>停机、模式不适用、缺少有辨识力的时间窗，或多种原因无法区分时保留未决。“异常但未定位”不计作三分类正确，未决留在总体分母中。</p><span class="badge warning">无充分证据 ≠ 正常</span></article>
+  <article class="card"><span class="boundary-number">04</span><h2>核查与节能有距离</h2><p>数据问题修正后仍需核查设备疑点。现有数据查询与现场补采单独记账；当前未实施现场补采，不承诺试点、设备故障定位实绩或实际节能收益。</p><span class="badge">无付费 API</span></article>
+ </div><div class="card architecture"><h2>简单、可复核的工作流</h2><div><span>允许的观测点位</span><b>→</b><span>数据质量 + 有效工况</span><b>→</b><span>风路 / 盘管证据</span><b>→</b><span>支持、反驳、下一步</span></div><p>策略只改变证据查询顺序；诊断规则、数值计算与证据池保持一致。数据质量、分支适用性和设备疑点独立呈现；公开CSV可以追溯到字段映射与实际核查卡。</p></div></section>
+</main><div id="toast" class="toast hidden" role="status"></div><script src="/app.js"></script><script src="/import-ui.js"></script></body></html>
+
+

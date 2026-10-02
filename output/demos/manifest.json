@@ -1,0 +1,64 @@
+[
+  {
+    "name": "01_真实建筑用能回放",
+    "case_id": "NZH-CFF0E57369E1",
+    "origin": "measured",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动；保留原始缺测。"
+    },
+    "steps": [
+      "quality",
+      "air_path",
+      "coil_response",
+      "operating_context"
+    ],
+    "query_units": 4,
+    "verdict": "building_review",
+    "record_count": 840,
+    "duplicates": 0
+  },
+  {
+    "name": "02_仿真机组正常核验",
+    "case_id": "NZH-90C933F3C475",
+    "origin": "simulated",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "steps": [
+      "quality",
+      "air_path",
+      "coil_response"
+    ],
+    "query_units": 3,
+    "verdict": "normal",
+    "record_count": 288,
+    "duplicates": 0
+  },
+  {
+    "name": "03_记录修正后继续核查",
+    "case_id": "NZH-76889C2BA896",
+    "origin": "simulated",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "steps": [
+      "quality",
+      "air_path"
+    ],
+    "query_units": 2,
+    "verdict": "damper_stuck",
+    "record_count": 300,
+    "duplicates": 12,
+    "after_repair": {
+      "record_count": 288,
+      "duplicates": 0,
+      "verdict": "damper_stuck"
+    }
+  }
+]

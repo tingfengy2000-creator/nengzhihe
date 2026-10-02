@@ -1,0 +1,35 @@
+{
+  "leakage_members": [
+    {
+      "source_file": "LBNL_FDD_Dataset_SDAHU/coi_leakage_010_annual.csv",
+      "bytes": 139023633,
+      "crc32": 1365943655,
+      "sha256": "e520275f67027bbed69f84e6966bcef206ab0f7b2090d265934793e8d7af45ff"
+    },
+    {
+      "source_file": "LBNL_FDD_Dataset_SDAHU/coi_leakage_025_annual.csv",
+      "bytes": 139023633,
+      "crc32": 1365943655,
+      "sha256": "e520275f67027bbed69f84e6966bcef206ab0f7b2090d265934793e8d7af45ff"
+    },
+    {
+      "source_file": "LBNL_FDD_Dataset_SDAHU/coi_leakage_040_annual.csv",
+      "bytes": 139023633,
+      "crc32": 1365943655,
+      "sha256": "e520275f67027bbed69f84e6966bcef206ab0f7b2090d265934793e8d7af45ff"
+    },
+    {
+      "source_file": "LBNL_FDD_Dataset_SDAHU/coi_leakage_050_annual.csv",
+      "bytes": 139023633,
+      "crc32": 1365943655,
+      "sha256": "e520275f67027bbed69f84e6966bcef206ab0f7b2090d265934793e8d7af45ff"
+    }
+  ],
+  "leakage_unique_content_hashes": 1,
+  "exclusions": {
+    "OA_DMPR/RA_DMPR/CHWC_VLV": "Actual positions overlap the documented fault injection controls; disallowed diagnostic evidence.",
+    "OA_CFM/RA_CFM/SA_CFM/SF_WAT/RF_WAT/SF_SPD/RF_SPD/SYS_CTL": "Non-basic points excluded uniformly.",
+    "SA_SP/SA_SPSPT": "Document reports inches H2O for both; inspected source values approximately 402 vs 1.607 suggest unit inconsistency. No inferred conversion or quantitative use."
+  },
+  "decision": "Use only coi_leakage_025 as representative; no leakage severity generalization claim."
+}

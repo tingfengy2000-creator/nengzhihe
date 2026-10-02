@@ -1,0 +1,15 @@
+{
+  "verified": true,
+  "source_file_count": 572,
+  "archive_member_count": 574,
+  "zip_bytes": 2866506,
+  "zip_sha256": "a51f010a1cf6c3dcacbad9d15ba3c266b3e6ff960f3d9e0677d49a9088848a3a",
+  "zip_path": "E:\\比赛\\nengzhihe\\delivery\\能智核_首轮复核包_非提交版.zip",
+  "built_at_utc": "2026-09-30T09:42:40.707918+00:00",
+  "prediction_files": 420,
+  "holdout_payload_files": 42,
+  "first_run_snapshot_sha256": "b5a5a447403fe40db00818fc8e6e5bab88af796d509054ca0574cac96a09f617",
+  "cache_deletions": 0,
+  "inference_calls": 0,
+  "threshold_updates": 0
+}

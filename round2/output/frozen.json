@@ -1,0 +1,26 @@
+{
+  "frozen_at_utc": "2026-09-30T10:08:28.617743+00:00",
+  "files_sha256": {
+    "diagnostics.py": "a640302fe8f10f48b97bbe3ee1c6ebb80cd11ae7d09645f9474e3b20b07b9910",
+    "policies.py": "26512a73a7780f16daf2e5b36943b258c610d91e817fa28f327260ad480b8921",
+    "baseline_v1/engine.py": "c4ac027f55efaf7e701c8e555faddc730f63ccd375cb06ba72cd37865597df01",
+    "baseline_v1/data/calibration.json": "bd0015f29d09f879c5fea5e81a750aab46d885e93da0d3d1066c591f98ab98d9",
+    "data/calibration.json": "57bb0a931630549100855f952d321f40923c51215ca668a96654b2c3f1dc6598",
+    "data/policy_config.json": "cd672338129c5e3a3f806f236f4b26d69c978dc72952274c8e1250b300f90303",
+    "data/split_plan.json": "d03d1e0e134f03193b052a13f33d561caa3ea02a397faf47e982d80a01cc19de",
+    "data/dev_seal.json": "b632d5e5a003129c77b6083f9865667a8d21d2cc045b4ec1bfabade73bb1c047",
+    "data/final_seal.json": "84be2f7c9f4bc66cfabe63f261b11f6e2b028d188c8975b139a71c894071e168",
+    "scripts/evaluate.py": "a5c787ba8d2917f66da11dd2477402d53f34674e6a4d4adba27af9c32904cd4a",
+    "scripts/prepare_round2_data.py": "96405699b35f0fa1302ab9d6e8b18c2ba2e8530934589ea9da7cff7b9660d269",
+    "scripts/select_policy.py": "991d5ab946f337481b22c5bd1f2cfeb9db48a1c6309b50b2db0c1adc27925230",
+    "scripts/test_diagnostics.py": "efeca08f779b06a7d73d4558b44af7f8774bfe9e7229dcb2c9fffeffb70e05b8",
+    "scripts/test_integration.py": "acb9429cb7be63271970ba15b37015a873593a4ad9293435517753a1b08318f7",
+    "scripts/freeze.py": "47cbfb041f4bc81ad70a5c6643bd90cad343c2cce76aa0951a7187a63bd59eb8",
+    "PROTOCOL.txt": "ee09219284bdd8ad6e01ea284181e3faa128546c3459c8d180a82fa9506238e9"
+  },
+  "runtime": "3.12.14",
+  "final_sensor_values_or_labels_used_for_development": false,
+  "preparation_boundary": "Program parsed raw streams and serialized predeclared date blocks; no final value summaries or labels supplied to developers.",
+  "development_metrics_not_final": true,
+  "evaluation_rule": "No diagnosis, calibration, policy or metric changes after final evaluation begins."
+}

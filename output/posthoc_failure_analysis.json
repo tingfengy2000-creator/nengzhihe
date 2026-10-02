@@ -1,0 +1,22 @@
+{
+  "status": "posthoc_descriptive_only_no_retuning",
+  "full_information_by_true_class": {
+    "normal": {
+      "normal": 2,
+      "unresolved": 12
+    },
+    "damper_stuck": {
+      "unresolved": 14
+    },
+    "coil_leakage": {
+      "coil_leakage": 8,
+      "unresolved": 6
+    }
+  },
+  "unresolved_rule_states": {
+    "insufficient|{\"air_response\": \"unknown\", \"coil_response\": \"unknown\"}": 12,
+    "insufficient|{\"air_response\": \"unknown\", \"coil_response\": \"no_leak_evidence\"}": 14,
+    "inactive|{}": 6
+  },
+  "limitations": "Same heldout records cannot serve as a fresh test set after analysis. These counts do not establish causal failure mechanisms."
+}

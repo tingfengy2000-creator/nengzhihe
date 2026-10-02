@@ -1,0 +1,16 @@
+# Frozen evidence uses exact-byte hashes. Never normalize old inputs/results.
+* -text
+*.png binary
+*.pdf binary
+*.docx binary
+*.zip binary
+data/** linguist-vendored
+output/** linguist-generated
+materials/** linguist-documentation
+round2/data/** linguist-vendored
+round2/output/** linguist-generated
+round2/materials/** linguist-documentation
+round3/data/** linguist-vendored
+round3/output/** linguist-generated
+round3/materials/** linguist-documentation
+runtime/** linguist-vendored

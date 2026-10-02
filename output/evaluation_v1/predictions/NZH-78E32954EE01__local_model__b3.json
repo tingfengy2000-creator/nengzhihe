@@ -1,0 +1,391 @@
+{
+  "run_id": "e529ac0352d94b93",
+  "case_id": "NZH-78E32954EE01",
+  "strategy": "local_model",
+  "strategy_label": "本地模型主动补证",
+  "budget": 3,
+  "family": "lbnl",
+  "origin": "simulated",
+  "perturbation": {
+    "type": "none",
+    "origin": "none",
+    "description": "无额外人为扰动。"
+  },
+  "repair": null,
+  "initial_summary": {
+    "record_rows": 288,
+    "duplicate_records": 0,
+    "missing_fraction": 0.0,
+    "supply_setpoint_delta_mean_C": 0.060685,
+    "fan_on_fraction": 0.666667,
+    "unique_operating_minutes": 960,
+    "measurement_type": "simulated_single_duct_ahu",
+    "note": "Shared initial screening summary, identical for all strategies."
+  },
+  "steps": [
+    {
+      "index": 1,
+      "action": "quality",
+      "label": "核查记录完整性",
+      "reason": "所有策略共享并计费的记录完整性检查；数据问题与设备疑点可并存。",
+      "cost": 1,
+      "latency_ms": 0.245,
+      "selection_latency_ms": 0,
+      "evidence": [
+        {
+          "label": "重复记录",
+          "value": 0,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / quality / duplicates"
+        },
+        {
+          "label": "缺失比例",
+          "value": 0.0,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / quality / missing_fraction"
+        },
+        {
+          "label": "记录条数",
+          "value": 288,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / quality / rows"
+        }
+      ],
+      "features": {
+        "duplicates": 0,
+        "missing_fraction": 0.0,
+        "rows": 288
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "unresolved",
+        "name": "证据不足",
+        "status": "insufficient",
+        "rule_evidence": {
+          "air_response": "unknown",
+          "coil_response": "unknown"
+        },
+        "thresholds": {
+          "mix_std_boundary": 0.060753,
+          "mix_correlation_boundary": 0.624152,
+          "closed_drop_boundary_C": -0.120259
+        },
+        "detail": "尚未取得足够设备过程证据；记录检查通过不能推出设备正常。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+      },
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      }
+    },
+    {
+      "index": 2,
+      "action": "air_path",
+      "label": "核查混风与风阀指令",
+      "reason": "The air-path action provides temperature and damper command data, which is necessary to assess mixing and damper-stuck issues, directly addressing the 'unknown' air_response in the program diagnosis.",
+      "cost": 1,
+      "latency_ms": 299.603,
+      "selection_latency_ms": 299.097,
+      "evidence": [
+        {
+          "label": "室外温度均值 °C",
+          "value": 27.07975,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / air_path / oa_mean"
+        },
+        {
+          "label": "混合与回风温差 °C",
+          "value": 0.093834,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / air_path / mixed_return_mean"
+        },
+        {
+          "label": "温度推算混风比例中位数",
+          "value": 0.015724,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / air_path / mix_fraction_med"
+        },
+        {
+          "label": "推算混风比例波动",
+          "value": 0.004373,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / air_path / mix_fraction_std"
+        },
+        {
+          "label": "室外风阀指令均值",
+          "value": 0.099792,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / air_path / damper_cmd_mean"
+        },
+        {
+          "label": "室外风阀指令波动",
+          "value": 0.002879,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / air_path / damper_cmd_std"
+        },
+        {
+          "label": "推算混风比例与指令相关",
+          "value": 0.123674,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / air_path / mix_cmd_corr"
+        },
+        {
+          "label": "低开度指令时的推算混风比例",
+          "value": 0.0151,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / air_path / mix_low_cmd"
+        },
+        {
+          "label": "高开度指令时的推算混风比例",
+          "value": null,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / air_path / mix_high_cmd"
+        },
+        {
+          "label": "有效混风独立时刻数",
+          "value": 157,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / air_path / valid_mix_samples"
+        }
+      ],
+      "features": {
+        "oa_mean": 27.07975,
+        "mixed_return_mean": 0.093834,
+        "mix_fraction_med": 0.015724,
+        "mix_fraction_std": 0.004373,
+        "damper_cmd_mean": 0.099792,
+        "damper_cmd_std": 0.002879,
+        "mix_cmd_corr": 0.123674,
+        "mix_low_cmd": 0.0151,
+        "mix_high_cmd": null,
+        "valid_mix_samples": 157
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "unresolved",
+        "name": "证据不足",
+        "status": "insufficient",
+        "rule_evidence": {
+          "air_response": "unknown",
+          "coil_response": "unknown"
+        },
+        "thresholds": {
+          "mix_std_boundary": 0.060753,
+          "mix_correlation_boundary": 0.624152,
+          "closed_drop_boundary_C": -0.120259
+        },
+        "detail": "混风有效温差、独立时刻或指令变化不足，无法核验卡滞。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+      },
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      }
+    },
+    {
+      "index": 3,
+      "action": "coil_response",
+      "label": "核查盘管热响应",
+      "reason": "The 'coil_response' action is needed to investigate cooling-coil valve command and temperature data, which is critical for determining potential coil leakage or damper-stuck issues based on the current unresolved diagnosis.",
+      "cost": 1,
+      "latency_ms": 305.717,
+      "selection_latency_ms": 305.176,
+      "evidence": [
+        {
+          "label": "送风与设定温差均值 °C",
+          "value": 0.060685,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / coil_response / supply_delta_mean"
+        },
+        {
+          "label": "送风设定偏差绝对值 °C",
+          "value": 0.068089,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / coil_response / supply_delta_abs"
+        },
+        {
+          "label": "混合至送风温降 °C",
+          "value": 8.605623,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / coil_response / coil_drop_mean"
+        },
+        {
+          "label": "零冷阀指令时温降 °C",
+          "value": null,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / coil_response / closed_valve_drop"
+        },
+        {
+          "label": "零冷阀指令样本比例",
+          "value": 0.0,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / coil_response / closed_valve_fraction"
+        },
+        {
+          "label": "冷阀指令均值",
+          "value": 0.624548,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / coil_response / coil_cmd_mean"
+        },
+        {
+          "label": "冷阀指令波动",
+          "value": 0.050362,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / coil_response / coil_cmd_std"
+        },
+        {
+          "label": "温降与冷阀指令相关",
+          "value": 0.7748,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / coil_response / coil_drop_cmd_corr"
+        },
+        {
+          "label": "送风设定温差 P90 °C",
+          "value": 0.00107,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / coil_response / supply_delta_p90"
+        },
+        {
+          "label": "有效零冷阀指令独立时刻数",
+          "value": 0,
+          "detail": "程序计算；缺失指标显示为空",
+          "source": "NZH-78E32954EE01 / coil_response / valid_closed_samples"
+        }
+      ],
+      "features": {
+        "supply_delta_mean": 0.060685,
+        "supply_delta_abs": 0.068089,
+        "coil_drop_mean": 8.605623,
+        "closed_valve_drop": null,
+        "closed_valve_fraction": 0.0,
+        "coil_cmd_mean": 0.624548,
+        "coil_cmd_std": 0.050362,
+        "coil_drop_cmd_corr": 0.7748,
+        "supply_delta_p90": 0.00107,
+        "valid_closed_samples": 0
+      },
+      "diagnosis": {
+        "confidence": null,
+        "support_score": null,
+        "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+        "label": "unresolved",
+        "name": "证据不足",
+        "status": "insufficient",
+        "rule_evidence": {
+          "air_response": "unknown",
+          "coil_response": "unknown"
+        },
+        "thresholds": {
+          "mix_std_boundary": 0.060753,
+          "mix_correlation_boundary": 0.624152,
+          "closed_drop_boundary_C": -0.120259
+        },
+        "detail": "混风有效温差、独立时刻或指令变化不足，无法核验卡滞。 零冷阀指令有效时刻不足，不能据少量温降判断泄漏。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+      },
+      "quality": {
+        "status": "passed",
+        "label": "记录检查通过",
+        "issues": [],
+        "duplicates": 0,
+        "missing": 0,
+        "missing_fraction": 0.0,
+        "rows": 288,
+        "valid_schema": true,
+        "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+      }
+    }
+  ],
+  "final": {
+    "confidence": null,
+    "support_score": null,
+    "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+    "label": "unresolved",
+    "name": "证据不足",
+    "status": "insufficient",
+    "rule_evidence": {
+      "air_response": "unknown",
+      "coil_response": "unknown"
+    },
+    "thresholds": {
+      "mix_std_boundary": 0.060753,
+      "mix_correlation_boundary": 0.624152,
+      "closed_drop_boundary_C": -0.120259
+    },
+    "detail": "混风有效温差、独立时刻或指令变化不足，无法核验卡滞。 零冷阀指令有效时刻不足，不能据少量温降判断泄漏。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。",
+    "quality": {
+      "status": "passed",
+      "label": "记录检查通过",
+      "issues": [],
+      "duplicates": 0,
+      "missing": 0,
+      "missing_fraction": 0.0,
+      "rows": 288,
+      "valid_schema": true,
+      "note": "记录检查通过不代表设备正常；数据问题与设备疑点分别核验。"
+    },
+    "operation": {
+      "confidence": null,
+      "support_score": null,
+      "score_note": "可复核证据规则，不输出未经校准的故障概率。",
+      "label": "unresolved",
+      "name": "证据不足",
+      "status": "insufficient",
+      "rule_evidence": {
+        "air_response": "unknown",
+        "coil_response": "unknown"
+      },
+      "thresholds": {
+        "mix_std_boundary": 0.060753,
+        "mix_correlation_boundary": 0.624152,
+        "closed_drop_boundary_C": -0.120259
+      },
+      "detail": "混风有效温差、独立时刻或指令变化不足，无法核验卡滞。 零冷阀指令有效时刻不足，不能据少量温降判断泄漏。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。"
+    }
+  },
+  "cost": {
+    "query_units": 3,
+    "field_acquisition_units": 0,
+    "latency_ms": 606.302,
+    "model_calls": 2,
+    "model_latency_ms": 604.273,
+    "cost_note": "查询单位是离线实验记账，不等于现场采集费用或实际人民币成本。"
+  },
+  "warnings": [],
+  "model_calls": [
+    {
+      "action": "air_path",
+      "reason": "The air-path action provides temperature and damper command data, which is necessary to assess mixing and damper-stuck issues, directly addressing the 'unknown' air_response in the program diagnosis.",
+      "latency_ms": 299.097,
+      "raw": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"action\\\": \\\"air_path\\\",\\n  \\\"reason\\\": \\\"The air-path action provides temperature and damper command data, which is necessary to assess mixing and damper-stuck issues, directly addressing the 'unknown' air_response in the program diagnosis.\\\"\\n}\"}}],\"created\":1790760852,\"model\":\"nengzhihe-qwen3-4b-q4km\",\"system_fingerprint\":\"b11146-7fe450e19\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":54,\"prompt_tokens\":662,\"total_tokens\":716,\"prompt_tokens_details\":{\"cached_tokens\":230}},\"id\":\"chatcmpl-tR59y7d6oVvyUxplIlDcclU2vVw6bdin\",\"timings\":{\"cache_n\":230,\"prompt_n\":432,\"prompt_ms\":46.184,\"prompt_per_token_ms\":0.1069074074074074,\"prompt_per_second\":9353.888792655465,\"predicted_n\":54,\"predicted_ms\":159.475,\"predicted_per_token_ms\":3.0089622641509433,\"predicted_per_second\":332.34049224016303}}",
+      "response_valid": true
+    },
+    {
+      "action": "coil_response",
+      "reason": "The 'coil_response' action is needed to investigate cooling-coil valve command and temperature data, which is critical for determining potential coil leakage or damper-stuck issues based on the current unresolved diagnosis.",
+      "latency_ms": 305.176,
+      "raw": "{\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"action\\\": \\\"coil_response\\\",\\n  \\\"reason\\\": \\\"The 'coil_response' action is needed to investigate cooling-coil valve command and temperature data, which is critical for determining potential coil leakage or damper-stuck issues based on the current unresolved diagnosis.\\\"\\n}\"}}],\"created\":1790760852,\"model\":\"nengzhihe-qwen3-4b-q4km\",\"system_fingerprint\":\"b11146-7fe450e19\",\"object\":\"chat.completion\",\"usage\":{\"completion_tokens\":56,\"prompt_tokens\":770,\"total_tokens\":826,\"prompt_tokens_details\":{\"cached_tokens\":226}},\"id\":\"chatcmpl-jFDJn8MOgWEqeGCM2ebNwQ8v9QvUh1sL\",\"timings\":{\"cache_n\":226,\"prompt_n\":544,\"prompt_ms\":57.277,\"prompt_per_token_ms\":0.10528860294117648,\"prompt_per_second\":9497.704139532447,\"predicted_n\":56,\"predicted_ms\":166.83,\"predicted_per_token_ms\":3.0332727272727276,\"predicted_per_second\":329.6769166217107}}",
+      "response_valid": true
+    }
+  ],
+  "summary": "混风有效温差、独立时刻或指令变化不足，无法核验卡滞。 零冷阀指令有效时刻不足，不能据少量温降判断泄漏。 结论仅适用于本公开单机组仿真及限定候选范围，真实设备仍需现场核验。",
+  "data_hash": "559387f92972a1769b13f5552f3eab3739661eb0f1111dae5935d78c181f33a5",
+  "status": "completed",
+  "freeze_sha256": "98e5e2d8e3e5ef4b58674a982397a6ab5678e730c61099e67c6503dadbd713b9",
+  "unique_operating_minutes": 960
+}

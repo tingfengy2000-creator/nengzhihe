@@ -1,0 +1,15 @@
+{
+  "passed": 10,
+  "checks": [
+    "Full evidence budget1 still acquires every allowed group",
+    "Missing air evidence cannot inherit known damper conclusion",
+    "Budget1 cannot inherit budget4 conclusion",
+    "Repair changes data quality but retains device concern",
+    "Actual short window recomputed and cannot certify device",
+    "Metadata has no numerical influence",
+    "Normal has two affirmative support statements",
+    "BDG cannot become labelled device diagnosis",
+    "No model calls in any run",
+    "Workbench exposes only demos and development"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "case_id": "IMP-3641CD79DEA841DB",
+  "run_id": "9ea1e3b3b34343ad",
+  "source_file": "LBNL_SDAHU_2018-04-10_raw_excerpt.csv",
+  "source_sha256": "ebc73213a52426a562f0409eeb1ad65ea5c608f4321105bdd95f5970e4b8a434",
+  "input_rows": 1440,
+  "output_rows": 288,
+  "device_label": "normal",
+  "card": "output/cards/9ea1e3b3b34343ad.html",
+  "elapsed_ms_including_file_parse_conversion_verification_and_export": 77.322,
+  "scope": "Existing development demonstration, not independent accuracy or human efficiency evidence."
+}

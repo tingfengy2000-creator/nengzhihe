@@ -1,0 +1,1094 @@
+{
+  "audit_type": "independent_arithmetic_rescoring_of_same_first_run_records",
+  "scope_statement_zh": "这是对同一轮已保存运行记录的独立算术重计分核对。未重新运行模型或诊断，未重新读取原始用能/传感器载荷，也未独立核验真实标签；不是新一轮独立外部验证。",
+  "generated_at_utc": "2026-09-30T09:41:24.318907+00:00",
+  "status": "PASS",
+  "sources": [
+    {
+      "path": "output/evaluation_v1/scored_rows.json",
+      "bytes": 212202,
+      "sha256": "1cef34e3aa56d077078858ad8af080cd87519698653ac5690305ca8112657955"
+    },
+    {
+      "path": "output/evaluation_v1/benchmark_first_run.json",
+      "bytes": 27034,
+      "sha256": "b5a5a447403fe40db00818fc8e6e5bab88af796d509054ca0574cac96a09f617"
+    },
+    {
+      "path": "output/evaluation_v1/execution_receipt.json",
+      "bytes": 424,
+      "sha256": "5591d60d39db7be30d6502391c56db837bcee2fc1bfea5e7895d8cb6dc65d63c"
+    },
+    {
+      "path": "output/protocol_frozen.json",
+      "bytes": 5714,
+      "sha256": "98e5e2d8e3e5ef4b58674a982397a6ab5678e730c61099e67c6503dadbd713b9"
+    }
+  ],
+  "independence_of_calculation": "No project metric implementation was imported or executed. Counts and class-wise confusion totals were recomputed using Python standard-library arithmetic and exact rational fractions before float comparison.",
+  "metric_definitions": {
+    "correct": "prediction == truth",
+    "wrong": "prediction differs from truth and is not unresolved",
+    "unresolved": "prediction == unresolved",
+    "accuracy": "correct / all records; unresolved remains in the denominator",
+    "coverage": "(correct + wrong) / all records",
+    "error_rate": "wrong / (correct + wrong); null if no answered records",
+    "macro_f1": "mean over the three observed ground-truth classes of 2TP/(2TP+FP+FN); unresolved predictions count as false negatives for their true class; unresolved is not averaged as an extra target class; zero denominator contributes 0",
+    "avg_queries": "sum recorded query_units / all records in the strategy-budget group",
+    "float_comparison": {
+      "relative_tolerance": 1e-12,
+      "absolute_tolerance": 1e-12
+    }
+  },
+  "class_universe": [
+    "coil_leakage",
+    "damper_stuck",
+    "normal"
+  ],
+  "structure": {
+    "records": 420,
+    "case_ids": 42,
+    "date_blocks": 7,
+    "base_case_ids": 21,
+    "method_budget_groups": 10,
+    "date_blocks_values": [
+      "2018-04-16",
+      "2018-04-17",
+      "2018-04-18",
+      "2018-04-19",
+      "2018-04-20",
+      "2018-04-21",
+      "2018-04-22"
+    ],
+    "case_truth_distribution": {
+      "coil_leakage": 14,
+      "damper_stuck": 14,
+      "normal": 14
+    },
+    "case_perturbation_distribution": {
+      "duplicate_records_12": 21,
+      "none": 21
+    },
+    "records_per_method_budget": [
+      {
+        "strategy": "adaptive_rule",
+        "budget": 2,
+        "records": 42,
+        "case_ids": 42
+      },
+      {
+        "strategy": "fixed",
+        "budget": 2,
+        "records": 42,
+        "case_ids": 42
+      },
+      {
+        "strategy": "local_model",
+        "budget": 2,
+        "records": 42,
+        "case_ids": 42
+      },
+      {
+        "strategy": "adaptive_rule",
+        "budget": 3,
+        "records": 42,
+        "case_ids": 42
+      },
+      {
+        "strategy": "fixed",
+        "budget": 3,
+        "records": 42,
+        "case_ids": 42
+      },
+      {
+        "strategy": "local_model",
+        "budget": 3,
+        "records": 42,
+        "case_ids": 42
+      },
+      {
+        "strategy": "adaptive_rule",
+        "budget": 4,
+        "records": 42,
+        "case_ids": 42
+      },
+      {
+        "strategy": "fixed",
+        "budget": 4,
+        "records": 42,
+        "case_ids": 42
+      },
+      {
+        "strategy": "full_information",
+        "budget": 4,
+        "records": 42,
+        "case_ids": 42
+      },
+      {
+        "strategy": "local_model",
+        "budget": 4,
+        "records": 42,
+        "case_ids": 42
+      }
+    ],
+    "duplicate_run_keys": [],
+    "identity_conflicts": [],
+    "method_coverage_failures": [],
+    "base_pair_failures": [],
+    "unknown_predictions": []
+  },
+  "checks": {
+    "records_420": true,
+    "unique_case_ids_42": true,
+    "unique_date_blocks_7": true,
+    "unique_base_case_ids_21": true,
+    "method_budget_combinations_10": true,
+    "methods_match_frozen_design": true,
+    "no_duplicate_case_method_budget_records": true,
+    "case_metadata_consistent_across_methods": true,
+    "every_case_has_all_10_expected_runs": true,
+    "base_cases_each_have_clean_and_duplicate_pair": true,
+    "predictions_in_true_classes_or_unresolved": true,
+    "all_method_groups_have_42_cases": true,
+    "count_partition_holds": true,
+    "query_counts_equal_recorded_action_counts": true,
+    "query_costs_within_declared_budgets": true,
+    "quality_is_first_action_in_each_run": true,
+    "no_repeated_actions_within_run": true,
+    "full_information_only_at_budget_4_and_4_queries": true,
+    "benchmark_prediction_count_matches_records": true,
+    "benchmark_metric_keys_match_records": true,
+    "all_requested_metrics_match": true,
+    "primary_budget_preregistered_as_4": true,
+    "secondary_budgets_preregistered_as_2_3": true,
+    "benchmark_primary_budget_matches_preregistration": true,
+    "benchmark_protocol_matches_frozen_protocol": true,
+    "freeze_hash_matches_benchmark": true,
+    "freeze_hash_matches_receipt": true,
+    "frozen_evaluation_units_match_observed_counts": true,
+    "frozen_before_evaluation_start": true,
+    "receipt_timestamps_nondecreasing": true,
+    "decision_gate_agrees_with_reported_boolean": true
+  },
+  "comparison_field_count": 90,
+  "mismatch_count": 0,
+  "mismatches": [],
+  "recomputed_metrics": [
+    {
+      "strategy": "adaptive_rule",
+      "budget": 2,
+      "n": 42,
+      "correct": 6,
+      "wrong": 0,
+      "unresolved": 36,
+      "accuracy": 0.14285714285714285,
+      "macro_f1": 0.2,
+      "coverage": 0.14285714285714285,
+      "error_rate": 0.0,
+      "avg_queries": 1.8571428571428572,
+      "per_class": [
+        {
+          "label": "coil_leakage",
+          "tp": 6,
+          "fp": 0,
+          "fn_including_unresolved": 8,
+          "f1": 0.6
+        },
+        {
+          "label": "damper_stuck",
+          "tp": 0,
+          "fp": 0,
+          "fn_including_unresolved": 14,
+          "f1": 0.0
+        },
+        {
+          "label": "normal",
+          "tp": 0,
+          "fp": 0,
+          "fn_including_unresolved": 14,
+          "f1": 0.0
+        }
+      ],
+      "comparisons": {
+        "n": {
+          "recomputed": 42,
+          "reported": 42,
+          "match": true
+        },
+        "correct": {
+          "recomputed": 6,
+          "reported": 6,
+          "match": true
+        },
+        "wrong": {
+          "recomputed": 0,
+          "reported": 0,
+          "match": true
+        },
+        "unresolved": {
+          "recomputed": 36,
+          "reported": 36,
+          "match": true
+        },
+        "accuracy": {
+          "recomputed": 0.14285714285714285,
+          "reported": 0.14285714285714285,
+          "match": true
+        },
+        "macro_f1": {
+          "recomputed": 0.2,
+          "reported": 0.19999999999999998,
+          "match": true
+        },
+        "coverage": {
+          "recomputed": 0.14285714285714285,
+          "reported": 0.14285714285714285,
+          "match": true
+        },
+        "error_rate": {
+          "recomputed": 0.0,
+          "reported": 0.0,
+          "match": true
+        },
+        "avg_queries": {
+          "recomputed": 1.8571428571428572,
+          "reported": 1.8571428571428572,
+          "match": true
+        }
+      },
+      "all_metrics_match": true
+    },
+    {
+      "strategy": "fixed",
+      "budget": 2,
+      "n": 42,
+      "correct": 0,
+      "wrong": 0,
+      "unresolved": 42,
+      "accuracy": 0.0,
+      "macro_f1": 0.0,
+      "coverage": 0.0,
+      "error_rate": null,
+      "avg_queries": 1.8571428571428572,
+      "per_class": [
+        {
+          "label": "coil_leakage",
+          "tp": 0,
+          "fp": 0,
+          "fn_including_unresolved": 14,
+          "f1": 0.0
+        },
+        {
+          "label": "damper_stuck",
+          "tp": 0,
+          "fp": 0,
+          "fn_including_unresolved": 14,
+          "f1": 0.0
+        },
+        {
+          "label": "normal",
+          "tp": 0,
+          "fp": 0,
+          "fn_including_unresolved": 14,
+          "f1": 0.0
+        }
+      ],
+      "comparisons": {
+        "n": {
+          "recomputed": 42,
+          "reported": 42,
+          "match": true
+        },
+        "correct": {
+          "recomputed": 0,
+          "reported": 0,
+          "match": true
+        },
+        "wrong": {
+          "recomputed": 0,
+          "reported": 0,
+          "match": true
+        },
+        "unresolved": {
+          "recomputed": 42,
+          "reported": 42,
+          "match": true
+        },
+        "accuracy": {
+          "recomputed": 0.0,
+          "reported": 0.0,
+          "match": true
+        },
+        "macro_f1": {
+          "recomputed": 0.0,
+          "reported": 0.0,
+          "match": true
+        },
+        "coverage": {
+          "recomputed": 0.0,
+          "reported": 0.0,
+          "match": true
+        },
+        "error_rate": {
+          "recomputed": null,
+          "reported": null,
+          "match": true
+        },
+        "avg_queries": {
+          "recomputed": 1.8571428571428572,
+          "reported": 1.8571428571428572,
+          "match": true
+        }
+      },
+      "all_metrics_match": true
+    },
+    {
+      "strategy": "local_model",
+      "budget": 2,
+      "n": 42,
+      "correct": 1,
+      "wrong": 0,
+      "unresolved": 41,
+      "accuracy": 0.023809523809523808,
+      "macro_f1": 0.044444444444444446,
+      "coverage": 0.023809523809523808,
+      "error_rate": 0.0,
+      "avg_queries": 1.8571428571428572,
+      "per_class": [
+        {
+          "label": "coil_leakage",
+          "tp": 1,
+          "fp": 0,
+          "fn_including_unresolved": 13,
+          "f1": 0.13333333333333333
+        },
+        {
+          "label": "damper_stuck",
+          "tp": 0,
+          "fp": 0,
+          "fn_including_unresolved": 14,
+          "f1": 0.0
+        },
+        {
+          "label": "normal",
+          "tp": 0,
+          "fp": 0,
+          "fn_including_unresolved": 14,
+          "f1": 0.0
+        }
+      ],
+      "comparisons": {
+        "n": {
+          "recomputed": 42,
+          "reported": 42,
+          "match": true
+        },
+        "correct": {
+          "recomputed": 1,
+          "reported": 1,
+          "match": true
+        },
+        "wrong": {
+          "recomputed": 0,
+          "reported": 0,
+          "match": true
+        },
+        "unresolved": {
+          "recomputed": 41,
+          "reported": 41,
+          "match": true
+        },
+        "accuracy": {
+          "recomputed": 0.023809523809523808,
+          "reported": 0.023809523809523808,
+          "match": true
+        },
+        "macro_f1": {
+          "recomputed": 0.044444444444444446,
+          "reported": 0.044444444444444446,
+          "match": true
+        },
+        "coverage": {
+          "recomputed": 0.023809523809523808,
+          "reported": 0.023809523809523808,
+          "match": true
+        },
+        "error_rate": {
+          "recomputed": 0.0,
+          "reported": 0.0,
+          "match": true
+        },
+        "avg_queries": {
+          "recomputed": 1.8571428571428572,
+          "reported": 1.8571428571428572,
+          "match": true
+        }
+      },
+      "all_metrics_match": true
+    },
+    {
+      "strategy": "adaptive_rule",
+      "budget": 3,
+      "n": 42,
+      "correct": 10,
+      "wrong": 0,
+      "unresolved": 32,
+      "accuracy": 0.23809523809523808,
+      "macro_f1": 0.32575757575757575,
+      "coverage": 0.23809523809523808,
+      "error_rate": 0.0,
+      "avg_queries": 2.5714285714285716,
+      "per_class": [
+        {
+          "label": "coil_leakage",
+          "tp": 8,
+          "fp": 0,
+          "fn_including_unresolved": 6,
+          "f1": 0.7272727272727273
+        },
+        {
+          "label": "damper_stuck",
+          "tp": 0,
+          "fp": 0,
+          "fn_including_unresolved": 14,
+          "f1": 0.0
+        },
+        {
+          "label": "normal",
+          "tp": 2,
+          "fp": 0,
+          "fn_including_unresolved": 12,
+          "f1": 0.25
+        }
+      ],
+      "comparisons": {
+        "n": {
+          "recomputed": 42,
+          "reported": 42,
+          "match": true
+        },
+        "correct": {
+          "recomputed": 10,
+          "reported": 10,
+          "match": true
+        },
+        "wrong": {
+          "recomputed": 0,
+          "reported": 0,
+          "match": true
+        },
+        "unresolved": {
+          "recomputed": 32,
+          "reported": 32,
+          "match": true
+        },
+        "accuracy": {
+          "recomputed": 0.23809523809523808,
+          "reported": 0.23809523809523808,
+          "match": true
+        },
+        "macro_f1": {
+          "recomputed": 0.32575757575757575,
+          "reported": 0.32575757575757575,
+          "match": true
+        },
+        "coverage": {
+          "recomputed": 0.23809523809523808,
+          "reported": 0.23809523809523808,
+          "match": true
+        },
+        "error_rate": {
+          "recomputed": 0.0,
+          "reported": 0.0,
+          "match": true
+        },
+        "avg_queries": {
+          "recomputed": 2.5714285714285716,
+          "reported": 2.5714285714285716,
+          "match": true
+        }
+      },
+      "all_metrics_match": true
+    },
+    {
+      "strategy": "fixed",
+      "budget": 3,
+      "n": 42,
+      "correct": 10,
+      "wrong": 0,
+      "unresolved": 32,
+      "accuracy": 0.23809523809523808,
+      "macro_f1": 0.32575757575757575,
+      "coverage": 0.23809523809523808,
+      "error_rate": 0.0,
+      "avg_queries": 2.7142857142857144,
+      "per_class": [
+        {
+          "label": "coil_leakage",
+          "tp": 8,
+          "fp": 0,
+          "fn_including_unresolved": 6,
+          "f1": 0.7272727272727273
+        },
+        {
+          "label": "damper_stuck",
+          "tp": 0,
+          "fp": 0,
+          "fn_including_unresolved": 14,
+          "f1": 0.0
+        },
+        {
+          "label": "normal",
+          "tp": 2,
+          "fp": 0,
+          "fn_including_unresolved": 12,
+          "f1": 0.25
+        }
+      ],
+      "comparisons": {
+        "n": {
+          "recomputed": 42,
+          "reported": 42,
+          "match": true
+        },
+        "correct": {
+          "recomputed": 10,
+          "reported": 10,
+          "match": true
+        },
+        "wrong": {
+          "recomputed": 0,
+          "reported": 0,
+          "match": true
+        },
+        "unresolved": {
+          "recomputed": 32,
+          "reported": 32,
+          "match": true
+        },
+        "accuracy": {
+          "recomputed": 0.23809523809523808,
+          "reported": 0.23809523809523808,
+          "match": true
+        },
+        "macro_f1": {
+          "recomputed": 0.32575757575757575,
+          "reported": 0.32575757575757575,
+          "match": true
+        },
+        "coverage": {
+          "recomputed": 0.23809523809523808,
+          "reported": 0.23809523809523808,
+          "match": true
+        },
+        "error_rate": {
+          "recomputed": 0.0,
+          "reported": 0.0,
+          "match": true
+        },
+        "avg_queries": {
+          "recomputed": 2.7142857142857144,
+          "reported": 2.7142857142857144,
+          "match": true
+        }
+      },
+      "all_metrics_match": true
+    },
+    {
+      "strategy": "local_model",
+      "budget": 3,
+      "n": 42,
+      "correct": 10,
+      "wrong": 0,
+      "unresolved": 32,
+      "accuracy": 0.23809523809523808,
+      "macro_f1": 0.32575757575757575,
+      "coverage": 0.23809523809523808,
+      "error_rate": 0.0,
+      "avg_queries": 2.6666666666666665,
+      "per_class": [
+        {
+          "label": "coil_leakage",
+          "tp": 8,
+          "fp": 0,
+          "fn_including_unresolved": 6,
+          "f1": 0.7272727272727273
+        },
+        {
+          "label": "damper_stuck",
+          "tp": 0,
+          "fp": 0,
+          "fn_including_unresolved": 14,
+          "f1": 0.0
+        },
+        {
+          "label": "normal",
+          "tp": 2,
+          "fp": 0,
+          "fn_including_unresolved": 12,
+          "f1": 0.25
+        }
+      ],
+      "comparisons": {
+        "n": {
+          "recomputed": 42,
+          "reported": 42,
+          "match": true
+        },
+        "correct": {
+          "recomputed": 10,
+          "reported": 10,
+          "match": true
+        },
+        "wrong": {
+          "recomputed": 0,
+          "reported": 0,
+          "match": true
+        },
+        "unresolved": {
+          "recomputed": 32,
+          "reported": 32,
+          "match": true
+        },
+        "accuracy": {
+          "recomputed": 0.23809523809523808,
+          "reported": 0.23809523809523808,
+          "match": true
+        },
+        "macro_f1": {
+          "recomputed": 0.32575757575757575,
+          "reported": 0.32575757575757575,
+          "match": true
+        },
+        "coverage": {
+          "recomputed": 0.23809523809523808,
+          "reported": 0.23809523809523808,
+          "match": true
+        },
+        "error_rate": {
+          "recomputed": 0.0,
+          "reported": 0.0,
+          "match": true
+        },
+        "avg_queries": {
+          "recomputed": 2.6666666666666665,
+          "reported": 2.6666666666666665,
+          "match": true
+        }
+      },
+      "all_metrics_match": true
+    },
+    {
+      "strategy": "adaptive_rule",
+      "budget": 4,
+      "n": 42,
+      "correct": 10,
+      "wrong": 0,
+      "unresolved": 32,
+      "accuracy": 0.23809523809523808,
+      "macro_f1": 0.32575757575757575,
+      "coverage": 0.23809523809523808,
+      "error_rate": 0.0,
+      "avg_queries": 3.1904761904761907,
+      "per_class": [
+        {
+          "label": "coil_leakage",
+          "tp": 8,
+          "fp": 0,
+          "fn_including_unresolved": 6,
+          "f1": 0.7272727272727273
+        },
+        {
+          "label": "damper_stuck",
+          "tp": 0,
+          "fp": 0,
+          "fn_including_unresolved": 14,
+          "f1": 0.0
+        },
+        {
+          "label": "normal",
+          "tp": 2,
+          "fp": 0,
+          "fn_including_unresolved": 12,
+          "f1": 0.25
+        }
+      ],
+      "comparisons": {
+        "n": {
+          "recomputed": 42,
+          "reported": 42,
+          "match": true
+        },
+        "correct": {
+          "recomputed": 10,
+          "reported": 10,
+          "match": true
+        },
+        "wrong": {
+          "recomputed": 0,
+          "reported": 0,
+          "match": true
+        },
+        "unresolved": {
+          "recomputed": 32,
+          "reported": 32,
+          "match": true
+        },
+        "accuracy": {
+          "recomputed": 0.23809523809523808,
+          "reported": 0.23809523809523808,
+          "match": true
+        },
+        "macro_f1": {
+          "recomputed": 0.32575757575757575,
+          "reported": 0.32575757575757575,
+          "match": true
+        },
+        "coverage": {
+          "recomputed": 0.23809523809523808,
+          "reported": 0.23809523809523808,
+          "match": true
+        },
+        "error_rate": {
+          "recomputed": 0.0,
+          "reported": 0.0,
+          "match": true
+        },
+        "avg_queries": {
+          "recomputed": 3.1904761904761907,
+          "reported": 3.1904761904761907,
+          "match": true
+        }
+      },
+      "all_metrics_match": true
+    },
+    {
+      "strategy": "fixed",
+      "budget": 4,
+      "n": 42,
+      "correct": 10,
+      "wrong": 0,
+      "unresolved": 32,
+      "accuracy": 0.23809523809523808,
+      "macro_f1": 0.32575757575757575,
+      "coverage": 0.23809523809523808,
+      "error_rate": 0.0,
+      "avg_queries": 3.3333333333333335,
+      "per_class": [
+        {
+          "label": "coil_leakage",
+          "tp": 8,
+          "fp": 0,
+          "fn_including_unresolved": 6,
+          "f1": 0.7272727272727273
+        },
+        {
+          "label": "damper_stuck",
+          "tp": 0,
+          "fp": 0,
+          "fn_including_unresolved": 14,
+          "f1": 0.0
+        },
+        {
+          "label": "normal",
+          "tp": 2,
+          "fp": 0,
+          "fn_including_unresolved": 12,
+          "f1": 0.25
+        }
+      ],
+      "comparisons": {
+        "n": {
+          "recomputed": 42,
+          "reported": 42,
+          "match": true
+        },
+        "correct": {
+          "recomputed": 10,
+          "reported": 10,
+          "match": true
+        },
+        "wrong": {
+          "recomputed": 0,
+          "reported": 0,
+          "match": true
+        },
+        "unresolved": {
+          "recomputed": 32,
+          "reported": 32,
+          "match": true
+        },
+        "accuracy": {
+          "recomputed": 0.23809523809523808,
+          "reported": 0.23809523809523808,
+          "match": true
+        },
+        "macro_f1": {
+          "recomputed": 0.32575757575757575,
+          "reported": 0.32575757575757575,
+          "match": true
+        },
+        "coverage": {
+          "recomputed": 0.23809523809523808,
+          "reported": 0.23809523809523808,
+          "match": true
+        },
+        "error_rate": {
+          "recomputed": 0.0,
+          "reported": 0.0,
+          "match": true
+        },
+        "avg_queries": {
+          "recomputed": 3.3333333333333335,
+          "reported": 3.3333333333333335,
+          "match": true
+        }
+      },
+      "all_metrics_match": true
+    },
+    {
+      "strategy": "full_information",
+      "budget": 4,
+      "n": 42,
+      "correct": 10,
+      "wrong": 0,
+      "unresolved": 32,
+      "accuracy": 0.23809523809523808,
+      "macro_f1": 0.32575757575757575,
+      "coverage": 0.23809523809523808,
+      "error_rate": 0.0,
+      "avg_queries": 4.0,
+      "per_class": [
+        {
+          "label": "coil_leakage",
+          "tp": 8,
+          "fp": 0,
+          "fn_including_unresolved": 6,
+          "f1": 0.7272727272727273
+        },
+        {
+          "label": "damper_stuck",
+          "tp": 0,
+          "fp": 0,
+          "fn_including_unresolved": 14,
+          "f1": 0.0
+        },
+        {
+          "label": "normal",
+          "tp": 2,
+          "fp": 0,
+          "fn_including_unresolved": 12,
+          "f1": 0.25
+        }
+      ],
+      "comparisons": {
+        "n": {
+          "recomputed": 42,
+          "reported": 42,
+          "match": true
+        },
+        "correct": {
+          "recomputed": 10,
+          "reported": 10,
+          "match": true
+        },
+        "wrong": {
+          "recomputed": 0,
+          "reported": 0,
+          "match": true
+        },
+        "unresolved": {
+          "recomputed": 32,
+          "reported": 32,
+          "match": true
+        },
+        "accuracy": {
+          "recomputed": 0.23809523809523808,
+          "reported": 0.23809523809523808,
+          "match": true
+        },
+        "macro_f1": {
+          "recomputed": 0.32575757575757575,
+          "reported": 0.32575757575757575,
+          "match": true
+        },
+        "coverage": {
+          "recomputed": 0.23809523809523808,
+          "reported": 0.23809523809523808,
+          "match": true
+        },
+        "error_rate": {
+          "recomputed": 0.0,
+          "reported": 0.0,
+          "match": true
+        },
+        "avg_queries": {
+          "recomputed": 4.0,
+          "reported": 4,
+          "match": true
+        }
+      },
+      "all_metrics_match": true
+    },
+    {
+      "strategy": "local_model",
+      "budget": 4,
+      "n": 42,
+      "correct": 10,
+      "wrong": 0,
+      "unresolved": 32,
+      "accuracy": 0.23809523809523808,
+      "macro_f1": 0.32575757575757575,
+      "coverage": 0.23809523809523808,
+      "error_rate": 0.0,
+      "avg_queries": 3.238095238095238,
+      "per_class": [
+        {
+          "label": "coil_leakage",
+          "tp": 8,
+          "fp": 0,
+          "fn_including_unresolved": 6,
+          "f1": 0.7272727272727273
+        },
+        {
+          "label": "damper_stuck",
+          "tp": 0,
+          "fp": 0,
+          "fn_including_unresolved": 14,
+          "f1": 0.0
+        },
+        {
+          "label": "normal",
+          "tp": 2,
+          "fp": 0,
+          "fn_including_unresolved": 12,
+          "f1": 0.25
+        }
+      ],
+      "comparisons": {
+        "n": {
+          "recomputed": 42,
+          "reported": 42,
+          "match": true
+        },
+        "correct": {
+          "recomputed": 10,
+          "reported": 10,
+          "match": true
+        },
+        "wrong": {
+          "recomputed": 0,
+          "reported": 0,
+          "match": true
+        },
+        "unresolved": {
+          "recomputed": 32,
+          "reported": 32,
+          "match": true
+        },
+        "accuracy": {
+          "recomputed": 0.23809523809523808,
+          "reported": 0.23809523809523808,
+          "match": true
+        },
+        "macro_f1": {
+          "recomputed": 0.32575757575757575,
+          "reported": 0.32575757575757575,
+          "match": true
+        },
+        "coverage": {
+          "recomputed": 0.23809523809523808,
+          "reported": 0.23809523809523808,
+          "match": true
+        },
+        "error_rate": {
+          "recomputed": 0.0,
+          "reported": 0.0,
+          "match": true
+        },
+        "avg_queries": {
+          "recomputed": 3.238095238095238,
+          "reported": 3.238095238095238,
+          "match": true
+        }
+      },
+      "all_metrics_match": true
+    }
+  ],
+  "preregistered_primary": {
+    "budget": 4,
+    "secondary_budgets": [
+      2,
+      3
+    ],
+    "frozen_at_utc": "2026-09-30T09:33:25.114551+00:00",
+    "evaluation_started_at_utc": "2026-09-30T09:33:25.465798+00:00",
+    "primary_metrics": [
+      {
+        "strategy": "adaptive_rule",
+        "budget": 4,
+        "n": 42,
+        "correct": 10,
+        "wrong": 0,
+        "unresolved": 32,
+        "accuracy": 0.23809523809523808,
+        "macro_f1": 0.32575757575757575,
+        "coverage": 0.23809523809523808,
+        "avg_queries": 3.1904761904761907
+      },
+      {
+        "strategy": "fixed",
+        "budget": 4,
+        "n": 42,
+        "correct": 10,
+        "wrong": 0,
+        "unresolved": 32,
+        "accuracy": 0.23809523809523808,
+        "macro_f1": 0.32575757575757575,
+        "coverage": 0.23809523809523808,
+        "avg_queries": 3.3333333333333335
+      },
+      {
+        "strategy": "full_information",
+        "budget": 4,
+        "n": 42,
+        "correct": 10,
+        "wrong": 0,
+        "unresolved": 32,
+        "accuracy": 0.23809523809523808,
+        "macro_f1": 0.32575757575757575,
+        "coverage": 0.23809523809523808,
+        "avg_queries": 4.0
+      },
+      {
+        "strategy": "local_model",
+        "budget": 4,
+        "n": 42,
+        "correct": 10,
+        "wrong": 0,
+        "unresolved": 32,
+        "accuracy": 0.23809523809523808,
+        "macro_f1": 0.32575757575757575,
+        "coverage": 0.23809523809523808,
+        "avg_queries": 3.238095238095238
+      }
+    ],
+    "llm_minus_rule_correct": 0,
+    "rule_minus_llm_mean_queries": -0.04761904761904745,
+    "decision_gate_recomputed": false
+  },
+  "receipt_scope": {
+    "integrity_verified_flag_as_recorded": true,
+    "first_holdout_payload_read_after_freeze_flag_as_recorded": true,
+    "predictions_completed_at_utc": "2026-09-30T09:34:22.343631+00:00",
+    "labels_opened_at_utc": "2026-09-30T09:34:22.343631+00:00",
+    "strict_prediction_timestamp_precedes_label_timestamp": false,
+    "note_zh": "回执中预测完成和打开标签使用同一时间戳，可核对非倒序，不能仅凭此独立证明严格先后。本核对只验证冻结协议文件摘要与汇总/回执一致，未重新核验协议清单内的全部源码或模型文件。"
+  },
+  "limitations_zh": [
+    "同一套已保存预测与真值被重新计分；这不是独立采样、外部机组验证、真实楼宇验证或新的模型运行。",
+    "42条记录来自21个基础日工况及成对扰动，跨7个日期块；不能将42条记录视为42个独立楼宇样本。",
+    "未决计入整体正确率分母；零已决错判不等于高整体准确率。",
+    "本核对不能证明标签真实性、原始数据无污染或开发者盲态；仅在指定四份记录的证据边界内核对算术与一致性。"
+  ]
+}
