@@ -1,0 +1,20 @@
+{
+  "title": "能智核——公共建筑风阀疑点核验与补证工作台",
+  "slides": 10,
+  "narrative": "actual_task",
+  "fonts": [
+    "Microsoft YaHei"
+  ],
+  "native_table_slides": [
+    6,
+    7
+  ],
+  "sources": [
+    "output/comparison/summary.json",
+    "output/reliability_tests.json",
+    "output/standalone_tests.json",
+    "output/study_software_checks.json",
+    "study/private/protocol.json"
+  ],
+  "performance_claim": "historical regression only; no advantage or human-value result"
+}

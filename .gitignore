@@ -46,3 +46,22 @@ Thumbs.db
 /round3/output/runs/
 /round3/output/cards/
 /round3/data/imports/
+
+# Round4 caches and private input/session data remain local.
+**/node_modules/
+/round4/runtime/
+/round4/data/imports/
+/round4/output/runs/
+/round4/output/cards/
+/round4/study/results/participants/
+/round4/study/results/manual_scores.csv
+/round4/study_process.json
+/round4/video/working/*
+!/round4/video/working/capture.json
+!/round4/video/working/captions.ass
+/round4/video/qa/montage-*.jpg
+/round4/materials/working/render*/
+/round4/materials/working/reference*/
+/round4/presentation/working/render*/
+/round4/presentation/working/candidate*
+/round4/presentation/working/previous_checked*

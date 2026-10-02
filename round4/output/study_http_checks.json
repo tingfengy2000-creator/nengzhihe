@@ -1,0 +1,12 @@
+{
+  "passed": 5,
+  "checks": [
+    "Formal enrollment locked without signed independent review",
+    "Private answer file not served",
+    "Condition A cannot use automated verification",
+    "Condition B actually recomputes duplicate repair and preserves device suspicion",
+    "Software HTTP demonstrations create no real participant"
+  ],
+  "real_participants": 0,
+  "scope": "Live localhost software checks only"
+}

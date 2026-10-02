@@ -1,0 +1,20 @@
+LBNL 单风道空调机组
+Chen, Yimin; Granderson, Jessica (2023). LBNL FDD Dataset SDAHU. figshare. https://doi.org/10.6084/m9.figshare.22338283.v1
+授权：CC BY 4.0。随包记录来源归属。原始数值未在提供的日片段中改动，转换另留映射记录。
+官方ZIP：https://fdddata.lbl.gov/data/Simulated_LBNL_FDD_Data_Sets_SDAHU/LBNL_FDD_Data_Sets_SDAHU.zip
+ZIP SHA256：8295fcf0f55bc955937cb4ec0198512c28e5ede32e6bbf735257b0df55426471
+日片段来源成员：LBNL_FDD_Dataset_SDAHU/AHU_annual.csv，2018-04-10。
+日片段 SHA256：ebc73213a52426a562f0409eeb1ad65ea5c608f4321105bdd95f5970e4b8a434
+官方设备文档随 data/source_docs 保留。所有数据来源为仿真，不称实测设备。
+温度为源degF，接口显式转degC；SF_SPD_DM和RF_SPD_DM为0/1启停，SF_CS/RF_CS是转速指令，OA_DMPR_DM与CHWC_VLV_DM为控制指令。实际OA_DMPR/CHWC_VLV等不用于诊断。SYS_CTL没有被改当真值或故障特征使用。
+
+BDG2
+Building Data Genome Project 2：https://github.com/buds-lab/building-data-genome-project-2
+只展示已保留的小量真实建筑电量与天气/历史参考回放，不提供设备点位或故障真值。LICENSE、README随 data/source_docs 保留；不与仿真样本拼接成真实楼宇定位证据。
+
+公开文档
+美国能源部 EMIS Primer：https://betterbuildingssolutioncenter.energy.gov/sites/default/files/attachments/EMIS_Primer_Organizational_Use.pdf
+只用于说明用能管理/FDD应用的任务背景；其他机构的节能或成本数据没有作为本项目效果。
+
+扰动、历史与新操作
+三个演示中的重复记录是有明确标注的人为扰动，并非真实现场脏数据证据。旧112条冻结JSON只用于回归，source setting/日期/标签在评价侧可见，数值诊断仅使用允许点位。原始CSV导入日期属于已有开发演示；新操作任务不是新独立性能验证。

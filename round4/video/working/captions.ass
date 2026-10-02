@@ -1,0 +1,27 @@
+﻿[Script Info]
+ScriptType: v4.00+
+PlayResX: 1279
+PlayResY: 1001
+WrapStyle: 0
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Microsoft YaHei,26,&H00FFFFFF,&H00FFFFFF,&H00192D27,&H00192D27,0,0,0,0,100,100,0,0,1,0,0,2,36,36,20,1
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:10.00,Default,,0,0,0,,告警之后先查什么？实机操作采样录制，非真人价值实验。
+Dialogue: 0,0:00:10.00,0:00:20.00,Default,,0,0,0,,选择公开原始CSV：1440行、31列；当前只支持已验证仿真配置。
+Dialogue: 0,0:00:20.00,0:00:30.00,Default,,0,0,0,,逐项确认时间、点位与单位。这里故意把1分钟数据声明为5分钟。
+Dialogue: 0,0:00:30.00,0:00:39.00,Default,,0,0,0,,错误采样间隔被拒绝，不能按记录数乘错误间隔虚增运行时间。
+Dialogue: 0,0:00:39.00,0:00:48.00,Default,,0,0,0,,更正声明后真实重算：完整5点桶聚合，1440行转为288行。
+Dialogue: 0,0:00:48.00,0:00:58.00,Default,,0,0,0,,先看数据质量，再看各分支可检验条件；缺少关阀时段须保留未决。
+Dialogue: 0,0:00:58.00,0:01:06.00,Default,,0,0,0,,导出本次运行生成的HTML核查卡，保留质量对象、映射与源数据哈希。
+Dialogue: 0,0:01:06.00,0:01:15.00,Default,,0,0,0,,演示三：300条观测中有12条完全重复记录；设备疑点另行判断。
+Dialogue: 0,0:01:15.00,0:01:25.00,Default,,0,0,0,,修正为288条后，质量通过，风阀候选仍存在；继续补证，不能宣布设备正常。
+Dialogue: 0,0:01:25.00,0:01:35.00,Default,,0,0,0,,移除风路证据后重新计算，候选退回未决；输出随证据变化。
+Dialogue: 0,0:01:35.00,0:01:45.00,Default,,0,0,0,,本次导出的核查卡可离线阅读与打印；正常仅限已核验的开发示例工况。
+Dialogue: 0,0:01:45.00,0:01:55.00,Default,,0,0,0,,BDG2仅展示真实用能回放，不与仿真机组拼接成真实楼宇故障证据。
+Dialogue: 0,0:01:55.00,0:02:05.00,Default,,0,0,0,,工况演示：只有具备规定的温差、启停与持续时长，才能形成有限核验结论。
+Dialogue: 0,0:02:05.00,0:02:20.00,Default,,0,0,0,,历史56个基础日工况：三种方法均12/56；正常和泄漏对照保留，无新增性能优势。
+Dialogue: 0,0:02:20.00,0:02:32.00,Default,,0,0,0,,下一步检验真实使用价值：常规曲线表格与工作台使用相同清单，参考答案先独立复核。
+Dialogue: 0,0:02:32.00,0:02:46.00,Default,,0,0,0,,常规方式提供同样原始曲线、表格与检查清单。正式任务交叉平衡，不重复给同一人。
+Dialogue: 0,0:02:46.00,0:03:00.00,Default,,0,0,0,,已实现核查任务与证据交接。真实建筑适用性、人工价值和节能收益仍待验证。

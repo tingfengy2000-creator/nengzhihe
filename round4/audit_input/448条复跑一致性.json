@@ -1,0 +1,22 @@
+{
+  "records_original": 448,
+  "records_auditor": 448,
+  "compared_fields": [
+    "case_id",
+    "base_case_id",
+    "day",
+    "perturbation",
+    "truth",
+    "method",
+    "prediction",
+    "raw_status",
+    "query_units",
+    "actions"
+  ],
+  "mismatch_count": 0,
+  "mismatches": [],
+  "timing_equality_required": false,
+  "source_files_unchanged": true,
+  "zip_files_compared_for_drift": 133,
+  "drift": []
+}

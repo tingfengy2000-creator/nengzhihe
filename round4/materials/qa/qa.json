@@ -1,0 +1,126 @@
+{
+  "status": "visually_reviewed_anonymous_editable_drafts",
+  "total_pages": 11,
+  "files": [
+    {
+      "file": "materials/final/附件1_能智核_项目简表.docx",
+      "sha256": "f7f187d2f5aacaf2567dc3e3934804caceddfcac24ee76ccbdb2b26471140415",
+      "pdf": "materials/final/附件1_能智核_项目简表.pdf",
+      "pdf_sha256": "adce5b686005ebaad98462fd66f44e5844a5643b09b3e75f66c4c03a00c7f5ff",
+      "pages": 3,
+      "fonts": [
+        "SimSun",
+        "SimHei"
+      ],
+      "embedded_fonts": 0,
+      "anonymous_author": true,
+      "all_pages_visually_inspected": true,
+      "page_sha256": {
+        "materials/qa/1/page-1.png": "811819f3bf5a94d705a465d278cb22373cb4f2a6c10e7a37f45fcb44bfdb0065",
+        "materials/qa/1/page-2.png": "097b817b9489f50c5b8fa892f3d4a17ef1289cef727558a4161033e589d089a3",
+        "materials/qa/1/page-3.png": "9ba795a394acf8dcfb534c17d769b6803f2047c23bc6b143454f1b1bbbaf13c2"
+      }
+    },
+    {
+      "file": "materials/final/附件2_能智核_项目说明书.docx",
+      "sha256": "0617baeb1ba2014e1e2191071f74ff344622fc4b5bc8f82fb2c513e12c661e53",
+      "pdf": "materials/final/附件2_能智核_项目说明书.pdf",
+      "pdf_sha256": "81079bd4f213c39faebdb0476f9f019dc038a8c06bff77879aae258693057918",
+      "pages": 5,
+      "fonts": [
+        "SimSun",
+        "SimHei"
+      ],
+      "embedded_fonts": 0,
+      "anonymous_author": true,
+      "all_pages_visually_inspected": true,
+      "page_sha256": {
+        "materials/qa/2/page-1.png": "3abc384607d0addff724ef7e7f2f92ade1dff3f74a44657da7b43e097a51a15e",
+        "materials/qa/2/page-2.png": "6014e7b736f6238209fe0d2595629aee5f1c630c9c293498fc35a81141d63bc8",
+        "materials/qa/2/page-3.png": "1511c0a10d90c0eb9295135ab95a4a856ef1d55e40184f317448c9898beeaa44",
+        "materials/qa/2/page-4.png": "a9bd1d10272583c81e163530b764a7df7d072bb6198d22f6d37c63a6474132bc",
+        "materials/qa/2/page-5.png": "ce19ff27f68aed8da26623a7829340acb76e7a82655d29486dbdc0a439907cc1"
+      }
+    },
+    {
+      "file": "materials/final/附件3_能智核_商业计划书.docx",
+      "sha256": "0a9241c7c9ce29d7e7156351c990d6af78c23afccd2aecf761ba70fec68d8502",
+      "pdf": "materials/final/附件3_能智核_商业计划书.pdf",
+      "pdf_sha256": "62530692c1c26e4ebf9672d355240252a381befb309511edaf282d4fb68b3674",
+      "pages": 3,
+      "fonts": [
+        "SimSun",
+        "SimHei"
+      ],
+      "embedded_fonts": 0,
+      "anonymous_author": true,
+      "all_pages_visually_inspected": true,
+      "page_sha256": {
+        "materials/qa/3/page-1.png": "dc852585b2a6d5d6c97473f31f66bc8ec5d673808638992e928c3c3205574730",
+        "materials/qa/3/page-2.png": "f988b35f7ac63f56d7721eab71491e0e02d8e978202b50d4493e4da914b81621",
+        "materials/qa/3/page-3.png": "e7d3a80509071c08d9b0ab647b210e2df1dc67d4e71bccf7cc4d4b617d712333"
+      }
+    }
+  ],
+  "word_limits": {
+    "简表": {
+      "6": {
+        "chars": 139,
+        "cap": 300
+      },
+      "8": {
+        "chars": 152,
+        "cap": 300
+      },
+      "10": {
+        "chars": 253,
+        "cap": 600
+      },
+      "12": {
+        "chars": 134,
+        "cap": 300
+      }
+    },
+    "说明书一": {
+      "chars": 236,
+      "cap": 2000
+    },
+    "说明书二": {
+      "chars": 477,
+      "cap": 3000
+    },
+    "说明书三": {
+      "chars": 1316,
+      "cap": 3000
+    },
+    "说明书四": {
+      "chars": 146,
+      "cap": 500
+    },
+    "商业一": {
+      "chars": 123,
+      "cap": 200
+    },
+    "商业二": {
+      "chars": 102,
+      "cap": 200
+    },
+    "商业三": {
+      "chars": 384,
+      "cap": 2000
+    },
+    "商业四": {
+      "chars": 508,
+      "cap": 2000
+    },
+    "商业五": {
+      "chars": 434,
+      "cap": 2000
+    },
+    "商业六": {
+      "chars": 182,
+      "cap": 500
+    }
+  },
+  "notes": "All 11 pages inspected. Final unchanged pages additionally matched earlier inspected PNG bytes. Full Chinese fonts; no missing glyphs, blank tail pages, clipped tables or orphan headings. Administrative identity fields remain intentionally blank; maturity is self-assessed level 3, not certification."
+}

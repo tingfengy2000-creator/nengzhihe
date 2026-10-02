@@ -1,0 +1,138 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>能智核 核查卡 da617e1434334661</title>
+<style>body{font:15px/1.65 "Microsoft YaHei",sans-serif;color:#203b39;max-width:1000px;margin:38px auto;padding:0 25px}h1{font-size:28px}h2{font-size:20px;margin-top:28px}.badge{padding:4px 10px;background:#e7f2ed;border-radius:5px}.dim{color:#526763}.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}table{border-collapse:collapse;width:100%;font-size:13px}td,th{border:1px solid #bbcfc8;padding:9px;text-align:left}th{background:#e7f2ed}pre{font-size:11px;white-space:pre-wrap;overflow-wrap:anywhere}@media print{body{margin:0;padding:0}h2{break-after:avoid}tr{break-inside:avoid}.screen{display:none}}</style>
+<h1>能智核 公共建筑风阀疑点核验卡</h1><p class="dim">运行编号 da617e1434334661 · 数据 IMP-1117C5AA2EF3434B · simulated · 仅本次可用证据</p>
+<div class="two"><section><h2>数据质量</h2><strong class="badge" style="background:#e7f2ed;color:#203b39">记录检查通过</strong><p>288条记录，重复0条，缺失0项；有效运行955分钟。</p><ul><li>当前记录检查通过；不代表设备正常。</li></ul></section>
+<section><h2>设备判断</h2><strong class="badge">已核验工况正常</strong><p>混风指令响应与稳定关阀热响应均有正向一致证据；仅称已核验时段和限定三类范围正常。</p><p class="dim">数据修正不等于设备正常；未检出偏离不等于排除故障。</p></section></div>
+<h2>各分支当前能否检验</h2><table style="table-layout:fixed"><colgroup><col style="width:8%"><col style="width:11%"><col style="width:29%"><col style="width:8%"><col style="width:44%"></colgroup><tr><th>分支</th><th>状态</th><th>依据</th><th>分钟</th><th>补证条件</th></tr><tr><td>风路</td><td>可检验</td><td>当前窗口未发现足够的风路偏离证据；不能据此排除卡滞。</td><td>900</td><td>需要OA_TEMP、RA_TEMP、MA_TEMP、OA_DMPR_DM及双风机启停；启动30分钟后，室外/回风温差≥3°C，至少两个连续30分钟窗口且指令位于已校准范围。</td></tr><tr><td>盘管</td><td>可检验</td><td>合格关阀窗口位于开发正常专属参考；只支持当前有限工况，不作普遍排除。</td><td>270</td><td>需要MA_TEMP、SA_TEMP、CHWC_VLV_DM、SF_CS及双风机启停；风机已稳定，零关阀指令（容差0.01%）持续至少75分钟，获得15分钟等待后的两个30分钟窗口；还需开发参考覆盖。</td></tr><tr><td>运行工况</td><td>可检验</td><td>已取得可用稳定运行工况；仍需分别核验风路和盘管。</td><td>925</td><td>需要双风机启停和转速指令、OA_TEMP、风阀与冷阀指令；连续运行至少90分钟可提供启动30分钟后的60分钟证据。</td></tr></table>
+<div class="two"><section><h2>已有支持证据</h2><ul><li>本次风路参考内窗口870分钟、盘管参考内窗口270分钟，满足当前两个分支的有限参考一致性条件。</li></ul></section><section><h2>证据限制与缺口</h2><ul><li>870分钟混风响应处于开发参考包络；当前窗口未发现足够的风路偏离证据，不能据此排除卡滞。</li><li>270分钟稳定关阀热响应处于开发参考包络；该证据只覆盖当前工况，不足以排除所有阀泄漏。</li></ul></section></div>
+<h2>下一步核查动作</h2><ol><li>保留记录，在其他运行工况持续观察；不据此宣布普遍无故障。</li></ol><h2>实际核查过程</h2><table><tr><th>序号</th><th>证据组</th><th>选择理由</th></tr><tr><td>1</td><td>记录可信度</td><td>先检查记录完整性，数据问题与设备疑点独立处理。</td></tr><tr><td>2</td><td>混风与风阀响应</td><td>读取全部允许证据，不受预算滑块截断。</td></tr><tr><td>3</td><td>启停与控制工况</td><td>读取全部允许证据，不受预算滑块截断。</td></tr><tr><td>4</td><td>关阀与盘管温降</td><td>读取全部允许证据，不受预算滑块截断。</td></tr></table>
+<p>离线查询 4 单位；现场补采未实施，费用/人工节省未测。本次程序计算耗时32.339毫秒，不是人工运维提效证据。</p>
+<h2>输入转换与适用范围</h2><p>仅支持当前LBNL公开单风道机组仿真配置及已校准输入范围；BDG2只作独立实测用能回放。故障候选需独立核实，不推算实际节能收益。</p><pre>{
+  &quot;profile&quot;: &quot;lbnl_sdahu_public_2022&quot;,
+  &quot;source_sha256&quot;: &quot;ebc73213a52426a562f0409eeb1ad65ea5c608f4321105bdd95f5970e4b8a434&quot;,
+  &quot;input_rows&quot;: 1440,
+  &quot;output_rows&quot;: 288,
+  &quot;source_interval_minutes&quot;: 1,
+  &quot;target_interval_minutes&quot;: 5,
+  &quot;time_column&quot;: &quot;Datetime&quot;,
+  &quot;mapping&quot;: {
+    &quot;SA_TEMP&quot;: &quot;SA_TEMP&quot;,
+    &quot;SA_TEMPSPT&quot;: &quot;SA_TEMPSPT&quot;,
+    &quot;OA_TEMP&quot;: &quot;OA_TEMP&quot;,
+    &quot;MA_TEMP&quot;: &quot;MA_TEMP&quot;,
+    &quot;RA_TEMP&quot;: &quot;RA_TEMP&quot;,
+    &quot;SF_SPD_DM&quot;: &quot;SF_SPD_DM&quot;,
+    &quot;RF_SPD_DM&quot;: &quot;RF_SPD_DM&quot;,
+    &quot;SF_CS&quot;: &quot;SF_CS&quot;,
+    &quot;RF_CS&quot;: &quot;RF_CS&quot;,
+    &quot;OA_DMPR_DM&quot;: &quot;OA_DMPR_DM&quot;,
+    &quot;RA_DMPR_DM&quot;: &quot;RA_DMPR_DM&quot;,
+    &quot;CHWC_VLV_DM&quot;: &quot;CHWC_VLV_DM&quot;,
+    &quot;ZONE_TEMP_1&quot;: &quot;ZONE_TEMP_1&quot;,
+    &quot;ZONE_TEMP_2&quot;: &quot;ZONE_TEMP_2&quot;,
+    &quot;ZONE_TEMP_3&quot;: &quot;ZONE_TEMP_3&quot;,
+    &quot;ZONE_TEMP_4&quot;: &quot;ZONE_TEMP_4&quot;,
+    &quot;ZONE_TEMP_5&quot;: &quot;ZONE_TEMP_5&quot;
+  },
+  &quot;source_units&quot;: {
+    &quot;SA_TEMP&quot;: &quot;degF&quot;,
+    &quot;SA_TEMPSPT&quot;: &quot;degF&quot;,
+    &quot;OA_TEMP&quot;: &quot;degF&quot;,
+    &quot;MA_TEMP&quot;: &quot;degF&quot;,
+    &quot;RA_TEMP&quot;: &quot;degF&quot;,
+    &quot;SF_SPD_DM&quot;: &quot;binary&quot;,
+    &quot;RF_SPD_DM&quot;: &quot;binary&quot;,
+    &quot;SF_CS&quot;: &quot;fraction&quot;,
+    &quot;RF_CS&quot;: &quot;fraction&quot;,
+    &quot;OA_DMPR_DM&quot;: &quot;fraction&quot;,
+    &quot;RA_DMPR_DM&quot;: &quot;fraction&quot;,
+    &quot;CHWC_VLV_DM&quot;: &quot;fraction&quot;,
+    &quot;ZONE_TEMP_1&quot;: &quot;degF&quot;,
+    &quot;ZONE_TEMP_2&quot;: &quot;degF&quot;,
+    &quot;ZONE_TEMP_3&quot;: &quot;degF&quot;,
+    &quot;ZONE_TEMP_4&quot;: &quot;degF&quot;,
+    &quot;ZONE_TEMP_5&quot;: &quot;degF&quot;
+  },
+  &quot;ignored_columns&quot;: [
+    &quot;CHWC_VLV&quot;,
+    &quot;OA_CFM&quot;,
+    &quot;OA_DMPR&quot;,
+    &quot;RA_CFM&quot;,
+    &quot;RA_DMPR&quot;,
+    &quot;RF_SPD&quot;,
+    &quot;RF_WAT&quot;,
+    &quot;SA_CFM&quot;,
+    &quot;SA_SP&quot;,
+    &quot;SA_SPSPT&quot;,
+    &quot;SF_SPD&quot;,
+    &quot;SF_WAT&quot;,
+    &quot;SYS_CTL&quot;
+  ],
+  &quot;transform&quot;: &quot;Explicit (F-32)*5/9 or percent/100; complete 1-minute buckets averaged to 5-minute only when all five point values exist. Missing cells remain missing. No interpolation or hidden label use.&quot;
+}</pre>
+<details><summary>查看与服务、诊断账本一致的质量对象</summary><pre>{
+  &quot;status&quot;: &quot;passed&quot;,
+  &quot;quality_status&quot;: &quot;passed&quot;,
+  &quot;label&quot;: &quot;记录检查通过&quot;,
+  &quot;issues&quot;: [],
+  &quot;rows&quot;: 288,
+  &quot;unique_rows&quot;: 288,
+  &quot;duplicates&quot;: 0,
+  &quot;missing&quot;: 0,
+  &quot;missing_fraction&quot;: 0.0,
+  &quot;valid_schema&quot;: true,
+  &quot;valid_for_diagnosis&quot;: true,
+  &quot;unit_errors&quot;: [],
+  &quot;time_errors&quot;: [],
+  &quot;time_valid&quot;: true,
+  &quot;range_errors&quot;: [],
+  &quot;conflicting_timestamps&quot;: 0,
+  &quot;missing_points&quot;: {
+    &quot;air_path&quot;: [],
+    &quot;coil_response&quot;: [],
+    &quot;operating_context&quot;: []
+  },
+  &quot;declared_interval_minutes&quot;: 5,
+  &quot;actual_interval_seconds&quot;: [
+    300.0
+  ],
+  &quot;bad_interval_count&quot;: 0,
+  &quot;gap_count&quot;: 0,
+  &quot;timestamp_span_minutes&quot;: 1435.0,
+  &quot;unique_operating_minutes&quot;: 955,
+  &quot;duration_basis&quot;: &quot;Only validated regular intervals count; final sample represents one declared interval. Gaps and duplicates add no duration.&quot;,
+  &quot;note&quot;: &quot;记录检查通过不代表设备正常；数据质量与设备证据分别判断。&quot;
+}</pre></details>
+<script id="canonical-quality" type="application/json">{
+  "status": "passed",
+  "quality_status": "passed",
+  "label": "记录检查通过",
+  "issues": [],
+  "rows": 288,
+  "unique_rows": 288,
+  "duplicates": 0,
+  "missing": 0,
+  "missing_fraction": 0.0,
+  "valid_schema": true,
+  "valid_for_diagnosis": true,
+  "unit_errors": [],
+  "time_errors": [],
+  "time_valid": true,
+  "range_errors": [],
+  "conflicting_timestamps": 0,
+  "missing_points": {
+    "air_path": [],
+    "coil_response": [],
+    "operating_context": []
+  },
+  "declared_interval_minutes": 5,
+  "actual_interval_seconds": [
+    300.0
+  ],
+  "bad_interval_count": 0,
+  "gap_count": 0,
+  "timestamp_span_minutes": 1435.0,
+  "unique_operating_minutes": 955,
+  "duration_basis": "Only validated regular intervals count; final sample represents one declared interval. Gaps and duplicates add no duration.",
+  "note": "记录检查通过不代表设备正常；数据质量与设备证据分别判断。"
+}</script></html>

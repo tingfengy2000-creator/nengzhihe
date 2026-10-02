@@ -1,0 +1,103 @@
+{
+  "duration_seconds": 180,
+  "sampled_frames": 360,
+  "sampling_fps": 2,
+  "output_fps": 12,
+  "size": [
+    1280,
+    1002
+  ],
+  "has_audio": false,
+  "source": "Actual local browser operation; no mock screens",
+  "editing": "Quiet gaps between capture segments removed; source frame order preserved. Captions added below the interface. This is not a response latency or human-value measurement.",
+  "raw_capture_manifest_sha256": "51bb363fd7491641cb6dd4cd0c041d05690211445457091aa5d37ba51d4cef6b",
+  "video_sha256": "1d69b36bf85f34890b48e9c21799f1812b054197c216e6ccc5075c14d4759f39",
+  "chapters": [
+    {
+      "start_seconds": 0.0,
+      "end_seconds": 10.0,
+      "caption": "告警之后先查什么？实机操作采样录制，非真人价值实验。"
+    },
+    {
+      "start_seconds": 10.0,
+      "end_seconds": 20.0,
+      "caption": "选择公开原始CSV：1440行、31列；当前只支持已验证仿真配置。"
+    },
+    {
+      "start_seconds": 20.0,
+      "end_seconds": 30.0,
+      "caption": "逐项确认时间、点位与单位。这里故意把1分钟数据声明为5分钟。"
+    },
+    {
+      "start_seconds": 30.0,
+      "end_seconds": 39.0,
+      "caption": "错误采样间隔被拒绝，不能按记录数乘错误间隔虚增运行时间。"
+    },
+    {
+      "start_seconds": 39.0,
+      "end_seconds": 48.0,
+      "caption": "更正声明后真实重算：完整5点桶聚合，1440行转为288行。"
+    },
+    {
+      "start_seconds": 48.0,
+      "end_seconds": 58.0,
+      "caption": "先看数据质量，再看各分支可检验条件；缺少关阀时段须保留未决。"
+    },
+    {
+      "start_seconds": 58.0,
+      "end_seconds": 66.0,
+      "caption": "导出本次运行生成的HTML核查卡，保留质量对象、映射与源数据哈希。"
+    },
+    {
+      "start_seconds": 66.0,
+      "end_seconds": 75.0,
+      "caption": "演示三：300条观测中有12条完全重复记录；设备疑点另行判断。"
+    },
+    {
+      "start_seconds": 75.0,
+      "end_seconds": 85.0,
+      "caption": "修正为288条后，质量通过，风阀候选仍存在；继续补证，不能宣布设备正常。"
+    },
+    {
+      "start_seconds": 85.0,
+      "end_seconds": 95.0,
+      "caption": "移除风路证据后重新计算，候选退回未决；输出随证据变化。"
+    },
+    {
+      "start_seconds": 95.0,
+      "end_seconds": 105.0,
+      "caption": "本次导出的核查卡可离线阅读与打印；正常仅限已核验的开发示例工况。"
+    },
+    {
+      "start_seconds": 105.0,
+      "end_seconds": 115.0,
+      "caption": "BDG2仅展示真实用能回放，不与仿真机组拼接成真实楼宇故障证据。"
+    },
+    {
+      "start_seconds": 115.0,
+      "end_seconds": 125.0,
+      "caption": "工况演示：只有具备规定的温差、启停与持续时长，才能形成有限核验结论。"
+    },
+    {
+      "start_seconds": 125.0,
+      "end_seconds": 140.0,
+      "caption": "历史56个基础日工况：三种方法均12/56；正常和泄漏对照保留，无新增性能优势。"
+    },
+    {
+      "start_seconds": 140.0,
+      "end_seconds": 152.0,
+      "caption": "下一步检验真实使用价值：常规曲线表格与工作台使用相同清单，参考答案先独立复核。"
+    },
+    {
+      "start_seconds": 152.0,
+      "end_seconds": 166.0,
+      "caption": "常规方式提供同样原始曲线、表格与检查清单。正式任务交叉平衡，不重复给同一人。"
+    },
+    {
+      "start_seconds": 166.0,
+      "end_seconds": 180.0,
+      "caption": "已实现核查任务与证据交接。真实建筑适用性、人工价值和节能收益仍待验证。"
+    }
+  ],
+  "output_fps_note": "Nominal 12 fps; 2130 decoded frames, duration 180 seconds, sampled from 360 actual UI screenshots."
+}

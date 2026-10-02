@@ -1,0 +1,21 @@
+{
+  "status": "pending",
+  "reviewer_code": "",
+  "reviewer_independent_of_implementation": false,
+  "reviewed_utc": "",
+  "reviewed_task_ids": [],
+  "checks": {
+    "raw_signals_and_documentation": false,
+    "matching_and_difficulty": false,
+    "acceptable_conclusions_and_alternatives": false,
+    "rubric_and_failure_rules": false,
+    "no_system_output_as_truth": false
+  },
+  "notes": "",
+  "sha256": {
+    "private/answer_key_draft.json": "b84877fa5be5d0876754a7486328caeb1793f930c232e62afd348b2ca715c0f0",
+    "private/rubric.json": "e91ecb98396a3d5720a97181b550cab5e5e940cae08b2002b34796824956992c",
+    "private/task_manifest.json": "e0321b98d9abe87620e7a18aa4f2e0f9bb51f157b7f451d3c3a683402d8a002f",
+    "private/protocol.json": "2d5cb1ba4be7c7e626176f61de1172b1068aba9d967491770eb9011ee845e518"
+  }
+}

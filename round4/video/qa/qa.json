@@ -1,0 +1,31 @@
+{
+  "video_sha256": "1d69b36bf85f34890b48e9c21799f1812b054197c216e6ccc5075c14d4759f39",
+  "duration_seconds": 180,
+  "size": [
+    1280,
+    1002
+  ],
+  "all_17_chapter_midpoints_visually_inspected": true,
+  "decode_to_end_passed": true,
+  "audio": false,
+  "source": "Actual browser UI captures, sampled at 2 fps; captions added; idle gaps removed, source order preserved. Not a human study or latency recording.",
+  "chapter_frame_sha256": {
+    "video/qa/chapter-01.png": "a7d75ece801fdd68f0ee9ebfdfb4678ffe8779980d31b7186d31c73cf656e398",
+    "video/qa/chapter-02.png": "9253474a09702afa7c5319ebaeecd59b843f361e65fab1c12d1cef4d81ddae69",
+    "video/qa/chapter-03.png": "8cc882992ef440cc626072c5f2f49ca090096d9d2735cd5b2c9653ff62af2a46",
+    "video/qa/chapter-04.png": "0d2c846d4e67bd402ac2438f92109c83cd79cd58daeef7e85838bb42fca310c5",
+    "video/qa/chapter-05.png": "cf98fb60a7047efaec0d5cc90e851725878e234e4a614820f732b66c626c3ddc",
+    "video/qa/chapter-06.png": "e08ab6fc366113433aecaee4fe831c644d42dc715e86dea4bb6f756cac3b4d37",
+    "video/qa/chapter-07.png": "7a426a66e2df6b2891b0b274dd10383bfe44caf50655a2bbd35437cc8ec173f7",
+    "video/qa/chapter-08.png": "6fbe7c0cf5ab531cf6c0ac7bff06f5274cbe7f7fa4b3c448858eb9d7d6479908",
+    "video/qa/chapter-09.png": "2df60b9d3d2a66e11c1255018d0bb8d8343e6b5b48f29236dde06db9bb40c82b",
+    "video/qa/chapter-10.png": "5a202c6df2f25ceb8e3c8b078ca5dbc7c3650b2613a4880fdc96ad9ff0a78053",
+    "video/qa/chapter-11.png": "4cb1f347bbb0b5027e9242597537042d40df25a7d4f6001a8ba0ff87fa08c617",
+    "video/qa/chapter-12.png": "f347c0e3b46aabcc584d7c2a07a96786b42333687d1d2f04e2c5250dd1f65577",
+    "video/qa/chapter-13.png": "7a66a1ba2bc70a85bbe0cab43165e3554ddce3fbd87ac7dbe559066ec339ee90",
+    "video/qa/chapter-14.png": "f7c7b81aed25525635718fe4078b3caf0f224fc58db29e30966d96156252c6ec",
+    "video/qa/chapter-15.png": "a5b63502540a36c16e8bb47eac92d1828ddd86a36adee1f73f4f6b6689eeb72f",
+    "video/qa/chapter-16.png": "9d83853e2d987ad55813c08382f884a5debccb107df97c17cda80d74998048c7",
+    "video/qa/chapter-17.png": "788386f9307dbe12460bea78a3eb86c9cdc2ca8006dea7d30c233526b5652cdf"
+  }
+}

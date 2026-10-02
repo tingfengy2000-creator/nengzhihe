@@ -1,0 +1,22 @@
+{
+  "attachment1.docx": "f7f187d2f5aacaf2567dc3e3934804caceddfcac24ee76ccbdb2b26471140415",
+  "attachment1.pdf": "adce5b686005ebaad98462fd66f44e5844a5643b09b3e75f66c4c03a00c7f5ff",
+  "attachment2.docx": "0617baeb1ba2014e1e2191071f74ff344622fc4b5bc8f82fb2c513e12c661e53",
+  "attachment2.pdf": "81079bd4f213c39faebdb0476f9f019dc038a8c06bff77879aae258693057918",
+  "attachment3.docx": "0a9241c7c9ce29d7e7156351c990d6af78c23afccd2aecf761ba70fec68d8502",
+  "attachment3.pdf": "62530692c1c26e4ebf9672d355240252a381befb309511edaf282d4fb68b3674",
+  "base_case_results.csv": "58170e5c3d52b0e2d1aea798085d4c0f7bfeadf0bb224552e760bc717369f856",
+  "by_date.json": "a26fdf318d1bf724008df49cea9ec501ffceb3ba078d1c777d2bd92d97660021",
+  "demo.mp4": "1d69b36bf85f34890b48e9c21799f1812b054197c216e6ccc5075c14d4759f39",
+  "import_card.html": "cafafbead282c77c8c3031a720919edb049cb738b93311204e79148730501fb2",
+  "index.html": "40b95457fdd0a35e7e863563f5cababcb4414546aca1c7a6162e01f4bdf5c2ff",
+  "presentation.pdf": "655a3babd08c251deb299098287eb2a7ef5077b297a487cce4533ee6539280a9",
+  "presentation.pptx": "05007adda74f105105b0eb31274c0d03052dfa4efbbe5a93b681fbc67de9160b",
+  "recording_provenance.json": "54a9adcd7a6ecbaf536d889e03e1ae1c48cce17ac0270e734c5d43657461ad3b",
+  "report.txt": "08c85e720e0994ac3ec60bd04fd12d338772dd6a2692b13db079d47906d217d5",
+  "set_overlap.json": "54bd2303f3ce780b07bd22a88e15e4426de71b5a0ee6effee8cf1b0cb1f73490",
+  "study_protocol.txt": "48367cff611262a8b0d42b1bf101161580c1804f81c6a3bfb10a1768b7b1766d",
+  "summary.json": "1bc92e8674d5f5d0a4583c889893c46c1fdedde9d0705ee8abed8087829bbae7",
+  "suspicion_card.html": "59b7b6ed5804b87636d1a8c7b6893f08ec5685a1cd7190eb3f283f9777e82773",
+  "workbench.png": "a9445d2aa84975475540a9ffa3dde01a4c03f69862636d1473e92acfd46b3c91"
+}

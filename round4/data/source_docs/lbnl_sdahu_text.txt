@@ -1,0 +1,418 @@
+ 
+ 
+LBNL Fault Detection and Diagnostics Data Sets: Single 
+Duct Air Handling Unit  
+ 
+ 
+  
+   
+ 
+Jessica Granderson, Guanjing Lin, Yimin Chen, Armando Casillas 
+ Lawrence Berkeley National Laboratory 
+ 
+Sen Huang, Draguna Vrabie 
+Pacific Northwest National Laboratory 
+ 
+U.S. Department of Energy, Building Technologies Office 
+September 1, 2022 
+ 
+ 
+ 
+ 
+ 
+  
+Please cite as:  
+Lawrence Berkeley National Laboratory, LBNL FDD Data Sets. DOI: https://dx.doi.org/10.25984/188132
+
+1 
+DISCLAIMER 
+This document was prepared as an account of work sponsored by the United States Government. While 
+this document is believed to contain correct information, neither the United States Government nor any 
+agency thereof, nor The Regents of the University of California, nor any of their employees, makes any 
+warranty, express or implied, or assumes any legal responsibility for the accuracy, completeness, or 
+usefulness of any information, apparatus, product, or process disclosed, or represents that its use would 
+not infringe privately owned rights. Reference herein to any specific commercial product, process, or 
+service by its trade name, trademark, manufacturer, or otherwise, does not necessarily constitute or 
+imply its endorsement, recommendation, or favoring by the United States Government or any agency 
+thereof, or The Regents of the University of California. The views and opinions of authors expressed 
+herein do not necessarily state or reflect those of the United States Government or any agency thereof 
+or The Regents of the University of California. 
+ 
+ 
+ 
+ACKNOWLEDGEMENT 
+This work was supported by the Assistant Secretary for Energy Efficiency and Renewable Energy, 
+Building Technologies Office, of the U.S. Department of Energy (DOE) under Contract No. DE-AC02- 
+05CH11231. The authors thank all data providers and partners who helped to develop and evaluate the 
+data sets.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+CONTACT INFORMATION 
+ 
+Website: https://faultdetection.lbl.gov/data/ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 
+Table of Contents 
+ 
+ 
+1 Building and system information 3 
+1.1 System type and diagram 3 
+2 Data point summary 5 
+3 Faulty and fault-free scenarios 8 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3 
+This documentation describes the curated single-duct AHU (SDAHU) fault detection and diagnostics data 
+set (LBNL FDD Data Sets_SDAHU). In this documentation, the system information, data points 
+specifications, and input scenarios for faulted and fault-free conditions represented in the data are 
+detailed.  The dataset and associated brick model ttl file can be downloaded from 
+https://fdd.hyperarts.com/dataset/simulated-sd-ahu/ 
+ 
+1 Building and system information 
+1.1 System type and diagram 
+The studied system is a single-duct variable-air-volume (VAV) AHU providing heating and cooling to the 
+middle floor of a three-story DOE large office reference building. The conditioned floor space consists of 
+a single interior zone and four perimeter zones. The AHU distributes conditioned air to each zone via 
+one of five VAV boxes. Hot water utilized by the AHU heating coil and the VAV box reheat coils is 
+supplied by a natural gas-fired boiler. Chilled water used by the AHU cooling coil is provided by a central 
+chiller plant. Figure 1 provides an illustration of the building and floor layout. The figure also illustrates 
+the AHU and VAV box equipment layout. 
+ 
+ 
+Figure 1. Studied DOE large office reference building and the layout of one floor  
+ 
+ 
+A schematic diagram of the simulated AHU used in this study is shown in Figure 2. The main components 
+of the AHU include the supply fan with a variable frequency driver (VFD), return fan with a VFD (not 
+depicted), cooling and heating coils, cooling and heating control valves, and outdoor air (OA) and return 
+air (RA) dampers. The VAV boxes are a typical single-duct pressure-independent VAV box with hydronic 
+reheat.  The major components of the VAV boxes are reheating coil, reheating coil valve, and terminal 
+damper. 
+ 
+
+4 
+ 
+Figure 2. Schematic diagram of single-duct AHU and the connected zones 
+ 
+1.2 Description of control sequence 
+  
+Control sequences for the single-duct AHU for occupied and unoccupied periods are described below. 
+ 
+Occupied mode (Monday – Friday 6:00am – 10:00pm, Saturday 6:00am – 6:00pm) 
+●  Fan status: The supply fan and return fan run continuously during occupied periods. 
+●  Supply air temperature control: The supply air temperature is controlled via the cooling coil 
+valve to maintain a fixed setpoint of 55°F when OA temperature is higher than 60°F or lower 
+than 33.8°F. For OA temperatures between 33.8°F and 60°F, mechanical cooling is active only 
+when the economizer dampers are 100% open. Otherwise, mechanical cooling is locked out and 
+the cooling coil valve is closed. When mechanical cooling is locked out, the supply air 
+temperature is not directly controlled and may vary from 55°F. 
+●  Supply fan control: The supply fan speed is controlled via a VFD  to maintain a constant static 
+pressure setpoint of 1.6 in. w.g. 
+●  Return fan control: The return fan speed is controlled via a VFD to be 90% of the speed of the 
+supply fan.  
+●  Minimum outdoor air control: The OA damper is controlled to a fixed minimum position (10% 
+open) when the unit is not in economizer mode. 
+●  Economizer mode: The AHU operates in economizer mode when outdoor air temperature is 
+between 33.8°F and 60°F. In this mode, the OA damper modulates in sequence with the RA 
+
+5 
+damper to maintain a 55°F mixed air temperature setpoint. Once the OA damper is greater than 
+100% open. The cooling coil valve shall be enabled to maintain supply air temperature setpoint. 
+●  Space temperature control: The zone heating and cooling setpoints are 70°F and 75°F, 
+respectively, during the occupied period. 
+  
+Unoccupied mode 
+● Fan status: The supply and return fans are off. The cooling coil valve and OA damper are 
+closed. The system cycles ON and OFF to maintain the space temperatures between the 
+unoccupied heating and cooling setpoints. 
+● Minimum outdoor air control: The OA damper is closed. 
+● Space temperature control: The zone heating and cooling setpoints are 60°F and 80°F, 
+respectively, during the unoccupied period. 
+ 
+The occupied and unoccupied space temperature setpoints are adopted from Deru et al., 2010. The 
+economizer mode parameters come from ASHRAE Guideline 36-2020 and ASHRAE Standard 90.1-2016. 
+The static pressure setpoint was determined through testing and air balancing analyses of the simulated 
+system under design conditions. All other control setpoints and parameters are based on accepted 
+engineering practice. 
+ 
+2 Data point summary 
+A total of 30  data points were included in the data sets. The data point descriptions are summarized in 
+Table 2. In the table, the “Basic point” column indicates if the data point is commonly employed in the 
+existing building automation system to monitor the system.   
+ 
+Table 2 Data points summary of the single-duct AHU 
+NO. Data point name Diagram Point 
+Abbreviation Description Unit Basic 
+point? 
+1 AHU: Supply Air 
+Temperature SA_TEMP AHU supply air temperature °F Y 
+2 AHU: Supply Air 
+Temperature Set Point SA_TEMPSPT AHU supply air temperature set 
+point °F Y 
+3 AHU: Outdoor Air 
+Temperature OA_TEMP AHU outdoor air temperature °F Y 
+4 AHU: Mixed Air 
+Temperature MA_TEMP AHU mixed air temperature °F Y 
+5 AHU: Return Air 
+Temperature RA_TEMP AHU return air temperature °F Y 
+6 AHU: Supply Air Fan 
+Status SF_SPD_DM AHU supply air fan status; 0-off, 1-
+on – Y 
+7 AHU: Return Air Fan 
+Status RF_SPD_DM AHU return air fan status; 0-off, 1-
+on – Y 
+8 AHU: Outdoor 
+Volumetric Airflow OA_CFM AHU outdoor airflow CFM N 
+6 
+9 AHU: Return 
+Volumetric Airflow RA_CFM AHU return airflow CFM N 
+10 AHU: Supply 
+Volumetric Airflow SA_CFM AHU supply airflow CFM N 
+11 
+AHU: Supply Air Fan 
+Speed Control Signal SF_CS 
+Control signal for AHU supply air fan 
+speed; ranges from 0 to 1; 0 - fan 
+speed is 0%, 1 -  fan speed is 100% 
+0-1 Y 
+12 
+AHU: Supply Air Fan 
+Speed Position SF_SPD 
+AHU supply air fan speed; ranges 
+from 0 to 1; 0 - fan speed is 0%, 1 -  
+fan speed is 100% 
+0-1 N 
+13 
+AHU: Return Air Fan 
+Speed Control Signal RF_CS 
+Control signal for AHU return air fan 
+speed; ranges from 0 to 1; 0 - fan 
+speed is 0%, 1 -  fan speed is 100% 
+0-1 Y 
+14 
+AHU: Return Air Fan 
+Speed Position RF_SPD 
+AHU return air fan speed; ranges 
+from 0 to 1; 0 - fan speed is 0%, 1 -  
+fan speed is 100% 
+0-1 N 
+15 AHU: Supply Air Fan 
+Power SF_WAT AHU supply air fan power W N 
+16 AHU: Return Air Fan 
+Power RF_WAT AHU return air fan power W N 
+17 
+AHU: Outdoor Air 
+Damper Control Signal OA_DMPR_DM 
+Control signal for AHU outdoor air 
+damper; ranges from 0 to 1; 0 – 
+damper should be fully closed, 1 – 
+damper should be fully open 
+Open(0-1) Y 
+18 
+AHU: Outdoor Air 
+Damper Position OA_DMPR 
+AHU outdoor air damper position; 
+ranges from 0 to 1; 0 – damper 
+should be fully closed, 1 – damper 
+should be fully open 
+Open(0-1) N 
+19 
+AHU: Return Air 
+Damper Control Signal RA_DMPR_DM 
+Control signal for AHU return air 
+damper; ranges from 0 to 1; 0 – 
+damper should be fully closed, 1 – 
+damper should be fully open 
+Open(0-1) Y 
+20 
+AHU: Return Air 
+Damper Position RA_DMPR 
+AHU return air damper position; 
+ranges from 0 to 1; 0 – damper 
+should be fully closed, 1 – damper 
+should be fully open 
+Open(0-1) N 
+21 
+AHU: Cooling Coil 
+Valve Control Signal CHWC_VLV_DM 
+Control signal for AHU cooling coil 
+valve; ranges from 0 to 1; 0 – valve 
+should be fully closed, 1 – valve 
+should be fully open 
+Open(0-1) Y 
+22 
+AHU: Cooling Coil 
+Valve Position CHWC_VLV 
+AHU cooling coil valve position; 
+ranges from 0 to 1; 0 – valve should 
+be fully closed, 1 – valve should be 
+fully open 
+Open(0-1) N 
+23 AHU: Supply Air Duct 
+Static Pressure  SA_SP AHU supply air duct static pressure Inches H2O Y 
+7 
+24 
+AHU: Supply Air Duct 
+Static Pressure Set 
+Point 
+SA_SPSPT 
+AHU supply air duct static pressure 
+setpoint Inches H2O Y 
+25 
+Occupancy Mode 
+Indicator SYS_CTL 
+Indicator if the system operates in 
+occupied mode; 1-occupied mode, 
+0-unoccupied mode 
+– N 
+26 Zone 1: Air 
+Temperature ZONE_TEMP_1 Zone 1 Air Temperature °F Y 
+27 Zone 2: Air 
+Temperature ZONE_TEMP_2 Zone 2 Air Temperature °F Y 
+28 Zone 3: Air 
+Temperature ZONE_TEMP_3 Zone 3 Air Temperature °F Y 
+29 Zone 4: Air 
+Temperature ZONE_TEMP_4 Zone 4 Air Temperature °F Y 
+30 Zone 5: Air 
+Temperature ZONE_TEMP_5 Zone 5 Air Temperature °F Y 
+ 
+It is noted that, for sensor related faults (i.e., Zone air temperature sensor bias fault), the value of the 
+faulty sensor logged is the faulty value. 
+ 
+A LBNL_FDD_Data_Sets_SDAHU.ttl file  was also developed to present the data points and their 
+relationships according to the Brick Schema1(version 1.2). Figure 2 shows the SDAHU data point 
+relations created under the Brick schema model.  
+ 
+ 
+ 
+1 Ref: Brick Schema website https://brickschema.org/ Access: May 01, 2022  
+8 
+ 
+ 
+Figure 2 The schematic diagram of SDAHU Brick model  
+ 
+3 Faulty and fault-free scenarios 
+Faulty and fault-free scenarios included in the data set are shown in Table 3. There are a total of 20 
+faulted cases and 1 fault-free case. Each faulted case lasts for one year.  The TMY weather data for 
+Chicago, IL is used as the weather inputs.   
+Table 3 Simulated input scenarios included in the dataset for the SDAHU 
+Input Scenarios Method of fault imposition 
+Fault type Fault intensity 
+Outdoor air temperature sensor 
+bias 
+Bias = 2°C Add bias to sensor output. 
+Bias = 4°C 
+Bias = -2°C 
+Bias = -4°C 
+Supply air temperature sensor 
+bias 
+Bias = 2°C Add bias to sensor output. 
+Bias = 4°C 
+Bias = -2°C 
+Bias = -4°C 
+
+9 
+OA Damper Stuck Minimum position (10%) Automated override of OA damper position to 
+indicate that OA damper is stuck. 
+25% open 
+75% Open 
+100% Open* 
+Cooling Coil Valve Leaking 10% Adjusted the minimum coil valve position 
+value when the control signal is zero. 
+25% 
+40% 
+50% 
+Stuck 10% Automated override of coil valve position to 
+indicate that valve is stuck. 
+25% 
+50% 
+75% 
+  Fault-free  
+*Data only available from April 1 to Nov 1 
+ 
+The data set is provided in a set of the csv files.  Each .csv file (except OA damper stuck open 100%) 
+represents one-year data of a fault with a specific fault intensity or a fault-free case. The data set uses 1-
+minute measurement frequency so the data sets can be converted into input samples of any time 
+horizon larger than 1 minute. Table 4 lists the csv file description for each faulty case and fault-free case.  
+Table 4 File inventory 
+No. Fault file name Fault type  Fault intensity 
+1 AHU_annual.csv Fault  free NA 
+2 sa_bias_-2_annual.csv Supply air temperature sensor bias -2°C 
+3 sa_bias_-4_annual.csv Supply air temperature sensor bias -4°C 
+4 sa_bias_2_annual.csv Supply air temperature sensor bias +2°C 
+5 sa_bias_4_annual.csv Supply air temperature sensor bias +4°C 
+6 coi_leakage_010_annual.csv Cooling coil valve leaking 10% leakage 
+7 coi_leakage_025_annual.csv Cooling coil valve leaking 25% leakage 
+8 coi_leakage_040_annual.csv Cooling coil valve leaking 40% leakage 
+9 coi_leakage_050_annual.csv Cooling coil valve leaking 50% leakage 
+10 coi_stuck_010_annual.csv Cooling coil valve stuck Stuck at 10% 
+11 coi_stuck_025_annual.csv Cooling coil valve stuck Stuck at 25% 
+12 coi_stuck_050_annual.csv Cooling coil valve stuck Stuck at 50% 
+10 
+13 coi_stuck_075_annual.csv Cooling coil valve stuck Stuck at 75% 
+14 damper_stuck_010_annual.csv Outdoor air damper stuck Stuck at 10% 
+15 damper_stuck_025_annual.csv Outdoor air damper stuck Stuck at 25% 
+16 damper_stuck_075_annual.csv Outdoor air damper stuck Stuck at 75% 
+17 damper_stuck_100_annual_short.csv Outdoor air damper stuck Stuck at 100% 
+18 oa_bias_-2_annual.csv Outdoor air temperature sensor bias -2°C 
+19 oa_bias_-4_annual.csv Outdoor air temperature sensor bias -4°C 
+20 oa_bias_2_annual.csv Outdoor air temperature sensor bias +2°C 
+21 oa_bias_4_annual.csv Outdoor air temperature sensor bias +4°C 
+ 

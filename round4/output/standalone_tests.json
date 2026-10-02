@@ -1,0 +1,22 @@
+{
+  "passed": 13,
+  "checks": [
+    "Isolated local server ready",
+    "Historical comparison available in standalone copy",
+    "Three independent local demos present",
+    "Demo runs NZH-CFF0E57369E1",
+    "Demo runs NZH-90C933F3C475",
+    "Demo runs NZH-76889C2BA896",
+    "Follow-up advice consistent in UI and card NZH-76889C2BA896",
+    "HTTP refuses false raw cadence",
+    "HTTP original CSV maps to 288 records",
+    "Full information includes all four evidence groups even budget1",
+    "HTTP view, evidence, decision and HTML share quality",
+    "HTML card includes source mapping and hash",
+    "Changed evidence truly recomputes into an unresolved result"
+  ],
+  "isolated_root": "E:\\比赛\\nengzhihe\\round4\\output\\standalone_1790915795420884600",
+  "parent_data_used": false,
+  "http_port": 18197,
+  "source_script_sha256": "1885ec8f645af5e3a901209dabde0f07e72d60f00b8aa05b19756467aff831a6"
+}

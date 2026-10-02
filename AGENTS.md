@@ -18,8 +18,15 @@ This project is independent of every other project under E:\比赛. Never modify
 Use task-local dependencies and ports. Do not kill or reconfigure unrelated services. Bind preview to 127.0.0.1.
 
 # GitHub review workflow (user authorized 2026-10-02)
-- Repository: https://github.com/tingfengy2000-creator/nengzhihe (private). Current product is round3; root application files are round1 history.
+- Repository: https://github.com/tingfengy2000-creator/nengzhihe (private). Current product is round4; root application files are round1 history.
 - Each subsequent project update includes verification, CHANGELOG/review-index updates, a scoped commit and push to main. Confirm the remote commit and CI; report failed sync honestly.
 - Follow CONTRIBUTING.md. Use immutable tags/releases for stage reviews. Never force-push or replace a review tag.
 - Preserve old evidence and archive bytes. Never commit secrets, new private imports, model weights, installations, caches or duplicate test trees. No cache cleanup is authorized.
 - Distinguish measured data, simulation and artificial perturbations. Historical 112 cases are regression only.
+
+# Current round4 contract
+- Primary position: 公共建筑风阀疑点核验与补证工作台. See round4/AGENTS.md.
+- Main historical unit: 56 base day-scenarios; 112 only paired perturbation regression. 025/075 are stuck openings.
+- No algorithm superiority, zero-false-alarm or human efficiency claim. Real participants remain zero until actual recruitment.
+- Independent human review and signed answer/rubric hashes are mandatory before real enrollment; never sign on behalf of a person.
+- Current no-install review: round4/delivery/review/index.html. Preserve prior round3 tag and all bytes.

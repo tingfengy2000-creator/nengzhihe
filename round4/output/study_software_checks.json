@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "checks": [
+    "Independent review remains pending",
+    "Real study locked before independent reference review",
+    "Eight matched but distinct task inputs",
+    "S1 unique tasks, four per condition",
+    "S2 unique tasks, four per condition",
+    "S3 unique tasks, four per condition",
+    "S4 unique tasks, four per condition",
+    "Each matched task sees both conditions across sequences",
+    "T1A valid time/units and no labels in participant case",
+    "T1B valid time/units and no labels in participant case",
+    "T2A valid time/units and no labels in participant case",
+    "T2B valid time/units and no labels in participant case",
+    "T3A valid time/units and no labels in participant case",
+    "T3B valid time/units and no labels in participant case",
+    "T4A valid time/units and no labels in participant case",
+    "T4B valid time/units and no labels in participant case",
+    "Refreshing task does not reset server timer",
+    "Training source is distinct from formal task dates",
+    "Late submission is capped and explicitly marked timeout",
+    "Software exercise is never a real participant",
+    "Duplicate submission cannot create another task response"
+  ],
+  "count": 21,
+  "real_participants_created": 0,
+  "scope": "Software tests, not simulated user-value evaluation."
+}

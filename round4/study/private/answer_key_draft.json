@@ -1,0 +1,378 @@
+{
+  "status": "pending_independent_human_review",
+  "system_output_used_as_truth": false,
+  "tasks": [
+    {
+      "task_id": "T1A",
+      "source_file": "AHU_annual.csv",
+      "source_day": "2018-05-07",
+      "source_label": "normal",
+      "source_case_id": "NZH2-D9A288336CF1",
+      "input_sha256": "9d78e85dbcd0989a43ef2e65e908eb9a316e83654470dfa19c8c1bc172134c24",
+      "independent_raw_facts": {
+        "rows": 288,
+        "unique_rows": 288,
+        "exact_repeats": 0,
+        "actual_interval_minutes": [
+          5.0
+        ],
+        "temperature_unit": "degC",
+        "both_fans_on_minutes": 0,
+        "on_with_temperature_difference_at_least_3C_minutes": 0,
+        "on_with_zero_coil_command_minutes_before_settling": 0,
+        "oa_command_range_during_on": null,
+        "first_on": null,
+        "last_on": null
+      },
+      "raw_facts_not_system_truth": true,
+      "required_evidence": [
+        "E1_time_and_units",
+        "E2_quality_and_repair",
+        "E3_operating_window",
+        "E4_command_vs_response",
+        "E5_inspectability",
+        "E6_next_evidence"
+      ],
+      "draft_acceptable_conclusions": [
+        "风阀疑点候选，仍需现场/测点核实",
+        "现有证据不足，不能排除风阀疑点"
+      ],
+      "reviewer_must_resolve": "独立复核者根据原始曲线、单位、文档及所给参考表，逐任务圈定可接受结论、有效时段、必要补证与可接受替代答案；不得直接复制工作台输出。",
+      "prohibited_attributions": [
+        "用控制指令当作实际阀位",
+        "仅凭参考内响应排除卡滞",
+        "仅凭本窗口确定卡滞开度",
+        "由持续制冷温降确认关阀泄漏",
+        "数据修正即认定设备正常"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "task_id": "T1B",
+      "source_file": "AHU_annual.csv",
+      "source_day": "2018-05-08",
+      "source_label": "normal",
+      "source_case_id": "NZH2-DAEC7F3478EE",
+      "input_sha256": "2605b8b6d651bcf8077241b78e85f867ef6d81bbdfed23f9412c679f87dbce55",
+      "independent_raw_facts": {
+        "rows": 288,
+        "unique_rows": 288,
+        "exact_repeats": 0,
+        "actual_interval_minutes": [
+          5.0
+        ],
+        "temperature_unit": "degC",
+        "both_fans_on_minutes": 955,
+        "on_with_temperature_difference_at_least_3C_minutes": 955,
+        "on_with_zero_coil_command_minutes_before_settling": 955,
+        "oa_command_range_during_on": [
+          0.66662,
+          0.96048
+        ],
+        "first_on": "2018-05-08T05:05:00",
+        "last_on": "2018-05-08T20:55:00"
+      },
+      "raw_facts_not_system_truth": true,
+      "required_evidence": [
+        "E1_time_and_units",
+        "E2_quality_and_repair",
+        "E3_operating_window",
+        "E4_command_vs_response",
+        "E5_inspectability",
+        "E6_next_evidence"
+      ],
+      "draft_acceptable_conclusions": [
+        "风阀疑点候选，仍需现场/测点核实",
+        "现有证据不足，不能排除风阀疑点"
+      ],
+      "reviewer_must_resolve": "独立复核者根据原始曲线、单位、文档及所给参考表，逐任务圈定可接受结论、有效时段、必要补证与可接受替代答案；不得直接复制工作台输出。",
+      "prohibited_attributions": [
+        "用控制指令当作实际阀位",
+        "仅凭参考内响应排除卡滞",
+        "仅凭本窗口确定卡滞开度",
+        "由持续制冷温降确认关阀泄漏",
+        "数据修正即认定设备正常"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "task_id": "T2A",
+      "source_file": "damper_stuck_025_annual.csv",
+      "source_day": "2018-05-07",
+      "source_label": "damper_stuck",
+      "source_case_id": "NZH2-19EC7D73838C",
+      "input_sha256": "523c418663b41aaf64e8fea1e24729b2d62e870ecfd218c2d1600c7b6f3b6d32",
+      "independent_raw_facts": {
+        "rows": 288,
+        "unique_rows": 288,
+        "exact_repeats": 0,
+        "actual_interval_minutes": [
+          5.0
+        ],
+        "temperature_unit": "degC",
+        "both_fans_on_minutes": 0,
+        "on_with_temperature_difference_at_least_3C_minutes": 0,
+        "on_with_zero_coil_command_minutes_before_settling": 0,
+        "oa_command_range_during_on": null,
+        "first_on": null,
+        "last_on": null
+      },
+      "raw_facts_not_system_truth": true,
+      "required_evidence": [
+        "E1_time_and_units",
+        "E2_quality_and_repair",
+        "E3_operating_window",
+        "E4_command_vs_response",
+        "E5_inspectability",
+        "E6_next_evidence"
+      ],
+      "draft_acceptable_conclusions": [
+        "风阀疑点候选，仍需现场/测点核实",
+        "现有证据不足，不能排除风阀疑点"
+      ],
+      "reviewer_must_resolve": "独立复核者根据原始曲线、单位、文档及所给参考表，逐任务圈定可接受结论、有效时段、必要补证与可接受替代答案；不得直接复制工作台输出。",
+      "prohibited_attributions": [
+        "用控制指令当作实际阀位",
+        "仅凭参考内响应排除卡滞",
+        "仅凭本窗口确定卡滞开度",
+        "由持续制冷温降确认关阀泄漏",
+        "数据修正即认定设备正常"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "task_id": "T2B",
+      "source_file": "damper_stuck_025_annual.csv",
+      "source_day": "2018-05-08",
+      "source_label": "damper_stuck",
+      "source_case_id": "NZH2-3C8EB8DD4AC8",
+      "input_sha256": "6f83993566eb820048b4f976d1263e3f7ad08b6f2686517c988cb3f6bc67b588",
+      "independent_raw_facts": {
+        "rows": 288,
+        "unique_rows": 288,
+        "exact_repeats": 0,
+        "actual_interval_minutes": [
+          5.0
+        ],
+        "temperature_unit": "degC",
+        "both_fans_on_minutes": 955,
+        "on_with_temperature_difference_at_least_3C_minutes": 955,
+        "on_with_zero_coil_command_minutes_before_settling": 0,
+        "oa_command_range_during_on": [
+          1.0,
+          1.0
+        ],
+        "first_on": "2018-05-08T06:05:00",
+        "last_on": "2018-05-08T21:55:00"
+      },
+      "raw_facts_not_system_truth": true,
+      "required_evidence": [
+        "E1_time_and_units",
+        "E2_quality_and_repair",
+        "E3_operating_window",
+        "E4_command_vs_response",
+        "E5_inspectability",
+        "E6_next_evidence"
+      ],
+      "draft_acceptable_conclusions": [
+        "风阀疑点候选，仍需现场/测点核实",
+        "现有证据不足，不能排除风阀疑点"
+      ],
+      "reviewer_must_resolve": "独立复核者根据原始曲线、单位、文档及所给参考表，逐任务圈定可接受结论、有效时段、必要补证与可接受替代答案；不得直接复制工作台输出。",
+      "prohibited_attributions": [
+        "用控制指令当作实际阀位",
+        "仅凭参考内响应排除卡滞",
+        "仅凭本窗口确定卡滞开度",
+        "由持续制冷温降确认关阀泄漏",
+        "数据修正即认定设备正常"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "task_id": "T3A",
+      "source_file": "damper_stuck_075_annual.csv",
+      "source_day": "2018-05-07",
+      "source_label": "damper_stuck",
+      "source_case_id": "NZH2-74EB79DEBACF",
+      "input_sha256": "6cfca91e89bfdc5ac531770f2f0b3f374f8f3c52e30838a7feefeb9da8720b07",
+      "independent_raw_facts": {
+        "rows": 300,
+        "unique_rows": 288,
+        "exact_repeats": 12,
+        "actual_interval_minutes": [
+          5.0
+        ],
+        "temperature_unit": "degC",
+        "both_fans_on_minutes": 0,
+        "on_with_temperature_difference_at_least_3C_minutes": 0,
+        "on_with_zero_coil_command_minutes_before_settling": 0,
+        "oa_command_range_during_on": null,
+        "first_on": null,
+        "last_on": null
+      },
+      "raw_facts_not_system_truth": true,
+      "required_evidence": [
+        "E1_time_and_units",
+        "E2_quality_and_repair",
+        "E3_operating_window",
+        "E4_command_vs_response",
+        "E5_inspectability",
+        "E6_next_evidence"
+      ],
+      "draft_acceptable_conclusions": [
+        "风阀疑点候选，仍需现场/测点核实",
+        "现有证据不足，不能排除风阀疑点"
+      ],
+      "reviewer_must_resolve": "独立复核者根据原始曲线、单位、文档及所给参考表，逐任务圈定可接受结论、有效时段、必要补证与可接受替代答案；不得直接复制工作台输出。",
+      "prohibited_attributions": [
+        "用控制指令当作实际阀位",
+        "仅凭参考内响应排除卡滞",
+        "仅凭本窗口确定卡滞开度",
+        "由持续制冷温降确认关阀泄漏",
+        "数据修正即认定设备正常"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "task_id": "T3B",
+      "source_file": "damper_stuck_075_annual.csv",
+      "source_day": "2018-05-08",
+      "source_label": "damper_stuck",
+      "source_case_id": "NZH2-E0D1E5358A0D",
+      "input_sha256": "17f3bfaaad0b700014d422b9d87f970bf3debc53204abee2e389e44cd050c293",
+      "independent_raw_facts": {
+        "rows": 300,
+        "unique_rows": 288,
+        "exact_repeats": 12,
+        "actual_interval_minutes": [
+          5.0
+        ],
+        "temperature_unit": "degC",
+        "both_fans_on_minutes": 955,
+        "on_with_temperature_difference_at_least_3C_minutes": 955,
+        "on_with_zero_coil_command_minutes_before_settling": 275,
+        "oa_command_range_during_on": [
+          0.1,
+          1.0
+        ],
+        "first_on": "2018-05-08T06:05:00",
+        "last_on": "2018-05-08T21:55:00"
+      },
+      "raw_facts_not_system_truth": true,
+      "required_evidence": [
+        "E1_time_and_units",
+        "E2_quality_and_repair",
+        "E3_operating_window",
+        "E4_command_vs_response",
+        "E5_inspectability",
+        "E6_next_evidence"
+      ],
+      "draft_acceptable_conclusions": [
+        "风阀疑点候选，仍需现场/测点核实",
+        "现有证据不足，不能排除风阀疑点"
+      ],
+      "reviewer_must_resolve": "独立复核者根据原始曲线、单位、文档及所给参考表，逐任务圈定可接受结论、有效时段、必要补证与可接受替代答案；不得直接复制工作台输出。",
+      "prohibited_attributions": [
+        "用控制指令当作实际阀位",
+        "仅凭参考内响应排除卡滞",
+        "仅凭本窗口确定卡滞开度",
+        "由持续制冷温降确认关阀泄漏",
+        "数据修正即认定设备正常"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "task_id": "T4A",
+      "source_file": "coi_leakage_025_annual.csv",
+      "source_day": "2018-05-07",
+      "source_label": "coil_leakage",
+      "source_case_id": "NZH2-46E91BAF93ED",
+      "input_sha256": "75757345986e0d528ef710a6a8e3e465eca1e7755568e463e836a49f7d1034bf",
+      "independent_raw_facts": {
+        "rows": 288,
+        "unique_rows": 288,
+        "exact_repeats": 0,
+        "actual_interval_minutes": [
+          5.0
+        ],
+        "temperature_unit": "degC",
+        "both_fans_on_minutes": 0,
+        "on_with_temperature_difference_at_least_3C_minutes": 0,
+        "on_with_zero_coil_command_minutes_before_settling": 0,
+        "oa_command_range_during_on": null,
+        "first_on": null,
+        "last_on": null
+      },
+      "raw_facts_not_system_truth": true,
+      "required_evidence": [
+        "E1_time_and_units",
+        "E2_quality_and_repair",
+        "E3_operating_window",
+        "E4_command_vs_response",
+        "E5_inspectability",
+        "E6_next_evidence"
+      ],
+      "draft_acceptable_conclusions": [
+        "风阀疑点候选，仍需现场/测点核实",
+        "现有证据不足，不能排除风阀疑点"
+      ],
+      "reviewer_must_resolve": "独立复核者根据原始曲线、单位、文档及所给参考表，逐任务圈定可接受结论、有效时段、必要补证与可接受替代答案；不得直接复制工作台输出。",
+      "prohibited_attributions": [
+        "用控制指令当作实际阀位",
+        "仅凭参考内响应排除卡滞",
+        "仅凭本窗口确定卡滞开度",
+        "由持续制冷温降确认关阀泄漏",
+        "数据修正即认定设备正常"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "task_id": "T4B",
+      "source_file": "coi_leakage_025_annual.csv",
+      "source_day": "2018-05-08",
+      "source_label": "coil_leakage",
+      "source_case_id": "NZH2-3296C8BACFA1",
+      "input_sha256": "47e8bb60fe7f63688ccabc0faedf1047a28842617bfa6f573d8b8c3d43b6b206",
+      "independent_raw_facts": {
+        "rows": 288,
+        "unique_rows": 288,
+        "exact_repeats": 0,
+        "actual_interval_minutes": [
+          5.0
+        ],
+        "temperature_unit": "degC",
+        "both_fans_on_minutes": 955,
+        "on_with_temperature_difference_at_least_3C_minutes": 955,
+        "on_with_zero_coil_command_minutes_before_settling": 955,
+        "oa_command_range_during_on": [
+          0.68125,
+          0.96006
+        ],
+        "first_on": "2018-05-08T06:05:00",
+        "last_on": "2018-05-08T21:55:00"
+      },
+      "raw_facts_not_system_truth": true,
+      "required_evidence": [
+        "E1_time_and_units",
+        "E2_quality_and_repair",
+        "E3_operating_window",
+        "E4_command_vs_response",
+        "E5_inspectability",
+        "E6_next_evidence"
+      ],
+      "draft_acceptable_conclusions": [
+        "风阀疑点候选，仍需现场/测点核实",
+        "现有证据不足，不能排除风阀疑点"
+      ],
+      "reviewer_must_resolve": "独立复核者根据原始曲线、单位、文档及所给参考表，逐任务圈定可接受结论、有效时段、必要补证与可接受替代答案；不得直接复制工作台输出。",
+      "prohibited_attributions": [
+        "用控制指令当作实际阀位",
+        "仅凭参考内响应排除卡滞",
+        "仅凭本窗口确定卡滞开度",
+        "由持续制冷温降确认关阀泄漏",
+        "数据修正即认定设备正常"
+      ],
+      "review_status": "pending"
+    }
+  ]
+}

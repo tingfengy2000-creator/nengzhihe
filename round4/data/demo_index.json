@@ -1,0 +1,44 @@
+[
+  {
+    "id": "NZH-90C933F3C475",
+    "split": "demo",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动。"
+    },
+    "path": "data/demos/NZH-90C933F3C475.json"
+  },
+  {
+    "id": "NZH-76889C2BA896",
+    "split": "demo",
+    "family": "lbnl",
+    "origin": "simulated",
+    "title": "仿真设备核验案例",
+    "description": "LBNL公开单风道空调机组仿真；设备标签仅用于评测。",
+    "perturbation": {
+      "type": "duplicate_records_12",
+      "origin": "human_generated",
+      "description": "人为插入12条完全重复记录；设备运行曲线未改变。修复仅去重，不消除设备疑点。"
+    },
+    "path": "data/demos/NZH-76889C2BA896.json"
+  },
+  {
+    "id": "NZH-CFF0E57369E1",
+    "split": "demo",
+    "family": "bdg2",
+    "origin": "measured",
+    "title": "公开建筑回放 01",
+    "description": "BDG2公开建筑电表与站点天气，仅支持异常候选筛查，无真实设备故障标签。",
+    "perturbation": {
+      "type": "none",
+      "origin": "none",
+      "description": "无额外人为扰动；保留原始缺测。"
+    },
+    "path": "data/demos/NZH-CFF0E57369E1.json"
+  }
+]

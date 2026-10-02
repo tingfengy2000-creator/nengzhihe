@@ -1,0 +1,1518 @@
+{
+  "started": "2026-10-02T04:40:21.619Z",
+  "frames": [
+    {
+      "name": "00000.png",
+      "elapsed_ms": 0
+    },
+    {
+      "name": "00001.png",
+      "elapsed_ms": 504
+    },
+    {
+      "name": "00002.png",
+      "elapsed_ms": 1005
+    },
+    {
+      "name": "00003.png",
+      "elapsed_ms": 1520
+    },
+    {
+      "name": "00004.png",
+      "elapsed_ms": 2034
+    },
+    {
+      "name": "00005.png",
+      "elapsed_ms": 2548
+    },
+    {
+      "name": "00006.png",
+      "elapsed_ms": 3064
+    },
+    {
+      "name": "00007.png",
+      "elapsed_ms": 3566
+    },
+    {
+      "name": "00008.png",
+      "elapsed_ms": 4072
+    },
+    {
+      "name": "00009.png",
+      "elapsed_ms": 4575
+    },
+    {
+      "name": "00010.png",
+      "elapsed_ms": 5088
+    },
+    {
+      "name": "00011.png",
+      "elapsed_ms": 5602
+    },
+    {
+      "name": "00012.png",
+      "elapsed_ms": 6106
+    },
+    {
+      "name": "00013.png",
+      "elapsed_ms": 6608
+    },
+    {
+      "name": "00014.png",
+      "elapsed_ms": 7122
+    },
+    {
+      "name": "00015.png",
+      "elapsed_ms": 7637
+    },
+    {
+      "name": "00016.png",
+      "elapsed_ms": 8152
+    },
+    {
+      "name": "00017.png",
+      "elapsed_ms": 8666
+    },
+    {
+      "name": "00018.png",
+      "elapsed_ms": 9182
+    },
+    {
+      "name": "00019.png",
+      "elapsed_ms": 9695
+    },
+    {
+      "name": "00020.png",
+      "elapsed_ms": 10857
+    },
+    {
+      "name": "00021.png",
+      "elapsed_ms": 11366
+    },
+    {
+      "name": "00022.png",
+      "elapsed_ms": 11882
+    },
+    {
+      "name": "00023.png",
+      "elapsed_ms": 12397
+    },
+    {
+      "name": "00024.png",
+      "elapsed_ms": 12898
+    },
+    {
+      "name": "00025.png",
+      "elapsed_ms": 13413
+    },
+    {
+      "name": "00026.png",
+      "elapsed_ms": 13925
+    },
+    {
+      "name": "00027.png",
+      "elapsed_ms": 14436
+    },
+    {
+      "name": "00028.png",
+      "elapsed_ms": 14939
+    },
+    {
+      "name": "00029.png",
+      "elapsed_ms": 15441
+    },
+    {
+      "name": "00030.png",
+      "elapsed_ms": 15956
+    },
+    {
+      "name": "00031.png",
+      "elapsed_ms": 16471
+    },
+    {
+      "name": "00032.png",
+      "elapsed_ms": 16973
+    },
+    {
+      "name": "00033.png",
+      "elapsed_ms": 17488
+    },
+    {
+      "name": "00034.png",
+      "elapsed_ms": 18003
+    },
+    {
+      "name": "00035.png",
+      "elapsed_ms": 18517
+    },
+    {
+      "name": "00036.png",
+      "elapsed_ms": 19030
+    },
+    {
+      "name": "00037.png",
+      "elapsed_ms": 19533
+    },
+    {
+      "name": "00038.png",
+      "elapsed_ms": 20046
+    },
+    {
+      "name": "00039.png",
+      "elapsed_ms": 20561
+    },
+    {
+      "name": "00040.png",
+      "elapsed_ms": 31168
+    },
+    {
+      "name": "00041.png",
+      "elapsed_ms": 31683
+    },
+    {
+      "name": "00042.png",
+      "elapsed_ms": 32198
+    },
+    {
+      "name": "00043.png",
+      "elapsed_ms": 32711
+    },
+    {
+      "name": "00044.png",
+      "elapsed_ms": 33223
+    },
+    {
+      "name": "00045.png",
+      "elapsed_ms": 33737
+    },
+    {
+      "name": "00046.png",
+      "elapsed_ms": 34251
+    },
+    {
+      "name": "00047.png",
+      "elapsed_ms": 34765
+    },
+    {
+      "name": "00048.png",
+      "elapsed_ms": 35267
+    },
+    {
+      "name": "00049.png",
+      "elapsed_ms": 35781
+    },
+    {
+      "name": "00050.png",
+      "elapsed_ms": 36281
+    },
+    {
+      "name": "00051.png",
+      "elapsed_ms": 36785
+    },
+    {
+      "name": "00052.png",
+      "elapsed_ms": 37297
+    },
+    {
+      "name": "00053.png",
+      "elapsed_ms": 37811
+    },
+    {
+      "name": "00054.png",
+      "elapsed_ms": 38324
+    },
+    {
+      "name": "00055.png",
+      "elapsed_ms": 38824
+    },
+    {
+      "name": "00056.png",
+      "elapsed_ms": 39335
+    },
+    {
+      "name": "00057.png",
+      "elapsed_ms": 39851
+    },
+    {
+      "name": "00058.png",
+      "elapsed_ms": 40362
+    },
+    {
+      "name": "00059.png",
+      "elapsed_ms": 40876
+    },
+    {
+      "name": "00060.png",
+      "elapsed_ms": 42082
+    },
+    {
+      "name": "00061.png",
+      "elapsed_ms": 42593
+    },
+    {
+      "name": "00062.png",
+      "elapsed_ms": 43094
+    },
+    {
+      "name": "00063.png",
+      "elapsed_ms": 43605
+    },
+    {
+      "name": "00064.png",
+      "elapsed_ms": 44107
+    },
+    {
+      "name": "00065.png",
+      "elapsed_ms": 44607
+    },
+    {
+      "name": "00066.png",
+      "elapsed_ms": 45119
+    },
+    {
+      "name": "00067.png",
+      "elapsed_ms": 45623
+    },
+    {
+      "name": "00068.png",
+      "elapsed_ms": 46134
+    },
+    {
+      "name": "00069.png",
+      "elapsed_ms": 46636
+    },
+    {
+      "name": "00070.png",
+      "elapsed_ms": 47150
+    },
+    {
+      "name": "00071.png",
+      "elapsed_ms": 47662
+    },
+    {
+      "name": "00072.png",
+      "elapsed_ms": 48170
+    },
+    {
+      "name": "00073.png",
+      "elapsed_ms": 48685
+    },
+    {
+      "name": "00074.png",
+      "elapsed_ms": 49198
+    },
+    {
+      "name": "00075.png",
+      "elapsed_ms": 49708
+    },
+    {
+      "name": "00076.png",
+      "elapsed_ms": 50209
+    },
+    {
+      "name": "00077.png",
+      "elapsed_ms": 50711
+    },
+    {
+      "name": "00078.png",
+      "elapsed_ms": 51571
+    },
+    {
+      "name": "00079.png",
+      "elapsed_ms": 52086
+    },
+    {
+      "name": "00080.png",
+      "elapsed_ms": 52600
+    },
+    {
+      "name": "00081.png",
+      "elapsed_ms": 53113
+    },
+    {
+      "name": "00082.png",
+      "elapsed_ms": 53628
+    },
+    {
+      "name": "00083.png",
+      "elapsed_ms": 54141
+    },
+    {
+      "name": "00084.png",
+      "elapsed_ms": 54653
+    },
+    {
+      "name": "00085.png",
+      "elapsed_ms": 55153
+    },
+    {
+      "name": "00086.png",
+      "elapsed_ms": 55665
+    },
+    {
+      "name": "00087.png",
+      "elapsed_ms": 56176
+    },
+    {
+      "name": "00088.png",
+      "elapsed_ms": 56685
+    },
+    {
+      "name": "00089.png",
+      "elapsed_ms": 57186
+    },
+    {
+      "name": "00090.png",
+      "elapsed_ms": 57701
+    },
+    {
+      "name": "00091.png",
+      "elapsed_ms": 58200
+    },
+    {
+      "name": "00092.png",
+      "elapsed_ms": 58715
+    },
+    {
+      "name": "00093.png",
+      "elapsed_ms": 59229
+    },
+    {
+      "name": "00094.png",
+      "elapsed_ms": 59744
+    },
+    {
+      "name": "00095.png",
+      "elapsed_ms": 60259
+    },
+    {
+      "name": "00096.png",
+      "elapsed_ms": 81145
+    },
+    {
+      "name": "00097.png",
+      "elapsed_ms": 81659
+    },
+    {
+      "name": "00098.png",
+      "elapsed_ms": 82175
+    },
+    {
+      "name": "00099.png",
+      "elapsed_ms": 82687
+    },
+    {
+      "name": "00100.png",
+      "elapsed_ms": 83192
+    },
+    {
+      "name": "00101.png",
+      "elapsed_ms": 83706
+    },
+    {
+      "name": "00102.png",
+      "elapsed_ms": 84208
+    },
+    {
+      "name": "00103.png",
+      "elapsed_ms": 84722
+    },
+    {
+      "name": "00104.png",
+      "elapsed_ms": 85224
+    },
+    {
+      "name": "00105.png",
+      "elapsed_ms": 85724
+    },
+    {
+      "name": "00106.png",
+      "elapsed_ms": 86226
+    },
+    {
+      "name": "00107.png",
+      "elapsed_ms": 86729
+    },
+    {
+      "name": "00108.png",
+      "elapsed_ms": 87243
+    },
+    {
+      "name": "00109.png",
+      "elapsed_ms": 87758
+    },
+    {
+      "name": "00110.png",
+      "elapsed_ms": 88262
+    },
+    {
+      "name": "00111.png",
+      "elapsed_ms": 88763
+    },
+    {
+      "name": "00112.png",
+      "elapsed_ms": 89263
+    },
+    {
+      "name": "00113.png",
+      "elapsed_ms": 89778
+    },
+    {
+      "name": "00114.png",
+      "elapsed_ms": 90293
+    },
+    {
+      "name": "00115.png",
+      "elapsed_ms": 90808
+    },
+    {
+      "name": "00116.png",
+      "elapsed_ms": 100263
+    },
+    {
+      "name": "00117.png",
+      "elapsed_ms": 100773
+    },
+    {
+      "name": "00118.png",
+      "elapsed_ms": 101275
+    },
+    {
+      "name": "00119.png",
+      "elapsed_ms": 101788
+    },
+    {
+      "name": "00120.png",
+      "elapsed_ms": 102302
+    },
+    {
+      "name": "00121.png",
+      "elapsed_ms": 102814
+    },
+    {
+      "name": "00122.png",
+      "elapsed_ms": 103326
+    },
+    {
+      "name": "00123.png",
+      "elapsed_ms": 103841
+    },
+    {
+      "name": "00124.png",
+      "elapsed_ms": 104355
+    },
+    {
+      "name": "00125.png",
+      "elapsed_ms": 104869
+    },
+    {
+      "name": "00126.png",
+      "elapsed_ms": 105370
+    },
+    {
+      "name": "00127.png",
+      "elapsed_ms": 105884
+    },
+    {
+      "name": "00128.png",
+      "elapsed_ms": 106398
+    },
+    {
+      "name": "00129.png",
+      "elapsed_ms": 106912
+    },
+    {
+      "name": "00130.png",
+      "elapsed_ms": 107426
+    },
+    {
+      "name": "00131.png",
+      "elapsed_ms": 107926
+    },
+    {
+      "name": "00132.png",
+      "elapsed_ms": 108995
+    },
+    {
+      "name": "00133.png",
+      "elapsed_ms": 109498
+    },
+    {
+      "name": "00134.png",
+      "elapsed_ms": 110000
+    },
+    {
+      "name": "00135.png",
+      "elapsed_ms": 110511
+    },
+    {
+      "name": "00136.png",
+      "elapsed_ms": 111012
+    },
+    {
+      "name": "00137.png",
+      "elapsed_ms": 111526
+    },
+    {
+      "name": "00138.png",
+      "elapsed_ms": 112040
+    },
+    {
+      "name": "00139.png",
+      "elapsed_ms": 112552
+    },
+    {
+      "name": "00140.png",
+      "elapsed_ms": 113053
+    },
+    {
+      "name": "00141.png",
+      "elapsed_ms": 113566
+    },
+    {
+      "name": "00142.png",
+      "elapsed_ms": 114070
+    },
+    {
+      "name": "00143.png",
+      "elapsed_ms": 114584
+    },
+    {
+      "name": "00144.png",
+      "elapsed_ms": 115098
+    },
+    {
+      "name": "00145.png",
+      "elapsed_ms": 115613
+    },
+    {
+      "name": "00146.png",
+      "elapsed_ms": 116127
+    },
+    {
+      "name": "00147.png",
+      "elapsed_ms": 116627
+    },
+    {
+      "name": "00148.png",
+      "elapsed_ms": 117141
+    },
+    {
+      "name": "00149.png",
+      "elapsed_ms": 117656
+    },
+    {
+      "name": "00150.png",
+      "elapsed_ms": 118484
+    },
+    {
+      "name": "00151.png",
+      "elapsed_ms": 118985
+    },
+    {
+      "name": "00152.png",
+      "elapsed_ms": 119500
+    },
+    {
+      "name": "00153.png",
+      "elapsed_ms": 120015
+    },
+    {
+      "name": "00154.png",
+      "elapsed_ms": 120530
+    },
+    {
+      "name": "00155.png",
+      "elapsed_ms": 121044
+    },
+    {
+      "name": "00156.png",
+      "elapsed_ms": 121556
+    },
+    {
+      "name": "00157.png",
+      "elapsed_ms": 122070
+    },
+    {
+      "name": "00158.png",
+      "elapsed_ms": 122583
+    },
+    {
+      "name": "00159.png",
+      "elapsed_ms": 123098
+    },
+    {
+      "name": "00160.png",
+      "elapsed_ms": 123611
+    },
+    {
+      "name": "00161.png",
+      "elapsed_ms": 124112
+    },
+    {
+      "name": "00162.png",
+      "elapsed_ms": 124622
+    },
+    {
+      "name": "00163.png",
+      "elapsed_ms": 125137
+    },
+    {
+      "name": "00164.png",
+      "elapsed_ms": 125648
+    },
+    {
+      "name": "00165.png",
+      "elapsed_ms": 126153
+    },
+    {
+      "name": "00166.png",
+      "elapsed_ms": 126667
+    },
+    {
+      "name": "00167.png",
+      "elapsed_ms": 127181
+    },
+    {
+      "name": "00168.png",
+      "elapsed_ms": 127681
+    },
+    {
+      "name": "00169.png",
+      "elapsed_ms": 128192
+    },
+    {
+      "name": "00170.png",
+      "elapsed_ms": 167240
+    },
+    {
+      "name": "00171.png",
+      "elapsed_ms": 167746
+    },
+    {
+      "name": "00172.png",
+      "elapsed_ms": 168247
+    },
+    {
+      "name": "00173.png",
+      "elapsed_ms": 168757
+    },
+    {
+      "name": "00174.png",
+      "elapsed_ms": 169260
+    },
+    {
+      "name": "00175.png",
+      "elapsed_ms": 169761
+    },
+    {
+      "name": "00176.png",
+      "elapsed_ms": 170275
+    },
+    {
+      "name": "00177.png",
+      "elapsed_ms": 170788
+    },
+    {
+      "name": "00178.png",
+      "elapsed_ms": 171288
+    },
+    {
+      "name": "00179.png",
+      "elapsed_ms": 171799
+    },
+    {
+      "name": "00180.png",
+      "elapsed_ms": 172303
+    },
+    {
+      "name": "00181.png",
+      "elapsed_ms": 172816
+    },
+    {
+      "name": "00182.png",
+      "elapsed_ms": 173331
+    },
+    {
+      "name": "00183.png",
+      "elapsed_ms": 173845
+    },
+    {
+      "name": "00184.png",
+      "elapsed_ms": 174360
+    },
+    {
+      "name": "00185.png",
+      "elapsed_ms": 174862
+    },
+    {
+      "name": "00186.png",
+      "elapsed_ms": 175365
+    },
+    {
+      "name": "00187.png",
+      "elapsed_ms": 175879
+    },
+    {
+      "name": "00188.png",
+      "elapsed_ms": 176394
+    },
+    {
+      "name": "00189.png",
+      "elapsed_ms": 176899
+    },
+    {
+      "name": "00190.png",
+      "elapsed_ms": 177717
+    },
+    {
+      "name": "00191.png",
+      "elapsed_ms": 178228
+    },
+    {
+      "name": "00192.png",
+      "elapsed_ms": 178743
+    },
+    {
+      "name": "00193.png",
+      "elapsed_ms": 179255
+    },
+    {
+      "name": "00194.png",
+      "elapsed_ms": 179758
+    },
+    {
+      "name": "00195.png",
+      "elapsed_ms": 180273
+    },
+    {
+      "name": "00196.png",
+      "elapsed_ms": 180786
+    },
+    {
+      "name": "00197.png",
+      "elapsed_ms": 181288
+    },
+    {
+      "name": "00198.png",
+      "elapsed_ms": 181789
+    },
+    {
+      "name": "00199.png",
+      "elapsed_ms": 182299
+    },
+    {
+      "name": "00200.png",
+      "elapsed_ms": 182812
+    },
+    {
+      "name": "00201.png",
+      "elapsed_ms": 183325
+    },
+    {
+      "name": "00202.png",
+      "elapsed_ms": 183826
+    },
+    {
+      "name": "00203.png",
+      "elapsed_ms": 184328
+    },
+    {
+      "name": "00204.png",
+      "elapsed_ms": 184840
+    },
+    {
+      "name": "00205.png",
+      "elapsed_ms": 185342
+    },
+    {
+      "name": "00206.png",
+      "elapsed_ms": 185856
+    },
+    {
+      "name": "00207.png",
+      "elapsed_ms": 186369
+    },
+    {
+      "name": "00208.png",
+      "elapsed_ms": 186874
+    },
+    {
+      "name": "00209.png",
+      "elapsed_ms": 187389
+    },
+    {
+      "name": "00210.png",
+      "elapsed_ms": 199294
+    },
+    {
+      "name": "00211.png",
+      "elapsed_ms": 199803
+    },
+    {
+      "name": "00212.png",
+      "elapsed_ms": 200317
+    },
+    {
+      "name": "00213.png",
+      "elapsed_ms": 200830
+    },
+    {
+      "name": "00214.png",
+      "elapsed_ms": 201332
+    },
+    {
+      "name": "00215.png",
+      "elapsed_ms": 201835
+    },
+    {
+      "name": "00216.png",
+      "elapsed_ms": 202336
+    },
+    {
+      "name": "00217.png",
+      "elapsed_ms": 202851
+    },
+    {
+      "name": "00218.png",
+      "elapsed_ms": 203355
+    },
+    {
+      "name": "00219.png",
+      "elapsed_ms": 203870
+    },
+    {
+      "name": "00220.png",
+      "elapsed_ms": 204383
+    },
+    {
+      "name": "00221.png",
+      "elapsed_ms": 204885
+    },
+    {
+      "name": "00222.png",
+      "elapsed_ms": 205398
+    },
+    {
+      "name": "00223.png",
+      "elapsed_ms": 205898
+    },
+    {
+      "name": "00224.png",
+      "elapsed_ms": 206413
+    },
+    {
+      "name": "00225.png",
+      "elapsed_ms": 206924
+    },
+    {
+      "name": "00226.png",
+      "elapsed_ms": 207426
+    },
+    {
+      "name": "00227.png",
+      "elapsed_ms": 207940
+    },
+    {
+      "name": "00228.png",
+      "elapsed_ms": 208440
+    },
+    {
+      "name": "00229.png",
+      "elapsed_ms": 208940
+    },
+    {
+      "name": "00230.png",
+      "elapsed_ms": 210071
+    },
+    {
+      "name": "00231.png",
+      "elapsed_ms": 210576
+    },
+    {
+      "name": "00232.png",
+      "elapsed_ms": 211091
+    },
+    {
+      "name": "00233.png",
+      "elapsed_ms": 211605
+    },
+    {
+      "name": "00234.png",
+      "elapsed_ms": 212105
+    },
+    {
+      "name": "00235.png",
+      "elapsed_ms": 212618
+    },
+    {
+      "name": "00236.png",
+      "elapsed_ms": 213119
+    },
+    {
+      "name": "00237.png",
+      "elapsed_ms": 213620
+    },
+    {
+      "name": "00238.png",
+      "elapsed_ms": 214134
+    },
+    {
+      "name": "00239.png",
+      "elapsed_ms": 214648
+    },
+    {
+      "name": "00240.png",
+      "elapsed_ms": 215148
+    },
+    {
+      "name": "00241.png",
+      "elapsed_ms": 215649
+    },
+    {
+      "name": "00242.png",
+      "elapsed_ms": 216150
+    },
+    {
+      "name": "00243.png",
+      "elapsed_ms": 216652
+    },
+    {
+      "name": "00244.png",
+      "elapsed_ms": 217166
+    },
+    {
+      "name": "00245.png",
+      "elapsed_ms": 217667
+    },
+    {
+      "name": "00246.png",
+      "elapsed_ms": 218180
+    },
+    {
+      "name": "00247.png",
+      "elapsed_ms": 218693
+    },
+    {
+      "name": "00248.png",
+      "elapsed_ms": 219209
+    },
+    {
+      "name": "00249.png",
+      "elapsed_ms": 219723
+    },
+    {
+      "name": "00250.png",
+      "elapsed_ms": 220541
+    },
+    {
+      "name": "00251.png",
+      "elapsed_ms": 221051
+    },
+    {
+      "name": "00252.png",
+      "elapsed_ms": 221564
+    },
+    {
+      "name": "00253.png",
+      "elapsed_ms": 222064
+    },
+    {
+      "name": "00254.png",
+      "elapsed_ms": 222579
+    },
+    {
+      "name": "00255.png",
+      "elapsed_ms": 223094
+    },
+    {
+      "name": "00256.png",
+      "elapsed_ms": 223595
+    },
+    {
+      "name": "00257.png",
+      "elapsed_ms": 224109
+    },
+    {
+      "name": "00258.png",
+      "elapsed_ms": 224624
+    },
+    {
+      "name": "00259.png",
+      "elapsed_ms": 225137
+    },
+    {
+      "name": "00260.png",
+      "elapsed_ms": 225652
+    },
+    {
+      "name": "00261.png",
+      "elapsed_ms": 226157
+    },
+    {
+      "name": "00262.png",
+      "elapsed_ms": 226670
+    },
+    {
+      "name": "00263.png",
+      "elapsed_ms": 227185
+    },
+    {
+      "name": "00264.png",
+      "elapsed_ms": 227688
+    },
+    {
+      "name": "00265.png",
+      "elapsed_ms": 228191
+    },
+    {
+      "name": "00266.png",
+      "elapsed_ms": 228692
+    },
+    {
+      "name": "00267.png",
+      "elapsed_ms": 229194
+    },
+    {
+      "name": "00268.png",
+      "elapsed_ms": 229708
+    },
+    {
+      "name": "00269.png",
+      "elapsed_ms": 230222
+    },
+    {
+      "name": "00270.png",
+      "elapsed_ms": 230735
+    },
+    {
+      "name": "00271.png",
+      "elapsed_ms": 231240
+    },
+    {
+      "name": "00272.png",
+      "elapsed_ms": 231755
+    },
+    {
+      "name": "00273.png",
+      "elapsed_ms": 232267
+    },
+    {
+      "name": "00274.png",
+      "elapsed_ms": 232768
+    },
+    {
+      "name": "00275.png",
+      "elapsed_ms": 233281
+    },
+    {
+      "name": "00276.png",
+      "elapsed_ms": 233795
+    },
+    {
+      "name": "00277.png",
+      "elapsed_ms": 234309
+    },
+    {
+      "name": "00278.png",
+      "elapsed_ms": 234821
+    },
+    {
+      "name": "00279.png",
+      "elapsed_ms": 235321
+    },
+    {
+      "name": "00280.png",
+      "elapsed_ms": 246431
+    },
+    {
+      "name": "00281.png",
+      "elapsed_ms": 246946
+    },
+    {
+      "name": "00282.png",
+      "elapsed_ms": 247461
+    },
+    {
+      "name": "00283.png",
+      "elapsed_ms": 247965
+    },
+    {
+      "name": "00284.png",
+      "elapsed_ms": 248478
+    },
+    {
+      "name": "00285.png",
+      "elapsed_ms": 248980
+    },
+    {
+      "name": "00286.png",
+      "elapsed_ms": 249483
+    },
+    {
+      "name": "00287.png",
+      "elapsed_ms": 249987
+    },
+    {
+      "name": "00288.png",
+      "elapsed_ms": 250488
+    },
+    {
+      "name": "00289.png",
+      "elapsed_ms": 250993
+    },
+    {
+      "name": "00290.png",
+      "elapsed_ms": 251495
+    },
+    {
+      "name": "00291.png",
+      "elapsed_ms": 252010
+    },
+    {
+      "name": "00292.png",
+      "elapsed_ms": 252512
+    },
+    {
+      "name": "00293.png",
+      "elapsed_ms": 253014
+    },
+    {
+      "name": "00294.png",
+      "elapsed_ms": 253528
+    },
+    {
+      "name": "00295.png",
+      "elapsed_ms": 254028
+    },
+    {
+      "name": "00296.png",
+      "elapsed_ms": 254528
+    },
+    {
+      "name": "00297.png",
+      "elapsed_ms": 255032
+    },
+    {
+      "name": "00298.png",
+      "elapsed_ms": 255534
+    },
+    {
+      "name": "00299.png",
+      "elapsed_ms": 256048
+    },
+    {
+      "name": "00300.png",
+      "elapsed_ms": 256547
+    },
+    {
+      "name": "00301.png",
+      "elapsed_ms": 257061
+    },
+    {
+      "name": "00302.png",
+      "elapsed_ms": 257574
+    },
+    {
+      "name": "00303.png",
+      "elapsed_ms": 258074
+    },
+    {
+      "name": "00304.png",
+      "elapsed_ms": 270277
+    },
+    {
+      "name": "00305.png",
+      "elapsed_ms": 270786
+    },
+    {
+      "name": "00306.png",
+      "elapsed_ms": 271300
+    },
+    {
+      "name": "00307.png",
+      "elapsed_ms": 271813
+    },
+    {
+      "name": "00308.png",
+      "elapsed_ms": 272315
+    },
+    {
+      "name": "00309.png",
+      "elapsed_ms": 272829
+    },
+    {
+      "name": "00310.png",
+      "elapsed_ms": 273333
+    },
+    {
+      "name": "00311.png",
+      "elapsed_ms": 273835
+    },
+    {
+      "name": "00312.png",
+      "elapsed_ms": 274349
+    },
+    {
+      "name": "00313.png",
+      "elapsed_ms": 274858
+    },
+    {
+      "name": "00314.png",
+      "elapsed_ms": 275359
+    },
+    {
+      "name": "00315.png",
+      "elapsed_ms": 275874
+    },
+    {
+      "name": "00316.png",
+      "elapsed_ms": 276389
+    },
+    {
+      "name": "00317.png",
+      "elapsed_ms": 276904
+    },
+    {
+      "name": "00318.png",
+      "elapsed_ms": 277417
+    },
+    {
+      "name": "00319.png",
+      "elapsed_ms": 277920
+    },
+    {
+      "name": "00320.png",
+      "elapsed_ms": 278421
+    },
+    {
+      "name": "00321.png",
+      "elapsed_ms": 278935
+    },
+    {
+      "name": "00322.png",
+      "elapsed_ms": 279449
+    },
+    {
+      "name": "00323.png",
+      "elapsed_ms": 279958
+    },
+    {
+      "name": "00324.png",
+      "elapsed_ms": 280473
+    },
+    {
+      "name": "00325.png",
+      "elapsed_ms": 280987
+    },
+    {
+      "name": "00326.png",
+      "elapsed_ms": 281489
+    },
+    {
+      "name": "00327.png",
+      "elapsed_ms": 282000
+    },
+    {
+      "name": "00328.png",
+      "elapsed_ms": 282515
+    },
+    {
+      "name": "00329.png",
+      "elapsed_ms": 283029
+    },
+    {
+      "name": "00330.png",
+      "elapsed_ms": 283544
+    },
+    {
+      "name": "00331.png",
+      "elapsed_ms": 284044
+    },
+    {
+      "name": "00332.png",
+      "elapsed_ms": 285986
+    },
+    {
+      "name": "00333.png",
+      "elapsed_ms": 286494
+    },
+    {
+      "name": "00334.png",
+      "elapsed_ms": 287007
+    },
+    {
+      "name": "00335.png",
+      "elapsed_ms": 287510
+    },
+    {
+      "name": "00336.png",
+      "elapsed_ms": 288021
+    },
+    {
+      "name": "00337.png",
+      "elapsed_ms": 288523
+    },
+    {
+      "name": "00338.png",
+      "elapsed_ms": 289023
+    },
+    {
+      "name": "00339.png",
+      "elapsed_ms": 289537
+    },
+    {
+      "name": "00340.png",
+      "elapsed_ms": 290052
+    },
+    {
+      "name": "00341.png",
+      "elapsed_ms": 290566
+    },
+    {
+      "name": "00342.png",
+      "elapsed_ms": 291067
+    },
+    {
+      "name": "00343.png",
+      "elapsed_ms": 291581
+    },
+    {
+      "name": "00344.png",
+      "elapsed_ms": 292095
+    },
+    {
+      "name": "00345.png",
+      "elapsed_ms": 292609
+    },
+    {
+      "name": "00346.png",
+      "elapsed_ms": 293110
+    },
+    {
+      "name": "00347.png",
+      "elapsed_ms": 293625
+    },
+    {
+      "name": "00348.png",
+      "elapsed_ms": 294140
+    },
+    {
+      "name": "00349.png",
+      "elapsed_ms": 294643
+    },
+    {
+      "name": "00350.png",
+      "elapsed_ms": 295146
+    },
+    {
+      "name": "00351.png",
+      "elapsed_ms": 295660
+    },
+    {
+      "name": "00352.png",
+      "elapsed_ms": 296173
+    },
+    {
+      "name": "00353.png",
+      "elapsed_ms": 296688
+    },
+    {
+      "name": "00354.png",
+      "elapsed_ms": 297202
+    },
+    {
+      "name": "00355.png",
+      "elapsed_ms": 297713
+    },
+    {
+      "name": "00356.png",
+      "elapsed_ms": 298214
+    },
+    {
+      "name": "00357.png",
+      "elapsed_ms": 298729
+    },
+    {
+      "name": "00358.png",
+      "elapsed_ms": 299234
+    },
+    {
+      "name": "00359.png",
+      "elapsed_ms": 299749
+    }
+  ],
+  "events": [
+    {
+      "start_ms": 0,
+      "caption": "告警之后先查什么？实机操作采样录制，非真人价值实验。"
+    },
+    {
+      "start_ms": 10857,
+      "caption": "选择公开原始CSV：1440行、31列；当前只支持已验证仿真配置。"
+    },
+    {
+      "start_ms": 31168,
+      "caption": "逐项确认时间、点位与单位。这里故意把1分钟数据声明为5分钟。"
+    },
+    {
+      "start_ms": 42082,
+      "caption": "错误采样间隔被拒绝，不能按记录数乘错误间隔虚增运行时间。"
+    },
+    {
+      "start_ms": 51571,
+      "caption": "更正声明后真实重算：完整5点桶聚合，1440行转为288行。"
+    },
+    {
+      "start_ms": 81145,
+      "caption": "先看数据质量，再看各分支可检验条件；缺少关阀时段须保留未决。"
+    },
+    {
+      "start_ms": 100263,
+      "caption": "导出本次运行生成的HTML核查卡，保留质量对象、映射与源数据哈希。"
+    },
+    {
+      "start_ms": 108995,
+      "caption": "演示三：300条观测中有12条完全重复记录；设备疑点另行判断。"
+    },
+    {
+      "start_ms": 118484,
+      "caption": "修正为288条后，质量通过，风阀候选仍存在；继续补证，不能宣布设备正常。"
+    },
+    {
+      "start_ms": 167240,
+      "caption": "移除风路证据后重新计算，候选退回未决；输出随证据变化。"
+    },
+    {
+      "start_ms": 177717,
+      "caption": "本次导出的核查卡可离线阅读与打印；正常仅限已核验的开发示例工况。"
+    },
+    {
+      "start_ms": 199294,
+      "caption": "BDG2仅展示真实用能回放，不与仿真机组拼接成真实楼宇故障证据。"
+    },
+    {
+      "start_ms": 210071,
+      "caption": "工况演示：只有具备规定的温差、启停与持续时长，才能形成有限核验结论。"
+    },
+    {
+      "start_ms": 220541,
+      "caption": "历史56个基础日工况：三种方法均12/56；正常和泄漏对照保留，无新增性能优势。"
+    },
+    {
+      "start_ms": 246431,
+      "caption": "下一步检验真实使用价值：常规曲线表格与工作台使用相同清单，参考答案先独立复核。"
+    },
+    {
+      "start_ms": 270277,
+      "caption": "常规方式提供同样原始曲线、表格与检查清单。正式任务交叉平衡，不重复给同一人。"
+    },
+    {
+      "start_ms": 285986,
+      "caption": "已实现核查任务与证据交接。真实建筑适用性、人工价值和节能收益仍待验证。"
+    }
+  ],
+  "t0": 1790916021620,
+  "ended": "2026-10-02T04:45:21.883Z",
+  "recording": "Actual local browser interaction sampled at approximately 2 fps. Quiet gaps between operation segments are removed in the 180-second edit. No fabricated UI or human-test results."
+}

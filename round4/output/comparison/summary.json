@@ -1,0 +1,188 @@
+{
+  "status": "historical_regression_only",
+  "base_cases": 56,
+  "dates": 14,
+  "contiguous_date_blocks": 2,
+  "simulated_systems": 1,
+  "paired_records": 112,
+  "methods": [
+    {
+      "method": "workbench",
+      "n": 56,
+      "supported": 12,
+      "source_consistent": 12,
+      "wrong_attributions": 0,
+      "unresolved": 44,
+      "support_coverage": 0.21428571428571427,
+      "source_consistent_over_all": 0.21428571428571427,
+      "mean_software_ms": 30.14492678422747,
+      "groups": {
+        "AHU_annual.csv": {
+          "n": 14,
+          "supported": 0,
+          "source_consistent": 0,
+          "wrong_attributions": 0,
+          "unresolved": 14,
+          "support_coverage": 0.0,
+          "source_consistent_over_all": 0.0,
+          "mean_software_ms": 30.348428574922895
+        },
+        "coi_leakage_025_annual.csv": {
+          "n": 14,
+          "supported": 0,
+          "source_consistent": 0,
+          "wrong_attributions": 0,
+          "unresolved": 14,
+          "support_coverage": 0.0,
+          "source_consistent_over_all": 0.0,
+          "mean_software_ms": 30.282578564115934
+        },
+        "damper_stuck_025_annual.csv": {
+          "n": 14,
+          "supported": 1,
+          "source_consistent": 1,
+          "wrong_attributions": 0,
+          "unresolved": 13,
+          "support_coverage": 0.07142857142857142,
+          "source_consistent_over_all": 0.07142857142857142,
+          "mean_software_ms": 30.01590001596404
+        },
+        "damper_stuck_075_annual.csv": {
+          "n": 14,
+          "supported": 11,
+          "source_consistent": 11,
+          "wrong_attributions": 0,
+          "unresolved": 3,
+          "support_coverage": 0.7857142857142857,
+          "source_consistent_over_all": 0.7857142857142857,
+          "mean_software_ms": 29.93279998190701
+        }
+      },
+      "paired_robustness": {
+        "base_pairs": 56,
+        "records": 112,
+        "prediction_changes": 0
+      }
+    },
+    {
+      "method": "fixed_threshold",
+      "n": 56,
+      "supported": 12,
+      "source_consistent": 12,
+      "wrong_attributions": 0,
+      "unresolved": 44,
+      "support_coverage": 0.21428571428571427,
+      "source_consistent_over_all": 0.21428571428571427,
+      "mean_software_ms": 9.519567850345213,
+      "groups": {
+        "AHU_annual.csv": {
+          "n": 14,
+          "supported": 0,
+          "source_consistent": 0,
+          "wrong_attributions": 0,
+          "unresolved": 14,
+          "support_coverage": 0.0,
+          "source_consistent_over_all": 0.0,
+          "mean_software_ms": 9.490399987303785
+        },
+        "coi_leakage_025_annual.csv": {
+          "n": 14,
+          "supported": 0,
+          "source_consistent": 0,
+          "wrong_attributions": 0,
+          "unresolved": 14,
+          "support_coverage": 0.0,
+          "source_consistent_over_all": 0.0,
+          "mean_software_ms": 9.537192876450717
+        },
+        "damper_stuck_025_annual.csv": {
+          "n": 14,
+          "supported": 1,
+          "source_consistent": 1,
+          "wrong_attributions": 0,
+          "unresolved": 13,
+          "support_coverage": 0.07142857142857142,
+          "source_consistent_over_all": 0.07142857142857142,
+          "mean_software_ms": 9.606478536235434
+        },
+        "damper_stuck_075_annual.csv": {
+          "n": 14,
+          "supported": 11,
+          "source_consistent": 11,
+          "wrong_attributions": 0,
+          "unresolved": 3,
+          "support_coverage": 0.7857142857142857,
+          "source_consistent_over_all": 0.7857142857142857,
+          "mean_software_ms": 9.444200001390916
+        }
+      },
+      "paired_robustness": {
+        "base_pairs": 56,
+        "records": 112,
+        "prediction_changes": 0
+      }
+    },
+    {
+      "method": "without_contiguity",
+      "n": 56,
+      "supported": 12,
+      "source_consistent": 12,
+      "wrong_attributions": 0,
+      "unresolved": 44,
+      "support_coverage": 0.21428571428571427,
+      "source_consistent_over_all": 0.21428571428571427,
+      "mean_software_ms": 9.347050030815549,
+      "groups": {
+        "AHU_annual.csv": {
+          "n": 14,
+          "supported": 0,
+          "source_consistent": 0,
+          "wrong_attributions": 0,
+          "unresolved": 14,
+          "support_coverage": 0.0,
+          "source_consistent_over_all": 0.0,
+          "mean_software_ms": 9.270800044760108
+        },
+        "coi_leakage_025_annual.csv": {
+          "n": 14,
+          "supported": 0,
+          "source_consistent": 0,
+          "wrong_attributions": 0,
+          "unresolved": 14,
+          "support_coverage": 0.0,
+          "source_consistent_over_all": 0.0,
+          "mean_software_ms": 9.332785715482064
+        },
+        "damper_stuck_025_annual.csv": {
+          "n": 14,
+          "supported": 1,
+          "source_consistent": 1,
+          "wrong_attributions": 0,
+          "unresolved": 13,
+          "support_coverage": 0.07142857142857142,
+          "source_consistent_over_all": 0.07142857142857142,
+          "mean_software_ms": 9.448571463248559
+        },
+        "damper_stuck_075_annual.csv": {
+          "n": 14,
+          "supported": 11,
+          "source_consistent": 11,
+          "wrong_attributions": 0,
+          "unresolved": 3,
+          "support_coverage": 0.7857142857142857,
+          "source_consistent_over_all": 0.7857142857142857,
+          "mean_software_ms": 9.33604289977146
+        }
+      },
+      "paired_robustness": {
+        "base_pairs": 56,
+        "records": 112,
+        "prediction_changes": 0
+      }
+    }
+  ],
+  "new_holdout_evaluation": false,
+  "human_participants": 0,
+  "value_study_status": "pending_independent_review_and_recruitment",
+  "risk_coverage_curve": false
+}

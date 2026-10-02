@@ -1,81 +1,71 @@
-# 能智核 · 公共建筑用能异常核验
+# 能智核——公共建筑风阀疑点核验与补证工作台
 
-**告警之后，先查什么？** 面向公共建筑用能管理人员的核验工作台：检查数据质量，查看当前工况能否检验设备疑点，再给出有证据支持的判断与补证动作。参赛方向为「智慧能源与环境」。
+**告警之后，先查什么？** 核对数据质量，检查当前工况是否可检验，再把支持证据、限制与补证动作交给下一位核查人员。参赛方向：智慧能源与环境。
 
-**当前版本：[第三轮工作台](round3/README.txt)。阶段评审从 [评审索引](docs/REVIEW_INDEX.md) 开始。** 本仓库保留三轮源代码、冻结输入、逐例结果、审核反例及参赛底稿；历史轮次不覆盖。
+当前版本为 **round4**。先看 [固定版本评审入口](https://github.com/tingfengy2000-creator/nengzhihe/releases/tag/round4-review-v1)，下载 `nengzhihe_round4_review.zip` 后双击 `review/index.html`，无需安装即可查看三分钟实际操作视频、10页答辩PDF、三份材料及真实核查卡。私有仓库需被授予访问权限。
 
-![第三轮实际工作台](round3/output/ui/workbench_top.png)
+![实际工作台](round4/output/ui/workbench_top.png)
 
-## 本阶段已交付
+## 当前交付
 
-- 三个可操作案例：BDG2 实测用能回放、LBNL 单风道空调机组仿真核验、修正重复记录后继续核查设备疑点。
-- 公开原始 CSV → 字段、单位与采样间隔映射 → 真实重算 → 可阅读 HTML 核查卡；明确拒绝超出当前支持范围的输入。
-- 数据质量与设备判断独立展示；同一个质量对象贯穿服务、诊断、界面与导出；实际采样间隔不匹配时拒判。
-- [三份可编辑 Word](round3/materials/final)、[逐页视觉复检](round3/materials/QA_视觉复检.txt)及最终 PDF/页面预览。它们是匿名底稿，尚须确认身份填报与成熟度等行政字段。
+- 公开原始CSV → 字段、单位、时间映射 → 真实核验 → 可溯源HTML核查卡；错误单位和采样间隔拒判。
+- 数据质量与设备判断两个独立维度。重复记录修正后设备疑点仍可保留；改变证据会真实重算。
+- 三个保留演示：BDG2实测回放、LBNL仿真核验、修正数据后继续核查。两套数据不拼接成真实故障证据。
+- 可运行真人邀测包：常规曲线/表格与工作台，相同清单，8个匹配不同任务，4种交叉平衡顺序。**当前0人，待独立复核与招募；未验证提效。**
+- [三份可编辑DOCX及PDF](round4/materials/final)共11页、[PPTX及PDF](round4/presentation/final)10页，均逐页视觉复检；[三分钟视频](round4/video/final/nengzhihe_actual_operation_3min.mp4)来自实际操作。
 
-## 快速运行当前版本
+## 运行与复现
 
-需要 Python 3.12（已验证版本 3.12.14）。无需模型、付费 API 或年度原始数据包。
+Python 3.12；无需模型或付费API。仅支持已验证LBNL单风道机组仿真配置。
 
 ```powershell
-git clone https://github.com/tingfengy2000-creator/nengzhihe.git
-cd nengzhihe
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r round3/requirements.txt
-cd round3
-..\.venv\Scripts\python.exe -X utf8 server.py --port 18193
+python -m pip install -r round4/requirements.txt
+python -X utf8 round4/server.py --port 18195
 ```
 
-在浏览器打开 <http://127.0.0.1:18193/?demo=3>。当前终端按 Ctrl+C 停止。Windows 后台启动与仅停止本项目的命令见 [第三轮运行说明](round3/README.txt)。私有仓库克隆需要你的 GitHub 账号具有访问权限。
+打开 <http://127.0.0.1:18195>。邀测服务另运行 `python -X utf8 round4/study_server.py --port 18196`，打开 <http://127.0.0.1:18196>；正式入口未完成独立复核会保持锁定。只绑定本机。
 
-原始 CSV 演示文件：[LBNL_SDAHU_2018-04-10_raw_excerpt.csv](round3/data/public_csv/LBNL_SDAHU_2018-04-10_raw_excerpt.csv)。点击“导入公开CSV”，选择该文件、`Datetime`、1 分钟采样，按界面映射并确认当前仿真配置。完整步骤见 [导入任务说明](docs/DEMO.md)。
+详细步骤见 [当前说明](round4/README.txt)、[导入演示](docs/DEMO.md)、[邀测主持说明](round4/study/README.txt)。参考答案只给主持与评分人员，勿将整个源码包发给参与者。
 
-## 已有证据与边界
+```powershell
+python tools/check_repository.py
+python tools/verify_round4.py
+```
 
-| 核查内容 | 可复查结果 | 应如何理解 |
-| --- | --- | --- |
-| 可靠性反例与输入契约 | 29 项检查通过 | 软件契约检查，不是故障诊断准确率 |
-| 独立目录启动与 HTTP 全流程 | 11 项检查通过 | 当前依赖环境下的自包含性检查 |
-| 历史 112 条记录回归 | 第三轮预测与第二轮一致，24 正确、88 未决 | 56 个基础日工况、14 个日期，同一仿真系统；现均为回归数据 |
-| 025 / 075 风阀设置 | 基础日工况分别为 1/14、11/14 正确 | 保留差异，不包装为普适识别能力 |
-| 正常 / 盘管阀泄漏 | 两组各 0/14 正确 | 112 条均没有合格盘管核验窗口，不能把未检测到视为排除故障 |
+复现创建保留的独立副本，不覆盖原成绩。GitHub Actions同时核查round3与round4。
 
-第二轮自身工程修复对照为 **6/112 → 24/112（5.36% → 21.43%，+16.07 个百分点）**，新增 20 条正确，同时 2 条原正确变为未决。第三轮修复可靠性与操作完整性，**没有新增性能提升主张**。主动查询尚未证明优于规则；未验证真实楼宇故障定位、人工效率提升或节能收益。BDG2 实测回放与 LBNL 仿真诊断分开呈现。
+## 已有结果与边界
+
+主分母为 **56个基础日工况**：14个日期、2个日期块、1套仿真系统。112条另作原始/重复记录配对扰动回归，全部已属于历史资料。
+
+| 源工况设置 | 基础数 | 当前工作台一致候选 | 未决 |
+| --- | ---: | ---: | ---: |
+| 正常 | 14 | 0 | 14 |
+| 卡滞开度25%（025） | 14 | 1 | 13 |
+| 卡滞开度75%（075） | 14 | 11 | 3 |
+| 盘管阀泄漏 | 14 | 0 | 14 |
+| 合计 | 56 | 12 | 44 |
+
+固定温差阈值与去连续窗口约束消融也是同一12个候选，**没有新增性能优势**。025/075不等于故障轻重；正常和泄漏三分类召回仍为0。盘管没有合格窗口，不能把没有检测到当作设备正常。112条配对记录三方法各0组候选标签变化；这不支持“零误报”主张。本轮无新留出成绩。
+
+29项可靠性、13项独立HTTP、21项邀测软件机制检查通过；336条方法—记录隔离复现一致。这些是软件与回归证据，不是人工提效、真实楼宇能力或节能收益。见 [阶段报告](round4/REPORT.txt)和[逐例对照](round4/output/comparison)。
 
 ## 仓库结构
 
 ```text
-.
-├── round3/                 当前可独立启动的第三轮版本
-│   ├── *.py、web/          服务、诊断、导入、导出与界面
-│   ├── data/               演示、公开 CSV、历史回归输入与来源
-│   ├── scripts/            启停、测试、复现及材料构建脚本
-│   ├── output/             冻结核查结果、回归明细与界面截图
-│   ├── materials/          三份 Word、赛事模板、逐页渲染与 QA
-│   └── delivery/           第三轮评审 ZIP 与哈希清单
-├── round2/                 第二轮源码、输入、逐例结果与交付包
-├── data/、web/、*.py       首轮原始源码与已结束实验输入
-├── output/、materials/     首轮结果与历史材料
-├── delivery/               首轮评审包
-├── runtime/                首轮模型下载脚本、元数据与许可
-├── docs/                   阶段评审索引、更新约定及来源说明
-├── tools/                  仓库检查和隔离复现入口
-└── .github/                持续集成与评审问题模板
+round4/                  当前阶段
+  *.py, web/             核验、导入、导出、服务与界面
+  data/, scripts/        公开输入、冻结回归数据与复现
+  study/                 邀测协议、任务、未签署参考、评分与前端
+  output/                对照结果、软件检查与真实截图
+  materials/             官方模板、DOCX/PDF、逐页QA
+  presentation/, video/  可编辑答辩稿、实际录制与来源
+  delivery/              无需安装入口、评审包与运行包
+round3/, round2/         历史源码、成绩与交付原件
+根目录data/, web/, *.py  首轮历史源码与输入
+ docs/, tools/, .github/ 评审索引、隔离复现、持续集成
 ```
 
-首轮原说明完整保留在 [docs/archive/round1_README.md](docs/archive/round1_README.md)。沿用既有轮次路径，保证相对路径、冻结清单和历史复现脚本仍可对应。根目录的旧 `server.py` 属于首轮；新演示请运行 `round3/server.py`。
+根目录旧server.py属首轮；当前运行round4/server.py。历史 [round3说明](docs/archive/round3_README.md)、[首轮说明](docs/archive/round1_README.md)和[阶段评审索引](docs/REVIEW_INDEX.md)保留。
 
-## 复核与更新
-
-在仓库根目录执行：
-
-```powershell
-python tools/check_repository.py
-python tools/verify_round3.py
-```
-
-检查只在忽略的 `.review-work/` 内创建隔离副本，保留历史结果原件并输出新回执，不清理本地缓存。GitHub Actions 在每次推送及 Pull Request 中执行同一核查。
-
-每次完成修改后：补充 [CHANGELOG](CHANGELOG.md)，执行检查，审阅变更，提交并推送 `main`。每个评审阶段建立固定标签与 Release；历史评审引用标签或 commit，不仅引用会变化的 `main`。详见 [CONTRIBUTING](CONTRIBUTING.md)。
-
-公开数据、第三方许可及未上传的大文件见 [DATA_AND_LICENSES](docs/DATA_AND_LICENSES.md)。代码尚未授予开源许可；建立私有评审仓库不等于公开发布或授予第三方使用许可。
+每次更新按 [CONTRIBUTING](CONTRIBUTING.md)执行检查、提交、推送与版本发布。私人导入、安装文件与缓存不入库，保留本机。来源与许可见 [数据说明](docs/DATA_AND_LICENSES.md)。身份字段留空，成熟度自评第3级；材料已视觉复检不等于报名手续完成。

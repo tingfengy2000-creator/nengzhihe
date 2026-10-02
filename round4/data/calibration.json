@@ -1,0 +1,171 @@
+{
+  "method": "Normal command-conditioned envelopes with development class-overlap rejection and fixed settled-window gates; engineering repair.",
+  "scope": "one simulated SDAHU; temperature-inferred air fraction is NOT actuator position; no direct feedback",
+  "gates": {
+    "warmup_minutes": 30,
+    "closed_settle_minutes": 15,
+    "window_minutes": 30,
+    "minimum_qualified_minutes": 60,
+    "mix_delta_min_C": 3.0,
+    "minimum_mix_fraction_margin": 0.03,
+    "normal_thermal_margin_C": 0.15,
+    "normal_window_fraction_min": 0.9,
+    "fault_window_fraction_min": 0.8,
+    "command_bin_width": 0.05,
+    "fan_command_bin_width": 0.1,
+    "economizer_min_C": 1.0,
+    "economizer_max_C": 15.555556,
+    "coil_closed_command_max": 0.0001,
+    "cooling_on_command_min": 0.05
+  },
+  "air_envelope": {
+    "13": {
+      "low": 0.433158,
+      "high": 0.615758,
+      "samples": 117
+    },
+    "14": {
+      "low": 0.557112,
+      "high": 0.704291,
+      "samples": 45
+    },
+    "15": {
+      "low": 0.623418,
+      "high": 0.78097,
+      "samples": 64
+    },
+    "16": {
+      "low": 0.698202,
+      "high": 1.03449,
+      "samples": 119
+    },
+    "17": {
+      "low": 0.770175,
+      "high": 0.892527,
+      "samples": 92
+    },
+    "18": {
+      "low": 0.832253,
+      "high": 0.928541,
+      "samples": 76
+    },
+    "19": {
+      "low": 0.869393,
+      "high": 1.035175,
+      "samples": 392
+    },
+    "12": {
+      "low": 0.366106,
+      "high": 0.521865,
+      "samples": 325
+    },
+    "2": {
+      "low": -0.016737,
+      "high": 0.060479,
+      "samples": 750
+    },
+    "11": {
+      "low": 0.295669,
+      "high": 0.425876,
+      "samples": 23
+    }
+  },
+  "coil_envelope": {
+    "8": {
+      "low": -0.9191,
+      "high": -0.1971,
+      "samples": 327
+    },
+    "7": {
+      "low": -0.94755,
+      "high": 0.07822,
+      "samples": 216
+    },
+    "6": {
+      "low": -1.01916,
+      "high": 0.09162,
+      "samples": 298
+    }
+  },
+  "coil_normal_exclusive_high": {
+    "8": -0.47647,
+    "7": -0.4912,
+    "6": -0.42958
+  },
+  "development_case_ids": [
+    "NZH2-D9A288336CF1",
+    "NZH2-DAEC7F3478EE",
+    "NZH2-4FAB29C47C64",
+    "NZH2-C395ADA08BF2",
+    "NZH2-F0CB5418970F",
+    "NZH2-65FA20643B24",
+    "NZH2-5288BB51091E",
+    "NZH2-BA998FCD0A7A",
+    "NZH2-242BD91AB86C",
+    "NZH2-90D0BC4B622E",
+    "NZH2-451ED11E8FB2",
+    "NZH2-10F8AE894141",
+    "NZH2-B07A6B3CD036",
+    "NZH2-0957BD0EB588",
+    "NZH-53F45186C216",
+    "NZH-7C6AFE50C963",
+    "NZH-1C8F1B2AFDF5",
+    "NZH-6EB35BB07FA1"
+  ],
+  "development_case_sha256": [
+    "cfd9e9e99379284fae0040820e9ac227f29490bf0e704dfccea5ca54e0f53fd2",
+    "2806ae9a4a85d78aa78491d9892194a51fcae6e3e4154fe099cac77651455a44",
+    "d687b841190d02c02851a4b41e1629506605c3f678bcd58ccb5207a96d03cf97",
+    "18059091e5314dce8963c8ff7672873f636e664da4b67740e741cd5c61dd4484",
+    "264dd13869925ce1df768b77938b72150849b80abf9a8c53ea67ea9f7abfd5ba",
+    "56dfe59a9ef29660d235e5329c39abeb1ad5b4883f935cfd916e2a23320bbb9e",
+    "123e320dcceab194a8cb9caa5dedf9343e2f53e55c7ef9176ddee494ce52c6ba",
+    "f3dd78aa3704f8a93271c263743f3f7b3d78280bda734f77551c88dc7c1234ae",
+    "0afcc2ffb97ae26cda68a93a73a1af7bbc6c6c117a3cde4b854a36931911431f",
+    "411b2d4309af1a83647fa1763320013582cbbb15a61981a95ab2cd7cc1f07410",
+    "6427421bfe1847a109a6dd1864fdfd5ca1e314eb217b0cc35301a2670b06cff7",
+    "e1d3bb7d216c9a363ae44f5a6c7390c6944463b283ad90962452337d5a91a6bb",
+    "41b2638c02b1e7b9be5191ec32f04d9d78b4ee2506e053c024dda52ca7e1a489",
+    "b390b6d9226f802a00d459ed7a9531940beab0c07566efe4a17c0227090cb8e8",
+    "fe1f3af7c9fd6d5683c3265a8b1d645d4209c213bdf1fca0c0329777b3badb03",
+    "3bda5acc3effd5e7699a1d9d3fa8a167a6bd682d6f44333b5bb55dacf08bb61a",
+    "7969de876931e605efc699f3d4d14063c047983f706639f5e0a0635607bfbfdb",
+    "b9287e10355ae4497a800b2b044ea27afb6c70ab809d76b5d3c63756a3875d8b"
+  ],
+  "overlap_check_case_ids": [
+    "NZH2-46E91BAF93ED",
+    "NZH2-3296C8BACFA1",
+    "NZH2-58D599EE8FEC",
+    "NZH2-AD0C34D222AA",
+    "NZH2-D5E63D7FF0E8",
+    "NZH2-A54082878FC0",
+    "NZH2-ADBF3E4719B2",
+    "NZH2-195BB39B17CE",
+    "NZH2-772FD2646524",
+    "NZH2-6D03A4E2F420",
+    "NZH2-984ACA7CE14D",
+    "NZH2-DB8AFC8BA01B",
+    "NZH2-781EFE3A836C",
+    "NZH2-4D697CFBFEC0"
+  ],
+  "overlap_check_case_sha256": [
+    "e6891a29adf90ac41ddc294fd7fbbc38a863c4b0d6d034688447920b8fb9a579",
+    "4dc6ce201e4bf182e2cf28ce33f39dabeae99f805a1f14596b2391a0e560f2fb",
+    "33f28567809e4aa88473da5bbe877723c8fe02d2bafb78449eeb2fb4921982ff",
+    "cb051409e1826fe17f562d8538ccb8409bdd1e747392dda2ab1a079dc6d28b01",
+    "a674c01a456278032169dce0b201d3e7ddf1650fea88566422a6d8de27079491",
+    "e5cb5ffa075d11d2e6c68fa0cb5eba2fd5fb361d071aa512ce06e1cfb9416ad4",
+    "605de2fa1e7a486bb3c2f6938c6990c37f5899d1e545b564bfa2e2ec72b35ec9",
+    "1a7532c78f276ff533c587d531258534f3830ab82d0226a0dc6a42381eb2086f",
+    "008c52cba1074d018292b3d282eb41e384e3c73b49e9ad3418e7d710b00e55e7",
+    "da26397156cda4c838ff3e350122aa0762164ff9e1730097b3ff46c1cc0d2482",
+    "6794a21d84bf6cae769f14eae088240b345c6ac526b1a7375330fbcd197dcc97",
+    "15e3e62a9d97cfc41c594d02742fa1d01fe20bd9528ddc7b2d3095ff0e40e1c7",
+    "c3597f9c5ea73f109cf7acae1f96a3f3fa2eadb333f04f09464b9a52c4c76175",
+    "a91c7fd5e29e19182f13140828bc6b4645668260aa33d63062f91df246a9bbc6"
+  ],
+  "temperature_units": "degC",
+  "original_source_units": "degF converted by (F-32)*5/9",
+  "source_document": "LBNL SDAHU September2022 pp4-7: fans, economizer1..15.555556C, Basic command definitions",
+  "not_claimed": "Not a universal sensor accuracy envelope or original algorithm; bounds apply to the source simulation only."
+}

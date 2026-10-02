@@ -1,0 +1,54 @@
+{
+  "status": "passed",
+  "timestamp_utc": "2026-10-02T05:19:01.375295+00:00",
+  "commands": [
+    {
+      "script": "run_comparison.py",
+      "exit_code": 0,
+      "seconds": 11.44
+    },
+    {
+      "script": "test_reliability.py",
+      "exit_code": 0,
+      "seconds": 0.928
+    },
+    {
+      "script": "test_standalone.py",
+      "exit_code": 0,
+      "seconds": 1.114
+    },
+    {
+      "script": "test_study.py",
+      "exit_code": 0,
+      "seconds": 0.26
+    },
+    {
+      "script": "analyze_study.py",
+      "exit_code": 0,
+      "seconds": 0.044
+    },
+    {
+      "script": "demo_import.py",
+      "exit_code": 0,
+      "seconds": 0.404
+    }
+  ],
+  "elapsed_seconds": 14.603,
+  "reliability_checks": 29,
+  "isolated_http_checks": 13,
+  "study_software_checks": 21,
+  "method_case_records_reproduced": 336,
+  "prediction_or_evidence_changes": 0,
+  "main_unit": 56,
+  "paired_records": 112,
+  "word_pages_hash_verified": 11,
+  "slides_hash_verified": 10,
+  "video_hash_verified": true,
+  "release_archives_hash_verified": 2,
+  "real_participants": 0,
+  "value_study_status": "pending_independent_review_and_recruitment",
+  "original_files_unchanged": true,
+  "source_manifest_sha256": "a76628dcf8be94870dab42359b505d40e3d922eb3bbe5d941538f7c1ba692430",
+  "retained_workdir": ".review-work/round4_1790918326667225900",
+  "scope": "Historical reproducibility and software checks only, not a new performance or human-value experiment."
+}

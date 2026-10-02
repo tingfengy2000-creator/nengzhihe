@@ -1,0 +1,21 @@
+{
+  "all_pages_visually_inspected": true,
+  "pages": 10,
+  "files": {
+    "presentation/final/能智核_实际核查任务答辩.pptx": "05007adda74f105105b0eb31274c0d03052dfa4efbbe5a93b681fbc67de9160b",
+    "presentation/final/能智核_实际核查任务答辩.pdf": "655a3babd08c251deb299098287eb2a7ef5077b297a487cce4533ee6539280a9"
+  },
+  "page_sha256": {
+    "presentation/qa/slide-01.png": "b84e29dc98f92ce65da010e447115926e1e0894edbcead32175eb3d42aad9532",
+    "presentation/qa/slide-02.png": "55041aa66791d799244278fbeea44f33c5e07985de9dcd4d7d8fb3e9de9f367b",
+    "presentation/qa/slide-03.png": "c31090cf8c24c229ad6b8c497dd7fe356eba067ca10668531dabd448c96db1f3",
+    "presentation/qa/slide-04.png": "82d38dba4d9117c0372971a2f10438ce42e7898db7c22646dc3a877e8c265db5",
+    "presentation/qa/slide-05.png": "fa60e9eabf023d7149f63ef150804bbe441ee7d4581ae9eaad67d3199cbb0b6a",
+    "presentation/qa/slide-06.png": "f6f1760d89e9e0b1e0ae9bd482af89367061b8dfd853eff34c276c3c484e82cd",
+    "presentation/qa/slide-07.png": "27de90123c92d05024d3be6a600339e360f97927c1a432c2c1b0788413f46f3d",
+    "presentation/qa/slide-08.png": "413f0ac02b2452b8482bb5c923050aa392ad500b925b5c2322d9cc119dfb1e73",
+    "presentation/qa/slide-09.png": "1d29bdf16d575bacea97e1489e10d7b968eb121f9c79361d67e38e4443cc05e2",
+    "presentation/qa/slide-10.png": "490bb346c51936fd6b9bd8632dc407d9e23f1d2913c5080d1afdb4ec3903a369"
+  },
+  "notes": "Final 10-slide PDF visually inspected after finalization; native editable text/tables, real UI screenshots, no clipping or missing glyphs. Task-based narrative; no new performance claim."
+}

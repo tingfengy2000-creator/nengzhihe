@@ -1,0 +1,87 @@
+{
+  "status": "prepared_not_human_tested",
+  "selection_rule": "Take the first two chronological dates in the existing round2 development split, all four settings, without outcome-based selection. Duplicate-record challenge is applied identically to the two 75%-opening tasks. No repeated underlying case per participant.",
+  "dates": [
+    "2018-05-07",
+    "2018-05-08"
+  ],
+  "tasks": [
+    {
+      "id": "T1A",
+      "pair": 1,
+      "variant": "A",
+      "sha256": "9d78e85dbcd0989a43ef2e65e908eb9a316e83654470dfa19c8c1bc172134c24",
+      "path": "private/cases/T1A.json"
+    },
+    {
+      "id": "T1B",
+      "pair": 1,
+      "variant": "B",
+      "sha256": "2605b8b6d651bcf8077241b78e85f867ef6d81bbdfed23f9412c679f87dbce55",
+      "path": "private/cases/T1B.json"
+    },
+    {
+      "id": "T2A",
+      "pair": 2,
+      "variant": "A",
+      "sha256": "523c418663b41aaf64e8fea1e24729b2d62e870ecfd218c2d1600c7b6f3b6d32",
+      "path": "private/cases/T2A.json"
+    },
+    {
+      "id": "T2B",
+      "pair": 2,
+      "variant": "B",
+      "sha256": "6f83993566eb820048b4f976d1263e3f7ad08b6f2686517c988cb3f6bc67b588",
+      "path": "private/cases/T2B.json"
+    },
+    {
+      "id": "T3A",
+      "pair": 3,
+      "variant": "A",
+      "sha256": "6cfca91e89bfdc5ac531770f2f0b3f374f8f3c52e30838a7feefeb9da8720b07",
+      "path": "private/cases/T3A.json"
+    },
+    {
+      "id": "T3B",
+      "pair": 3,
+      "variant": "B",
+      "sha256": "17f3bfaaad0b700014d422b9d87f970bf3debc53204abee2e389e44cd050c293",
+      "path": "private/cases/T3B.json"
+    },
+    {
+      "id": "T4A",
+      "pair": 4,
+      "variant": "A",
+      "sha256": "75757345986e0d528ef710a6a8e3e465eca1e7755568e463e836a49f7d1034bf",
+      "path": "private/cases/T4A.json"
+    },
+    {
+      "id": "T4B",
+      "pair": 4,
+      "variant": "B",
+      "sha256": "47e8bb60fe7f63688ccabc0faedf1047a28842617bfa6f573d8b8c3d43b6b206",
+      "path": "private/cases/T4B.json"
+    }
+  ],
+  "matched_on": [
+    "source system",
+    "fault/source setting",
+    "same permitted signals and units",
+    "same checklist",
+    "same recording-quality challenge"
+  ],
+  "not_assumed_equal": [
+    "weather",
+    "running duration",
+    "evidence strength",
+    "task difficulty"
+  ],
+  "matching_review_required": true,
+  "participants": 0,
+  "background_fields": [
+    "role",
+    "hvac_experience_band",
+    "csv_experience_band",
+    "previous_workbench_exposure"
+  ]
+}

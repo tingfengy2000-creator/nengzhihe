@@ -1,0 +1,15 @@
+# Reference and content contract
+
+Authority: the four user-supplied competition files copied byte-for-byte into ../references; hashes in reference_manifest.json. Template DOCX pages rendered and all pages inspected before authoring (brief 5, technical 2, business 2). Original reference PDFs/Word and prior-round materials remain untouched.
+
+Retain official attachment identifiers, competition title, original top-level chapter names and word caps, technical and business subsection labels, brief field order, merged table geometry, all track/type/maturity options and page-number field. A4 11906 by 16838 twips; margins 1800 left/right and 1440 top/bottom. The templates contain excess blank paragraphs and huge row heights; these are content space, not mandatory blank-page requirements.
+
+User-authorized fidelity changes: replace all inherited subset fonts with full SimSun for body and SimHei for headings; strip obfuscated embedded-font parts and relationships; remove template placeholder paragraphs, fixed row heights and gratuitous empty pages; adjust spacing and pagination. Reference text itself is not changed. Titles remain black. No new decorative cover page. Technical narrative uses four chapters, business uses six chapters. Brief summaries cap at 300/300/600/300 non-whitespace characters. Technical caps at 2000/3000/3000/500; business at 200/200/2000/2000/2000/500. Captions and table text count conservatively in their chapters.
+
+Identity fields stay empty because guide p6 prohibits identifying information, including institution/instructor and other identifying information. No team names, telephone numbers or credentials are invented. Maturity is self-assessed level 3 (development/prototype evidence), not certified; identity fields remain blank for anonymous review. Competition track selected: 智慧能源与环境. Technology advancement: 无法判断. Development: 软硬件开发类. Delivery: 软件. Three distinct indicators: 12/56 historical candidates versus the fixed baseline also 12/56 (no advantage); two audited counterexamples corrected; one executable raw-CSV-to-card task. No savings, labor efficiency, originality or leadership claim.
+
+Images: actual local UI screenshots, generated code-aligned flow diagram. No mock evidence images. Historical 112 records now regression only; all four source settings retained, no date/category reselection. New reliability checks do not provide a new accuracy estimate. Detailed implementation constraints belong to engineering report, not competition narrative.
+
+Render every final page using packaged render_docx.py with task-private signed LibreOffice and full local Chinese fonts. Retain every iteration and renderer cache. Inspect every PNG before status is visually reviewed. Record page counts, font sanitation, cap checks and inspection notes outside submitted narrative.
+
+Round4 final: current wind-damper verification position, 56 base day-scenarios and 112 perturbation records separately reported. Human study pending with zero participants. DOCX page counts 3/5/3, all 11 pages inspected; exact hashes in materials/qa/qa.json. All figures come from the running workbench. No artificial human-efficiency claims.

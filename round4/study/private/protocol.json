@@ -1,0 +1,204 @@
+{
+  "title": "常规曲线表格与风阀核验工作台的任务对照",
+  "status": "pending_independent_review_and_recruitment",
+  "planned_participants": "团队拟招募5—10名真实人员，探索性实验，非已实现人数或功效保证。",
+  "condition_A": "曲线、原始数值表、字段单位、相同检查清单、开发参考包络表及纸笔计算说明，无自动诊断。",
+  "condition_B": "完全相同原始数据、曲线表格与清单，另提供当前工作台真实计算的质量、分支证据及核查卡。",
+  "assignment": "按加入顺序循环分配S1..S4，不按参与者表现挑顺序。两阶段各四题，同一人不重复同一原始日工况。两阶段间休息3分钟。",
+  "training": "两种条件各2分钟相同操作介绍；另有非测试示例。禁止在正式题间给答案反馈。",
+  "sequences": {
+    "S1": {
+      "order": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "first_mode": "A",
+      "first_variant": "A",
+      "tasks": [
+        {
+          "task_id": "T1A",
+          "mode": "A"
+        },
+        {
+          "task_id": "T2A",
+          "mode": "A"
+        },
+        {
+          "task_id": "T3A",
+          "mode": "A"
+        },
+        {
+          "task_id": "T4A",
+          "mode": "A"
+        },
+        {
+          "task_id": "T1B",
+          "mode": "B"
+        },
+        {
+          "task_id": "T2B",
+          "mode": "B"
+        },
+        {
+          "task_id": "T3B",
+          "mode": "B"
+        },
+        {
+          "task_id": "T4B",
+          "mode": "B"
+        }
+      ]
+    },
+    "S2": {
+      "order": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "first_mode": "B",
+      "first_variant": "A",
+      "tasks": [
+        {
+          "task_id": "T1A",
+          "mode": "B"
+        },
+        {
+          "task_id": "T2A",
+          "mode": "B"
+        },
+        {
+          "task_id": "T3A",
+          "mode": "B"
+        },
+        {
+          "task_id": "T4A",
+          "mode": "B"
+        },
+        {
+          "task_id": "T1B",
+          "mode": "A"
+        },
+        {
+          "task_id": "T2B",
+          "mode": "A"
+        },
+        {
+          "task_id": "T3B",
+          "mode": "A"
+        },
+        {
+          "task_id": "T4B",
+          "mode": "A"
+        }
+      ]
+    },
+    "S3": {
+      "order": [
+        4,
+        3,
+        2,
+        1
+      ],
+      "first_mode": "A",
+      "first_variant": "B",
+      "tasks": [
+        {
+          "task_id": "T4B",
+          "mode": "A"
+        },
+        {
+          "task_id": "T3B",
+          "mode": "A"
+        },
+        {
+          "task_id": "T2B",
+          "mode": "A"
+        },
+        {
+          "task_id": "T1B",
+          "mode": "A"
+        },
+        {
+          "task_id": "T4A",
+          "mode": "B"
+        },
+        {
+          "task_id": "T3A",
+          "mode": "B"
+        },
+        {
+          "task_id": "T2A",
+          "mode": "B"
+        },
+        {
+          "task_id": "T1A",
+          "mode": "B"
+        }
+      ]
+    },
+    "S4": {
+      "order": [
+        4,
+        3,
+        2,
+        1
+      ],
+      "first_mode": "B",
+      "first_variant": "B",
+      "tasks": [
+        {
+          "task_id": "T4B",
+          "mode": "B"
+        },
+        {
+          "task_id": "T3B",
+          "mode": "B"
+        },
+        {
+          "task_id": "T2B",
+          "mode": "B"
+        },
+        {
+          "task_id": "T1B",
+          "mode": "B"
+        },
+        {
+          "task_id": "T4A",
+          "mode": "A"
+        },
+        {
+          "task_id": "T3A",
+          "mode": "A"
+        },
+        {
+          "task_id": "T2A",
+          "mode": "A"
+        },
+        {
+          "task_id": "T1A",
+          "mode": "A"
+        }
+      ]
+    }
+  },
+  "seconds_per_task": 300,
+  "primary_metrics": [
+    "含失败的封顶核查时间",
+    "关键证据遗漏0..6",
+    "错误归因比例",
+    "超时/未提交比例"
+  ],
+  "analysis_unit": "先对每名参与者在A/B各四题汇总，再报告配对差值、每个任务对和顺序组。小样本仅探索性描述，不将8题当8名用户。",
+  "participants_and_privacy": "仅化名编号和经验档，不收真实姓名、联系方式或雇主。自愿参加，可退出；实际招募由团队完成。真人数据默认不入Git。",
+  "reference_precondition": "一名未参与本系统规则编写的复核者核查原始任务、答案及评分标准并签署哈希。该身份由团队负责核实。软件字段不是专家认证。",
+  "reference_freeze": [
+    "private/answer_key_draft.json",
+    "private/rubric.json",
+    "private/task_manifest.json",
+    "private/protocol.json"
+  ],
+  "no_result_claim": "当前无真人记录，不输出提效比例；测试软件自检不计参与者。"
+}

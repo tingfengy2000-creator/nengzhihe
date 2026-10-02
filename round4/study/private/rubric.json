@@ -1,0 +1,42 @@
+{
+  "status": "pending_independent_human_review",
+  "items": [
+    {
+      "id": "E1_time_and_units",
+      "points": 1,
+      "criterion": "写明实际采样间隔与温度单位，不以记录数乘错标间隔。"
+    },
+    {
+      "id": "E2_quality_and_repair",
+      "points": 1,
+      "criterion": "识别是否有重复/冲突，并说明去重只修数据。"
+    },
+    {
+      "id": "E3_operating_window",
+      "points": 1,
+      "criterion": "用具体时段描述双风机和启动后工况，不把停机或全天均值当有效核验。"
+    },
+    {
+      "id": "E4_command_vs_response",
+      "points": 1,
+      "criterion": "引用指令、混风温度及室外/回风温差，区分指令与实际位置。"
+    },
+    {
+      "id": "E5_inspectability",
+      "points": 1,
+      "criterion": "给出有证据支持的候选或未决，解释限制，不从未发现直接推导正常。"
+    },
+    {
+      "id": "E6_next_evidence",
+      "points": 1,
+      "criterion": "下一步明确点位、时段或现场动作，符合本任务缺口。"
+    }
+  ],
+  "omitted_evidence": "Each absent or substantively incorrect required item counts as one omission, range 0..6.",
+  "wrong_attribution": "One or more unsupported causal assertions, counted per task; compare against independently approved acceptable alternatives. Source fault label alone must not force a conclusion that allowed observations cannot identify.",
+  "timeout_seconds": 300,
+  "failure": "Timeout, missing submission or a critical unsupported attribution is a task failure. Report each component as well.",
+  "time_analysis": "Cap all assigned task times at 300 seconds; missing tasks assigned 300 seconds and failure. Do not report speed only among successful completers.",
+  "scoring": "Human score each item 0/1 plus wrong_attribution and rationale; blind scorers to condition where answer text allows. No LLM scoring or simulated participants.",
+  "difficulty": "Independent reviewer checks pair matching before recruitment; if pairs change, regenerate and refreeze protocol and key before testing."
+}

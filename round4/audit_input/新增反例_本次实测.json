@@ -1,0 +1,70 @@
+[
+  {
+    "test": "baseline",
+    "rejected_with_exception": false,
+    "quality_status": "passed",
+    "quality_label": "记录检查通过",
+    "diagnostic_quality_status": "passed",
+    "unit_errors": [],
+    "device_label": "normal",
+    "device_status": "supported",
+    "timestamps_span": [
+      "2018-04-10T00:00:00",
+      "2018-04-10T23:55:00"
+    ],
+    "declared_interval_minutes": 5,
+    "reported_operating_minutes": 955,
+    "first_air_window": {
+      "start": "2018-04-10T05:35:00",
+      "end": "2018-04-10T06:00:00",
+      "minutes": 30,
+      "samples": 6
+    }
+  },
+  {
+    "test": "wrong_declared_unit",
+    "rejected_with_exception": false,
+    "quality_status": "passed",
+    "quality_label": "记录检查通过",
+    "diagnostic_quality_status": "needs_review",
+    "unit_errors": [
+      "OA_TEMP"
+    ],
+    "device_label": "unresolved",
+    "device_status": "invalid_evidence",
+    "timestamps_span": [
+      "2018-04-10T00:00:00",
+      "2018-04-10T23:55:00"
+    ],
+    "declared_interval_minutes": 5,
+    "reported_operating_minutes": 955,
+    "first_air_window": {
+      "start": "2018-04-10T05:35:00",
+      "end": "2018-04-10T06:00:00",
+      "minutes": 30,
+      "samples": 6
+    }
+  },
+  {
+    "test": "one_minute_timestamps_declared_as_five",
+    "rejected_with_exception": false,
+    "quality_status": "passed",
+    "quality_label": "记录检查通过",
+    "diagnostic_quality_status": "passed",
+    "unit_errors": [],
+    "device_label": "normal",
+    "device_status": "supported",
+    "timestamps_span": [
+      "2018-04-10T00:00:00",
+      "2018-04-10T04:47:00"
+    ],
+    "declared_interval_minutes": 5,
+    "reported_operating_minutes": 955,
+    "first_air_window": {
+      "start": "2018-04-10T01:07:00",
+      "end": "2018-04-10T01:12:00",
+      "minutes": 30,
+      "samples": 6
+    }
+  }
+]
