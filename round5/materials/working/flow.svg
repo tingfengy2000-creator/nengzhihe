@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="700" viewBox="0 0 1400 700">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#56776f" stroke-width="1.5"/></marker></defs>
+<rect width="1400" height="700" fill="white"/>
+<g font-family="Microsoft YaHei" fill="#173b35">
+<text x="40" y="50" font-size="28" font-weight="bold">从一份公开原始 CSV 到一张可复核核查卡</text>
+<g fill="#f0f6f3" stroke="#b6cec2" stroke-width="2">
+<rect x="40" y="88" width="400" height="130" rx="12"/><rect x="500" y="88" width="400" height="130" rx="12"/><rect x="960" y="88" width="400" height="130" rx="12"/>
+<rect x="40" y="300" width="400" height="150" rx="12"/><rect x="500" y="300" width="400" height="150" rx="12"/><rect x="960" y="300" width="400" height="150" rx="12"/>
+<rect x="40" y="542" width="1320" height="116" rx="12" fill="#f9f5e9" stroke="#ded2ac"/>
+</g>
+<g font-size="24" font-weight="bold"><text x="64" y="127">01 明确输入范围</text><text x="524" y="127">02 显式映射与转换</text><text x="984" y="127">03 共用质量对象</text><text x="64" y="340">06 核查卡与后续行动</text><text x="524" y="340">05 程序计算分支证据</text><text x="984" y="340">04 检查分支适用条件</text></g>
+<g font-size="21"><text x="64" y="164">LBNL 单风道机组仿真日片段</text><text x="64" y="194">真实数据 BDG2 仅作独立回放</text><text x="524" y="164">时间列、点位、单位、采样间隔</text><text x="524" y="194">完整 1 分钟桶 → 5 分钟均值</text><text x="984" y="164">单位 / 间隔 / 重复 / 缺失 / 冲突</text><text x="984" y="194">无效则拒判；不虚增时长</text>
+<text x="64" y="377">数据质量与设备判断分别展示</text><text x="64" y="410">证据、时间窗、补证条件可导出</text><text x="524" y="377">风路响应 / 盘管响应 / 运行工况</text><text x="524" y="410">参考覆盖、持续时长、证据强度</text><text x="984" y="377">缺点位、缺时段、冲突各自说明</text><text x="984" y="410">当前不可检验 ≠ 正常</text>
+<text x="64" y="584" font-weight="bold">可追溯路径与安全边界</text><text x="64" y="622">服务、证据、质量卡和导出共用同一质量对象；源文件哈希与映射可追溯；文件名、故障标签和实际阀位不作诊断输入。</text></g>
+<g fill="none" stroke="#56776f" stroke-width="3" marker-end="url(#a)"><path d="M440 153H489"/><path d="M900 153H949"/><path d="M1160 218V287"/><path d="M960 375H912"/><path d="M500 375H452"/></g>
+<text x="46" y="502" font-size="21">修改证据、预算或修正重复记录后，重新走质量与证据计算路径，生成新的运行编号和核查卡。</text>
+</g></svg>

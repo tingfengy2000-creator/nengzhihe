@@ -1,0 +1,581 @@
+{
+  "evaluation_status": "development_and_known_holdout_reinspection",
+  "ablation_check": {
+    "compared_keys": [
+      "any_fault_detected",
+      "damper_related_suspicion",
+      "judgment_state",
+      "apar_alarms"
+    ],
+    "mismatching_case_ids": [],
+    "pass": true
+  },
+  "methods": {
+    "apar_plus_response_evidence": {
+      "events": 11,
+      "fault_detection": {
+        "correct": 9,
+        "true_positive": 7,
+        "true_negative": 2,
+        "false_positive_normal": 2,
+        "missed_fault": 0,
+        "coverage": 0.8181818181818182,
+        "error_rate_all_events": 0.18181818181818182
+      },
+      "damper_localization": {
+        "supported": 1,
+        "correct_supported": 1,
+        "false_damper_attribution": 0,
+        "unresolved_true_damper": 1,
+        "precision_among_supported": 1.0,
+        "recall_among_damper_events": 0.5
+      },
+      "response_evidence": {
+        "support_minutes_sum": 45.0,
+        "wait_minutes_observed_count": 1,
+        "wait_minutes_min": 15.0,
+        "wait_minutes_max": 15.0
+      },
+      "by_subsystem": {
+        "cooling_coil": {
+          "events": 2,
+          "fault_detection": {
+            "correct": 2,
+            "true_positive": 2,
+            "true_negative": 0,
+            "false_positive_normal": 0,
+            "missed_fault": 0,
+            "coverage": 1.0,
+            "error_rate_all_events": 0.0
+          },
+          "damper_localization": {
+            "supported": 0,
+            "correct_supported": 0,
+            "false_damper_attribution": 0,
+            "unresolved_true_damper": 0,
+            "precision_among_supported": null,
+            "recall_among_damper_events": null
+          },
+          "response_evidence": {
+            "support_minutes_sum": 0.0,
+            "wait_minutes_observed_count": 0,
+            "wait_minutes_min": null,
+            "wait_minutes_max": null
+          }
+        },
+        "heating_coil": {
+          "events": 3,
+          "fault_detection": {
+            "correct": 3,
+            "true_positive": 3,
+            "true_negative": 0,
+            "false_positive_normal": 0,
+            "missed_fault": 0,
+            "coverage": 1.0,
+            "error_rate_all_events": 0.0
+          },
+          "damper_localization": {
+            "supported": 0,
+            "correct_supported": 0,
+            "false_damper_attribution": 0,
+            "unresolved_true_damper": 0,
+            "precision_among_supported": null,
+            "recall_among_damper_events": null
+          },
+          "response_evidence": {
+            "support_minutes_sum": 0.0,
+            "wait_minutes_observed_count": 0,
+            "wait_minutes_min": null,
+            "wait_minutes_max": null
+          }
+        },
+        "normal": {
+          "events": 4,
+          "fault_detection": {
+            "correct": 2,
+            "true_positive": 0,
+            "true_negative": 2,
+            "false_positive_normal": 2,
+            "missed_fault": 0,
+            "coverage": 0.5,
+            "error_rate_all_events": 0.5
+          },
+          "damper_localization": {
+            "supported": 0,
+            "correct_supported": 0,
+            "false_damper_attribution": 0,
+            "unresolved_true_damper": 0,
+            "precision_among_supported": null,
+            "recall_among_damper_events": null
+          },
+          "response_evidence": {
+            "support_minutes_sum": 15.0,
+            "wait_minutes_observed_count": 0,
+            "wait_minutes_min": null,
+            "wait_minutes_max": null
+          }
+        },
+        "outdoor_damper": {
+          "events": 2,
+          "fault_detection": {
+            "correct": 2,
+            "true_positive": 2,
+            "true_negative": 0,
+            "false_positive_normal": 0,
+            "missed_fault": 0,
+            "coverage": 1.0,
+            "error_rate_all_events": 0.0
+          },
+          "damper_localization": {
+            "supported": 1,
+            "correct_supported": 1,
+            "false_damper_attribution": 0,
+            "unresolved_true_damper": 1,
+            "precision_among_supported": 1.0,
+            "recall_among_damper_events": 0.5
+          },
+          "response_evidence": {
+            "support_minutes_sum": 30.0,
+            "wait_minutes_observed_count": 1,
+            "wait_minutes_min": 15.0,
+            "wait_minutes_max": 15.0
+          }
+        }
+      },
+      "by_evaluation_group": {
+        "development": {
+          "events": 5,
+          "fault_detection": {
+            "correct": 5,
+            "true_positive": 3,
+            "true_negative": 2,
+            "false_positive_normal": 0,
+            "missed_fault": 0,
+            "coverage": 0.6,
+            "error_rate_all_events": 0.0
+          },
+          "damper_localization": {
+            "supported": 1,
+            "correct_supported": 1,
+            "false_damper_attribution": 0,
+            "unresolved_true_damper": 0,
+            "precision_among_supported": 1.0,
+            "recall_among_damper_events": 1.0
+          },
+          "response_evidence": {
+            "support_minutes_sum": 45.0,
+            "wait_minutes_observed_count": 1,
+            "wait_minutes_min": 15.0,
+            "wait_minutes_max": 15.0
+          }
+        },
+        "known_holdout_reinspection": {
+          "events": 6,
+          "fault_detection": {
+            "correct": 4,
+            "true_positive": 4,
+            "true_negative": 0,
+            "false_positive_normal": 2,
+            "missed_fault": 0,
+            "coverage": 1.0,
+            "error_rate_all_events": 0.3333333333333333
+          },
+          "damper_localization": {
+            "supported": 0,
+            "correct_supported": 0,
+            "false_damper_attribution": 0,
+            "unresolved_true_damper": 1,
+            "precision_among_supported": null,
+            "recall_among_damper_events": 0.0
+          },
+          "response_evidence": {
+            "support_minutes_sum": 0.0,
+            "wait_minutes_observed_count": 0,
+            "wait_minutes_min": null,
+            "wait_minutes_max": null
+          }
+        }
+      }
+    },
+    "apar_professional_baseline": {
+      "events": 11,
+      "fault_detection": {
+        "correct": 9,
+        "true_positive": 7,
+        "true_negative": 2,
+        "false_positive_normal": 2,
+        "missed_fault": 0,
+        "coverage": 0.8181818181818182,
+        "error_rate_all_events": 0.18181818181818182
+      },
+      "damper_localization": {
+        "supported": 4,
+        "correct_supported": 1,
+        "false_damper_attribution": 3,
+        "unresolved_true_damper": 1,
+        "precision_among_supported": 0.25,
+        "recall_among_damper_events": 0.5
+      },
+      "response_evidence": {
+        "support_minutes_sum": 0,
+        "wait_minutes_observed_count": 0,
+        "wait_minutes_min": null,
+        "wait_minutes_max": null
+      },
+      "by_subsystem": {
+        "cooling_coil": {
+          "events": 2,
+          "fault_detection": {
+            "correct": 2,
+            "true_positive": 2,
+            "true_negative": 0,
+            "false_positive_normal": 0,
+            "missed_fault": 0,
+            "coverage": 1.0,
+            "error_rate_all_events": 0.0
+          },
+          "damper_localization": {
+            "supported": 0,
+            "correct_supported": 0,
+            "false_damper_attribution": 0,
+            "unresolved_true_damper": 0,
+            "precision_among_supported": null,
+            "recall_among_damper_events": null
+          },
+          "response_evidence": {
+            "support_minutes_sum": 0,
+            "wait_minutes_observed_count": 0,
+            "wait_minutes_min": null,
+            "wait_minutes_max": null
+          }
+        },
+        "heating_coil": {
+          "events": 3,
+          "fault_detection": {
+            "correct": 3,
+            "true_positive": 3,
+            "true_negative": 0,
+            "false_positive_normal": 0,
+            "missed_fault": 0,
+            "coverage": 1.0,
+            "error_rate_all_events": 0.0
+          },
+          "damper_localization": {
+            "supported": 3,
+            "correct_supported": 0,
+            "false_damper_attribution": 3,
+            "unresolved_true_damper": 0,
+            "precision_among_supported": 0.0,
+            "recall_among_damper_events": null
+          },
+          "response_evidence": {
+            "support_minutes_sum": 0,
+            "wait_minutes_observed_count": 0,
+            "wait_minutes_min": null,
+            "wait_minutes_max": null
+          }
+        },
+        "normal": {
+          "events": 4,
+          "fault_detection": {
+            "correct": 2,
+            "true_positive": 0,
+            "true_negative": 2,
+            "false_positive_normal": 2,
+            "missed_fault": 0,
+            "coverage": 0.5,
+            "error_rate_all_events": 0.5
+          },
+          "damper_localization": {
+            "supported": 0,
+            "correct_supported": 0,
+            "false_damper_attribution": 0,
+            "unresolved_true_damper": 0,
+            "precision_among_supported": null,
+            "recall_among_damper_events": null
+          },
+          "response_evidence": {
+            "support_minutes_sum": 0,
+            "wait_minutes_observed_count": 0,
+            "wait_minutes_min": null,
+            "wait_minutes_max": null
+          }
+        },
+        "outdoor_damper": {
+          "events": 2,
+          "fault_detection": {
+            "correct": 2,
+            "true_positive": 2,
+            "true_negative": 0,
+            "false_positive_normal": 0,
+            "missed_fault": 0,
+            "coverage": 1.0,
+            "error_rate_all_events": 0.0
+          },
+          "damper_localization": {
+            "supported": 1,
+            "correct_supported": 1,
+            "false_damper_attribution": 0,
+            "unresolved_true_damper": 1,
+            "precision_among_supported": 1.0,
+            "recall_among_damper_events": 0.5
+          },
+          "response_evidence": {
+            "support_minutes_sum": 0,
+            "wait_minutes_observed_count": 0,
+            "wait_minutes_min": null,
+            "wait_minutes_max": null
+          }
+        }
+      },
+      "by_evaluation_group": {
+        "development": {
+          "events": 5,
+          "fault_detection": {
+            "correct": 5,
+            "true_positive": 3,
+            "true_negative": 2,
+            "false_positive_normal": 0,
+            "missed_fault": 0,
+            "coverage": 0.6,
+            "error_rate_all_events": 0.0
+          },
+          "damper_localization": {
+            "supported": 2,
+            "correct_supported": 1,
+            "false_damper_attribution": 1,
+            "unresolved_true_damper": 0,
+            "precision_among_supported": 0.5,
+            "recall_among_damper_events": 1.0
+          },
+          "response_evidence": {
+            "support_minutes_sum": 0,
+            "wait_minutes_observed_count": 0,
+            "wait_minutes_min": null,
+            "wait_minutes_max": null
+          }
+        },
+        "known_holdout_reinspection": {
+          "events": 6,
+          "fault_detection": {
+            "correct": 4,
+            "true_positive": 4,
+            "true_negative": 0,
+            "false_positive_normal": 2,
+            "missed_fault": 0,
+            "coverage": 1.0,
+            "error_rate_all_events": 0.3333333333333333
+          },
+          "damper_localization": {
+            "supported": 2,
+            "correct_supported": 0,
+            "false_damper_attribution": 2,
+            "unresolved_true_damper": 1,
+            "precision_among_supported": 0.0,
+            "recall_among_damper_events": 0.0
+          },
+          "response_evidence": {
+            "support_minutes_sum": 0,
+            "wait_minutes_observed_count": 0,
+            "wait_minutes_min": null,
+            "wait_minutes_max": null
+          }
+        }
+      }
+    },
+    "without_response_evidence": {
+      "events": 11,
+      "fault_detection": {
+        "correct": 9,
+        "true_positive": 7,
+        "true_negative": 2,
+        "false_positive_normal": 2,
+        "missed_fault": 0,
+        "coverage": 0.8181818181818182,
+        "error_rate_all_events": 0.18181818181818182
+      },
+      "damper_localization": {
+        "supported": 4,
+        "correct_supported": 1,
+        "false_damper_attribution": 3,
+        "unresolved_true_damper": 1,
+        "precision_among_supported": 0.25,
+        "recall_among_damper_events": 0.5
+      },
+      "response_evidence": {
+        "support_minutes_sum": 0,
+        "wait_minutes_observed_count": 0,
+        "wait_minutes_min": null,
+        "wait_minutes_max": null
+      },
+      "by_subsystem": {
+        "cooling_coil": {
+          "events": 2,
+          "fault_detection": {
+            "correct": 2,
+            "true_positive": 2,
+            "true_negative": 0,
+            "false_positive_normal": 0,
+            "missed_fault": 0,
+            "coverage": 1.0,
+            "error_rate_all_events": 0.0
+          },
+          "damper_localization": {
+            "supported": 0,
+            "correct_supported": 0,
+            "false_damper_attribution": 0,
+            "unresolved_true_damper": 0,
+            "precision_among_supported": null,
+            "recall_among_damper_events": null
+          },
+          "response_evidence": {
+            "support_minutes_sum": 0,
+            "wait_minutes_observed_count": 0,
+            "wait_minutes_min": null,
+            "wait_minutes_max": null
+          }
+        },
+        "heating_coil": {
+          "events": 3,
+          "fault_detection": {
+            "correct": 3,
+            "true_positive": 3,
+            "true_negative": 0,
+            "false_positive_normal": 0,
+            "missed_fault": 0,
+            "coverage": 1.0,
+            "error_rate_all_events": 0.0
+          },
+          "damper_localization": {
+            "supported": 3,
+            "correct_supported": 0,
+            "false_damper_attribution": 3,
+            "unresolved_true_damper": 0,
+            "precision_among_supported": 0.0,
+            "recall_among_damper_events": null
+          },
+          "response_evidence": {
+            "support_minutes_sum": 0,
+            "wait_minutes_observed_count": 0,
+            "wait_minutes_min": null,
+            "wait_minutes_max": null
+          }
+        },
+        "normal": {
+          "events": 4,
+          "fault_detection": {
+            "correct": 2,
+            "true_positive": 0,
+            "true_negative": 2,
+            "false_positive_normal": 2,
+            "missed_fault": 0,
+            "coverage": 0.5,
+            "error_rate_all_events": 0.5
+          },
+          "damper_localization": {
+            "supported": 0,
+            "correct_supported": 0,
+            "false_damper_attribution": 0,
+            "unresolved_true_damper": 0,
+            "precision_among_supported": null,
+            "recall_among_damper_events": null
+          },
+          "response_evidence": {
+            "support_minutes_sum": 0,
+            "wait_minutes_observed_count": 0,
+            "wait_minutes_min": null,
+            "wait_minutes_max": null
+          }
+        },
+        "outdoor_damper": {
+          "events": 2,
+          "fault_detection": {
+            "correct": 2,
+            "true_positive": 2,
+            "true_negative": 0,
+            "false_positive_normal": 0,
+            "missed_fault": 0,
+            "coverage": 1.0,
+            "error_rate_all_events": 0.0
+          },
+          "damper_localization": {
+            "supported": 1,
+            "correct_supported": 1,
+            "false_damper_attribution": 0,
+            "unresolved_true_damper": 1,
+            "precision_among_supported": 1.0,
+            "recall_among_damper_events": 0.5
+          },
+          "response_evidence": {
+            "support_minutes_sum": 0,
+            "wait_minutes_observed_count": 0,
+            "wait_minutes_min": null,
+            "wait_minutes_max": null
+          }
+        }
+      },
+      "by_evaluation_group": {
+        "development": {
+          "events": 5,
+          "fault_detection": {
+            "correct": 5,
+            "true_positive": 3,
+            "true_negative": 2,
+            "false_positive_normal": 0,
+            "missed_fault": 0,
+            "coverage": 0.6,
+            "error_rate_all_events": 0.0
+          },
+          "damper_localization": {
+            "supported": 2,
+            "correct_supported": 1,
+            "false_damper_attribution": 1,
+            "unresolved_true_damper": 0,
+            "precision_among_supported": 0.5,
+            "recall_among_damper_events": 1.0
+          },
+          "response_evidence": {
+            "support_minutes_sum": 0,
+            "wait_minutes_observed_count": 0,
+            "wait_minutes_min": null,
+            "wait_minutes_max": null
+          }
+        },
+        "known_holdout_reinspection": {
+          "events": 6,
+          "fault_detection": {
+            "correct": 4,
+            "true_positive": 4,
+            "true_negative": 0,
+            "false_positive_normal": 2,
+            "missed_fault": 0,
+            "coverage": 1.0,
+            "error_rate_all_events": 0.3333333333333333
+          },
+          "damper_localization": {
+            "supported": 2,
+            "correct_supported": 0,
+            "false_damper_attribution": 2,
+            "unresolved_true_damper": 1,
+            "precision_among_supported": 0.0,
+            "recall_among_damper_events": 0.0
+          },
+          "response_evidence": {
+            "support_minutes_sum": 0,
+            "wait_minutes_observed_count": 0,
+            "wait_minutes_min": null,
+            "wait_minutes_max": null
+          }
+        }
+      }
+    }
+  },
+  "comparison": {
+    "fault_detection_correct_change": 0,
+    "fault_detection_coverage_change": 0.0,
+    "false_damper_attribution_change": -3,
+    "damper_precision_change": 0.75,
+    "corrected_false_attributions": 3,
+    "claim_boundary": "same 11 controlled-test-cell experiment days, former holdout reinspection; no untouched external validation"
+  }
+}

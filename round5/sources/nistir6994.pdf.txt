@@ -1,0 +1,1638 @@
+
+--- PDF PAGE 1 ---
+NISTIR 6994 
+ 
+ 
+Results from Field Testing of Air Handling 
+Unit and Variable Air Volume Box Fault 
+Detection Tools 
+ 
+ 
+ 
+ 
+ 
+ 
+Jeffrey Schein 
+Steven T. Bushby 
+Natascha S. Castro 
+ 
+ 
+U.S. DEPARTMENT OF COMMERCE 
+National Institute of Standards and Technology 
+Building Environment Division 
+Building and Fire Research Laboratory 
+Gaithersburg, MD 20899-8631   
+ 
+John M. House 
+Iowa Energy Center 
+Ames, IA 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+
+--- PDF PAGE 2 ---
+NISTIR 6994 
+ 
+Results from Field Testing of Air Handling 
+Unit and Variable Air Volume Box Fault 
+Detection Tools 
+ 
+ 
+Jeffrey Schein 
+Steven T. Bushby 
+Natascha S. Castro 
+ 
+ 
+U.S. DEPARTMENT OF COMMERCE 
+National Institute of Standards and Technology 
+Building Environment Division 
+Building and Fire Research Laboratory 
+Gaithersburg, MD 20899-8631 
+ 
+John M. House 
+Iowa Energy Center 
+Ames, IA 
+ 
+Prepared for: 
+Architectural Energy Corporation 
+Boulder, Colorado 
+ 
+ 
+ 
+April 2003 
+                            
+ 
+ 
+ 
+ 
+ 
+U.S. Department of Commerce 
+Donald L. Evans, Secretary 
+Technology Administration  
+Phillip J. Bond, Under Secretary for Technology 
+National Institute of Standards and Technology 
+Arden L. Bement, Jr., Director 
+  
+
+--- PDF PAGE 3 ---
+  
+Abstract 
+ 
+Building heating, ventilation, and air conditioning (HVAC) equipment routin ely fails to satisfy 
+performance expectations envi sioned at design. Such failures often go unnoticed for extended 
+periods of time. Additionally, higher expectations are being placed on a co mbination of different 
+and often conflicting performance measures, such as energy efficiency, indoor air quality, 
+comfort, reliability, limiting peak demand on uti lities, etc. To meet these expectations, the 
+processes, systems, and equipment used in both commercial and residential buildings are 
+becoming increasingly sophisticated. This develo pment both necessitates the use of automated 
+diagnostics to ensure fault-free operation and enables diagnostic capabilities for the various 
+building systems by providing a di stributed platform that is powerful and flexible enough to 
+perform fault detection and diagnostics (FDD). 
+ 
+The purpose of the research effort described in this report is to develop, test, and demonstrate 
+FDD methods that can detect common mechanical faults and contro l errors in air-handling units 
+(AHUs) and variable-air-volume (VAV) boxes. The tools are intended to be sufficiently simple 
+that they can be embedded in commercial building automation and control systems and rely upon 
+only sensor data and control signals that are commonly available in these systems. 
+ 
+AHU Performance Assessment Rules (APAR) is a dia gnostic tool that uses a set of expert rules 
+derived from mass and energy balan ces to detect faults in air-handling units. Control signals are 
+used to determine the mode of operation for the AHU. A subset of the expert rules corresponding 
+to that mode of operation is then evaluated to determine if there is a mechanical fault or a control 
+problem. VAV box Performance Assessment Control Charts (VPACC) is a diagnostic tool that 
+uses statistical quality control measures to detect faults or control problems in VAV boxes. 
+ 
+This report describes a rese arch study of the a pplication of APAR and VPACC to HVAC 
+systems in real buildings.  AHU and VAV box data we re collected from several field sites.  The 
+study examined the effectiveness of the tools in detecting commonly fo und mechanical faults 
+and control problems, the reliability of the t ools across different building uses and climate 
+regions, and the robustness of the tools in ha ndling data from a variety of HVAC system 
+configurations.  APAR and VPACC were both found to be successful at finding a wide variety of 
+faults. Both tools appear to be suitable for embedding in commercial control products. 
+ 
+Key words: BACnet, building automation and contro l, direct digital control, energy management 
+systems, fault detection and diagnostics, cybernetic building systems 
+ 
+Acknowledgments 
+This work was supported in part by the Californ ia Energy Commission P ublic Interest Energy 
+Research (PIER) Program. In addition, this proj ect, like any field study, would not have been 
+possible without those individuals who assisted with the data co llection aspect of this work. 
+Thanks are due to Mark Levi and Stephen May of the U.S. General Services Administration 
+Region IX, Louis Coughenour of Enovity, Jim Butler,  Olav P. Hegland, and Robert Veelenturf 
+of Cimetrics, Xiaohui Zhou of the Iowa Energy Center, Mike Macklin of  the Des Moines Area 
+Community College, and Joel Bender, H. Michael Newman, and Elaine Stanton-Hicks of Cornell 
+University. 
+
+--- PDF PAGE 4 ---
+ 
+ 
+Table of Contents 
+Results from Field Testing of Air Handling Unit and Variable Air Volume Box Fault Detection 
+Tools ............................................................................................................................................... 1 
+1 Introduction............................................................................................................................. 5 
+2 Methodology........................................................................................................................... 6 
+2.1 FDD for Air Handling Units........................................................................................... 6 
+2.1.1 System Description ................................................................................................. 6 
+2.1.2 AHU Performance Assessment Rules (APAR) ...................................................... 7 
+2.1.3 Instrumentation Accuracy Requirements.............................................................. 12 
+2.2 FDD for VAV Boxes .................................................................................................... 13 
+2.2.1 VAV box Performance Assessment Control Charts - VPACC ............................ 13 
+2.2.2 Control Charts....................................................................................................... 13 
+2.2.3 System Description ............................................................................................... 15 
+2.2.4 CUSUM Applied to VAV Box Diagnostics ......................................................... 16 
+2.2.5 Point requirements ................................................................................................ 18 
+2.2.6 Parameters............................................................................................................. 18 
+2.2.7 Special Cases ........................................................................................................ 18 
+3 Data Sources ......................................................................................................................... 20 
+3.1 SITE-1........................................................................................................................... 20 
+3.2 SITE-2........................................................................................................................... 20 
+3.3 SITE-3........................................................................................................................... 20 
+3.4 SITE-4........................................................................................................................... 20 
+4 Results................................................................................................................................... 21 
+4.1 SITE-1........................................................................................................................... 21 
+4.1.1 AHU Supply Air Temperature Fault..................................................................... 21 
+4.1.2 AHU Mode Switch Fault ...................................................................................... 22 
+4.1.3 AHU Simultaneous Heating and Cooling Fault.................................................... 22 
+4.1.4 AHU Temperature Sensor / Damper Fault ........................................................... 23 
+4.1.5   VAV Box Zone Temperature Fault .................................................................... 24 
+4.2 SITE-2........................................................................................................................... 25 
+4.2.1 AHU Saturated Cooling Coil................................................................................ 25 
+4.2.2 AHU Mode Switch Fault ...................................................................................... 26 
+4.3 SITE-3........................................................................................................................... 27 
+4.4 SITE-4........................................................................................................................... 30 
+4.4.1 AHU Simultaneous Heating and Cooling Fault.................................................... 30 
+4.4.2 VAV Box Airflow Fault ....................................................................................... 31 
+5 Summary and Future Work................................................................................................... 32 
+6 References............................................................................................................................. 33 
+ 
+
+--- PDF PAGE 5 ---
+1 Introduction 
+Building HVAC equipment routinely fails to satisfy performance expectations envisioned 
+at design. Such failures often go unnoticed for extended periods of time. Additionally, 
+higher expectations are being placed on a co mbination of different and often conflicting 
+performance measures, such as energy efficien cy, indoor air quality, comfort, reliability, 
+limiting peak demand on utilities, etc. To meet these expectations, the processes, systems, 
+and equipment used in both commercial a nd residential buildings are becoming 
+increasingly sophisticated. This developm ent both necessitates the use of automated 
+diagnostics to ensure fault-free operation an d enables diagnostic capabilities for the 
+various building systems by providing a distributed platform that is powerful and flexible 
+enough to perform fault detection and diagnostics (FDD). 
+ 
+The purpose of the research effort described in this report is to develop, test, and 
+demonstrate FDD methods that can detect co mmon mechanical faults and control errors 
+in air-handling units (AHUs) and variable -air-volume (VAV) boxes. The tools are 
+intended to be sufficiently simple that they  can be embedded in commercial building 
+control systems and rely upon only sensor data  and control signals that are commonly 
+available in commercial building automation and control systems. 
+ 
+AHU Performance Assessment Rules (APAR) is a diagnostic tool that uses a set of expert 
+rules derived from mass and energy balances  to detect common fa ults in air-handling 
+units. Control signals are used to determine the mode of operation for the AHU. A subset 
+of the expert rules corresponding to that mode of operation is then evaluated to determine 
+if there is a mechanical fault or a contro l problem. VAV box Performance Assessment 
+Control Charts (VPACC) is a diagnostic tool that uses statistical quality control measures 
+to detect faults or control problems in VAV boxes. VPACC can be applied to most VAV 
+box control strategies. Fault thresholds are determined by statistical analysis of a database 
+of “normal operation” data. The FDD tools for AHUs and VAV boxes are being 
+developed with distinct approaches because of the nature of the systems.  VAV boxes are 
+simple devices with a limited number of operation modes and possible faults. Because the 
+building industry is sensit ive to first cost, the VAV boxes typically have little 
+instrumentation and controllers with lim ited capability. However, VAV boxes are very 
+numerous in a typical HVAC system, resulting in a large amount of data to be monitored 
+for faults. AHUs are more complex and thus su sceptible to more kinds of faults. They 
+also tend to have more instrumentation and more capable controllers. The FDD tools for 
+both systems are designed to be robust so that they can adapt to the variety of 
+applications typical of their use. 
+ 
+A previous study [1], describes the theoreti cal basis of APAR and VPACC and evaluates 
+the tools’ performance using data generate d by simulation, emulation, and laboratory 
+testing.  The study examined the breadth of fau lts that can be detected and the conditions 
+under which they can be detected.  This report describes the results of a research study to 
+extend the previous work by evaluating the application of APAR and VPACC to HVAC 
+systems in real buildings.  The researc h, involving the collection of AHU and VAV box 
+data from several field sites, examined th e effectiveness of these tools in detecting 
+ 5
+
+--- PDF PAGE 6 ---
+commonly found mechanical faults and contro l problems, the reliabi lity of the tools 
+across several seasons, and the robustness of th e tools in handling data from a variety of 
+system types and configurations.  The sites include an office building, a restaurant, as 
+well as community college and university campu ses, featuring constant- and variable-air-
+volume systems. 
+2 Methodology 
+2.1 FDD for Air Handling Units 
+The fault detection tool descri bed in this section was develo ped for application to single 
+duct variable-volume or constant-volume air handlers with hydronic heating and cooling 
+coils and airside economizers.  The rules th at are used for FDD focus on temperature 
+control in an AHU.  Hence, the system desc ription will be restricted to components and 
+control strategies directly related to temperature control. Figure 2.1 is a schematic 
+diagram of a typical single duct air handling unit (AHU). 
+ 
+C
+C
+Return
+Fan
+Recirculation
+Air Damper
+Normally Open
+Exhaust Air Damper
+Normally Closed
+Cooling
+Coil
+Heating
+Coil
+Filter
+H
+C
+Supply
+Fan
+T & H
+T & H
+Return Air
+Damper
+Motor
+Air Handling Controller
+Outputs
+Inputs
+Outdoor Air Damper
+Normally Closed
+From
+Zones
+To
+Zones
+T
+Outdoor Air Temperature
+& Humidity Sensors
+T
+Mixed
+Air
+Supply
+Air
+ 
+ 
+ 
+Figure 2.1: Schematic diagram of a single duct air-handling unit 
+ 
+2.1.1 System Description 
+The AHU controller typically controls the suppl y air temperature to maintain a setpoint 
+temperature at a location in the supply duc t downstream of the supply fan. Outdoor air 
+enters the AHU and is mixed with air return ed from the building. The mixed air passes 
+over the heating and cooling coils, where if  necessary, it is conditioned prior to being 
+supplied to the building. The typical operating sequence for AHUs consists of four 
+primary modes of operation during occupied  periods for maintaining the supply air 
+ 6
+
+--- PDF PAGE 7 ---
+temperature and the ventilation at preset le vels. The relationship of the four operating 
+modes to the control of the heating coil valv e, the cooling coil valve and the mixing box 
+dampers is shown in Figure 2.2. Sequencing lo gic determines the mode of operation as 
+dictated by various thermal relationships including the internal and external loads on the 
+zones served by the AHU. 
+ 
+In the heating mode (Mode 1 in Figure 2.2), the heating coil valve is controlled to 
+maintain the supply air temperature at the he ating set point and the cooling coil valve is 
+closed. The mixed air dampers are positioned to allow the minimum outdoor air 
+necessary to satisfy ventilation requirements. 
+ 
+ 
+Mode 2 Mode 3 Mode 4Mode 1
+Control Signal (%)
+100
+0
+Heating
+Coil Valve
+Cooling
+Coil ValveMixing Box
+Dampers
+Mode 2 Mode 3 Mode 4Mode 1
+Control Signal (%)
+100
+0
+Heating
+Coil Valve
+Cooling
+Coil ValveMixing Box
+Dampers
+ 
+Figure 2.2: Typical operating modes of an air-handling unit 
+As cooling loads increase, the AHU transitions from heating to cooling with outside air 
+(Mode 2). In this mode, the heating and cooling coil valves are closed and the mixing box 
+dampers are modulated to maintain the supply air temperature at cooling set point. As the 
+loads continue to increase, the mixing damper s eventually saturate with the outdoor air 
+damper fully open and the AHU changes over to mechanical cooling.  When the AHU is 
+operating in one of the mechanical cooling modes (Modes 3 and 4), the cooling coil valve 
+modulates to maintain the supply air temperat ure at cooling set point, the heating coil 
+valve is closed, and the outdoor air damper is either fully open or at its minimum 
+position. There are several di fferent types of economizer  controls, generally the 
+economizer control logic uses a comparison of  the outdoor and return air temperatures or 
+enthalpies to determine the proper posi tion of the outdoor air damper such that 
+mechanical cooling requirements are minimi zed. Hence, the third primary mode (Mode 
+3) of operation is mechanical cooling with  100 % outdoor air and the fourth primary 
+mode (Mode 4) of operation is mechanical cooling with minimum outdoor air. 
+ 
+2.1.2
+ AHU Performance Assessment Rules (APAR) 
+The basis for the fault detection methodology is a set of expert rules used to assess the 
+performance of the AHU. The tool developed from these rules is referred to as APAR 
+(AHU Performance Assessment Rules). APAR uses control signals and occupancy 
+information to identify the mode of operation of the AHU, thereby identifying a subset of 
+the rules that specify temperature relationships that are applicable for that mode. The two 
+main mode classifications are occupied a nd unoccupied. For occupi ed periods, the mode 
+is further categorized as described in th e previous paragraph. For convenience, the 
+ 7
+
+--- PDF PAGE 8 ---
+operating modes are summarized below: 
+ 
+• Mode 1: heating 
+• Mode 2: cooling with outdoor air 
+• Mode 3: mechanical cooling with 100 % outdoor air 
+• Mode 4: mechanical cooling with minimum outdoor air 
+• Mode 5: unknown 
+ 
+Because the direct digital control (DDC) out put to the actuators of the heating and 
+cooling coil valves and the mixing box dampers are known, the mode of operation can be 
+ascertained. Although not depicted  in Figure 2.2, a fifth mode  of operation referred to 
+“unknown” operation has been defined and listed above. The unknown mode applies to 
+the case in which the AHU is running in an occupied mode, but none of the control 
+output relationships defined for Modes 1- 4 are satisfied. The unknown mode could be 
+associated with mode transitions and/or with faulty operation such as simultaneous 
+heating and cooling. 
+  
+Once the mode of operation has been establis hed, rules based on conservation of mass 
+and energy can be used along with the sensor information that is typically available for 
+controlling the AHUs. For example, normal ope ration in the mechanical cooling mode 
+with 100 % outdoor air (Mode 3)  dictates that the outdoor and mixed air temperatures 
+must be approximately equal. Defining 
+Toa and Tma as the outdoor air and mixed air 
+temperatures, respectively, the rule (defined as Rule 10) is written as 
+ 
+ Rule 10:  |Toa - Tma| > εt  
+ 
+where εt is a threshold that depends on th e uncertainty (or accuracy) of the 
+measurements. The rules are written such that a fault is indicated if a rule is true. In the 
+example above, the rule states that if the outdoor and mixed air temperatures are not the 
+same (i.e., if true) a fault has occurred. 
+ 
+As a detailed description of the 28 AP AR rules and the reasoning behind them is 
+available elsewhere [2], the rules are simply listed in Table 2.1 without detailed 
+explanation. Table 2.1 groups the rules according to mode of operation. As indicated in 
+the column heading for the rule expression, a true expression indicates a fault. Table 2.2 
+presents the rules as related groups and indicates the sensors and control signals used to 
+evaluate each rule. The first group of rules treat s the relationship of temperatures in the 
+coil subsystem of the AHU. For these four rules, only the relational operator in the rules 
+change from one mode to another. A typica l rule from this subgroup requires the supply 
+air temperature to be lower than the su m of the mixed air temperature and the 
+temperature rise across the supply fan in the mechanical cooling m odes. There are also 
+groups of rules treating the mixing box subsystem, the zone subsystem, economizer 
+operation, comfort requirements, and controll er logic/tuning. Hence, although there are 
+28 rules, in reality only a sm all number of temperature and control signal relationships 
+are used to define the rules. 
+ 8
+
+--- PDF PAGE 9 ---
+ 
+Table 2.1: APAR Rule Set 
+Mode Rule # Rule Expression (true implies existence of a fault) 
+1 Tsa < Tma + ΔTsf - εt 
+2 For  |Tra - Toa| ≥ ΔTmin:  |Qoa/Qsa - (Qoa/Qsa)min | > εf  
+3 |uhc – 1| ≤ εhc   and   Tsa,s – Tsa ≥ εt 
+Heating 
+(Mode 1) 
+4 |uhc – 1| ≤ εhc 
+5 Toa > Tsa,s - ΔTsf + εt 
+6 Tsa > Tra - ΔTrf + εt 
+Cooling with 
+Outdoor Air 
+(Mode 2) 7 
+|Tsa - ΔTsf - Tma| > εt 
+8 Toa < Tsa,s - ΔTsf  - εt 
+9 Toa > Tco + εt 
+10 |Toa - Tma| > εt 
+11 Tsa >  Tma + ΔTsf + εt 
+12 Tsa > Tra - ΔTrf + εt 
+13 |ucc – 1| ≤ εcc   and   Tsa – Tsa,s ≥ εt 
+Mechanical 
+Cooling with 
+100% Outdoor 
+Air 
+(Mode 3) 
+14 
+|ucc – 1| ≤ εcc 
+15 Toa < Tco - εt 
+16 Tsa >  Tma + ΔTsf + εt  
+17 Tsa > Tra - ΔTrf + εt 
+18 For  |Tra - Toa| ≥ ΔTmin:  |Qoa/Qsa - (Qoa/Qsa)min | > εf 
+19 |ucc – 1| ≤ εcc   and   Tsa – Tsa,s ≥ εt 
+Mechanical 
+Cooling with 
+Minimum 
+Outdoor Air 
+(Mode 4) 
+20 
+|ucc – 1| ≤ εcc 
+21 ucc > εcc   and   uhc > εhc   and   εd  <  ud < 1 - εd 
+22 uhc > εhc   and   ucc > εcc 
+23 uhc > εhc   and   ud > εd 
+Unknown 
+Occupied 
+Modes 
+(Mode 5) 24 
+εd  <  ud < 1 - εd   and   ucc > εcc 
+25 | Tsa – Tsa,s |  > εt 
+26 Tma < min(Tra , Toa) - εt 
+27 Tma > max(Tra , Toa) + εt 
+All Occupied 
+Modes 
+(Mode 1, 2, 3, 4, 
+or 5) 28 Number of mode transitions per hour  >  
+MTmax 
+ 
+ 
+ 9
+
+--- PDF PAGE 10 ---
+ 10
+Where 
+     MTmax = maximum number of mode changes per hour 
+ Tsa = supply air temperature 
+ Tma = mixed air temperature 
+ Tra = return air temperature 
+ Toa = outdoor air temperature 
+ T co = changeover air temperature fo r switching between Modes 3 and 4 
+ Tsa,s = supply air temperature set point 
+ Δ Tsf  = temperature rise across the supply fan 
+ ΔTrf  = temperature rise across the return fan 
+ ΔTmin = threshold on the minimum temperature difference between the 
+return and outdoor air 
+ Qoa/Qsa = outdoor air fraction = (Tma - Tra)/(Toa - Tra) 
+ (Qoa/Qsa)min = threshold on the minimum outdoor air fraction 
+ uhc = normalized heating coil valve control signal [0,1] where uhc = 0 
+indicates the valve is closed and uhc = 1 indicates it is 100 % open 
+ ucc = normalized cooling coil valve control signal [0,1] where ucc = 0 
+indicates the valve is closed and ucc = 1 indicates it is 100 % open 
+ ud = normalized mixing box damper control signal [0,1] where ud = 0 
+indicates the outdoor air damper is closed and ud = 1 indicates it is 
+100 % open 
+ εt = threshold for errors in temperature measurements 
+ ε f = threshold parameter accounting for errors related to airflows 
+(function of uncertainties in temperature measurements) 
+ ε hc = threshold parameter for the heating coil valve control signal 
+ εcc = threshold parameter for the cooling coil valve control signal 
+     εd = threshold parameter for the mixing box damper control signal 
+ 
+2.1.2.1 Operational and Design Data Requirements 
+APAR uses the following occupancy informatio n, setpoint values, sensor measurements, 
+and control signals: 
+ 
+• Occupancy status;    
+• Supply air temperature set point; 
+• Supply air temperature; 
+• Return air temperature; 
+• Mixed air temperature; 
+• Outdoor air temperature; 
+• Cooling coil valve control signal; 
+• Heating coil valve control signal; 
+• Mixing box damper control 
+signal; 
+• Return air relative humidity 
+(for enthalpy-based economizers 
+only) 
+• Outdoor air relative humidity  
+(for enthalpy-based economizers 
+only).
+
+--- PDF PAGE 11 ---
+Table 2.2: Summary of Rule Relationships 
+Tsa Tra Tma Toa Tsa,s ΔTsf ΔTrf Tco ucc uhc ud
+11  
+72  
+11 3  
+16 4  
+21 
+18 4 
+26 1, 2, 3, 4 
+27 1, 2, 3, 4 
+25 1, 2, 3, 4 
+31  
+13 3 
+19 4 
+41 
+14 3 
+20 4 
+52 
+83 
+62  
+12 3  
+17 4  
+93 
+15 4 
+10 3 
+21 - 
+22 - 
+23 - 
+24 - 
+28 - 
+Controller Logic/Tuning: Rules are related and 
+identify periods of operation associated with 
+controller problems, such as simultaneous 
+heating and cooling, and excessive mode 
+changes. 
+Coil Subsystem: The relational sign (<, >, etc.) 
+changes based on the mode of operation.
+Comfort Requirements: The first four rules 
+indicate comfort is sacrificed (with Rules 3, 13, 
+and 19 indicating the system is out of control), 
+whereas the latter three rules indicate comfort 
+could soon be sacrificed (system is out of 
+control). 
+The relational sign (<, >, etc.) changes based 
+on the mode of operation.
+Zone Subsystem: Rules are identical.
+Economizer: The relational sign (<, >, etc.) 
+changes based on the mode of operation.
+Mixing Box Subsystem: Rules are related 
+through calculation of outdoor air fraction. If 
+Rule 26 or 27 is satisfied, the outdoor air 
+fraction will be negative or greater than unity.
+Sensors and Control Signals Relationship Between Grouped RulesRule Mode *
+ 
+* The dash symbol indicates either an unknown mode or multiple modes of operation. 
+ 
+With the possible exception of the mixed air temper ature, this information is generally available 
+for most AHUs controlled with a DDC system. If one or more sensors are not available, certain 
+rules will no longer be applicable. For instance, in the absence of a mixed air temperature sensor, 
+nine rules listed in Table 2.1 (Rules 1, 2, 7, 10, 11, 16, 18, 26, and 27) will be eliminated from 
+consideration in APAR. Conversely, the presence of additional sensors would expand the rule set 
+and provide an opportunity to either detect more faults, or to detect faults during modes of 
+operation in which they would normally be hidden.  For instance, if a temperature sensor was 
+installed between the heating and cooling coils , leakage through the heating valve could be 
+detected during the mechanical cooling modes, whereas normally it would be masked in these 
+modes.  
+ 
+In addition to the operational data listed above, ce rtain design data are needed to implement the 
+rules. The required design data are: 
+ 
+• Minimum and maximum values of control signal s for the heating coil valve, cooling coil 
+valve and mixing box dampers for normalizing the control signals; 
+• Percentage outdoor air necessary to satisfy ventilation requirements; 
+• Changeover temperature from mechanical cool ing with 100 % outdoor air to mechanical 
+cooling with minimum outdoor air (or equivalent condition for enthalpy-based economizer); 
+• Description of sequencing/economizer cycle st rategy (used to verify that the rules are 
+suitable to a particular AHU installation). 
+ 11
+
+--- PDF PAGE 12 ---
+ 
+2.1.2.2 Detecting and Diagnosing Faults 
+APAR does not search for the existence of a specif ic set of faults. Rather, any fault that causes a 
+rule to be satisfied would be detected and addi tional effort would be necessary to isolate the 
+source of the problem. Emulati on, simulation, and laboratory experimentation from previous 
+work [1] as well as the current study demonstrat e that the rule set can identify the following 
+faults: 
+ 
+• Stuck or leaking mixing box dampers, heating coil valves, and cooling coil valves; 
+• Temperature sensor faults; 
+• Design faults such as undersized coils; 
+• Controller programming errors related to tuning, setpoints, and sequencing logic; 
+• Inappropriate operator intervention. 
+ 
+The operating point, severity of a fault, and threshold selectio n for the rules will obviously 
+influence when a particular rule is satisfied. Threshold selection is discussed next. 
+ 
+2.1.2.3
+ Threshold Selection 
+In addition to the sensor, contro l signals, and setpoint informati on, there are other parameters 
+that must be specified for APAR. For instance , estimates of the temp erature rise across the 
+supply fan (and return fan, if one exists) must be provided, a reasonable default is 1.1 ºC (2.0 ºF). 
+A model-based value correlated to the airflow rate or the control signal to the fan could be used 
+as the basis for this estimate; however, some am ount of training data woul d likely be necessary 
+to establish the correlation. Thresholds used in evaluation of rules such as εt in Rule 10 must also 
+be specified. Another approach  might be to calculate the threshold values based on the 
+uncertainty of each sensor or actuator value.  As  an example, the threshold in Rule 10 would be 
+determined from the expression 
+ 
+ εt = εToa + εTma  
+ 
+where εToa and εTma are the uncertainties associated with  the measurement of the outdoor and 
+mixed air temperatures. If a threshold is too great, the associated fault(s) must be relatively 
+severe to be detected.  If, on the other hand, a threshold is too small, normal variation in 
+operating conditions may result in false alarms.  Th ese threshold values are currently determined 
+heuristically for each site.   
+ 
+2.1.3 Instrumentation Accuracy Requirements  
+APAR uses existing sensor points in the cont rol system to perform the fault detection 
+calculations.  The typical industrial grade sensors that are alrea dy installed for control purposes 
+have sufficient accuracy.  Laboratory grade instru ments are not required.  Higher quality sensors 
+that have been installed and calibrated properly will allow the use of tighter thresholds (less 
+severe faults can be detected) than lower quali ty sensors, or those that have been poorly 
+calibrated or installed. 
+ 
+ 12
+
+--- PDF PAGE 13 ---
+2.2 FDD for VAV Boxes 
+ 
+2.2.1 VAV box Performance Assessment Control Charts - VPACC 
+The primary purpose of heating, ventilating,  and air-conditioning (HVAC) equipment in 
+commercial buildings is to provide a comforta ble and healthy environment for occupants. 
+Variable-air-volume (VAV) air handling systems are common for conditioning air and delivering 
+the air to occupied zones. VAV boxes are an integr al part of such systems and are the final piece 
+of equipment that air passes through prior to reaching the occupants. As such, it is important to 
+ensure that these devices operate correctly. 
+ 
+The challenges presented in detecting and diag nosing faults in VAV boxes are similar to those 
+encountered with other pieces of HVAC equipmen t. Generally there are very few sensors, 
+making it difficult to ascertain what is happeni ng in the device. Limitations associated with 
+controller memory and communica tion capabilities further complicate the task. The number of 
+different types of VAV boxes and lack of standardized control sequences add a final level of 
+complexity to the challenge. This set of constraints is counterbalanced by the fact that VAV 
+boxes are much more numerous than other pieces of HVAC equipment. Fo r instance, buildings 
+may have ten to fifteen times more VAV boxes than air-handling units. Hence, maintenance 
+staffs would clearly benefit from a tool that assisted them in monitoring VAV box operation.  
+ 
+The needs and constraints described above have led to the development of VAV Box 
+Performance Assessment Control Charts (VPACC), a fault detect ion tool that uses a small 
+number of control charts to assess the pe rformance of VAV boxes. The underlying approach, 
+while developed for a specific type of VAV box a nd control sequence, is general in nature and 
+can be adapted to other types of VAV boxes. This  section describes the basic concept of control 
+charts and their use for determining when contro l processes have gone “out of control”.  The 
+specific control charts developed and implemented in VPACC are then presented for a single 
+duct pressure-independent throttling VAV box with reheat. 
+ 
+2.2.2
+ Control Charts 
+Control charts are common tools for monitoring control processes wherein a measured quantity 
+is compared to upper and lower li mits that define allowable (or fault free) operation. If the 
+measured quantity falls outside these limits, the pro cess is said to be “out of control.” The limits 
+are typically defined using statistical parameters and, therefore, control charts are often referred 
+to as statistical quality control charts. 
+ 
+There are many different types of  control charts. VPACC implements an algorithm known as a 
+CUSUM (cumulative sum) chart. The basic concep t behind CUSUM charts is to accumulate the 
+error between a process output and the expected  value of the output. Large values of the 
+accumulated error are indicative of an out of control process. With the process output at 
+sampling time i denoted x
+i, the estimate of the expected value denoted x , and the estimate of the 
+process standard deviation denoted by 
+ˆ
+σˆ , the normalized process output is given by: 
+ 
+ 13
+
+--- PDF PAGE 14 ---
+ σˆ 
+xˆ -  x  zi
+i =  (1)  
+ 
+The normalized process output is used to compute two cumulative sums defined as follows: 
+ 
+  (2a)  ] S  k  -  z  0,  [ max   S1 - i ii +=
+ 
+  (2b)  
+] T  k   z  0,  [  min   T1 - iii + +=
+ 
+where k is a slack parameter that must be specified. Positive values of z greater than k cause the 
+sum S to move away from zero and the sum T to approach or remain at zero. Negative values of z 
+less than - k cause the sum T to move away from zero and the sum S to approach or remain at 
+zero. A process is said to be  out of control when either S exceeds a threshold value defined by 
+the parameter h, or T falls below - h. Figure 2.3 [3] presents normalized data and the S and T 
+cumulative sums for k = 0.5 and h = 5. The fi rst 20 data points come from a random normal 
+distribution with a mean value of zero and a standa rd deviation of unity. Th e mean value is then 
+increased to 0.25, 0.5, 0.75 and 1.0 for subsequent sets of 20 data points. Note that S exceeds the 
+threshold value of h after about 68 data points. Because the mean value increases above 0, the 
+cumulative sum T remains above its threshold of -5. 
+ 
+CUSUM charts are generally considered to be effective for detecting gradual shifts in the process 
+mean. The most commonly used control charts are Shewhart and Shewhart-type charts. Shewhart 
+charts are effective for detecting large, sudden changes in the pr ocess mean. Generally Shewhart 
+chart limits are set at values of 
+σˆ 3   xˆ ± . In terms of the normalized pa rameter z, the chart limits 
+are . Shewhart charts were not investigated as part of this study; however, it is interesting 
+to note that the basic CUSUM and Shewhart char ts are equivalent if the CUSUM parameters k 
+and h are selected as k = 3 and h = 0. 
+3  ± =z
+ 
+Data Point
+0 2 04 06 08 0 1 0 0
+Data Point
+0 2 04 06 08 0 1 0 0
+CUSUM
+-10
+-5
+0
+5
+10
+15
+20
+25
+T
+S
+Upper Chart Limit
+Lower Chart Limit
+ 
+-3
+-2
+-1
+0
+1
+2
+3
+z
+Figure 2.3: A simple CUSUM control chart indicating an “out of control” process. 
+ 
+ 14
+
+--- PDF PAGE 15 ---
+2.2.3 System Description 
+Figure 2.4 is a schematic diagram of a typical single duct variable-air-volume (VAV) box with 
+hydronic reheat. The diagram depicts a damper that is used to modulate airflow to the zone and a 
+control valve that modulates hot water flow to the reheat coil. Several sensors are also shown in 
+ 
+Room
+H
+C
+DP
+Hydronic
+Reheat Coil
+VAV Box Controller
+o
+Thermostat
+T
+Damper
+Hot Water Supply Hot Water 
+Return
+M
+M
+Supply Air
+Room
+H
+C
+DP
+Hydronic
+Reheat Coil
+VAV Box Controller
+o
+Thermostat
+T
+Damper
+Hot Water Supply Hot Water 
+Return
+MM
+M
+Supply Air
+  
+Figure 2.4: Schematic diagram  of a single duct pressure- independent VAV box with 
+hydronic reheat. 
+Figure 2.4. The zone thermostat measures the air temperature in the zone. The differential 
+pressure transducer is used to measure the flow rate of air into the zone. Finally, the discharge air 
+temperature sensor measures the temperature of th e air stream entering the zone. This sensor is 
+used to provide diagnostic information rather th an for control purposes. The VAV box controller 
+reads the sensor information, computes control outputs for the damper and reheat valve, and 
+transmits these signals to the appropriate actuators. 
+ 
+Figure 2.5 shows a typical control sequence for a pressure-independent VAV box.  A heating set 
+point and a cooling set poi nt are specified. As the zone temp erature increases above the cooling 
+set point, the airflow rate to the zone increase s proportionally. This is accomplished by resetting 
+the airflow rate setpoint and modulating the damp er to achieve this airflow rate. As the zone 
+temperature decreases toward the cooling set point, the airflow rate setpoint is decreased and the 
+damper gradually closes until it is providing the minimum flow rate necessary for ventilation. If 
+the room temperature continues to decrease and reaches the heating set point, the reheat valve 
+will begin to open. The airflow rate can also be varied in the heating mode, with the airflow 
+increasing as the temperature de creases. Alternatively, a highe r fixed airflow rate may be 
+specified for heating operation to  improve the distribution of the warm air. In Figure 2.5, it is 
+ 15
+
+--- PDF PAGE 16 ---
+assumed that a fixed airflow rate associated w ith the ventilation requirement of the room is 
+provided in the heating mode. 
+ 
+ Airflow 
+Setpoint
+Heating
+Set
+Point
+Cooling
+Set
+Point
+Room 
+Temperature 
+Valve 
+Position 
+MaximumFully 
+Open 
+Fully 
+Closed 
+Airflow 
+Setpoint
+Valve
+Heating
+Set
+Point
+Cooling
+Set
+Point
+Room 
+Temperature 
+Valve 
+Position 
+Minimum 
+Fully 
+Open 
+Fully 
+Closed 
+Valve
+ 
+Figure 2.5: Damper and valve control sequence as a function of room temperature for a 
+single duct pressure-independent VAV box with hydronic reheat. 
+  
+2.2.4 CUSUM Applied to VAV Box Diagnostics 
+The previous section described one particul ar VAV box control strate gy.  However, a wide 
+variety of control strategies are employed by controller manufact urers, most of which use a 
+cascaded control loop to maintain th e zone temperature and zone airf low rate at setpoint values.  
+In order to make VPACC independent of the control strategy used in a particular controller/VAV 
+box application, four generic errors were identified: the airflow rate  error, the absolute value of 
+the airflow rate error, the temperature error, and the reheat coil differential temperature error. As 
+long as the VAV box controller has an airflo w setpoint, as well as heating and cooling 
+temperature setpoints, VPACC will function independently of the control strategy used.  
+Common mechanical and control faults will result in  a deviation of one or more of these errors 
+from its value during normal operation, which can be detected by a CUSUM chart.  
+ 
+The airflow rate error, 
+Qerror, is defined as 
+ 
+ 
+Qerror = Qactual - Qsetpoint (3) 
+ 
+where 
+Qactual = measured airflow rate 
+Qsetpoint = airflow rate set point. 
+ 16
+
+--- PDF PAGE 17 ---
+ 
+The CUSUMs of this error, SQ and TQ, are effective for detecting damper faults and differential 
+pressure sensor faults associated with airflow measurement. 
+ 
+The absolute value of the airflow rate error, |
+Qerror|, is defined as 
+ 
+ 
+|Qerror| = |Qactual - Qsetpoint| (4) 
+ 
+Only one CUSUM value, 
+S|Q|, is defined for this error sinc e the error is never negative. S|Q| is 
+effective for detecting unstable damper control faults. 
+ 
+The temperature error, 
+Terror, is defined as  
+ 
+ 
+Terror = Tzone – CSP :  If Tzone > CSP (5a) 
+ Terror = 0 :  If HSP < Tzone < CSP (5b) 
+ Terror = Tzone – HSP :  If Tzone < HSP (5c) 
+ 
+where 
+ 
+Tzone = zone temperature 
+CSP = cooling set point 
+HSP = heating set point. 
+ 
+The CUSUMs of the temperature error, ST and TT, are effective for detecting damper faults, valve 
+faults, and temperature sensor fau lts. The specific definition of temperature error used in this 
+report is based on the control sequence describe d above. Various other commonly used control 
+sequences may require changes to the definitions  of heating setpoint, cooling setpoint, and 
+temperature error. 
+ 
+The reheat coil differential temperature error, 
+ΔTerror, is defined as 
+ 
+ 
+ΔTerror = Tdischarge – Tentering :  If uhc = 0  (6a) 
+ ΔTerror = 0  :  If uhc ≠ 0  (6b) 
+ 
+where 
+ 
+Tdischarge = discharge air temperature (the temperat ure of the air leaving the reheat coil) 
+Tentering  = entering air temperature (the temperat ure of the air entering the reheat coil) 
+uhc  = control signal to the reheat coil valve. 
+ 
+The positive CUSUM of the reheat coil differential temperature error,  S ΔT, is effective for 
+detecting a leaking reheat coil valve fault. The negative CUSUM,  TΔT, is effective for detecting 
+temperature sensor faults. The leaking valve faul t highlights the advantages of automated FDD. 
+Without VPACC, the local controller may be ca pable of masking this fault by increasing the 
+airflow rate into the space. In this scenario there will be no “too hot” or “too cold” complaints, so 
+a significant energy penalty may be accrued. 
+ 17
+
+--- PDF PAGE 18 ---
+ 
+The errors and CUSUMs are only calculated dur ing occupied periods.  During unoccupied 
+periods, the errors are not computed, and the CU SUMs are reset to zero.  The first hour of the 
+occupied period is treated the same as the unoccu pied period, to allow steady state conditions to 
+develop. 
+ 
+2.2.5 Point requirements 
+Most of the points required by VPACC are al ready available in the local VAV box controller: 
+room temperature, cooling setpoint, heating setpoint, airflow rate setpoint, actual airflow rate, 
+and occupancy status.  Entering air temperatur e is typically not available, so supply air 
+temperature (available over the control network from the AHU cont roller) could be used.  Many 
+VAV boxes are equipped with a discharge air temp erature sensor, which VPACC needs in order 
+to calculate the reheat coil differential temperature error.  If a di scharge air temperature sensor is 
+not available, a simplified version of VPACC coul d be used, implementing the airflow rate error 
+and the temperature error only. 
+ 
+2.2.6 Parameters 
+For each process error to which CUSUM analysis is to be applied, there is a set of parameters 
+that must be known and/or specified. These ar e the expected value of the process error ( ), the 
+process error standard deviation (
+xˆ
+σˆ ), the slack parameter (k), and the alarm limits for the S and T 
+CUSUMs (hS and hT). For the purposes of this study, the expected value and standard deviation 
+of the process error were determ ined by analysis of a short peri od of fault-free operation from a 
+particular data source. CUSUM analysis was pe rformed for each error using an expected value 
+and standard deviation representative of the VAV boxes from each site. These parameters will be 
+referred to as the VPACC statistical parameters  throughout the remainder of this paper. The 
+slack parameter k = 3 and alarm limits hS = hT  = 900 are the same for all data sources. To exceed 
+the alarm limit value using one min data, an error th at is five standard de viations from the mean 
+would have to persist for 7.5 h. When a CUSUM doe s exceed the alarm limit,  it is reset to zero 
+and the calculations resume. Each CUSUM is also  reset to zero during unoccupied periods (and 
+during the first hour of occupancy, to allow st eady state conditions to develop).  Thus, the 
+severity of a fault can be established from the number of alarms over a period of time. 
+ 
+2.2.7 Special Cases 
+2.2.7.1 No Discharge Air Temperature Sensor 
+Many VAV boxes are equipped with a discharge air temperature sensor, which VPACC needs to 
+calculate the reheat coil differential temperature error. If a discharge air temperature sensor is not 
+available, a simplified version of VPACC could be used, implementing the airflow rate error, the 
+absolute value of the airflow rate error, and th e temperature error only. In this case, a leaking 
+reheat coil valve (or, in the cas e of electric reheat, staged reheat enabled “on” in the cooling 
+mode) would not be detected unless it was so ex treme that the VAV box was unable to maintain 
+the zone temperature at the set point, thereby causing alarms due to excessive values of ST. 
+ 
+ 18
+
+--- PDF PAGE 19 ---
+2.2.7.2 Pressure Dependent 
+In some VAV boxes, the damper is controlled dire ctly in response to zo ne temperature without 
+an intermediate determination of an airflow setpoint. Qerror and |Qerror| do not exist for a pressure 
+dependent VAV box. In this case, a stuck damper may go undetected. In the case where the zone 
+is overcooled, the reheat coil valve will open (or stag ed reheat will be enabled “on” if electric 
+reheat is employed) and compensate for the faul t, masking its existence. In the case where the 
+zone is undercooled, the rising zone temperature may create alarms due to excessive values of ST. 
+ 
+2.2.7.3 No Reheat 
+Some VAV boxes do not have reheat capabilities. Others do not have reheat available part of the 
+year because a two pipe hydronic sy stem is being used for chilled water at that time. Since the 
+VAV box cannot take any control action to increas e zone temperature, a negative temperature 
+error does not necessarily indicate a fault. In this situation, only the ST CUSUM will be 
+calculated for Terror. 
+ 
+2.2.7.4 Dual Duct 
+In a dual duct VAV box, there is no reheat coil (and no electric reheat). Instead there are two air 
+inlets, namely, a cold deck and a hot deck. Each air inlet has a damper an d differential pressure 
+sensor. For this arrangement, two airflow errors ( Qerror,hot and Qerror,cold) and two absolute value 
+airflow errors (|Qerror, hot| and |Qerror, cold|) will be calculated. No ΔTerror will be calculated as there 
+is no reheat capability. 
+ 19
+
+--- PDF PAGE 20 ---
+ 
+3 Data Sources 
+3.1  SITE-1 
+SITE-1 is a large federal office building in California.  Air ha ndling unit data were collected 
+from three constant-volume AHUs with enth alpy-based economizers.  VAV box data were 
+collected from eight single-duct, pressure inde pendent, cooling-only VAV boxes.  Stand-alone 
+software was configured by facility personnel to au tomatically collect data from the appropriate 
+equipment controllers at 5 min intervals, generate  trend data files, and e-mail those files to the 
+researchers. 
+ 
+3.2 SITE-2 
+SITE-2 is a restaurant with a pre-existing arra ngement for remote monitoring.  The monitoring 
+firm agreed to provide the researchers with 1 min data collected from one constant-volume AHU 
+with a temperature-based economizer.  Only those points already being tre nded were available.  
+Mixed air temperature was not one of those points.  Although the economi zer is controlled to 
+maintain the supply air temperature at a set point, the heating and c ooling coil valves are 
+controlled to maintain zone temperature, not supply air temperature, at a setpoint.  Therefore, the 
+supply air temperature setpoint is not a meaningful quantity in  all modes of operation.  In 
+addition, the zone temperature setpoint, another point not being trended, is varied based on a 
+fixed schedule.  The zone temperature setpoint is  also occupant adjustable.  A modified version 
+of APAR was developed in which the modes ar e determined as described earlier, but only a 
+subset of the rules, those not involving mixed ai r temperature or supply air temperature setpoint, 
+were evaluated. 
+ 
+3.3 SITE-3 
+SITE-3 is a community college campus.  Data we re collected from nine single-duct, pressure 
+independent VAV boxes with hydronic reheat.  The reheat coils are supplied with hot water by a 
+two-pipe system (a single piping system is us ed for chilled water durin g cooling season and hot 
+water during heating season).  During the cooli ng season (the time period during which the data 
+was collected) hot water for reheat is not available, so the VAV boxes were treated as if they 
+were cooling-only.  The building control system was configured by facility personnel to trend 
+data from the appropriate equipment controllers at one min intervals. 
+ 
+3.4 SITE-4 
+SITE-4 is a university campus.  It  was originally intended that the appropriate data would be 
+trended using the university’s advanced control system, which would allo w the researchers to 
+access the equipment controllers via the Internet.  Due to time and personnel constraints, it was 
+not possible to establish this mode of data co llection.  However, three weeks of preliminary 1 
+min data were trended by facility personnel and ma de available to the researchers.  Data were 
+collected from two variable-air-volume AHUs with enthalpy-based economizers, as well as from 
+eight pressure independent VAV boxes with hydr onic reheat.  These systems operate 24 hours 
+per day, 7 days per week.  There is no occupied/unoccupied scheduling. 
+ 20
+
+--- PDF PAGE 21 ---
+ 
+4 Results 
+Examples of faulty operation are presented from each of the sites. 
+ 
+4.1 SITE-1 
+ 
+4.1.1 AHU Supply Air Temperature Fault 
+Figure 4.1 shows a plot of temperature and contro l signal data from one of the AHUs at SITE-1, 
+labeled AHU-A.  Based on the control signals (coo ling coil valve is black, heating coil valve is 
+not shown, but remains fully closed, mixing box da mper is not shown, but remains aligned for 
+minimum ventilation) APAR determines that  AHU-A is operating in Mode 4 (mechanical 
+cooling with minimum outdoor air), then applies the rules for this mode.  One of the rules for 
+Mode 4 is Rule 19, which states that if the average cooling coil valve cont rol signal is fully open 
+(within 1 %) and the difference between supply air temperatur e and supply air temperature 
+setpoint is greater than 1.7 °C (3.0 °F), the coo ling coil valve is saturated and a persistent supply 
+air temperature error exists.  Figure 4.1 shows the supply air temperature (blue), varies from 9 °C  
+to 13 °C  (50 °F to 55 °F)  and the supply air temperature setpoint (red) is fixed at 7 °C (45 °F) - 
+an unreasonably low value for this application.   Clearly, the supply air temperature error is 
+greater than 1.7 °C (3.0 °F), ther efore APAR has detected a fault.   Facility personnel confirmed 
+that the fault was the result of inappropriate operator intervention. 
+5
+10
+15
+20
+0 100 200 300 400 500 600 700
+Time (min) From Beginning of Occupied Period
+Temperature (oC)
+0
+20
+40
+60
+80
+100
+Control Signal (0 % to 100 %)
+Supply Air Temperature
+Supply Air Temperature Setpoint
+Cooling Coil Valve Control Signal
+Figure 4.1 SITE-1 AHU-A Supply Air Temperature Fault 
+  
+ 21
+
+--- PDF PAGE 22 ---
+4.1.2  AHU Mode Switch Fault 
+  Figure 4.2 shows a plot of the control signals, including the cooling coil valve (blue), heating 
+coil valve (red), and mixed air damper (green), from another of the AHUs at SITE-1, labeled 
+AHU-B.  Of interest is the 3 h period from 420 min until 600 min after the beginning of the 
+occupied period.  During this 3 h time span, APAR observes AHU operation in three different 
+modes:  Mode 2 (cooling with out door air – heating co il valve less than 1 % open, cooling coil 
+valve less than 1 % open, mixed air damper gr eater than 26 % open [25 % is the position for 
+minimum outdoor air fraction to meet ventilation requirements plus a 1 % threshold]), Mode 3 
+(mechanical cooling with 100 % outdoor air – heating coil valve less than 1 % open, cooling coil 
+valve greater than 1 % open, mixed air damp er greater than 99 % open), and Mode 4 
+(mechanical cooling with minimu m outdoor air – heating coil valv e less than 1 % open, cooling 
+coil valve greater than 1 % open, mixed air damper  less than 26 % open).  Rule 28 is evaluated 
+regardless of mode, stating that if more than seven mode switches are recorded in 1 h, a fault has 
+been detected.  In this case, the AHU switc hes between modes 26 times over the 3 h period, 
+satisfying Rule 28 for each of the 3 h.  The most pr obable cause of this fault is incorrect tuning 
+of the temperature control PID loop in the AHU c ontroller.  A follow up with facility personnel 
+confirmed the existence of the fault as well as the diagnosis. 
+0
+20
+40
+60
+80
+100
+120
+400 420 440 460 480 500 520 540 560 580 600 620
+Time (min) From Beginning of Occupied Period
+Control Signal (0 % to 100 %)
+Mixed Air Damper Control Signal
+Cooling Coil Valve Control Signal
+Heating Coil Valve Control Signal
+Figure 4.2 SITE-1 AHU-B Mode Switch Fault 
+ 
+4.1.3 AHU Simultaneous Heating and Cooling Fault 
+Figure 4.3 shows a plot of the control signals from another of the AHUs at SITE-1, labeled 
+AHU-C.  During a 25 min time span starting 230 min after the beginning of the occupied period, 
+ 22
+
+--- PDF PAGE 23 ---
+the heating coil valve (red) is open while the mixing box damper (green) is 100 % open.  For a 
+10 min period during this time span (from 235 min until 245 min) both the heating coil valve and 
+the mixing box damper are 100 % open.  This combination of control signals is inconsistent with 
+any known mode, so APAR classifies this peri od of operation as Mode 5 (unknown mode) and 
+evaluates the rules associated with  this mode.  Rule 23, one of the rules associated with Mode 5, 
+states that if the average posit ion of the heating coil valve is greater than 1 % and the average 
+position of the mixing box damper is more than 26 % (1 % more than the minimum for 
+ventilation), then a fault has been detecte d, since the AHU is simultaneously heating and 
+cooling/economizing.  The most probable cause of this fault is an AHU controller sequencing  
+error.  A follow up with facil ity personnel confirmed this diagnos is.  The facility personnel then 
+modified the controller sequencin g logic.  After the modification,  the fault was not detected  
+again. 
+0
+20
+40
+60
+80
+100
+120
+200 210 220 230 240 250 260 270 280 290 300
+Time (min) From Beginning of Occupied Period
+Control Signal (0 % to 100 %)
+Mixed Air Damper Control Signal
+Heating Coil Valve Control Signal
+Cooling Coil Valve Control Signal
+4.1.4   AHU Temperature Sensor / Damper Fault 
+Figure 4.3 SITE-1 AHU-C Simultaneous Heating and Cooling Fault 
+Figure 4.4 shows another plot of temperatures an d control signals from AHU-C.  From 220 min 
+until 700 min after the beginning of the occupied period (approximately an eight hour time span), 
+the mixed air damper (green) is positioned for 100 % outdoor air.  The cooling coil valve (not 
+shown) ranges from fully closed to fully open and the heating coil valv e (not shown) remains 
+fully closed.  Based on this combination of control signals, APAR places AHU-C in Mode 3 
+(mechanical cooling with 100 % outdoor air) and evaluates the rules for Mode 3.  One of these is 
+Rule 10, which states that if the outdoor air and mixed air temperature differ by more than 1.7 °C 
+(3.0 °F), a fault has been detected since the ou tdoor air and mixed air te mperature should be the 
+same when the mixed air damper is positioned for 100 % outdoor air.  During this time, the 
+ 23
+
+--- PDF PAGE 24 ---
+mixed air temperature (brown) remains approximate ly 3 °C  (5 °F) greater than the outdoor air 
+temperature (blue), satisfying Rule  10.  The most probable causes of this fault include a mixed 
+air or outside air temperature sensor error or a mixed damper leakage or actuator failure.  A 
+follow up with facility personnel revealed that the fault was caused by the location of the outdoor 
+air temperature sensor on the r oof of the building, remote from  the AHU outside air intake.  
+Although the location of the sensor is less than ideal, it was not po ssible for the building staff to 
+relocate it.  
+ 
+12
+14
+16
+18
+20
+22
+24
+200 250 300 350 400 450 500 550 600 650 700
+Time (min) From Beginning of Occupied Period
+Temperature (oC)
+0
+20
+40
+60
+80
+100
+120
+Control Signal (0 % to 100 %)
+Mixed Air Damper Control Signal
+Mixed Air Temperature
+Outdoor Air 
+Figure 4.4 SITE-1 AHU-C Temperature Sensor / Damper Fault 
+4.1.5    VAV Box Zone Temperature Fault 
+Figure 4.5 shows a plot of the zone temperatur e and the related CUSUM from one of the VAV 
+boxes at SITE-1, labeled VAV Bo x - A.  Approximately 500 mi n after the beginning of the 
+occupied period the supply air temperature from  the air handling unit (brown) begins to rise, 
+reaching a peak of 32 °C (90 °F) at 880 min.  Th e zone temperature (green) closely tracks the 
+supply air temperature from the AHU, peaking at  approximately the same  temperature and at 
+approximately the same time.  In this operating region the zone temperature error is defined as 
+the difference between the zone temperature and the cooling setpoint.  This zone temperature 
+error is normalized, using sitewide  statistical parameters determin ed from one month of training 
+data from SITE-1, by subtracting the average zone temperature error (0.34 °C [0.61 °F]), then 
+dividing by the standard deviation (1.0 °C [1.8 °F]).  The slack parame ter k is set at three, so at 
+630 min, when the normalized zone temperature erro r increases to more than three, the positive 
+temperature CUSUM (S_Temp, purpl e) begins to increase.  S_ Temp exceeds the alarm limit h 
+(set at 180, which, with data at 5 min intervals, corresponds to an error five standard deviations 
+greater than average for 7.5 h) at 1000 min after the beginning of the occupied period.  Although 
+ 24
+
+--- PDF PAGE 25 ---
+building staff were notified of the detection of this fault, they we re unable to investigate further. 
+Clearly the cause of the problem is the high AHU supply air temperature, however it is unknown 
+if there was an AHU fault.  It is possible that the AHU supply air temperature setpoint was high 
+due to heating demand from other VAV boxes served  by the AHU.  This may be a system level 
+fault, resulting from the hierarchical relationshi p between different pieces of equipment in the  
+HVAC system. 
+20
+22
+24
+26
+28
+30
+32
+34
+0 100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500
+Time (min) From Beginning of Occupied Period
+Temperature (oC)
+0
+50
+100
+150
+200
+250
+CUSUM Accumulated Sum
+  
+4.2   SITE-2 
+ 
+4.2.1 AHU Saturated Cooling Coil 
+Figure 4.6 shows a plot from an AHU at SITE- 2, labeled AHU-A.  For the first 450 min of 
+occupancy, the heating coil (red) re mains closed, the mixed air damp er (green) is aligned for the 
+minimum outside air fraction, and the cooling coil va lve (blue) is saturated at 100 %.  Based on 
+these control signals, APAR determines that AHU-A is operating in Mode 4 (mechanical cooling 
+with minimum outdoor air).  This  AHU is a single zone unit in which the cooling coil valve is 
+controlled to maintain zone temp erature at the zone te mperature setpoint ra ther than supply air 
+temperature at the supply air temperature setpoint . One of the rules associated with Mode 4 is 
+Rule 20, which, as modified for SITE-2, states th at if the average cooling coil valve position is 
+greater than 99 % open, the valve is saturated and any additional cooling load will cause the zone 
+temperature to drift.  When this rule is satisfi ed, APAR declares a warni ng rather than a fault, 
+since the supply air temperature error cannot be evaluated (see th e description of SITE-2 in 3.2, 
+Figure 4.5 SITE-1  VAV Box-A Zone Temperature Fault 
+AHU Supply Air 
+Zone Temperature
+Stemp (positive zone temperature error CUSUM)
+Cooling Setpoint
+Heating Setpoint
+ 25
+
+--- PDF PAGE 26 ---
+for further explanation).  The zone temperature (brown) is maintained between 20 °C (68 °F) and 
+22 °C (72 °F), a reasonable range for the ap plication.  There are many possible diagnoses 
+including:  temperature sens or error, cooling coil valve actuator fa ilure, inappropriate 
+operator/occupant intervention, temperature cont rol PID loop tuning error, or sequencing logic 
+error.  On the other hand, it is entirely possible that this wa rning was caused by some unusual 
+activity in the zone which genera ted a large cooling load.  A fo llow up with facility personnel 
+was not possible. 
+ 
+Figure 4.6 Site-2 AHU-A Saturated Cooling Coil Fault 
+0
+20
+40
+60
+80
+100
+120
+0 50 100 150 200 250 300 350 400 450 500
+Time (min) From Beginning of Occupied Period
+Control Signal (0 % to 100 %)
+15
+17
+19
+21
+23
+25
+27
+29
+Temperature (oC)
+Cooling Coil Valve Control Signal
+Mixed Air Damper Control Signal
+Heating Coil Valve Control Signal
+Zone Temperature
+   
+4.2.2 AHU Mode Switch Fault 
+Figure 4.7 shows a plot of the control signals from AHU-A, in cluding the cool ing coil valve 
+(blue), heating coil valve (red), and mixed air damper (green).  During the first three hours of the 
+occupied period APAR observes AHU-A cycle betw een two different modes:  Mode 2 (cooling 
+with outdoor air – heating coil va lve less than 1% open, cooling coil valve less than 1% open, 
+mixed air damper open more than 21% [20% is  the minimum for ventilation]) and Mode 3 
+(mechanical cooling with 100 % outdoor air – heating coil valve less than 1% open).  Rule 28 is 
+evaluated regardless of mode, sta ting that if more than seven mode switches are recorded in an 
+hour, a fault has been detected.   In this case, the AHU switches between the two modes 72 times 
+during the three hour period, satisf ying Rule 28 for each of the three hours.  The most probable 
+cause of this fault is either a sequencing error or incorrect tuning of th e temperature control PID 
+loop in the AHU controller.  The existence of the fault was confirmed by the monitoring firm and 
+reported to the facility personnel, who were unable to investigate further. 
+ 26
+
+--- PDF PAGE 27 ---
+0
+20
+40
+60
+80
+100
+120
+0 20 40 60 80 100 120 140 160 180 200
+Time (min) From Beginning of Occupied Period
+Control Signal (0 % to 100 %)
+Cooling Coil Valve Control Signal
+Mixed Air Damper Control Signal
+Heating Coil Valve Control Signal
+     
+AV box E reveals that 
+the zone temperature routinely exceeds the cooling set point of 22.2 ºC (72 ºF) by 2.2 ºC (4 ºF) to 
+3.3 ºC (6 ºF). This produces 70 alarms of ST per week on average and nine weeks with 100 to 115 
+alarms of ST. It is common for the discharge air temperature to this zone to be 15.6 ºC (60 ºF) to 
+21.1 ºC (70 ºF), indicating that the capacity proble ms are due at least in part to the manner in 
+which the AHU is being controlled and/or to th e design of the system. Another VAV box (C) on 
+the same AHU routinely operates in the heating mode 1.1 ºC (2 ºF) to 1.7 ºC (3 ºF) below the 
+heating set point of 22.2 ºC ( 72 ºF). The lack of reheat makes it impossible for the AHU to 
+satisfy the two zones when one requires cooling and the other heating. Operational changes to 
+Figure 4.7 Site-2 AHU-A Mode Switch Fault 
+4.3 SITE-3 
+Results from 20 weeks of field testing for each of the nine VAV boxes are summarized in Table 
+4.1. The number reported in a cell represents the total number of alarms over the 20 week period 
+of a particular CUSUM and a particular VAV box. The total numbe r of alarms for each box are 
+also reported in the last column of Table 4.1. Note that the total excludes SQ and TQ because they 
+are in essence a subset of S|Q|. That is, an alarm of SQ or TQ will always produce an alarm of S|Q|, 
+although S|Q| may alarm first if, for instance, the airflow errors are predominantly positive but 
+include some large negative errors as well. Because reheat was not available, VPACC did not 
+monitor the zone temperature error in the heating mode. 
+ 
+The VPACC results in Table 4.1 indicate that VAV boxes E and I are performing poorly and 
+VAV boxes F, G, and H are performing well. The other VAV boxes are performing somewhere 
+between these two extremes. Closer inspection of the trended data for V
+ 27
+
+--- PDF PAGE 28 ---
+reduce the minimum airflow rates for the heati ng mode may help alleviate the problem of 
+overcooling certain zones.  
+ 
+Table 4.1 
+VPACC results for the field data sets. 
+ 
+Number of Alarms 
+VAV Box 
+SQ T Q S T T T S |Q| Total 1 
+A 0 29 36 0 29 65 
+B 0 125 62 0 125 187 
+C 0 38 42 0 38 80 
+D 0 104 52 0 105 157 
+E 0 70 1406 0 72 1478 
+F 0 1 0 0 1 1 
+G 0 0 1 0 0 1 
+H 0 10 3 0 10 13 
+I 0 674 3 0 674 677 
+1 Total = ST + TT + S|Q| because SQ and TQ are subsets of S|Q|.  
+ 
+ 
+The VPACC results in Table 4.1 indicate that box I has severe airflow control problems. The 
+minimum number of alarms of TQ in a week is seven, while th e average is close to 34. This 
+indicates that the flow rate to the zone is consiste ntly less than the set point airflow rate. This is 
+true whether the VAV b s to indicate that 
+the static pressure is not sufficient to deliver the amount of air needed in the zone. Due to the 
+re of the flow error, S|Q| alarms at the same times as TQ. 
+ox operates in the heating or  cooling mode. This seem
+natu
+ 
+VAV boxes F and G alarm only one time each over the twenty weeks of te sting. Inspection of 
+the process data supported the findings of VPACC, namely, that the control was quite good. 
+VAV box H also performed well, with 11 of the 13 alarms occurring during the week of June 10-
+16, 2002. For much of the first part of that we ek, the AHU supply air temperature ranged from 
+18.3 ºC (65 ºF) to 21.1 ºC (70 ºF), causing the zone temperature to exceed its cooling set point of 
+22.2 ºC (72 ºF) by nearly 1.1 ºC (2 ºF). Hence the problem does not appear to be with the control 
+of the VAV box. The controller opera ted in the heating mode during most of the testing and this 
+contributed to the low number of alarms because  only flow control was monitored in the heating 
+ode. m
+ 
+The performance of the remaining four VAV boxes (A ,B,C, and D) is a littl e more difficult to 
+assess. A significant number of the alarms for each occur during five weeks of the testing, 
+namely, May 20-26, 2002, May 27 to June 2, 2002, June 10-16, 2002, July 8-14, 2002, and July 
+22-28, 2002. Specifically, 55 of 65 alarms for A, 111 of 187 alarms for B, 75 of 80 alarms for C, 
+and 101 of 156 alarms for D occur during those five weeks. 
+ 
+The problem in the weeks of May 20-26, 2002 and May 27 to June 2, 2002 is associated with the 
+AHU temperature control. All four boxes (as well as  E, which is served by the same AHU) have 
+a significant number of 
+ST alarms during these two weeks. Clos er inspection of the trended data 
+indicates the discharge air temper atures to the zones exceeded 23.9 ºC (75 ºF) for nearly 20 h 
+ 28
+
+--- PDF PAGE 29 ---
+over the latter part of the first week and the beginning of the second week. Since this time period 
+encompasses the Memorial Day holiday, it is lik ely that there was a sc heduling inconsistency 
+that had the AHU and VAV boxes operating in an occupied mode while the chiller was not 
+running. 
+he problem in the other three weeks is a su dden drop in the airflow through the four boxes. 
+Figure 4.8 shows the ture error ( Terr  error ( Qerror) for box D during a 
+portion of the week of July 8-14, 2002. The sudde n drop in the airflow rate produces large 
+negative airflow errors and positive temp rs. A sho in F re 4.9, this results in 
+numerous airflow ala s ( TQ) and o  tem atur arm ( ) . This particular problem occurs at 
+six distinct times in the three weeks. The problem occurs at the same t  in each of the boxes 
+and also occurs in box E. The f act that the alarm ccur  th e same  in each of the boxes 
+points to the AHU as the likely source of the problem.  
+ 
+T
+ tempera
+or) and airflow
+erature erro s wn igu
+rm ne per e al ST
+ime
+s o at time
+-1
+2
+3
+Data Point (1-min. Intervals)
+2000 2250 2500 2750 3000 3250 3500 3750 4000
+Terror (oC)
+0
+1
+Qerror (%)
+-50
+50
+100
+0
+-2 -100
+ 
+Figure 4.8 Field data for VAV box 101W during the week of July 8, 2002 
+ 
+Considering the remaining 16 weeks of data, th e results from VPACC i ndicate that boxes A and 
+nificant problem. 
+C are performing fairly well (a veraging about 1 alarm per week), while boxes B and D are not 
+doing as well. In general boxes B and D lack capacity in the cooling mode, as indicated by actual 
+airflow rates that are considerably less than the set point values. In  the case of box B, the 
+resultant temperature errors can be significant, sometimes exceeding 1.1 ºC  (2 ºF). Despite the 
+capacity problems, temperature control in zone D is not a sig
+ 
+ 29
+
+--- PDF PAGE 30 ---
+Data Point (1-min. Intervals)
+2000 2250 2500 2750 3000 3250 3500 3750 4000
+800
+1000
+-1000
+-800
+600
+-600
+-400
+-200
+0
+200
+400
+CUSUM
+ST
+ 
+Figure 4.9 VPACC output corresponding to the conditions in Figure 7a 
+4.4 SITE-4 
+4.4.1 AHU Simultaneous Heating and Cooling Fault 
+Figure 4.10 shows a plot of the control signals from one of the AHUs at SITE-4, labeled AHU-
+A.  During the first 1140 min (19 h) of the day,  the heating coil valve (r ed) varies between 5 % 
+and 35 % open.  Over the same time period, the mixing box damper (green) varies between 25 % 
+and 35 % open.  This AHU has two separate mi xing box dampers:  one allows the minimum 
+amount of outdoor air for ventilation, while the other is for cooling with outside air.  The mixing 
+box damper position shown in Figure 4.10 refers to th e arrangement for cooling with outside air.  
+The cooling coil is closed throughout the 19 h time  period.  This combination of control signals 
+is inconsistent with any known mo de of operation, so this period of  operation is classified as 
+Mode 5 (unknown mode) and evalua tes the rules associated with Mode 5.  Rule 23, one of the 
+rules associated arrangement of 
+HU-A, states that if the averag e position of the heat ing coil valve is great er than 1 % and the 
+urther. 
+TQ
+ with Mode 5 and modified to  reflect the mixing box damper 
+A
+average position of the mixing box damper is great er than 1 %, then a fault has been detected, 
+since the AHU is simultaneously heating and co oling/economizing.  The most probable cause of 
+this fault is either a sequencing error or a temper ature sensor error related to the specific control 
+strategy implemented in this AHU, in which the cooling coil valve, hea ting coil valve, and 
+mixing box damper are each controlled by in dependent PID loops, along with independent 
+temperature sensors and setpoints.  Facility personnel were not able to investigate f
+ 30
+
+--- PDF PAGE 31 ---
+0.0
+10.0
+20.0
+30.0
+40.0
+50.0
+60.0
+70.0
+80.0
+90.0
+0 200 400 600 800 1000 1200 1400
+100.0Control Signal (0 % to 100 %)
+Cooling Coil Valve Control Signal
+Heating Coil Valve Control Signal
+Mixing Box Damper Control Signal
+Time (min)
+ 31
+tential 
+site.   
+   
+4.4.2 VAV Box Airflow Fault 
+A sufficient quantity of data to generate st atistical parameters for the SITE-4 VAV boxes was 
+not available, so parameters fr om SITE-1 were used instead.  SITE-1 parameters were chosen 
+because SITE-1 and SITE-4 both have single-d uct, pressure-independent VAV boxes.  Figure 
+4.11 shows a plot of zone airflow data and the damper control signal from a VAV box at SITE-4, 
+labeled VAV Box - A.  For this entire day, the airflow setpoint (blue) is 0.27 m 3/s (580 cfm).  
+The actual measured airflow rate (red) is in the region of (0.46 ±0.02) m3/s [(965 ±50) cfm].  The 
+damper control signal (not s hown) is 0 %.  The positive airflow CUSUM (purple) steadily 
+increases, exceeding the alarm limit (set at 900, wh ich, with data at 1 min intervals, corresponds 
+to an error five standard deviations greater than average for 7.5 h) at 1415 min.  A follow up with 
+facility personnel confirmed the existence of th e fault.  Possible diagnoses include:  airflow 
+sensor failure, damper/actuator failure, improper airflow control PID loop tuning, control logic 
+sequencing error, or inappropriate operator in tervention. A study to determine robust sets of 
+statistical parameters for a variety of systems is needed; however, this example illustrates the 
+possiblity of using the CUSUM approach without collecting training data from each po
+Figure 4.10 SITE-4 AHU Simultaneous Heating and Cooling Fault 
+
+--- PDF PAGE 32 ---
+ 
+0.00
+0.10
+0.20
+0.30
+0.40
+0.50
+0.60
+0 200 400 600 800 1000 1200 1400
+Time (min)
+Airflow (m^3 / s)
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+1000
+CUSUM Accumulated Sum
+Measured Airflow
+Airflow Setpoint
+SQ (positive airflow error CUSUM)
+Figure 4.11 SITE-4 VAV Box Airflow Fault 
+5   Summary and Future Work  
+ence that the FDD tools will perform in an even greater variety of  applications. Several 
+faults have been successfully detected and confir med by building operations staff. Every site has 
+been found to have at least one fault. Even thou gh the sample size is sma ll, these results appear 
+to confirm the hypothesis that faults of the type that can be detected by these tools are common. 
+ 
+This report presents the results of a field study to evaluate APAR, a rule based FDD tool for 
+AHUs, and VPACC, a statistical quality control based FDD tool for VAV boxes.  APAR consists 
+of a set of expert rule s, derived from mass and energy balan ces.  Control signals are used to 
+determine the AHU’s mode of operation, which identifies the subset of the rules to be evaluated.  
+VPACC uses a small set of process errors, valid for most VAV box control strategies, to measure 
+VAV box performance.  CUSUM charts, a statistical quality control tool, are used to evaluate the 
+process errors.  Thresholds are determined by statistical analysis of a database of “normal 
+operation” data. 
+ 
+APAR and VPACC were evaluate d using data from several di fferent sources – an office 
+building, a restaurant, and community college a nd university campuses, featuring constant- and 
+variable-air-volume systems.  Any evaluation usi ng field data must contend with some inherent 
+difficulties:  reliance on sensor data to discern the true state of the system, the inability to report 
+a “false positive” (an undetected fault), and ambi guity regarding what constitutes a fault.  
+However, in this case consistent results across diverse testing environments gives a high level of 
+confid
+ 32
+
+--- PDF PAGE 33 ---
+ 33
+ a parallel study beyond the sc ope of this report, the FDD tools were embedded in AHU and 
+VAV box controllers and evaluated in a laboratory setting.  Fo llow-on work will require 
+partnering with control system  manufacturers to conduct field tests of APAR and VPACC, 
+embedded in their own controller products. 
+ 
+NIST’s vision of full commercialization of auto mated fault detection and diagnostics is one in 
+which APAR and VPACC, along with appropriat e parameters and thresholds, are packaged 
+within HVAC control products.  In order for this vision to become reality, more work is needed 
+in three main areas.  First, it is impractical to expect trend data  to be evaluated to determine the 
+necessary parameters and thresholds for each site , as was done in this study. Ideally, sets of 
+robust parameters and thresholds that are effectiv e across specified ranges of applications would 
+be available. Additional field data  from a wide variety of systems must be collected in order to 
+determine these robust parameters and threshol ds. Also, the current embedded FDD tools are 
+written using generic mathematical  functions available in the la nguages in which the controllers 
+are programmed. Although this approach is suita ble for a technology demonstration, built-in 
+APAR and VPACC functions would greatly simplify the task of  embedding FDD in a control 
+program. Finally, more work is needed to develop alternative ways to interpret FDD results and 
+deliver this information to the building operator. The most direct approach  is to generate an 
+alarm that the operator must acknowledge whenever  a rule is satisified (APAR) or a cumulative 
+sum exceeds the alarm limit (VPACC). Refinement s to the basic scheme are possible. For 
+example, rather than automatically sending the alarm to the operator, the building control system 
+could highlight, on demand, those devices having experienced the greatest number of alarms in a 
+given period of time. Or, ent system is used, an alarm 
+could automatically generate an appropriate work order. However, many faults are the result of 
+design or commissioning issues that are beyond the scope of the building maintenance staff. 
+uipment, such as an air handling unit, boiler, or chiller, 
+ools”, NISTIR 6964. 
+In
+if an automated main tenance managem
+Furthermore, a fault in another piece of eq
+could result in this approach generating a la rge number of alarms, perhaps overwhelming the 
+operator. A mechanism is needed to resolve multiple conflicting fault reports before reporting 
+them to the operator. 
+6 References 
+[1] Castro, N.S., Schein, J., Park, C., Galler, M.A., Bushby, S.T., and House, J.M., 2002, 
+“Results from Simulation and Laboratory Testing of Air Handling Unit and Variable Air Volume 
+Box Diagnostic T
+ 
+[2] House, J.M., Vaezi-Nejad, H., and Whitcom b, J.M., 2001, “An Expert Rule Set for Fault 
+Detection in Air-Handling Units,” 
+ASHRAE Transactions, Vol. 107, Pt. 1: pp. 858-871. 
+ 
+[3] Ryan, Thomas P., 2000, Statistical Methods for Quality Improvement, 2
+nd Edition, Wiley and 
+Sons, New York. 
+ 

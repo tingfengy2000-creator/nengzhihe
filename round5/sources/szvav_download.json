@@ -1,0 +1,19 @@
+{
+  "retrieved_source": {
+    "id": 21403023,
+    "name": "SZVAV.csv",
+    "size": 1207524,
+    "is_link_only": false,
+    "download_url": "https://ndownloader.figshare.com/files/21403023",
+    "supplied_md5": "801640dd2dfdc0d4089d1283b2611314",
+    "computed_md5": "801640dd2dfdc0d4089d1283b2611314",
+    "mimetype": "text/plain"
+  },
+  "sha256": "512992155cb43c576a3ba1e45b37f20966f42c5b05980428fec8008bd054ee93",
+  "license": {
+    "value": 2,
+    "name": "CC0",
+    "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  "access_scope": "Full file stored and hashed, only CSV header, timestamp and ground-truth column inspected before split; sensor/control values not analyzed."
+}

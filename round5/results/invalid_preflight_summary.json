@@ -1,0 +1,92 @@
+{
+  "source": "FLEXLAB SZVAV physical test-cell experiments; one AHU, 11 days",
+  "development_ids": [
+    "e2c0804768e9",
+    "0fb594c24122",
+    "19e3873d3c2f",
+    "5138876d3912",
+    "b5a5b08a1984"
+  ],
+  "holdout_ids": [
+    "cdb7b26d9822",
+    "d3d4e932bfcc",
+    "6f58784f583e",
+    "c61746d012a7",
+    "4458c0d87ff2",
+    "231519158e09"
+  ],
+  "freeze": {
+    "path": "round5/protocol/frozen_methods.json",
+    "sha256": "5fb9f41ab2d84f5596c5fdc33f3c3180a3d04c264cd192f94218d47c7df7348a"
+  },
+  "records": 22,
+  "methods": [
+    "apar",
+    "without_consistency"
+  ],
+  "ground_truth_input_excluded": true,
+  "apar": {
+    "development": {
+      "cases": 5,
+      "detection": 3,
+      "damper_suspicion": 3,
+      "states": {
+        "no_sufficient_mixing_violation": 2,
+        "supported_suspicion": 3
+      },
+      "avg_applicable_minutes": 648.0
+    },
+    "holdout": {
+      "cases": 6,
+      "detection": 6,
+      "damper_suspicion": 4,
+      "states": {
+        "no_sufficient_mixing_violation": 2,
+        "supported_suspicion": 4
+      },
+      "avg_applicable_minutes": 665.6666666666666
+    },
+    "all": {
+      "cases": 11,
+      "detection": 9,
+      "damper_suspicion": 7,
+      "states": {
+        "no_sufficient_mixing_violation": 4,
+        "supported_suspicion": 7
+      },
+      "avg_applicable_minutes": 657.6363636363636
+    }
+  },
+  "without_consistency": {
+    "development": {
+      "cases": 5,
+      "detection": 3,
+      "damper_suspicion": 3,
+      "states": {
+        "no_sufficient_mixing_violation": 2,
+        "supported_suspicion": 3
+      },
+      "avg_applicable_minutes": 648.0
+    },
+    "holdout": {
+      "cases": 6,
+      "detection": 6,
+      "damper_suspicion": 4,
+      "states": {
+        "no_sufficient_mixing_violation": 2,
+        "supported_suspicion": 4
+      },
+      "avg_applicable_minutes": 665.6666666666666
+    },
+    "all": {
+      "cases": 11,
+      "detection": 9,
+      "damper_suspicion": 7,
+      "states": {
+        "no_sufficient_mixing_violation": 4,
+        "supported_suspicion": 7
+      },
+      "avg_applicable_minutes": 657.6363636363636
+    }
+  }
+}

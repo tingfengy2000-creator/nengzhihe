@@ -1,0 +1,141 @@
+{
+  "created_utc": "2026-10-03T06:27:15.159258+00:00",
+  "source": "FLEXLAB SZVAV.csv, figshare 11752740 file21403023",
+  "source_kind": "physical_test_cell_injected_faults",
+  "source_sha256": "512992155cb43c576a3ba1e45b37f20966f42c5b05980428fec8008bd054ee93",
+  "license": "CC0, metadata snapshot retained; attribution still provided",
+  "selection": "Bounded document/schema screening: MZVAV-2-1 physical has no damper fault; SZCAV has one normal day; SZVAV chosen for matching points and four normal days. No measurement outcomes used.",
+  "split_policy": "Metadata-stratified whole experiment days: earliest day per fault subsystem plus first two normal days for development; every other day held out. All data/variants on one experiment date remain together. Not a strictly chronological forecast split.",
+  "development_dates": [
+    "2017-09-11",
+    "2017-09-12",
+    "2017-09-18",
+    "2017-09-20",
+    "2017-09-21"
+  ],
+  "holdout_dates": [
+    "2017-09-14",
+    "2017-09-15",
+    "2017-09-19",
+    "2017-09-22",
+    "2017-09-23",
+    "2017-09-24"
+  ],
+  "date_counts": {
+    "development": 5,
+    "holdout": 6,
+    "all": 11
+  },
+  "calendar_contiguous_blocks": {
+    "development": [
+      [
+        "2017-09-11",
+        "2017-09-12"
+      ],
+      [
+        "2017-09-18"
+      ],
+      [
+        "2017-09-20",
+        "2017-09-21"
+      ]
+    ],
+    "holdout": [
+      [
+        "2017-09-14",
+        "2017-09-15"
+      ],
+      [
+        "2017-09-19"
+      ],
+      [
+        "2017-09-22",
+        "2017-09-23",
+        "2017-09-24"
+      ]
+    ]
+  },
+  "label_authority": "Inventory Table3-4 PDF page19 and CSV binary truth; manually overridden hardware commands or physical bypass-valve leakage.",
+  "labels": {
+    "e2c0804768e9": {
+      "date": "2017-09-11",
+      "subsystem": "cooling_coil",
+      "fault_type": "leak",
+      "injection_setting": "50% max flow",
+      "split": "development"
+    },
+    "0fb594c24122": {
+      "date": "2017-09-12",
+      "subsystem": "heating_coil",
+      "fault_type": "leak",
+      "injection_setting": "40% max flow",
+      "split": "development"
+    },
+    "cdb7b26d9822": {
+      "date": "2017-09-14",
+      "subsystem": "heating_coil",
+      "fault_type": "stuck",
+      "injection_setting": "fully open",
+      "split": "holdout"
+    },
+    "d3d4e932bfcc": {
+      "date": "2017-09-15",
+      "subsystem": "heating_coil",
+      "fault_type": "stuck",
+      "injection_setting": "50% open",
+      "split": "holdout"
+    },
+    "19e3873d3c2f": {
+      "date": "2017-09-18",
+      "subsystem": "outdoor_damper",
+      "fault_type": "stuck",
+      "injection_setting": "minimum position",
+      "split": "development"
+    },
+    "6f58784f583e": {
+      "date": "2017-09-19",
+      "subsystem": "outdoor_damper",
+      "fault_type": "stuck",
+      "injection_setting": "fully open",
+      "split": "holdout"
+    },
+    "5138876d3912": {
+      "date": "2017-09-20",
+      "subsystem": "normal",
+      "fault_type": "none",
+      "injection_setting": "none",
+      "split": "development"
+    },
+    "b5a5b08a1984": {
+      "date": "2017-09-21",
+      "subsystem": "normal",
+      "fault_type": "none",
+      "injection_setting": "none",
+      "split": "development"
+    },
+    "c61746d012a7": {
+      "date": "2017-09-22",
+      "subsystem": "cooling_coil",
+      "fault_type": "stuck",
+      "injection_setting": "fully open",
+      "split": "holdout"
+    },
+    "4458c0d87ff2": {
+      "date": "2017-09-23",
+      "subsystem": "normal",
+      "fault_type": "none",
+      "injection_setting": "none",
+      "split": "holdout"
+    },
+    "231519158e09": {
+      "date": "2017-09-24",
+      "subsystem": "normal",
+      "fault_type": "none",
+      "injection_setting": "none",
+      "split": "holdout"
+    }
+  },
+  "holdout_status": "measurements_not_analyzed; no engine predictions",
+  "known_metadata_issue": "2017-09-24 has1439 rows, retained; no date selection based on this count.",
+  "claim_limits": "One physical AHU in one test cell, 11 day experiments, small condition strata; no operational field trial or cross-population performance."
+}

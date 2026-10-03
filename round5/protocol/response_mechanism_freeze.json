@@ -1,0 +1,44 @@
+{
+  "protocol": "round5 response evidence mechanism v1",
+  "status": "frozen_before_reinspection_run",
+  "evaluation_status": "development_and_known_holdout_reinspection",
+  "holdout_claim": "not_untouched_external_validation; prior preflight inspected the former holdout",
+  "normal_ids": [
+    "5138876d3912",
+    "b5a5b08a1984"
+  ],
+  "baseline": "adapted NISTIR6994 Table 2.1 rules in src/apar.py",
+  "added_mechanism": "coil-closed stable commanded-air-path response residual",
+  "ablation": "remove added response evidence and retain the same APAR baseline",
+  "same_evidence": "A, B and C receive the same parsed signal record, quality handling, calibration dates, history and thresholds",
+  "parameters": {
+    "parameters": {
+      "response_quantile": 0.95,
+      "response_sensor_margin_c": 0.2,
+      "response_floor_c": 0.5,
+      "response_violation_fraction": 0.8,
+      "response_alarm_minutes": 30.0,
+      "coil_closed_epsilon": 0.05
+    },
+    "threshold_c": 2.54027777777778,
+    "normal_q95_c": 2.34027777777778,
+    "normal_minutes": 560,
+    "normal_ids": [
+      "5138876d3912",
+      "b5a5b08a1984"
+    ],
+    "base_calibration_normal_ids": [
+      "5138876d3912",
+      "b5a5b08a1984"
+    ],
+    "interpretation": "requested OA/RA command ratio versus measured MA; command is not actual damper feedback"
+  },
+  "truth_separation": "labels and injection settings are joined only by scripts/score_response_mechanism.py after inference",
+  "sha256": {
+    "data/raw/SZVAV.csv": "512992155cb43c576a3ba1e45b37f20966f42c5b05980428fec8008bd054ee93",
+    "protocol/external_split.json": "fff002f1cb91a4ee58da1afc63a5a7d94e5fc7ff1af09e6612407312f6f4527e",
+    "src/adapter.py": "2b835d26ecb2d82a14339d9f6d465d528d9b1d8eed56f17acab9206d1fe840c2",
+    "src/apar.py": "80575fdb0ad9416d3cf36b77680b3abd451695bdb838184a14ad9290ceb54cf6",
+    "src/response_evidence.py": "fee021a257d3456958b00c85408653b4606f5f8d6c7a95fb68ff918ad269fbdd"
+  }
+}

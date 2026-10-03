@@ -1,0 +1,1102 @@
+{
+  "source": {
+    "name": "OpenEI submission 910 archive / SZVAV.csv",
+    "url": "https://data.openei.org/submissions/910",
+    "nature": "The downloaded inventory identifies SZVAV as a FLEXLAB X3A controlled test-cell experiment; the OpenEI page summary also describes the collection as AFDD simulation data. This is not an operational-building trial.",
+    "sha256": "512992155cb43c576a3ba1e45b37f20966f42c5b05980428fec8008bd054ee93",
+    "signals": "1-minute temperature, occupancy, fan and requested actuator commands; no measured damper position or airflow"
+  },
+  "case_id": "19e3873d3c2f",
+  "recomputed": true,
+  "baseline": {
+    "id": "19e3873d3c2f",
+    "method": "apar_professional_baseline",
+    "any_fault_detected": true,
+    "damper_related_suspicion": true,
+    "exact_fault_localization": "unresolved",
+    "healthy_conclusion": false,
+    "judgment_state": "supported_suspicion",
+    "quality": {
+      "status": "usable",
+      "invalid_intervals": 0,
+      "missing_by_point": {
+        "SA": 0,
+        "HSP": 0,
+        "CSP": 0,
+        "OA": 0,
+        "MA": 0,
+        "RA": 0,
+        "FAN": 0,
+        "SF": 0,
+        "OAD": 0,
+        "RAD": 0,
+        "EAD": 0,
+        "CC": 0,
+        "HC": 0,
+        "OCC": 0
+      },
+      "declared_interval_minutes": 1.0,
+      "actual_interval_minutes": [
+        1.0
+      ],
+      "time_span_minutes": 1439.0,
+      "occupied_minutes": 720.0
+    },
+    "apar_alarms": [
+      9,
+      10
+    ],
+    "coil_balance_suspicion": false,
+    "rules": {
+      "1": {
+        "name": "heating temperature rise",
+        "threshold": 3.534166666666664,
+        "unit": "degC",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "3": {
+        "name": "heating capacity/setpoint",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "4": {
+        "name": "heating saturation",
+        "threshold": 0.95,
+        "unit": "saturation",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "5": {
+        "name": "economizer temperature limit",
+        "threshold": 1.3106666666666669,
+        "unit": "degC",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "6": {
+        "name": "economizer warmer than return",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 250.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "7": {
+        "name": "closed-coil temperature balance",
+        "threshold": 4.033722222222216,
+        "unit": "degC",
+        "eligible_minutes": 250.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "8": {
+        "name": "mechanical cooling below economizer limit",
+        "threshold": 1.1739444444444487,
+        "unit": "degC",
+        "eligible_minutes": 425.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "9": {
+        "name": "economizer changeover",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 425.0,
+        "support_minutes": 45.0,
+        "alarm": true,
+        "windows": [
+          {
+            "start_minute": 902.0,
+            "end_minute": 917.0,
+            "minutes": 15.0,
+            "violation_fraction": 0.8
+          },
+          {
+            "start_minute": 917.0,
+            "end_minute": 932.0,
+            "minutes": 15.0,
+            "violation_fraction": 1.0
+          },
+          {
+            "start_minute": 947.0,
+            "end_minute": 962.0,
+            "minutes": 15.0,
+            "violation_fraction": 0.8
+          }
+        ]
+      },
+      "10": {
+        "name": "full outside-air mixing balance",
+        "threshold": 0.8055555555555596,
+        "unit": "degC",
+        "eligible_minutes": 425.0,
+        "support_minutes": 150.0,
+        "alarm": true,
+        "windows": [
+          {
+            "start_minute": 602.0,
+            "end_minute": 617.0,
+            "minutes": 15.0,
+            "violation_fraction": 1.0
+          },
+          {
+            "start_minute": 617.0,
+            "end_minute": 632.0,
+            "minutes": 15.0,
+            "violation_fraction": 1.0
+          },
+          {
+            "start_minute": 632.0,
+            "end_minute": 647.0,
+            "minutes": 15.0,
+            "violation_fraction": 1.0
+          },
+          {
+            "start_minute": 647.0,
+            "end_minute": 662.0,
+            "minutes": 15.0,
+            "violation_fraction": 1.0
+          },
+          {
+            "start_minute": 662.0,
+            "end_minute": 677.0,
+            "minutes": 15.0,
+            "violation_fraction": 1.0
+          },
+          {
+            "start_minute": 677.0,
+            "end_minute": 692.0,
+            "minutes": 15.0,
+            "violation_fraction": 0.9333333333333333
+          },
+          {
+            "start_minute": 692.0,
+            "end_minute": 707.0,
+            "minutes": 15.0,
+            "violation_fraction": 1.0
+          },
+          {
+            "start_minute": 707.0,
+            "end_minute": 722.0,
+            "minutes": 15.0,
+            "violation_fraction": 1.0
+          },
+          {
+            "start_minute": 722.0,
+            "end_minute": 737.0,
+            "minutes": 15.0,
+            "violation_fraction": 1.0
+          },
+          {
+            "start_minute": 737.0,
+            "end_minute": 752.0,
+            "minutes": 15.0,
+            "violation_fraction": 0.8
+          }
+        ]
+      },
+      "11": {
+        "name": "cooling temperature drop",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 425.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "12": {
+        "name": "cooling warmer than return",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 425.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "13": {
+        "name": "full-OA cooling capacity/setpoint",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "14": {
+        "name": "full-OA cooling saturation",
+        "threshold": 0.95,
+        "unit": "saturation",
+        "eligible_minutes": 425.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "15": {
+        "name": "minimum-OA changeover",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "16": {
+        "name": "minimum-OA cooling temperature drop",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "17": {
+        "name": "minimum-OA warmer than return",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "19": {
+        "name": "minimum-OA cooling capacity/setpoint",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "20": {
+        "name": "minimum-OA cooling saturation",
+        "threshold": 0.95,
+        "unit": "saturation",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "21": {
+        "name": "three actuators active",
+        "threshold": 0.5,
+        "unit": "binary",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "22": {
+        "name": "simultaneous heating/cooling commands",
+        "threshold": 0.5,
+        "unit": "binary",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "23": {
+        "name": "heating with economizer command",
+        "threshold": 0.5,
+        "unit": "binary",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "24": {
+        "name": "cooling with partial economizer",
+        "threshold": 0.5,
+        "unit": "binary",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "25": {
+        "name": "supply setpoint error",
+        "threshold": 4.382999999999991,
+        "unit": "degC",
+        "eligible_minutes": 425.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "26": {
+        "name": "mixed air below both inlets",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 675.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "27": {
+        "name": "mixed air above both inlets",
+        "threshold": 1.3722222222222213,
+        "unit": "degC",
+        "eligible_minutes": 675.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "28": {
+        "name": "mode cycling",
+        "threshold": 5.0,
+        "unit": "transitions",
+        "eligible_minutes": 675.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      }
+    },
+    "verification_support_minutes": 150.0,
+    "verification_applicable_minutes": 165.0,
+    "apar_applicable_minutes": 675.0,
+    "mode_minutes": {
+      "0": 719.0,
+      "1": 0.0,
+      "2": 280.0,
+      "3": 440.0,
+      "4": 0.0,
+      "5": 0.0
+    },
+    "limitations": [
+      "Control commands are not actual damper position; mixing alarms also admit sensor or return/exhaust-path causes."
+    ],
+    "next_actions": [
+      {
+        "code": "independent_temperature_check",
+        "instruction": "Synchronously recheck OA/RA/MA temperatures in the flagged occupied window; verify sensor placement and mixing uniformity."
+      },
+      {
+        "code": "damper_command_response",
+        "instruction": "With site authorization, compare requested OA/RA commands with independent physical stroke/position response; do not use control command as actual feedback."
+      }
+    ],
+    "verification_windows": [
+      {
+        "start_minute": 602.0,
+        "end_minute": 617.0,
+        "minutes": 15.0,
+        "violation_fraction": 1.0
+      },
+      {
+        "start_minute": 617.0,
+        "end_minute": 632.0,
+        "minutes": 15.0,
+        "violation_fraction": 1.0
+      },
+      {
+        "start_minute": 632.0,
+        "end_minute": 647.0,
+        "minutes": 15.0,
+        "violation_fraction": 1.0
+      },
+      {
+        "start_minute": 647.0,
+        "end_minute": 662.0,
+        "minutes": 15.0,
+        "violation_fraction": 1.0
+      },
+      {
+        "start_minute": 662.0,
+        "end_minute": 677.0,
+        "minutes": 15.0,
+        "violation_fraction": 1.0
+      },
+      {
+        "start_minute": 677.0,
+        "end_minute": 692.0,
+        "minutes": 15.0,
+        "violation_fraction": 0.9333333333333333
+      },
+      {
+        "start_minute": 692.0,
+        "end_minute": 707.0,
+        "minutes": 15.0,
+        "violation_fraction": 1.0
+      },
+      {
+        "start_minute": 707.0,
+        "end_minute": 722.0,
+        "minutes": 15.0,
+        "violation_fraction": 1.0
+      },
+      {
+        "start_minute": 722.0,
+        "end_minute": 737.0,
+        "minutes": 15.0,
+        "violation_fraction": 1.0
+      },
+      {
+        "start_minute": 737.0,
+        "end_minute": 752.0,
+        "minutes": 15.0,
+        "violation_fraction": 0.8
+      }
+    ],
+    "input_contract": "physical command/sensor allowlist only; labels, injection parameters and date names excluded"
+  },
+  "result": {
+    "id": "19e3873d3c2f",
+    "method": "apar_plus_response_evidence",
+    "any_fault_detected": true,
+    "damper_related_suspicion": true,
+    "exact_fault_localization": "unresolved",
+    "healthy_conclusion": false,
+    "judgment_state": "damper_supported_by_command_response",
+    "quality": {
+      "status": "usable",
+      "invalid_intervals": 0,
+      "missing_by_point": {
+        "SA": 0,
+        "HSP": 0,
+        "CSP": 0,
+        "OA": 0,
+        "MA": 0,
+        "RA": 0,
+        "FAN": 0,
+        "SF": 0,
+        "OAD": 0,
+        "RAD": 0,
+        "EAD": 0,
+        "CC": 0,
+        "HC": 0,
+        "OCC": 0
+      },
+      "declared_interval_minutes": 1.0,
+      "actual_interval_minutes": [
+        1.0
+      ],
+      "time_span_minutes": 1439.0,
+      "occupied_minutes": 720.0
+    },
+    "apar_alarms": [
+      9,
+      10
+    ],
+    "coil_balance_suspicion": false,
+    "rules": {
+      "1": {
+        "name": "heating temperature rise",
+        "threshold": 3.534166666666664,
+        "unit": "degC",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "3": {
+        "name": "heating capacity/setpoint",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "4": {
+        "name": "heating saturation",
+        "threshold": 0.95,
+        "unit": "saturation",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "5": {
+        "name": "economizer temperature limit",
+        "threshold": 1.3106666666666669,
+        "unit": "degC",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "6": {
+        "name": "economizer warmer than return",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 250.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "7": {
+        "name": "closed-coil temperature balance",
+        "threshold": 4.033722222222216,
+        "unit": "degC",
+        "eligible_minutes": 250.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "8": {
+        "name": "mechanical cooling below economizer limit",
+        "threshold": 1.1739444444444487,
+        "unit": "degC",
+        "eligible_minutes": 425.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "9": {
+        "name": "economizer changeover",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 425.0,
+        "support_minutes": 45.0,
+        "alarm": true,
+        "windows": [
+          {
+            "start_minute": 902.0,
+            "end_minute": 917.0,
+            "minutes": 15.0,
+            "violation_fraction": 0.8
+          },
+          {
+            "start_minute": 917.0,
+            "end_minute": 932.0,
+            "minutes": 15.0,
+            "violation_fraction": 1.0
+          },
+          {
+            "start_minute": 947.0,
+            "end_minute": 962.0,
+            "minutes": 15.0,
+            "violation_fraction": 0.8
+          }
+        ]
+      },
+      "10": {
+        "name": "full outside-air mixing balance",
+        "threshold": 0.8055555555555596,
+        "unit": "degC",
+        "eligible_minutes": 425.0,
+        "support_minutes": 150.0,
+        "alarm": true,
+        "windows": [
+          {
+            "start_minute": 602.0,
+            "end_minute": 617.0,
+            "minutes": 15.0,
+            "violation_fraction": 1.0
+          },
+          {
+            "start_minute": 617.0,
+            "end_minute": 632.0,
+            "minutes": 15.0,
+            "violation_fraction": 1.0
+          },
+          {
+            "start_minute": 632.0,
+            "end_minute": 647.0,
+            "minutes": 15.0,
+            "violation_fraction": 1.0
+          },
+          {
+            "start_minute": 647.0,
+            "end_minute": 662.0,
+            "minutes": 15.0,
+            "violation_fraction": 1.0
+          },
+          {
+            "start_minute": 662.0,
+            "end_minute": 677.0,
+            "minutes": 15.0,
+            "violation_fraction": 1.0
+          },
+          {
+            "start_minute": 677.0,
+            "end_minute": 692.0,
+            "minutes": 15.0,
+            "violation_fraction": 0.9333333333333333
+          },
+          {
+            "start_minute": 692.0,
+            "end_minute": 707.0,
+            "minutes": 15.0,
+            "violation_fraction": 1.0
+          },
+          {
+            "start_minute": 707.0,
+            "end_minute": 722.0,
+            "minutes": 15.0,
+            "violation_fraction": 1.0
+          },
+          {
+            "start_minute": 722.0,
+            "end_minute": 737.0,
+            "minutes": 15.0,
+            "violation_fraction": 1.0
+          },
+          {
+            "start_minute": 737.0,
+            "end_minute": 752.0,
+            "minutes": 15.0,
+            "violation_fraction": 0.8
+          }
+        ]
+      },
+      "11": {
+        "name": "cooling temperature drop",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 425.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "12": {
+        "name": "cooling warmer than return",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 425.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "13": {
+        "name": "full-OA cooling capacity/setpoint",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "14": {
+        "name": "full-OA cooling saturation",
+        "threshold": 0.95,
+        "unit": "saturation",
+        "eligible_minutes": 425.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "15": {
+        "name": "minimum-OA changeover",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "16": {
+        "name": "minimum-OA cooling temperature drop",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "17": {
+        "name": "minimum-OA warmer than return",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "19": {
+        "name": "minimum-OA cooling capacity/setpoint",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "20": {
+        "name": "minimum-OA cooling saturation",
+        "threshold": 0.95,
+        "unit": "saturation",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "21": {
+        "name": "three actuators active",
+        "threshold": 0.5,
+        "unit": "binary",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "22": {
+        "name": "simultaneous heating/cooling commands",
+        "threshold": 0.5,
+        "unit": "binary",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "23": {
+        "name": "heating with economizer command",
+        "threshold": 0.5,
+        "unit": "binary",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "24": {
+        "name": "cooling with partial economizer",
+        "threshold": 0.5,
+        "unit": "binary",
+        "eligible_minutes": 0.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "25": {
+        "name": "supply setpoint error",
+        "threshold": 4.382999999999991,
+        "unit": "degC",
+        "eligible_minutes": 425.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "26": {
+        "name": "mixed air below both inlets",
+        "threshold": 0.5,
+        "unit": "degC",
+        "eligible_minutes": 675.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "27": {
+        "name": "mixed air above both inlets",
+        "threshold": 1.3722222222222213,
+        "unit": "degC",
+        "eligible_minutes": 675.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      },
+      "28": {
+        "name": "mode cycling",
+        "threshold": 5.0,
+        "unit": "transitions",
+        "eligible_minutes": 675.0,
+        "support_minutes": 0,
+        "alarm": false,
+        "windows": []
+      }
+    },
+    "verification_support_minutes": 150.0,
+    "verification_applicable_minutes": 165.0,
+    "apar_applicable_minutes": 675.0,
+    "mode_minutes": {
+      "0": 719.0,
+      "1": 0.0,
+      "2": 280.0,
+      "3": 440.0,
+      "4": 0.0,
+      "5": 0.0
+    },
+    "limitations": [
+      "Control commands are not actual damper position; mixing alarms also admit sensor or return/exhaust-path causes.",
+      "The response check uses a requested command ratio and measured mixed-air temperature; it cannot establish physical damper position.",
+      "This mechanism was developed on the retained 11-day controlled-test-cell record; the source has no untouched independent event set in this round."
+    ],
+    "next_actions": [
+      {
+        "code": "confirm_physical_response",
+        "instruction": "Confirm the supported air-path suspicion with an independent damper position or airflow measurement; control commands are not feedback."
+      },
+      {
+        "code": "independent_temperature_check",
+        "instruction": "Synchronously recheck OA/RA/MA temperatures in the flagged occupied window; verify sensor placement and mixing uniformity."
+      },
+      {
+        "code": "damper_command_response",
+        "instruction": "With site authorization, compare requested OA/RA commands with independent physical stroke/position response; do not use control command as actual feedback."
+      }
+    ],
+    "verification_windows": [
+      {
+        "start_minute": 602.0,
+        "end_minute": 617.0,
+        "minutes": 15.0,
+        "violation_fraction": 1.0
+      },
+      {
+        "start_minute": 617.0,
+        "end_minute": 632.0,
+        "minutes": 15.0,
+        "violation_fraction": 1.0
+      },
+      {
+        "start_minute": 632.0,
+        "end_minute": 647.0,
+        "minutes": 15.0,
+        "violation_fraction": 1.0
+      },
+      {
+        "start_minute": 647.0,
+        "end_minute": 662.0,
+        "minutes": 15.0,
+        "violation_fraction": 1.0
+      },
+      {
+        "start_minute": 662.0,
+        "end_minute": 677.0,
+        "minutes": 15.0,
+        "violation_fraction": 1.0
+      },
+      {
+        "start_minute": 677.0,
+        "end_minute": 692.0,
+        "minutes": 15.0,
+        "violation_fraction": 0.9333333333333333
+      },
+      {
+        "start_minute": 692.0,
+        "end_minute": 707.0,
+        "minutes": 15.0,
+        "violation_fraction": 1.0
+      },
+      {
+        "start_minute": 707.0,
+        "end_minute": 722.0,
+        "minutes": 15.0,
+        "violation_fraction": 1.0
+      },
+      {
+        "start_minute": 722.0,
+        "end_minute": 737.0,
+        "minutes": 15.0,
+        "violation_fraction": 1.0
+      },
+      {
+        "start_minute": 737.0,
+        "end_minute": 752.0,
+        "minutes": 15.0,
+        "violation_fraction": 0.8
+      }
+    ],
+    "input_contract": "physical command/sensor allowlist only; labels, injection parameters and date names excluded",
+    "response_mechanism": {
+      "current_gap": "No measured damper position or airflow feedback is in this source.",
+      "evidence_basis": "coil-closed stable interval; commanded OA/RA ratio; measured MA residual",
+      "support_minutes": 30.0,
+      "available_minutes": 240.0,
+      "initial_window_start_minute": 375.0,
+      "initial_window_end_minute": 390.0,
+      "later_support_windows": [
+        {
+          "start_minute": 390.0,
+          "end_minute": 405.0,
+          "minutes": 15.0,
+          "violation_fraction": 0.8,
+          "residual_mean_c": 2.6781481481481486,
+          "residual_max_c": 2.866666666666667,
+          "command_fraction_mean": 1.0
+        }
+      ],
+      "threshold_c": 2.54027777777778,
+      "wait_minutes_from_first_eligible": 15.0,
+      "all_windows": [
+        {
+          "start_minute": 375.0,
+          "end_minute": 390.0,
+          "minutes": 15.0,
+          "violation_fraction": 1.0,
+          "residual_mean_c": 2.963703703703703,
+          "residual_max_c": 3.205555555555552,
+          "command_fraction_mean": 1.0
+        },
+        {
+          "start_minute": 390.0,
+          "end_minute": 405.0,
+          "minutes": 15.0,
+          "violation_fraction": 0.8,
+          "residual_mean_c": 2.6781481481481486,
+          "residual_max_c": 2.866666666666667,
+          "command_fraction_mean": 1.0
+        },
+        {
+          "start_minute": 405.0,
+          "end_minute": 420.0,
+          "minutes": 15.0,
+          "violation_fraction": 0.0,
+          "residual_mean_c": 2.1807407407407413,
+          "residual_max_c": 2.433333333333337,
+          "command_fraction_mean": 1.0
+        },
+        {
+          "start_minute": 420.0,
+          "end_minute": 435.0,
+          "minutes": 15.0,
+          "violation_fraction": 0.0,
+          "residual_mean_c": 1.7981481481481483,
+          "residual_max_c": 1.9277777777777807,
+          "command_fraction_mean": 1.0
+        },
+        {
+          "start_minute": 435.0,
+          "end_minute": 450.0,
+          "minutes": 15.0,
+          "violation_fraction": 0.0,
+          "residual_mean_c": 1.5985185185185176,
+          "residual_max_c": 1.6555555555555586,
+          "command_fraction_mean": 1.0
+        },
+        {
+          "start_minute": 450.0,
+          "end_minute": 465.0,
+          "minutes": 15.0,
+          "violation_fraction": 0.0,
+          "residual_mean_c": 1.5385185185185186,
+          "residual_max_c": 1.5833333333333321,
+          "command_fraction_mean": 1.0
+        },
+        {
+          "start_minute": 465.0,
+          "end_minute": 480.0,
+          "minutes": 15.0,
+          "violation_fraction": 0.0,
+          "residual_mean_c": 1.4025925925925935,
+          "residual_max_c": 1.5388888888888914,
+          "command_fraction_mean": 1.0
+        },
+        {
+          "start_minute": 480.0,
+          "end_minute": 495.0,
+          "minutes": 15.0,
+          "violation_fraction": 0.0,
+          "residual_mean_c": 1.210000000000002,
+          "residual_max_c": 1.3333333333333357,
+          "command_fraction_mean": 1.0
+        },
+        {
+          "start_minute": 495.0,
+          "end_minute": 510.0,
+          "minutes": 15.0,
+          "violation_fraction": 0.0,
+          "residual_mean_c": 1.2322222222222232,
+          "residual_max_c": 1.3333333333333357,
+          "command_fraction_mean": 1.0
+        },
+        {
+          "start_minute": 510.0,
+          "end_minute": 525.0,
+          "minutes": 15.0,
+          "violation_fraction": 0.0,
+          "residual_mean_c": 1.200000000000002,
+          "residual_max_c": 1.2722222222222257,
+          "command_fraction_mean": 1.0
+        },
+        {
+          "start_minute": 525.0,
+          "end_minute": 540.0,
+          "minutes": 15.0,
+          "violation_fraction": 0.0,
+          "residual_mean_c": 1.193333333333333,
+          "residual_max_c": 1.2555555555555564,
+          "command_fraction_mean": 1.0
+        },
+        {
+          "start_minute": 540.0,
+          "end_minute": 555.0,
+          "minutes": 15.0,
+          "violation_fraction": 0.0,
+          "residual_mean_c": 1.191481481481483,
+          "residual_max_c": 1.2833333333333385,
+          "command_fraction_mean": 1.0
+        },
+        {
+          "start_minute": 555.0,
+          "end_minute": 570.0,
+          "minutes": 15.0,
+          "violation_fraction": 0.0,
+          "residual_mean_c": 1.2855555555555553,
+          "residual_max_c": 1.4555555555555593,
+          "command_fraction_mean": 1.0
+        },
+        {
+          "start_minute": 570.0,
+          "end_minute": 585.0,
+          "minutes": 15.0,
+          "violation_fraction": 0.0,
+          "residual_mean_c": 1.3803703703703705,
+          "residual_max_c": 1.4888888888888943,
+          "command_fraction_mean": 1.0
+        },
+        {
+          "start_minute": 1042.0,
+          "end_minute": 1057.0,
+          "minutes": 15.0,
+          "violation_fraction": 0.0,
+          "residual_mean_c": 0.5859259259259268,
+          "residual_max_c": 0.7611111111111093,
+          "command_fraction_mean": 1.0
+        },
+        {
+          "start_minute": 1057.0,
+          "end_minute": 1072.0,
+          "minutes": 15.0,
+          "violation_fraction": 0.0,
+          "residual_mean_c": 0.648148148148149,
+          "residual_max_c": 0.8222222222222229,
+          "command_fraction_mean": 1.0
+        }
+      ],
+      "support_windows": [
+        {
+          "start_minute": 375.0,
+          "end_minute": 390.0,
+          "minutes": 15.0,
+          "violation_fraction": 1.0,
+          "residual_mean_c": 2.963703703703703,
+          "residual_max_c": 3.205555555555552,
+          "command_fraction_mean": 1.0
+        },
+        {
+          "start_minute": 390.0,
+          "end_minute": 405.0,
+          "minutes": 15.0,
+          "violation_fraction": 0.8,
+          "residual_mean_c": 2.6781481481481486,
+          "residual_max_c": 2.866666666666667,
+          "command_fraction_mean": 1.0
+        }
+      ],
+      "before_state": "supported_suspicion",
+      "after_state": "damper_supported_by_command_response",
+      "explanation": "A second occupied stable interval with both coil commands closed shows a persistent mixed-air residual against the requested OA/RA ratio. This separates an air-path response issue from coil heat, but does not prove physical stroke without position or flow feedback."
+    },
+    "damper_evidence_status": "supported"
+  },
+  "calibration": {
+    "normal_case_ids": [
+      "5138876d3912",
+      "b5a5b08a1984"
+    ],
+    "response_threshold_c": 2.54027777777778,
+    "threshold_source": "normal-only q95 + 0.20 C; frozen mechanism v1"
+  }
+}

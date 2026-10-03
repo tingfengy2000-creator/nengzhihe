@@ -1,0 +1,12 @@
+# Round5 professional baseline and external physical evidence
+- Work only on enhance/apar-physical-validation, based on round4-review-v2 / 42ea87e. Local commits allowed. No push, release, tag, deployment, or modification of prior rounds.
+- Existing root auto-publish guidance is superseded by the user's 2026-10-03 instruction. Preserve all prior tracked bytes and unrelated uncommitted work.
+- Implement traceable NIST APAR rules, not a deliberately weakened comparator. Distinguish symptom detection, subsystem suspicion, specific fault localization, and action correctness.
+- Old 56 base cases /112 paired records are development and regression only.
+- Select at most one suitable physical AHU source after bounded metadata/schema/document screening. Separate experimental fault injection from simulation and operational field deployment.
+- Establish experiment/date-block split using metadata before examining heldout measurements; freeze adapter, methods, calibration and metrics before heldout execution. Never retune after seeing heldout results.
+- Same sensor/history/calibration opportunity for baseline, baseline+verification and one necessary ablation. No artificial baseline handicap or original-method claims for APAR, modes or energy balances.
+- No additional agent architecture, LLM tuning, large training or unbounded search. Only one minimal improvement if a concrete residual bottleneck justifies it.
+- Reuse round4 UI and human study mechanism. No fake participants or independent expert signatures. Pending human recruitment does not block physical-data work.
+- Any updated presentation/materials follow the four official templates, anonymity and page-level QA; retain original front-end design and old materials.
+- Retain downloads, caches and iteration artifacts; no cleanup. Do not operate on xiangyi-youju or other projects/services.

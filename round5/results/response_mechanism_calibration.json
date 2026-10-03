@@ -1,0 +1,207 @@
+{
+  "base": {
+    "parameters": {
+      "control_epsilon": 0.05,
+      "temperature_floor_c": 0.5,
+      "sensor_margin_c": 0.2,
+      "fan_rise_c": 1.1,
+      "min_temperature_separation_c": 3.0,
+      "window_minutes": 15,
+      "violation_fraction": 0.8,
+      "alarm_minutes": 30,
+      "normal_quantile": 0.99
+    },
+    "fmin": null,
+    "fmin_samples": 0,
+    "thresholds": {
+      "1": 3.534166666666664,
+      "3": 0.5,
+      "4": 0.95,
+      "5": 1.3106666666666669,
+      "6": 0.5,
+      "7": 4.033722222222216,
+      "8": 1.1739444444444487,
+      "9": 0.5,
+      "10": 0.8055555555555596,
+      "11": 0.5,
+      "12": 0.5,
+      "13": 0.5,
+      "14": 0.95,
+      "15": 0.5,
+      "16": 0.5,
+      "17": 0.5,
+      "19": 0.5,
+      "20": 0.95,
+      "21": 0.5,
+      "22": 0.5,
+      "23": 0.5,
+      "24": 0.5,
+      "25": 4.382999999999991,
+      "26": 0.5,
+      "27": 1.3722222222222213,
+      "28": 5.0
+    },
+    "normal_statistics": {
+      "1": {
+        "n_normal_minutes": 192,
+        "normal_q99": 3.334166666666664,
+        "unit": "degC"
+      },
+      "3": {
+        "n_normal_minutes": 0,
+        "normal_q99": null,
+        "unit": "degC"
+      },
+      "4": {
+        "n_normal_minutes": 192,
+        "normal_q99": 0.26,
+        "unit": "saturation"
+      },
+      "5": {
+        "n_normal_minutes": 12,
+        "normal_q99": 1.110666666666667,
+        "unit": "degC"
+      },
+      "6": {
+        "n_normal_minutes": 560,
+        "normal_q99": -1.362111111111109,
+        "unit": "degC"
+      },
+      "7": {
+        "n_normal_minutes": 560,
+        "normal_q99": 3.833722222222216,
+        "unit": "degC"
+      },
+      "8": {
+        "n_normal_minutes": 528,
+        "normal_q99": 0.9739444444444486,
+        "unit": "degC"
+      },
+      "9": {
+        "n_normal_minutes": 528,
+        "normal_q99": -0.19444444444444997,
+        "unit": "degC"
+      },
+      "10": {
+        "n_normal_minutes": 528,
+        "normal_q99": 0.6055555555555595,
+        "unit": "degC"
+      },
+      "11": {
+        "n_normal_minutes": 528,
+        "normal_q99": -0.5141111111111124,
+        "unit": "degC"
+      },
+      "12": {
+        "n_normal_minutes": 528,
+        "normal_q99": -3.4810555555555514,
+        "unit": "degC"
+      },
+      "13": {
+        "n_normal_minutes": 0,
+        "normal_q99": null,
+        "unit": "degC"
+      },
+      "14": {
+        "n_normal_minutes": 528,
+        "normal_q99": 0.3773000000000002,
+        "unit": "saturation"
+      },
+      "15": {
+        "n_normal_minutes": 0,
+        "normal_q99": null,
+        "unit": "degC"
+      },
+      "16": {
+        "n_normal_minutes": 0,
+        "normal_q99": null,
+        "unit": "degC"
+      },
+      "17": {
+        "n_normal_minutes": 0,
+        "normal_q99": null,
+        "unit": "degC"
+      },
+      "19": {
+        "n_normal_minutes": 0,
+        "normal_q99": null,
+        "unit": "degC"
+      },
+      "20": {
+        "n_normal_minutes": 0,
+        "normal_q99": null,
+        "unit": "saturation"
+      },
+      "21": {
+        "n_normal_minutes": 0,
+        "normal_q99": null,
+        "unit": "binary"
+      },
+      "22": {
+        "n_normal_minutes": 0,
+        "normal_q99": null,
+        "unit": "binary"
+      },
+      "23": {
+        "n_normal_minutes": 0,
+        "normal_q99": null,
+        "unit": "binary"
+      },
+      "24": {
+        "n_normal_minutes": 0,
+        "normal_q99": null,
+        "unit": "binary"
+      },
+      "25": {
+        "n_normal_minutes": 732,
+        "normal_q99": 4.182999999999991,
+        "unit": "degC"
+      },
+      "26": {
+        "n_normal_minutes": 1280,
+        "normal_q99": 0.061111111111110755,
+        "unit": "degC"
+      },
+      "27": {
+        "n_normal_minutes": 1280,
+        "normal_q99": 1.1722222222222214,
+        "unit": "degC"
+      },
+      "28": {
+        "n_normal_minutes": 1280,
+        "normal_q99": 2.0,
+        "unit": "transitions"
+      }
+    },
+    "normal_ids": [
+      "5138876d3912",
+      "b5a5b08a1984"
+    ],
+    "disabled_rules": {
+      "2": "minimum outside-air fraction unavailable; fewer than60 eligible normal minutes",
+      "18": "minimum outside-air fraction unavailable; fewer than60 eligible normal minutes"
+    }
+  },
+  "response": {
+    "parameters": {
+      "response_quantile": 0.95,
+      "response_sensor_margin_c": 0.2,
+      "response_floor_c": 0.5,
+      "response_violation_fraction": 0.8,
+      "response_alarm_minutes": 30.0,
+      "coil_closed_epsilon": 0.05
+    },
+    "threshold_c": 2.54027777777778,
+    "normal_q95_c": 2.34027777777778,
+    "normal_minutes": 560,
+    "normal_ids": [
+      "5138876d3912",
+      "b5a5b08a1984"
+    ],
+    "base_calibration_normal_ids": [
+      "5138876d3912",
+      "b5a5b08a1984"
+    ],
+    "interpretation": "requested OA/RA command ratio versus measured MA; command is not actual damper feedback"
+  }
+}

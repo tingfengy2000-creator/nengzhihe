@@ -1,0 +1,89 @@
+{
+  "headers": [
+    "Datetime",
+    "AHU: Supply Air Temperature",
+    "AHU: Supply Air Temperature Heating Set Point",
+    "AHU: Supply Air Temperature Cooling Set Point",
+    "AHU: Outdoor Air Temperature",
+    "AHU: Mixed Air Temperature",
+    "AHU: Return Air Temperature",
+    "AHU: Supply Air Fan Status",
+    "AHU: Supply Air Fan Speed Control Signal",
+    "AHU: Outdoor Air Damper Control Signal  ",
+    "AHU: Return Air Damper Control Signal",
+    "AHU: Exhaust Air Damper Control Signal    ",
+    "AHU: Cooling Coil Valve Control Signal",
+    "AHU: Heating Coil Valve Control Signal",
+    "Occupancy Mode Indicator",
+    "Fault Detection Ground Truth"
+  ],
+  "dates": {
+    "9/11/2017": {
+      "rows": 1440,
+      "source_binary_label_counts": {
+        "1": 1440
+      }
+    },
+    "9/12/2017": {
+      "rows": 1440,
+      "source_binary_label_counts": {
+        "1": 1440
+      }
+    },
+    "9/14/2017": {
+      "rows": 1440,
+      "source_binary_label_counts": {
+        "1": 1440
+      }
+    },
+    "9/15/2017": {
+      "rows": 1440,
+      "source_binary_label_counts": {
+        "1": 1440
+      }
+    },
+    "9/18/2017": {
+      "rows": 1440,
+      "source_binary_label_counts": {
+        "1": 1440
+      }
+    },
+    "9/19/2017": {
+      "rows": 1440,
+      "source_binary_label_counts": {
+        "1": 1440
+      }
+    },
+    "9/20/2017": {
+      "rows": 1440,
+      "source_binary_label_counts": {
+        "0": 1440
+      }
+    },
+    "9/21/2017": {
+      "rows": 1440,
+      "source_binary_label_counts": {
+        "0": 1440
+      }
+    },
+    "9/22/2017": {
+      "rows": 1440,
+      "source_binary_label_counts": {
+        "1": 1440
+      }
+    },
+    "9/23/2017": {
+      "rows": 1440,
+      "source_binary_label_counts": {
+        "0": 1440
+      }
+    },
+    "9/24/2017": {
+      "rows": 1439,
+      "source_binary_label_counts": {
+        "0": 1439
+      }
+    }
+  },
+  "sensor_values_inspected": false
+}

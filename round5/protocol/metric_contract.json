@@ -1,0 +1,17 @@
+{
+  "scope": "Round5 external physical validation; old round4 56/112 records are regression only",
+  "objects": {
+    "suspicion_detection": "An APAR rule-family violation is present for a sustained eligible window. This is a fault signal, not a unique component diagnosis.",
+    "fault_detection": "Binary any-fault comparison made after inference against the independent CSV ground-truth label; all normal and fault cases remain in the denominator.",
+    "fault_localization": "A component attribution is counted only when the declared component matches the independent experiment label. Unsupported damper attribution is an error, not a correct suspicion.",
+    "next_action_correctness": "Whether the requested point/time/action is independently judged appropriate. No participant or independent expert review exists yet, so this remains unscored.",
+    "coverage": "Resolved candidate state / all cases; unresolved and not-testable cases remain in the denominator.",
+    "external_applicability": "Cases with all required points, valid actual time intervals, and at least one eligible APAR window divided by all selected experiment days; this is a data applicability ratio, not diagnostic accuracy."
+  },
+  "methods": {
+    "apar": "NISTIR6994 APAR rules adapted to the documented FLEXLAB SZVAV sequence; no workflow consistency gate.",
+    "apar_plus_verification": "The same APAR rules, input points, calibration, thresholds and windows, with the predeclared independent inlet-temperature consistency check before damper-related suspicion is reported.",
+    "without_consistency": "Necessary ablation: the same APAR-plus-verification path with only the inlet-temperature consistency check removed. It is not a weak baseline."
+  },
+  "rules": ["No label, date, fault filename, injection setting or ground-truth field enters adapter signals or APAR evaluation.", "All cases, dates, normal controls and fault controls are scored.", "A no-alarm result never implies normal equipment.", "Control command is not actual actuator feedback; damper attribution is conditional and may remain unresolved."]
+}

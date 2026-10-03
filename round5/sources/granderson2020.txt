@@ -1,0 +1,2263 @@
+PAGE 1
+Building fault detection data to aid diagnostic 
+algorithm creation and performance testing
+Jessica Granderson1, Guanjing Lin1, Ari Harding1, Piljae 
+Im2, Yan Chen3
+1Lawrence Berkeley National Laboratory; 2Oak Ridge National 
+Laboratory, 3Pacific Northwest National 
+Laboratory
+Energy Technologies Area 
+March 2020
+Please cite as: 
+Granderson, J., Lin, G., Harding, A., Im, P. and Chen, Y., 
+2020. Building fault detection data to aid diagnostic algorithm 
+creation and performance testing. Scientific Data, 7(65)..
+PAGE 2
+ 
+Disclaimer: 
+This document was prepared as an account of work sponsored by the United States Government. 
+While this document is believed to contain correct information, neither the United States 
+Government nor any agency thereof, nor the Regents of the University of California, nor any of 
+their employees, makes any warranty, express or implied, or assumes any legal responsibility for 
+the accuracy, completeness, or usefulness of any information, apparatus, product, or process 
+disclosed, or represents that its use would not infringe privately owned rights. Reference herein 
+to any specific commercial product, process, or service by its trade name,  trademark, 
+manufacturer, or otherwise, does not necessarily constitute or imply its endorsement, 
+recommendation, or favoring by the United States Government or any agency thereof, or the 
+Regents of the University of California. The views and opinions of a uthors expressed herein do 
+not necessarily state or reflect those of the United States Government or any agency thereof or 
+the Regents of the University of California. 
+ 
+Acknowledgments: 
+This work was supported by the Assistant Secretary for Energy Efficiency and Renewable 
+Energy, Building Technologies Office, of the U.S. Department of Energy under Contract No. DE-
+AC02-05CH11231. 
+ 
+PAGE 3
+1 
+ 
+Building fault detection data to aid diagnostic algorithm creation 1 
+and performance testing  2 
+ 3 
+Jessica Granderson 1, Guanjing Lin 1, Ari Harding 1, Piljae Im 2, Yan 4 
+Chen3 5 
+ 6 
+1. Lawrence Berkeley National Laboratory 7 
+2. Oak Ridge National Laboratory 8 
+3. Pacific Northwest National Laboratory 9 
+ 10 
+Corresponding authors: Jessica Granderson (JGranderson@lbl.gov), Guanjing Lin 11 
+(GJLin@lbl.gov) 12 
+ 13 
+Abstract 14 
+It is estimated that approximately 4-5% of national energy consumption can be saved through 15 
+corrections to existing commercial building controls infrastructure and resulting 16 
+improvements to efficiency. Correspondingly, automated fault detection and diagnostics 17 
+(FDD) algorithms are designed to identify the presence of  operational faults and their root 18 
+causes.  A diversity of techn iques is used for FDD spanning physical models, black box, and 19 
+rule-based approaches. A persistent challenge has been the lack of common datasets and test 20 
+methods to benchmark their performance accuracy.   21 
+ 22 
+This article presents a first of its kind public  dataset with ground-truth data on the presence 23 
+and absence of building faults. This dataset spans a range of seasons and operational 24 
+conditions and encompasses multiple building system types. It contains information on fault 25 
+severity, as well as data points reflective of the measurements in building control systems that 26 
+FDD algorithms typically have access to . The data were created using simulation models as 27 
+well as experimental test facilities, and will be expanded over time.  28 
+ 29 
+ 30 
+Background & Summary 31 
+Buildings use 40% of primary energy globally, and account for 33% of direct and indirect 32 
+carbon emissions from fuel combustion 1. In US commercial buildings, an average 29% of 33 
+energy use can be reduced through more efficiency operations and improved controls 2. 34 
+Algorithms developed to perform automated fault detection and diagnostics (FDD) use 35 
+building operational data to identify the presence of faults and (in some cases) isolate their 36 
+root causes.   37 
+ 38 
+As buildings become more data rich, and as data science comes t o buildings, FDD is of 39 
+increasing relevance to the building community. Outside of the research community, building 40 
+owners and operators at the leading edge of technology adoption are using AFDD to enable 41 
+median whole-building portfolio savings of 7%3. Modern commercial and research-grade FDD 42 
+technologies often integrate with building automation systems (BAS) to obtain operational 43 
+controls data for their algorithms, or are implemented as retrofit add -ons to existing 44 
+equipment. Extensive libraries of detectio n logic  are continuously run against the data, and 45 
+results are surfaced through a grap hical user interface for resolution by operations and 46 
+maintenance staff4. 47 
+ 48 
+A diversity of techniques is used for FDD in buildings, spanning physical models, black box, and 49 
+rule-based approaches  and researchers continuously strive to develop new and better 50 
+algorithms, with hundreds of methods published in the literature5. A persistent challenge has 51 
+PAGE 4
+2 
+ 
+been the lack of common datasets and test methods to support the development of, and to 52 
+benchmark the performance accuracy of FDD methods  against one another . Prior work has 53 
+made progress toward common test methods6,7, however test datasets remain a gap. 54 
+ 55 
+Overall, there are limited examples of publicly available operational datasets for building 56 
+energy efficiency applications. For example, utility smart meter data, HVAC control system 57 
+data, lighting system data, and submetered electricity and gas data are often obtained on a 58 
+research-project specific data, and restricted by NDAs or other data sharing restrictions. There 59 
+is a nascent body of shared operational datasets for buildings, including for example8,9,10. 60 
+ 61 
+Specific to FDD applications, it is extremely rare to find datasets that have verified ground 62 
+truth information on the pre sence and absence of faults. The majority of buildings have not 63 
+yet implemented FDD,  and often faults go undetected. Where FDD tools have been 64 
+implemented, the historians do not indicate whether detected faults were verified, and false 65 
+positives and negati ves may confound interpretation of the historic records. While BAS are 66 
+common in larger buildings, and may contain time series trend logs of operational data in their 67 
+historians, these data are not labeled to indicate whether it represents faulted, un-faulted, or 68 
+simply atypical/anomalous system operational states. 69 
+ 70 
+The dataset described in this article contains operational building heating ventilation and air-71 
+conditioning (HVAC) data, paired with validated ground-truth information as to the presence 72 
+and absence of faults. This dataset spans a range of seasons and operational conditions and 73 
+encompasses multiple building system types, fault types, and fault severity, or intensity levels. 74 
+The systems of focus include air-handling units (AHUs) and rooftop units (RTUs). The included 75 
+data points reflect measurements that are typically logged in building control systems . The 76 
+dataset comprises both simulated (i.e., modeled) data, and experimental (i.e., physical) data 77 
+from test facilities. The data were provided by multiple contributors, and synthesized into a 78 
+single repository with a common format and documentation. 79 
+ 80 
+The test dataset can be used by FDD developers, FDD users, and research funders to: 81 
+● Compare and contrast performance accuracy across FDD algorithms 82 
+● Identify performance gaps to focus future development efforts and resource 83 
+investment 84 
+● Develop an understanding of how FDD technology overall is improving over time 85 
+ 86 
+A preliminary illustration of use of the dataset to compare and contrast FDD algorithm 87 
+performance accuracy and identify performance gaps is documented in 11. This initial dataset 88 
+will be expanded over time to cover a larger range of operational conditions, fault types, and 89 
+seasons. It will also be evolved to include a larger set of HVAC systems, specifically, chiller and 90 
+boiler plants, dual-duct AHUs, terminal variable air volume (VAV) boxes, and terminal fan coil 91 
+units.  92 
+ 93 
+ 94 
+Methods 95 
+The dataset 12 comprises 5 AHU and RTU HVAC system types, created either through 96 
+simulation, or in physical experimental  facilities by multiple contributors. In the following 97 
+sections we describe : the tools and facilities used to create the data, system configurations 98 
+and control sequences, fault profiles (type, intensities and durations), and methods of fault 99 
+imposition.  100 
+ 101 
+Facilities and simulation tools  102 
+PAGE 5
+3 
+ 
+The simulated datasets were created using HVAC SIM+ and an EnergyPlus -Modelica co-103 
+simulation. HVACSIM+ was developed by the US National Institute for Standards and 104 
+Technology13, the Modelica Buildings Library14 is developed by the Lawrence Berkeley National 105 
+Laboratory, and EnergyPlus15 is developed by several contributors through funding from  the 106 
+US Department of Energy . Described with respect to other modeling tools in16, HVACSIM+, 107 
+Modelica, and EnergyPlus are non-proprietary tools to model the behavior of building HVAC 108 
+systems using physics-based approaches.  109 
+  110 
+The experimental datasets were created using three experimental research facilities. Located 111 
+at the Lawrence Berkeley National Laboratory in Berkeley, California, FLEXLAB 17 is designed 112 
+to evaluate the efficacy of major building systems, individually or as an integrated  whole, 113 
+under real-world conditions. FLEXLAB testbeds can monitor and assess heating, ventilation, air 114 
+conditioning, lighting, windows, building envel ope, control systems and plug loads in any 115 
+combination. Each building in the facility features to identical paired test cell. The facility is 116 
+operated through a National Instruments control and data acquisition platform. The test cell 117 
+used to create the da taset described in this paper comprised a 20- by 25-foot (6.1- by 7.6-118 
+meter) zone served by a 10 -ton (35.2-ton) direct expansion chiller shared with the adjacent 119 
+cell. The test cell contains a dedicated air -handling unit with water -sourced heating and 120 
+cooling coils and a direct-drive variable frequency drive (VFD) controlled fan. Heating water is 121 
+provided by a natural gas boiler. The test cell features a south-facing windowed wall, insulated 122 
+concrete slab, and otherwise near-adiabatic walls and roof. 123 
+ 124 
+Two experimental data sets were taken  in FLEXLAB, one in single -zone constant air volume 125 
+(CAV) mode and one based on ASHRAE Guideline 3618 single-zone variable air volume ( VAV) 126 
+mode. Both were implemented in National Instruments’ Test Stand programming 127 
+environment. The CAV mode included a modulating, staged economizer for cooling mode. 128 
+ 129 
+Located at the Oak Ridge National Laboratory in Oak Ridge Tennessee, the Flexible  Research 130 
+Platform (FRP)19 is a two-story building with 10 conditioned zones and 2 unconditioned zones 131 
+(i.e., stair case). The building is 13.4 x 13.4m with a 40.6cm thick exterior wall. The 10 132 
+conditioned zones comprise eight perimeters and two cores areas. The multi -zone HVAC 133 
+system used for the data described in this paper incorporates a 44kW RTU and a natural gas 134 
+furnace.. Each room in the FRP has a variable -air-volume (VAV) box with electric resistance 135 
+reheat. The central fan in the air-handling unit draws return air from each room. To create the 136 
+data, the original intake for the fresh air in the RTU was blocked (i.e., no ventilation air) and 137 
+an exhaust fan (with a known air flow rate) was left un-operated. The facility uses a dedicated 138 
+Johnson Controls Metasys building automation system, through which the room set point 139 
+temperatures, schedules, and other controls were implemented. 140 
+ 141 
+Located at the Iowa Energy Center in Ames City, Iowa, the Energy Resource Station facility was 142 
+built to compare different energy efficiency measures and monitor their energy consumption 143 
+and performance. The test system w as controlled by a commercially available building 144 
+automation system. The fault tests were conducted on an AHU serving three perimeters, and 145 
+one interior zone. The system was configured to provide variable air volume space 146 
+conditioning. The chilled water is provided from an air-cooled chiller and the heating water is 147 
+provided by a natural gas-fired boiler. More detailed information about this facility is provided 148 
+in20. 149 
+ 150 
+System configurations and control sequences 151 
+Single-zone constant air volume (CAV) and variable air volume (VAV) AHU 152 
+PAGE 6
+4 
+ 
+Figure 1 contains the schematic representation of the single-zone AHU. 153 
+ 154 
+ 155 
+Figure 1. Schematic diagram of the single-zone AHU. 156 
+Control sequence for the CAV configuration: The AHU is scheduled for automatic operation on 157 
+a time of day basis for occupied and unoccupied mode. There is no dehumidification control. 158 
+Occupied mode (Monday-Sunday 6am-6pm) 159 
+ Fan status: The supply fan continues to run. 160 
+ Supply air temperature control: the cooling coil valve and heating coil valve shall 161 
+modulate to maintain a SAT setpoint. The SAT setpoint is reset within T_min (10°C) 162 
+and T_max (30°C) based on zone demand. 163 
+ Supply air fan speed control: The supply fan speed is fixed at 50%. 164 
+ Minimum outdoor air control: When the unit is not in economizer mode, the  OA 165 
+damper shall be fixed at a minimum OA damper position (15% opening). 166 
+ Economizer mode: The AHU shall enter economizer mode when outdoor air 167 
+temperature is 2°C lower than the return air temperature. The OA damper will 168 
+gradually open to 100%, then RA damper will gradually close to 0% and EA damper 169 
+will gradually open to 100%. 170 
+ Space temperature control: The zone heating and cooling setpoint are 21.7°C and 171 
+23.3°C during the occupied time period. 172 
+Unoccupied mode 173 
+ The supply fan is on. The OA and EA damper close and the RA damper fully open. 174 
+ Unoccupied heating: zone air temperature heating setpoint is 18.3°C. 175 
+ Unoccupied cooling: zone air temperature cooling setpoint is 26.7°C. 176 
+Control sequence for the VAV configuration: This was an advanced sequence modified from, 177 
+and based upon the ASHRAE Guideline 36. The AHU was scheduled for automatic operation 178 
+on a time of day basis for occupied and unoccupied mode. There was no dehumidification 179 
+control. 180 
+
+PAGE 7
+5 
+ 
+Occupied mode (Monday-Sunday 6am-6pm) 181 
+ Fan status: The supply fan continues to run. 182 
+ Supply air temperature control:  In cooling mode, the heating coil valve is closed 183 
+and the cooling coil valve shall modulate to maintain a SAT setpoint. The SAT 184 
+cooling setpoint is reset within T_min (12.8°C) and T_max (22.5°C) based on zone 185 
+demand; In heating mode, the cooling coil valve is closed and the heating coil valve 186 
+shall modulate to maintain a supply air temperature (SAT) setpoint. The SAT 187 
+cooling setpoint is reset within T_min (22.5°C) and T_max (30°C) based on zone 188 
+demand. In economizer mode, the OA damper shall modulate to maintain the SAT 189 
+heating setpoint. 190 
+ Supply air fan speed control: The supply fan speed is reset between minimum 191 
+(10%) and maximum speed (50% in cooling mode, 30% in heating mode) based on 192 
+zone demand. The minimum speed is determined to meet the ventilation with the 193 
+OA damper completely open. The maximum speed is determined to provide 194 
+design heating/cooling airflow for heating/cooling mode. 195 
+ Minimum outdoor air control: When the unit is not in economizer mode, the OA 196 
+damper shall be fixed at a minimum OA damper position which is reset based on 197 
+supply fan speed between minimum (10%) and maximum (15%). Return air 198 
+damper is fully open and exhaust air damper is fully closed. 199 
+ Economizer mode: The AHU shall enter economizer mo de when outdoor air 200 
+temperature is 2°C lower than the return air temperature. The OA damper will 201 
+open to 100%, while RA damper will gradually close to 0% and EA damper will 202 
+gradually open to 100%. 203 
+ Space temperature control: The zone heating and cooling setpoint are 21.7°C and 204 
+23.3°C during the occupied time period. 205 
+Unoccupied mode 206 
+ The supply fan run at minimum speed (10%). The system operates in the same 207 
+way as in occupied mode to when the space temperature beyond the unoccupied 208 
+heating/cooling setpoint, and disabled when the setpoint +/- 2°C is achieved. 209 
+ Unoccupied heating: zone air temperature heating setpoint is 18.3°C. 210 
+ Unoccupied cooling: zone air temperature cooling setpoint is 26.7°C. 211 
+Multi-zone VAV AHU #1 212 
+Figure 2 contains the schematic representation of the multi-zone VAV AHU #1. 213 
+PAGE 8
+6 
+ 
+ 214 
+Figure 2: Schematic diagram of multi-zone VAV AHU #1. 215 
+Control sequence: The control sequence was modified from, and based on ASHRAE 90.1 -216 
+198921 and 199922. The AHU was scheduled for automatic operation on a time of day basis for 217 
+occupied and unoccupied mode. There was no dehumidification control. 218 
+Occupied mode (Monday – Saturday 6am – 8pm) 219 
+ 220 
+ Fan status: The supply fan and return fan starts or continue to run.  221 
+ Supply air temperature control: The cooling coil valve shall modulate to maintain 222 
+a fixed 12.7°C supply air temperature setpoint.   223 
+ Static pressure control: The supply fan VFD shall modulate to maintain a fixed 224 
+250pa static pressure set point. Return fan VFD is controlled as the same as supply 225 
+fan. 226 
+ Minimum outdoor air control: When the unit is not in economizer mode, the OA 227 
+damper shall be fixed at a minimum OA damper position (14% opening) 228 
+ Economizer mode: The AHU shall enter economizer mode when outdoor air 229 
+temperature is below 15.5 °C. The OA damper will modulate in seq uence with 230 
+return air damper to maintain the supply air temperature setpoint. The cooling 231 
+coil valve will be closed. Once the OA damper is greater than 100% open. The 232 
+cooling coil valve shall be enable to maintain supply air temperature setpoint 233 
+ VAV box reheating coil valve and airflow control: In cooling mode, when the zone 234 
+cooling setpoint is met, VAV airflow is 30% of max flow rate; when the zone 235 
+temperature is -1.7°C higher than the setpoint, the damper is 100% open or max 236 
+airflow rate, when zone temperature is between the setpoint and setpoint +1.7°C, 237 
+the damper modulate so that the airflow rate is 30% and 100% of max flow rate.  238 
+In heating mode, VAV airflow is 30% of max flow rate, when the zone temperature 239 
+is -1.7°C lower than the setpoint, the heatin g coil valve is fully open; when the 240 
+zone temperature is at zone temperature heating setpoint, the heating coil valve 241 
+is 0% open. When zone temperature is between the heating setpoint and setpoint 242 
+-1.7°C, the heating coil modulate between 0% to 100%. When the zone 243 
+temperature is between zone cooling setpoint and heating setpoint, VAV airflow 244 
+is 30% of max flow rate. 245 
+
+PAGE 9
+7 
+ 
+ Space temperature control: The zone heating and cooling setpoint are 21.1°C and 246 
+23.8°C during the occupied time period. 247 
+ 248 
+Unoccupied mode 249 
+ 250 
+ Fan status: The supply fan is off. The cooling coil valve closes and the OA damper 251 
+close. The return fan is controlled as the same as supply fan. System cycling ON 252 
+and OFF to maintain the unoccupied heating and cooling setpoint. 253 
+ Unoccupied heating: zone air temperature heating setpoint is 15.5°C.   254 
+ Unoccupied cooling: zone air temperature cooling setpoint is 26.6°C   255 
+ 256 
+Multi-zone VAV AHU #2 257 
+Figure 3 contains the schematic representation of the Multi-zone AHU #2 . An experimental 258 
+dataset and a simulated data set were created based on Multi-zone AHU #2. 259 
+ 260 
+Figure 3: Schematic diagram of multi-zone VAV AHU #2. 261 
+Control sequence: The AHU is scheduled for automatic operation on a time of day basis 262 
+for occupied and unoccupied mode. There is no dehumidification control. 263 
+Occupied mode (Monday - Sunday 6am -6pm) 264 
+ 265 
+ Fan status: The supply fan and return fans start or continue to run.  266 
+ Supply air temperature control: The cooling coil valve shall modulate to 267 
+maintain a fixed 12.7°C supply air temperature setpoint.  When the 268 
+outdoor air damper is in the minimum position and mechanical heating is 269 
+required (output from the PI control algorithm drops below 0) causing the 270 
+control sequence to switch to the mechanical heating mode.  During the 271 
+mechanical heating mode, the valve for the AHU heating coil is modulated 272 
+to maintain a fixed 18.3°C supply air temperature setpoint.   273 
+
+PAGE 10
+8 
+ 
+ Static pressure control: The supply fan VFD shall modulate to maintain a 274 
+fixed 9653Pa static pressure set point. The return fan is operated with a 275 
+speed tracking control sequence (80% of supply fan speed). 276 
+ Minimum outdoor air control: When the unit is not in economizer mode, 277 
+the OA damper shall be fixed at a minimum OA damper position (40% 278 
+opening) 279 
+ Economizer mode: The AHU shall enter economizer mode when outdoor 280 
+air tem perature is below 18.3°C. The OA damper will modulate in 281 
+sequence with return air damper to maintain the supply air temperature 282 
+setpoint. The cooling coil valve will be closed. Once the OA damper is 283 
+greater than 100% open. The cooling coil valve shall be enable to maintain 284 
+supply air temperature setpoint 285 
+ VAV box reheating coil valve and airflow control: If zone temperature is 286 
+less than zone heating setpoint, then a heating case exists.  The VAV 287 
+damper is regulated to maintain a minimum air flow rate, determ ined 288 
+either for indoor air quality or equipment limitations.  The reheating valve 289 
+is regulated by a dual PI (DPI) algorithm to supply enough heated water 290 
+flowing through the reheating coil to increase the entering air 291 
+temperature to bring zone air temperature above heating setpoint.  When 292 
+zone air temperature is higher than the zone cooling setpoint,  then a 293 
+cooling case exists.  The reheating valve position is at 0 %.  The VAV 294 
+damper is opened to bring in more supply air to cool the zone.  The air 295 
+flow rate entering the zone may be varied between the minimum value 296 
+and the maximum value, which is the rated maximum flow rate for the 297 
+VAV unit.  An air flow rate setpoint is determined by scaling the DPI output 298 
+between minimum and maximum values.  Another PI the n regulates the 299 
+damper position to maintain air flow rate setpoints. Maximum air flow 300 
+rate is 1699 cubic m/hr for exterior zones and 680 cubic m/hr for interior 301 
+zones.  Minimum air flow rate is 340 cubic m/hr for all zones 302 
+ Space temperature control: The zo ne heating and cooling setpoint are 303 
+21.1°C and 22.2°C during the occupied time period. 304 
+ 305 
+Unoccupied mode 306 
+ 307 
+ The fans are turned off, and the dampers and valves are indexed to a fully 308 
+closed position. Fully closed dampers and valves refers to 100 % return air 309 
+with both the heated and chilled water valves closed. 310 
+Rooftop unit 311 
+Figure 4 contains the schematic representation of the RTU. 312 
+PAGE 11
+9 
+ 
+ 313 
+Figure 4. Schematic diagram of the RTU and connected 10 VAV boxes serving 10 zones. 314 
+Control sequence for the RTU: The AHU is scheduled for automatic operation on a time of day 315 
+basis for occupied and unoccupied mode.  316 
+Occupied mode (Monday-Sunday 7am-10pm) 317 
+ Supply air temperature control: the cooling coil valve and heating coil valve shall 318 
+modulate to maintain a SAT setpoint. The SAT setpoint is 12.7°C year-round  319 
+ Space temperature control: The zone heating and cooling setpoint are 21°C and 320 
+24°C during the occupied time period  321 
+ The exception was for the condenser fouling test, for which occupied mode 322 
+started at 6:38am and ended at 9:38pm 323 
+Unoccupied mode 324 
+ Unoccupied heating: zone air temperature heating setpoint is 15.5°C  325 
+ Unoccupied cooling: zone air temperature cooling setpoint is 26.6°C 326 
+Fault profiles  327 
+Table 1 summarizes the faulted and unfaulted scenarios for the AHU data, including the fault 328 
+type, intensity, and season in which data were acquired. Each cell contains the number of days 329 
+for which data were acquired for each scenario. Table 2 contains the same information for the 330 
+RTU data. 331 
+
+PAGE 12
+10 
+ 
+Input Scenarios MZVAV AHU-1 
+(Sim) 
+MZVAV 
+AHU-2 
+(Exp) 
+MZVAV AHU-2 
+(Sim) 
+SZCAV 
+AHU 
+(Exp) 
+SZVAV 
+AHU 
+(Exp) 
+Fault Type Fault 
+Intensity 
+Sp Sum F W Sp Sum Sp Sum W W Sum 
+OA 
+Damper 
+Stuck Min 
+position 
+      1  1  1 
+Fully 
+open 
+         1 1 
+40% 
+open 
+      1     
+45% 
+open 
+       1    
+50% 
+open 
+       1  1  
+Valve of 
+Heating 
+Coil 
+Stuck Fully 
+Closed 
+         1  
+50% 
+open 
+         1 1 
+Fully 
+Open 
+         1 1 
+Leaking Low      1  1  1  
+Medium      1  1    
+High      1  1  1 1 
+Valve of 
+Cooling 
+Coil 
+Stuck Fully 
+Closed 
+      1   1  
+Fully 
+Open 
+      1 1  1 1 
+15% 
+Open 
+       1    
+50% 
+Open 
+         1  
+65% 
+Open 
+       1    
+Leaking Low           1  
+High          1 1 
+Outdoor 
+Air 
+Temper
+ature 
+Bias +1°C 7 7 7 7        
++2°C 7 7 7 7        
++4°C 7 7 7 7        
+-1°C 7 7 7 7        
+-2°C 7 7 7 7        
+-4°C 7 7 7 7        
+Unfaulted 7 7 7 7 4 3 3 9 1 1 4 
+ 332 
+Table 1. Fault profiles for the AHU data; Sim = Simulated, Exp = Experimental, Sp = Spring, Sum 333 
+= Summer, F = Fall, W = Winter. 334 
+PAGE 13
+11 
+ 
+ 335 
+ 336 
+Input scenarios Season 
+Fault type Fault intensity Sum W F 
+Condenser fouling 
+25% reduction in condenser coil 
+air flow full load 1   
+50% reduction in condenser coil 
+air flow full load  
+ 
+1   
+HVAC setback error: delayed 
+onset 3-hour onset delay  1  
+HAV setback error: early 
+termination 3-hour early termination  1  
+Excessive infiltration  
++20% infiltration  1  
++40% infiltration  1  
+Lighting Setback Error: Delayed 
+Onset 3-hour onset delay  1  
+Lighting Setback Error: Early 
+Termination 3-hour early termination  1  
+No Overnight HVAC Setback No setback  1  
+No Overnight Lighting Setback No setback  1  
+Thermostat measurement bias 
+Bias of +2.2°C (Core zone 103)  1  
+Bias of -2.2C (Core zone 103)  1  
+Bias of +2.2(Perimeter zone 
+205)  1  
+Bias of -2.2(Perimeter zone 
+205)  1  
+Unfaulted   6 1 
+ 337 
+Table 2. Fault profiles for the RTU data; Sum = Summer, F = Fall, W = Winter. 338 
+ 339 
+ 340 
+Methods of fault imposition 341 
+Tables 3 through 8  summarize how each fault was imposed for each of the represented 342 
+systems and fault scenarios. 343 
+  344 
+PAGE 14
+12 
+ 
+ 345 
+ 346 
+Input Scenarios 
+Method of fault imposition 
+Fault type Fault intensity 
+OA damper 
+Stuck 
+Fully open (100%) Automated override of control signal 
+values to indicate that OA damper is 
+stuck. Partially open (50%) 
+Leaking 
+20% of max damper flow If control signal drops below X%, fix 
+control output at X%. Otherwise damper 
+controls normally. X = 2 at 20% intensity, 
+and = 10 at 50% intensity 50% of max damper flow 
+Valve of 
+Heating Coil 
+Stuck 
+Fully closed (0%) 
+Automated override of control signal 
+values to indicate that heating coil valve 
+is stuck. 
+Fully open (100%) 
+Partially open (50%) 
+Leaking 
+5% of max coil valve flow Open heating coil bypass valve to 
+5%/40% of the maximum heating coil 
+valve flow. 40% of max coil valve flow 
+Valve of 
+Cooling Coil 
+Stuck 
+Fully closed (0%) 
+Automated override of control signal 
+values to indicate that cooling coil valve 
+is stuck 
+Fully open (100%) 
+Partially open (50%) 
+Leaking 
+5% of max coil valve flow Open heating coil bypass valve to 
+5%/50% of the maximum heating coil 
+valve flow. 50% of max coil valve flow 
+Unfaulted -- 
+ 347 
+Table 3. Methods of fault imposition for each of the single-zone CAV AHU faults. 348 
+  349 
+PAGE 15
+13 
+ 
+ 350 
+Input Scenarios Method of fault imposition 
+Fault type Fault intensity 
+OA Damper Stuck 
+Minimum position 
+Automated override of control signal values 
+to indicate that OA damper is stuck. 
+Fully open (100%) 
+Valve of 
+Heating Coil 
+Stuck 
+Fully open (100%) 
+Automated override of control signal values 
+to indicate that heating coil valve is stuck. 
+Partially open (50%)  
+Leaking 40% of max coil valve flow Open heating coil bypass valve to 40% of 
+the maximum heating coil valve flow. 
+Valve of 
+Cooling Coil 
+Stuck Fully open (100%) Automated override of control signal values 
+to indicate that cooling coil valve is stuck 
+Leaking 50% of max coil valve flow Open heating coil bypass valve to 50% of 
+the maximum heating coil valve flow. 
+Unfaulted -- 
+ 351 
+Table 4. Methods of fault imposition for each of the single-zone VAV AHU faults. 352 
+ 353 
+ 354 
+Input Scenarios 
+Fault type Fault intensity 
+Outdoor air temperature sensor bias 
+(x is the true value, x’ is the faulted value) 
+x' =x + 1(°C) 
+x' =x + 2(°C) 
+x' =x + 4(°C) 
+x' =x - 1(°C) 
+x' =x - 2(°C) 
+x' =x - 4(°C) 
+Unfaulted - 
+Table 5. Methods of fault imposition for each of the multi-zone VAV AHU #1 faults.  355 
+PAGE 16
+14 
+ 
+Input Scenarios 
+Method of fault imposition 
+Fault type Fault intensity 
+Valve of 
+Heating Coil Leaking 
+Stage 1: 1.5 SLM 
+(Standard liter per 
+minute)  
+Manually open heating coil bypass valve Stage 2: 3.7 SLM 
+Stage 3: 7.5 SLM 
+Unfaulted - 
+Table 6. Methods of fault imposition for each of the multi-zone VAV AHU #2.1 faults. 356 
+ 357 
+Input Scenarios 
+Method of fault imposition 
+Fault type Fault intensity 
+OA Damper Stuck 
+Fully closed 
+Automated override of control signal values 
+to indicate that OA damper is stuck. 
+40% open 
+45% open 
+55% open 
+Valve of Heating 
+Coil Leaking 
+Stage 1: 1.5 SLM 
+Manually open heating coil bypass valve Stage 2: 3.7 SLM 
+Stage 3: 7.5 SLM 
+Valve of Cooling 
+Coil Stuck 
+Fully closed 
+Automated override of control signal values 
+to indicate that cooing coil valve is stuck. 
+Fully open 
+Partially open 15% 
+Partially open 65% 
+Unfaulted - 
+Table 7. Methods of fault imposition for each of the multi-zone VAV AHU #2.2 faults. 358 
+PAGE 17
+15 
+ 
+ 359 
+Input Scenarios 
+Method of fault imposition 
+Fault type Fault intensity 
+Condenser 
+Fouling 
+25% reduction in condenser coil 
+air flow full load 
+Cover the condenser face using 
+screen, mesh, or cloth 
+50% reduction in condenser coil 
+air flow full load 
+HVAC Setback Error: Delayed 
+Onset 3-hour onset delay Modify the control programming 
+HVAC Setback Error: Early 
+Termination 3-hour early termination Modify the control programming 
+Excessive infiltration 
++20% infiltration 
+Open windows to achieve target 
+infiltration area 
++40% infiltration 
+Lighting Setback Error: Delayed 
+Onset 3-hour onset delay Modify the control programming 
+Lighting Setback Error: Early 
+Termination 3-hour early termination Modify the control programming 
+No Overnight HVAC Setback No setback Modify the control programming 
+No Overnight Lighting Setback No setback Modify the control programming 
+Thermostat measurement bias 
+Bias of +2.2°C (Core zone 103) 
+Adjust the temperature set point 
+Bias of -2.2°C (Core zone 103) 
+Bias of +2.2°C (Perimeter zone 
+205) 
+Bias of -2.2°C (Perimeter zone 
+205) 
+Unfaulted - 
+Table 8. Methods of fault imposition for each of the rooftop unit faults. 360 
+Code availability 361 
+PAGE 18
+16 
+ 
+The Modelica Buildings Library and EnergyPlus are freely available for download23,24. 362 
+EnergyPlus runs on Windows, Mac OSX, and Linux  operating systems. A Windows or Linux -363 
+based computer and Dymola solver are required to run Modelica, and Dymola can be licensed 364 
+from Modelica Buildlings Library. HVACSim+ is also freely available, upon request from NIST , 365 
+and has no operating system requirements. The HVACSim+ AHU model that was used in this 366 
+work is available within the ASHRAE Research Project 1312 Results25. 367 
+ 368 
+The data acquisition system that is implemented in FLEXLAB comprises a custom-built National 369 
+Instruments platform utilizing distributed Compact RIOs (cRIO s), PC -based servers and 370 
+workstations, and a Unix-based database running sMAP2.026. Data are typically collected and 371 
+recorded at a one -second (1 Hz) rate with averaging to one minute for database storage  – 372 
+suitable for  most research purposes. 1  Hz da ta are stored in CSV files for use as needed. 373 
+Control and data acquisition are implemented over the same architecture, with most control 374 
+sequences running in the NI TestStand environment. A simple API also allows remote data 375 
+acquisition and control using text-based messages, which allows use of other programming or 376 
+scripting environments such as python or java. Ex perimental data are accessed from sMAP 377 
+using a browser-based GUI or via text-based query.  378 
+ 379 
+At the Flexible Research Platform, the data acquisition system utilizes Campbell Scientific data 380 
+loggers. It includes measurements of the zone set point temperature and humidity, supply and 381 
+return air temperature and flow rates, and energy consumption of individual components 382 
+including compressor, condenser, supply fan, VAV reheating. Data are typically collected and 383 
+recorded at a one -second rate with averaging thirty seconds for database storage. The data 384 
+file format is CSV, with automated transfer from the data loggers to storage  on an ORNL  385 
+internal server, at time resolutions of 30 seconds, 1 min, 15 min, and 60 min intervals. 386 
+ 387 
+Data Records 388 
+The data are stored on figshare and on OpenEI, a wiki -based platform that supports public 389 
+sharing of, and access to data and analyses related to renewable energy and energy efficiency. 390 
+Summarized in Table 9, the dataset 12 comprises a collection of six  comma separated value 391 
+(CSV) files. Each CSV file represents a single combination of system configuration and 392 
+experimental or simulated data creation approach.  The data are minute-frequency time series 393 
+measurements of the system operational parameters that are most commonly available to 394 
+FDD algorithms in typical commercial buildings . Time stamps are in the first column of each 395 
+file, and presented in the format m/d/yy h:mm. The final column of each file contains a binary 396 
+indicator of the ground truth information on whether or not a fault is present. 397 
+  398 
+PAGE 19
+17 
+ 
+ 399 
+ 400 
+ 401 
+Data file System Data provenance Total file size 
+SZVAV Air handling unit: single 
+zone variable air volume 
+Experimental 1.2 MB 
+SZCAV Air handling unit: single 
+zone constant air volume 
+Experimental 1.6 MB 
+MZ-VAV-2-1 Air handling unit: multi-zone 
+variable air volume 
+Experimental 1.8 MB 
+MZ-VAV-2-2 Air handling unit: multi-zone 
+variable air volume 
+Simulation 2.9 MB 
+MZ-VAV-1 Air handling unit: multi-zone 
+variable air volume 
+Simulation 22.7 MB 
+RTU Rooftop unit Experimental 9.9 MB 
+ 402 
+Table 9. Files and size of each file in the full dataset, as well as system of focus and provenance. 403 
+ 404 
+The set of CSV files is accompanied with a data ‘inventory’ file that describes: 405 
+key information necessary to understand the content and scope of each data set, including: 406 
+ An overview of the data set, who created it, and whether it was generated through 407 
+simulation or physical experimentation 408 
+ Building and system information 409 
+o Model or experimental facility description 410 
+o System type and diagram 411 
+o Control sequences 412 
+ Data points 413 
+ Input scenarios for faulted and fault-free conditions represented in the data 414 
+o Fault types 415 
+o Fault intensities 416 
+o Method of fault imposition 417 
+o Fault occurred time 418 
+ 419 
+ 420 
+Technical Validation 421 
+The technical quality of the dataset can be understood through 3 primary lenses: 1) accuracy 422 
+of measurement in the fa cilities; 2) accuracy of the simulation models; 3) accuracy of the 423 
+ground truth information on the presence or absence of faults and their severity. Description 424 
+and illustrations of each are provided in the following. 425 
+ 426 
+PAGE 20
+18 
+ 
+Facilities measurement 427 
+The facility measurements that are included in the dataset comprise sensor data as well as 428 
+data that indicate equipment status and control commands. Sensor data span temperature, 429 
+relative humidity, power, pressure, and air flow. Equipment status and control commands 430 
+encompass parameters such as valve and damper control commands, temperature setpoints, 431 
+and operational modes.  432 
+ 433 
+Specifications of the relevant FRP and FLEXLAB sensors are provided in Table 10. Many more 434 
+sensors are available in the facilities, however we report only those used in the dataset 435 
+described in this paper).  436 
+ 437 
+Facility Sensor Measurement Accuracy 
+FLEXLAB BAPI BA/10K-2(XP)-D-12”-
+BB thermistor 
+Temperature 0.1C  
+FRP Campbell Sci HC2S3-L Temperature, 
+relative humidity 
+(RH) 
+0.1C and 0.8% RH @ 23C 
+ Continental Controls WNB-
+3D-240P 
+Power 0.5% of reading 
+ Omega PX409-750-A5V 
+pressure transducer 
+Pressure 0.08% best straight line maximum 
+ Air Monitor fan evaluator 
+paired with Veltron 
+DPT2500-Plus transmitter 
+Air flow DPT2500, 0.25% of natural span, 
+including hysteresis, deadband, 
+nonlinearity, and nonrepeatability 
+ 
+Fan evaluator 2% 
+Table 10. Specifications of relevant sensors from the FLEXLAB and FRP experimental facilities.  438 
+ 439 
+Facility sensors are periodically calibrated using a variety of standard approaches based on 440 
+ISO/IEC 1702527, which specifies requirements  for testing and calibration l aboratories. To 441 
+illustrate, a detailed example is provided for the water-bath calibration of the FLEXLAB AHU 442 
+temperature sensors (thermistors).  443 
+ 444 
+The supply and return air temperature sensors are inserted in the appropriate duct, and the 445 
+mixed air temperature sensor is placed in the AHU mixed air plenum, which is open to return 446 
+air and outside air (Figure 1). The calibration is conducted using a 0.01°C accuracy reference 447 
+sensor (US sensor USP3021), an Agilent/Keysight 34970A data acquisition unit, and an Anova 448 
+water bath. All Agilent measurements are conducted to ensure that the measurement of the 449 
+testing sensor is consistent with the reference sensor, and they use temperature step sizes of 450 
+5°C to bound the range of interest. 451 
+ 452 
+An example of a supply air temperature calibration result from this process is show in Figure 453 
+5, showing calibration of experimental sensors to within 0.02°C of the reference sensor . The 454 
+normal range of interest for the temperature sensors at FLEXLAB is 5°C to 45°C, so the supply 455 
+air temperature sensor is calibrated in a range of 5°C to 60°C. The blue dots and orange dots 456 
+are the temperature measurements from the reference senor and the newly calibrated supply 457 
+air temperature sensor respectively. The black dots which are plotted on the secondary y-axis 458 
+represent the difference between the newly calibrate sensor to the reference sensor. The plot 459 
+shows that across the full range of interest the measurements of the newly calibrated sensor 460 
+(orange dots) match those of the reference sensor (blue dots) to within 0.02°C. There is one 461 
+outlier (0.06°C) at the low-resistance, high-temperature (left) side of the plot . Temperatures 462 
+below about 35°C are very closely aligned with the reference sensor, with offsets within  463 
+0.01°C  464 
+ 465 
+PAGE 21
+19 
+ 
+ 466 
+ 467 
+Figure 5: AHU supply air temperature water-bath calibration. 468 
+ 469 
+To verify the data for equipment status and control commands, the results from functional 470 
+tests were leveraged. The primary purpose of functional tests is to ensure that system 471 
+operation is consistent with the designed con trol sequences , and reflective of fault -free 472 
+operational behavior. A failed functional test would indicate incorrect implementation of 473 
+control logic, equipment faults, or inaccurate system-reporting of status and command data.  474 
+ 475 
+For example, Figure 6(a) shows the characteristic curve for the FLEXLAB AHU heating coil valve, 476 
+heating water flowrate versus heating coil valve co ntrol signal . As expected, once the valve is 477 
+opened past 20%, the flowrate steadily increases until reaching its maximum value at the 80-478 
+100% open position . Similarly, Figure 6(b) shows supply air temperature setpoint versus 479 
+cooling loop control signal. It indicates that the cooling loop control signal modulates between 480 
+higher and lower values to drive a supply air temperature setpoint res et in accordance with 481 
+the defined control sequence.   482 
+ 483 
+   484 
+ 485 
+                                           (a)                                                                            (b) 486 
+Figure 6. Examples of functional test results from FLEXLAB. 487 
+ 488 
+Figure 7 shows a functional test from the FRP RTU, in which the control command for RTU fan 489 
+speed (%) signal is observed to appropriately track with measured RTU fan airflow (L/S), as the 490 
+signal is increased from approximately 40% to 100%.  491 
+ 492 
+
+PAGE 22
+20 
+ 
+ 493 
+Figure 7. Examples of functional test results from the FRP.  494 
+ 495 
+Simulation models 496 
+An EnergyPlus-Modelica model that was used to generate the simulated data for multi -zone 497 
+AHU #128. The US Department of Energy’s large office Commercial Reference Building Model29 498 
+(hereafter referred to as Reference Building) in EnergyPlus was used to calculate the building 499 
+thermal load, as the Reference Buildings are taken to represent reasonably realistic building 500 
+characteristics and construction practices and are widely used in the evaluation of building 501 
+design and operation 30. Since control processes are idealized in EnergyPlus, and may not 502 
+capture short-term behaviors of HVAC systems, the HVAC systems in the large office Reference 503 
+Building were re-implemented with components from the Modelica Buildings Library to model 504 
+the dynamic behavior s. To retain realistic system response in the Modelica representation, 505 
+the system performance curves from the Reference Building were transferred to the Modelica 506 
+representation. Modelica component and system models have been validated using empirical 507 
+validation, comparative testing and analytical verification. Most relevant to the models used 508 
+in this work, c omparative testing, in which results are compared with other simulators, has 509 
+been used for the multi -zone a irflow models 31. In addition, analytical  verification, in which 510 
+results are compared with exact solutions, has been used to validate most of the individual 511 
+component models in Modelica , such as for heat and mass transfer and storage, for flow 512 
+resistance el ements such as valves and pipes, for fan models and for radiosity transport 513 
+models32. 514 
+ 515 
+The HVACSim+ model that was used to generate the simulated dataset for multi -zone VAV 516 
+AHU #2 was validated with the experimental data from the physical unit that the model was 517 
+created to represent. This validation is detailed in25. To validate the model under  fault-free 518 
+conditions, steady state experiments and dynamic experiments were conducted to generate 519 
+the experimental data for the comparison. Energy indices (i.e. electrical energy consumed by 520 
+return and supply fan, heating water energy consumed by heating coil, and chilled water 521 
+energy consumed by cooling coil) were used to compare the simulated energy consumption 522 
+with real energy consumption during the experiment. Op erational indices (i.e. temperature, 523 
+air flow, and control indexes) were used to compare the simulated operational variables with 524 
+the actual measurements. To illustrate, the temperature operational indices that were used 525 
+for model validation are provided in Table 11. In the Table “max diff.” indicates the maximum 526 
+difference of the hourly average values between simulated values and experimental data.  527 
+Maximum differences less than 20% of the typical value were taken as sufficient. 528 
+ 529 
+Indices Summer in 2007 Winter in 
+2008 Spring in 2008 
+8/19 8/25 9/4 2/16 2/17 5/2 5/3 5/9 
+Temp 
+˚C Supply air 
+typical 
+value 12.7 12.7 12.7 18.3 18.3 12.7 12.7 12.7 
+max. 
+diff.* -0.9  -0.7  -0.5  -0.2  -0.05  -0.4  -0.8  -0.4  
+
+PAGE 23
+21 
+ 
+Mixed air 
+typical 
+value 23.8 23.3 23.3 12.7 13.3 18.3 13.3 8.3 
+max. 
+diff. -0.4  -0.7  -0.8  -0.7  -0.2  -2.3  -1.0  -1.3  
+ 530 
+Table 11. Example of temperature operational indices used to validate a simulation model with 531 
+experimental data.  532 
+ 533 
+To validate the model for faulted conditions, the simulated operational data under a specific 534 
+fault were verified to ensure that  they reproduced the major fault signature obtained from 535 
+the facility measurements. An example is shown in  Figure 8. The plot shows measured and 536 
+simulated the heating coil outlet air temperature under faulted and un-faulted operation. The 537 
+simulated temperature (brown solid line) during faulted operation is much higher than the 538 
+simulated temperature during fault free operation (light blue dashed line). This offset behavior 539 
+was consistent with that observed in the physical measurements, shown in red (faulted 540 
+operation), and dark blue dashed (un-faulted operation). 541 
+ 542 
+ 543 
+Figure 8. Heating coil outlet air temperature associated with the presence and absence of a leaking 544 
+heating coil fault. 545 
+ 546 
+Fault ground truth 547 
+Ground truth assignment of the data as faulted or fault -free, wa s validated first through 548 
+functional testing (experimental data), and engineering logic (experimental and simulated 549 
+data). Described in the preceding section on facility measurement, functional tests ensure that 550 
+system operation is consistent with the desi gned control sequences. Whereas a failed 551 
+functional test can indicate faulted equipment (including sensors and status/command data), 552 
+or incorrect implementation of control sequences, a successful functional test can verify fault-553 
+free operation . For example , Figure 6(a) suggests the heating coil valve moves smoothly 554 
+without the presence of any pre-existing stuck or leakage faults. Similarly, Figure 6(b) indicates 555 
+that the supply air temperature setpoint was reset according the defined sequence that was 556 
+in place.   557 
+ 558 
+After functional testing, the data for each fault-present or fault-free case were visually 559 
+inspected to validate the presence or absence of faults (and their severity). Engineering logic 560 
+and knowledge of the implemented control strategies was applied to confirm that the “fault 561 
+free” scenario and “imposed fault” scenario were indeed reflected in the data trends. Figure 562 
+8 provides an example to validate the fault signature of the imposed leaking heating coil 563 
+fault, in which the heating coil outlet air temperature is confirmed to increase, as compared 564 
+to the fault-free system. Figure 9 illustrates another example, for a cooling coil, stuck at a 565 
+severity of 100% (i.e., fully closed, or 0% open). SAT is supply air temperature; SAT Sp is 566 
+10
+15
+20
+25
+30
+35
+40
+45
+50
+360 540 720 900 1080
+Heating coil outlet air temperature (°C)
+Time (minute)
+System with fault Fault free system
+Simulated system with fault Simulated fault free system
+PAGE 24
+22 
+ 
+supply air temperature set point; CV-POSN is cooling coil valve position. The data in the 567 
+figure show that when the fault was imposed, the cooling coil valve position was overridden 568 
+a fixed 0% position. The expected symptom of supply air temperature much higher than the 569 
+setpoint was then observed, validating that the fault was correctly imposed.  570 
+ 571 
+Similar checks were conducted for each of the faults in both the experimental as well as the 572 
+simulated data sets. 573 
+ 574 
+ 575 
+Figure 9. AHU operational data for an imposed stuck cooling coil valve fault.  576 
+ 577 
+ 578 
+Usage Notes 579 
+A complete inventory of the data was developed to support users in interpreting the content 580 
+and form of the data, and the corresponding HVAC systems, controls, and faults. The data itself 581 
+comprise time series that can be analy zed with whatever software tools the user elects to 582 
+implement. The data are provided at 1 -minute intervals, and can be resampled as needed to 583 
+fit the needs of specific applications.  584 
+ 585 
+References 586 
+ 587 
+1. International Energy Agency (IEA). (2019). World Energy Balances.  588 
+ 589 
+2. Fernandez, N., et al. Impacts on commercial building controls on energy savings and peak 590 
+load reduction. Report Number PNNL-25985 (Pacific Northwest National Laboratory, 2014). 591 
+ 592 
+3. Kramer, H., Lin, G., Curtin, C., Crowe, E., Granderson, J. Building analytics and monitoring-593 
+based commissioning: industry practice, costs, and savings. Energy Efficiency. DOI: 594 
+https://doi.org/10.1007/s12053-019-09790-2 (2019). 595 
+ 596 
+4. Granderson, J., et al. Characterization and Survey of Automated Fault Detection and 597 
+Diagnostics Tools. Report Number LBNL-2001075 (Lawrence Berkeley National Laboratory, 598 
+2017).  599 
+ 600 
+5. Kim, W., Katipamula, S. A review of fault detection and diagnostics methods for building 601 
+systems. Science and Technology for the Built Environment 24, 3–21 (2018). 602 
+ 603 
+0
+20
+40
+60
+80
+100
+0
+10
+20
+30
+40
+0:00 3:00 6:00 9:00 12:00 15:00 18:00 21:00 0:00
+% OPen
+Tem perature (⁰C)
+Mar 11
+SAT Sp SAT CV-POSN
+SAT is 8°C higher than the SAT setpoint, but cooling coil valve doesn’t open
+Cooling coil valve position is fixed at 0%
+PAGE 25
+23 
+ 
+6.  Yuill, D.P., Braun, J.E. Evaluating the performance of fault detection and diagnostics 604 
+protocols applied to air-cooled unitary air-conditioning equipment. HVAC&R Research 19(7), 605 
+882–891 (2013).  606 
+ 607 
+7. Frank, S., et al. A performance evaluation framework for building fault detection and 608 
+diagnosis algorithms. Energy and Buildings. 192, 84-92 (2019). 609 
+ 610 
+8. Miller, C ., Megger, F. Building Data Genome Project: An open, public dataset from non -611 
+residential building electric meters. Energy Procedia. 122, 439-444 (2017).  612 
+ 613 
+9. Rashid, H., Singh, P., Singh, A. I-BLEND, a campus-scale commercial and residential buildings 614 
+electrical energy dataset. Sci. Data 6, 190015. (2019) . 615 
+ 616 
+10. Vink, K., Ankyu, E., Koyama, M. Multiyear microgrid data from a research building in  617 
+Tsukuba, Japan. Sci. Data 6, 190020. (2019) . 618 
+ 619 
+11. Lin, G ., Kramer, H ., Granderson, J. Building fault detection and diagnostics: Achieved 620 
+savings, and methods to evaluate algorithm performance.  Building and Environment . 168, 621 
+106505. (2020). 622 
+ 623 
+12. Granderson, J., Lin, G., Harding, A., Im, P., Chen, Y. Dataset for building fault detection 624 
+and diagnostics algorithm creation and performance testing. figshare 625 
+https://figshare.com/s/c0aadb2bfc76ea3c3424 (2019). 626 
+ 627 
+13. Clark, D., May, W. HVACSIM+ Building Systems and Equipment Simulation Program – User’s 628 
+Guide. https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nbsir85-3243.pdf (1985). 629 
+ 630 
+14. Wetter, M., Zuo, W., Nouidui, T., Pang, X. Modelica buildings library. Journal of Building 631 
+Performance Simulation. 7(4), 253-270 (2014). 632 
+ 633 
+15. Crawley, D., et al. EnergyPlus: creating a new -generation building energy simulation 634 
+program. Energy and Buildings 33.4, 319-331 (2001).   635 
+  636 
+16. Pourarian,  S., Kearsley, A., Wen, J., Pertzborn , A. Efficient and robust optimization for 637 
+building energy simulation. Energy and Buildings. 122, 53-62 (2016). 638 
+ 639 
+17. Lawrence Berkeley National Laboratory. FLEXLAB. https://flexlab.lbl.gov/(2019).  640 
+ 641 
+18. ASHRAE.  Guideline 36-2018. High-Performance Sequences of Operation for HVAC 642 
+Systems. ASHRAE, Atlanta, 2018. 643 
+ 644 
+19. Oak Ridge National Laboratory. Flexible Research Platforms.  645 
+https://www.ornl.gov/content/flexible-research-platforms/(2019). 646 
+ 647 
+20. Maxwell, G., Loutzenhiser, P., Klaassen, C. Economizer control tests for the empirical 648 
+validation of building energy analysis tools. (A Report of Task 22, Subtask D Building Energy 649 
+Analysis Tools Project D Empirical Validation. Iowa Energy Center and International Energy 650 
+Agency Solar Heating and Cooling Programme). http://www.pubs.iea-651 
+shc.org/data/sites/1/publications/IEA%20Economizer%20Report.pdf (2014). 652 
+PAGE 26
+24 
+ 
+ 653 
+21.  ASHRAE. Standard 90.1-1989, Energy Efficient Design of New Buildings Except Low-Rise 654 
+Residential Buildings. (ASHRAE 1989). 655 
+ 656 
+22. ASHRAE. Standard 90.1-1999, Energy Efficient Design of New Buildings Except Low-Rise 657 
+Residential Buildings. (ASHRAE 1999). 658 
+ 659 
+23. Modelica Buildings Library. https://simulationresearch.lbl.gov/modelica/download.html 660 
+(2019). 661 
+ 662 
+24. EnergyPlus. https://energyplus.net (2019). 663 
+ 664 
+25. ASHRAE. RP-1312. Tools for Evaluating Fault Detection and Diagnostic Methods for Air -665 
+Handling Units. (ASHRAE 2012). 666 
+ 667 
+26. sMAP 2.0 Documentation. https://pythonhosted.org/Smap/en/2.0/index.html (2013). 668 
+ 669 
+27. ISO/IEC International Standard (2017). General requirements for the competence of 670 
+testing and calibration laboratories. ISO/IEC 1702:2017.  671 
+ 672 
+28. Huang, S., Chen, Y., Ehrlich, P. W., & Vrabie, D. L. A control-oriented building envelope and 673 
+HVAC system simulation model for a typical large office building. In Proceedings of Building 674 
+Performance Modeling Conference and SimBuild , co-organized by ASHRAE and IBPSA -USA, 675 
+Chicago, IL. (2018). 676 
+ 677 
+29. Deru, M., et al., U.S. Department of Energy Commercial Reference Building Models of the 678 
+National Building Stock.  Technical Report NREL TP-5500-46861 (National Renewable Energy 679 
+Laboratory, 2011). 680 
+ 681 
+30. Field, K., Deru, M., Studer, D. Using DOE commercial reference buildings for simulation 682 
+studies. No. NREL/CP-550-48588. (National Renewable Energy Laboratory, 2010). 683 
+ 684 
+31. Nouidui, T.S., Wetter, M., Zuo, W. Validation of the window model of the Modelica 685 
+Buildings Library. In Proceedings of the Fifth National SimBuild Conference.  529-536 686 
+(Modelica Association, 2012). 687 
+ 688 
+32. Wetter, M. Multizone airflow model in Modelica. In Proceedings of the 5th International 689 
+Modelica Conference, Vol. 2. (Eds. Kral, C., Haumer, A.) 431-440. (Modelica Association, 2006). 690 
+ 691 
+ 692 
+ 693 
+Acknowledgements 694 
+This work was supported by the Ass istant Secretary for Energy Efficiency and Renewable 695 
+Energy, Building Technologies Office, of the U.S. Department of Energy under Contract No. DE-696 
+AC02-05CH11231. The authors wish to acknowledge for their contributions to the dataset and 697 
+its documentation: Professor Jin Wen of Drexel University; Draguna Vrabie, and Sen Huang of 698 
+Pacific Northwest National Laboratory; Stephen Frank and Willy Bernal Heredia of National 699 
+Renewable Energy Laboratory. Finally, we thank Marina Sofos, Erika Gupta, and Amy Jiron of 700 
+the Building Technologies Office for their generous support. 701 
+ 702 
+PAGE 27
+25 
+ 
+Author contributions 703 
+Jessica Granderson led the overall research effort and the development and writing of the 704 
+manuscript. 705 
+ 706 
+Guanjing Lin co-wrote the manuscript, synthesized the datasets, and led the technical 707 
+validation and documentation of the data.  708 
+ 709 
+Ari Harding designed and implemented the methods of fault imposition for the experimental 710 
+faults created using the FLEXLAB test facility. 711 
+ 712 
+Piljae Im designed and implemented the methods of fault imposition for the experimental 713 
+faults created using the FRP test facility, and contributed to the associated documentation. 714 
+ 715 
+Yan Chen designed and implemented the methods of fault imposition for the simulated faults 716 
+created using Modelica. 717 
+ 718 
+ 719 
+Competing interests 720 
+The authors declare no competing interests. 721 
+PAGE 28
+ 1 
+ 
+ 
+Packaged Scalable Energy Information Systems for Hotels   
+Abstract  
+Purpose 
+Building Energy Information Systems (EIS) are performance monitoring software, data acquisition 
+hardware, and communication systems used to store, analyze, and display building energy data. Some 
+$60 billion is spent annually on wasted energy in U.S. buildings, and actions taken based on EIS data can 
+enable operational energy savings of ~10 percent in the U.S. commercial sector (~2 quads of primary 
+energy). However, EIS adoption is low due to various technical and market challenges. This paper provides 
+technical specifications for standardized EIS packages that can help overcome barriers and accelerate scale. 
+Design/Methodology/Approach 
+A five-step process was followed: 
+1. Identifying business drivers as key determinants for hotel sector-specific packages 
+2. Addressing heterogeneity to develop standardized, tiered packages 
+3. Determining performance metrics for key stakeholders  
+4. Recommending streamlined data architecture 
+5. Developing visualization enabling insights and actions  
+Findings 
+Technical specifications for two tiers (entry and advanced) of EIS packages for hotels have been developed. 
+EIS vendor, integrator, and client organization’s facilities and IT staff have been considered as key 
+stakeholders. Findings from six field demonstrations show benefits of (i) cost-effectiveness, through 
+reduced transactional, first, and operational costs, (ii) scalability, by accommodating heterogeneity across 
+the building sub-sector, (iii) simplicity, by integrating meters, gateways, and software in the package, and 
+(iv) actionability in organizations, across various decision making levels.  
+Value 
+Building owners and operators can use these specifications to ease procurement and installation of EIS in 
+their facilities. EIS software vendors can use them to develop new product offerings for underserved 
+sectors.  
+  
+PAGE 29
+ 2 
+ 
+Packaged Scalable Energy Information Systems for Hotels 
+1. Context 
+Although architects and engineers target energy efficiency in building design, operations of buildings differ 
+from the design intent. Every minute, day, week, and month, in countries spanning the globe, from United 
+States to India, large amounts of the energy consumed in buildings is not actually utilized for any purpose. 
+For instance, one of the largest building energy loads, heating, ventilation and air conditioning (HVAC) 
+systems often fail to meet performance expectations due to various faults, poor maintenance and controls, 
+and improper commissioning (Roth, 2005). It is normal for building equipment to experience operational 
+stray (Henderson and Waltner, 2013), where actual energy use is higher than designed. A building’s actual 
+energy use can be two to five times higher than designed (Roth et al., 2005). When the problem persists 
+undetected over long periods of time, it can lead to an estimated 15 to 30 percent of energy wasted in 
+commercial buildings (Katipamula and Brambley, 2005). 
+The business-as-usual approach of tracking energy use through monthly utility bills is typically too late (being 
+post-facto) and too coarse (being at a whole building level) to identify causes for wastage. Optimal 
+performance requires access to higher granularity of energy consumption data, and more timely analysis. It 
+requires that building energy use be continuously monitored and managed to curtail operational stray, 
+capture deeper energy and dollar savings, and attain energy performance targets.  
+On average, U.S. hotels spend approximately 6 percent of revenue on utilities, but historic and luxury 
+properties may see energy costs hitting 10 percent or more (National Grid, 2004). A 10 percent reduction in 
+energy consumption has the same financial effect as increasing the average daily room rate by $0.62 in 
+limited-service hotels and by $1.35 in full-service hotels (ENERGY STAR, 2007). Trends from the hospitality 
+industry show that utility costs are the second largest operational cost, after labor (Gaggioli, 2016). Some 
+forward-thinking hotel owners use proprietary tools to capture monthly energy, waste, and water 
+consumption data to identify trends, track performance, and compare the same against benchmarks, to 
+inform decisions for efficiency actions for hotels in their portfolio. For instance, a large hotel chain reports 
+that since implementing this tool in 2012, their hotels have saved $185 million in avoided costs.  It also states 
+that 75 percent of frequent travelers care about sustainability and one-third of business travelers actively 
+seek environmentally friendly hotels—an indicator that this enterprise strategy could potentially attract 
+clients to build up topline growth (Better Buildings, 2015).  
+Such trends are also relevant in emerging economies, such as In India, where the hospitality sector has been 
+growing at a cumulative annual growth rate of 14 percent (Indian Brand Equity Foundation, 2017); major 
+international hotel chains are planning to set up or expand significant properties within the next decade. The 
+high growth rate of this new hospitality footprint affords a substantial opportunity for energy efficient design 
+and operations. 
+The good news is that information technologies offer opportunities to reduce building energy demand and 
+associated greenhouse gas emissions. Energy Management and Information System (EMIS) is a broad family 
+of tools and services to manage commercial building energy use. These technologies include, for example, 
+energy information system (EIS), equipment-specific fault detection and diagnostic systems, benchmarking 
+and utility tracking tools, automated system optimization tools, and building automation systems. (Lawrence 
+Berkeley National Laboratory, 2015). A key energy efficiency enabling technology are energy information 
+PAGE 30
+ 3 
+systems (EIS), broadly defined as a system with performance monitoring software, data acquisition 
+hardware, and communications used to store, analyze, and display building energy data.  
+ Through an EIS one can access energy data to identify consumption and patterns to track energy use, 
+manage demand charges, validate utility billing, identify waste, benchmark building energy performance, and 
+help identify short-term and long-term goals and actions toward energy efficiency opportunities toward 
+20 percent savings. A cost-benefit study conducted by Lawrence Berkeley National Laboratory (LBNL) across 
+26 enterprises’ building portfolios shows that participants achieved year-over-year median site and portfolio 
+savings of 17 and 8 percent, respectively; they reported that this performance would not have been possible 
+without the EIS. The median five-year cost of EIS software ownership (up-front and ongoing costs) was 
+calculated to be $1,800 per monitoring point (kilowatt meter points were most common) (Granderson et al., 
+2016). Facility owners, energy and sustainability managers, and facility operators can use the data analytics 
+provided by an EIS to drive energy efficiency, improve building performance, and save energy costs.  
+Larger hotels and enterprises may be able to leverage economies of scale, and with bigger infrastructure and 
+personnel budgets are well positioned to implement customized EIS solutions. However, small- to medium-
+sized hotels such as high-growth business hotels remain underserved relative to efficiency services, owing to 
+tighter margins and lack of energy management staff. In these facilities current EIS solutions can be cost-
+prohibitive and present a high bar for entry, limiting adoption. Hotels are a prime example of a case where 
+the need for guest comfort and services can cause significant energy waste, and where cost-effective, easy- 
+to-use EIS can play a critical role in achieving energy savings.  
+2. R&D Motivation  
+Despite the strong rationale for EIS as a key emerging technology that enables building energy savings, and 
+dramatic increases in the number of EIS market offerings, several barriers impede their broad adoption. 
+First, enterprise decision makers typically have insufficient awareness of the energy cost and use, and the 
+role that EIS can play in minimizing those costs.  Executives can be unaware that 3 to 5 percent of their 
+revenue is being spent on energy, or even if they do, they perceive that to be a fixed, unmanageable cost 
+(Forbes, 2015). With such little awareness of the problem, the adoption of a solution is a challenge. 
+Furthermore, even if owners do realize the value that an EIS can deliver, they still face a fragmented market 
+of building energy management systems, tools, and vendors that makes it challenging to appreciate, procure 
+and specify a relevant EIS for their building or enterprise. Enterprises are also concerned about data security.  
+Second, even within the hotels sector, buildings are heterogeneous. Energy Information Systems are 
+generally customized on building-by-building basis, which is typically a time-consuming process that requires 
+a high level of skill to configure the EIS, a robust metering infrastructure, drawing insights from data 
+analyses, and provision of services. This customization drives up the transaction cost for an EIS.  
+Third, currently available EIS tend to be too complex to serve the basic needs of small- to medium-sized 
+hotels. The operations staff are also generally not trained in the installation and use of typically sophisticated 
+EIS and need to rely on vendor services, which creates additional ongoing costs for the organization. 
+From a vendor perspective, it is difficult to market and sell EIS solutions for small- to medium-sized facilities. 
+The foremost challenge is high upfront technology cost, which is a function of the high transaction cost 
+required to customize EIS on a building-by-building basis. If coupled with ineffective use of sophisticated EIS 
+technologies, or high vendor cost for services, return on investment (ROI) may not prove justifiable. Factors 
+contributing to the wide range of upfront technology costs include the number of monitored points (e.g., 
+PAGE 31
+ 4 
+only whole building energy usage vs. extensive sub-metering), extent of software features, and configuration 
+needs.  
+These current practices of building-wise customization and high transaction costs have led to low adoption 
+of this innovative emerging technology in all but the largest facilities and most sophisticated campuses and 
+enterprises. The adoption of EIS is largely limited to large organizations or buildings with large energy 
+expenditures that justify the first and ongoing high cost of the EIS. 
+The motivation of this work is to overcome these challenges through design and engineering of cost-
+effective packaged EIS solutions that can help drive adoption, especially in underserved building sectors, in 
+order to help curtail energy waste and enable optimal use of operational energy across the building stock. 
+For this study, we focused on business hotels—the largest group of hotel types that primarily cater to 
+business travelers. These are typically underserved, but with significant opportunity for energy efficient 
+operations. We anticipate the findings are extensible to small- to medium-sized convention centers, airport 
+hotels, and budget to mid-range service hotels. 
+3. Concept of a Packaged EIS 
+We propose simplified, low-cost EIS packages—“EIS-in-a-box”—that overcome barriers such as installation 
+and commissioning complexity, difficulty of use, and high cost. We have developed packaged EIS broadly 
+applicable across the hospitality sector, rather than needing high customization at a building-by-building 
+level. We derived the technical requirements for EIS packages with three predefined components, as shown 
+in Figure 1, namely: 
+(i) Data acquisition and communication through sub-meters, and gateway connectivity 
+(ii) Back-end software for data access, storage, and analysis 
+(iii) Front-end visualization and user notifications 
+ 
+ 
+Figure 1: The three components of an Energy Information System (EIS) 
+
+PAGE 32
+ 5 
+Our proposed simplified, sector-specific EIS packages are detailed in subsequent sections. These packages 
+are intended to obviate the need for customization, and enhance ease of procurement, installation and use, 
+thereby enabling scale-up and wider adoption in the building sector. 
+ 
+4. Key Development Considerations 
+We took into account two key considerations to develop packaged EIS-in-a-box for hotels: 
+(i) How to frame typical transaction costs for the procurement, installation, and use of EIS  
+(ii) How to characterize the heterogeneity in the hospitality sector, and accommodate its influence on 
+package hardware design and engineering 
+These considerations are detailed below. 
+4.1. Transaction cost framework 
+Transaction cost is defined as costs other than the money price that is incurred in trading goods or 
+services…and activities (that) involve opportunity costs in terms of time, effort and money (Johnson, 2005). 
+The transaction process involves the time and effort required to deliver a product and service. For an EIS 
+solution, typically there is a four-step transaction process (as shown in Figure 2) that can easily take several 
+months or more. Each step requires time and effort that leads to overhead costs borne by the vendor that 
+are typically passed on to the client. Through a series of structured interviews with seven EIS vendors, we 
+determined that a significant portion of the cost is in implementing steps 1 through 3 (i.e., client 
+recruitment, system configuration, and system integration). Our analysis showed that there exist hidden 
+technical opportunities for reduction in transaction cost during each of these steps. For example, the time 
+taken for steps 2 and 3 may be shortened if the electrical circuitry is viable for simple sub-metering. 
+Additionally, metering and installation costs can be reduced significantly if a prioritization is done to select 
+core sub-metering points based on an understanding of typically high and controllable loads. Similarly, 
+offering value across the stakeholder ecosystem through a simple, secure system with reports and metrics 
+targeted across facilities, Information Technologies (IT) staff, and executives can ease the buy-in process and 
+time required for integration. 
+Our intent has been to comprehensively discover such opportunities and develop relevant technical 
+requirements for packaged EIS that allow the steps to be streamlined to reduce the time, as well as first and 
+recurring costs, for installing and operating an EIS. Our goal is that within a compressed period of transaction 
+time (on the order of a few days) the product requirement can be fulfilled with reduced first cost 
+(~30 percent less) for both vendors and users. Additionally, by using our user interface guidelines, in-house 
+facility managers can be better equipped to understand the energy behavior of their facilities, conduct the 
+first set of actions for troubleshooting, and easily operate and maintain the system, all leading to reduced 
+operating and service costs. Beyond that, deeper vendor expertise can still be sought as needed for energy 
+projects and upgrades. By offering an enhanced value proposition for an EIS, it is our intent that vendors and 
+integrators experience fewer barriers to increased market penetration using existing hardware, 
+communications devices, and distribution channels. That, in turn, should lead to better sales in higher 
+volume, which may further lower the price point for a packaged EIS-in-a-box. 
+ 
+ 
+PAGE 33
+ 6 
+ 
+Figure 2: Typical transaction cost framework for the specification, installation, and use of an energy information system (EIS) 
+4.2 Heterogeneity in the hotels building sector 
+A second key consideration is the extent to which the energy and metering infrastructure and management 
+approach varies from hotel to hotel. This heterogeneity affects the extent to which a packaged standardized 
+solution can be broadly applicable. We investigated the types of hotels to understand the physical and 
+organizational attributes that drive energy use to enable a relevant package design.  
+Typically, 75 percent of a hotel or motel’s total energy use can be attributed to space heating, lighting, and 
+cooling combined, with cooling and lighting alone comprising half of the building’s energy consumption, as 
+shown in Figure 3. However, there is a broad range of energy use intensity across lodging facilities, ranging 
+from 15,000 Btu per square foot to over 300,000 Btu per square foot (U.S. Department of Energy, 2016). 
+
+PAGE 34
+ 7 
+ 
+Figure 3: Screen shot from the Building Performance Database (BPD) for 7,638 U.S. hotels. Median Site EUI is 87 kBtu/sf. 25th, 
+75th percentiles are 66 and 113 kBtu/sf, respectively. (Source: U.S. DOE, 2016) 
+ 
+4.2.1 Mapping physical infrastructure 
+There is wide diversity in hotel facilities, classified by parameters such as size of the hotel, target markets, 
+level of service, and ownership, as shown in Figure 4. These parameters are significant determinants for the 
+physical design and operations of hotel facilities, and thereby a key consideration to assess how and where 
+an EIS may help impact energy use. Another important consideration is to analyze and understand potential 
+saving opportunities and EIS design in new construction, as compared to those possible in existing facilities. 
+ 
+Figure 4: Heterogeneity in the hotels building sector, based on physical and organizational attributes  
+
+PAGE 35
+ 8 
+4.2.2 Organizational characteristics and business drivers  
+Organizational considerations in developing the packaged EIS included factors such as the value 
+attributed to energy, and staff motivation and skill available to take energy-related decisions and 
+actions. Even within an organization, a diversity of stakeholders have influence, ranging from facilities 
+staff operating on a day-to-day level, and IT staff who take decisions regarding the information 
+technology infrastructure, to facilities executives and sustainability managers who may make 
+investment and high-level decisions. While facilities staff may consider building automation systems 
+important for primarily building operations and management, the value of energy efficiency is often 
+far from being fully appreciated or visible, or perceived as being business-relevant. Understanding and 
+being responsive to organizational business drivers and needs is a key precursor for an effective EIS.  
+These considerations were taken into account during the design of the packaged EIS and are detailed 
+in the next section. 
+5. Approach to Determine Specifications for Packaged EIS 
+ We followed a five-step process to determine the specifications:  
+o Step 1: Determining business drivers for the building sector as the core determinants for the 
+package 
+o Step 2: Addressing heterogeneity of facilities through a tiered package structure 
+o Step 3: Identifying metrics for key stakeholders and decision makers for which data would be 
+derived 
+o Step 4: Recommending a “picklist of loads” for controlling data cadence  
+o Step 5: Forming insights and actions based on data analysis presented in simplified user 
+interfaces 
+ 
+Each step is detailed in the sub-sections that follow. 
+ 
+5. 1 Determining business drivers for hotels 
+ 
+Through a literature review of trends related to facility energy use in hotels, and interviews with 
+industry collaborators, we identified five business drivers for hospitality organizations. These drivers, 
+and their impact on the design of an EIS package is detailed below: 
+(i) Monitor energy performance of their facility. To address this driver, an EIS should provide near 
+real-time time-series information on facility energy use and quantify changes in energy use 
+over time. 
+(ii) Track cost and demand to understand the financial implications of energy use, and wastage; 
+identify base and peak demand, and assess system size and efficiency of mechanical 
+equipment. An EIS should support the establishment and monitoring of utility budgets and 
+costs, and develop annual energy reports.  
+(iii) Benchmark energy performance to have an effective yardstick for demand, efficiency, and 
+energy use targets by comparing the facility’s energy performance against a peer. Hence an 
+EIS should perform “cross-sectional benchmarking.” Second, it should benchmark the facility 
+against itself, (i.e., validate the energy performance against the design intent, initial 
+commissioned operations, or base period of performance). Hence, an EIS should perform 
+“longitudinal benchmarking” (Granderson et al., 2013). 
+PAGE 36
+ 9 
+(iv) Identify and track energy efficiency projects. An EIS should to provide information to identify, 
+understand, and mitigate risks of undertaking energy efficiency measures, track persistence in 
+savings through any implemented projects, and track improvements over time. 
+(v) Be environmentally sustainable and compliant to track greenhouse gas emissions, for instance 
+for benchmarking or carbon disclosure program reporting and city energy disclosure 
+ordinances. An EIS may provide this option. 
+Once we identified the business drivers for hotel organizations, we mapped features and functionality 
+of packaged EIS to address these drivers. There are operational or cost metrics associated with these 
+drivers. Our goal for EIS-in-a-box packages is to provide information relevant to operational 
+performance metrics pertinent for the facilities staff, as well as cost metrics that tie back to the 
+topline revenue and profit, pertinent for executive-level decision-making. The EIS should acquire 
+energy data from consistent sub-metering points to feed into the analyses for performance and cost 
+metrics. Further, the EIS should provide effective visualization to make the energy information 
+accessible, optimum, reportable, and actionable. This logic flow for the design of packaged EIS is 
+shown in Figure 5.  
+ 
+ 
+Figure 5: Logic flow for developing a packaged EIS-in-a box based on prioritized business drivers for a building typology 
+5.2 Addressing heterogeneity through a tiered package structure 
+ 
+As mentioned earlier, hotel facilities and organizations are heterogeneous, and their staff posses 
+varying levels of skills and motivation to save energy. To address this heterogeneity, we developed 
+two distinct tiers of EIS packages: Entry (Tier 1) and Advanced (Tier 2). These tiers represent a light-
+touch and medium-touch approach respectively, to provide technology options that are 
+commensurate with organizational skills and motivation. The difference between the two tiers lay in 
+their objectives, target user/audience, and features and functionality—relative to the Entry tier, the 
+Advanced tier marks an increase in complexity, cost, and energy savings potential. 
+ 
+The Entry Tier 1 EIS package for hotels offers organizations that traditionally have little or no visibility 
+into their building energy footprint, and whose building managers who have extremely limited time 
+and resources, to obtain only the most important information. The Entry Tier 1 package is a “foot in 
+
+PAGE 37
+ 10 
+the door” to familiarize users with installation, use, and benefits of a simple EIS. In such organizations, 
+a monthly utility bill may be the only currently available energy use information, which is post-facto.  
+ 
+On the other hand, organizations that recognize the value of energy and provide some resources for 
+their building managers to monitor their building’s energy usage may be better served through an 
+Advanced Tier 2 solution. This is targeted toward hotel owners and managers who have a higher 
+awareness and interest in the benefits of energy efficiency and carbon accounting, and the ability to 
+spend investment dollars and staff resources commensurately. 
+ 
+Figure 6 shows, for each key business driver, how the Tier 1 and Tier 2 packaged EIS solutions 
+compare with the custom EIS offerings common in today’s market. We note that users could begin 
+with Tier 1 and evolve its capabilities to a Tier 2 level over time, as their needs change from 
+“introduction to quick energy wins” to “ best practices for ongoing maintenance of energy 
+performance.”  
+ 
+Figure 6: Entry and Advanced tier functionality, built around prioritized support provided to business drivers 
+5.3 Identifying metrics for key stakeholders and decision makers 
+ 
+In the spirit of making energy information visible and valuable across the hotels’ stakeholder 
+ecosystem, we identified two primary types of users for the packaged solution: (1) facility managers 
+who track energy granularly at a daily or sub-daily basis, and (2) management/executives who would 
+view energy and its financial implications quarterly or annually (at a minimum). Further, we identified 
+the two types of audiences’ critical questions and metrics of interest, to track and report on a rapid, 
+short-term basis (daily/weekly) (Figure 7) and a long-term (quarterly/annual) basis (Figure 8). We 
+generated recommended daily and annual dashboards with easy-to-use charts. Our recommended 
+dashboards targeting these two audiences are shown in Section 6: Results. 
+ 
+
+PAGE 38
+ 11 
+ 
+Figure 7: A list of questions and metrics that inform the facilities daily/weekly dashboard  
+ 
+Figure 8: A list of high-level questions that inform the monthly/annual dashboard, targeted primarily for decision 
+making at the owner/executive level. Additional facilities-level charts are also provided for the facilities staff. 
+Building Pulse at a Glance: Facilities Dashboard with Five Metrics 
+Primary Audience: facility managers, engineering staff 
+Timescale: daily, weekly 
+ 
+1. What is my hotel’s whole-building Absolute Energy Consumption? 
+ kWh or kBtu (or therm) per day or per week   
+2. What is the normalized Energy Use Intensity of my hotel facility? 
+ kWh or kBtu (or therm) per unit square area  
+ kWh/room or per occupant* 
+3. How is my building performing compared to past performance, i.e., longitudinal benchmarking?  
+ kWh or kBtu (or therm) use for given day or week versus a previous time period 
+4. What is the load demand per end use of my building, and are the end-uses operating efficiently? 
+ kW or kBtu/hour per time period 
+ % Portion of the total energy use*     
+5. What is the fuel consumption and cost? 
+ kBtu/fuel per time period  
+ $ per time period 
+ 
+*Tier 2 only, using building occupancy inputs  
+High-level Picture: Executive Dashboard with Five Metrics, with Additional Facilities Charts 
+Primary Audience: executives, facilities managers 
+Timescale: monthly, quarterly, or annually 
+  
+1. What is the fuel consumption and cost?  
+ kBtu/fuel per time period  
+ cost per time period  
+2. What are the trends for my facility’s energy costs? 
+ cost per time period   
+3. What is my building’s energy performance, and how is it performing over time compared to 
+baseline, i.e., longitudinal benchmarking? 
+  kWh or Btu per month, quarter, or year 
+  kWh or kBtu/unit square area  
+  kWh/room or per occupied room*      
+4. How is my building performing compared to other similar facilities in my portfolio, or benchmarks, 
+i.e., cross-sectional benchmarking? 
+ kBtu/fuel per time period, or per unit square area, or per occupant* 
+ cost per time period  
+5. What is the carbon footprint of my facility? 
+ Metrics tons or pounds of carbon dioxide (CO 2) per year   
+Additionally, for facilities staff  
+6. What is the load demand per end use of my building, and are the systems operating efficiently?  
+ kW or kBtu/hour per time period 
+ % portion of the total energy use  
+ kW/ton*   
+7. What does an annual snapshot of my facility look like? Is it performing well throughout the course 
+of a month/year? 
+ kW or kBtu/hour per time period 
+* Tier 2 only 
+PAGE 39
+ 12 
+ 
+5.4 Determining a pick-list of loads to monitor in the EIS 
+ 
+A key approach for package design is simplification, i.e., paring down the extraneous hardware, 
+removing any superfluous data collection, and streamlining the data analysis and visualization without 
+adding any sophisticated new algorithms and techniques. The optimization of data collection is also 
+driven not just by simplicity of use, but also by the emerging challenge of too much data, as can be 
+encountered in custom EIS implementations. On one end of the spectrum are legacy meters, read 
+12 times a year to track consumption post-facto. At the other end, smart meters barrage readings at 
+15-minute intervals, providing 35,000 meter readings a year. This amount of data is an opportunity 
+for data interrogation, however, it is costly data overload, and our target segment would find it 
+virtually impossible to gain insights relevant to them, given their typical lack of data analysis 
+experience. 
+ 
+Measuring every end use load and piece of equipment in a hotel building would require hundreds of 
+metering points, which would be neither practical nor cost effective. Hence, only prioritized loads 
+were recommended to be monitored, to provide the relevant data to feed into the pertinent metrics 
+required for the business drivers.  
+ 
+Our aim was to reach an 80-20 solution, i.e., select approximately 20 percent of core measurement 
+points in a hotel building necessary to provide 80 percent of the most critical information necessary 
+for energy-based decision making. In order to select the core metering points to measure loads or 
+end-uses, we developed a decision framework determined by following three selection criteria: 
+ 
+(i) Is the load large? Answering this question helped to identify the most significant loads by size 
+in an office facility. For example, space heating and cooling loads typically account for one-
+third to one-half of a hotel’s energy use.  
+ 
+(ii) Is it a discretionary load/end-use? It is important to characterize loads in a facility that can be 
+controlled, managed, or scheduled by the facility manager (or even the occupant) versus 
+loads that that are too indispensable (e.g., Uninterruptible power supply, UPS) or are too 
+regulated or distributed to be flexibly controlled or managed. For instance, a hotel 
+conference room or business center that is used only at certain times may be easy to 
+schedule. Lobby lighting, however, is not a discretionary load to schedule, since lighting would 
+be required continuously for hotel operations. On the other hand, lighting may be 
+controllable, and able to be dimmed or tuned based on operations and occupancy.  
+ 
+(iii) Is the load reasonably measurable? Analyses must determine whether the electrical design 
+provides an opportunity to sub-meter certain points, or even disaggregate data through 
+subtraction or back-calculation, i.e., virtual load. While there is more variability in the wiring 
+design in some hotel portfolios, many portfolios are required to follow the guidelines for 
+electrical design, which allow predetermination of standardized points for energy monitoring. 
+ 
+Using this decision framework we assessed which electrical points scored high on all three decision 
+criteria. An example is space-cooling loads in hotels: cooling loads typically account for a significant 
+contribution to the energy use, and cooling is potentially able to be scheduled in a business hotel 
+room based on occupancy, thus making it discretionary. Finally, HVAC loads are often on an 
+independent circuit, making them measurable (sub-meterable). Hence, space cooling is prioritized as 
+a core monitoring point. Another example is lighting. Even in situations where lighting is not 
+disaggregated from plug loads at the panel level, there still is value in obtaining data from the mixed 
+lighting-plus-plugs panel.  
+PAGE 40
+ 13 
+ 
+Using this method, we derived a picklist of loads (See figures 11 and 12 in Section 6: Results). This 
+picklist is a set of core recommended energy-monitoring points for a hotel facility, and can be further 
+broken down if the building is owner-occupied or leased. This picklist would be further used to inform 
+technology users about the types of meters and gateways and the associated analysis and 
+visualization that are essentially the technical requirements for the EIS package. By creating this 
+predefined package of EIS components, we aim to reduce the usual transaction costs borne from 
+developing custom EIS configurations on a facility-by-facility basis. 
+ 
+5.5 Forming insights and actions 
+ 
+Based on the questions to be answered in the short-term (Figure 7), we developed a daily/weekly 
+dashboard, and based on the questions to be answered in the long-term (Figure 8), we developed a 
+quarterly/annual dashboard. These dashboards enable facility staff to monitor and answer pertinent 
+questions quickly and succinctly, conduct actions, and to send reports up the management chain to 
+the executive level. Each package provides guidance on how to interpret energy data and relay 
+information from each energy consumption analysis. Flexibility is built in for a suggested picklist of 
+loads, incremental configuration of charts, and associated notifications based on whether it is 
+pertinent to an Entry or Advanced package.  
+ 
+Common reasons for initiating energy-related upgrades in hotels and motels include customer 
+complaints, corporate sustainability policies, frequent equipment malfunctions and shortened 
+equipment lifetime due to years of deferred maintenance, piecemeal additions to buildings, and 
+internal changes to existing spaces that have not been accompanied by corresponding changes to 
+heating and cooling systems. Other reasons are previous attempts to reduce energy use by 
+inappropriate measures, such as covering vents, and major pieces of capital equipment or building 
+elements, such as a boiler or a roof, that are nearing the end of their useful life (ENERGY STAR, 2015). 
+These are usually cost-intensive, one-time upgrades. What we propose through the ongoing use of an 
+EIS is a staged approach that can reveal no-cost or low-cost opportunities that are mostly 
+incremental, and enable persistent savings on energy costs through load reduction strategies. 
+Facility operators can follow a staged approach and assess the impact of each upgrade through EIS 
+energy use tracking. This staged approach is listed below, and is shown in Figure 9: 
+ 
+(i) Schedule loads: This involves turning off and on loads based on predetermined schedules, 
+such as tracking and ensuring that HVAC settings in lobbies, offices, and other such peripheral 
+and back rooms are at minimum settings during hours of low use. This strategy helps to keep 
+the peak-to-baseload ratio high, so that off-hours setbacks are aggressively maintained for 
+energy savings during those hours. Scheduling can be effective if there is pre-known 
+information regarding occupancy, events, or any evening, nighttime, off-peak, or seasonal 
+variations. 
+ 
+(ii) Control loads: The basis of ongoing controls may be occupancy, outdoor air temperature, grid 
+pricing, and other such measures. Examples include: using demand control ventilation for 
+areas with variable occupancy, using economizers for free cooling when the weather is 
+appropriate, and setting laundry hot water to 120° Fahrenheit—an optimal temperature for 
+all hot water uses outside of the kitchen—where codes are specific about water temperature. 
+For hallways, a simple recommended strategy is to use a combination of scheduled lighting 
+and dimming plus occupancy-sensor controls after hours. Another example is to reduce the 
+amount of overnight lighting used in the guest hallways by dimming controls. The results are 
+PAGE 41
+ 14 
+not only energy savings but also the unforeseen benefit of fewer noise complaints from other 
+guests, since hallway conversations linger for a shorter time (ENERGY STAR, 2016).  
+ 
+Beyond these in-house actions around scheduling and controlling loads, here may be additional 
+actions required that warrant external contractor or vendor support, such as the following: 
+ 
+(iii) Repair equipment: If, despite scheduling and controlling loads, the equipment shows energy 
+waste, this may indicate the need for component, equipment, or system repair. 
+ 
+(iv) Audit building/systems: Beyond all the previous approaches, if the whole building or a system 
+shows energy waste, it calls for executive decision making around deploying an energy audit for 
+a deeper dive to investigate causes and further determine potential energy efficiency projects. 
+ 
+(v) Upgrade systems, equipment, and appliances: This would be a last resort, to deploy capital 
+resources into a physical system upgrade. The EIS will track energy costs before and after the 
+energy efficiency projects, such as replacement with energy efficient, ENERGY STAR-labeled 
+appliances, replacement with high-intensity fluorescent (HIF) lighting for parking lots and 
+outdoor applications, or HVAC upgrades. 
+ 
+ 
+Figure 9: Staged approach to energy savings based on EIS analytics 
+Additional practices such as hotel reservation best practices can be followed aggressively; these can 
+include booking rooms in clusters and renting last the cooling- or heating-intensive areas, such as 
+rooms on top floors, at building corners, and facing west (in summer) or north (in winter). Best 
+housekeeping practices such as covering heated swimming pools, turning off all lights, closing drapes, 
+and setting temperatures to minimum levels in unoccupied rooms will save energy, and that will be 
+reflected in the EIS’s energy use tracking. 
+ 
+6. Results 
+The packaged EIS solutions have three components: energy meters, communications gateways, and 
+software with a user interface. The hardware components, such as sub-meters and gateway, are 
+specified for each tier, and are selected from off-the-shelf products that comply with the 
+specifications, as shown in Figure 10. An important first-order supply-side interval metering is 
+recommended for whole building electric, natural gas, other fuel and standby power. This should be 
+followed by sub-metering of selected points and locations that are identified through the “picklist of 
+loads” as detailed in Section 5.4 above. The whole building and systems/end-use sub-metering 
+information acquired feeds into metrics-oriented visualization, and can help trigger action toward 
+delving further into a certain fuel or end-use. Thus, software analysis and visualization is defined for 
+each tier.  
+ 
+Section 6.1 and 6.2 describe the Entry Tier 1 and Advanced Tier 2 EIS packages. 
+ 
+
+PAGE 42
+ 15 
+Figure 10: Metering and gateway requirements for EIS packages 
+ 
+ 
+ 
+ 
+Meters Sub-metering 
+Points 
+Physical 
+Location  
+Communication 
+Gateway 
+Measured 
+Parameters 
+Accuracy and 
+Turndown 
+(U.S. and India)  
+Additional 
+Inputs 
+Tier 1: Electric sub-meters* 
+Whole 
+Building, 2–3 
+major loads 
+(spaces or end 
+uses) such as 
+chiller plant, 
+fan energy 
+1 Main 
+distribution 
+board (DB)  
+Wired between 
+sub-meter and 
+gateway, Wi-Fi 
+between 
+gateway (1) and 
+remote database  
+ 
+RS-485 (Modbus 
+and BACnet) 
+output standard 
+for India; TCP/IP 
+for U.S. 
+kWh, V, A  
+Class 1 according to 
+IS13779 (India 
+standard); 
+1% with 10:1 
+turndown (U.S. 
+requirement) 
+-Bldg./space 
+areas 
+-  Fuel supply 
+cost 
+Tier 2: Electric sub-meters* Whole 
+Building, 7–10 
+major loads 
+(spaces or end 
+uses) such as:  
+- chiller plant 
+- fan energy  
+- emergency 
+equipment/ 
+plugs/lights  
+1 Main DB 
++ 
+Represent-
+ative 
+Spaces / 
+Floor DB 
+Wired between 
+sub-meter and 
+gateway, Wi-Fi 
+between 
+gateway (1) and 
+remote database  
+ 
+RS-485 (Modbus 
+and BACnet) 
+output standard 
+for India; TCP/IP 
+for U.S. 
+kWh, kW, V, 
+A, Power 
+Factor,  
+For WB: 
+current and 
+voltage 
+harmonics 
+Class 1 according to 
+IS13779 (India 
+standard); 
+1% with 10:1 
+turndown (U.S. 
+requirement) 
+Tier 2 
+- Bldg./space 
+areas 
+-  Fuel supply 
+cost 
+-  Operating 
+schedules 
+-  Outdoor air 
+temperature 
+(OAT) from 
+weather data 
+ 
+ 
+Tiers 1 and 2:  
+Gas sub-meters 
+Primarily U.S. package 
+Whole 
+Building gas; 1 
+major space 
+heating load 
+(boiler or 
+furnace) 
+1 main 
+piping 
+location, at 
+all boilers/ 
+furnaces 
+Pulse output 
+counting using a 
+twister pair to 
+gateway (e.g., 
+pulse counting 
+and convert to 
+therms) 
+Sub-meter 
+reads out in 
+cubic ft, 
+data 
+required as 
+therms 
+U.S. ANSI B109 
+standard;  
+1% with 100:1 
+turndown 
+  
+Tier 2: Btu sub-meter 
+Water cooling 
+and heating  
+At chiller 
+and boiler 
+plant 
+Scaled pulse or 
+RS-485 (Modbus 
+and BACnet) 
+output standard 
+Btu/h 
+Precision matched 
+temp. Sensors, 2% 
+accuracy 10:1 or 4% 
+accuracy with 100:1; 
+Standard EN 1434 
+  
+PAGE 43
+ 16 
+6.1 EIS Tier 1, Entry package 
+ 
+Audience: The EIS Tier 1 Entry package (Figure 11) is targeted toward hotel owners and managers who 
+have an interest in understanding their buildings’ energy utilization, but have low skill and time. 
+An entry-level “foot in the door” EIS package can familiarize a user with the installation, use, and 
+benefits of a simple EIS based on information about when and how much total electricity is being 
+consumed and wasted, primarily at the whole building level. This is a solution that most optimizes 
+sub-meters and dashboards that can identify low-hanging fruit for energy savings. It would have an 
+arguably lower energy savings potential, on the order of 3 to 5 percent at a whole building level. The 
+EIS Tier 1 Entry package provides an introduction to the organization on quick energy wins. 
+Data Requirements: Interval meters at whole building and sub-meter levels for 2 to 3 critical points 
+from the picklist of loads, selected on the basis of significance and controllability of the loads and ease 
+of metering it. These loads can be at the end-use level (e.g., HVAC and all lights and plugs), for critical 
+equipment (e.g., chiller plant). No additional user-supplied information is required. 
+Visualization and Functionality: Two to five preconfigured charts in visualization dashboards, as shown 
+in Figures 13 and 14, to provide information for the features provided below: 
+o Simple tracking of energy consumption (KWh) to identify ongoing use and electricity wastage, 
+to inform energy efficiency actions.  
+o Load profiling of critical loads (KW). These data can be provided from hourly interval 
+metering. 
+o Longitudinal benchmarking to provide visibility into long-term building’s energy trends, 
+including tracking whole building energy savings after implementation of energy efficiency 
+projects 
+o Tracking fuel costs that help with reconciliation of electricity billing costs and identify 
+variances in cost versus actual consumption. 
+A simple level of analysis can usually be carried out in-house. Notifications, such as basic alerts and 
+stock recommendations, are provided to the facility manager, and standard monthly or quarterly 
+reports are provided to executives. Actions such as scheduling and controls for main sub-metered 
+end-uses and equipment can be conducted in-house. As needed, infrequent vendor support would be 
+required for recalibration of meters, software upgrades, and the like. 
+ 
+ 
+PAGE 44
+ 17 
+ 
+ 
+ 
+Figure 11: High-level overview of a Hotel EIS Tier 1 Entry Package. The left column recommends a picklist of loads, the middle column defines a simple communication gateway, and the 
+right column provides the analysis and visualization functionality.
+
+PAGE 45
+ 18 
+ 
+ 
+6.2 EIS Tier 2, Advanced package 
+ 
+Audience: The Tier 2, Advanced-Level package (Figure 12) is targeted toward hotel owners and 
+managers who have a relatively higher awareness and interest in energy efficiency and carbon 
+accounting to spend investment dollars and staff resources commensurately.  
+This is a more complex, granular package than the Entry level. The Advanced Package consolidates 
+data from a few more interval meters and provides deeper visibility and analytics in terms of when, 
+how much, and where electricity is being consumed and wasted. All other things being equal, this 
+enables higher energy savings than the Entry-level package—up to ~10 percent—since it takes 
+advantage of more extensive sub-metering to better pinpoint the reasons for use and waste. The cost 
+is correspondingly higher because of additional metering requirement, higher functionality software, 
+and/or ongoing vendor software services (analysis, data storage) cost, although the increase in 
+number of points can potentially bring down the cost of the per point metering cost.  
+Data requirements: Interval data is recommended from up to 7 to 8 end-uses or major areas. Their 
+selection is based on the picklist of loads. Beyond Entry level metering, other points such as outdoor 
+lighting, air handlers, elevators, and major areas such as common areas and guest room blocks are 
+recommended. Additional user-supplied information is also suggested to be configured into the EIS, 
+such as operating schedules, building/ zone square feet areas, and designed occupancy (number of 
+rooms, event schedule) that allow for normalization to provide superior analytics.  
+Visualization and Functionality: Six to ten advanced visualization screens are recommended. In 
+addition to the charts provided in the EIS Basic package, there are charts depicting cost accounting, 
+carbon accounting, and heat maps, as well as end-use pies, as illustrated in figures 13 and 14. In 
+addition to the functionality and benefits of the Tier 1 Entry package, the Tier 2 Advanced package 
+provides the following: 
+o Higher granularity and visibility into energy consumption (KWh) and load profiling (kW) of up 
+to 7 to 8 major loads. Integration with additional user-provided data makes the Advanced EIS 
+package a powerful tool to provide simple baselines that can be normalized (e.g., for floor 
+area and operational hours) and can identify when and where the energy saving 
+opportunities are with respect to time and the load category (i.e., scheduling, changes in load 
+profile). 
+o Cross-sectional benchmarking with respect to a peer group such as a portfolio or other similar 
+hotels. Benchmarking provides comparative information that reveals the need for 
+improvement in energy performance; helps set energy targets; prioritizes energy efficiency 
+projects, and tracks progress toward those targets. 
+o Cost accounting in terms of reporting electricity costs against the budget, indicating a surplus 
+or deficit.  
+o Sustainability/GHG tracking, by providing carbon accounting analysis and reports. 
+Built-in notifications, such as email/phone alerts and some custom recommendations are also 
+recommended in the Advanced package. The usability could be a conveniently handled through  a 
+hybrid model of of in-house analysis and specific vendor-provided services. Vendor services can 
+include support, training, and upgrade; as well as cost of any data storage in the cloud based or 
+vendor-site local server. 
+PAGE 46
+ 19 
+ 
+ 
+ 
+Figure 12: High-level overview of a Hotel EIS Tier 2 Advanced Package. The left column recommends a picklist of loads, the middle column defines a simple communication gateway, and 
+the right column provides the analysis and visualization functionality. 
+
+PAGE 47
+ 20 
+ 
+Figure 13: High-level overview of daily/weekly dashboard, “Building Pulse at a Glance” for facilities staff 
+ 
+ 
+Figure 14: High-level overview of Monthly/ Annual dashboard for both executives and facilities staff 
+  
+3.	Fuel	Cost	and	Consump on	Chart		
+(similar	for	 er	1	and	2)	
+- Consump on	(kBtu):			
+										Electricity	(grid,	off-grid),		
+										Natural	Gas	
+-				Cost	(INR/USD)	
+electricity-	grid	
+electricity	(	non-grid)	
+Gas	
+Electricity	(grid)	
+400	BTUs	
+57%	
+Electricity		
+(back	up)	
+50	BTUs	
+14%	
+Gas	
+100	BTUs	
+28%	
+FUEL	(	BY	TYPE)	CONSUMPTION	AND	COST	
+Facility	Daily	Dashboard:	Building	Pulse	at	a	Glance	
+How	much	energy	(by	fuel)	and	cost	is	my	building	consuming,	where	and	when?			
+	
+	
+1. Energy	Use	Area	Chart	
+	(2	versions,	for	 er	1	and	2)	
+	Energy	Consump on		
+- Electricity	(kWh	or	kBtu)	
+- Gas	(therms	or	kBtu)	
+ENERGY	USE	AREA	CHART	
+Time	
+Load	kW	
+End	use	1	
+	
+End	Use	2	
+End	use	3	
+	
+End	use	4	
+End	use	5	
+	
+Degree	hours	
+2.	Power	Demand	Trendlines	
+Chart		
+(2	versions,	for	 er	1	and	2)	
+-	Electrical	Loads	(kW)	
+-	Gas	Load	(kBtu/hour)	
+POWER	DEMAND	TRENDLINES	CHART	
+The	Facility	Daily	Dashboard	can	be	used	by	the	facility	staff		
+on	a	daily	or	weekly	basis		
+Monthly/Annual	Dashboard	
+	
+	
+	
+5.	Whole	Building	Heat	Map:	(Tier	2	only)	
+- Electrical	Loads	(kW)	
+	
+Electricity-	
+grid	
+Gas	
+FUEL	(	BY	TYPE)	CONSUMPTION	AND	COST	
+Electricity	
+backup	
+Steam	
+1.	Consump on	and	cost	per	fuel	type	
+(Similar	for	Tier	1	and	2)	
+USD/INR	or	kBtu/	 me	period	
+3.	Monthly/Annual	energy	use	and	longitudinal	
+benchmarking		
+(Similar	for	Tier	1	and	2)	
+Electricity	(kWh),	Gas	(kBtu)	
+MONTHLY/ANNUAL	ENERGY	USE	
+	
+	
+	
+5.	Average	Loads	line	chart		
+(Similar	for	Tier	1	and	2)	
+-	Electrical	Loads	(kW)	
+-	Gas	Load	(kBtu)	
+	
+AVERAGE	LOADS:	
+Load	name	
+0	
+5000	
+10000	
+15000	
+20000	
+25000	
+Jan	 Feb	 Mar	 Apr	 May	 Jun	 Jul	 Aug	 Sep	 Oct	 Nov	 Dec	
+2013	
+2014	
+2015	
+2.	Cost	trending	
+(Similar	for	Tier	1	and	2)	
+USD	or	INR/	 me	period	
+COST	TRENDING	
+	
+	
+	
+4.		Cross-sec onal	Benchmarking	(Tier	2	only)	
+-	Por olio	Manager	score	
+-	Carbon	footprint	
+-	Comparisons	with	peer	buildings	in	the	district	or	na on	
+	
+	
+ENERGY	BENCHMARKING	
+Facility	manager	charts	Execu ve-level	charts	
+PAGE 48
+ 21 
+ 
+6.3 Trade-offs between functionality and greater adoption 
+There is a trade-off between functionality and broader adoption: Figure 15 shows the range of 
+organizational and technical factors addressed in the two tiers of EIS packages. The tiered EIS-in-a-box 
+packages do not provide the accuracy, granularity, and customized features of expensive custom 
+energy information and management systems (EMIS) solutions used by some large buildings and 
+portfolios. However, their value is in the 80-20 solution, i.e., they provide adequate functionality for 
+energy savings in small- and medium-sized facilities, simplicity of use, actionable dashboards, and cost-
+effectiveness through first and operational cost reduction. We believe that the Tier 1 Entry EIS is a 
+minimum requirement for all hotel facilities, and the Tier 2 Advanced EIS is best practice within a 
+limited cost.  
+  
+Figure 15: The two tiers of EIS-in-a-box provide trade-off between functionality and broader adoptability 
+ 
+7. Results 
+In a context where $60 billion is spent annually on wasted energy in U.S. buildings (Forbes, 2015), it is 
+critical to manage building energy use to achieve up to 20 percent savings enabled by EIS (Granderson 
+et al., 2016). A key technical response to help overcome the scale and adoption challenge for EIS is the 
+development of packaged solutions that address the current pain points around specifying, procuring, 
+installing, and using the EIS. Our packaged EIS-in-a-box solution provides the following benefits: 
+o Cost-effectiveness, by helping to reduce first costs (i.e., transactional costs, hardware costs) as 
+well as ongoing operational costs. This can help ease the sales cycle for vendors (especially for 
+new or tough-to-penetrate markets) and make procurement and operations cost-effective for 
+users. To test our assumptions around reduction of transaction costs, we conducted vendor 
+Site gauge           Building level                   System level     Equipment level  
+M  e  t  e  r  i  n  g     G  r  a  n  u l  a  r  i  t  y   
+D  a  t  a   -  C  o  l  l e  c  t  i o  n    a n d     C  o  m  m  u  n  i  c  a  t  I  o  n  s 
+  
+F i r s t   C  o  s  t  
+NO EIS          TIER 1 ENTRY                   TIER 2 ADVANCED   CUSTOM EMIS 
+ 
+ 
+T  o  o  l  s 
+Spreadsheet tool  Simple analytics                Advanced Analytics  EMIS tools 
+  
+D  e  c  i  s  i  o  n – m a k  i  n  g    p  o  t  e  n  t  i  a  l 
+Manual spot measurements      Hourly batch                  15-minute batch    Continuous 
+Post-facto utility bill        
+Manufacturer specs 
+ 
+n/a         $                                  $$    $$$ 
+    n/a             Coarse                      Medium       Fine 
+Organizational factors Technical factors 
+S t a f f    R e s o u r c e s 
+  n/a            In-house staff                   Hybrid model     Vendor serviced 
+PAGE 49
+ 22 
+interviews and found that packaged EIS can help bring down cost by up to 30 percent of 
+custom solutions (Singh et al., 2017). 
+o Scalability, by development of an optimum EIS that takes into account the specificity of the 
+hotel sector rather than being too generic (all types of buildings) or too specific (customized on 
+a per-building basis); also by engineering EIS packages to accommodate heterogeneity across 
+hotel buildings. Its replicability across the organization’s building portfolio and scalability 
+establishes a broader market applicability of the systems. These EIS hotels packages are 
+intended to be relevant across a range of facilities by recognizing and accommodating the 
+heterogeneity within this target segment. 
+o Simplicity, through ease of use, procurement, and installation. EIS packages are engineered for 
+the uncomplicated integration of the three main components (i.e., meters, gateways, and 
+software) into preset configurations as two recommended tiered EIS-in-a-box packages. The 
+uncluttered hardware and streamlined data architecture and cadence helps curtail 
+unnecessary data management. Technical simplification of products and their usability is a real 
+need and a path toward scalable deployment. 
+o Actionability in the organization, through alignment with business drivers and metrics that are 
+relevant across various levels of organizational decision making. For the facilities staff in the 
+basement checking the near-time, daily, or weekly pulse, it enables data-derived actions in the 
+facilities operations. For executives, valuable energy information presented with the relevant 
+energy and sustainability metrics at quarterly/annual time frames can help inform facility and 
+energy investments within their larger decision-making framework. 
+The EIS package technical requirements that were developed in this work provide details for the three 
+components—metering, gateways, and software/user interface—that are integrated into two tiers. 
+The recommendations are specific, but allow flexibility in the prioritized selection of points for energy 
+monitoring, reporting, and granularity of data acquisition, analysis, and actionable information display. 
+Energy Information Systems packages significantly improve on the business-as-usual practice for 
+energy measurement of post-facto utility bill information, or for single-point-in-time information such 
+as spot measurements, site gauges, manufacturer specifications, and assumptions. The core EIS 
+information is intended to provide knowledge that is actionable across various types of decision 
+makers in an organization, as well as across organizations in the offices sector. The packages rely on 
+buy-in across various stakeholders, including upper management commitment for investment in these 
+packaged solutions, as well as early involvement of IT staff to help overcome security, data 
+maintenance, big data management, and installation hurdles. The packages rely upon training of 
+in-house staff while leveraging the technical skills of systems integrators as necessary in the process. In 
+this way, the design of the packages considers the EIS vendor, integrator, and client organization’s 
+facilities and IT staff as crucial partners in the successful installation of an EIS and persistent savings 
+through its use. Finally, advantages such as standardization of packages also may help with 
+interoperability and security standards in the near future. 
+While these EIS packages do not provide all the features available through more complex, custom-built 
+EIS solutions, they represent a cost-effective option for stakeholders interested in increasing their 
+property’s energy efficiency who might otherwise be unable to practically leverage the technology. 
+While sacrificing some of the granularity or accuracy, the value of the EIS-in-a-box is derived through 
+their ease of use and adoption. The sector-specific packages can be a factor in market transformation 
+that could allow building owners and managers to easily procure, install, and operate a system to 
+monitor their energy usage, identify areas for improvement and cost savings, and encourage market 
+adoption of the technology.  
+PAGE 50
+ 23 
+While this paper focuses on the hotel sector, our methodology spans three building sectors (hospitals, 
+hotels, and offices) across two countries that are among the world’s top energy consumers, namely 
+the United States and India. Vendor interviews have been conducted to study typical transaction costs 
+and project cost savings from EIS-in-a box packages across these building typologies. These packages 
+are being field-demonstrated in six buildings in India and a key next step is to assess the efficacy of the 
+packages and the effectiveness of data-driven decision making through the packages. 
+In conclusion, the research question we investigated was: How can we effectively design building 
+energy information system packages that can overcome technological and market barriers to attain 
+significant energy savings for high-consuming building sectors? Through streamlining and integrating 
+the metering, communication, and visualization components of an EIS, it is possible to significantly 
+reduce transaction costs, provide a relevant amount data for energy-based decision making, and drive 
+significant energy savings through these adaptable and adoptable packaged EIS-in-a box solutions.  
+ 
+ 
+ 
+ 
+ 
+PAGE 51
+ 24 
+References 
+Better Buildings (2005). Dealerships to Donuts: Best Practices for Energy Efficiency in the Franchise 
+Mode. Presentation. U.S. Department of Energy. Available at 
+https://www4.eere.energy.gov/challenge/sites/default/files/uploaded-
+files/Dealerships_to_Donuts_March3_508.pdf. (Accessed 15 March 2017). 
+ 
+ENERGY STAR (2016). Facility Type Hotels and Motels in Building Upgrade Manual. Chapter 12. ENERGY 
+STAR Building Manual. U.S. Environmental Protection Agency. Available at 
+https://www.energystar.gov/sites/default/files/buildings/tools/EPA_BUM_CH12_HotelsMotels.pdf. 
+(Accessed 15 March 2017). 
+ 
+ENERGY STAR (2015). Energy Use in Hotels. Data Trends. ENERGY STAR Portfolio Manager. U.S. 
+Environmental Protection Agency. Available at 
+https://www.energystar.gov/sites/default/files/tools/DataTrends_Hotel_20150129.pdf. (Accessed 15 
+March 2017). 
+ 
+ENERGY STAR (2007). Hotels: An Overview of Energy Use and Energy Efficiency Opportunities. ENERGY 
+STAR Portfolio Manager. U.S. Environmental Protection Agency. Available at 
+https://www.energystar.gov/sites/default/files/buildings/tools/SPP Sales Flyer for Hospitality and 
+Hotels.pdf. (Accessed 17 October 2016). 
+ 
+Forbes Insights (2015). No More Wasted Energy: The Power of Energy Intelligence Software. Available 
+at http://images.getmore.enernoc.com/Web/EnerNOCInc/%7B2884a7d3-c905-4b95-91c1-
+cf9fee1d6bb7%7D_report_Forbes_Insights_No_More_Wasted_Energy.pdf. (Accessed 10 April 2017). 
+ 
+Gaggioli, Alex (2016). “Hotel Operating Costs Affect the Bottom Line.” Cloudbeds. Available at 
+https://www.cloudbeds.com/articles/hotel-operating-costs/. (Accessed 10 April 2017). 
+ 
+Granderson, Jessica, and Guanjing Lin (2016). “Building Energy Information Systems: Synthesis of 
+Costs, Savings, and Best-practice Uses.” Energy Efficiency 9(6), 1369–1384, DOI 10.1007/s12053-016-
+9428-9. Available at http://link.springer.com/article/10.1007/s12053-016-9428-9. (Accessed 15 May 
+2017). 
+ 
+Granderson, Jessica, Mary Ann Piette, Benjamin Rosenblum, Lily Hu, et al. (2013). Energy Information 
+Handbook: Applications for Energy-Efficient Building Operations. CreateSpace. 2013, 
+ISBN 1480178276/9781480178274. LBNL Report LBNL-5272E. Available at 
+http://eis.lbl.gov/downloads/energy-information-handbook.pdf. (Accessed 15 May 2017). 
+PAGE 52
+ 25 
+Henderson, Philip, and Meg Waltner (2013). Real-Time Energy Management: A Case Study of Three 
+Large Commercial Buildings in Washington, D.C. Natural Resources Defense Council. Available at 
+https://www.nrdc.org/sites/default/files/tower-companies-case-study.pdf. ( Accessed 20 May 2017). 
+ 
+Indian Brand Equity Foundation (2017). Tourism & Hospitality Industry in India. Available at 
+https://www.ibef.org/industry/tourism-hospitality-india.aspx (Accessed 20 May 2017). 
+ 
+Johnson, Paul M. (2005). Transaction Costs. A Glossary of Political Economy Terms. Auburn University 
+Department of Political Science. Available at: 
+http://www.auburn.edu/~johnspm/gloss/transaction_costs (Accessed 15 February 2016). 
+ 
+Katipamula, S., and Michael Brambley (2005). “Methods for fault detection, diagnostics, and 
+prognostics for building systems – A review, part 1.” HVAC&R Research 11(1): 3-25. Available at 
+https://pdfs.semanticscholar.org/7e9c/459913a079d826c5397d41f22ed580af6f09.pdf (Accessed 20 
+May 2017). 
+ 
+Lawrence Berkeley National Laboratory. (2015). A Primer on Organizational Use of Energy 
+Management and Information Systems. Better Buildings U.S. Department of Energy. Available at 
+https://betterbuildingssolutioncenter.energy.gov/sites/default/files/attachments/A_Primer_on_Organi
+zational_Use_of_EMIS_V1.1.pdf (Accessed 10 August 2016). 
+ 
+National Grid (2004). Managing Energy Costs in Full-Service Hotels. Available at 
+https://www9.nationalgridus.com/non_html/shared_energyeff_hotels.pdf. (Accessed 10 August 2016). 
+ 
+Roth, Kurt W., Detlef Westphalen, Michael Y. Feng, Patricia Llana, and Louis Quartararo (2005). “Energy 
+Impact of Commercial Building Controls and Performance Diagnostics: Market Characterization, Energy 
+Impact of Building Faults and Energy Savings Potential.” 2005. Prepared by TIAC LLC for the U.S. 
+Department of Energy. 
+ 
+Roth, K., P. Llana, D. Westphalen, and J. Broderick. 2005. “Automated whole building diagnostics.” 
+ASHRAE Journal 47(5): 82–84. 
+Singh, Reshma, Paul Mathew, Jessica Granderson, Yashkumar Shukla, Amiya Ranjan (2017), “Packaged 
+Building EIS for underserved markets: An assesment based on technical specifications for three building 
+sectors.” Working paper. Lawrence Berkeley National Laboratory. Berkeley. 2017 
+U.S. Department of Energy (2016). Building Performance Database. Available at: 
+https://energy.gov/eere/buildings/building-performance-database. (Accessed 13 May 2017). 

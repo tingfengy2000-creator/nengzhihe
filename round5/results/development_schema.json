@@ -1,0 +1,487 @@
+[
+  {
+    "id": "e2c0804768e9",
+    "rows": 1440,
+    "occupied_rows": 720,
+    "time_deltas": {
+      "1.0": 1439
+    },
+    "signals": {
+      "SA": {
+        "missing": 0,
+        "occupied_min": 9.749999999999998,
+        "occupied_median": 15.555555555555557,
+        "occupied_max": 24.050000000000004
+      },
+      "HSP": {
+        "missing": 590,
+        "occupied_min": 11.688888888888888,
+        "occupied_median": 11.688888888888888,
+        "occupied_max": 12.7
+      },
+      "CSP": {
+        "missing": 590,
+        "occupied_min": 12.799999999999999,
+        "occupied_median": 12.799999999999999,
+        "occupied_max": 22.5
+      },
+      "OA": {
+        "missing": 1,
+        "occupied_min": 18.672222222222224,
+        "occupied_median": 23.736111111111114,
+        "occupied_max": 30.84444444444444
+      },
+      "MA": {
+        "missing": 0,
+        "occupied_min": 19.07222222222222,
+        "occupied_median": 23.56666666666667,
+        "occupied_max": 26.84444444444444
+      },
+      "RA": {
+        "missing": 0,
+        "occupied_min": 19.07222222222222,
+        "occupied_median": 21.994444444444447,
+        "occupied_max": 25.877777777777776
+      },
+      "FAN": {
+        "missing": 0,
+        "occupied_min": 1.0,
+        "occupied_median": 1.0,
+        "occupied_max": 1.0
+      },
+      "SF": {
+        "missing": 0,
+        "occupied_min": 0.1,
+        "occupied_median": 0.34,
+        "occupied_max": 0.5
+      },
+      "OAD": {
+        "missing": 0,
+        "occupied_min": 0.1,
+        "occupied_median": 0.13,
+        "occupied_max": 1.0
+      },
+      "RAD": {
+        "missing": 0,
+        "occupied_min": 0.0,
+        "occupied_median": 1.0,
+        "occupied_max": 1.0
+      },
+      "EAD": {
+        "missing": 0,
+        "occupied_min": 0.1,
+        "occupied_median": 0.1,
+        "occupied_max": 0.9
+      },
+      "CC": {
+        "missing": 0,
+        "occupied_min": 0.0,
+        "occupied_median": 0.36,
+        "occupied_max": 1.0
+      },
+      "HC": {
+        "missing": 0,
+        "occupied_min": 0.0,
+        "occupied_median": 0.0,
+        "occupied_max": 0.08
+      },
+      "OCC": {
+        "missing": 0,
+        "occupied_min": 1.0,
+        "occupied_median": 1.0,
+        "occupied_max": 1.0
+      }
+    },
+    "full_oa_command_minutes": 262,
+    "full_oa_and_ra_closed_minutes": 262,
+    "both_valves_closed_minutes": 188
+  },
+  {
+    "id": "0fb594c24122",
+    "rows": 1440,
+    "occupied_rows": 720,
+    "time_deltas": {
+      "1.0": 1439
+    },
+    "signals": {
+      "SA": {
+        "missing": 0,
+        "occupied_min": 22.199999999999996,
+        "occupied_median": 27.883333333333333,
+        "occupied_max": 40.355555555555554
+      },
+      "HSP": {
+        "missing": 0,
+        "occupied_min": 11.688888888888888,
+        "occupied_median": 11.688888888888888,
+        "occupied_max": 22.5
+      },
+      "CSP": {
+        "missing": 0,
+        "occupied_min": 12.799999999999999,
+        "occupied_median": 12.799999999999999,
+        "occupied_max": 22.5
+      },
+      "OA": {
+        "missing": 0,
+        "occupied_min": 17.127777777777776,
+        "occupied_median": 21.53333333333333,
+        "occupied_max": 26.29444444444444
+      },
+      "MA": {
+        "missing": 0,
+        "occupied_min": 18.466666666666665,
+        "occupied_median": 22.083333333333332,
+        "occupied_max": 31.72222222222222
+      },
+      "RA": {
+        "missing": 0,
+        "occupied_min": 26.37777777777778,
+        "occupied_median": 28.72222222222222,
+        "occupied_max": 32.37777777777777
+      },
+      "FAN": {
+        "missing": 0,
+        "occupied_min": 1.0,
+        "occupied_median": 1.0,
+        "occupied_max": 1.0
+      },
+      "SF": {
+        "missing": 0,
+        "occupied_min": 0.1,
+        "occupied_median": 0.5,
+        "occupied_max": 0.5
+      },
+      "OAD": {
+        "missing": 0,
+        "occupied_min": 0.1,
+        "occupied_median": 1.0,
+        "occupied_max": 1.0
+      },
+      "RAD": {
+        "missing": 0,
+        "occupied_min": 0.0,
+        "occupied_median": 0.0,
+        "occupied_max": 1.0
+      },
+      "EAD": {
+        "missing": 0,
+        "occupied_min": 0.1,
+        "occupied_median": 0.9,
+        "occupied_max": 0.9
+      },
+      "CC": {
+        "missing": 0,
+        "occupied_min": 0.86,
+        "occupied_median": 1.0,
+        "occupied_max": 1.0
+      },
+      "HC": {
+        "missing": 0,
+        "occupied_min": 0.0,
+        "occupied_median": 0.0,
+        "occupied_max": 0.0
+      },
+      "OCC": {
+        "missing": 0,
+        "occupied_min": 1.0,
+        "occupied_median": 1.0,
+        "occupied_max": 1.0
+      }
+    },
+    "full_oa_command_minutes": 453,
+    "full_oa_and_ra_closed_minutes": 453,
+    "both_valves_closed_minutes": 0
+  },
+  {
+    "id": "19e3873d3c2f",
+    "rows": 1440,
+    "occupied_rows": 720,
+    "time_deltas": {
+      "1.0": 1439
+    },
+    "signals": {
+      "SA": {
+        "missing": 0,
+        "occupied_min": 12.13888888888889,
+        "occupied_median": 17.680555555555557,
+        "occupied_max": 22.54444444444444
+      },
+      "HSP": {
+        "missing": 0,
+        "occupied_min": 11.688888888888888,
+        "occupied_median": 11.688888888888888,
+        "occupied_max": 22.5
+      },
+      "CSP": {
+        "missing": 0,
+        "occupied_min": 12.799999999999999,
+        "occupied_median": 17.627777777777776,
+        "occupied_max": 22.5
+      },
+      "OA": {
+        "missing": 0,
+        "occupied_min": 16.255555555555553,
+        "occupied_median": 17.736111111111114,
+        "occupied_max": 20.91666666666667
+      },
+      "MA": {
+        "missing": 0,
+        "occupied_min": 17.82222222222222,
+        "occupied_median": 18.95555555555556,
+        "occupied_max": 24.288888888888888
+      },
+      "RA": {
+        "missing": 0,
+        "occupied_min": 20.549999999999997,
+        "occupied_median": 22.85,
+        "occupied_max": 23.972222222222225
+      },
+      "FAN": {
+        "missing": 0,
+        "occupied_min": 1.0,
+        "occupied_median": 1.0,
+        "occupied_max": 1.0
+      },
+      "SF": {
+        "missing": 0,
+        "occupied_min": 0.1,
+        "occupied_median": 0.45,
+        "occupied_max": 0.5
+      },
+      "OAD": {
+        "missing": 0,
+        "occupied_min": 0.09,
+        "occupied_median": 1.0,
+        "occupied_max": 1.0
+      },
+      "RAD": {
+        "missing": 0,
+        "occupied_min": 0.0,
+        "occupied_median": 0.0,
+        "occupied_max": 0.56
+      },
+      "EAD": {
+        "missing": 0,
+        "occupied_min": 0.41,
+        "occupied_median": 0.9,
+        "occupied_max": 0.9
+      },
+      "CC": {
+        "missing": 0,
+        "occupied_min": 0.0,
+        "occupied_median": 0.21,
+        "occupied_max": 0.46
+      },
+      "HC": {
+        "missing": 0,
+        "occupied_min": 0.0,
+        "occupied_median": 0.0,
+        "occupied_max": 0.0
+      },
+      "OCC": {
+        "missing": 0,
+        "occupied_min": 1.0,
+        "occupied_median": 1.0,
+        "occupied_max": 1.0
+      }
+    },
+    "full_oa_command_minutes": 711,
+    "full_oa_and_ra_closed_minutes": 711,
+    "both_valves_closed_minutes": 272
+  },
+  {
+    "id": "5138876d3912",
+    "rows": 1440,
+    "occupied_rows": 720,
+    "time_deltas": {
+      "1.0": 1439
+    },
+    "signals": {
+      "SA": {
+        "missing": 0,
+        "occupied_min": 14.505555555555556,
+        "occupied_median": 18.558333333333334,
+        "occupied_max": 22.488888888888894
+      },
+      "HSP": {
+        "missing": 0,
+        "occupied_min": 11.688888888888888,
+        "occupied_median": 11.688888888888888,
+        "occupied_max": 22.5
+      },
+      "CSP": {
+        "missing": 0,
+        "occupied_min": 13.577777777777776,
+        "occupied_median": 22.5,
+        "occupied_max": 22.5
+      },
+      "OA": {
+        "missing": 0,
+        "occupied_min": 15.955555555555556,
+        "occupied_median": 17.994444444444444,
+        "occupied_max": 20.26111111111111
+      },
+      "MA": {
+        "missing": 0,
+        "occupied_min": 17.516666666666666,
+        "occupied_median": 18.947222222222223,
+        "occupied_max": 24.316666666666663
+      },
+      "RA": {
+        "missing": 0,
+        "occupied_min": 22.016666666666666,
+        "occupied_median": 22.866666666666664,
+        "occupied_max": 24.87222222222222
+      },
+      "FAN": {
+        "missing": 0,
+        "occupied_min": 1.0,
+        "occupied_median": 1.0,
+        "occupied_max": 1.0
+      },
+      "SF": {
+        "missing": 0,
+        "occupied_min": 0.1,
+        "occupied_median": 0.39,
+        "occupied_max": 0.5
+      },
+      "OAD": {
+        "missing": 0,
+        "occupied_min": 0.1,
+        "occupied_median": 1.0,
+        "occupied_max": 1.0
+      },
+      "RAD": {
+        "missing": 0,
+        "occupied_min": 0.0,
+        "occupied_median": 0.0,
+        "occupied_max": 1.0
+      },
+      "EAD": {
+        "missing": 0,
+        "occupied_min": 0.06,
+        "occupied_median": 0.9,
+        "occupied_max": 0.9
+      },
+      "CC": {
+        "missing": 0,
+        "occupied_min": 0.0,
+        "occupied_median": 0.0,
+        "occupied_max": 0.4
+      },
+      "HC": {
+        "missing": 0,
+        "occupied_min": 0.0,
+        "occupied_median": 0.0,
+        "occupied_max": 0.24
+      },
+      "OCC": {
+        "missing": 0,
+        "occupied_min": 1.0,
+        "occupied_median": 1.0,
+        "occupied_max": 1.0
+      }
+    },
+    "full_oa_command_minutes": 592,
+    "full_oa_and_ra_closed_minutes": 592,
+    "both_valves_closed_minutes": 365
+  },
+  {
+    "id": "b5a5b08a1984",
+    "rows": 1440,
+    "occupied_rows": 720,
+    "time_deltas": {
+      "1.0": 1439
+    },
+    "signals": {
+      "SA": {
+        "missing": 0,
+        "occupied_min": 13.533333333333333,
+        "occupied_median": 16.97222222222222,
+        "occupied_max": 22.722222222222225
+      },
+      "HSP": {
+        "missing": 0,
+        "occupied_min": 11.688888888888888,
+        "occupied_median": 11.688888888888888,
+        "occupied_max": 22.5
+      },
+      "CSP": {
+        "missing": 0,
+        "occupied_min": 12.799999999999999,
+        "occupied_median": 21.544444444444437,
+        "occupied_max": 22.5
+      },
+      "OA": {
+        "missing": 0,
+        "occupied_min": 11.994444444444447,
+        "occupied_median": 16.844444444444445,
+        "occupied_max": 19.638888888888886
+      },
+      "MA": {
+        "missing": 0,
+        "occupied_min": 15.216666666666665,
+        "occupied_median": 18.75,
+        "occupied_max": 25.572222222222223
+      },
+      "RA": {
+        "missing": 0,
+        "occupied_min": 20.85,
+        "occupied_median": 22.09444444444444,
+        "occupied_max": 25.438888888888894
+      },
+      "FAN": {
+        "missing": 0,
+        "occupied_min": 1.0,
+        "occupied_median": 1.0,
+        "occupied_max": 1.0
+      },
+      "SF": {
+        "missing": 0,
+        "occupied_min": 0.1,
+        "occupied_median": 0.42,
+        "occupied_max": 0.5
+      },
+      "OAD": {
+        "missing": 0,
+        "occupied_min": 0.11,
+        "occupied_median": 1.0,
+        "occupied_max": 1.0
+      },
+      "RAD": {
+        "missing": 0,
+        "occupied_min": 0.0,
+        "occupied_median": 0.0,
+        "occupied_max": 1.0
+      },
+      "EAD": {
+        "missing": 0,
+        "occupied_min": 0.06,
+        "occupied_median": 0.9,
+        "occupied_max": 0.9
+      },
+      "CC": {
+        "missing": 0,
+        "occupied_min": 0.0,
+        "occupied_median": 0.0,
+        "occupied_max": 0.43
+      },
+      "HC": {
+        "missing": 0,
+        "occupied_min": 0.0,
+        "occupied_median": 0.0,
+        "occupied_max": 0.26
+      },
+      "OCC": {
+        "missing": 0,
+        "occupied_min": 1.0,
+        "occupied_median": 1.0,
+        "occupied_max": 1.0
+      }
+    },
+    "full_oa_command_minutes": 575,
+    "full_oa_and_ra_closed_minutes": 575,
+    "both_valves_closed_minutes": 252
+  }
+]

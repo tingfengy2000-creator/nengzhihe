@@ -1,0 +1,11 @@
+{
+  "file": "nengzhihe_actual_operation_round5_3min.mp4",
+  "duration_seconds": 180,
+  "content": "170 seconds of the preserved round4 actual browser operation followed by a 10 second evidence card rendered from the round5 externally scored APAR physical holdout results",
+  "source_video": "round4/video/final/nengzhihe_actual_operation_3min.mp4",
+  "source_video_claims": "The first segment is an actual operation recording; no participant or model simulation was added.",
+  "evidence_card": "round5/presentation/working/render/slide-06.png",
+  "evidence": "FLEXLAB SZVAV physical experiment results; APAR and APAR-plus-verification are tied at the reported sample size.",
+  "audio": "silent",
+  "limitation": "This is a demonstration and result handoff. It does not show field deployment, energy savings, or human productivity results."
+}
