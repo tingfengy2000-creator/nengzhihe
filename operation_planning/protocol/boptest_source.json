@@ -1,0 +1,24 @@
+{
+  "source": "https://github.com/ibpsa/project1-boptest",
+  "official_api": "https://api.boptest.net",
+  "version": "v0.9.0",
+  "repository_commit": "9b1610bf7a108826bb3d22c72bffd2d71d7bb0a9",
+  "testcase": "bestest_air",
+  "license": "BSD-3-Clause-style license in vendor project1-boptest/license.md; verify before redistributing binary/model files",
+  "model_kind": "FMI 2.0 co-simulation FMU, official repository artifact",
+  "fmu_sha256": "158008fa3b635280a67dfed8bab5804d1f9a96d218b467dfebab77e5cbf8b86a",
+  "model_scope": {
+    "geometry": "single 6 m x 8 m x 2.7 m office unit",
+    "occupancy": "official bestest_air schedule; two-person office",
+    "weather": "official Denver TMY resource; no weather modification",
+    "controls": "cooling/heating setpoint override inputs, units K",
+    "measurements": ["zon_reaTRooAir_y (K)", "fcu_reaPCoo_y (W)", "fcu_reaPFan_y (W)", "fcu_reaPHea_y (W)"]
+  },
+  "provenance_boundary": "公开物理模型回放，不是运营楼宇试点；本地 FMU 结果不与 BDG2/LBNL 组合成现场故障证据。",
+  "public_service_check": {
+    "endpoint": "https://api.boptest.net/version",
+    "status": "blocked_in_current_environment_tls_connection_closed",
+    "checked_utc": "2026-10-03",
+    "fallback": "local pinned FMU replay"
+  }
+}

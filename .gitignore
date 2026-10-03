@@ -67,3 +67,11 @@ Thumbs.db
 /round4/presentation/working/render*/
 /round4/presentation/working/candidate*
 /round4/presentation/working/previous_checked*
+
+# Operation-planning local vendor/runtime download; provenance and fetch script
+# are versioned, while the pinned checkout and extracted binary cache stay local.
+/operation_planning/vendor/project1-boptest/
+/operation_planning/runtime/boptest_linux/*.deb
+/operation_planning/workbench.log
+/operation_planning/workbench.pid
+/operation_planning/request.json

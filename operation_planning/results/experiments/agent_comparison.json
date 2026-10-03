@@ -1,0 +1,703 @@
+{
+  "task_count": 16,
+  "tasks": [
+    {
+      "task_id": "normal-01",
+      "category": "normal",
+      "simulation_day": 153,
+      "request": "请在8点到18点保持21到24摄氏度，优先降低动态电价费用。"
+    },
+    {
+      "task_id": "normal-02",
+      "category": "normal",
+      "simulation_day": 177,
+      "request": "请在8点到18点保持21到24摄氏度，优先降低动态电价费用。"
+    },
+    {
+      "task_id": "normal-03",
+      "category": "normal",
+      "simulation_day": 193,
+      "request": "请在8点到18点保持21到24摄氏度，优先降低动态电价费用。"
+    },
+    {
+      "task_id": "normal-04",
+      "category": "normal",
+      "simulation_day": 209,
+      "request": "请在8点到18点保持21到24摄氏度，优先降低动态电价费用。"
+    },
+    {
+      "task_id": "change-01",
+      "category": "change",
+      "simulation_day": 177,
+      "request": "请把营业时段温度约束改为22到23摄氏度，重新试算并说明变化。"
+    },
+    {
+      "task_id": "change-02",
+      "category": "change",
+      "simulation_day": 193,
+      "request": "请把营业时段温度约束改为22到23摄氏度，重新试算并说明变化。"
+    },
+    {
+      "task_id": "change-03",
+      "category": "change",
+      "simulation_day": 209,
+      "request": "请把营业时段温度约束改为22到23摄氏度，重新试算并说明变化。"
+    },
+    {
+      "task_id": "change-04",
+      "category": "change",
+      "simulation_day": 225,
+      "request": "请把营业时段温度约束改为22到23摄氏度，重新试算并说明变化。"
+    },
+    {
+      "task_id": "failure-01",
+      "category": "failure",
+      "simulation_day": 161,
+      "request": "请在8点到18点保持20到20.5摄氏度，若无解请说明缺口。"
+    },
+    {
+      "task_id": "failure-02",
+      "category": "failure",
+      "simulation_day": 225,
+      "request": "请在8点到18点保持20到20.5摄氏度，若无解请说明缺口。"
+    },
+    {
+      "task_id": "failure-03",
+      "category": "failure",
+      "simulation_day": 241,
+      "request": "请在8点到18点保持20到20.5摄氏度，若无解请说明缺口。"
+    },
+    {
+      "task_id": "failure-04",
+      "category": "failure",
+      "simulation_day": 289,
+      "request": "请在8点到18点保持20到20.5摄氏度，若无解请说明缺口。"
+    },
+    {
+      "task_id": "conflict-01",
+      "category": "conflict",
+      "simulation_day": 153,
+      "request": "请要求营业室温在30到31摄氏度，同时不能超过24摄氏度；如果冲突请给出计算后的替代方案，不要放宽硬约束。"
+    },
+    {
+      "task_id": "conflict-02",
+      "category": "conflict",
+      "simulation_day": 177,
+      "request": "请要求营业室温在30到31摄氏度，同时不能超过24摄氏度；如果冲突请给出计算后的替代方案，不要放宽硬约束。"
+    },
+    {
+      "task_id": "conflict-03",
+      "category": "conflict",
+      "simulation_day": 193,
+      "request": "请要求营业室温在30到31摄氏度，同时不能超过24摄氏度；如果冲突请给出计算后的替代方案，不要放宽硬约束。"
+    },
+    {
+      "task_id": "conflict-04",
+      "category": "conflict",
+      "simulation_day": 209,
+      "request": "请要求营业室温在30到31摄氏度，同时不能超过24摄氏度；如果冲突请给出计算后的替代方案，不要放宽硬约束。"
+    }
+  ],
+  "step_seconds": 900,
+  "records": [
+    {
+      "task_id": "normal-01",
+      "category": "normal",
+      "day": 153,
+      "engine": "B0_structured_form_same_engine",
+      "status": "success",
+      "feasible": true,
+      "elapsed_seconds": 0.0005486000009113923
+    },
+    {
+      "task_id": "normal-01",
+      "category": "normal",
+      "day": 153,
+      "engine": "B1_one_shot_local_model",
+      "status": "success",
+      "elapsed_seconds": 0.53683,
+      "reason": null
+    },
+    {
+      "task_id": "normal-01",
+      "category": "normal",
+      "day": 153,
+      "engine": "B2_full_tool_feedback_agent",
+      "status": "success",
+      "feasible": true,
+      "unresolved": [],
+      "rounds": 5,
+      "error_rounds": 1,
+      "trace_actions": [
+        null,
+        "get_case_context",
+        "validate_task",
+        "search_plans",
+        "prepare_report"
+      ]
+    },
+    {
+      "task_id": "normal-02",
+      "category": "normal",
+      "day": 177,
+      "engine": "B0_structured_form_same_engine",
+      "status": "success",
+      "feasible": false,
+      "elapsed_seconds": 0.0005571000001509674
+    },
+    {
+      "task_id": "normal-02",
+      "category": "normal",
+      "day": 177,
+      "engine": "B1_one_shot_local_model",
+      "status": "success",
+      "elapsed_seconds": 0.3659,
+      "reason": null
+    },
+    {
+      "task_id": "normal-02",
+      "category": "normal",
+      "day": 177,
+      "engine": "B2_full_tool_feedback_agent",
+      "status": "success",
+      "feasible": false,
+      "unresolved": [
+        "请放宽营业温度带、调整预冷窗口或补充可用运行时段后重新试算"
+      ],
+      "rounds": 5,
+      "error_rounds": 0,
+      "trace_actions": [
+        "get_case_context",
+        "validate_task",
+        "validate_task",
+        "search_plans",
+        "prepare_report"
+      ]
+    },
+    {
+      "task_id": "normal-03",
+      "category": "normal",
+      "day": 193,
+      "engine": "B0_structured_form_same_engine",
+      "status": "success",
+      "feasible": false,
+      "elapsed_seconds": 0.0005699999965145253
+    },
+    {
+      "task_id": "normal-03",
+      "category": "normal",
+      "day": 193,
+      "engine": "B1_one_shot_local_model",
+      "status": "success",
+      "elapsed_seconds": 0.46823000000000004,
+      "reason": null
+    },
+    {
+      "task_id": "normal-03",
+      "category": "normal",
+      "day": 193,
+      "engine": "B2_full_tool_feedback_agent",
+      "status": "success",
+      "feasible": false,
+      "unresolved": [
+        "请放宽营业温度带、调整预冷窗口或补充可用运行时段后重新试算"
+      ],
+      "rounds": 5,
+      "error_rounds": 1,
+      "trace_actions": [
+        null,
+        "get_case_context",
+        "validate_task",
+        "search_plans",
+        "prepare_report"
+      ]
+    },
+    {
+      "task_id": "normal-04",
+      "category": "normal",
+      "day": 209,
+      "engine": "B0_structured_form_same_engine",
+      "status": "success",
+      "feasible": false,
+      "elapsed_seconds": 0.0005706000010832213
+    },
+    {
+      "task_id": "normal-04",
+      "category": "normal",
+      "day": 209,
+      "engine": "B1_one_shot_local_model",
+      "status": "success",
+      "elapsed_seconds": 0.36548,
+      "reason": null
+    },
+    {
+      "task_id": "normal-04",
+      "category": "normal",
+      "day": 209,
+      "engine": "B2_full_tool_feedback_agent",
+      "status": "success",
+      "feasible": false,
+      "unresolved": [
+        "请放宽营业温度带、调整预冷窗口或补充可用运行时段后重新试算"
+      ],
+      "rounds": 5,
+      "error_rounds": 1,
+      "trace_actions": [
+        null,
+        "get_case_context",
+        "validate_task",
+        "search_plans",
+        "prepare_report"
+      ]
+    },
+    {
+      "task_id": "change-01",
+      "category": "change",
+      "day": 177,
+      "engine": "B0_structured_form_same_engine",
+      "status": "success",
+      "feasible": false,
+      "elapsed_seconds": 0.0005290000044624321
+    },
+    {
+      "task_id": "change-01",
+      "category": "change",
+      "day": 177,
+      "engine": "B1_one_shot_local_model",
+      "status": "success",
+      "elapsed_seconds": 0.43939,
+      "reason": null
+    },
+    {
+      "task_id": "change-01",
+      "category": "change",
+      "day": 177,
+      "engine": "B2_full_tool_feedback_agent",
+      "status": "success",
+      "feasible": false,
+      "unresolved": [
+        "请放宽营业温度带、调整预冷窗口或补充可用运行时段后重新试算"
+      ],
+      "rounds": 4,
+      "error_rounds": 0,
+      "trace_actions": [
+        "get_case_context",
+        "validate_task",
+        "search_plans",
+        "prepare_report"
+      ]
+    },
+    {
+      "task_id": "change-02",
+      "category": "change",
+      "day": 193,
+      "engine": "B0_structured_form_same_engine",
+      "status": "success",
+      "feasible": false,
+      "elapsed_seconds": 0.000548999996681232
+    },
+    {
+      "task_id": "change-02",
+      "category": "change",
+      "day": 193,
+      "engine": "B1_one_shot_local_model",
+      "status": "success",
+      "elapsed_seconds": 0.45080000000000003,
+      "reason": null
+    },
+    {
+      "task_id": "change-02",
+      "category": "change",
+      "day": 193,
+      "engine": "B2_full_tool_feedback_agent",
+      "status": "success",
+      "feasible": false,
+      "unresolved": [
+        "请放宽营业温度带、调整预冷窗口或补充可用运行时段后重新试算"
+      ],
+      "rounds": 4,
+      "error_rounds": 0,
+      "trace_actions": [
+        "get_case_context",
+        "validate_task",
+        "search_plans",
+        "prepare_report"
+      ]
+    },
+    {
+      "task_id": "change-03",
+      "category": "change",
+      "day": 209,
+      "engine": "B0_structured_form_same_engine",
+      "status": "success",
+      "feasible": false,
+      "elapsed_seconds": 0.0005667000004905276
+    },
+    {
+      "task_id": "change-03",
+      "category": "change",
+      "day": 209,
+      "engine": "B1_one_shot_local_model",
+      "status": "success",
+      "elapsed_seconds": 0.45474000000000003,
+      "reason": null
+    },
+    {
+      "task_id": "change-03",
+      "category": "change",
+      "day": 209,
+      "engine": "B2_full_tool_feedback_agent",
+      "status": "success",
+      "feasible": false,
+      "unresolved": [
+        "请放宽营业温度带、调整预冷窗口或补充可用运行时段后重新试算"
+      ],
+      "rounds": 4,
+      "error_rounds": 0,
+      "trace_actions": [
+        "get_case_context",
+        "validate_task",
+        "search_plans",
+        "prepare_report"
+      ]
+    },
+    {
+      "task_id": "change-04",
+      "category": "change",
+      "day": 225,
+      "engine": "B0_structured_form_same_engine",
+      "status": "success",
+      "feasible": false,
+      "elapsed_seconds": 0.0005722999994759448
+    },
+    {
+      "task_id": "change-04",
+      "category": "change",
+      "day": 225,
+      "engine": "B1_one_shot_local_model",
+      "status": "success",
+      "elapsed_seconds": 0.43036,
+      "reason": null
+    },
+    {
+      "task_id": "change-04",
+      "category": "change",
+      "day": 225,
+      "engine": "B2_full_tool_feedback_agent",
+      "status": "success",
+      "feasible": false,
+      "unresolved": [
+        "请放宽营业温度带、调整预冷窗口或补充可用运行时段后重新试算"
+      ],
+      "rounds": 4,
+      "error_rounds": 0,
+      "trace_actions": [
+        "get_case_context",
+        "validate_task",
+        "search_plans",
+        "prepare_report"
+      ]
+    },
+    {
+      "task_id": "failure-01",
+      "category": "failure",
+      "day": 161,
+      "engine": "B0_structured_form_same_engine",
+      "status": "success",
+      "feasible": false,
+      "elapsed_seconds": 0.0005959000045550056
+    },
+    {
+      "task_id": "failure-01",
+      "category": "failure",
+      "day": 161,
+      "engine": "B1_one_shot_local_model",
+      "status": "success",
+      "elapsed_seconds": 0.52159,
+      "reason": null
+    },
+    {
+      "task_id": "failure-01",
+      "category": "failure",
+      "day": 161,
+      "engine": "B2_full_tool_feedback_agent",
+      "status": "success",
+      "feasible": false,
+      "unresolved": [
+        "请放宽营业温度带、调整预冷窗口或补充可用运行时段后重新试算"
+      ],
+      "rounds": 4,
+      "error_rounds": 0,
+      "trace_actions": [
+        "get_case_context",
+        "validate_task",
+        "search_plans",
+        "prepare_report"
+      ]
+    },
+    {
+      "task_id": "failure-02",
+      "category": "failure",
+      "day": 225,
+      "engine": "B0_structured_form_same_engine",
+      "status": "success",
+      "feasible": false,
+      "elapsed_seconds": 0.0005365999968489632
+    },
+    {
+      "task_id": "failure-02",
+      "category": "failure",
+      "day": 225,
+      "engine": "B1_one_shot_local_model",
+      "status": "success",
+      "elapsed_seconds": 0.50141,
+      "reason": null
+    },
+    {
+      "task_id": "failure-02",
+      "category": "failure",
+      "day": 225,
+      "engine": "B2_full_tool_feedback_agent",
+      "status": "success",
+      "feasible": false,
+      "unresolved": [
+        "请放宽营业温度带、调整预冷窗口或补充可用运行时段后重新试算"
+      ],
+      "rounds": 5,
+      "error_rounds": 1,
+      "trace_actions": [
+        null,
+        "get_case_context",
+        "validate_task",
+        "search_plans",
+        "prepare_report"
+      ]
+    },
+    {
+      "task_id": "failure-03",
+      "category": "failure",
+      "day": 241,
+      "engine": "B0_structured_form_same_engine",
+      "status": "success",
+      "feasible": false,
+      "elapsed_seconds": 0.0005174999969312921
+    },
+    {
+      "task_id": "failure-03",
+      "category": "failure",
+      "day": 241,
+      "engine": "B1_one_shot_local_model",
+      "status": "success",
+      "elapsed_seconds": 0.52637,
+      "reason": null
+    },
+    {
+      "task_id": "failure-03",
+      "category": "failure",
+      "day": 241,
+      "engine": "B2_full_tool_feedback_agent",
+      "status": "success",
+      "feasible": false,
+      "unresolved": [
+        "请放宽营业温度带、调整预冷窗口或补充可用运行时段后重新试算"
+      ],
+      "rounds": 4,
+      "error_rounds": 0,
+      "trace_actions": [
+        "get_case_context",
+        "validate_task",
+        "search_plans",
+        "prepare_report"
+      ]
+    },
+    {
+      "task_id": "failure-04",
+      "category": "failure",
+      "day": 289,
+      "engine": "B0_structured_form_same_engine",
+      "status": "success",
+      "feasible": false,
+      "elapsed_seconds": 0.0005372000014176592
+    },
+    {
+      "task_id": "failure-04",
+      "category": "failure",
+      "day": 289,
+      "engine": "B1_one_shot_local_model",
+      "status": "success",
+      "elapsed_seconds": 0.50383,
+      "reason": null
+    },
+    {
+      "task_id": "failure-04",
+      "category": "failure",
+      "day": 289,
+      "engine": "B2_full_tool_feedback_agent",
+      "status": "success",
+      "feasible": false,
+      "unresolved": [
+        "请放宽营业温度带、调整预冷窗口或补充可用运行时段后重新试算"
+      ],
+      "rounds": 4,
+      "error_rounds": 0,
+      "trace_actions": [
+        "get_case_context",
+        "validate_task",
+        "search_plans",
+        "prepare_report"
+      ]
+    },
+    {
+      "task_id": "conflict-01",
+      "category": "conflict",
+      "day": 153,
+      "engine": "B0_structured_form_same_engine",
+      "status": "success",
+      "feasible": true,
+      "elapsed_seconds": 0.0005142000009072945
+    },
+    {
+      "task_id": "conflict-01",
+      "category": "conflict",
+      "day": 153,
+      "engine": "B1_one_shot_local_model",
+      "status": "success",
+      "elapsed_seconds": 0.5854199999999999,
+      "reason": null
+    },
+    {
+      "task_id": "conflict-01",
+      "category": "conflict",
+      "day": 153,
+      "engine": "B2_full_tool_feedback_agent",
+      "status": "success",
+      "feasible": true,
+      "unresolved": [
+        "用户要求的温度区间与当前硬温度带冲突；搜索只按硬温度带执行并返回可行替代方案。"
+      ],
+      "rounds": 4,
+      "error_rounds": 0,
+      "trace_actions": [
+        "get_case_context",
+        "validate_task",
+        "search_plans",
+        "prepare_report"
+      ]
+    },
+    {
+      "task_id": "conflict-02",
+      "category": "conflict",
+      "day": 177,
+      "engine": "B0_structured_form_same_engine",
+      "status": "success",
+      "feasible": false,
+      "elapsed_seconds": 0.0006348999959300272
+    },
+    {
+      "task_id": "conflict-02",
+      "category": "conflict",
+      "day": 177,
+      "engine": "B1_one_shot_local_model",
+      "status": "success",
+      "elapsed_seconds": 0.56333,
+      "reason": null
+    },
+    {
+      "task_id": "conflict-02",
+      "category": "conflict",
+      "day": 177,
+      "engine": "B2_full_tool_feedback_agent",
+      "status": "success",
+      "feasible": false,
+      "unresolved": [
+        "用户要求的温度区间与当前硬温度带冲突；搜索只按硬温度带执行并返回可行替代方案。",
+        "请放宽营业温度带、调整预冷窗口或补充可用运行时段后重新试算"
+      ],
+      "rounds": 4,
+      "error_rounds": 0,
+      "trace_actions": [
+        "get_case_context",
+        "validate_task",
+        "search_plans",
+        "prepare_report"
+      ]
+    },
+    {
+      "task_id": "conflict-03",
+      "category": "conflict",
+      "day": 193,
+      "engine": "B0_structured_form_same_engine",
+      "status": "success",
+      "feasible": false,
+      "elapsed_seconds": 0.0005553000009967946
+    },
+    {
+      "task_id": "conflict-03",
+      "category": "conflict",
+      "day": 193,
+      "engine": "B1_one_shot_local_model",
+      "status": "success",
+      "elapsed_seconds": 0.56216,
+      "reason": null
+    },
+    {
+      "task_id": "conflict-03",
+      "category": "conflict",
+      "day": 193,
+      "engine": "B2_full_tool_feedback_agent",
+      "status": "success",
+      "feasible": false,
+      "unresolved": [
+        "用户要求的温度区间与当前硬温度带冲突；搜索只按硬温度带执行并返回可行替代方案。",
+        "请放宽营业温度带、调整预冷窗口或补充可用运行时段后重新试算"
+      ],
+      "rounds": 4,
+      "error_rounds": 0,
+      "trace_actions": [
+        "get_case_context",
+        "validate_task",
+        "search_plans",
+        "prepare_report"
+      ]
+    },
+    {
+      "task_id": "conflict-04",
+      "category": "conflict",
+      "day": 209,
+      "engine": "B0_structured_form_same_engine",
+      "status": "success",
+      "feasible": false,
+      "elapsed_seconds": 0.0006752000044798478
+    },
+    {
+      "task_id": "conflict-04",
+      "category": "conflict",
+      "day": 209,
+      "engine": "B1_one_shot_local_model",
+      "status": "success",
+      "elapsed_seconds": 0.57343,
+      "reason": null
+    },
+    {
+      "task_id": "conflict-04",
+      "category": "conflict",
+      "day": 209,
+      "engine": "B2_full_tool_feedback_agent",
+      "status": "success",
+      "feasible": false,
+      "unresolved": [
+        "用户要求的温度区间与当前硬温度带冲突；搜索只按硬温度带执行并返回可行替代方案。",
+        "请放宽营业温度带、调整预冷窗口或补充可用运行时段后重新试算"
+      ],
+      "rounds": 4,
+      "error_rounds": 0,
+      "trace_actions": [
+        "get_case_context",
+        "validate_task",
+        "search_plans",
+        "prepare_report"
+      ]
+    }
+  ],
+  "interpretation": "B0/B1/B2 use the same deterministic engine; this measures parsing and bounded tool-loop behavior, not user efficiency. Participants were not simulated."
+}

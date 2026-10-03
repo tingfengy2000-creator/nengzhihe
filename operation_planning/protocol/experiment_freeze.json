@@ -1,0 +1,31 @@
+{
+  "protocol_version": "operation-planning-v0.1",
+  "frozen_before_formal_runs": true,
+  "candidate_grid": {
+    "max_candidates": 36,
+    "implementation_default": 12,
+    "pre_cool_minutes": [30, 60, 90, 120],
+    "pre_cool_setpoints_c": [22.0, 23.0],
+    "occupied_setpoints_c": [23.0, 23.5, 24.0],
+    "recovery_hours": 24,
+    "step_seconds": 900
+  },
+  "development_date_blocks": [153, 289],
+  "formal_holdout_date_blocks": [161, 177, 193, 209, 225, 241],
+  "date_group_rule": "All windows, perturbations and derived versions from one model date stay in one group.",
+  "comparisons": [
+    "A0 official baseline control",
+    "A1 fixed reasonable pre-cool plan",
+    "A2 frozen bounded candidate search",
+    "B0 structured form plus same engine",
+    "B1 one-shot local model",
+    "B2 full local tool-feedback agent",
+    "C2 remove the new evidence/feedback mechanism while retaining the same deterministic engine"
+  ],
+  "hard_constraints": {
+    "temperature_band": "lower_temp_c - tolerance_c <= zone temperature <= upper_temp_c + tolerance_c during business window",
+    "recovery_observation": "24 hours after target day; reported separately, not hidden in the business-window score"
+  },
+  "metrics": ["feasible", "infeasible", "unresolved", "occupied_degree_hours", "target_electric_kwh", "target_cost_usd", "recovery_deviation", "agent_parse_success", "full_agent_success", "error_report_success", "latency"],
+  "no_claims": ["现场试点", "人工提效", "节能收益", "跨设备泛化", "仅凭推荐即代表实际控制"]
+}
