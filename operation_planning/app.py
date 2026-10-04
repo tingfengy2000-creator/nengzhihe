@@ -13,6 +13,7 @@ from urllib.parse import urlparse
 
 from .agent import OperationPlanningAgent
 from .boptest_adapter import LocalBestestAirFMUAdapter
+from .external_physical import summarize as summarize_external_physical
 from .schemas import TaskSpec
 from .search import PlanEvaluator
 
@@ -85,6 +86,8 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/operation/provenance":
             adapter = LocalBestestAirFMUAdapter()
             return self._send(HTTPStatus.OK, {"adapter": adapter.provenance(), "measurements": adapter.get_measurements(), "inputs": adapter.get_inputs()})
+        if path == "/api/operation/external":
+            return self._send(HTTPStatus.OK, summarize_external_physical())
         if path.startswith("/api/operation/task/"):
             job_id = path.rsplit("/", 1)[-1]
             with LOCK:

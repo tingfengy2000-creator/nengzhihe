@@ -1,0 +1,43 @@
+{
+  "dataset_entry": "https://data.openei.org/submissions/910",
+  "doi": "10.25984/1824861",
+  "article": "https://www.nature.com/articles/s41597-020-0398-6",
+  "source_file": "MZVAV-2-1.csv",
+  "source_type": "physical controlled experiment",
+  "facility": "Iowa Energy Center experimental AHU (MZVAV AHU-2)",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "original_archive_sha256": "68C58568E3F0E4E7D0F0DE3194A2CE7CA80703C057325EE402A94D3EAB5A76C1",
+  "subset_sha256": "75F5061EB6E4C0F41A4A8B936D05B96F7B1AC300610D496972BC86BEE4F6C0FC",
+  "selected_dates": {
+    "fault": [
+      {"date": "2007-08-28", "scenario": "heating_coil_bypass_leak", "intensity_gpm": 0.4},
+      {"date": "2007-08-29", "scenario": "heating_coil_bypass_leak", "intensity_gpm": 1.0},
+      {"date": "2007-08-30", "scenario": "heating_coil_bypass_leak", "intensity_gpm": 2.0}
+    ],
+    "normal": ["2008-08-19", "2008-08-25", "2008-09-04"]
+  },
+  "input_separation": {
+    "excluded": ["Fault Detection Ground Truth", "fault scenario labels", "fault intensity", "source file name"],
+    "timestamp_use": "grouping and sampling validation only",
+    "unit_conversion": "temperature degF to degC for summaries; control signals retained as fractions"
+  },
+  "professional_baseline": {
+    "name": "APAR-inspired supply-air tracking screen",
+    "reference": "https://www.nist.gov/publications/expert-rule-set-fault-detection-air-handling-units",
+    "report": "https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir6994.pdf",
+    "adaptation": "Only the source's supply-air temperature/setpoint pair is available; this is an adapted screen, not a complete APAR reproduction.",
+    "threshold_mae_c": 0.8,
+    "development_dates": ["2007-08-28", "2008-08-19"],
+    "holdout_dates": ["2007-08-29", "2007-08-30", "2008-08-25", "2008-09-04"]
+  },
+  "planning_scope_decision": {
+    "status": "insufficient_for_counterfactual_plan",
+    "reason": [
+      "the exported physical subset has no zone-air-temperature feedback",
+      "it has no aligned electric-power or energy meter",
+      "it logs control commands but not actual damper or valve positions"
+    ],
+    "use_in_workbench": "input admissibility and provenance case; not a BOPTEST plan score"
+  }
+}

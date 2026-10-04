@@ -19,7 +19,10 @@
     "max_candidates": 12,
     "source": "official_boptest_local_fmu",
     "user_request": "",
-    "user_confirmed": false
+    "user_confirmed": false,
+    "requested_lower_temp_c": null,
+    "requested_upper_temp_c": null,
+    "constraint_notes": ""
   },
   "candidates": [
     {
@@ -839,14 +842,17 @@
           "AirZoneTemperature_min_c": 20.869338467368266,
           "AirZoneTemperature_max_c": 30.064845972282683,
           "ElectricEnergy_target_kwh": 3.9468159376076675,
-          "HeatingEnergy_target_kwh": 0.0010108868501093817
+          "HeatingEnergy_target_kwh": 0.0010108868501093819,
+          "ThermalDiscomfort_target_degree_hours": 0.16145413076026216
         },
         "custom_metrics": {
           "target_electric_kwh": 3.9468159376076675,
-          "target_heating_kwh": 0.0010108868501093817,
+          "target_heating_kwh": 0.0010108868501093819,
           "target_cost_usd": 0.33154812802929284,
           "occupied_degree_hours": 0.16145413076026216,
           "occupied_strict_degree_hours": 0.0,
+          "target_official_discomfort_degree_hours": 0.16145413076026216,
+          "target_user_discomfort_degree_hours": 9.58576842214824,
           "max_target_temp_c": 26.476253718142743,
           "min_target_temp_c": 20.869338467368266,
           "max_recovery_temp_deviation_c": 6.064845972282683,
@@ -855,8 +861,8 @@
         },
         "feasible": true,
         "rejection_reasons": [],
-        "runtime_seconds": 16.43868630900033,
-        "cache_key": "ebedb97a010ed217a0277a4a880e35ac17660ca3d1e8b18c218d0788644a2cf2",
+        "runtime_seconds": 15.694389258998854,
+        "cache_key": "c97d8b06ef7f1c19602c7916cfa39c1b714fe89b7a416fce6679863860601e29",
         "evidence": {
           "adapter": {
             "testcase": "bestest_air",
@@ -884,10 +890,22 @@
             "provenance": "program_generated"
           },
           "price_profile": "dynamic"
+        },
+        "control_schedule": {
+          "baseline": "official internal thermostat schedule; override activation is false outside plan segments",
+          "segments": [
+            {
+              "start_minute": 390,
+              "end_minute": 480,
+              "cooling_setpoint_c": 23.0,
+              "heating_setpoint_c": 15.0,
+              "reason": "营业前预冷 90 分钟"
+            }
+          ]
         }
       },
       "objective_value_unrounded": 0.33154812802929284,
-      "elapsed_seconds": 16.738151100002142,
+      "elapsed_seconds": 16.31273560000409,
       "status": "feasible"
     },
     {
@@ -1707,14 +1725,17 @@
           "AirZoneTemperature_min_c": 20.869338467368266,
           "AirZoneTemperature_max_c": 30.064845528184094,
           "ElectricEnergy_target_kwh": 3.9468182475612794,
-          "HeatingEnergy_target_kwh": 0.0007389631049000631
+          "HeatingEnergy_target_kwh": 0.0007389631049000632,
+          "ThermalDiscomfort_target_degree_hours": 0.1614657711185714
         },
         "custom_metrics": {
-          "target_electric_kwh": 3.9468182475612794,
-          "target_heating_kwh": 0.0007389631049000631,
+          "target_electric_kwh": 3.946818247561279,
+          "target_heating_kwh": 0.0007389631049000632,
           "target_cost_usd": 0.331548287608018,
           "occupied_degree_hours": 0.1614657711185714,
           "occupied_strict_degree_hours": 0.0,
+          "target_official_discomfort_degree_hours": 0.1614657711185714,
+          "target_user_discomfort_degree_hours": 9.585777726237922,
           "max_target_temp_c": 26.476220848458865,
           "min_target_temp_c": 20.869338467368266,
           "max_recovery_temp_deviation_c": 6.064845528184094,
@@ -1723,8 +1744,8 @@
         },
         "feasible": true,
         "rejection_reasons": [],
-        "runtime_seconds": 15.934747098999651,
-        "cache_key": "1dfb39098578da8f8ebc99a4ded9e662a777d75c81ab2ba38e0a2221885a8667",
+        "runtime_seconds": 16.22999303600227,
+        "cache_key": "830cf495526b492f71a418f165f54f11f5e228d14939a1a6dc02532e7bae604f",
         "evidence": {
           "adapter": {
             "testcase": "bestest_air",
@@ -1752,10 +1773,22 @@
             "provenance": "program_generated"
           },
           "price_profile": "dynamic"
+        },
+        "control_schedule": {
+          "baseline": "official internal thermostat schedule; override activation is false outside plan segments",
+          "segments": [
+            {
+              "start_minute": 420,
+              "end_minute": 480,
+              "cooling_setpoint_c": 22.0,
+              "heating_setpoint_c": 15.0,
+              "reason": "营业前预冷 60 分钟"
+            }
+          ]
         }
       },
       "objective_value_unrounded": 0.331548287608018,
-      "elapsed_seconds": 16.229010299997753,
+      "elapsed_seconds": 0.006711299996823072,
       "status": "feasible"
     },
     {
@@ -2574,15 +2607,18 @@
         "kpis": {
           "AirZoneTemperature_min_c": 20.869338467368266,
           "AirZoneTemperature_max_c": 30.064846071374063,
-          "ElectricEnergy_target_kwh": 3.946820963002585,
-          "HeatingEnergy_target_kwh": 0.0010104377073080204
+          "ElectricEnergy_target_kwh": 3.9468209630025846,
+          "HeatingEnergy_target_kwh": 0.0010104377073080204,
+          "ThermalDiscomfort_target_degree_hours": 0.16146973278210908
         },
         "custom_metrics": {
           "target_electric_kwh": 3.9468209630025846,
           "target_heating_kwh": 0.0010104377073080204,
-          "target_cost_usd": 0.3315485396465738,
+          "target_cost_usd": 0.3315485396465739,
           "occupied_degree_hours": 0.16146973278210908,
           "occupied_strict_degree_hours": 0.0,
+          "target_official_discomfort_degree_hours": 0.16146973278210908,
+          "target_user_discomfort_degree_hours": 9.585721535193528,
           "max_target_temp_c": 26.47620522671309,
           "min_target_temp_c": 20.869338467368266,
           "max_recovery_temp_deviation_c": 6.064846071374063,
@@ -2591,8 +2627,8 @@
         },
         "feasible": true,
         "rejection_reasons": [],
-        "runtime_seconds": 16.168793541000014,
-        "cache_key": "6793796a9977034c889f95f0f50dc4ce2b81a0f3630accd591851ed296ff8acb",
+        "runtime_seconds": 15.490936048998265,
+        "cache_key": "bae605117f53cfa3be027f5c076c12ce46f820b4f6404db3348adf2c73e4b076",
         "evidence": {
           "adapter": {
             "testcase": "bestest_air",
@@ -2620,10 +2656,22 @@
             "provenance": "program_generated"
           },
           "price_profile": "dynamic"
+        },
+        "control_schedule": {
+          "baseline": "official internal thermostat schedule; override activation is false outside plan segments",
+          "segments": [
+            {
+              "start_minute": 360,
+              "end_minute": 480,
+              "cooling_setpoint_c": 23.0,
+              "heating_setpoint_c": 15.0,
+              "reason": "营业前预冷 120 分钟"
+            }
+          ]
         }
       },
-      "objective_value_unrounded": 0.3315485396465738,
-      "elapsed_seconds": 16.46575020000091,
+      "objective_value_unrounded": 0.3315485396465739,
+      "elapsed_seconds": 16.060852099995827,
       "status": "feasible"
     },
     {
@@ -3442,15 +3490,18 @@
         "kpis": {
           "AirZoneTemperature_min_c": 20.869338467368266,
           "AirZoneTemperature_max_c": 30.064843241227265,
-          "ElectricEnergy_target_kwh": 3.9468329847207597,
-          "HeatingEnergy_target_kwh": 0.0010110159445399336
+          "ElectricEnergy_target_kwh": 3.9468329847207593,
+          "HeatingEnergy_target_kwh": 0.001011015944539934,
+          "ThermalDiscomfort_target_degree_hours": 0.1614622653815161
         },
         "custom_metrics": {
           "target_electric_kwh": 3.9468329847207593,
-          "target_heating_kwh": 0.0010110159445399336,
+          "target_heating_kwh": 0.001011015944539934,
           "target_cost_usd": 0.3315495584239581,
           "occupied_degree_hours": 0.1614622653815161,
           "occupied_strict_degree_hours": 0.0,
+          "target_official_discomfort_degree_hours": 0.1614622653815161,
+          "target_user_discomfort_degree_hours": 9.585830539850308,
           "max_target_temp_c": 26.476266452266316,
           "min_target_temp_c": 20.869338467368266,
           "max_recovery_temp_deviation_c": 6.0648432412272655,
@@ -3459,8 +3510,8 @@
         },
         "feasible": true,
         "rejection_reasons": [],
-        "runtime_seconds": 15.91777992399966,
-        "cache_key": "60e39122005e09f4e73bd3ea2e55c0b278dfcea67bce09e8fb5be3c0b3c55a88",
+        "runtime_seconds": 15.653643160003412,
+        "cache_key": "6ce10ec53501ccb93c4554882a81b0ddedab54cbd9c7aadb5f794b2d27bad45c",
         "evidence": {
           "adapter": {
             "testcase": "bestest_air",
@@ -3488,10 +3539,22 @@
             "provenance": "program_generated"
           },
           "price_profile": "dynamic"
+        },
+        "control_schedule": {
+          "baseline": "official internal thermostat schedule; override activation is false outside plan segments",
+          "segments": [
+            {
+              "start_minute": 450,
+              "end_minute": 480,
+              "cooling_setpoint_c": 23.0,
+              "heating_setpoint_c": 15.0,
+              "reason": "营业前预冷 30 分钟"
+            }
+          ]
         }
       },
       "objective_value_unrounded": 0.3315495584239581,
-      "elapsed_seconds": 16.190739100002247,
+      "elapsed_seconds": 0.006464199992478825,
       "status": "feasible"
     },
     {
@@ -3844,70 +3907,70 @@
           23.189827046028597,
           23.36253566493781,
           23.54636883692598,
-          25.035020347072305,
-          25.72728084170768,
-          26.1652294687579,
-          26.538054158013153,
-          26.893470404915774,
-          27.239072256671136,
-          27.575480170123797,
-          27.906163775828645,
-          28.23256875260728,
-          28.55606757598059,
-          28.882197854269066,
-          29.20829705332517,
-          29.532783879699593,
-          29.855519810926523,
-          30.064848970200444,
-          30.024001533323826,
-          30.021883605602056,
-          30.01688092913315,
-          30.013733886720274,
-          30.011810472569266,
-          30.010044767032355,
-          30.008319430781512,
-          30.00818766441813,
-          30.006940613729682,
-          30.005326922320364,
-          30.002652071148646,
-          30.000771270248094,
-          29.999632032689703,
-          29.999354634634642,
-          29.998783182898933,
-          29.99855841451955,
-          29.99835814196689,
-          29.998662920983975,
-          29.998698065982524,
-          29.998510798672896,
-          29.99864493915277,
-          29.99809581925001,
-          29.9975572825918,
-          29.99715194955212,
-          29.996462650381716,
-          30.021495965929773,
-          29.978203850591285,
-          29.992324419697923,
-          29.98970847952512,
-          29.945812498894895,
-          29.86505294228266,
-          29.782001184140256,
-          29.7068927149478,
-          29.637383275114473,
-          29.573471506144017,
-          29.509857590474383,
-          29.43449902919258,
-          29.33570365098501,
-          29.20841357163073,
-          29.057067630536437,
-          28.891563995355114,
-          28.72424984114417,
-          28.557302983726345,
-          28.3890387619241,
-          28.218908067029815,
-          28.0435965857406,
-          27.857334023057376,
-          27.67000407162959,
-          27.498907242347855
+          24.29926633282048,
+          24.00064184361679,
+          24.03222957964698,
+          24.025562133856454,
+          24.02751929503728,
+          24.02646388165641,
+          24.02537800116636,
+          24.024646006902685,
+          24.023657373524202,
+          24.022946065434837,
+          24.02210108808896,
+          24.021123963388277,
+          24.02035412718243,
+          24.0193415733213,
+          24.01763600110229,
+          24.01527435716929,
+          24.012498811636476,
+          24.010161050635872,
+          24.008457796563675,
+          24.00738625356064,
+          24.00630951409005,
+          24.005146412776867,
+          24.005084105283572,
+          24.00421163464631,
+          24.002933965767625,
+          24.000922111126954,
+          23.99833421320176,
+          23.997036267973385,
+          23.996559235949746,
+          23.996006400970714,
+          23.99583385909534,
+          23.995696360919396,
+          23.99616614015497,
+          23.996131322491124,
+          23.99566716593108,
+          23.995515895522374,
+          23.995176841990315,
+          23.994691794026153,
+          23.994227093690597,
+          23.99348827147503,
+          27.12284044492327,
+          27.69645875557717,
+          27.851123993777435,
+          27.873677977381305,
+          27.84320141620759,
+          27.79223202724171,
+          27.73801787066651,
+          27.679889135165922,
+          27.622594135583824,
+          27.573216713053455,
+          27.525476946577044,
+          27.4655931000799,
+          27.380861169353977,
+          27.265776756622472,
+          27.125014538730625,
+          26.969917029452063,
+          26.811382348088387,
+          26.652312592830185,
+          26.492528342132914,
+          26.331407936511084,
+          26.16540840531684,
+          25.988346475367393,
+          25.810063462467724,
+          25.648440582105707
         ],
         "electric_power_w": [
           1.9281682089978182e-59,
@@ -4039,70 +4102,70 @@
           1.1493441114736625e-150,
           4.60140364e-315,
           6.369790935273451e-160,
-          0.0,
-          4.544070557927015e-181,
-          0.0,
-          0.0,
-          4.354969243362991e-199,
-          0.0,
-          9.223466222340892e-205,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          31.8705982321936,
-          62.37156120653476,
-          87.32769539066206,
-          107.38670305466792,
-          124.14386886218895,
-          138.64500504423026,
-          151.53052724560848,
-          162.362750560908,
-          172.57099137119783,
-          182.06139227076997,
-          189.59783924696916,
-          194.61674979282307,
-          196.4005391171014,
-          196.1961429315252,
-          195.52115101187255,
-          194.20169540436532,
-          192.38221652938984,
-          190.35284451940382,
-          188.5872452140929,
-          186.7728897754901,
-          185.022113360061,
-          183.2742918448571,
-          181.08224108138305,
-          178.19125874061797,
-          174.7478836631844,
-          170.67808049657108,
-          12.329274923008239,
-          19.341628078663334,
-          8.103205229454106,
-          0.02117097405134495,
-          2.890638245074727e-23,
-          5.651984182956383e-16,
-          4.73867969836238e-38,
-          1.1244612281162201e-18,
-          1.3135904728047953e-22,
-          2.7877460306269083e-49,
-          8.286866358762019e-54,
-          1.1792083546002204e-30,
-          3.679691553737304e-32,
-          2.510989583214806e-75,
-          3.3061025772120056e-38,
-          2.153434289811738e-89,
-          2.570051508109771e-94,
-          1.8818540846482319e-50,
-          6.652193614665737e-97,
-          4.1397254737499684e-51,
-          2.9188435650152755e-109,
-          2.3550259262123028e-58,
-          2.2777632077552106e-70,
-          2.3864959536509173e-74
+          161.59680210036476,
+          153.7167449120669,
+          186.69445687593696,
+          213.44007967961707,
+          243.30410362809482,
+          274.6811725322171,
+          306.5142518246041,
+          339.01160671802614,
+          372.0368449336897,
+          405.38575566153185,
+          438.9810273828176,
+          472.4600022682895,
+          505.7583258088835,
+          538.7706143832547,
+          570.26058209634,
+          598.7986234429827,
+          623.1025215711979,
+          643.1891088349792,
+          659.9917130156969,
+          674.5900604863547,
+          687.4822666546839,
+          698.0898535721113,
+          708.0308960740731,
+          717.061541213001,
+          723.6672461814686,
+          727.1630110664938,
+          725.4282886102254,
+          720.0611439996937,
+          713.6243699776719,
+          706.1193557701023,
+          698.0161590367602,
+          689.7287614744563,
+          682.1106097044741,
+          674.7636591231613,
+          666.8474566145486,
+          658.4637180311942,
+          649.6470170058759,
+          639.9577094320426,
+          629.5456385999684,
+          618.075319431,
+          1.8992041559392973e-11,
+          4.4097571060466104e-18,
+          3.0770267981575267e-28,
+          1.4481915383681955e-34,
+          1.6477920434368276e-87,
+          6.179618376128619e-100,
+          1.0174838873418235e-107,
+          2.1229389834505326e-114,
+          2.7615691229902986e-121,
+          1.1434839454765054e-62,
+          8.993747391555678e-62,
+          2.5683322805615735e-138,
+          2.1222300691884508e-69,
+          2.401255563623415e-73,
+          5.833218416266643e-78,
+          1.9406729797534778e-78,
+          8.206486304062743e-168,
+          1.6397258715602316e-82,
+          1.8623394604683148e-84,
+          7.745390454512126e-171,
+          5.63528766910568e-179,
+          1.995534472660866e-91,
+          9.249346185092498e-202,
+          4.371876227780294e-208
         ],
         "heating_power_w": [
           0.0,
@@ -4234,20 +4297,6 @@
           0.0,
           4.150215070970712e-156,
           0.0,
-          3.6272604872541112e-177,
-          0.0,
-          2.2218277066135031e-187,
-          2.8914121843251517e-190,
-          0.0,
-          1.2719234913671798e-201,
-          0.0,
-          2.107938918225373e-203,
-          9.387366407112076e-211,
-          1.382490066168594e-210,
-          3.419973423884198e-212,
-          2.434161994410899e-211,
-          2.2562874155808262e-215,
-          1.1922827456915404e-222,
           0.0,
           0.0,
           0.0,
@@ -4278,49 +4327,66 @@
           0.0,
           0.0,
           0.0,
-          3.737037038474952e-09,
-          0.0,
-          1.0349747194413099e-16,
           0.0,
           0.0,
-          7.433538393094099e-23,
-          9.458687628484819e-26,
           0.0,
           0.0,
-          1.281762960066716e-35,
-          0.0,
-          2.3176751320577895e-43,
-          3.0440352930931547e-46,
-          0.0,
-          3.0504741266709604e-49,
-          0.0,
-          1.5919249045597446e-53,
           0.0,
           0.0,
-          0.0
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          2.220407924340099e-41,
+          1.1007330232147109e-47,
+          1.0713126521872916e-51,
+          3.300937500231788e-55,
+          6.108210455118073e-59,
+          0.0,
+          0.0,
+          3.210088098579806e-67,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.4940138472091892e-81,
+          0.0,
+          0.0,
+          4.646590172794288e-83,
+          3.800081777400537e-87,
+          0.0,
+          1.2480287050364044e-98,
+          7.221932849908572e-102
         ],
         "kpis": {
           "AirZoneTemperature_min_c": 20.869338467368266,
-          "AirZoneTemperature_max_c": 30.064848970200444,
-          "ElectricEnergy_target_kwh": 3.9468391846377777,
-          "HeatingEnergy_target_kwh": 0.001011410638155922
+          "AirZoneTemperature_max_c": 27.873677977381305,
+          "ElectricEnergy_target_kwh": 3.946839184637778,
+          "HeatingEnergy_target_kwh": 0.001011410638155922,
+          "ThermalDiscomfort_target_degree_hours": 0.16146023206665916
         },
         "custom_metrics": {
-          "target_electric_kwh": 3.9468391846377777,
+          "target_electric_kwh": 3.946839184637778,
           "target_heating_kwh": 0.001011410638155922,
           "target_cost_usd": 0.331550081180147,
           "occupied_degree_hours": 0.16146023206665916,
           "occupied_strict_degree_hours": 0.0,
+          "target_official_discomfort_degree_hours": 0.16146023206665916,
+          "target_user_discomfort_degree_hours": 9.585847378744745,
           "max_target_temp_c": 26.476243048558217,
           "min_target_temp_c": 20.869338467368266,
-          "max_recovery_temp_deviation_c": 6.064848970200444,
+          "max_recovery_temp_deviation_c": 3.8736779773813055,
           "target_peak_electric_w": 556.5950120931826,
           "target_feasible": true
         },
         "feasible": true,
         "rejection_reasons": [],
-        "runtime_seconds": 15.975315228999534,
-        "cache_key": "89fa253825e234ac2e7bcb85bdf39295eb010afdaffb25af3ade0fa78d629fdd",
+        "runtime_seconds": 16.343018931002007,
+        "cache_key": "94156d708e79bf43b54155c8e2b0206ab0d7d9095124f2396e09415603da7db7",
         "evidence": {
           "adapter": {
             "testcase": "bestest_air",
@@ -4340,10 +4406,14 @@
             "provenance": "program_generated"
           },
           "price_profile": "dynamic"
+        },
+        "control_schedule": {
+          "baseline": "official internal thermostat schedule; override activation is false outside plan segments",
+          "segments": []
         }
       },
       "objective_value_unrounded": 0.331550081180147,
-      "elapsed_seconds": 16.30693240000255,
+      "elapsed_seconds": 0.006571200006874278,
       "status": "feasible"
     },
     {
@@ -5162,15 +5232,18 @@
         "kpis": {
           "AirZoneTemperature_min_c": 20.869338467368266,
           "AirZoneTemperature_max_c": 30.064848970200444,
-          "ElectricEnergy_target_kwh": 3.9468391846377777,
-          "HeatingEnergy_target_kwh": 0.001011410638155922
+          "ElectricEnergy_target_kwh": 3.946839184637778,
+          "HeatingEnergy_target_kwh": 0.001011410638155922,
+          "ThermalDiscomfort_target_degree_hours": 0.16146023206665916
         },
         "custom_metrics": {
-          "target_electric_kwh": 3.9468391846377777,
+          "target_electric_kwh": 3.946839184637778,
           "target_heating_kwh": 0.001011410638155922,
           "target_cost_usd": 0.331550081180147,
           "occupied_degree_hours": 0.16146023206665916,
           "occupied_strict_degree_hours": 0.0,
+          "target_official_discomfort_degree_hours": 0.16146023206665916,
+          "target_user_discomfort_degree_hours": 9.585847378744745,
           "max_target_temp_c": 26.476243048558217,
           "min_target_temp_c": 20.869338467368266,
           "max_recovery_temp_deviation_c": 6.064848970200444,
@@ -5179,8 +5252,8 @@
         },
         "feasible": true,
         "rejection_reasons": [],
-        "runtime_seconds": 16.496456077999937,
-        "cache_key": "9ed7a16cbbbbcf6d4b8cdd82a548e0c712726bce60d4b0b1714f2a8b863326ce",
+        "runtime_seconds": 15.77986846100248,
+        "cache_key": "099982b64d660d60fc54f516ae918f2ae270367099558144065b673b3e1e6cb3",
         "evidence": {
           "adapter": {
             "testcase": "bestest_air",
@@ -5208,10 +5281,22 @@
             "provenance": "program_generated"
           },
           "price_profile": "dynamic"
+        },
+        "control_schedule": {
+          "baseline": "official internal thermostat schedule; override activation is false outside plan segments",
+          "segments": [
+            {
+              "start_minute": 480,
+              "end_minute": 1080,
+              "cooling_setpoint_c": 24.0,
+              "heating_setpoint_c": 21.0,
+              "reason": "营业时段冷却设定 24.0°C"
+            }
+          ]
         }
       },
       "objective_value_unrounded": 0.331550081180147,
-      "elapsed_seconds": 16.79688239999814,
+      "elapsed_seconds": 16.053315799988923,
       "status": "feasible"
     },
     {
@@ -6030,15 +6115,18 @@
         "kpis": {
           "AirZoneTemperature_min_c": 20.869338467368266,
           "AirZoneTemperature_max_c": 30.064848846057714,
-          "ElectricEnergy_target_kwh": 3.946848845849082,
-          "HeatingEnergy_target_kwh": 0.0010109952245068545
+          "ElectricEnergy_target_kwh": 3.946848845849081,
+          "HeatingEnergy_target_kwh": 0.0010109952245068543,
+          "ThermalDiscomfort_target_degree_hours": 0.16145987108001236
         },
         "custom_metrics": {
-          "target_electric_kwh": 3.9468488458490816,
-          "target_heating_kwh": 0.0010109952245068545,
+          "target_electric_kwh": 3.946848845849081,
+          "target_heating_kwh": 0.0010109952245068543,
           "target_cost_usd": 0.3315508963220399,
           "occupied_degree_hours": 0.16145987108001236,
           "occupied_strict_degree_hours": 0.0,
+          "target_official_discomfort_degree_hours": 0.16145987108001236,
+          "target_user_discomfort_degree_hours": 9.585894715576691,
           "max_target_temp_c": 26.47623848060806,
           "min_target_temp_c": 20.869338467368266,
           "max_recovery_temp_deviation_c": 6.064848846057714,
@@ -6047,8 +6135,8 @@
         },
         "feasible": true,
         "rejection_reasons": [],
-        "runtime_seconds": 16.152154672000506,
-        "cache_key": "c109fb00e7ee4d58496a59ef9a1e1668c0b666e8655bf4b8ab75f1870dc3e1c9",
+        "runtime_seconds": 15.911260498993215,
+        "cache_key": "c6589a0c71640d1d2c672f31478fb8da8b4f50e43d72bda00a759847dd643bee",
         "evidence": {
           "adapter": {
             "testcase": "bestest_air",
@@ -6076,10 +6164,22 @@
             "provenance": "program_generated"
           },
           "price_profile": "dynamic"
+        },
+        "control_schedule": {
+          "baseline": "official internal thermostat schedule; override activation is false outside plan segments",
+          "segments": [
+            {
+              "start_minute": 420,
+              "end_minute": 480,
+              "cooling_setpoint_c": 23.0,
+              "heating_setpoint_c": 15.0,
+              "reason": "营业前预冷 60 分钟"
+            }
+          ]
         }
       },
       "objective_value_unrounded": 0.3315508963220399,
-      "elapsed_seconds": 16.43261369999891,
+      "elapsed_seconds": 0.005713899998227134,
       "status": "feasible"
     },
     {
@@ -6898,8 +6998,9 @@
         "kpis": {
           "AirZoneTemperature_min_c": 20.869338467368266,
           "AirZoneTemperature_max_c": 30.06484515155978,
-          "ElectricEnergy_target_kwh": 3.946852320328398,
-          "HeatingEnergy_target_kwh": 0.0010112839505296023
+          "ElectricEnergy_target_kwh": 3.9468523203283983,
+          "HeatingEnergy_target_kwh": 0.0010112839505296023,
+          "ThermalDiscomfort_target_degree_hours": 0.16146052487667362
         },
         "custom_metrics": {
           "target_electric_kwh": 3.946852320328398,
@@ -6907,6 +7008,8 @@
           "target_cost_usd": 0.3315511847770491,
           "occupied_degree_hours": 0.16146052487667362,
           "occupied_strict_degree_hours": 0.0,
+          "target_official_discomfort_degree_hours": 0.16146052487667362,
+          "target_user_discomfort_degree_hours": 9.585861099183886,
           "max_target_temp_c": 26.476230373337046,
           "min_target_temp_c": 20.869338467368266,
           "max_recovery_temp_deviation_c": 6.06484515155978,
@@ -6915,8 +7018,8 @@
         },
         "feasible": true,
         "rejection_reasons": [],
-        "runtime_seconds": 16.374851796000257,
-        "cache_key": "f7a0ad0cb0b0132490c8447ccc56c0409e5e121cf3aacd98ff1fadf4e7ea7215",
+        "runtime_seconds": 15.465463685999566,
+        "cache_key": "705a64180f448efdc1598e613fde03134c3100830a39e0b87757ce85be7e02d2",
         "evidence": {
           "adapter": {
             "testcase": "bestest_air",
@@ -6944,10 +7047,22 @@
             "provenance": "program_generated"
           },
           "price_profile": "dynamic"
+        },
+        "control_schedule": {
+          "baseline": "official internal thermostat schedule; override activation is false outside plan segments",
+          "segments": [
+            {
+              "start_minute": 360,
+              "end_minute": 480,
+              "cooling_setpoint_c": 22.0,
+              "heating_setpoint_c": 15.0,
+              "reason": "营业前预冷 120 分钟"
+            }
+          ]
         }
       },
       "objective_value_unrounded": 0.3315511847770491,
-      "elapsed_seconds": 16.67005209999843,
+      "elapsed_seconds": 16.19515020000108,
       "status": "feasible"
     },
     {
@@ -7767,14 +7882,17 @@
           "AirZoneTemperature_min_c": 20.869338467368266,
           "AirZoneTemperature_max_c": 30.06484584013026,
           "ElectricEnergy_target_kwh": 3.9468552557161347,
-          "HeatingEnergy_target_kwh": 0.0010114523953094377
+          "HeatingEnergy_target_kwh": 0.0010114523953094379,
+          "ThermalDiscomfort_target_degree_hours": 0.16145718320333913
         },
         "custom_metrics": {
           "target_electric_kwh": 3.9468552557161347,
-          "target_heating_kwh": 0.0010114523953094377,
+          "target_heating_kwh": 0.0010114523953094379,
           "target_cost_usd": 0.33155143307384893,
           "occupied_degree_hours": 0.16145718320333913,
           "occupied_strict_degree_hours": 0.0,
+          "target_official_discomfort_degree_hours": 0.16145718320333913,
+          "target_user_discomfort_degree_hours": 9.585797302547943,
           "max_target_temp_c": 26.47620000911934,
           "min_target_temp_c": 20.869338467368266,
           "max_recovery_temp_deviation_c": 6.0648458401302605,
@@ -7783,8 +7901,8 @@
         },
         "feasible": true,
         "rejection_reasons": [],
-        "runtime_seconds": 16.1697162090004,
-        "cache_key": "d355a6cc51bc509476abe9c8e329f87af6591590178cf1c9f814565800c4a59d",
+        "runtime_seconds": 15.580349032999948,
+        "cache_key": "6890132bdcf16d035bc8702601c08a59796cd4342fb65459238944123be7550c",
         "evidence": {
           "adapter": {
             "testcase": "bestest_air",
@@ -7812,10 +7930,22 @@
             "provenance": "program_generated"
           },
           "price_profile": "dynamic"
+        },
+        "control_schedule": {
+          "baseline": "official internal thermostat schedule; override activation is false outside plan segments",
+          "segments": [
+            {
+              "start_minute": 390,
+              "end_minute": 480,
+              "cooling_setpoint_c": 22.0,
+              "heating_setpoint_c": 15.0,
+              "reason": "营业前预冷 90 分钟"
+            }
+          ]
         }
       },
       "objective_value_unrounded": 0.33155143307384893,
-      "elapsed_seconds": 16.4693832999983,
+      "elapsed_seconds": 0.00572190000093542,
       "status": "feasible"
     },
     {
@@ -8635,14 +8765,17 @@
           "AirZoneTemperature_min_c": 20.869338467368266,
           "AirZoneTemperature_max_c": 30.06484649571388,
           "ElectricEnergy_target_kwh": 3.947217630962681,
-          "HeatingEnergy_target_kwh": 4.349811351342446e-18
+          "HeatingEnergy_target_kwh": 4.3498113513424476e-18,
+          "ThermalDiscomfort_target_degree_hours": 0.1614527324326076
         },
         "custom_metrics": {
           "target_electric_kwh": 3.947217630962681,
-          "target_heating_kwh": 4.349811351342446e-18,
+          "target_heating_kwh": 4.3498113513424476e-18,
           "target_cost_usd": 0.33156591043604755,
           "occupied_degree_hours": 0.1614527324326076,
           "occupied_strict_degree_hours": 0.0,
+          "target_official_discomfort_degree_hours": 0.1614527324326076,
+          "target_user_discomfort_degree_hours": 9.585766318085547,
           "max_target_temp_c": 26.476203452859693,
           "min_target_temp_c": 20.869338467368266,
           "max_recovery_temp_deviation_c": 6.06484649571388,
@@ -8651,8 +8784,8 @@
         },
         "feasible": true,
         "rejection_reasons": [],
-        "runtime_seconds": 15.96156959200016,
-        "cache_key": "260fa639fa09d53af96e5209dadccbe2c1a72a36ffe442301c48858571e0f5fa",
+        "runtime_seconds": 15.772935626999242,
+        "cache_key": "1d42ad481c464d65598acf86881c3b9c92136dcd7c2b85dba7c65ee427b7d554",
         "evidence": {
           "adapter": {
             "testcase": "bestest_air",
@@ -8680,10 +8813,22 @@
             "provenance": "program_generated"
           },
           "price_profile": "dynamic"
+        },
+        "control_schedule": {
+          "baseline": "official internal thermostat schedule; override activation is false outside plan segments",
+          "segments": [
+            {
+              "start_minute": 450,
+              "end_minute": 480,
+              "cooling_setpoint_c": 22.0,
+              "heating_setpoint_c": 15.0,
+              "reason": "营业前预冷 30 分钟"
+            }
+          ]
         }
       },
       "objective_value_unrounded": 0.33156591043604755,
-      "elapsed_seconds": 16.228411799998867,
+      "elapsed_seconds": 0.011854099997435696,
       "status": "feasible"
     },
     {
@@ -9503,7 +9648,8 @@
           "AirZoneTemperature_min_c": 20.869338467368266,
           "AirZoneTemperature_max_c": 30.062610708328066,
           "ElectricEnergy_target_kwh": 5.249866984797848,
-          "HeatingEnergy_target_kwh": 2.6832272334481845e-15
+          "HeatingEnergy_target_kwh": 2.6832272334481845e-15,
+          "ThermalDiscomfort_target_degree_hours": 1.9670834130470494
         },
         "custom_metrics": {
           "target_electric_kwh": 5.249866984797848,
@@ -9511,6 +9657,8 @@
           "target_cost_usd": 0.44022187535112406,
           "occupied_degree_hours": 0.0,
           "occupied_strict_degree_hours": 0.0,
+          "target_official_discomfort_degree_hours": 1.9670834130470494,
+          "target_user_discomfort_degree_hours": 8.76349803011506,
           "max_target_temp_c": 26.349021450543432,
           "min_target_temp_c": 20.869338467368266,
           "max_recovery_temp_deviation_c": 6.062610708328066,
@@ -9519,8 +9667,8 @@
         },
         "feasible": true,
         "rejection_reasons": [],
-        "runtime_seconds": 16.499918210999567,
-        "cache_key": "f34f683d83ada750727c2e8a1749cf4639921f5fd1c11ec8d62eb149d71b27c0",
+        "runtime_seconds": 15.130580199998803,
+        "cache_key": "45a40a0b5adf2f217aaf6636c129f9856617280d217ff524aab8ee3a39a1d20b",
         "evidence": {
           "adapter": {
             "testcase": "bestest_air",
@@ -9548,10 +9696,22 @@
             "provenance": "program_generated"
           },
           "price_profile": "dynamic"
+        },
+        "control_schedule": {
+          "baseline": "official internal thermostat schedule; override activation is false outside plan segments",
+          "segments": [
+            {
+              "start_minute": 480,
+              "end_minute": 1080,
+              "cooling_setpoint_c": 23.5,
+              "heating_setpoint_c": 21.0,
+              "reason": "营业时段冷却设定 23.5°C"
+            }
+          ]
         }
       },
       "objective_value_unrounded": 0.44022187535112406,
-      "elapsed_seconds": 16.805969499997445,
+      "elapsed_seconds": 16.118018299996038,
       "status": "feasible"
     },
     {
@@ -10370,15 +10530,18 @@
         "kpis": {
           "AirZoneTemperature_min_c": 20.869338467368266,
           "AirZoneTemperature_max_c": 30.05308214901595,
-          "ElectricEnergy_target_kwh": 5.511037912783028,
-          "HeatingEnergy_target_kwh": 1.27301795327241e-11
+          "ElectricEnergy_target_kwh": 5.511037912783029,
+          "HeatingEnergy_target_kwh": 1.27301795327241e-11,
+          "ThermalDiscomfort_target_degree_hours": 5.158230069042616
         },
         "custom_metrics": {
-          "target_electric_kwh": 5.511037912783029,
+          "target_electric_kwh": 5.511037912783028,
           "target_heating_kwh": 1.27301795327241e-11,
           "target_cost_usd": 0.4610487642569844,
           "occupied_degree_hours": 0.0,
           "occupied_strict_degree_hours": 0.0,
+          "target_official_discomfort_degree_hours": 5.158230069042616,
+          "target_user_discomfort_degree_hours": 8.532061447821285,
           "max_target_temp_c": 26.30852743863187,
           "min_target_temp_c": 20.869338467368266,
           "max_recovery_temp_deviation_c": 6.05308214901595,
@@ -10387,8 +10550,8 @@
         },
         "feasible": true,
         "rejection_reasons": [],
-        "runtime_seconds": 16.265340287000072,
-        "cache_key": "7193b998b9dc45027ef1ccfe7c3a2de8847a87442f8e8ed0ae213ba8fc49d97f",
+        "runtime_seconds": 15.604174331005197,
+        "cache_key": "bda337edc031aa1c7b62cf19eb954f0e4546742395c7128a8cb07277ecaeca6f",
         "evidence": {
           "adapter": {
             "testcase": "bestest_air",
@@ -10416,10 +10579,22 @@
             "provenance": "program_generated"
           },
           "price_profile": "dynamic"
+        },
+        "control_schedule": {
+          "baseline": "official internal thermostat schedule; override activation is false outside plan segments",
+          "segments": [
+            {
+              "start_minute": 480,
+              "end_minute": 1080,
+              "cooling_setpoint_c": 23.0,
+              "heating_setpoint_c": 21.0,
+              "reason": "营业时段冷却设定 23.0°C"
+            }
+          ]
         }
       },
       "objective_value_unrounded": 0.4610487642569844,
-      "elapsed_seconds": 16.570939700002782,
+      "elapsed_seconds": 16.174500900000567,
       "status": "feasible"
     }
   ],
@@ -10428,5 +10603,5 @@
   "recommendation_reason": "已按可行性优先、再按目标值排序",
   "unresolved_requirements": [],
   "agent_trace": [],
-  "generated_at_utc": "2026-10-03T14:04:01.096821+00:00"
+  "generated_at_utc": "2026-10-04T03:38:23.739944+00:00"
 }

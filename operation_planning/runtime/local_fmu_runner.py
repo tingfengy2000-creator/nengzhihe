@@ -32,21 +32,21 @@ OUTPUT_FIELDS = [
     "fcu_reaPFan_y",
     "fcu_reaPHea_y",
     "zon_reaCO2RooAir_y",
+    "con_oveTSetCoo_y",
+    "con_oveTSetHea_y",
 ]
 
 
-def _setpoint_for_minute(minute: int, segments: List[Dict[str, Any]]) -> tuple[float, float]:
-    """Return °C setpoints for one minute in the target date."""
-    # An explicit baseline makes the comparison reproducible and prevents the
-    # FMU's internal schedule from silently changing between candidates.
+def _setpoint_for_minute(minute: int, segments: List[Dict[str, Any]]) -> tuple[float, float, bool]:
+    """Return °C setpoints and whether an override is active."""
     local_hour = minute / 60.0
     cooling, heating = (24.0, 21.0) if 8.0 <= local_hour < 18.0 else (30.0, 15.0)
     for segment in segments:
         if int(segment["start_minute"]) <= minute < int(segment["end_minute"]):
             cooling = float(segment["cooling_setpoint_c"])
             heating = float(segment["heating_setpoint_c"])
-            break
-    return cooling, heating
+            return cooling, heating, True
+    return cooling, heating, False
 
 
 def _build_input(req: Dict[str, Any], stop_time: int, step: int) -> np.ndarray:
@@ -60,24 +60,34 @@ def _build_input(req: Dict[str, Any], stop_time: int, step: int) -> np.ndarray:
     times = np.arange(0.0, float(stop_time) + 0.1, float(step))
     arr = np.zeros(times.size, dtype=dtype)
     arr["time"] = times
-    arr["con_oveTSetCoo_activate"] = True
-    arr["con_oveTSetHea_activate"] = True
+    # The native controller remains untouched for A0.  For a non-baseline
+    # plan, the override channel is activated from initialization so the FMU
+    # receives a well-defined common history; outside plan segments its values
+    # equal the official schedule.
+    has_override = bool(req.get("segments"))
+    arr["con_oveTSetCoo_activate"] = has_override
+    arr["con_oveTSetHea_activate"] = has_override
     day_start = (int(req["simulation_day"]) - 1) * 86400
     for idx, t in enumerate(times):
         if t < day_start:
             # Same known history for every candidate.
             cooling, heating = (24.0, 21.0) if ((t % 86400) / 3600.0) >= 8 and ((t % 86400) / 3600.0) < 18 else (30.0, 15.0)
+            active = has_override
         else:
             minute = int((t - day_start) // 60)
-            cooling, heating = _setpoint_for_minute(minute, req.get("segments", []))
+            cooling, heating, active = _setpoint_for_minute(minute, req.get("segments", []))
         arr["con_oveTSetCoo_u"][idx] = cooling + 273.15
         arr["con_oveTSetHea_u"][idx] = heating + 273.15
+        arr["con_oveTSetCoo_activate"][idx] = has_override
+        arr["con_oveTSetHea_activate"][idx] = has_override
     return arr
 
 
-def _integrate(values: np.ndarray, step: int) -> float:
-    values = np.asarray(values, dtype=float)
-    return float(np.nansum(np.maximum(values, 0.0)) * step / 3600000.0)
+def _integrate_window(times: np.ndarray, values: np.ndarray, start: float, end: float, divisor: float) -> float:
+    mask = (times >= start - 1e-6) & (times <= end + 1e-6)
+    x = np.asarray(times[mask], dtype=float)
+    y = np.maximum(np.asarray(values[mask], dtype=float), 0.0)
+    return float(np.trapezoid(y, x) / divisor) if x.size >= 2 else 0.0
 
 
 def run(req: Dict[str, Any]) -> Dict[str, Any]:
@@ -108,6 +118,8 @@ def run(req: Dict[str, Any]) -> Dict[str, Any]:
     cool_w = np.asarray(result["fcu_reaPCoo_y"], dtype=float)
     fan_w = np.asarray(result["fcu_reaPFan_y"], dtype=float)
     heat_w = np.asarray(result["fcu_reaPHea_y"], dtype=float)
+    cool_set_c = np.asarray(result["con_oveTSetCoo_y"], dtype=float) - 273.15
+    heat_set_c = np.asarray(result["con_oveTSetHea_y"], dtype=float) - 273.15
     temp_local = temp_c[mask]
     times_local = times[mask]
     cool_local = cool_w[mask]
@@ -124,12 +136,16 @@ def run(req: Dict[str, Any]) -> Dict[str, Any]:
     occ_violation = violation[occupied]
     occ_strict = strict_violation[occupied]
     electric = cool_w + fan_w
+    user_discomfort = np.maximum(low - temp_c, 0.0) + np.maximum(temp_c - high, 0.0)
+    official_discomfort = np.maximum(heat_set_c - temp_c, 0.0) + np.maximum(temp_c - cool_set_c, 0.0)
     custom = {
-        "target_electric_kwh": _integrate(electric[(times >= target_start) & (times <= target_end)], step),
-        "target_heating_kwh": _integrate(heat_w[(times >= target_start) & (times <= target_end)], step),
-        "target_cost_usd": _integrate(electric[(times >= target_start) & (times <= target_end)], step),
-        "occupied_degree_hours": float(np.sum(occ_violation) * step / 3600.0),
-        "occupied_strict_degree_hours": float(np.sum(occ_strict) * step / 3600.0),
+        "target_electric_kwh": _integrate_window(times, electric, target_start, target_end, 3600000.0),
+        "target_heating_kwh": _integrate_window(times, heat_w, target_start, target_end, 3600000.0),
+        "target_cost_usd": 0.0,
+        "occupied_degree_hours": float(np.trapezoid(occ_violation, times[occupied]) / 3600.0) if np.count_nonzero(occupied) >= 2 else 0.0,
+        "occupied_strict_degree_hours": float(np.trapezoid(occ_strict, times[occupied]) / 3600.0) if np.count_nonzero(occupied) >= 2 else 0.0,
+        "target_official_discomfort_degree_hours": _integrate_window(times, official_discomfort, target_start, target_end, 3600.0),
+        "target_user_discomfort_degree_hours": _integrate_window(times, user_discomfort, target_start, target_end, 3600.0),
         "max_target_temp_c": float(np.nanmax(temp_c[(times >= target_start) & (times <= target_end)])),
         "min_target_temp_c": float(np.nanmin(temp_c[(times >= target_start) & (times <= target_end)])),
         "max_recovery_temp_deviation_c": float(np.nanmax(violation[(times >= target_end) & (times <= recovery_end)])),
@@ -146,11 +162,15 @@ def run(req: Dict[str, Any]) -> Dict[str, Any]:
         "temperature_c": clean(temp_local),
         "electric_power_w": clean((cool_local + fan_local)),
         "heating_power_w": clean(heat_local),
+        "cooling_setpoint_c": clean(np.asarray(result["con_oveTSetCoo_y"], dtype=float)[mask] - 273.15),
+        "heating_setpoint_c": clean(np.asarray(result["con_oveTSetHea_y"], dtype=float)[mask] - 273.15),
+        "override_active": [bool(x) for x in _build_input(req, recovery_end, step)["con_oveTSetCoo_activate"][mask]],
         "kpis": {
             "AirZoneTemperature_min_c": float(np.nanmin(temp_local)),
             "AirZoneTemperature_max_c": float(np.nanmax(temp_local)),
             "ElectricEnergy_target_kwh": custom["target_electric_kwh"],
             "HeatingEnergy_target_kwh": custom["target_heating_kwh"],
+            "ThermalDiscomfort_target_degree_hours": custom["target_official_discomfort_degree_hours"],
         },
         "custom_metrics": custom,
         "target_period": [target_start, target_end],
@@ -159,6 +179,10 @@ def run(req: Dict[str, Any]) -> Dict[str, Any]:
         "runtime_seconds": time.perf_counter() - started,
         "outputs": OUTPUT_FIELDS,
         "input_fields": INPUT_FIELDS,
+        "control_schedule": {
+            "baseline": "official internal thermostat schedule; override activation is false outside plan segments",
+            "segments": req.get("segments", []),
+        },
     }
 
 

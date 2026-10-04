@@ -1,0 +1,309 @@
+{
+  "source": {
+    "title": "Building fault detection data to aid diagnostic algorithm creation and performance testing",
+    "dataset_entry": "https://data.openei.org/submissions/910",
+    "doi": "10.25984/1824861",
+    "article": "https://www.nature.com/articles/s41597-020-0398-6",
+    "physical_file": "MZVAV-2-1.csv",
+    "facility": "Iowa Energy Center experimental AHU (MZVAV AHU-2)",
+    "source_type": "physical controlled experiment",
+    "license": "CC BY 4.0 (dataset entry; retain attribution and indicate modifications)",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "original_zip_sha256": "68C58568E3F0E4E7D0F0DE3194A2CE7CA80703C057325EE402A94D3EAB5A76C1",
+    "subset_sha256": "75F5061EB6E4C0F41A4A8B936D05B96F7B1AC300610D496972BC86BEE4F6C0FC",
+    "data_path": "E:\\比赛\\nengzhihe\\operation_planning\\data\\external\\mzvav2_1_physical_subset.csv",
+    "data_sha256": "75f5061eb6e4c0f41a4a8b936d05b96f7b1ac300610d496972bc86bee4f6c0fc"
+  },
+  "adapter": {
+    "measurement_units": {
+      "temperature": "degF in source, converted to degC for summary",
+      "commands": "fraction/control signal",
+      "time": "minute timestamps"
+    },
+    "input_fields": [
+      "AHU: Supply Air Temperature",
+      "AHU: Supply Air Temperature Set Point",
+      "AHU: Outdoor Air Temperature",
+      "AHU: Mixed Air Temperature",
+      "AHU: Return Air Temperature",
+      "AHU: Supply Air Fan Status",
+      "AHU: Outdoor Air Damper Control Signal  ",
+      "AHU: Return Air Damper Control Signal",
+      "AHU: Exhaust Air Damper Control Signal  ",
+      "AHU: Cooling Coil Valve Control Signal",
+      "AHU: Heating Coil Valve Control Signal"
+    ],
+    "excluded_from_diagnostics": [
+      "Fault Detection Ground Truth"
+    ],
+    "label_source": "inventory event table; source ground-truth column is excluded from inputs",
+    "events": [
+      {
+        "date": "2007-08-28",
+        "metadata": {
+          "class": "fault",
+          "scenario": "heating_coil_bypass_leak",
+          "intensity_gpm": 0.4
+        },
+        "rows": 1440,
+        "sampling_seconds": {
+          "min": 60.0,
+          "max": 60.0
+        },
+        "occupied_rows": 720,
+        "supply_setpoint_tracking_mae_c": 1.009907,
+        "available_command_values": {
+          "oa_damper_command": 1440,
+          "ra_damper_command": 1440,
+          "ea_damper_command": 1440,
+          "heating_valve_command": 1440
+        }
+      },
+      {
+        "date": "2007-08-29",
+        "metadata": {
+          "class": "fault",
+          "scenario": "heating_coil_bypass_leak",
+          "intensity_gpm": 1.0
+        },
+        "rows": 1440,
+        "sampling_seconds": {
+          "min": 60.0,
+          "max": 60.0
+        },
+        "occupied_rows": 720,
+        "supply_setpoint_tracking_mae_c": 0.420818,
+        "available_command_values": {
+          "oa_damper_command": 1440,
+          "ra_damper_command": 1440,
+          "ea_damper_command": 1440,
+          "heating_valve_command": 1440
+        }
+      },
+      {
+        "date": "2007-08-30",
+        "metadata": {
+          "class": "fault",
+          "scenario": "heating_coil_bypass_leak",
+          "intensity_gpm": 2.0
+        },
+        "rows": 1440,
+        "sampling_seconds": {
+          "min": 60.0,
+          "max": 60.0
+        },
+        "occupied_rows": 720,
+        "supply_setpoint_tracking_mae_c": 0.330633,
+        "available_command_values": {
+          "oa_damper_command": 1440,
+          "ra_damper_command": 1440,
+          "ea_damper_command": 1440,
+          "heating_valve_command": 1440
+        }
+      },
+      {
+        "date": "2008-08-19",
+        "metadata": {
+          "class": "normal",
+          "scenario": "unfaulted"
+        },
+        "rows": 1440,
+        "sampling_seconds": {
+          "min": 60.0,
+          "max": 60.0
+        },
+        "occupied_rows": 720,
+        "supply_setpoint_tracking_mae_c": 0.303557,
+        "available_command_values": {
+          "oa_damper_command": 1440,
+          "ra_damper_command": 1440,
+          "ea_damper_command": 1440,
+          "heating_valve_command": 1440
+        }
+      },
+      {
+        "date": "2008-08-25",
+        "metadata": {
+          "class": "normal",
+          "scenario": "unfaulted"
+        },
+        "rows": 1440,
+        "sampling_seconds": {
+          "min": 60.0,
+          "max": 60.0
+        },
+        "occupied_rows": 720,
+        "supply_setpoint_tracking_mae_c": 0.349406,
+        "available_command_values": {
+          "oa_damper_command": 1440,
+          "ra_damper_command": 1440,
+          "ea_damper_command": 1440,
+          "heating_valve_command": 1440
+        }
+      },
+      {
+        "date": "2008-09-04",
+        "metadata": {
+          "class": "normal",
+          "scenario": "unfaulted"
+        },
+        "rows": 1440,
+        "sampling_seconds": {
+          "min": 60.0,
+          "max": 60.0
+        },
+        "occupied_rows": 720,
+        "supply_setpoint_tracking_mae_c": 0.351991,
+        "available_command_values": {
+          "oa_damper_command": 1440,
+          "ra_damper_command": 1440,
+          "ea_damper_command": 1440,
+          "heating_valve_command": 1440
+        }
+      }
+    ]
+  },
+  "planning_eligibility": {
+    "status": "insufficient_for_counterfactual_plan",
+    "required_channels": {
+      "zone_air_temperature": false,
+      "electric_power_or_energy": false,
+      "actual_damper_or_valve_position": false,
+      "weather_or_outdoor_temperature": true,
+      "control_commands": true
+    },
+    "reasons": [
+      "no zone-air-temperature feedback in this exported physical subset",
+      "no electric-power/energy meter aligned to the AHU trace",
+      "control signals are commands; actual damper/valve positions are not logged"
+    ],
+    "usable_for": [
+      "physical channel and timestamp replay",
+      "source/label separation check",
+      "input admissibility gate"
+    ],
+    "not_used_for": [
+      "counterfactual energy/cost ranking",
+      "measured building savings",
+      "training or tuning the BOPTEST planner"
+    ]
+  },
+  "comparison": {
+    "baseline": "field-presence assumption (would accept the trace as a planning input)",
+    "能智核_gate": "requires zone feedback, energy signal and actual-actuator evidence before claiming a plan score",
+    "baseline_result": "inadmissible assumption detected",
+    "gate_result": "refused counterfactual score with explicit missing-channel reasons"
+  },
+  "professional_baseline_comparison": {
+    "rule": {
+      "name": "APAR-inspired supply-air tracking screen",
+      "reference": "https://www.nist.gov/publications/expert-rule-set-fault-detection-air-handling-units",
+      "report": "https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir6994.pdf",
+      "adaptation": "The physical file exposes supply-air temperature and setpoint but not all APAR points; this is an adapted screening rule, not a complete APAR reproduction.",
+      "threshold_mae_c": 0.8
+    },
+    "development_date_blocks": [
+      "2007-08-28",
+      "2008-08-19"
+    ],
+    "holdout_date_blocks": [
+      "2007-08-29",
+      "2007-08-30",
+      "2008-08-25",
+      "2008-09-04"
+    ],
+    "records": [
+      {
+        "date": "2007-08-29",
+        "truth_for_evaluation": "fault",
+        "engine": "professional_screen",
+        "decision": "normal_assumed",
+        "correct_if_decided": false,
+        "counted_as_decided": true
+      },
+      {
+        "date": "2007-08-29",
+        "truth_for_evaluation": "fault",
+        "engine": "能智核_evidence_gate",
+        "decision": "unresolved_no_actuator_feedback",
+        "correct_if_decided": false,
+        "counted_as_decided": false
+      },
+      {
+        "date": "2007-08-30",
+        "truth_for_evaluation": "fault",
+        "engine": "professional_screen",
+        "decision": "normal_assumed",
+        "correct_if_decided": false,
+        "counted_as_decided": true
+      },
+      {
+        "date": "2007-08-30",
+        "truth_for_evaluation": "fault",
+        "engine": "能智核_evidence_gate",
+        "decision": "unresolved_no_actuator_feedback",
+        "correct_if_decided": false,
+        "counted_as_decided": false
+      },
+      {
+        "date": "2008-08-25",
+        "truth_for_evaluation": "normal",
+        "engine": "professional_screen",
+        "decision": "normal_assumed",
+        "correct_if_decided": true,
+        "counted_as_decided": true
+      },
+      {
+        "date": "2008-08-25",
+        "truth_for_evaluation": "normal",
+        "engine": "能智核_evidence_gate",
+        "decision": "unresolved_no_actuator_feedback",
+        "correct_if_decided": false,
+        "counted_as_decided": false
+      },
+      {
+        "date": "2008-09-04",
+        "truth_for_evaluation": "normal",
+        "engine": "professional_screen",
+        "decision": "normal_assumed",
+        "correct_if_decided": true,
+        "counted_as_decided": true
+      },
+      {
+        "date": "2008-09-04",
+        "truth_for_evaluation": "normal",
+        "engine": "能智核_evidence_gate",
+        "decision": "unresolved_no_actuator_feedback",
+        "correct_if_decided": false,
+        "counted_as_decided": false
+      }
+    ],
+    "summary": {
+      "professional_screen": {
+        "holdout_date_blocks": 4,
+        "decided": 4,
+        "unresolved": 0,
+        "correct_if_decided": 2,
+        "wrong_if_decided": 2,
+        "coverage": 1.0,
+        "error_rate_among_decided": 0.5
+      },
+      "能智核_evidence_gate": {
+        "holdout_date_blocks": 4,
+        "decided": 0,
+        "unresolved": 4,
+        "correct_if_decided": 0,
+        "wrong_if_decided": 0,
+        "coverage": 0.0,
+        "error_rate_among_decided": 0.0
+      }
+    },
+    "interpretation": "The gate trades coverage for avoiding unsupported normal conclusions when actual actuator feedback is absent; this is a safety result, not a savings or general diagnostic claim."
+  },
+  "counts": {
+    "rows": 8640,
+    "date_blocks": 6,
+    "normal_blocks": 3,
+    "fault_blocks": 3
+  }
+}

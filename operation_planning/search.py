@@ -45,6 +45,11 @@ def _price_at(seconds: float, prices: Sequence[tuple[int, float]]) -> float:
     return candidate
 
 
+def _trapezoid(values: Sequence[float], times: Sequence[float]) -> float:
+    """Small dependency-free trapezoid integrator for the Windows service."""
+    return sum((float(a) + float(b)) * (float(tb) - float(ta)) / 2.0 for a, b, ta, tb in zip(values, values[1:], times, times[1:]))
+
+
 def _segments(kind: str, duration: int = 0, cooling: float = 24.0) -> List[PlanSegment]:
     if kind == "baseline":
         return []
@@ -89,6 +94,7 @@ class PlanEvaluator:
             "version": task.testcase_version,
             "commit": task.model_commit,
             "fmu_sha256": self.adapter.fmu_sha256,
+            "runner_contract": "official_baseline_or_initialized_override_trapezoid_v3",
             "simulation_day": task.simulation_day,
             "physical_schedule": plan.to_dict(),
             "step_seconds": self.adapter.step_seconds,
@@ -116,8 +122,12 @@ class PlanEvaluator:
         electric = raw["electric_power_w"]
         times = raw["time_seconds"]
         target_mask = [start <= float(t) <= end for t in times]
-        energy = sum(max(0.0, float(p)) for p, flag in zip(electric, target_mask) if flag) * raw["step_seconds"] / 3600000.0
-        cost = sum(max(0.0, float(p)) * _price_at(float(t), prices) for p, t, flag in zip(electric, times, target_mask) if flag) * raw["step_seconds"] / 3600000.0
+        selected_energy_times = [float(t) for t, flag in zip(times, target_mask) if flag]
+        selected_energy_values = [max(0.0, float(p)) for p, flag in zip(electric, target_mask) if flag]
+        energy = float(_trapezoid(selected_energy_values, selected_energy_times) / 3600000.0) if len(selected_energy_times) >= 2 else 0.0
+        selected_times = [float(t) for t, flag in zip(times, target_mask) if flag]
+        selected_cost_values = [max(0.0, float(p)) * _price_at(float(t), prices) for p, t, flag in zip(electric, times, target_mask) if flag]
+        cost = float(_trapezoid(selected_cost_values, selected_times) / 3600000.0) if len(selected_times) >= 2 else 0.0
         raw["custom_metrics"]["target_electric_kwh"] = energy
         raw["custom_metrics"]["target_cost_usd"] = cost
         feasible = bool(raw["custom_metrics"].get("target_feasible", False))
@@ -145,6 +155,7 @@ class PlanEvaluator:
             runtime_seconds=float(raw["runtime_seconds"]),
             cache_key=cache_key,
             evidence={"adapter": self.adapter.provenance(), "plan": plan.to_dict(), "price_profile": task.price_profile},
+            control_schedule=raw.get("control_schedule", {}),
         )
         cache_path.write_text(json.dumps(result.to_dict(), ensure_ascii=False, indent=2), encoding="utf-8")
         return result

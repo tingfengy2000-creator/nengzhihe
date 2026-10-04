@@ -127,6 +127,7 @@ class SimulationResult:
     runtime_seconds: float = 0.0
     cache_key: str = ""
     evidence: Dict[str, Any] = field(default_factory=dict)
+    control_schedule: Dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
