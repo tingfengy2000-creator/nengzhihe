@@ -43,6 +43,13 @@ class TaskSpec:
     recovery_hours: int = 24
     objective: str = "cost"
     price_profile: str = "dynamic"
+    # Optional regional tariff scenario.  ``price_profile`` remains for
+    # backwards compatibility with the BOPTEST USD fixtures.
+    tariff_id: str = "boptest_dynamic"
+    region_id: str = "model_reference"
+    tariff_calendar_date: Optional[str] = None
+    custom_tariff: Optional[Dict[str, Any]] = None
+    revision: int = 1
     max_candidates: int = 12
     source: str = "official_boptest_local_fmu"
     user_request: str = ""
@@ -69,12 +76,20 @@ class TaskSpec:
             errors.append("恢复观察窗口必须在 24..48 小时")
         if self.objective not in ("cost", "energy"):
             errors.append("目标只能是 cost 或 energy")
-        if self.price_profile not in ("constant", "dynamic", "highly_dynamic"):
+        if self.price_profile not in ("constant", "dynamic", "highly_dynamic", "region", "custom"):
             errors.append("电价情景不受支持")
         if not 1 <= self.max_candidates <= 36:
             errors.append("候选方案数必须在 1..36")
         if self.requested_lower_temp_c is not None and self.requested_upper_temp_c is not None and self.requested_lower_temp_c >= self.requested_upper_temp_c:
             errors.append("用户要求的温度范围无效")
+        if self.tariff_calendar_date:
+            try:
+                import datetime as _dt
+                _dt.date.fromisoformat(str(self.tariff_calendar_date))
+            except ValueError:
+                errors.append("tariff_calendar_date 必须为 YYYY-MM-DD")
+        if int(self.revision) < 1:
+            errors.append("任务修订版本必须为正整数")
         return errors
 
     def to_dict(self) -> Dict[str, Any]:
@@ -146,6 +161,123 @@ class DecisionReport:
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
+
+
+@dataclass
+class RegionProfile:
+    """A deliberately narrow supply-area profile, not a nationwide lookup."""
+
+    region_id: str
+    province: str
+    city: str
+    supply_area: str
+    timezone: str
+    supported_tariffs: List[str] = field(default_factory=list)
+
+
+@dataclass
+class TariffProfile:
+    """Versioned tariff data with provenance and explicit billing scope."""
+
+    tariff_id: str
+    version: str
+    area: str
+    category: str
+    voltage_level: str
+    billing_type: str
+    price_type: str
+    effective_start: str
+    effective_end: str
+    currency: str
+    unit: str
+    periods: List[Dict[str, Any]]
+    source_url: str
+    source_title: str
+    verified: bool
+    inclusions: List[str] = field(default_factory=list)
+    exclusions: List[str] = field(default_factory=list)
+    notes: List[str] = field(default_factory=list)
+
+
+@dataclass
+class SimulationContext:
+    """Physical model clock is kept separate from billing-calendar clock."""
+
+    model: str
+    model_version: str
+    weather_sample_date: str
+    simulation_day: int
+    timezone: str = "UTC"
+    initial_conditions: str = "official model warm-up"
+
+
+@dataclass
+class SiteContext:
+    site_id: str
+    name: str
+    latitude: float
+    longitude: float
+    timezone: str
+    elevation_m: Optional[float] = None
+    source: str = ""
+
+
+@dataclass
+class WeatherContext:
+    site: SiteContext
+    source: str
+    dataset_kind: str
+    start: str
+    end: str
+    variables: List[str]
+    units: Dict[str, str]
+    wind_height_m: Optional[float] = None
+    missing_count: int = 0
+    notes: List[str] = field(default_factory=list)
+
+
+@dataclass
+class LoadSeries:
+    timestamps: List[str]
+    interval_seconds: List[int]
+    electric_power_w: List[float]
+    cooling_load_w: List[float]
+    latent_load_w: List[float]
+    source: str
+    scope: str
+
+
+@dataclass
+class EquipmentProfile:
+    equipment_id: str
+    brand: str
+    model: str
+    combination: str
+    rated_cooling_kw: float
+    rated_input_kw: float
+    cop: float
+    shr: Optional[float]
+    operating_range: Dict[str, Any]
+    price_cny: Optional[float]
+    installation_cny: Optional[float]
+    maintenance_cny_per_year: Optional[float]
+    expected_life_years: int
+    source: str
+    source_type: str = "public_datasheet_or_user_quote"
+    limitations: List[str] = field(default_factory=list)
+
+
+@dataclass
+class CashFlowScenario:
+    study_years: int
+    discount_rate: float
+    equipment_cny: Optional[float]
+    installation_cny: Optional[float]
+    electricity_cny: Optional[float]
+    maintenance_cny: Optional[float]
+    replacement_cny: Optional[float]
+    residual_cny: Optional[float]
+    source_notes: List[str] = field(default_factory=list)
 
 
 def stable_hash(payload: Any) -> str:

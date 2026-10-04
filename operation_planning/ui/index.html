@@ -3,57 +3,85 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>能智核 · 先试算，再决策</title>
-  <style>
-    :root { --ink:#17243b; --muted:#66748a; --line:#dce4ef; --bg:#f4f7fb; --panel:#fff; --teal:#0c938d; --blue:#3875dc; --orange:#e58a3b; --red:#c85252; --green:#19865c; }
-    * { box-sizing:border-box; } body { margin:0; color:var(--ink); background:var(--bg); font:14px/1.55 "Segoe UI","Microsoft YaHei",sans-serif; }
-    header { padding:24px 5vw 18px; background:linear-gradient(135deg,#142b4c,#0e6b78); color:white; display:flex; justify-content:space-between; gap:24px; align-items:center; }
-    header h1 { margin:0; font-size:26px; letter-spacing:.02em; } header p { margin:5px 0 0; color:#cfe7ed; } .badge { border:1px solid #8fd8d5; color:#def8f6; border-radius:999px; padding:6px 12px; white-space:nowrap; }
-    nav { padding:12px 5vw; background:#fff; border-bottom:1px solid var(--line); display:flex; gap:8px; position:sticky; top:0; z-index:3; } nav button { border:0; background:transparent; color:var(--muted); padding:9px 16px; border-radius:8px; cursor:pointer; } nav button.active, nav button:hover { background:#e8f5f5; color:#087c77; font-weight:600; }
-    main { max-width:1440px; margin:0 auto; padding:26px 5vw 60px; } .page { display:none; } .page.active { display:block; }
-    .intro { display:flex; justify-content:space-between; align-items:end; margin-bottom:20px; gap:20px; } h2 { margin:0; font-size:22px; } h3 { margin:0 0 10px; font-size:16px; } .intro span,.muted { color:var(--muted); }
-    .grid { display:grid; grid-template-columns:1.2fr .8fr; gap:18px; } .panel { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px; box-shadow:0 4px 16px rgba(31,57,92,.05); } .wide { grid-column:1/-1; }
-    label { display:block; color:var(--muted); margin:10px 0 5px; font-size:13px; } input, select, textarea { width:100%; border:1px solid #cdd8e7; border-radius:8px; padding:10px; color:var(--ink); background:#fff; font:inherit; } textarea { min-height:110px; resize:vertical; } .row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; } .row3 { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-    .primary { background:var(--teal); color:#fff; border:0; border-radius:8px; padding:11px 18px; font-weight:600; cursor:pointer; } .primary:hover { background:#087a76; } .ghost { background:#fff; border:1px solid #b9c8dc; color:var(--ink); border-radius:8px; padding:10px 14px; cursor:pointer; } .actions { margin-top:15px; display:flex; align-items:center; gap:12px; } .status { color:var(--muted); }
-    .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; } .kpi { padding:13px; border-radius:10px; background:#f5f8fc; } .kpi small { color:var(--muted); display:block; } .kpi strong { display:block; margin-top:4px; font-size:20px; }
-    .trace { max-height:440px; overflow:auto; display:flex; flex-direction:column; gap:9px; } .trace-item { border-left:3px solid var(--teal); padding:9px 11px; background:#f6fafb; border-radius:0 8px 8px 0; } .trace-item b { color:#087c77; } .chart { min-height:300px; border:1px solid var(--line); border-radius:10px; padding:8px; background:#fbfcfe; } svg { width:100%; height:280px; } .legend { display:flex; gap:14px; color:var(--muted); font-size:12px; } .dot { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:4px; } .temp { background:var(--blue); } .low { background:var(--orange); } .high { background:var(--red); }
-    table { border-collapse:collapse; width:100%; } th,td { text-align:left; border-bottom:1px solid var(--line); padding:9px 7px; vertical-align:top; } th { color:var(--muted); font-weight:500; font-size:12px; } .ok { color:var(--green); font-weight:600; } .no { color:var(--red); font-weight:600; } .pill { padding:3px 7px; border-radius:99px; background:#edf2fa; font-size:12px; } .callout { padding:11px 13px; border-radius:10px; background:#fff7e9; color:#84531e; border:1px solid #f2d9a8; margin-top:13px; }
-    @media(max-width:900px) { .grid { grid-template-columns:1fr; } .row,.row3,.kpis { grid-template-columns:1fr 1fr; } header { align-items:flex-start; flex-direction:column; } }
-  </style>
+  <meta name="theme-color" content="#2563eb" />
+  <title>能智核｜先试算，再安排空调运行</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
 </head>
 <body>
-  <header><div><h1>能智核</h1><p>公共建筑空调运行方案试算与优化智能体 · 先试算，再决策</p></div><div class="badge">本地 FMU 回放 · 不直接控制设备</div></header>
-  <nav><button class="active" data-page="requirements">01 运行要求</button><button data-page="simulation">02 方案试算</button><button data-page="results">03 结果与案例</button></nav>
+  <header class="topbar">
+    <div class="brand"><span class="mark">能</span><div><strong>能智核</strong><small>公共建筑空调运行方案试算与优化智能体</small></div></div>
+    <div class="status" id="globalStatus">本地模型回放 · 不向设备下发控制</div>
+  </header>
+  <nav class="nav" aria-label="主导航">
+    <button class="active" data-page="selection">空调选型</button>
+    <button data-page="workbench">方案工作台</button>
+    <button data-page="tariffs">地区与电价</button>
+    <button data-page="history">历史方案</button>
+  </nav>
   <main>
-    <section class="page active" id="requirements">
-      <div class="intro"><div><h2>把现场约束说清楚</h2><span>自然语言由本地模型调用工具，数值由程序和官方模型计算。</span></div></div>
-      <div class="grid">
-        <div class="panel"><h3>任务描述</h3><label for="request">给运行人员的自然语言要求</label><textarea id="request">请比较基线和有限预冷方案。办公时间 8:00–18:00，室温保持 21–24°C，优先降低动态电价下的费用；如果没有满足条件的方案，请明确说明缺口。</textarea><div class="actions"><button class="primary" id="start">开始试算</button><span class="status" id="status">等待输入</span></div></div>
-        <div class="panel"><h3>可编辑条件</h3><div class="row"><div><label>模型日期（年内日）</label><input id="day" type="number" value="153" min="1" max="365" /></div><div><label>营业开始</label><input id="startHour" type="number" value="8" min="0" max="23" /></div><div><label>营业结束</label><input id="endHour" type="number" value="18" min="1" max="24" /></div><div><label>候选上限</label><input id="maxCandidates" type="number" value="6" min="1" max="36" /></div></div><div class="row3"><div><label>温度下限 °C</label><input id="low" type="number" step="0.1" value="21" /></div><div><label>温度上限 °C</label><input id="high" type="number" step="0.1" value="24" /></div><div><label>目标</label><select id="objective"><option value="cost">动态电价费用</option><option value="energy">用电量</option></select></div></div><label>计算步长</label><select id="step"><option value="900">15 分钟（正式口径）</option><option value="1800">30 分钟（快速演示）</option></select><p class="muted">数据来源：BOPTEST v0.9.0 bestest_air 官方 FMI 2.0 FMU；日期、占用与内部得热来自模型，业务时段是用户约束，不能互相替代。</p></div>
-        <div class="panel wide"><h3>边界提示</h3><div class="callout">当前版本只做单房间公共办公单元的离线试算。它会给出可执行方案、温度与能耗证据和剩余缺口，不向 BMS 下发控制，也不把仿真结果称为现场节能收益。</div></div>
+    <section class="page active" id="selection">
+      <div class="hero"><div><div class="eyebrow">第一阶段 · 热湿负荷与全生命周期成本</div><h1>先算清需求，再比较设备。</h1><p>从公开逐时气象、房间条件和设备参数出发，分别核对降温、除湿、耗电与研究期成本。报价、运行时段和建筑条件都可修改，结果会真实重算。</p></div><span class="pill">2023–2025 参考年 · 城市级再分析 · 非楼宇实测</span></div>
+      <div class="layout"><div class="panel"><h2>建立一个可复核的空调场景</h2><div class="form-grid">
+        <div class="field"><label for="selSite">城市</label><select id="selSite"><option value="guangzhou">广州</option><option value="beijing">北京</option><option value="harbin">哈尔滨</option></select></div>
+        <div class="field"><label for="selYear">天气参考年</label><select id="selYear"><option value="2023">2023 完整年</option><option value="2024" selected>2024 完整年</option><option value="2025">2025 完整年</option></select></div>
+        <div class="field"><label for="selArea">房间面积 m²</label><input id="selArea" type="number" value="35" min="5" max="1000" /></div>
+        <div class="field"><label for="selPeople">工作日人数</label><input id="selPeople" type="number" value="4" min="0" max="100" /></div>
+        <div class="field"><label for="selStart">使用开始</label><input id="selStart" type="number" value="8" min="0" max="23" /></div>
+        <div class="field"><label for="selEnd">使用结束</label><input id="selEnd" type="number" value="18" min="1" max="24" /></div>
+        <div class="field"><label for="selTemp">室内温度目标 °C</label><input id="selTemp" type="number" value="26" step="0.5" min="18" max="30" /></div>
+        <div class="field"><label for="selRh">室内湿度目标 %RH</label><input id="selRh" type="number" value="60" step="1" min="35" max="80" /></div>
+        <div class="field"><label for="selPrice">年度电价参考 CNY/kWh</label><input id="selPrice" type="number" value="0.66" step="0.0001" min="0.01" /></div>
+        <div class="field"><label for="selYears">研究期</label><select id="selYears"><option value="5">5 年</option><option value="10" selected>10 年</option><option value="15">15 年</option></select></div>
+        <div class="field"><label for="selEquipment">对比型号（可多选）</label><select id="selEquipment" multiple size="3"></select></div>
+        <div class="field"><label for="selQuantity">同类房间数量</label><input id="selQuantity" type="number" value="1" min="1" max="100" /></div>
+        <div class="field"><label for="selEquipmentPrice">每台设备参考报价 CNY</label><input id="selEquipmentPrice" type="number" value="3000" min="0" step="100" /></div>
+        <div class="field"><label for="selInstallPrice">每台安装参考报价 CNY</label><input id="selInstallPrice" type="number" value="800" min="0" step="50" /></div>
+        <div class="field"><label for="selMaintenancePrice">每台年维护参考 CNY</label><input id="selMaintenancePrice" type="number" value="260" min="0" step="10" /></div>
+        <div class="field full"><label for="selWeatherCsv">可选：上传本地逐时天气 CSV</label><input id="selWeatherCsv" type="file" accept=".csv,text/csv" /><span class="helper" id="selWeatherStatus">默认使用上方城市与参考年；CSV需含 timestamp、temperature、RH、pressure、solar 五类字段。</span></div>
       </div>
+      <details class="details"><summary>高级建筑条件（使用有来源的参考值）</summary><div class="form-grid" style="margin-top:14px"><div class="field"><label for="selWwr">窗墙比</label><input id="selWwr" type="number" value="0.25" step="0.05" min="0" max="0.9" /></div><div class="field"><label for="selVent">新风 L/s·人</label><input id="selVent" type="number" value="7" step="1" min="0" max="50" /></div><div class="field"><label for="selAch">渗透 ACH</label><input id="selAch" type="number" value="0.35" step="0.05" min="0" max="3" /></div><div class="field"><label for="selOrientation">主要朝向</label><select id="selOrientation"><option value="south">南</option><option value="west">西</option><option value="east">东</option><option value="north">北</option></select></div></div></details>
+      <div class="actions"><button class="primary" id="runSelection">开始空调选型试算</button><span class="helper" id="selectionStatus">等待输入</span></div><div class="notice warn" style="margin-top:18px">默认型号为公开额定点；厂家未公开的 SHR、报价和完整部分负荷曲线会明确标作参考值或用户输入。城市级再分析不代表楼宇微气候。</div></div>
+      <aside class="side-stack"><div class="panel"><h3>当前会计算</h3><div class="assistant"><strong>温度与除湿分开核对</strong><span class="muted">围护传热、太阳得热、人员/设备显热、新风与渗透热湿交换、冷却能力和输入功率都会进入逐时结果。</span></div></div><div class="panel"><h3>第二阶段接口已预留</h3><p class="muted">统一输出 SiteContext、WeatherSeries、LoadSeries、EquipmentProfile 和 CashFlowScenario，后续先接光伏，再接风电；本轮不展示尚未计算的发电结果。</p></div></aside></div>
+      <section class="panel" id="selectionResults" hidden style="margin-top:22px"><div class="result-head"><div><div class="eyebrow">选型结果</div><h2 id="selectionTitle">尚未计算</h2><p class="muted" id="selectionSubtitle"></p></div></div><div class="metric-grid" id="selectionMetrics"></div><div class="layout" style="margin-top:10px"><div><h3>第一型号逐月电量 / 电费</h3><div class="chart" id="selectionChart"><div class="empty">等待真实结果。</div></div></div><div><h3>结果解释</h3><div class="notice" id="selectionInterpretation">完成计算后显示。</div></div></div><div class="candidate-wrap" id="selectionTable"></div><details class="evidence"><summary>逐时证据、天气来源与成本明细</summary><pre id="selectionRaw"></pre></details></section>
     </section>
-    <section class="page" id="simulation">
-      <div class="intro"><div><h2>方案试算</h2><span id="simSub">等待一次真实回放</span></div><button class="ghost" id="backEdit">修改要求</button></div>
-      <div class="grid"><div class="panel"><h3>Agent 工具轨迹</h3><div class="trace" id="trace"><div class="muted">开始任务后显示调用结果。</div></div></div><div class="panel"><h3>温度回放</h3><div class="chart" id="chart"><div class="muted">等待计算结果。</div></div><div class="legend"><span><i class="dot temp"></i>实测/仿真室温</span><span><i class="dot low"></i>下限</span><span><i class="dot high"></i>上限</span></div></div><div class="panel wide"><h3>候选方案比较</h3><div id="candidateTable" class="muted">等待计算结果。</div></div></div>
+    <section class="page" id="workbench">
+      <div class="hero"><div><div class="eyebrow">运行方案试算</div><h1>先试算，再安排空调运行。</h1><p>把使用时段、舒适温度和计费情景放在同一张核查卡里。程序回放真实模型、比较有限候选，并保留每一个证据窗口。</p></div><span class="pill">真实案例回放 · BOPTEST bestest_air v0.9.0</span></div>
+      <div class="layout">
+        <div class="panel">
+          <h2>提出一次运行要求</h2>
+          <div class="form-grid">
+            <div class="field full"><label for="request">给运行人员的自然语言要求</label><textarea id="request">办公区 8:00–18:00 使用，室温保持 21–24°C。请比较模型默认运行和有限预冷方案，优先降低电费；如果没有满足要求的方案，请保留未达标原因。</textarea></div>
+            <div class="field"><label for="region">计费地区</label><select id="region"><option value="model_reference">模型参考（BOPTEST USD）</option><option value="fujian_dehua">福建省德化县（历史 2026 年 7 月档案）</option><option value="guangdong_north">广东粤北山区（历史 2026 年 7 月档案）</option></select></div>
+            <div class="field"><label for="tariff">电价档案</label><select id="tariff"><option value="boptest_dynamic">BOPTEST 动态电价（USD）</option></select></div>
+            <div class="field"><label for="calendarDate">计费日历日期</label><input id="calendarDate" type="date" value="2026-07-15" /></div>
+            <div class="field"><label for="weatherDay">天气样本日（年内日）</label><input id="weatherDay" type="number" min="1" max="365" value="153" /></div>
+            <div class="field"><label for="startHour">使用开始</label><input id="startHour" type="number" min="0" max="23" value="8" /></div>
+            <div class="field"><label for="endHour">使用结束</label><input id="endHour" type="number" min="1" max="24" value="18" /></div>
+            <div class="field"><label for="objective">优先目标</label><select id="objective"><option value="cost">电费估算</option><option value="energy">空调电量</option></select></div>
+            <div class="field"><label for="useAgent">本地模型工具协同</label><select id="useAgent"><option value="true" selected>启用：模型只选择工具</option><option value="false">关闭：直接程序搜索</option></select></div>
+            <div class="field"><label for="low">温度下限 °C</label><input id="low" type="number" step="0.1" value="21" /></div>
+            <div class="field"><label for="high">温度上限 °C</label><input id="high" type="number" step="0.1" value="24" /></div>
+          </div>
+          <details class="details"><summary>高级设置（候选预算与回放精度）</summary><div class="form-grid" style="margin-top:14px"><div class="field"><label for="maxCandidates">候选上限</label><input id="maxCandidates" type="number" min="1" max="36" value="9" /></div><div class="field"><label for="step">模型计算步长</label><select id="step"><option value="900">15 分钟（正式口径）</option><option value="1800">30 分钟（快速演示）</option></select></div><div class="field"><label for="recovery">共同恢复时长</label><select id="recovery"><option value="24">24 小时</option><option value="48">48 小时</option></select></div></div></details>
+          <div class="actions"><button class="primary" id="start">生成运行方案</button><button class="secondary" id="cancel" disabled>取消当前回放</button><span class="helper" id="status">等待输入</span></div>
+          <div class="progress" id="progress" hidden><span id="progressText">准备中</span><div class="bar"><span id="progressBar"></span></div></div>
+          <div class="notice warn" style="margin-top:18px">固定模型与天气下的地区电价情景试算，非当地楼宇预测。电费范围只包括本模型计算的冷却设备与风机电功率；燃气供热、建筑总表和需量/容量基本电费不在本轮范围内。</div>
+        </div>
+        <aside class="side-stack">
+          <div class="panel"><h3>这次核查会回答</h3><div class="assistant"><strong>告警之后，先安排什么？</strong><span class="muted">当前任务 → 候选运行安排 → 温度与电量证据 → 地区电价重算 → 当前方案确认。</span></div></div>
+          <div class="panel"><h3>数据边界</h3><p class="muted">仿真日期与计费日历分开记录。切换电价会复用相同物理轨迹并重新计费；改变使用时段或控制方案才会重新回放模型。</p><p class="muted">方案比较范围由候选预算决定，不称有限候选为全局最优。</p></div>
+        </aside>
+      </div>
+      <section class="panel" id="resultsPanel" hidden style="margin-top:22px">
+        <div class="result-head"><div><div class="eyebrow">当前结果</div><h2 id="resultTitle">尚未计算</h2><p class="muted" id="resultSubtitle"></p></div><div class="actions"><button class="secondary" id="confirm">确认当前方案</button><button class="secondary" id="exportJson">JSON证据</button><button class="secondary" id="exportHtml">方案卡</button><button class="secondary" id="exportCsv">CSV时刻表</button></div></div>
+        <div class="metric-grid" id="metrics"></div>
+        <div class="layout" style="margin-top:10px"><div><h3>温度与约束</h3><div class="chart" id="chart"><div class="empty">等待真实回放。</div></div><div class="legend"><span><i class="room"></i>模型仿真室温</span><span><i class="bound"></i>使用温度上下限</span><span><i class="price"></i>价格时段</span></div><div class="timeline"><div class="timeline-strip" id="timeline"></div></div></div><div class="side-stack"><div><h3>推荐运行安排</h3><div id="planSummary" class="notice">尚未形成推荐。</div></div><div><h3>候选比较范围</h3><div id="candidateTable" class="candidate-wrap"><div class="empty">尚未形成候选。</div></div></div></div></div>
+        <details class="evidence"><summary>核验过程与原始证据</summary><div class="trace" id="trace" style="margin-top:12px"></div><pre id="rawJson"></pre></details>
+      </section>
     </section>
-    <section class="page" id="results">
-      <div class="intro"><div><h2>结果、证据与导出</h2><span>每项数字均可追溯到任务、方案、时间窗和程序结果。</span></div><button class="ghost" id="export">导出核查卡 JSON</button></div>
-      <div class="grid"><div class="panel wide"><div class="kpis" id="kpis"><div class="kpi"><small>推荐方案</small><strong>—</strong></div><div class="kpi"><small>可行性</small><strong>—</strong></div><div class="kpi"><small>营业温度证据</small><strong>—</strong></div><div class="kpi"><small>目标值</small><strong>—</strong></div></div></div><div class="panel"><h3>本次任务</h3><pre id="taskJson" class="muted" style="white-space:pre-wrap"></pre></div><div class="panel"><h3>数据来源与许可边界</h3><pre id="provJson" class="muted" style="white-space:pre-wrap">读取中…</pre></div><div class="panel"><h3>公开物理实测接入</h3><pre id="externalJson" class="muted" style="white-space:pre-wrap">读取中…</pre></div><div class="panel wide"><h3>案例状态</h3><p class="muted">当前页显示本次真实回放。正式实验会另外按日期块冻结开发与留出，正常、预冷和无解条件均保留，不以单个成功案例代替总体结果。</p><div id="unresolved" class="callout">尚未生成报告。</div></div></div>
-    </section>
+    <section class="page" id="tariffs"><div class="hero"><div><div class="eyebrow">地区与电价</div><h1>选择真实供电区，保留适用边界。</h1><p>档案带有来源、执行期、类别、电压和包含/排除项目。历史档案过期后不会静默当作当前价格。</p></div></div><div class="tariff-grid" id="tariffCards"><div class="empty">正在读取档案…</div></div><div class="panel" style="margin-top:18px"><h2>自定义分时电价</h2><p class="muted">未覆盖地区可录入完整时段，档案会标记为“用户提供”，需用户自行确认类别、电压与有效期。</p><div class="form-grid"><div class="field"><label for="customArea">供电区域</label><input id="customArea" placeholder="例如：某市某供电区" /></div><div class="field"><label for="customStart">生效日期</label><input id="customStart" type="date" value="2026-07-01" /></div><div class="field"><label for="customEnd">失效日期</label><input id="customEnd" type="date" value="2026-07-31" /></div><div class="field"><label for="customFlat">平段 CNY/kWh</label><input id="customFlat" type="number" step="0.00000001" placeholder="0.65" /></div><div class="field"><label for="customPeak">峰段 CNY/kWh</label><input id="customPeak" type="number" step="0.00000001" placeholder="1.10" /></div><div class="field"><label for="customValley">谷段 CNY/kWh</label><input id="customValley" type="number" step="0.00000001" placeholder="0.27" /></div></div><div class="actions"><button class="secondary" id="saveCustom">保存到本次试算</button><span class="helper" id="customStatus">未保存；用户提供档案不会冒充官方电价。</span></div></div></section>
+    <section class="page" id="history"><div class="hero"><div><div class="eyebrow">历史方案</div><h1>每次任务都有版本和确认状态。</h1><p>修改任务后，旧推荐只作为历史结果展示；只有当前版本且已确认的方案可以导出。</p></div></div><div class="panel"><div id="historyList" class="empty">暂无历史任务。</div></div></section>
   </main>
-  <script>
-    const $ = s => document.querySelector(s); let latest = null, latestJob = null;
-    document.querySelectorAll('nav button').forEach(b => b.onclick = () => { document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active')); b.classList.add('active'); document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); $('#'+b.dataset.page).classList.add('active'); });
-    $('#backEdit').onclick = () => document.querySelector('nav button[data-page=requirements]').click();
-    const fmt = (v, n=3) => Number.isFinite(Number(v)) ? Number(v).toFixed(n) : '—';
-    function jobStatus(id) { fetch('/api/operation/task/'+id).then(r=>r.json()).then(j=>{ latestJob=j; if(j.status==='queued'||j.status==='running'){ $('#status').textContent='正在回放官方模型…'; setTimeout(()=>jobStatus(id),1200); return; } if(j.status==='done'){ latest=j.output; $('#status').textContent='完成，可查看结果'; render(latest); document.querySelector('nav button[data-page=simulation]').click(); } else { $('#status').textContent='任务失败：'+(j.output?.error||'未知错误'); } }).catch(e=>$('#status').textContent='读取任务失败：'+e); }
-    $('#start').onclick = () => { const task={simulation_day:+$('#day').value,business_start_hour:+$('#startHour').value,business_end_hour:+$('#endHour').value,lower_temp_c:+$('#low').value,upper_temp_c:+$('#high').value,objective:$('#objective').value,max_candidates:+$('#maxCandidates').value}; const payload={request:$('#request').value,task,use_agent:true,step_seconds:+$('#step').value}; $('#status').textContent='提交任务…'; fetch('/api/operation/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(r=>r.json()).then(j=>{latestJob=j; jobStatus(j.job_id);}).catch(e=>$('#status').textContent='提交失败：'+e); };
-    function reportOf(x){return x?.report||{};}
-    function render(x){ const r=reportOf(x), cs=r.candidates||[]; $('#simSub').textContent=`${cs.length} 个候选 · ${r.feasible?'至少一个满足硬约束':'当前条件无可行方案'}`; $('#trace').innerHTML=(x.trace||[]).map(t=>`<div class="trace-item"><b>${t.action||'模型调用失败'}</b><br><span>${t.message||t.error||''}</span>${t.result?'<br><small class="muted">'+JSON.stringify(t.result).slice(0,260)+'</small>':''}</div>`).join('')||'<div class="muted">无轨迹</div>'; renderTable(cs); const chosen=cs.find(c=>c.plan?.plan_id===r.recommended_plan_id)||cs[0]; renderChart(chosen?.result); const task=r.task||{}; $('#taskJson').textContent=JSON.stringify(task,null,2); $('#unresolved').textContent=(r.unresolved_requirements||[]).join('；')||'本次任务已形成可追溯结果；仍需按冻结实验口径评价，不将单次回放外推为现场收益。'; const result=chosen?.result, metric=result?.custom_metrics||{}; $('#kpis').innerHTML=`<div class="kpi"><small>推荐方案</small><strong>${r.recommended_plan_id||'无'}</strong></div><div class="kpi"><small>可行性</small><strong class="${r.feasible?'ok':'no'}">${r.feasible?'满足':'无解/未决'}</strong></div><div class="kpi"><small>营业严格越界度时</small><strong>${fmt(metric.occupied_strict_degree_hours,3)} h·°C</strong></div><div class="kpi"><small>${task.objective==='energy'?'用电量':'费用'}</small><strong>${fmt(task.objective==='energy'?metric.target_electric_kwh:metric.target_cost_usd,3)}</strong></div>`; fetch('/api/operation/provenance').then(q=>q.json()).then(p=>$('#provJson').textContent=JSON.stringify(p,null,2)); fetch('/api/operation/external').then(q=>q.json()).then(p=>{const e=p.source||{}, g=p.planning_eligibility||{}, c=p.professional_baseline_comparison?.summary||{}; $('#externalJson').textContent=JSON.stringify({来源:e.physical_file,实验:e.facility,日期块:p.counts?.date_blocks,状态:g.status,可用于:g.usable_for,明确缺口:g.reasons,专业筛查留出:c.professional_screen,证据门留出:c['能智核_evidence_gate']},null,2);}); }
-    function renderTable(cs){ if(!cs.length){$('#candidateTable').textContent='没有候选结果';return;} $('#candidateTable').innerHTML='<table><thead><tr><th>方案</th><th>状态</th><th>费用</th><th>用电量</th><th>越界度时</th><th>拒绝原因</th></tr></thead><tbody>'+cs.map(c=>{const m=c.result?.custom_metrics||{};return `<tr><td><span class="pill">${c.plan?.plan_id||'—'}</span><br><small>${(c.plan?.segments||[]).map(s=>s.reason).join('；')||'模型默认时段'}</small></td><td class="${c.status==='feasible'?'ok':c.status==='infeasible'?'no':''}">${c.status}</td><td>${fmt(m.target_cost_usd)}</td><td>${fmt(m.target_electric_kwh)}</td><td>${fmt(m.occupied_strict_degree_hours)}</td><td>${(c.result?.rejection_reasons||[]).join('；')||'—'}</td></tr>`}).join('')+'</tbody></table>'; }
-    function renderChart(res){ if(!res||!res.time_seconds?.length){$('#chart').innerHTML='<div class="muted">没有可画的真实结果。</div>';return;} const w=700,h=260,p=35,ts=res.time_seconds,ys=res.temperature_c; const min=Math.min(...ys,20),max=Math.max(...ys,25), x=i=>p+(w-2*p)*i/(ys.length-1), y=v=>h-p-(h-2*p)*(v-min)/(max-min||1); const pts=ys.filter((_,i)=>i%Math.max(1,Math.floor(ys.length/220))===0).map((v,i,a)=>`${x(i*Math.max(1,Math.floor(ys.length/220))).toFixed(1)},${y(v).toFixed(1)}`).join(' '); $('#chart').innerHTML=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="温度回放"><line x1="${p}" y1="${y(21)}" x2="${w-p}" y2="${y(21)}" stroke="#e58a3b" stroke-dasharray="5 4"/><line x1="${p}" y1="${y(24)}" x2="${w-p}" y2="${y(24)}" stroke="#c85252" stroke-dasharray="5 4"/><polyline points="${pts}" fill="none" stroke="#3875dc" stroke-width="2.4"/><text x="${p}" y="18" fill="#66748a">${fmt(min,1)}–${fmt(max,1)}°C · ${ys.length} 个真实采样点</text></svg>`; }
-    $('#export').onclick=()=>{if(!latestJob?.job_id)return;window.open('/api/operation/export/'+latestJob.job_id,'_blank');};
-  </script>
+  <script src="/assets/app.js" defer></script>
 </body>
 </html>

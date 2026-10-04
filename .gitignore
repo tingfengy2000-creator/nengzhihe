@@ -79,5 +79,8 @@ Thumbs.db
 # only the six-date CC-BY subset used by the workbench is versioned.
 /operation_planning/protocol/oedi910.zip
 /operation_planning/protocol/oedi910_extract/
+/operation_planning/protocol/gd_tariff_*.jpg
+/operation_planning/results/physical_cache/
+/operation_planning/results/runs/*.json
 /operation_planning/data/external/oedi910.zip
 /operation_planning/data/external/oedi910_extract/

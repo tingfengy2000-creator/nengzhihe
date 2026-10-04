@@ -37,16 +37,22 @@ OUTPUT_FIELDS = [
 ]
 
 
-def _setpoint_for_minute(minute: int, segments: List[Dict[str, Any]]) -> tuple[float, float, bool]:
-    """Return °C setpoints and whether an override is active."""
+def _setpoint_for_minute(minute: int, segments: List[Dict[str, Any]], business_start: int = 8, business_end: int = 18) -> tuple[float, float, bool]:
+    """Return day-internal °C setpoints and whether a plan segment applies."""
+    minute = int(minute) % 1440
     local_hour = minute / 60.0
-    cooling, heating = (24.0, 21.0) if 8.0 <= local_hour < 18.0 else (30.0, 15.0)
+    cooling, heating = (24.0, 21.0) if business_start <= local_hour < business_end else (30.0, 15.0)
     for segment in segments:
         if int(segment["start_minute"]) <= minute < int(segment["end_minute"]):
             cooling = float(segment["cooling_setpoint_c"])
             heating = float(segment["heating_setpoint_c"])
             return cooling, heating, True
     return cooling, heating, False
+
+
+def _official_setpoint(minute: int) -> tuple[float, float]:
+    hour = (int(minute) % 1440) / 60.0
+    return (24.0, 21.0) if 8 <= hour < 18 else (30.0, 15.0)
 
 
 def _build_input(req: Dict[str, Any], stop_time: int, step: int) -> np.ndarray:
@@ -72,10 +78,17 @@ def _build_input(req: Dict[str, Any], stop_time: int, step: int) -> np.ndarray:
         if t < day_start:
             # Same known history for every candidate.
             cooling, heating = (24.0, 21.0) if ((t % 86400) / 3600.0) >= 8 and ((t % 86400) / 3600.0) < 18 else (30.0, 15.0)
-            active = has_override
+            active = False
+        elif day_start <= t < day_start + 86400:
+            minute = int((t - day_start) // 60) % 1440
+            # User task hours define the candidate plan, while the official
+            # native controller remains the common reference history.
+            cooling, heating, active = _setpoint_for_minute(
+                minute, req.get("segments", []), int(req.get("business_start_hour", 8)), int(req.get("business_end_hour", 18))
+            )
         else:
-            minute = int((t - day_start) // 60)
-            cooling, heating, active = _setpoint_for_minute(minute, req.get("segments", []))
+            cooling, heating = _official_setpoint(int((t - day_start) // 60))
+            active = False
         arr["con_oveTSetCoo_u"][idx] = cooling + 273.15
         arr["con_oveTSetHea_u"][idx] = heating + 273.15
         arr["con_oveTSetCoo_activate"][idx] = has_override
@@ -164,7 +177,14 @@ def run(req: Dict[str, Any]) -> Dict[str, Any]:
         "heating_power_w": clean(heat_local),
         "cooling_setpoint_c": clean(np.asarray(result["con_oveTSetCoo_y"], dtype=float)[mask] - 273.15),
         "heating_setpoint_c": clean(np.asarray(result["con_oveTSetHea_y"], dtype=float)[mask] - 273.15),
+        # Two distinct facts are exported: the override channel may be enabled
+        # for a candidate's common initialized history, while a plan segment is
+        # actually applied only at selected day-internal minutes.
         "override_active": [bool(x) for x in _build_input(req, recovery_end, step)["con_oveTSetCoo_activate"][mask]],
+        "override_setting_applied": [
+            bool(day_start <= t < day_start + 86400 and _setpoint_for_minute(int((t - day_start) // 60) % 1440, req.get("segments", []), int(req.get("business_start_hour", 8)), int(req.get("business_end_hour", 18)))[2])
+            for t in times_local
+        ],
         "kpis": {
             "AirZoneTemperature_min_c": float(np.nanmin(temp_local)),
             "AirZoneTemperature_max_c": float(np.nanmax(temp_local)),
@@ -180,7 +200,9 @@ def run(req: Dict[str, Any]) -> Dict[str, Any]:
         "outputs": OUTPUT_FIELDS,
         "input_fields": INPUT_FIELDS,
         "control_schedule": {
-            "baseline": "official internal thermostat schedule; override activation is false outside plan segments",
+            "baseline": "official 8:00–18:00 native thermostat schedule used for common history and recovery",
+            "override_channel": "candidate channel is initialized consistently; active does not mean a plan segment is applied",
+            "plan_hours": [req.get("business_start_hour", 8), req.get("business_end_hour", 18)],
             "segments": req.get("segments", []),
         },
     }

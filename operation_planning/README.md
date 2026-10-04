@@ -1,42 +1,29 @@
-# 能智核——公共建筑空调运行方案试算与优化智能体
+# 能智核工作台
 
 展示主张：**先试算，再决策。**
 
-本目录是独立增强分支上的产品链，不改动前四轮源码和发布包。它把一个公共办公单元的用户约束转成可审核的候选运行方案，调用固定的官方 BOPTEST `bestest_air` v0.9.0 FMU 做离线回放，再返回温度带、用电、动态电价费用、恢复窗口和拒绝原因。它不接管 BMS，也不把仿真结果写成现场节能或人工提效。
+当前增强分支在保留 BOPTEST `bestest_air` 方案工作台的基础上，加入第一阶段空调选型闭环：城市或用户 CSV 天气 → 单房间热湿负荷 → 公开额定点设备响应 → 逐时电量 → 逐月费用 → 用户报价驱动的全生命周期现金流。页面不向设备下发控制，结果不等同于现场楼宇预测。
 
 ## 启动
 
-先准备官方模型：
-
 ```powershell
-powershell -ExecutionPolicy Bypass -File operation_planning/protocol/fetch_boptest.ps1
-```
-
-本机验证过的执行链是 Windows → WSL Ubuntu-24.04 → FMPy 0.3.22 → FMI 2.0 co-simulation FMU。`runtime/boptest_linux/lib4` 是为官方 Linux FMU 提供 `libgfortran.so.4` 的运行时补充。Docker 未安装时不影响本地 FMU 回放；公共服务连接状态记录于 `protocol/boptest_source.json`。
-
-```powershell
-# 可选：先启动已配置的本地 Qwen3-4B llama.cpp 服务
-powershell -ExecutionPolicy Bypass -File runtime/start_model.ps1
-
-# 启动免安装工作台（仅监听本机）
 python operation_planning/run_server.py
-# 浏览器打开 http://127.0.0.1:18765
+# http://127.0.0.1:18765
 ```
 
-命令行最小真实回放：
+第一阶段 API：
 
-```powershell
-python scripts/operation_planning_demo.py --day 153 --max-candidates 2 --step-seconds 1800
-```
+- `GET /api/operation/weather/sites`：查看 3 城市 2023–2025 缓存年份。
+- `POST /api/operation/weather/import`：导入含 `timestamp,temp_c,rh_percent,pressure_hpa,solar_w_m2` 的用户 CSV。
+- `POST /api/operation/thermal/run`：按城市/年份或导入天气运行单房间热湿模型；可传 `equipment_quote` 覆盖采购、安装、维护参考值。
+- `GET /api/operation/equipment`：查看型号来源和限制。
 
-## 产品边界
+完整数据哈希和范围说明见 `protocol/weather_manifest.json`、`protocol/first_stage_model.md`、`results/regional_product_v2/`。第二阶段只保留 `SiteContext`、`WeatherContext`、`LoadSeries`、`EquipmentProfile` 和现金流接口，本轮没有生成光伏或风电结果。
 
-`schemas.py` 的 `TaskSpec`、`PlanSpec`、`SimulationResult` 和 `DecisionReport` 是前后端共享合同。业务营业时段与模型占用/内部得热分开保存；缺少模拟日期不会静默猜测。`search.py` 只使用预注册的候选网格，最多 36 个方案，按可行性优先、再按目标值排序，并保留全部方案和原因。价格、功率和温度全部由程序从模型输出计算。
+三个可复现演示可运行 `python scripts/first_stage_demo.py`，输出地区/年份比较、受控湿度目标变化和报价/批量房间场景到 `results/regional_product_v2/three_demos.json`。
 
-`agent.py` 是一个真实的本地模型工具反馈循环，允许工具为 `get_case_context`、`validate_task`、`evaluate_plan`、`search_plans`、`get_violation_details`、`compare_results`、`prepare_report`，最多 8 轮。模型不能直接写数值结论；模型不可用、输出截断或工具调用不合规时明确失败，不伪装成表单成功。
+## 证据边界
 
-## 实验与证据
+天气是 Open-Meteo Historical Weather API / ERA5 城市级再分析，按 CC BY 4.0 归因，不是楼宇微气候实测。热湿模型是可审计的集总参考模型；PsychroLib 2.5.0 以 MIT 许可证随项目分发。三条设备记录是公开网页/能效标签的额定点，SHR、报价和完整部分负荷曲线缺失时会在结果中保持待补或参考情景。`results/regional_product_v2/summary.json` 的 27 条组合用于复现地区、年份与型号变化，不能写成实测精度、节能收益或采购承诺。
 
-`protocol/experiment_freeze.json` 预先冻结开发日期、6 个时间留出日期块、方案网格、比较组和评价分母。A0/A1/A2 比较物理回放；B0/B1/B2 比较结构化输入、单轮模型和完整工具反馈；C2 是去掉新增反馈机制的必要消融。旧风阀 56 个基础工况与 112 条扰动记录仍只作历史回归，不作为本轮新结果。
-
-`bestest_air` 是公开模型仿真，不是实际运营楼宇。另有 `external_physical.py` 对 OEDI/LBNL 的 `MZVAV-2-1.csv` 物理实验子集做了真实下载、哈希、单位和日期块核验，并在工作台显示输入适用性。该实测子集没有区温反馈、能耗计量或实际执行器位置，因此能智核会拒绝把它转成反事实费用/能耗分数；这条拒绝本身作为数据准入证据保留。只有在本地实跑并保存逐例 JSON 后，才能在申报中写入对应数值；无真实参与者时不写用户提效；无优势时保留无增益结果。
+旧轮次诊断源码、结果和发布包保持原状；本分支只在 `operation_planning/` 增加独立产品链。

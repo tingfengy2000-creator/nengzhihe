@@ -1,0 +1,200 @@
+[
+  {
+    "file": "beijing_2023.json",
+    "sha256": "df8cdd779cad952506e5d57ccf3358ef4fb8ef857c82f432c8959bc2e26ca157",
+    "bytes": 408147,
+    "year": 2023,
+    "site": "beijing",
+    "source": "Open-Meteo Historical Weather API",
+    "model": "ERA5",
+    "variables": [
+      "time",
+      "temperature_2m",
+      "relative_humidity_2m",
+      "surface_pressure",
+      "shortwave_radiation",
+      "wind_speed_10m",
+      "wind_direction_10m"
+    ],
+    "timezone": "Asia/Shanghai",
+    "latitude": 40.0,
+    "longitude": 116.5,
+    "note": "城市级再分析参考，不是楼宇微气候实测；shortwave_radiation为过去一小时平均值"
+  },
+  {
+    "file": "beijing_2024.json",
+    "sha256": "967ed7bb885c2650757de92046e4eb03a2f58bd7074944506308d1cc557ca8d4",
+    "bytes": 408383,
+    "year": 2024,
+    "site": "beijing",
+    "source": "Open-Meteo Historical Weather API",
+    "model": "ERA5",
+    "variables": [
+      "time",
+      "temperature_2m",
+      "relative_humidity_2m",
+      "surface_pressure",
+      "shortwave_radiation",
+      "wind_speed_10m",
+      "wind_direction_10m"
+    ],
+    "timezone": "Asia/Shanghai",
+    "latitude": 40.0,
+    "longitude": 116.5,
+    "note": "城市级再分析参考，不是楼宇微气候实测；shortwave_radiation为过去一小时平均值"
+  },
+  {
+    "file": "beijing_2025.json",
+    "sha256": "e1ec2b1fcfc7718f4b8a5a9967fde87bf69fc74a11f66f17c1be3c27381fcbad",
+    "bytes": 407229,
+    "year": 2025,
+    "site": "beijing",
+    "source": "Open-Meteo Historical Weather API",
+    "model": "ERA5",
+    "variables": [
+      "time",
+      "temperature_2m",
+      "relative_humidity_2m",
+      "surface_pressure",
+      "shortwave_radiation",
+      "wind_speed_10m",
+      "wind_direction_10m"
+    ],
+    "timezone": "Asia/Shanghai",
+    "latitude": 40.0,
+    "longitude": 116.5,
+    "note": "城市级再分析参考，不是楼宇微气候实测；shortwave_radiation为过去一小时平均值"
+  },
+  {
+    "file": "guangzhou_2023.json",
+    "sha256": "ef3d7257de76334d7a3bd75627eed7b88aa06803bc68697686617a708aaf8e92",
+    "bytes": 408688,
+    "year": 2023,
+    "site": "guangzhou",
+    "source": "Open-Meteo Historical Weather API",
+    "model": "ERA5",
+    "variables": [
+      "time",
+      "temperature_2m",
+      "relative_humidity_2m",
+      "surface_pressure",
+      "shortwave_radiation",
+      "wind_speed_10m",
+      "wind_direction_10m"
+    ],
+    "timezone": "Asia/Shanghai",
+    "latitude": 23.25,
+    "longitude": 113.25,
+    "note": "城市级再分析参考，不是楼宇微气候实测；shortwave_radiation为过去一小时平均值"
+  },
+  {
+    "file": "guangzhou_2024.json",
+    "sha256": "5c1744f84ec57c9f71a8441dd821052a16553254d93a792aad4679bd60d6b6c9",
+    "bytes": 410435,
+    "year": 2024,
+    "site": "guangzhou",
+    "source": "Open-Meteo Historical Weather API",
+    "model": "ERA5",
+    "variables": [
+      "time",
+      "temperature_2m",
+      "relative_humidity_2m",
+      "surface_pressure",
+      "shortwave_radiation",
+      "wind_speed_10m",
+      "wind_direction_10m"
+    ],
+    "timezone": "Asia/Shanghai",
+    "latitude": 23.25,
+    "longitude": 113.25,
+    "note": "城市级再分析参考，不是楼宇微气候实测；shortwave_radiation为过去一小时平均值"
+  },
+  {
+    "file": "guangzhou_2025.json",
+    "sha256": "ba319e03dfda90481ba1e6e06650645cf224a3c469f8b0023585bcfdd3c50543",
+    "bytes": 408721,
+    "year": 2025,
+    "site": "guangzhou",
+    "source": "Open-Meteo Historical Weather API",
+    "model": "ERA5",
+    "variables": [
+      "time",
+      "temperature_2m",
+      "relative_humidity_2m",
+      "surface_pressure",
+      "shortwave_radiation",
+      "wind_speed_10m",
+      "wind_direction_10m"
+    ],
+    "timezone": "Asia/Shanghai",
+    "latitude": 23.25,
+    "longitude": 113.25,
+    "note": "城市级再分析参考，不是楼宇微气候实测；shortwave_radiation为过去一小时平均值"
+  },
+  {
+    "file": "harbin_2023.json",
+    "sha256": "68f426fb512a2f28c56ae8e971ee7c8a6464491eaff315f9c10b206db7b51e3c",
+    "bytes": 411345,
+    "year": 2023,
+    "site": "harbin",
+    "source": "Open-Meteo Historical Weather API",
+    "model": "ERA5",
+    "variables": [
+      "time",
+      "temperature_2m",
+      "relative_humidity_2m",
+      "surface_pressure",
+      "shortwave_radiation",
+      "wind_speed_10m",
+      "wind_direction_10m"
+    ],
+    "timezone": "Asia/Shanghai",
+    "latitude": 45.75,
+    "longitude": 126.5,
+    "note": "城市级再分析参考，不是楼宇微气候实测；shortwave_radiation为过去一小时平均值"
+  },
+  {
+    "file": "harbin_2024.json",
+    "sha256": "9c12e9245063aff0e657f82b6729bf2f6087f92850e5623d64e57926715d4f6d",
+    "bytes": 412566,
+    "year": 2024,
+    "site": "harbin",
+    "source": "Open-Meteo Historical Weather API",
+    "model": "ERA5",
+    "variables": [
+      "time",
+      "temperature_2m",
+      "relative_humidity_2m",
+      "surface_pressure",
+      "shortwave_radiation",
+      "wind_speed_10m",
+      "wind_direction_10m"
+    ],
+    "timezone": "Asia/Shanghai",
+    "latitude": 45.75,
+    "longitude": 126.5,
+    "note": "城市级再分析参考，不是楼宇微气候实测；shortwave_radiation为过去一小时平均值"
+  },
+  {
+    "file": "harbin_2025.json",
+    "sha256": "9d1899157794febd6d9b23f52353d9233aa523085e711f54534a59b9b3c341f4",
+    "bytes": 410705,
+    "year": 2025,
+    "site": "harbin",
+    "source": "Open-Meteo Historical Weather API",
+    "model": "ERA5",
+    "variables": [
+      "time",
+      "temperature_2m",
+      "relative_humidity_2m",
+      "surface_pressure",
+      "shortwave_radiation",
+      "wind_speed_10m",
+      "wind_direction_10m"
+    ],
+    "timezone": "Asia/Shanghai",
+    "latitude": 45.75,
+    "longitude": 126.5,
+    "note": "城市级再分析参考，不是楼宇微气候实测；shortwave_radiation为过去一小时平均值"
+  }
+]

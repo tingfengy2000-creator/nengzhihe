@@ -19,10 +19,11 @@ import urllib.request
 from .boptest_adapter import LocalBestestAirFMUAdapter
 from .schemas import PlanSegment, PlanSpec, TaskSpec
 from .search import PlanEvaluator
+from .tariffs import profile_public_dict, registry, profile
 
 
 CONFIG_PATH = Path(__file__).resolve().parents[1] / "runtime" / "local_model_config.json"
-TOOLS = ["get_case_context", "validate_task", "evaluate_plan", "search_plans", "get_violation_details", "compare_results", "prepare_report"]
+TOOLS = ["get_case_context", "validate_task", "evaluate_plan", "search_plans", "get_violation_details", "compare_results", "get_tariff_context", "validate_tariff", "reprice_results", "prepare_report"]
 
 
 class OperationPlanningAgent:
@@ -80,6 +81,34 @@ class OperationPlanningAgent:
     def _tool(self, name: str, args: Dict[str, Any], state: Dict[str, Any]) -> Dict[str, Any]:
         if name == "get_case_context":
             return {"provenance": self.adapter.provenance(), "measurements": self.adapter.get_measurements(), "inputs": self.adapter.get_inputs(), "forecast": self.adapter.get_forecast_points()}
+        if name == "get_tariff_context":
+            return registry()
+        if name == "validate_tariff":
+            tariff_id = str(args.get("tariff_id", state["task"].get("tariff_id", "boptest_dynamic")))
+            if tariff_id.startswith("boptest_"):
+                return {"valid": True, "tariff_id": tariff_id, "mode": "BOPTEST USD price file"}
+            try:
+                selected = profile(tariff_id, args.get("custom_tariff"))
+                if not args.get("calendar_date") and not state["task"].get("tariff_calendar_date"):
+                    return {"valid": False, "errors": ["地区电价必须明确计费日历日期"]}
+                return {"valid": True, "tariff": profile_public_dict(selected), "message": "电价档案可用于当前日期核验"}
+            except Exception as exc:
+                return {"valid": False, "errors": [str(exc)]}
+        if name == "reprice_results":
+            # Reprice uses the physical cache through the same evaluator; it
+            # does not invent a new trajectory when only the tariff changes.
+            tariff_id = str(args.get("tariff_id", state["task"].get("tariff_id", "boptest_dynamic")))
+            task_data = dict(state["task"]); task_data["tariff_id"] = tariff_id
+            if args.get("calendar_date"): task_data["tariff_calendar_date"] = args["calendar_date"]
+            task = TaskSpec(**task_data)
+            if not state.get("report"): return {"error": "请先 search_plans"}
+            changed = []
+            for item in state["report"].get("candidates", []):
+                if item.get("plan"):
+                    result = self.evaluator.evaluate(task, PlanSpec(**{**item["plan"], "segments": [PlanSegment(**s) for s in item["plan"].get("segments", [])]}))
+                    changed.append({"plan_id": result.plan_id, "metrics": result.custom_metrics, "result_id": result.result_id})
+            state["task"] = task.to_dict()
+            return {"reused_physical_trajectory": True, "tariff_id": tariff_id, "results": changed}
         if name == "validate_task":
             task = dict(state["task"])
             prior_conflict = state.get("constraint_conflict")
