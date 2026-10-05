@@ -52,7 +52,7 @@
           ],
           "numeric_source": "request parser plus model arguments; no recommendation computed"
         },
-        "latency_ms": 451.23,
+        "latency_ms": 267.92,
         "model": "local_configured_model"
       },
       {
@@ -71,7 +71,7 @@
             "allow_export": false
           }
         },
-        "latency_ms": 248.82,
+        "latency_ms": 221.3,
         "model": "local_configured_model"
       },
       {
@@ -96,7 +96,7 @@
             "performance_source": "rated point with explicit temperature derate; no complete part-load map"
           }
         },
-        "latency_ms": 336.17,
+        "latency_ms": 309.75,
         "model": "local_configured_model"
       },
       {
@@ -109,7 +109,7 @@
           "hash": "56632e1b83db122499363a93d75f2874296cfcfc3c040dc8140f5467ea16887b",
           "aligned_records": 8784
         },
-        "latency_ms": 199.98,
+        "latency_ms": 184.15,
         "model": "local_configured_model"
       },
       {
@@ -131,7 +131,7 @@
             "预算容量上限按已填单价估算=2.432kWp"
           ]
         },
-        "latency_ms": 216.54,
+        "latency_ms": 237.06,
         "model": "local_configured_model"
       },
       {
@@ -148,7 +148,7 @@
             "1.0": 1106.99335504488
           }
         },
-        "latency_ms": 683.06,
+        "latency_ms": 680.65,
         "model": "local_configured_model"
       },
       {
@@ -171,7 +171,7 @@
             "1.0": 631.6760310095967
           }
         },
-        "latency_ms": 900.29,
+        "latency_ms": 884.58,
         "model": "local_configured_model"
       },
       {
@@ -192,7 +192,7 @@
           "candidate_count": 2,
           "numeric_source": "run_pv_planning deterministic tool"
         },
-        "latency_ms": 5212.61,
+        "latency_ms": 5206.54,
         "model": "local_configured_model"
       },
       {
@@ -212,7 +212,7 @@
             "service_qualification": "当前空调负荷存在服务缺口；该推荐不能称为同等服务水平下的最优投资方案。"
           }
         },
-        "latency_ms": 282.35,
+        "latency_ms": 249.9,
         "model": "local_configured_model"
       }
     ]
@@ -303,7 +303,7 @@
           ],
           "numeric_source": "request parser plus model arguments; no recommendation computed"
         },
-        "latency_ms": 799.7,
+        "latency_ms": 809.02,
         "model": "local_configured_model"
       },
       {
@@ -343,7 +343,7 @@
             "allow_export": false
           }
         },
-        "latency_ms": 757.6,
+        "latency_ms": 735.97,
         "model": "local_configured_model"
       },
       {
@@ -368,7 +368,7 @@
             "performance_source": "rated point with explicit temperature derate; no complete part-load map"
           }
         },
-        "latency_ms": 282.4,
+        "latency_ms": 275.58,
         "model": "local_configured_model"
       },
       {
@@ -381,7 +381,7 @@
           "hash": "56632e1b83db122499363a93d75f2874296cfcfc3c040dc8140f5467ea16887b",
           "aligned_records": 8784
         },
-        "latency_ms": 134.38,
+        "latency_ms": 130.98,
         "model": "local_configured_model"
       },
       {
@@ -414,7 +414,7 @@
             "预算容量上限按已填单价估算=2.308kWp"
           ]
         },
-        "latency_ms": 434.04,
+        "latency_ms": 449.93,
         "model": "local_configured_model"
       },
       {
@@ -442,7 +442,7 @@
             "1.0": 1106.99335504488
           }
         },
-        "latency_ms": 859.45,
+        "latency_ms": 865.22,
         "model": "local_configured_model"
       },
       {
@@ -476,7 +476,7 @@
             "1.0": 754.9840476717428
           }
         },
-        "latency_ms": 1122.28,
+        "latency_ms": 1113.7,
         "model": "local_configured_model"
       },
       {
@@ -508,7 +508,7 @@
           "candidate_count": 2,
           "numeric_source": "run_pv_planning deterministic tool"
         },
-        "latency_ms": 5521.88,
+        "latency_ms": 5453.75,
         "model": "local_configured_model"
       },
       {
@@ -539,7 +539,7 @@
             "service_qualification": "当前空调负荷存在服务缺口；该推荐不能称为同等服务水平下的最优投资方案。"
           }
         },
-        "latency_ms": 514.47,
+        "latency_ms": 520.2,
         "model": "local_configured_model"
       }
     ]
@@ -587,7 +587,7 @@
           ],
           "numeric_source": "request parser plus model arguments; no recommendation computed"
         },
-        "latency_ms": 286.84,
+        "latency_ms": 272.26,
         "model": "local_configured_model"
       },
       {
@@ -599,7 +599,7 @@
           "status": "needs_clarification",
           "question": "已开启外送但缺少外送电价；请选择不计经济收益或提供价格"
         },
-        "latency_ms": 171.04,
+        "latency_ms": 160.49,
         "model": "local_configured_model"
       }
     ]

@@ -1,9 +1,10 @@
 {
   "lifecycle_zero_kwp": {
     "before_total_import_cost_cny": 8060.746751414448,
-    "after_total_import_cost_cny": 8258.473835583662,
+    "after_total_import_cost_cny": 8243.780182079507,
     "expected_total_import_cost_cny": 8243.780182079507,
-    "note": "0kWp固定负荷每年重新匹配；NPV为负的累计购电现金流"
+    "full_chain_normalized_scenario_cost_cny": 8258.473835583662,
+    "note": "精确回归采用用户指定的固定负荷 1249.05760334538 kWh/年；全年归一化情景的负荷另行报告，不混作该定义测试"
   },
   "azimuth_mapping": {
     "south_0": 180.0,
