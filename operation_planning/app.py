@@ -25,7 +25,7 @@ from .weather import available_sites, load_weather, parse_user_csv
 from .weather import load_pv_weather
 from .thermal_model import RoomSpec, simulate_room
 from .lifecycle import life_cycle_cost
-from .pv import PVScenario, PVQuote, run_pv_planning
+from .pv import PVScenario, PVQuote, run_pv_planning, scenario_from_dict
 from .pv_agent import PVPlanningAgent
 
 
@@ -187,21 +187,27 @@ class Handler(BaseHTTPRequestHandler):
             try:
                 payload = self._read_json()
                 site_id = str(payload.get("site_id", "guangzhou")); year = int(payload.get("year", 2024))
-                room_data = payload.get("room") or {}
-                room = RoomSpec(**{k: v for k, v in room_data.items() if k in RoomSpec.__dataclass_fields__})
-                load_weather_data = payload.get("weather") or load_weather(site_id, year)
-                pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year)
-                load_result = simulate_room(load_weather_data, room)
-                raw = payload.get("pv") or {}
-                quote_raw = raw.get("quote") or {}
-                quote = PVQuote(**{k: v for k, v in quote_raw.items() if k in PVQuote.__dataclass_fields__})
-                scenario_values = {k: v for k, v in raw.items() if k in PVScenario.__dataclass_fields__ and k != "quote"}
-                scenario_values.update(site_id=site_id, year=year, quote=quote)
-                scenario = PVScenario(**scenario_values)
-                report = run_pv_planning(load_result, pv_weather_data, scenario)
                 if bool(payload.get("use_agent", False)):
-                    report["agent"] = PVPlanningAgent().run(str(payload.get("request", "按现有空调负荷比较光伏容量")), report)
+                    # Agent mode starts from the task only.  It must first
+                    # interpret and validate the requested change; no final
+                    # report is computed before the model invokes tools.
+                    task = {"site_id": site_id, "year": year, "room": payload.get("room") or {}, "pv": payload.get("pv") or {}, "weather": payload.get("weather"), "pv_weather": payload.get("pv_weather")}
+                    agent_output = PVPlanningAgent().run(str(payload.get("request", "按现有空调负荷比较光伏容量")), task)
+                    if agent_output.get("status") != "success":
+                        return self._send(HTTPStatus.UNPROCESSABLE_ENTITY, {"status": agent_output.get("status", "failed"), "agent": agent_output, "error": agent_output.get("error") or agent_output.get("question", "Agent未完成任务")})
+                    report = agent_output.get("report") or {}
+                    # Keep the execution trace in the report without placing
+                    # the report object inside itself (which is not JSON
+                    # serializable and previously caused a circular result).
+                    report["agent"] = {k: v for k, v in agent_output.items() if k != "report"}
                 else:
+                    room_data = payload.get("room") or {}
+                    room = RoomSpec(**{k: v for k, v in room_data.items() if k in RoomSpec.__dataclass_fields__})
+                    load_weather_data = payload.get("weather") or load_weather(site_id, year)
+                    pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year)
+                    load_result = simulate_room(load_weather_data, room)
+                    scenario = scenario_from_dict(payload.get("pv") or {}, site_id=site_id, year=year)
+                    report = run_pv_planning(load_result, pv_weather_data, scenario)
                     report["agent"] = {"requested": False, "status": "disabled", "mode": "deterministic_tools", "note": "本接口的数值全部由Python工具计算；可按需启用本地模型工具协同。"}
                 return self._send(HTTPStatus.OK, {"status": "success", "report": report})
             except Exception as exc:

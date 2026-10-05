@@ -54,7 +54,7 @@
         <div class="field"><label for="pvUsable">可用面积比例</label><input id="pvUsable" type="number" value="0.8" min="0.05" max="1" step="0.05" /></div>
         <div class="field"><label for="pvTilt">组件倾角 °</label><input id="pvTilt" type="number" value="23" min="0" max="90" step="1" /></div>
         <div class="field"><label for="pvAzimuth">朝向</label><select id="pvAzimuth"><option value="0">南（Open-Meteo 0°）</option><option value="-90">东（-90°）</option><option value="90">西（90°）</option><option value="180">北（180°）</option></select></div>
-        <div class="field"><label for="pvBudget">预算 CNY（可空）</label><input id="pvBudget" type="number" placeholder="不限制" min="0" step="100" /></div>
+        <div class="field"><label for="pvBudget">预算 CNY</label><input id="pvBudget" type="number" value="9000" min="0" step="100" /></div>
         <div class="field"><label for="pvPrice">购电价 CNY/kWh</label><input id="pvPrice" type="number" value="0.66" min="0" step="0.01" /></div>
         <div class="field"><label for="pvStudy">比较年限</label><select id="pvStudy"><option value="5">5年</option><option value="10" selected>10年</option><option value="15">15年</option></select></div>
         <div class="field"><label for="pvStep">候选容量步长 kWp</label><select id="pvStep"><option value="0.5">0.5</option><option value="1" selected>1.0</option><option value="2">2.0</option></select></div>
@@ -67,7 +67,9 @@
         <div class="field"><label for="pvMaintenance">维护 CNY/kWp·年</label><input id="pvMaintenance" type="number" value="30" min="0" step="5" /></div>
         <div class="field"><label for="pvExport">余电处理</label><select id="pvExport"><option value="false" selected>不允许外送，余电弃用</option><option value="true">允许外送（需填写外送价）</option></select></div>
         <div class="field"><label for="pvExportPrice">外送价 CNY/kWh（可空）</label><input id="pvExportPrice" type="number" placeholder="不填则不计算收入" min="0" step="0.01" /></div>
-        <div class="field"><label for="pvUseAgent">本地模型工具协同</label><select id="pvUseAgent"><option value="false" selected>关闭：直接确定性计算</option><option value="true">启用：模型只选择工具</option></select></div>
+        <div class="field"><label for="pvTariff">购电档案</label><select id="pvTariff"><option value="user_constant" selected>用户常数情景（当前 0.66）</option><option value="fujian_industrial_lt1kv_202607">福建官方 2026-07（需匹配日期）</option><option value="guangdong_north_industrial_lt1kv_202607">广东粤北官方 2026-07（需匹配日期）</option></select></div>
+        <div class="field"><label for="pvUseAgent">本地模型工具协同</label><select id="pvUseAgent"><option value="false" selected>关闭：直接确定性计算</option><option value="true">启用：真实任务工具序列</option></select></div>
+        <div class="field full"><label for="pvRequest">Agent任务修改（启用协同时先解释并执行）</label><textarea id="pvRequest" rows="2">预算改为6000元，其他条件不变</textarea><span class="helper">模型只负责把修改写入任务并选择工具；数值由程序重算。</span></div>
       </div>
       <details class="details"><summary>同一空调负荷条件</summary><div class="form-grid" style="margin-top:14px"><div class="field"><label for="pvArea">房间面积 m²</label><input id="pvArea" type="number" value="35" min="5" /></div><div class="field"><label for="pvPeople">工作日人数</label><input id="pvPeople" type="number" value="4" min="0" /></div><div class="field"><label for="pvStart">使用开始</label><input id="pvStart" type="number" value="8" min="0" max="23" /></div><div class="field"><label for="pvEnd">使用结束</label><input id="pvEnd" type="number" value="18" min="1" max="24" /></div><div class="field"><label for="pvTemp">室内温度目标 °C</label><input id="pvTemp" type="number" value="26" step="0.5" /></div><div class="field"><label for="pvRh">室内湿度目标 %RH</label><input id="pvRh" type="number" value="60" step="1" /></div></div></details>
       <div class="actions"><button class="primary" id="runPV">运行光伏联算</button><span class="helper" id="pvStatus">使用同一第一阶段空调情景，等待输入。</span></div><div class="notice warn" style="margin-top:18px">屋顶面积是独立输入；房间面积和同类房间数量不会复制屋顶资源。设备、报价、可用面积和并网条件仍是待现场确认的情景。</div></div>

@@ -1,0 +1,122 @@
+{
+  "scope": "fixed 2 kWp time-year sensitivity; not independent building validation",
+  "rows": [
+    {
+      "site": "guangzhou",
+      "year": 2023,
+      "weather_hash": "ba252db3b0ce5948af606d3b0bc3c0ed635b4c4aefde99162c02cd8821382254",
+      "load_kwh": 1219.857399968989,
+      "pv_2kwp_kwh": 2190.48825283078,
+      "self_use_kwh": 865.8986329905755,
+      "grid_import_kwh": 353.9587669784136,
+      "curtailment_kwh": 1324.5896198402045,
+      "load_coverage_rate": 0.7098359472284123,
+      "economics_status": "complete",
+      "npv_cny": -10048.736615813237
+    },
+    {
+      "site": "guangzhou",
+      "year": 2024,
+      "weather_hash": "7a2854ff581fdeb15908726dd5b10a288adcc5ae072ab35cf6d316ef6a5cd356",
+      "load_kwh": 1249.05760334538,
+      "pv_2kwp_kwh": 2173.27913756574,
+      "self_use_kwh": 888.2104266135146,
+      "grid_import_kwh": 360.8471767318654,
+      "curtailment_kwh": 1285.0687109522255,
+      "load_coverage_rate": 0.7111044552585887,
+      "economics_status": "complete",
+      "npv_cny": -10090.40751939978
+    },
+    {
+      "site": "guangzhou",
+      "year": 2025,
+      "weather_hash": "3a411d0277dc07d206aff445ead70e0b8f50348884ae05a95b2c13949fe77c25",
+      "load_kwh": 1216.2525922485818,
+      "pv_2kwp_kwh": 2326.36780397537,
+      "self_use_kwh": 849.9970599233327,
+      "grid_import_kwh": 366.25553232524913,
+      "curtailment_kwh": 1476.3707440520373,
+      "load_coverage_rate": 0.6988655689949045,
+      "economics_status": "complete",
+      "npv_cny": -10126.787588289817
+    },
+    {
+      "site": "beijing",
+      "year": 2023,
+      "weather_hash": "87f01a7d6a3663e53cf3dc02248dd4a23aa762798e48b0c2fe446eb9b2e34746",
+      "load_kwh": 646.5564194267417,
+      "pv_2kwp_kwh": 2821.38943074657,
+      "self_use_kwh": 521.4575300965829,
+      "grid_import_kwh": 125.09888933015884,
+      "curtailment_kwh": 2299.9319006499873,
+      "load_coverage_rate": 0.8065151229322328,
+      "economics_status": "complete",
+      "npv_cny": -8483.52927344859
+    },
+    {
+      "site": "beijing",
+      "year": 2024,
+      "weather_hash": "c493a6e5544017c6f14f3b12bf5078cf9f7a236c9249beb3c8842bce2940ae84",
+      "load_kwh": 625.7830718341864,
+      "pv_2kwp_kwh": 2738.14178823877,
+      "self_use_kwh": 516.9678301352179,
+      "grid_import_kwh": 108.81524169896858,
+      "curtailment_kwh": 2221.173958103552,
+      "load_coverage_rate": 0.826113478301629,
+      "economics_status": "complete",
+      "npv_cny": -8375.345604487104
+    },
+    {
+      "site": "beijing",
+      "year": 2025,
+      "weather_hash": "be511dcb23fcc03f28e58e6874676d9cfa76fb8b6efb2f1d32a65ecfc8db9ea8",
+      "load_kwh": 626.0858351012471,
+      "pv_2kwp_kwh": 2792.1815741457,
+      "self_use_kwh": 499.11374616642183,
+      "grid_import_kwh": 126.97208893482525,
+      "curtailment_kwh": 2293.0678279792783,
+      "load_coverage_rate": 0.7971969946991501,
+      "economics_status": "complete",
+      "npv_cny": -8498.365525037723
+    },
+    {
+      "site": "harbin",
+      "year": 2023,
+      "weather_hash": "ae44a7969016cc8d3bf941f6292f9475273a71a42b70cd9df9186978a994e4e0",
+      "load_kwh": 277.94495750784364,
+      "pv_2kwp_kwh": 2739.1372355099,
+      "self_use_kwh": 239.25516906342872,
+      "grid_import_kwh": 38.689788444414894,
+      "curtailment_kwh": 2499.882066446471,
+      "load_coverage_rate": 0.8608005383824131,
+      "economics_status": "complete",
+      "npv_cny": -7896.169538807722
+    },
+    {
+      "site": "harbin",
+      "year": 2024,
+      "weather_hash": "87b645bc66fbdbc122473be9d5b9907cb5c7ef1369aa3a3c34ac161b264b2223",
+      "load_kwh": 267.863921866686,
+      "pv_2kwp_kwh": 2717.92602774532,
+      "self_use_kwh": 228.948037267296,
+      "grid_import_kwh": 38.91588459938996,
+      "curtailment_kwh": 2488.977990478024,
+      "load_coverage_rate": 0.8547177076771162,
+      "economics_status": "complete",
+      "npv_cny": -7897.637525263683
+    },
+    {
+      "site": "harbin",
+      "year": 2025,
+      "weather_hash": "4ab392a5bc1a0e6ba17454e82588c56c54dbcaf4a980423fc2ddfb5ed67356c9",
+      "load_kwh": 325.96252059869045,
+      "pv_2kwp_kwh": 2711.22308467082,
+      "self_use_kwh": 293.73690635176297,
+      "grid_import_kwh": 32.22561424692747,
+      "curtailment_kwh": 2417.486178319057,
+      "load_coverage_rate": 0.9011370565311031,
+      "economics_status": "complete",
+      "npv_cny": -7853.563944468851
+    }
+  ]
+}

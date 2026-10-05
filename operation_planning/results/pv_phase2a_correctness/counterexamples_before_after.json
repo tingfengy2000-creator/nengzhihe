@@ -1,0 +1,16 @@
+{
+  "lifecycle_zero_kwp": {
+    "before_total_import_cost_cny": 8060.746751414448,
+    "after_total_import_cost_cny": 8243.780182079508,
+    "expected_total_import_cost_cny": 8243.780182079507,
+    "note": "0kWp固定负荷每年重新匹配；NPV为负的累计购电现金流"
+  },
+  "azimuth_mapping": {
+    "south_0": 180.0,
+    "east_minus90": 90.0,
+    "west_plus90": 270.0,
+    "north_180": 0.0
+  },
+  "interval_validation": "real timestamp differences checked against declared intervals; NaN and negative values rejected",
+  "quote_and_export": "0kWp has no PV quote costs; nonzero missing quotes and missing export price remain incomplete"
+}

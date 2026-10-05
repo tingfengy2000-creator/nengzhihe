@@ -98,7 +98,13 @@ def simulate_room(weather: Dict[str, Any], room: RoomSpec | None = None) -> Dict
     for i, ts in enumerate(times):
         if any(h[v][i] is None for v in required):
             raise ValueError(f"天气变量在 {ts} 缺测；长缺口不得静默补零")
-        tout = float(h["temperature_2m"][i]); rhout = float(h["relative_humidity_2m"][i]); pressure = float(h["surface_pressure"][i]) * 100.0; solar = max(0.0, float(h["shortwave_radiation"][i]))
+        values = [float(h[v][i]) for v in required]
+        if any(not math.isfinite(value) for value in values):
+            raise ValueError(f"天气变量在 {ts} 含 NaN 或非有限值；不得静默补零")
+        if values[1] < 0 or values[1] > 100 or values[2] <= 0 or values[3] < 0:
+            raise ValueError(f"天气变量在 {ts} 超出物理输入范围")
+        tout, rhout, pressure_hpa, solar = values
+        pressure = pressure_hpa * 100.0
         dt_seconds = float(intervals[i]); scheduled = _active(ts, room); people = room.people_count if scheduled else 0
         # This first-stage model is cooling-only.  A scheduled winter hour is
         # retained in the trace, but it cannot be scored as an AC cooling

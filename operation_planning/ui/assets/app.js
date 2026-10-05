@@ -118,9 +118,10 @@
       roof_area_m2: pvNum('#pvRoof'), usable_fraction: pvNum('#pvUsable'), tilt_deg: pvNum('#pvTilt'), azimuth_open_meteo_deg: pvNum('#pvAzimuth'),
       budget_cny: pvNum('#pvBudget'), import_price_cny_per_kwh: pvNum('#pvPrice'), study_years: Number($('#pvStudy').value), candidate_step_kwp: Number($('#pvStep').value),
       requested_capacities_kwp: caps, allow_export: $('#pvExport').value === 'true', export_price_cny_per_kwh: pvNum('#pvExportPrice'),
+      tariff_id: $('#pvTariff').value,
       quote: { module_cny_per_kwp: pvNum('#pvModule'), inverter_cny_per_kwp: pvNum('#pvInverter'), structure_cny_per_kwp: pvNum('#pvStructure'), installation_cny_per_kwp: pvNum('#pvInstall'), grid_connection_cny: pvNum('#pvGrid'), maintenance_cny_per_kwp_year: pvNum('#pvMaintenance') }
     };
-    return { site_id: $('#pvSite').value, year: Number($('#pvYear').value), use_agent: false, pv, room: { area_m2: pvNum('#pvArea'), people_count: pvNum('#pvPeople'), start_hour: pvNum('#pvStart'), end_hour: pvNum('#pvEnd'), cooling_setpoint_c: pvNum('#pvTemp'), rh_setpoint_percent: pvNum('#pvRh') } };
+    return { site_id: $('#pvSite').value, year: Number($('#pvYear').value), request: $('#pvRequest').value.trim(), use_agent: $('#pvUseAgent').value === 'true', pv, room: { area_m2: pvNum('#pvArea'), people_count: pvNum('#pvPeople'), start_hour: pvNum('#pvStart'), end_hour: pvNum('#pvEnd'), cooling_setpoint_c: pvNum('#pvTemp'), rh_setpoint_percent: pvNum('#pvRh') } };
   }
   function renderPVChart(candidate) {
     const chart = $('#pvChart'); chart.replaceChildren(); const h = candidate?.hourly; if (!h || !h.timestamps?.length) { chart.textContent = '没有可画的真实逐时结果。'; return; }
@@ -138,7 +139,7 @@
     const rec = report.recommendation || {}; setText($('#pvRecommendation'), `${rec.status === 'conditional' ? `建议先核对 ${fmt(rec.capacity_kwp,2)} kWp` : '暂不做经济推荐'}：${rec.reason || '—'}`); setText($('#pvBoundary'), `${(report.notes || []).join('；')} ${(report.candidate_constraints || []).join('；')}`);
     renderPVChart(selected);
     const table=$('#pvTable'); table.replaceChildren(); const t=document.createElement('table'), thead=document.createElement('thead'), hr=document.createElement('tr'); ['容量 kWp','交流发电 kWh','自用 kWh','购电 kWh','覆盖率','初始投入','研究期NPV','状态'].forEach(x=>{const th=document.createElement('th');th.textContent=x;hr.append(th);}); thead.append(hr); const tbody=document.createElement('tbody'); list.forEach(c=>{const tr=document.createElement('tr'), ec=c.economics||{}; [fmt(c.capacity_kwp,2),fmt(c.generation_kwh),fmt(c.self_use_kwh),fmt(c.grid_import_kwh),c.load_coverage_rate==null?'不适用':`${fmt(c.load_coverage_rate*100,1)}%`,ec.capex_cny==null?'待报价':`${fmt(ec.capex_cny)} CNY`,ec.npv_cny==null?'待报价':`${fmt(ec.npv_cny)} CNY`,ec.status==='complete'?'可比较':'报价不完整'].forEach((v,i)=>{const td=document.createElement('td');td.textContent=v;if(i===7&&ec.status==='complete')td.className='ok';tr.append(td);}); tbody.append(tr);}); t.append(thead,tbody); table.append(t);
-    $('#pvRaw').textContent = JSON.stringify({load_context:report.load_context, weather_provenance:report.weather_provenance, baseline:report.baseline, selected, recommendation:report.recommendation, notes:report.notes}, null, 2);
+    $('#pvRaw').textContent = JSON.stringify({load_context:report.load_context, weather_provenance:report.weather_provenance, baseline:report.baseline, selected, recommendation:report.recommendation, agent:report.agent, agent_task:report.agent_task, notes:report.notes}, null, 2);
   }
   $('#runPV').addEventListener('click', () => { const button=$('#runPV'); button.disabled=true; setText($('#pvStatus'),'正在读取同一年度负荷与GHI/DNI/DHI并计算…'); api('/api/operation/pv/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(pvPayload())}).then(data=>{renderPV(data.report);setText($('#pvStatus'),'完成：数字来自光伏工具链，可修改输入后重新计算。');}).catch(e=>setText($('#pvStatus'),`失败：${e.message}`)).finally(()=>{button.disabled=false;}); });  loadTariffs();
 })();
