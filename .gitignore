@@ -84,3 +84,6 @@ Thumbs.db
 /operation_planning/results/runs/*.json
 /operation_planning/data/external/oedi910.zip
 /operation_planning/data/external/oedi910_extract/
+# Certification source PDFs stay local; profile stores URL and SHA-256 for provenance.
+/operation_planning/data/wind_profiles/*.pdf
+/operation_planning/results/phase2b_wind_before_shared_connection_fix/

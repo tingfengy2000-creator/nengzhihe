@@ -1,0 +1,4639 @@
+{
+  "calculation_version": "phase2b-wind-v1",
+  "profile": {
+    "profile_id": "sd6_swcc_11_04",
+    "source_url": "https://smallwindcertification.org/wp-content/uploads/2021/04/SWCC-11-04-Summary-Report-2020.pdf",
+    "source_sha256": "4EB008F8B98D92EF908F34FEF30F328D3C8D0D55A8F728ED13B160F9D61FDEB",
+    "curve_hash": "59c26f2a97a567d6c140b1335b1ec9e7771d2846874c29392ad7597e386b581b"
+  },
+  "fixed_configuration": {
+    "pv_capacity_kwp": 2,
+    "wind_turbine_count": 1,
+    "hub_height_m": 9,
+    "hellman_exponent": 0.14,
+    "budget_cny": 90000,
+    "allow_export": false,
+    "study_years": 10,
+    "tariff": "user_constant 0.66 CNY/kWh"
+  },
+  "scope": "3 cities x 3 cached weather years; same fixed configuration; Guangzhou 2024 full hourly evidence; other groups summary evidence",
+  "groups": [
+    {
+      "site_id": "guangzhou",
+      "year": 2023,
+      "calculation_version": "phase2b-wind-v1",
+      "weather_hash": "f5cd5647f792d9e63811f69ff39fc304b285eef3e796cac752afc81fbd69f624",
+      "profile_id": "sd6_swcc_11_04",
+      "candidates": [
+        {
+          "scenario_id": "S0_grid",
+          "pv_generation_kwh": 0.0,
+          "wind_generation_kwh": 0.0,
+          "self_use_kwh": 0.0,
+          "grid_import_kwh": 1221.9117894646013,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 0.0,
+          "load_coverage_rate": 0.0,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 0.0,
+            "npv_cny": 0.0,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 806.4617810466395,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 806.4617810466395,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 806.4617810466395,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 806.4617810466395,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 806.4617810466395,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 806.4617810466395,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 806.4617810466395,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 806.4617810466395,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 806.4617810466395,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 806.4617810466395,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              }
+            ],
+            "baseline_import_cost_cny": 806.4617810466395,
+            "total_grid_import_cost_cny": 8064.617810466396,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 0.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 0.0,
+            "total_lifecycle_spend_cny": 8064.617810466396,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S1_pv",
+          "pv_generation_kwh": 2229.8791032098084,
+          "wind_generation_kwh": 0.0,
+          "self_use_kwh": 860.524653519875,
+          "grid_import_kwh": 361.3871359447309,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 1369.3544496899328,
+          "load_coverage_rate": 0.704244496975454,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 7400.0,
+            "npv_cny": -2031.578927870889,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 238.5155097235226,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -6892.053728676883,
+                "discounted_cny": -6892.053728676883
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 240.29260517003124,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 506.1691758766083,
+                "discounted_cny": 506.1691758766083
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 242.07827412706706,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 504.3835069195725,
+                "discounted_cny": 504.3835069195725
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 243.8681618544829,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 502.59361919215667,
+                "discounted_cny": 502.59361919215667
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 245.6604767932725,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 500.8013042533671,
+                "discounted_cny": 500.8013042533671
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 247.46426991049367,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 498.99751113614593,
+                "discounted_cny": 498.99751113614593
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 249.29546987464263,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 497.1663111719969,
+                "discounted_cny": 497.1663111719969
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 251.14517156498385,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 495.31660948165563,
+                "discounted_cny": 495.31660948165563
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 253.0028153907822,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 493.45896565585736,
+                "discounted_cny": 493.45896565585736
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 254.87398392800395,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 370.0,
+                "net_cashflow_cny": 861.5877971186355,
+                "discounted_cny": 861.5877971186355
+              }
+            ],
+            "baseline_import_cost_cny": 806.4617810466395,
+            "total_grid_import_cost_cny": 2466.1967383372826,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 600.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 370.0,
+            "total_lifecycle_spend_cny": 10096.196738337283,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S2_wind",
+          "pv_generation_kwh": 0.0,
+          "wind_generation_kwh": 872.7046615246874,
+          "self_use_kwh": 126.86059305238977,
+          "grid_import_kwh": 1095.051196412213,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 745.8440684722974,
+          "load_coverage_rate": 0.10382140032217516,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 82000.0,
+            "npv_cny": -89062.72008585423,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 722.7337896320616,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -83116.27200858542,
+                "discounted_cny": -83116.27200858542
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 722.7337896320616,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1116.272008585422,
+                "discounted_cny": -1116.272008585422
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 722.7337896320616,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1116.272008585422,
+                "discounted_cny": -1116.272008585422
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 722.7337896320616,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1116.272008585422,
+                "discounted_cny": -1116.272008585422
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 722.7337896320616,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1116.272008585422,
+                "discounted_cny": -1116.272008585422
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 722.7337896320616,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1116.272008585422,
+                "discounted_cny": -1116.272008585422
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 722.7337896320616,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1116.272008585422,
+                "discounted_cny": -1116.272008585422
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 722.7337896320616,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1116.272008585422,
+                "discounted_cny": -1116.272008585422
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 722.7337896320616,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1116.272008585422,
+                "discounted_cny": -1116.272008585422
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 722.7337896320616,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 4100.0,
+                "net_cashflow_cny": 2983.7279914145784,
+                "discounted_cny": 2983.7279914145784
+              }
+            ],
+            "baseline_import_cost_cny": 806.4617810466395,
+            "total_grid_import_cost_cny": 7227.337896320616,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 12000.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 4100.0,
+            "total_lifecycle_spend_cny": 97127.33789632062,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S3_pv_wind",
+          "pv_generation_kwh": 2229.8791032098084,
+          "wind_generation_kwh": 872.7046615246874,
+          "self_use_kwh": 921.3711906630768,
+          "grid_import_kwh": 300.54059880152937,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 2181.212574071446,
+          "load_coverage_rate": 0.7540406751184464,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 89400.0,
+            "npv_cny": -91519.44873824954,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 198.3567952090092,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -90051.89501416236,
+                "discounted_cny": -90051.89501416236
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 199.88794823269006,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -653.4261671860505,
+                "discounted_cny": -653.4261671860505
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 201.43531528946795,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -654.9735342428285,
+                "discounted_cny": -654.9735342428285
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 202.99747179591836,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -656.5356907492788,
+                "discounted_cny": -656.5356907492788
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 204.56494800197058,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -658.1031669553311,
+                "discounted_cny": -658.1031669553311
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 206.14502495211445,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -659.6832439054749,
+                "discounted_cny": -659.6832439054749
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 207.74165781778302,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -661.2798767711434,
+                "discounted_cny": -661.2798767711434
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 209.35316038144956,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -662.89137933481,
+                "discounted_cny": -662.89137933481
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 210.97506372653046,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -664.513282679891,
+                "discounted_cny": -664.513282679891
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 212.6091633090138,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 4470.0,
+                "net_cashflow_cny": 3803.852617737626,
+                "discounted_cny": 3803.852617737626
+              }
+            ],
+            "baseline_import_cost_cny": 806.4617810466395,
+            "total_grid_import_cost_cny": 2054.0665487159476,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 12600.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 4470.0,
+            "total_lifecycle_spend_cny": 99584.06654871594,
+            "simple_payback_years": null
+          }
+        }
+      ]
+    },
+    {
+      "site_id": "guangzhou",
+      "year": 2024,
+      "calculation_version": "phase2b-wind-v1",
+      "weather_hash": "56632e1b83db122499363a93d75f2874296cfcfc3c040dc8140f5467ea16887b",
+      "profile_id": "sd6_swcc_11_04",
+      "candidates": [
+        {
+          "scenario_id": "S0_grid",
+          "pv_generation_kwh": 0.0,
+          "wind_generation_kwh": 0.0,
+          "self_use_kwh": 0.0,
+          "grid_import_kwh": 1251.2839144823713,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 0.0,
+          "load_coverage_rate": 0.0,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 0.0,
+            "npv_cny": 0.0,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 825.8473835583661,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 825.8473835583661,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 825.8473835583661,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 825.8473835583661,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 825.8473835583661,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 825.8473835583661,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 825.8473835583661,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 825.8473835583661,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 825.8473835583661,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 825.8473835583661,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              }
+            ],
+            "baseline_import_cost_cny": 825.8473835583661,
+            "total_grid_import_cost_cny": 8258.473835583662,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 0.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 0.0,
+            "total_lifecycle_spend_cny": 8258.473835583662,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S1_pv",
+          "pv_generation_kwh": 2213.986710089667,
+          "wind_generation_kwh": 0.0,
+          "self_use_kwh": 886.2055283780268,
+          "grid_import_kwh": 365.07838610434663,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 1327.78118171164,
+          "load_coverage_rate": 0.7082369701400905,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 7400.0,
+            "npv_cny": -1858.7762883995044,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 240.9517348288688,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -6875.104351270503,
+                "discounted_cny": -6875.104351270503
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 242.64944626190416,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 523.197937296462,
+                "discounted_cny": 523.197937296462
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 244.3617988200372,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 521.485584738329,
+                "discounted_cny": 521.485584738329
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 246.07790189759277,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 519.7694816607734,
+                "discounted_cny": 519.7694816607734
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 247.80036287604304,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 518.0470206823231,
+                "discounted_cny": 518.0470206823231
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 249.53664643948056,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 516.3107371188855,
+                "discounted_cny": 516.3107371188855
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 251.29030921069617,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 514.55707434767,
+                "discounted_cny": 514.55707434767
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 253.0685947515186,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 512.7787888068475,
+                "discounted_cny": 512.7787888068475
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 254.85828594724484,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 510.9890976111212,
+                "discounted_cny": 510.9890976111212
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 256.6550429497798,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 370.0,
+                "net_cashflow_cny": 879.1923406085864,
+                "discounted_cny": 879.1923406085864
+              }
+            ],
+            "baseline_import_cost_cny": 825.8473835583661,
+            "total_grid_import_cost_cny": 2487.250123983166,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 600.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 370.0,
+            "total_lifecycle_spend_cny": 10117.250123983165,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S2_wind",
+          "pv_generation_kwh": 0.0,
+          "wind_generation_kwh": 909.997121689495,
+          "self_use_kwh": 174.55493543655442,
+          "grid_import_kwh": 1076.7289790458174,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 735.4421862529379,
+          "load_coverage_rate": 0.13950066281221554,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 82000.0,
+            "npv_cny": -88747.93742611873,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 710.6411261702402,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -83084.79374261187,
+                "discounted_cny": -83084.79374261187
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 710.6411261702402,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1084.7937426118742,
+                "discounted_cny": -1084.7937426118742
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 710.6411261702402,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1084.7937426118742,
+                "discounted_cny": -1084.7937426118742
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 710.6411261702402,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1084.7937426118742,
+                "discounted_cny": -1084.7937426118742
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 710.6411261702402,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1084.7937426118742,
+                "discounted_cny": -1084.7937426118742
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 710.6411261702402,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1084.7937426118742,
+                "discounted_cny": -1084.7937426118742
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 710.6411261702402,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1084.7937426118742,
+                "discounted_cny": -1084.7937426118742
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 710.6411261702402,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1084.7937426118742,
+                "discounted_cny": -1084.7937426118742
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 710.6411261702402,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1084.7937426118742,
+                "discounted_cny": -1084.7937426118742
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 710.6411261702402,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 4100.0,
+                "net_cashflow_cny": 3015.206257388126,
+                "discounted_cny": 3015.206257388126
+              }
+            ],
+            "baseline_import_cost_cny": 825.8473835583661,
+            "total_grid_import_cost_cny": 7106.411261702402,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 12000.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 4100.0,
+            "total_lifecycle_spend_cny": 97006.41126170241,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S3_pv_wind",
+          "pv_generation_kwh": 2213.986710089667,
+          "wind_generation_kwh": 909.997121689495,
+          "self_use_kwh": 948.4336371444426,
+          "grid_import_kwh": 302.850277337929,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 2175.5501946347254,
+          "load_coverage_rate": 0.757968376454986,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 89400.0,
+            "npv_cny": -91335.6279971397,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 199.88118304303327,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -90034.03379948466,
+                "discounted_cny": -90034.03379948466
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 201.31161275025715,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -635.464229191891,
+                "discounted_cny": -635.464229191891
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 202.7568752451711,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -636.909491686805,
+                "discounted_cny": -636.909491686805
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 204.2042693167037,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -638.3568857583375,
+                "discounted_cny": -638.3568857583375
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 205.6541752326164,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -639.8067916742502,
+                "discounted_cny": -639.8067916742502
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 207.10477182156328,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -641.2573882631972,
+                "discounted_cny": -641.2573882631972
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 208.5654488482039,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -642.7180652898378,
+                "discounted_cny": -642.7180652898378
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 210.04788894293327,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -644.2005053845671,
+                "discounted_cny": -644.2005053845671
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 211.53919242812736,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -645.6918088697612,
+                "discounted_cny": -645.6918088697612
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 213.0364150947778,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 4470.0,
+                "net_cashflow_cny": 3822.8109684635883,
+                "discounted_cny": 3822.8109684635883
+              }
+            ],
+            "baseline_import_cost_cny": 825.8473835583661,
+            "total_grid_import_cost_cny": 2064.1018327233874,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 12600.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 4470.0,
+            "total_lifecycle_spend_cny": 99594.10183272339,
+            "simple_payback_years": null
+          }
+        }
+      ]
+    },
+    {
+      "site_id": "guangzhou",
+      "year": 2025,
+      "calculation_version": "phase2b-wind-v1",
+      "weather_hash": "d9582f34afc4c54eadb3a21bbbbd7ea16652d8e8a431697ab283ab8210af69e3",
+      "profile_id": "sd6_swcc_11_04",
+      "candidates": [
+        {
+          "scenario_id": "S0_grid",
+          "pv_generation_kwh": 0.0,
+          "wind_generation_kwh": 0.0,
+          "self_use_kwh": 0.0,
+          "grid_import_kwh": 1216.930946577923,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 0.0,
+          "load_coverage_rate": 0.0,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 0.0,
+            "npv_cny": 0.0,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 803.1744247414304,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 803.1744247414304,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 803.1744247414304,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 803.1744247414304,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 803.1744247414304,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 803.1744247414304,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 803.1744247414304,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 803.1744247414304,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 803.1744247414304,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 803.1744247414304,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              }
+            ],
+            "baseline_import_cost_cny": 803.1744247414304,
+            "total_grid_import_cost_cny": 8031.744247414304,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 0.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 0.0,
+            "total_lifecycle_spend_cny": 8031.744247414304,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S1_pv",
+          "pv_generation_kwh": 2369.2734204868398,
+          "wind_generation_kwh": 0.0,
+          "self_use_kwh": 847.6178552126704,
+          "grid_import_kwh": 369.3130913652536,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 1521.6555652741667,
+          "load_coverage_rate": 0.6965209140224584,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 7400.0,
+            "npv_cny": -2112.53669492463,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 243.74664030106737,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -6900.572215559637,
+                "discounted_cny": -6900.572215559637
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 245.41163991540353,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 497.76278482602686,
+                "discounted_cny": 497.76278482602686
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 247.08759908037257,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 496.0868256610578,
+                "discounted_cny": 496.0868256610578
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 248.76812566316843,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 494.4062990782619,
+                "discounted_cny": 494.4062990782619
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 250.4712495539002,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 492.7031751875302,
+                "discounted_cny": 492.7031751875302
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 252.20076148607302,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 490.97366325535734,
+                "discounted_cny": 490.97366325535734
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 253.96238641783697,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 489.21203832359333,
+                "discounted_cny": 489.21203832359333
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 255.7461937890041,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 487.42823095242625,
+                "discounted_cny": 487.42823095242625
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 257.5414688566826,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 485.63295588474773,
+                "discounted_cny": 485.63295588474773
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 259.3448772754254,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 370.0,
+                "net_cashflow_cny": 853.8295474660049,
+                "discounted_cny": 853.8295474660049
+              }
+            ],
+            "baseline_import_cost_cny": 803.1744247414304,
+            "total_grid_import_cost_cny": 2514.2809423389344,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 600.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 370.0,
+            "total_lifecycle_spend_cny": 10144.280942338934,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S2_wind",
+          "pv_generation_kwh": 0.0,
+          "wind_generation_kwh": 1048.438767974842,
+          "self_use_kwh": 124.3909611296333,
+          "grid_import_kwh": 1092.539985448289,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 924.0478068452054,
+          "load_coverage_rate": 0.10221694294111557,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 82000.0,
+            "npv_cny": -89079.0196565444,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 721.0763903958732,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -83117.90196565444,
+                "discounted_cny": -83117.90196565444
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 721.0763903958732,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1117.9019656544428,
+                "discounted_cny": -1117.9019656544428
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 721.0763903958732,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1117.9019656544428,
+                "discounted_cny": -1117.9019656544428
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 721.0763903958732,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1117.9019656544428,
+                "discounted_cny": -1117.9019656544428
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 721.0763903958732,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1117.9019656544428,
+                "discounted_cny": -1117.9019656544428
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 721.0763903958732,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1117.9019656544428,
+                "discounted_cny": -1117.9019656544428
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 721.0763903958732,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1117.9019656544428,
+                "discounted_cny": -1117.9019656544428
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 721.0763903958732,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1117.9019656544428,
+                "discounted_cny": -1117.9019656544428
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 721.0763903958732,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1117.9019656544428,
+                "discounted_cny": -1117.9019656544428
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 721.0763903958732,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 4100.0,
+                "net_cashflow_cny": 2982.0980343455576,
+                "discounted_cny": 2982.0980343455576
+              }
+            ],
+            "baseline_import_cost_cny": 803.1744247414304,
+            "total_grid_import_cost_cny": 7210.763903958732,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 12000.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 4100.0,
+            "total_lifecycle_spend_cny": 97110.76390395874,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S3_pv_wind",
+          "pv_generation_kwh": 2369.2734204868398,
+          "wind_generation_kwh": 1048.438767974842,
+          "self_use_kwh": 906.2305373431071,
+          "grid_import_kwh": 310.70040923481713,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 2511.481651118574,
+          "load_coverage_rate": 0.744685259168959,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 89400.0,
+            "npv_cny": -91616.40369647443,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 205.0622700949794,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -90061.88784535354,
+                "discounted_cny": -90061.88784535354
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 206.53074398306987,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -663.3563192416395,
+                "discounted_cny": -663.3563192416395
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 208.00711809779628,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -664.8326933563659,
+                "discounted_cny": -664.8326933563659
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 209.49013153526317,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -666.3157067938328,
+                "discounted_cny": -666.3157067938328
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 210.98663805205007,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -667.8122133106197,
+                "discounted_cny": -667.8122133106197
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 212.50118976666135,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -669.326765025231,
+                "discounted_cny": -669.326765025231
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 214.03701735968843,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -670.8625926182581,
+                "discounted_cny": -670.8625926182581
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 215.5945231907597,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -672.4200984493293,
+                "discounted_cny": -672.4200984493293
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 217.1724217482015,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -673.9979970067711,
+                "discounted_cny": -673.9979970067711
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 218.7658900602793,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 4470.0,
+                "net_cashflow_cny": 3794.4085346811507,
+                "discounted_cny": 3794.4085346811507
+              }
+            ],
+            "baseline_import_cost_cny": 803.1744247414304,
+            "total_grid_import_cost_cny": 2118.147943888749,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 12600.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 4470.0,
+            "total_lifecycle_spend_cny": 99648.14794388875,
+            "simple_payback_years": null
+          }
+        }
+      ]
+    },
+    {
+      "site_id": "beijing",
+      "year": 2023,
+      "calculation_version": "phase2b-wind-v1",
+      "weather_hash": "90b3595bae4f37a5d9dd771c03ee7d5730aa149928ba0783220416b176c5ca36",
+      "profile_id": "sd6_swcc_11_04",
+      "candidates": [
+        {
+          "scenario_id": "S0_grid",
+          "pv_generation_kwh": 0.0,
+          "wind_generation_kwh": 0.0,
+          "self_use_kwh": 0.0,
+          "grid_import_kwh": 647.1836086132487,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 0.0,
+          "load_coverage_rate": 0.0,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 0.0,
+            "npv_cny": 0.0,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 427.14118168474414,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 427.14118168474414,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 427.14118168474414,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 427.14118168474414,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 427.14118168474414,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 427.14118168474414,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 427.14118168474414,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 427.14118168474414,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 427.14118168474414,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 427.14118168474414,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              }
+            ],
+            "baseline_import_cost_cny": 427.14118168474414,
+            "total_grid_import_cost_cny": 4271.4118168474415,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 0.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 0.0,
+            "total_lifecycle_spend_cny": 4271.4118168474415,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S1_pv",
+          "pv_generation_kwh": 2878.032306880292,
+          "wind_generation_kwh": 0.0,
+          "self_use_kwh": 518.0878214531502,
+          "grid_import_kwh": 129.09578716009912,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 2359.9444854271496,
+          "load_coverage_rate": 0.8005267972767138,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 7400.0,
+            "npv_cny": -4237.114110119781,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 85.20321952566556,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -7118.062037840921,
+                "discounted_cny": -7118.062037840921
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 85.78480285418341,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 281.35637883056074,
+                "discounted_cny": 281.35637883056074
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 86.37209714382463,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 280.7690845409195,
+                "discounted_cny": 280.7690845409195
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 86.96160379742803,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 280.1795778873161,
+                "discounted_cny": 280.1795778873161
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 87.55078709392437,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 279.59039459081976,
+                "discounted_cny": 279.59039459081976
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 88.14175467872342,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 278.9994270060207,
+                "discounted_cny": 278.9994270060207
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 88.7322005818063,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 278.40898110293784,
+                "discounted_cny": 278.40898110293784
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 89.32532493007005,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 277.8158567546741,
+                "discounted_cny": 277.8158567546741
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 89.92455030194735,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 277.2166313827968,
+                "discounted_cny": 277.2166313827968
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 90.5295860596499,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 370.0,
+                "net_cashflow_cny": 646.6115956250942,
+                "discounted_cny": 646.6115956250942
+              }
+            ],
+            "baseline_import_cost_cny": 427.14118168474414,
+            "total_grid_import_cost_cny": 878.525926967223,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 600.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 370.0,
+            "total_lifecycle_spend_cny": 8508.525926967222,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S2_wind",
+          "pv_generation_kwh": 0.0,
+          "wind_generation_kwh": 563.9787830680202,
+          "self_use_kwh": 65.61771583759929,
+          "grid_import_kwh": 581.5658927756488,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 498.36106723042064,
+          "load_coverage_rate": 0.1013896442436197,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 82000.0,
+            "npv_cny": -89466.92307547186,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 383.8334892319287,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -83156.69230754719,
+                "discounted_cny": -83156.69230754719
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 383.8334892319287,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1156.6923075471846,
+                "discounted_cny": -1156.6923075471846
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 383.8334892319287,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1156.6923075471846,
+                "discounted_cny": -1156.6923075471846
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 383.8334892319287,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1156.6923075471846,
+                "discounted_cny": -1156.6923075471846
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 383.8334892319287,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1156.6923075471846,
+                "discounted_cny": -1156.6923075471846
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 383.8334892319287,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1156.6923075471846,
+                "discounted_cny": -1156.6923075471846
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 383.8334892319287,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1156.6923075471846,
+                "discounted_cny": -1156.6923075471846
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 383.8334892319287,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1156.6923075471846,
+                "discounted_cny": -1156.6923075471846
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 383.8334892319287,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1156.6923075471846,
+                "discounted_cny": -1156.6923075471846
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 383.8334892319287,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 4100.0,
+                "net_cashflow_cny": 2943.307692452816,
+                "discounted_cny": 2943.307692452816
+              }
+            ],
+            "baseline_import_cost_cny": 427.14118168474414,
+            "total_grid_import_cost_cny": 3838.334892319287,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 12000.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 4100.0,
+            "total_lifecycle_spend_cny": 93738.33489231928,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S3_pv_wind",
+          "pv_generation_kwh": 2878.032306880292,
+          "wind_generation_kwh": 563.9787830680202,
+          "self_use_kwh": 537.8709203283246,
+          "grid_import_kwh": 109.31268828492408,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 2904.1401696199864,
+          "load_coverage_rate": 0.8310947823305451,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 89400.0,
+            "npv_cny": -94003.17172585119,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 72.14637426804994,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -90305.00519258331,
+                "discounted_cny": -90305.00519258331
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 72.65077966187599,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -905.5095979771319,
+                "discounted_cny": -905.5095979771319
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 73.16182081157106,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -906.020639126827,
+                "discounted_cny": -906.020639126827
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 73.67685989751345,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -906.5356782127693,
+                "discounted_cny": -906.5356782127693
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 74.19194796418718,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -907.050766279443,
+                "discounted_cny": -907.050766279443
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 74.70919079531278,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -907.5680091105687,
+                "discounted_cny": -907.5680091105687
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 75.22588105943005,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -908.0846993746859,
+                "discounted_cny": -908.0846993746859
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 75.7472915112219,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -908.6061098264778,
+                "discounted_cny": -908.6061098264778
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 76.27245053957337,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -909.1312688548292,
+                "discounted_cny": -909.1312688548292
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 76.80094618989918,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 4470.0,
+                "net_cashflow_cny": 3560.340235494845,
+                "discounted_cny": 3560.340235494845
+              }
+            ],
+            "baseline_import_cost_cny": 427.14118168474414,
+            "total_grid_import_cost_cny": 744.5835426986349,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 12600.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 4470.0,
+            "total_lifecycle_spend_cny": 98274.58354269863,
+            "simple_payback_years": null
+          }
+        }
+      ]
+    },
+    {
+      "site_id": "beijing",
+      "year": 2024,
+      "calculation_version": "phase2b-wind-v1",
+      "weather_hash": "cc270933ffb51d1576ba53d6faa4a8f521227213c8c999db8373f9b785195a4d",
+      "profile_id": "sd6_swcc_11_04",
+      "candidates": [
+        {
+          "scenario_id": "S0_grid",
+          "pv_generation_kwh": 0.0,
+          "wind_generation_kwh": 0.0,
+          "self_use_kwh": 0.0,
+          "grid_import_kwh": 626.0180721467976,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 0.0,
+          "load_coverage_rate": 0.0,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 0.0,
+            "npv_cny": 0.0,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 413.1719276168851,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 413.1719276168851,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 413.1719276168851,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 413.1719276168851,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 413.1719276168851,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 413.1719276168851,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 413.1719276168851,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 413.1719276168851,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 413.1719276168851,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 413.1719276168851,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              }
+            ],
+            "baseline_import_cost_cny": 413.1719276168851,
+            "total_grid_import_cost_cny": 4131.719276168851,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 0.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 0.0,
+            "total_lifecycle_spend_cny": 4131.719276168851,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S1_pv",
+          "pv_generation_kwh": 2799.175025700787,
+          "wind_generation_kwh": 0.0,
+          "self_use_kwh": 512.2284931764583,
+          "grid_import_kwh": 113.78957897033796,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 2286.9465325243295,
+          "load_coverage_rate": 0.8182327571149475,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 7400.0,
+            "npv_cny": -4275.8706864382775,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 75.10112212042303,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -7121.929194503538,
+                "discounted_cny": -7121.929194503538
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 75.68432910549949,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 277.4875985113856,
+                "discounted_cny": 277.4875985113856
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 76.26877113996039,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 276.9031564769247,
+                "discounted_cny": 276.9031564769247
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 76.85739386268061,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 276.3145337542045,
+                "discounted_cny": 276.3145337542045
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 77.445456366097,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 275.7264712507881,
+                "discounted_cny": 275.7264712507881
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 78.04058295490128,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 275.1313446619838,
+                "discounted_cny": 275.1313446619838
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 78.63910836118094,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 274.53281925570417,
+                "discounted_cny": 274.53281925570417
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 79.24080811145868,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 273.9311195054264,
+                "discounted_cny": 273.9311195054264
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 79.84879701645639,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 273.3231306004287,
+                "discounted_cny": 273.3231306004287
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 80.4635935684721,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 370.0,
+                "net_cashflow_cny": 642.708334048413,
+                "discounted_cny": 642.708334048413
+              }
+            ],
+            "baseline_import_cost_cny": 413.1719276168851,
+            "total_grid_import_cost_cny": 777.5899626071299,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 600.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 370.0,
+            "total_lifecycle_spend_cny": 8407.58996260713,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S2_wind",
+          "pv_generation_kwh": 0.0,
+          "wind_generation_kwh": 419.06545349002533,
+          "self_use_kwh": 64.15223605199809,
+          "grid_import_kwh": 561.8658360947992,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 354.91321743802683,
+          "load_coverage_rate": 0.10247665188322991,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 82000.0,
+            "npv_cny": -89476.59524205679,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 370.8314518225667,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -83157.65952420568,
+                "discounted_cny": -83157.65952420568
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 370.8314518225667,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1157.6595242056815,
+                "discounted_cny": -1157.6595242056815
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 370.8314518225667,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1157.6595242056815,
+                "discounted_cny": -1157.6595242056815
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 370.8314518225667,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1157.6595242056815,
+                "discounted_cny": -1157.6595242056815
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 370.8314518225667,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1157.6595242056815,
+                "discounted_cny": -1157.6595242056815
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 370.8314518225667,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1157.6595242056815,
+                "discounted_cny": -1157.6595242056815
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 370.8314518225667,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1157.6595242056815,
+                "discounted_cny": -1157.6595242056815
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 370.8314518225667,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1157.6595242056815,
+                "discounted_cny": -1157.6595242056815
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 370.8314518225667,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1157.6595242056815,
+                "discounted_cny": -1157.6595242056815
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 370.8314518225667,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 4100.0,
+                "net_cashflow_cny": 2942.340475794318,
+                "discounted_cny": 2942.340475794318
+              }
+            ],
+            "baseline_import_cost_cny": 413.1719276168851,
+            "total_grid_import_cost_cny": 3708.3145182256667,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 12000.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 4100.0,
+            "total_lifecycle_spend_cny": 93608.31451822567,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S3_pv_wind",
+          "pv_generation_kwh": 2799.175025700787,
+          "wind_generation_kwh": 419.06545349002533,
+          "self_use_kwh": 527.960061213236,
+          "grid_import_kwh": 98.05801093356041,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 2690.2804179775726,
+          "load_coverage_rate": 0.8433623320213549,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 89400.0,
+            "npv_cny": -94068.99157129489,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 64.71828721614989,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -90311.54635959926,
+                "discounted_cny": -90311.54635959926
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 65.23471502021953,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -912.0627874033344,
+                "discounted_cny": -912.0627874033344
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 65.74894032735239,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -912.5770127104672,
+                "discounted_cny": -912.5770127104672
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 66.26702166372057,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -913.0950940468355,
+                "discounted_cny": -913.0950940468355
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 66.78917294350742,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -913.6172453266223,
+                "discounted_cny": -913.6172453266223
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 67.31734267634522,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -914.1454150594601,
+                "discounted_cny": -914.1454150594601
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 67.84975035073994,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -914.6778227338548,
+                "discounted_cny": -914.6778227338548
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 68.38794952165502,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -915.2160219047698,
+                "discounted_cny": -915.2160219047698
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 68.9271674999065,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -915.7552398830214,
+                "discounted_cny": -915.7552398830214
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 69.47050024416606,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 4470.0,
+                "net_cashflow_cny": 3553.701427372719,
+                "discounted_cny": 3553.701427372719
+              }
+            ],
+            "baseline_import_cost_cny": 413.1719276168851,
+            "total_grid_import_cost_cny": 670.7108474637625,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 12600.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 4470.0,
+            "total_lifecycle_spend_cny": 98200.71084746376,
+            "simple_payback_years": null
+          }
+        }
+      ]
+    },
+    {
+      "site_id": "beijing",
+      "year": 2025,
+      "calculation_version": "phase2b-wind-v1",
+      "weather_hash": "41e1a9b10f6d278497a3b05c4df7fff9508f70e95f17fba196069857a5b815ae",
+      "profile_id": "sd6_swcc_11_04",
+      "candidates": [
+        {
+          "scenario_id": "S0_grid",
+          "pv_generation_kwh": 0.0,
+          "wind_generation_kwh": 0.0,
+          "self_use_kwh": 0.0,
+          "grid_import_kwh": 626.9752162109287,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 0.0,
+          "load_coverage_rate": 0.0,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 0.0,
+            "npv_cny": 0.0,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 413.80364269921216,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 413.80364269921216,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 413.80364269921216,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 413.80364269921216,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 413.80364269921216,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 413.80364269921216,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 413.80364269921216,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 413.80364269921216,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 413.80364269921216,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 413.80364269921216,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              }
+            ],
+            "baseline_import_cost_cny": 413.80364269921216,
+            "total_grid_import_cost_cny": 4138.036426992122,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 0.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 0.0,
+            "total_lifecycle_spend_cny": 4138.036426992122,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S1_pv",
+          "pv_generation_kwh": 2848.430908966943,
+          "wind_generation_kwh": 0.0,
+          "self_use_kwh": 498.4550865970801,
+          "grid_import_kwh": 128.52012961384864,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 2349.9758223698627,
+          "load_coverage_rate": 0.7950156141887887,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 7400.0,
+            "npv_cny": -4370.308543873434,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 84.82328554514012,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -7131.019642845928,
+                "discounted_cny": -7131.019642845928
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 85.47726565197068,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 268.32637704724146,
+                "discounted_cny": 268.32637704724146
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 86.13727627837308,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 267.6663664208391,
+                "discounted_cny": 267.6663664208391
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 86.80726228856714,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 266.99638041064503,
+                "discounted_cny": 266.99638041064503
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 87.47835049846533,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 266.32529220074684,
+                "discounted_cny": 266.32529220074684
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 88.15582295630047,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 265.6478197429117,
+                "discounted_cny": 265.6478197429117
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 88.83823368457742,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 264.96540901463476,
+                "discounted_cny": 264.96540901463476
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 89.52284459374428,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 264.28079810546785,
+                "discounted_cny": 264.28079810546785
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 90.20650749739603,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 263.5971352018161,
+                "discounted_cny": 263.5971352018161
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 90.89812187102098,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 370.0,
+                "net_cashflow_cny": 632.9055208281911,
+                "discounted_cny": 632.9055208281911
+              }
+            ],
+            "baseline_import_cost_cny": 413.80364269921216,
+            "total_grid_import_cost_cny": 878.3449708655555,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 600.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 370.0,
+            "total_lifecycle_spend_cny": 8508.344970865555,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S2_wind",
+          "pv_generation_kwh": 0.0,
+          "wind_generation_kwh": 701.3531643778256,
+          "self_use_kwh": 57.551254882800315,
+          "grid_import_kwh": 569.4239613281286,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 643.8019094950239,
+          "load_coverage_rate": 0.09179191361120527,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 82000.0,
+            "npv_cny": -89520.16171777359,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 375.81981447656426,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -83162.01617177736,
+                "discounted_cny": -83162.01617177736
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 375.81981447656426,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1162.0161717773522,
+                "discounted_cny": -1162.0161717773522
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 375.81981447656426,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1162.0161717773522,
+                "discounted_cny": -1162.0161717773522
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 375.81981447656426,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1162.0161717773522,
+                "discounted_cny": -1162.0161717773522
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 375.81981447656426,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1162.0161717773522,
+                "discounted_cny": -1162.0161717773522
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 375.81981447656426,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1162.0161717773522,
+                "discounted_cny": -1162.0161717773522
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 375.81981447656426,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1162.0161717773522,
+                "discounted_cny": -1162.0161717773522
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 375.81981447656426,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1162.0161717773522,
+                "discounted_cny": -1162.0161717773522
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 375.81981447656426,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1162.0161717773522,
+                "discounted_cny": -1162.0161717773522
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 375.81981447656426,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 4100.0,
+                "net_cashflow_cny": 2937.9838282226483,
+                "discounted_cny": 2937.9838282226483
+              }
+            ],
+            "baseline_import_cost_cny": 413.80364269921216,
+            "total_grid_import_cost_cny": 3758.1981447656426,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 12000.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 4100.0,
+            "total_lifecycle_spend_cny": 93658.19814476564,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S3_pv_wind",
+          "pv_generation_kwh": 2848.430908966943,
+          "wind_generation_kwh": 701.3531643778256,
+          "self_use_kwh": 508.75825547049453,
+          "grid_import_kwh": 118.21696074043396,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 3041.0258178742597,
+          "load_coverage_rate": 0.8114487499922751,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 89400.0,
+            "npv_cny": -94199.52277374167,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 78.02319408868638,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -90324.21955138947,
+                "discounted_cny": -90324.21955138947
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 78.61746706508742,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -924.8138243658752,
+                "discounted_cny": -924.8138243658752
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 79.21714859576785,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -925.4135058965558,
+                "discounted_cny": -925.4135058965558
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 79.82314207063118,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -926.019499371419,
+                "discounted_cny": -926.019499371419
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 80.43471831160957,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -926.6310756123974,
+                "discounted_cny": -926.6310756123974
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 81.0534845543243,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -927.2498418551122,
+                "discounted_cny": -927.2498418551122
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 81.67206526924815,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -927.868422570036,
+                "discounted_cny": -927.868422570036
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 82.28870255463555,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -928.4850598554234,
+                "discounted_cny": -928.4850598554234
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 82.90421953233684,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -929.1005768331247,
+                "discounted_cny": -929.1005768331247
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 83.52505869146056,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 4470.0,
+                "net_cashflow_cny": 3540.2785840077513,
+                "discounted_cny": 3540.2785840077513
+              }
+            ],
+            "baseline_import_cost_cny": 413.80364269921216,
+            "total_grid_import_cost_cny": 807.5592007337877,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 12600.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 4470.0,
+            "total_lifecycle_spend_cny": 98337.55920073378,
+            "simple_payback_years": null
+          }
+        }
+      ]
+    },
+    {
+      "site_id": "harbin",
+      "year": 2023,
+      "calculation_version": "phase2b-wind-v1",
+      "weather_hash": "959c972ece1554ff9f8ac47bc6780bd396620dfe7dcffb51d1d9d16614351bf9",
+      "profile_id": "sd6_swcc_11_04",
+      "candidates": [
+        {
+          "scenario_id": "S0_grid",
+          "pv_generation_kwh": 0.0,
+          "wind_generation_kwh": 0.0,
+          "self_use_kwh": 0.0,
+          "grid_import_kwh": 280.6240375722793,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 0.0,
+          "load_coverage_rate": 0.0,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 0.0,
+            "npv_cny": 0.0,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 185.2118647977043,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 185.2118647977043,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 185.2118647977043,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 185.2118647977043,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 185.2118647977043,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 185.2118647977043,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 185.2118647977043,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 185.2118647977043,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 185.2118647977043,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 185.2118647977043,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              }
+            ],
+            "baseline_import_cost_cny": 185.2118647977043,
+            "total_grid_import_cost_cny": 1852.1186479770429,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 0.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 0.0,
+            "total_lifecycle_spend_cny": 1852.1186479770429,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S1_pv",
+          "pv_generation_kwh": 2797.2898414612578,
+          "wind_generation_kwh": 0.0,
+          "self_use_kwh": 236.67474247811984,
+          "grid_import_kwh": 43.94929509415951,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 2560.615098983141,
+          "load_coverage_rate": 0.843387275465169,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 7400.0,
+            "npv_cny": -6077.727029040957,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 29.006534762145286,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -7303.794669964441,
+                "discounted_cny": -7303.794669964441
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 29.21731884372796,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 95.99454595397634,
+                "discounted_cny": 95.99454595397634
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 29.430816512011578,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 95.78104828569272,
+                "discounted_cny": 95.78104828569272
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 29.647690431374905,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 95.56417436632938,
+                "discounted_cny": 95.56417436632938
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 29.869571633067793,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 95.34229316463649,
+                "discounted_cny": 95.34229316463649
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 30.091340315012165,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 95.12052448269213,
+                "discounted_cny": 95.12052448269213
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 30.313746481689645,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 94.89811831601466,
+                "discounted_cny": 94.89811831601466
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 30.53545210498749,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 94.67641269271681,
+                "discounted_cny": 94.67641269271681
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 30.75604920016884,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 94.45581559753546,
+                "discounted_cny": 94.45581559753546
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 30.977156733815043,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 370.0,
+                "net_cashflow_cny": 464.23470806388923,
+                "discounted_cny": 464.23470806388923
+              }
+            ],
+            "baseline_import_cost_cny": 185.2118647977043,
+            "total_grid_import_cost_cny": 299.8456770180007,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 600.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 370.0,
+            "total_lifecycle_spend_cny": 7929.845677018002,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S2_wind",
+          "pv_generation_kwh": 0.0,
+          "wind_generation_kwh": 2856.5259682297387,
+          "self_use_kwh": 83.0843557500508,
+          "grid_import_kwh": 197.53968182222854,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 2773.4416124796953,
+          "load_coverage_rate": 0.29606998911720483,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 82000.0,
+            "npv_cny": -89351.64325204969,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 130.3761900026708,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -83145.16432520497,
+                "discounted_cny": -83145.16432520497
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 130.3761900026708,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1145.1643252049664,
+                "discounted_cny": -1145.1643252049664
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 130.3761900026708,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1145.1643252049664,
+                "discounted_cny": -1145.1643252049664
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 130.3761900026708,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1145.1643252049664,
+                "discounted_cny": -1145.1643252049664
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 130.3761900026708,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1145.1643252049664,
+                "discounted_cny": -1145.1643252049664
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 130.3761900026708,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1145.1643252049664,
+                "discounted_cny": -1145.1643252049664
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 130.3761900026708,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1145.1643252049664,
+                "discounted_cny": -1145.1643252049664
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 130.3761900026708,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1145.1643252049664,
+                "discounted_cny": -1145.1643252049664
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 130.3761900026708,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1145.1643252049664,
+                "discounted_cny": -1145.1643252049664
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 130.3761900026708,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 4100.0,
+                "net_cashflow_cny": 2954.835674795034,
+                "discounted_cny": 2954.835674795034
+              }
+            ],
+            "baseline_import_cost_cny": 185.2118647977043,
+            "total_grid_import_cost_cny": 1303.761900026708,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 12000.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 4100.0,
+            "total_lifecycle_spend_cny": 91203.76190002672,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S3_pv_wind",
+          "pv_generation_kwh": 2797.2898414612578,
+          "wind_generation_kwh": 2856.5259682297387,
+          "self_use_kwh": 251.2409737199409,
+          "grid_import_kwh": 29.38306385233826,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 5402.574835971081,
+          "load_coverage_rate": 0.8952938454362795,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 89400.0,
+            "npv_cny": -95877.27504469504,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 19.39282214254325,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -90494.18095734484,
+                "discounted_cny": -90494.18095734484
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 19.513994515317023,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1094.3021297176128,
+                "discounted_cny": -1094.3021297176128
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 19.634561026226944,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1094.4226962285227,
+                "discounted_cny": -1094.4226962285227
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 19.754524704582302,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1094.542659906878,
+                "discounted_cny": -1094.542659906878
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 19.875054859711295,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1094.663190062007,
+                "discounted_cny": -1094.663190062007
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 19.997183927973893,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1094.7853191302697,
+                "discounted_cny": -1094.7853191302697
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 20.120562767141713,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1094.9086979694375,
+                "discounted_cny": -1094.9086979694375
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 20.24405282672926,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1095.0321880290248,
+                "discounted_cny": -1095.0321880290248
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 20.367729312934145,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1095.15586451523,
+                "discounted_cny": -1095.15586451523
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 20.493206588914262,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 4470.0,
+                "net_cashflow_cny": 3374.7186582087897,
+                "discounted_cny": 3374.7186582087897
+              }
+            ],
+            "baseline_import_cost_cny": 185.2118647977043,
+            "total_grid_import_cost_cny": 199.39369267207408,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 12600.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 4470.0,
+            "total_lifecycle_spend_cny": 97729.39369267208,
+            "simple_payback_years": null
+          }
+        }
+      ]
+    },
+    {
+      "site_id": "harbin",
+      "year": 2024,
+      "calculation_version": "phase2b-wind-v1",
+      "weather_hash": "124d3459ec283c6d03bb93a1062c0c77f7e71c61140fb584c3d6a4cd69302db3",
+      "profile_id": "sd6_swcc_11_04",
+      "candidates": [
+        {
+          "scenario_id": "S0_grid",
+          "pv_generation_kwh": 0.0,
+          "wind_generation_kwh": 0.0,
+          "self_use_kwh": 0.0,
+          "grid_import_kwh": 270.1620139434679,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 0.0,
+          "load_coverage_rate": 0.0,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 0.0,
+            "npv_cny": 0.0,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 178.30692920268896,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 178.30692920268896,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 178.30692920268896,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 178.30692920268896,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 178.30692920268896,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 178.30692920268896,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 178.30692920268896,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 178.30692920268896,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 178.30692920268896,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 178.30692920268896,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              }
+            ],
+            "baseline_import_cost_cny": 178.30692920268896,
+            "total_grid_import_cost_cny": 1783.0692920268896,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 0.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 0.0,
+            "total_lifecycle_spend_cny": 1783.0692920268896,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S1_pv",
+          "pv_generation_kwh": 2771.062992933275,
+          "wind_generation_kwh": 0.0,
+          "self_use_kwh": 225.73432454082732,
+          "grid_import_kwh": 44.427689402640674,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 2545.3286683924503,
+          "load_coverage_rate": 0.8355516796971421,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 7400.0,
+            "npv_cny": -6149.227178300933,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 29.322275005742842,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -7311.015345803054,
+                "discounted_cny": -7311.015345803054
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 29.516632563657595,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 88.79029663903137,
+                "discounted_cny": 88.79029663903137
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 29.711626695112738,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 88.59530250757624,
+                "discounted_cny": 88.59530250757624
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 29.91003135320739,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 88.39689784948158,
+                "discounted_cny": 88.39689784948158
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 30.112553212466093,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 88.19437599022288,
+                "discounted_cny": 88.19437599022288
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 30.318943450043843,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 87.98798575264513,
+                "discounted_cny": 87.98798575264513
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 30.52846681106399,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 87.77846239162497,
+                "discounted_cny": 87.77846239162497
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 30.741068190501142,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 87.56586101218781,
+                "discounted_cny": 87.56586101218781
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 30.95572658772289,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 87.35120261496607,
+                "discounted_cny": 87.35120261496607
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 31.179146458304746,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 370.0,
+                "net_cashflow_cny": 457.12778274438415,
+                "discounted_cny": 457.12778274438415
+              }
+            ],
+            "baseline_import_cost_cny": 178.30692920268896,
+            "total_grid_import_cost_cny": 302.2964703278233,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 600.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 370.0,
+            "total_lifecycle_spend_cny": 7932.296470327823,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S2_wind",
+          "pv_generation_kwh": 0.0,
+          "wind_generation_kwh": 2738.1368591833952,
+          "self_use_kwh": 93.95859515856368,
+          "grid_import_kwh": 176.20341878490453,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 2644.178264024825,
+          "load_coverage_rate": 0.3477861072586791,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 82000.0,
+            "npv_cny": -89279.87327195355,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 116.29425639803692,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -83137.98732719535,
+                "discounted_cny": -83137.98732719535
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 116.29425639803692,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1137.987327195348,
+                "discounted_cny": -1137.987327195348
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 116.29425639803692,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1137.987327195348,
+                "discounted_cny": -1137.987327195348
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 116.29425639803692,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1137.987327195348,
+                "discounted_cny": -1137.987327195348
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 116.29425639803692,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1137.987327195348,
+                "discounted_cny": -1137.987327195348
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 116.29425639803692,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1137.987327195348,
+                "discounted_cny": -1137.987327195348
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 116.29425639803692,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1137.987327195348,
+                "discounted_cny": -1137.987327195348
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 116.29425639803692,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1137.987327195348,
+                "discounted_cny": -1137.987327195348
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 116.29425639803692,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1137.987327195348,
+                "discounted_cny": -1137.987327195348
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 116.29425639803692,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 4100.0,
+                "net_cashflow_cny": 2962.0126728046516,
+                "discounted_cny": 2962.0126728046516
+              }
+            ],
+            "baseline_import_cost_cny": 178.30692920268896,
+            "total_grid_import_cost_cny": 1162.9425639803692,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 12000.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 4100.0,
+            "total_lifecycle_spend_cny": 91062.94256398037,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S3_pv_wind",
+          "pv_generation_kwh": 2771.062992933275,
+          "wind_generation_kwh": 2738.1368591833952,
+          "self_use_kwh": 245.6130328273781,
+          "grid_import_kwh": 24.548981116089905,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 5263.5868192892785,
+          "load_coverage_rate": 0.9091323729870228,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 89400.0,
+            "npv_cny": -95914.60525225359,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 16.202327536619332,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -90497.89539833393,
+                "discounted_cny": -90497.89539833393
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 16.326413347367456,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1098.0194841446785,
+                "discounted_cny": -1098.0194841446785
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 16.450886737588025,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1098.143957534899,
+                "discounted_cny": -1098.143957534899
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 16.576309145858794,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1098.26937994317,
+                "discounted_cny": -1098.26937994317
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 16.702453363797787,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1098.3955241611088,
+                "discounted_cny": -1098.3955241611088
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 16.829564121968524,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1098.5226349192797,
+                "discounted_cny": -1098.5226349192797
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 16.956153234145212,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1098.6492240314562,
+                "discounted_cny": -1098.6492240314562
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 17.083406033710894,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1098.776476831022,
+                "discounted_cny": -1098.776476831022
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 17.210022569278742,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1098.9030933665897,
+                "discounted_cny": -1098.9030933665897
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 17.337008190153767,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 4470.0,
+                "net_cashflow_cny": 3370.9699210125355,
+                "discounted_cny": 3370.9699210125355
+              }
+            ],
+            "baseline_import_cost_cny": 178.30692920268896,
+            "total_grid_import_cost_cny": 167.67454428048853,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 12600.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 4470.0,
+            "total_lifecycle_spend_cny": 97697.67454428048,
+            "simple_payback_years": null
+          }
+        }
+      ]
+    },
+    {
+      "site_id": "harbin",
+      "year": 2025,
+      "calculation_version": "phase2b-wind-v1",
+      "weather_hash": "d22bf210e1b8ae5c642d4c0e2d6be529cef18f62cefc4ab2098c7995aba32eda",
+      "profile_id": "sd6_swcc_11_04",
+      "candidates": [
+        {
+          "scenario_id": "S0_grid",
+          "pv_generation_kwh": 0.0,
+          "wind_generation_kwh": 0.0,
+          "self_use_kwh": 0.0,
+          "grid_import_kwh": 327.19323747044535,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 0.0,
+          "load_coverage_rate": 0.0,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 0.0,
+            "npv_cny": 0.0,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 215.9475367304938,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 215.9475367304938,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 215.9475367304938,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 215.9475367304938,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 215.9475367304938,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 215.9475367304938,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 215.9475367304938,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 215.9475367304938,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 215.9475367304938,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 215.9475367304938,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0,
+                "net_cashflow_cny": 0.0,
+                "discounted_cny": 0.0
+              }
+            ],
+            "baseline_import_cost_cny": 215.9475367304938,
+            "total_grid_import_cost_cny": 2159.475367304938,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 0.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 0.0,
+            "total_lifecycle_spend_cny": 2159.475367304938,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S1_pv",
+          "pv_generation_kwh": 2764.404275818088,
+          "wind_generation_kwh": 0.0,
+          "self_use_kwh": 289.76703913638624,
+          "grid_import_kwh": 37.426198334058704,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 2474.6372366817027,
+          "load_coverage_rate": 0.8856143891499599,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 7400.0,
+            "npv_cny": -5728.514682101879,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 24.701290900478742,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -7268.753754169985,
+                "discounted_cny": -7268.753754169985
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 24.93859231462383,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 131.00894441586996,
+                "discounted_cny": 131.00894441586996
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 25.179175968211783,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 130.76836076228201,
+                "discounted_cny": 130.76836076228201
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 25.423617344242142,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 130.52391938625166,
+                "discounted_cny": 130.52391938625166
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 25.667012714425084,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 130.2805240160687,
+                "discounted_cny": 130.2805240160687
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 25.911565954970712,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 130.03597077552308,
+                "discounted_cny": 130.03597077552308
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 26.159172549871645,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 129.78836418062215,
+                "discounted_cny": 129.78836418062215
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 26.410854184361895,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 129.53668254613189,
+                "discounted_cny": 129.53668254613189
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 26.66932373242174,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": 129.27821299807206,
+                "discounted_cny": 129.27821299807206
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 26.929443743210086,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 60.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 370.0,
+                "net_cashflow_cny": 499.0180929872837,
+                "discounted_cny": 499.0180929872837
+              }
+            ],
+            "baseline_import_cost_cny": 215.9475367304938,
+            "total_grid_import_cost_cny": 257.99004940681766,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 600.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 370.0,
+            "total_lifecycle_spend_cny": 7887.990049406817,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S2_wind",
+          "pv_generation_kwh": 0.0,
+          "wind_generation_kwh": 2489.0972403942965,
+          "self_use_kwh": 127.47052073054084,
+          "grid_import_kwh": 199.72271673990454,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 2361.6267196637546,
+          "load_coverage_rate": 0.38958788303824576,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 82000.0,
+            "npv_cny": -89058.69456317843,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 131.816993048337,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -83115.86945631784,
+                "discounted_cny": -83115.86945631784
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 131.816993048337,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1115.8694563178433,
+                "discounted_cny": -1115.8694563178433
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 131.816993048337,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1115.8694563178433,
+                "discounted_cny": -1115.8694563178433
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 131.816993048337,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1115.8694563178433,
+                "discounted_cny": -1115.8694563178433
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 131.816993048337,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1115.8694563178433,
+                "discounted_cny": -1115.8694563178433
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 131.816993048337,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1115.8694563178433,
+                "discounted_cny": -1115.8694563178433
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 131.816993048337,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1115.8694563178433,
+                "discounted_cny": -1115.8694563178433
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 131.816993048337,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1115.8694563178433,
+                "discounted_cny": -1115.8694563178433
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 131.816993048337,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1115.8694563178433,
+                "discounted_cny": -1115.8694563178433
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 131.816993048337,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1200.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 4100.0,
+                "net_cashflow_cny": 2984.1305436821567,
+                "discounted_cny": 2984.1305436821567
+              }
+            ],
+            "baseline_import_cost_cny": 215.9475367304938,
+            "total_grid_import_cost_cny": 1318.16993048337,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 12000.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 4100.0,
+            "total_lifecycle_spend_cny": 91218.16993048337,
+            "simple_payback_years": null
+          }
+        },
+        {
+          "scenario_id": "S3_pv_wind",
+          "pv_generation_kwh": 2764.404275818088,
+          "wind_generation_kwh": 2489.0972403942965,
+          "self_use_kwh": 303.94190521931455,
+          "grid_import_kwh": 23.251332251130343,
+          "grid_export_kwh": 0.0,
+          "curtailment_kwh": 4949.559610992974,
+          "load_coverage_rate": 0.9289370023937886,
+          "budget_ok": true,
+          "economics": {
+            "status": "complete",
+            "capex_cny": 89400.0,
+            "npv_cny": -95530.03395537485,
+            "yearly": [
+              {
+                "year": 1,
+                "grid_import_cost_cny": 15.345879285746031,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -90459.39834255526,
+                "discounted_cny": -90459.39834255526
+              },
+              {
+                "year": 2,
+                "grid_import_cost_cny": 15.476543371547578,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1059.529006641054,
+                "discounted_cny": -1059.529006641054
+              },
+              {
+                "year": 3,
+                "grid_import_cost_cny": 15.608371552464169,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1059.6608348219704,
+                "discounted_cny": -1059.6608348219704
+              },
+              {
+                "year": 4,
+                "grid_import_cost_cny": 15.741786628303544,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1059.7942498978098,
+                "discounted_cny": -1059.7942498978098
+              },
+              {
+                "year": 5,
+                "grid_import_cost_cny": 15.87553683919065,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1059.9280001086968,
+                "discounted_cny": -1059.9280001086968
+              },
+              {
+                "year": 6,
+                "grid_import_cost_cny": 16.010185265775615,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1060.0626485352818,
+                "discounted_cny": -1060.0626485352818
+              },
+              {
+                "year": 7,
+                "grid_import_cost_cny": 16.147739844693376,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1060.2002031141997,
+                "discounted_cny": -1060.2002031141997
+              },
+              {
+                "year": 8,
+                "grid_import_cost_cny": 16.288970302034357,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1060.3414335715406,
+                "discounted_cny": -1060.3414335715406
+              },
+              {
+                "year": 9,
+                "grid_import_cost_cny": 16.434082186624416,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 0.0,
+                "net_cashflow_cny": -1060.4865454561307,
+                "discounted_cny": -1060.4865454561307
+              },
+              {
+                "year": 10,
+                "grid_import_cost_cny": 16.580227403382786,
+                "export_income_cny": 0.0,
+                "maintenance_cny": 1260.0,
+                "replacement_cny": 0.0,
+                "residual_cny": 4470.0,
+                "net_cashflow_cny": 3409.367309327111,
+                "discounted_cny": 3409.367309327111
+              }
+            ],
+            "baseline_import_cost_cny": 215.9475367304938,
+            "total_grid_import_cost_cny": 159.50932267976253,
+            "total_export_income_cny": 0.0,
+            "total_maintenance_cny": 12600.0,
+            "total_replacement_cny": 0.0,
+            "total_residual_cny": 4470.0,
+            "total_lifecycle_spend_cny": 97689.50932267976,
+            "simple_payback_years": null
+          }
+        }
+      ]
+    }
+  ]
+}

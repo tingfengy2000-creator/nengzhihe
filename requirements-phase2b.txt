@@ -1,0 +1,2 @@
+# Phase 2B wind coupling (pinned for reproducible hub-height and curve calls)
+windpowerlib==0.2.2

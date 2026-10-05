@@ -15,6 +15,7 @@
   <nav class="nav" aria-label="主导航">
     <button class="active" data-page="selection">空调选型</button>
     <button data-page="pv">光伏配置</button>
+    <button data-page="hybrid">风光联算</button>
     <button data-page="workbench">方案工作台</button>
     <button data-page="tariffs">地区与电价</button>
     <button data-page="history">历史方案</button>
@@ -75,6 +76,26 @@
       <div class="actions"><button class="primary" id="runPV">运行光伏联算</button><span class="helper" id="pvStatus">使用同一第一阶段空调情景，等待输入。</span></div><div class="notice warn" style="margin-top:18px">屋顶面积是独立输入；房间面积和同类房间数量不会复制屋顶资源。设备、报价、可用面积和并网条件仍是待现场确认的情景。</div></div>
       <aside class="side-stack"><div class="panel"><h3>本页只回答三件事</h3><div class="assistant"><strong>发多少、用多少、花多少。</strong><span class="muted">物理发电、逐时匹配和生命周期现金流分层计算。缺报价时保留发电结果，不给无条件投资推荐。</span></div></div><div class="panel"><h3>计算边界</h3><p class="muted">当前负荷是未校准的城市级空调情景，只评价该空调用电；不含储能、风电、其他电器，也不把年度发电量直接抵扣年度负荷。</p></div></aside></div>
       <section class="panel" id="pvResults" hidden style="margin-top:22px"><div class="result-head"><div><div class="eyebrow">联算结果</div><h2 id="pvTitle">尚未计算</h2><p class="muted" id="pvSubtitle"></p></div></div><div class="metric-grid" id="pvMetrics"></div><div class="layout" style="margin-top:10px"><div><h3>负荷与光伏交流发电（逐时电量）</h3><div class="chart" id="pvChart"><div class="empty">等待真实结果。</div></div><div class="legend"><span><i class="room"></i>空调负荷</span><span><i class="pv"></i>光伏交流发电</span><span><i class="price"></i>同一时间轴</span></div></div><div><h3>推荐与边界</h3><div class="notice" id="pvRecommendation">完成计算后显示。</div><div class="notice warn" id="pvBoundary" style="margin-top:12px"></div></div></div><div class="candidate-wrap" id="pvTable"></div><details class="evidence"><summary>来源、输入、逐月和工具结果</summary><pre id="pvRaw"></pre></details></section>
+    </section>
+    <section class="page" id="hybrid">
+      <div class="hero"><div><div class="eyebrow">第二阶段 B · 风光同条件比较</div><h1>同一空调负荷下，先看四种供能方案。</h1><p>只购电、仅光伏、仅风电和风光组合使用同一时间轴、同一电价与研究期。风机采用公开认证曲线，现场风况、场址和报价仍需核验。</p></div><span class="pill">SWCC SD6 · windpowerlib · 无储能</span></div>
+      <div class="layout"><div class="panel"><h2>风光方案试算</h2><div class="form-grid">
+        <div class="field"><label for="hySite">地点</label><select id="hySite"><option value="guangzhou">广州</option><option value="beijing">北京</option><option value="harbin">哈尔滨</option></select></div>
+        <div class="field"><label for="hyYear">天气年份</label><select id="hyYear"><option value="2023">2023</option><option value="2024" selected>2024</option><option value="2025">2025</option></select></div>
+        <div class="field"><label for="hyPV">光伏容量 kWp</label><input id="hyPV" type="number" value="2" min="0" step="0.5" /></div>
+        <div class="field"><label for="hyWindCount">风机台数</label><select id="hyWindCount"><option value="0">0</option><option value="1" selected>1（SD6）</option></select></div>
+        <div class="field"><label for="hyHub">轮毂高度 m</label><input id="hyHub" type="number" value="9" min="1" max="30" step="0.5" /></div>
+        <div class="field"><label for="hyBudget">预算 CNY（情景）</label><input id="hyBudget" type="number" value="90000" min="0" step="1000" /></div>
+        <div class="field"><label for="hyPrice">购电价 CNY/kWh</label><input id="hyPrice" type="number" value="0.66" min="0" step="0.01" /></div>
+        <div class="field"><label for="hyYears">研究期</label><select id="hyYears"><option value="5">5年</option><option value="10" selected>10年</option><option value="15">15年</option></select></div>
+        <div class="field"><label for="hyExport">余电处理</label><select id="hyExport"><option value="false" selected>不允许外送</option><option value="true">允许外送（需外送价）</option></select></div>
+        <div class="field"><label for="hyExportPrice">外送价 CNY/kWh</label><input id="hyExportPrice" type="number" placeholder="可空" min="0" step="0.01" /></div>
+        <div class="field"><label for="hyAgent">本地模型任务协同</label><select id="hyAgent"><option value="false" selected>关闭：确定性工具</option><option value="true">启用：真实任务工具流</option></select></div>
+        <div class="field full"><label for="hyRequest">任务修改（启用协同时执行）</label><textarea id="hyRequest" rows="2">比较只购电、仅光伏、仅风电和风光组合，不允许外送</textarea></div>
+      </div><details class="details"><summary>同一空调负荷</summary><div class="form-grid" style="margin-top:14px"><div class="field"><label for="hyArea">房间面积 m²</label><input id="hyArea" type="number" value="35" min="5" /></div><div class="field"><label for="hyPeople">人数</label><input id="hyPeople" type="number" value="4" min="0" /></div><div class="field"><label for="hyStart">使用开始</label><input id="hyStart" type="number" value="8" min="0" max="23" /></div><div class="field"><label for="hyEnd">使用结束</label><input id="hyEnd" type="number" value="18" min="1" max="24" /></div><div class="field"><label for="hyTemp">温度目标 °C</label><input id="hyTemp" type="number" value="26" step="0.5" /></div><div class="field"><label for="hyRh">湿度目标 %RH</label><input id="hyRh" type="number" value="60" /></div></div></details>
+      <div class="actions"><button class="primary" id="runHybrid">运行四方案联算</button><span class="helper" id="hybridStatus">同一负荷、天气、电价和研究期，等待输入。</span></div><div class="notice warn" style="margin-top:18px">风机不是屋顶资源：首版只比较0/1台完整SD6。轮毂高度、场址、障碍物、并网、噪声与报价均为待核验条件。</div></div>
+      <aside class="side-stack"><div class="panel"><h3>本页回答</h3><div class="assistant"><strong>发电如何覆盖负荷，哪个组合值得继续查？</strong><span class="muted">四种方案按小时守恒匹配；物理发电、购电替代与生命周期经济性分别显示。</span></div></div><div class="panel"><h3>证据边界</h3><p class="muted">SD6曲线来自公开认证系统输出，包含报告列出的接口和并网逆变器；公开城市风况不能代替现场测风，用户报价不等于采购报价。</p></div></aside></div>
+      <section class="panel" id="hybridResults" hidden style="margin-top:22px"><div class="result-head"><div><div class="eyebrow">风光结果</div><h2 id="hybridTitle">尚未计算</h2><p class="muted" id="hybridSubtitle"></p></div></div><div class="metric-grid" id="hybridMetrics"></div><div class="layout" style="margin-top:10px"><div><h3>负荷、光伏与风电（逐时电量）</h3><div class="chart" id="hybridChart"><div class="empty">等待真实结果。</div></div><div class="legend"><span><i class="room"></i>空调负荷</span><span><i class="pv"></i>光伏</span><span><i class="bound"></i>风电</span></div></div><div><h3>建议与边界</h3><div class="notice" id="hybridRecommendation">完成计算后显示。</div><div class="notice warn" id="hybridBoundary" style="margin-top:12px"></div></div></div><div class="candidate-wrap" id="hybridTable"></div><details class="evidence"><summary>来源、曲线、风速高度与逐时证据</summary><pre id="hybridRaw"></pre></details></section>
     </section>
     <section class="page" id="workbench">
       <div class="hero"><div><div class="eyebrow">运行方案试算</div><h1>先试算，再安排空调运行。</h1><p>把使用时段、舒适温度和计费情景放在同一张核查卡里。程序回放真实模型、比较有限候选，并保留每一个证据窗口。</p></div><span class="pill">真实案例回放 · BOPTEST bestest_air v0.9.0</span></div>

@@ -1,0 +1,12 @@
+{
+  "calculation_version": "phase2b-wind-v1",
+  "source": "existing phase-two PV weather cache",
+  "weather_cache": "operation_planning/data/weather_pv",
+  "wind_variables": {"wind_speed_10m": "km/h, instantaneous value at normalized interval start", "temperature_2m": "degC", "surface_pressure": "hPa"},
+  "source_model_note": "The cache provenance is preserved; this manifest does not relabel Open-Meteo Best Match or ERA5 without response metadata.",
+  "height_method": "windpowerlib.wind_speed.hellman with source height 10m, default hub height 9m and editable exponent 0.14",
+  "density_method": "dry-air audit value pressure(Pa)/(287.05*(temperature+273.15)); no density correction applied to the certified SD6 curve",
+  "time_semantics": "wind is retained at normalized interval start; it is not shifted like preceding-hour radiation; power is integrated over the same explicit interval",
+  "boundary_policy": "uses existing normalized weather boundary records; no cyclic shift, copied year-start row or zero fill",
+  "windpowerlib_version": "0.2.2"
+}

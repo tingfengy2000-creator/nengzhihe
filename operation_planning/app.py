@@ -27,6 +27,9 @@ from .thermal_model import RoomSpec, simulate_room
 from .lifecycle import life_cycle_cost
 from .pv import PVScenario, PVQuote, run_pv_planning, scenario_from_dict
 from .pv_agent import PVPlanningAgent
+from .wind import WindTurbineProfile, WindScenario, WindQuote
+from .hybrid import HybridScenario, run_hybrid_planning
+from .hybrid_agent import HybridPlanningAgent
 
 
 ROOT = Path(__file__).resolve().parent
@@ -140,6 +143,9 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/operation/tariffs": return self._send(HTTPStatus.OK, registry())
         if path == "/api/operation/weather/sites": return self._send(HTTPStatus.OK, {"items": available_sites()})
         if path == "/api/operation/pv/provenance": return self._send(HTTPStatus.OK, {"engine": "pvlib", "scope": "phase2A photovoltaic generation, hourly load matching and lifecycle comparison", "radiation": "Open-Meteo GHI/DNI/DHI preceding-hour means", "status": "local_replay"})
+        if path == "/api/operation/wind/profiles":
+            profile = WindTurbineProfile.from_file()
+            return self._send(HTTPStatus.OK, {"profiles": [{"profile_id": profile.profile_id, "manufacturer": profile.manufacturer, "model": profile.model, "source_url": profile.source_url, "tested_hub_height_m": profile.tested_hub_height_m, "rated_power_kw": profile.rated_power_kw, "peak_power_kw": profile.peak_power_kw, "curve_range_m_s": profile.curve_range_m_s, "windpowerlib_version": __import__('windpowerlib').__version__}]})
         if path == "/api/operation/weather/import": return self._send(HTTPStatus.METHOD_NOT_ALLOWED, {"error": "请使用POST导入CSV"})
         if path == "/api/operation/equipment": return self._send(HTTPStatus.OK, {"items": catalogue()})
         if path == "/api/operation/provenance":
@@ -212,6 +218,28 @@ class Handler(BaseHTTPRequestHandler):
                 return self._send(HTTPStatus.OK, {"status": "success", "report": report})
             except Exception as exc:
                 return self._send(HTTPStatus.BAD_REQUEST, {"status": "failed", "error": f"{type(exc).__name__}: {exc}"})
+        if path == "/api/operation/hybrid/run":
+            try:
+                payload = self._read_json(); site_id = str(payload.get("site_id", "guangzhou")); year = int(payload.get("year", 2024))
+                if bool(payload.get("use_agent", False)):
+                    agent_output = HybridPlanningAgent().run(str(payload.get("request", "比较只购电、仅光伏、仅风电和风光组合")), payload)
+                    if agent_output.get("status") != "success":
+                        return self._send(HTTPStatus.UNPROCESSABLE_ENTITY, {"status":agent_output.get("status"),"agent":agent_output,"error":agent_output.get("error") or agent_output.get("question")})
+                    report = agent_output.get("report") or {}; report["agent"] = {k:v for k,v in agent_output.items() if k != "report"}
+                    return self._send(HTTPStatus.OK, {"status":"success","report":report})
+                room_data = payload.get("room") or {}; room = RoomSpec(**{k: v for k, v in room_data.items() if k in RoomSpec.__dataclass_fields__})
+                load_weather_data = payload.get("weather") or load_weather(site_id, year); pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year); load_result = simulate_room(load_weather_data, room)
+                pv_raw = payload.get("pv") or {}; pv = scenario_from_dict(pv_raw, site_id=site_id, year=year)
+                hraw = payload.get("hybrid") or {}; wind_raw = hraw.get("wind") or {}
+                wind = WindScenario(**{k:v for k,v in wind_raw.items() if k in WindScenario.__dataclass_fields__})
+                pv_quote = PVQuote(**{k:v for k,v in (hraw.get("pv_quote") or pv_raw.get("quote") or {}).items() if k in PVQuote.__dataclass_fields__})
+                wind_quote = WindQuote(**{k:v for k,v in (hraw.get("wind_quote") or {}).items() if k in WindQuote.__dataclass_fields__})
+                hvals = {k:v for k,v in hraw.items() if k in HybridScenario.__dataclass_fields__ and k not in {"wind","pv_quote","wind_quote"}}; hvals.update({"site_id":site_id,"year":year,"wind":wind,"pv_quote":pv_quote,"wind_quote":wind_quote})
+                hybrid = HybridScenario(**hvals); report = run_hybrid_planning(load_result, pv_weather_data, pv, hybrid, WindTurbineProfile.from_file())
+                report["agent"] = {"requested": False, "status": "disabled", "mode": "phase2b_hybrid_tools", "request": payload.get("request", "")}
+                return self._send(HTTPStatus.OK, {"status":"success","report":report})
+            except Exception as exc:
+                return self._send(HTTPStatus.BAD_REQUEST, {"status":"failed","error":f"{type(exc).__name__}: {exc}"})
         if path == "/api/operation/run":
             try:
                 payload = self._read_json(); task = _task_from(payload, "validation"); errors = task.validate()
