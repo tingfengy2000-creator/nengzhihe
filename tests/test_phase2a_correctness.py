@@ -14,11 +14,14 @@ from operation_planning.pv import (  # noqa: E402
     GenerationSeries,
     _intervals,
     _open_meteo_azimuth_to_pvlib,
+    _price_vectors,
     generate_pv,
     lifecycle_compare,
     match_load,
     run_pv_planning,
 )
+from operation_planning.weather import normalize_preceding_hour_payload
+from pvlib import inverter
 
 
 def _weather(start="2024-06-01T08:00:00", n=4):
@@ -80,9 +83,60 @@ def test_zero_kwp_does_not_inherit_connection_quote():
 
 def test_direction_mapping_and_interval_midpoint():
     assert [_open_meteo_azimuth_to_pvlib(x) for x in (0, -90, 90, 180)] == [180.0, 90.0, 270.0, 0.0]
+    raw = {"hourly": {"time": ["2024-03-01T07:00", "2024-03-01T08:00", "2024-03-01T09:00"], "temperature_2m": [20, 21, 22], "relative_humidity_2m": [50, 50, 50], "surface_pressure": [1010, 1010, 1010], "shortwave_radiation": [100, 700, 900]}}
+    boundary = {"hourly": {"time": ["2024-03-01T10:00"], "temperature_2m": [23], "relative_humidity_2m": [50], "surface_pressure": [1010], "shortwave_radiation": [500]}}
+    converted = normalize_preceding_hour_payload(raw, calendar_start="2024-03-01T07:00", calendar_end="2024-03-01T10:00", boundary_payload=boundary)
+    assert converted["source_timestamp"][1] == "2024-03-01T09:00"
+    assert converted["representative_time"][1] == "2024-03-01T08:30"
     weather = _weather(); gen = generate_pv(weather, 1, PVScenario(quote=_quote()))
     assert "midpoint" in gen.metadata["solar_position"]
     assert gen.metadata["representative_time_first"].endswith("08:30:00+08:00")
+
+
+def test_right_label_radiation_is_converted_to_left_interval():
+    raw_times = ["2024-03-01T07:00", "2024-03-01T08:00", "2024-03-01T09:00"]
+    raw = {"hourly": {"time": raw_times, "temperature_2m": [20, 21, 22], "relative_humidity_2m": [50, 50, 50], "surface_pressure": [1010, 1010, 1010], "shortwave_radiation": [100, 700, 900]}}
+    boundary = {"hourly": {"time": ["2024-03-01T10:00"], "temperature_2m": [23], "relative_humidity_2m": [50], "surface_pressure": [1010], "shortwave_radiation": [500]}}
+    normalized = normalize_preceding_hour_payload(raw, calendar_start="2024-03-01T07:00", calendar_end="2024-03-01T10:00", boundary_payload=boundary)
+    sem = normalized["_interval_semantics"]
+    assert normalized["hourly"]["time"] == raw_times
+    assert sem["source_timestamp"][0] == "2024-03-01T08:00"
+    assert sem["interval_start"][0] == "2024-03-01T07:00"
+    assert sem["representative_time"][0] == "2024-03-01T07:30"
+    assert normalized["hourly"]["shortwave_radiation"][0] == 700
+    assert normalized["hourly"]["temperature_2m"][0] == 20
+
+
+def test_interval_normalization_crosses_leap_day_and_year_edges():
+    start = datetime(2024, 2, 28, 23); end = datetime(2024, 3, 1, 2)
+    times = [(start + timedelta(hours=i)).isoformat(timespec="minutes") for i in range(int((end - start).total_seconds() // 3600))]
+    raw = {"hourly": {"time": times, "temperature_2m": list(range(len(times))), "relative_humidity_2m": [50] * len(times), "surface_pressure": [1010] * len(times), "shortwave_radiation": [100] * len(times)}}
+    boundary = {"hourly": {"time": [end.isoformat(timespec="minutes")], "temperature_2m": [99], "relative_humidity_2m": [50], "surface_pressure": [1010], "shortwave_radiation": [100]}}
+    normalized = normalize_preceding_hour_payload(raw, calendar_start=start.isoformat(timespec="minutes"), calendar_end=end.isoformat(timespec="minutes"), boundary_payload=boundary)
+    assert len(normalized["hourly"]["time"]) == 27
+    assert normalized["_interval_semantics"]["interval_end"][-1] == "2024-03-01T02:00"
+    assert normalized["hourly"]["time"][1].startswith("2024-02-29")
+
+
+def test_inverter_rated_ac_boundary_uses_pdc0_input_definition():
+    dc_rated_w = 2000.0; ac_rated_w = 1700.0; eta = 0.96; passed_pdc0 = ac_rated_w / eta
+    output = float(inverter.pvwatts(dc_rated_w, pdc0=passed_pdc0, eta_inv_nom=eta, eta_inv_ref=0.9637))
+    assert abs(output - 1700.0) < 1e-9
+    assert abs(float(inverter.pvwatts(dc_rated_w, pdc0=ac_rated_w, eta_inv_nom=eta, eta_inv_ref=0.9637)) - 1632.0) < 1e-9
+
+
+def test_tou_price_splits_inside_physical_interval():
+    scenario = PVScenario(tariff_id="custom_user", custom_tariff={"effective_start": "2024-01-01", "effective_end": "2024-01-01", "periods": [{"name": "flat", "start": "00:00", "end": "24:00", "price": 0.5}, {"name": "peak", "start": "08:30", "end": "09:00", "price": 1.0}]})
+    prices, meta = _price_vectors(scenario, ["2024-01-01T08:00", "2024-01-01T09:00"], [3600, 3600])
+    assert abs(prices[0] - 0.75) < 1e-12
+    assert len(meta["interval_examples"][0]["segments"]) == 2
+
+
+def test_tou_split_crosses_midnight():
+    scenario = PVScenario(tariff_id="custom_user", custom_tariff={"effective_start": "2024-01-01", "effective_end": "2024-01-02", "periods": [{"name": "flat", "start": "00:00", "end": "24:00", "price": 0.5}, {"name": "peak", "start": "23:30", "end": "24:00", "price": 1.0}, {"name": "valley", "start": "00:00", "end": "00:30", "price": 0.2}]})
+    prices, meta = _price_vectors(scenario, ["2024-01-01T23:30", "2024-01-02T00:30"], [3600, 3600])
+    assert abs(prices[0] - 0.6) < 1e-12
+    assert len(meta["interval_examples"][0]["segments"]) == 2
 
 
 def test_real_interval_and_nonfinite_guards():

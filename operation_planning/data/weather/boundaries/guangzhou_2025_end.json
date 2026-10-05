@@ -1,0 +1,52 @@
+{
+  "latitude": 23.233742,
+  "longitude": 113.20755,
+  "timezone": "Asia/Shanghai",
+  "hourly_units": {
+    "time": "iso8601",
+    "temperature_2m": "°C",
+    "relative_humidity_2m": "%",
+    "surface_pressure": "hPa",
+    "shortwave_radiation": "W/m²",
+    "wind_speed_10m": "km/h",
+    "wind_direction_10m": "°"
+  },
+  "hourly": {
+    "time": [
+      "2026-01-01T00:00"
+    ],
+    "temperature_2m": [
+      16.1
+    ],
+    "relative_humidity_2m": [
+      82
+    ],
+    "surface_pressure": [
+      1014.6
+    ],
+    "shortwave_radiation": [
+      0.0
+    ],
+    "wind_speed_10m": [
+      2.7
+    ],
+    "wind_direction_10m": [
+      122
+    ]
+  },
+  "_phase2_boundary_provenance": {
+    "source_url": "https://archive-api.open-meteo.com/v1/archive?latitude=23.25&longitude=113.25&start_date=2026-01-01&end_date=2026-01-01&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cshortwave_radiation%2Cwind_speed_10m%2Cwind_direction_10m&timezone=Asia%2FShanghai",
+    "source_cache": "operation_planning\\data\\weather\\guangzhou_2025.json",
+    "source_sha256": "ba319e03dfda90481ba1e6e06650645cf224a3c469f8b0023585bcfdd3c50543",
+    "purpose": "single required right-labelled boundary row for normalized calendar end",
+    "requested_model": null,
+    "variables": [
+      "temperature_2m",
+      "relative_humidity_2m",
+      "surface_pressure",
+      "shortwave_radiation",
+      "wind_speed_10m",
+      "wind_direction_10m"
+    ]
+  }
+}

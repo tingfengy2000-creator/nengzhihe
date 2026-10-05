@@ -1,0 +1,52 @@
+{
+  "latitude": 45.729347,
+  "longitude": 126.48265,
+  "timezone": "Asia/Shanghai",
+  "hourly_units": {
+    "time": "iso8601",
+    "temperature_2m": "°C",
+    "relative_humidity_2m": "%",
+    "surface_pressure": "hPa",
+    "shortwave_radiation": "W/m²",
+    "wind_speed_10m": "km/h",
+    "wind_direction_10m": "°"
+  },
+  "hourly": {
+    "time": [
+      "2025-01-01T00:00"
+    ],
+    "temperature_2m": [
+      -15.0
+    ],
+    "relative_humidity_2m": [
+      83
+    ],
+    "surface_pressure": [
+      999.5
+    ],
+    "shortwave_radiation": [
+      0.0
+    ],
+    "wind_speed_10m": [
+      6.5
+    ],
+    "wind_direction_10m": [
+      199
+    ]
+  },
+  "_phase2_boundary_provenance": {
+    "source_url": "https://archive-api.open-meteo.com/v1/archive?latitude=45.75&longitude=126.5&start_date=2025-01-01&end_date=2025-01-01&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cshortwave_radiation%2Cwind_speed_10m%2Cwind_direction_10m&timezone=Asia%2FShanghai",
+    "source_cache": "operation_planning\\data\\weather\\harbin_2024.json",
+    "source_sha256": "9c12e9245063aff0e657f82b6729bf2f6087f92850e5623d64e57926715d4f6d",
+    "purpose": "single required right-labelled boundary row for normalized calendar end",
+    "requested_model": null,
+    "variables": [
+      "temperature_2m",
+      "relative_humidity_2m",
+      "surface_pressure",
+      "shortwave_radiation",
+      "wind_speed_10m",
+      "wind_direction_10m"
+    ]
+  }
+}

@@ -218,14 +218,20 @@ def generate_pv(weather: Dict[str, Any], capacity_kwp: float, scenario: PVScenar
     if capacity_kwp == 0:
         dc = pd.Series(0.0, index=rep_idx); ac = pd.Series(0.0, index=rep_idx)
     else:
-        pdc0_w = float(capacity_kwp) * 1000.0; inverter_ac_kw = float(capacity_kwp) * float(scenario.inverter_ratio)
+        pdc0_w = float(capacity_kwp) * 1000.0; inverter_ac_rated_w = float(capacity_kwp) * float(scenario.inverter_ratio) * 1000.0
         dc = pvsystem.pvwatts_dc(poa_global, temp_cell, pdc0=pdc0_w, gamma_pdc=DEFAULT_GAMMA_PDC)
-        clipped_ac = inverter.pvwatts(dc, pdc0=inverter_ac_kw * 1000.0, eta_inv_nom=DEFAULT_INVERTER_EFFICIENCY, eta_inv_ref=0.9637)
+        # pvlib's PVWatts inverter expects pdc0 at the DC input corresponding
+        # to the AC rating: Pac0 = pdc0 * eta_inv_nom.  Passing Pac0 here
+        # would clip at Pac0*eta_inv_nom and under-rate the inverter.
+        inverter_pdc0_w = inverter_ac_rated_w / DEFAULT_INVERTER_EFFICIENCY
+        clipped_ac = inverter.pvwatts(dc, pdc0=inverter_pdc0_w, eta_inv_nom=DEFAULT_INVERTER_EFFICIENCY, eta_inv_ref=0.9637)
         ac = clipped_ac * (1.0 - float(scenario.shading_loss_fraction)) * (1.0 - float(scenario.system_loss_fraction)) * float(scenario.availability)
+    if capacity_kwp == 0:
+        pdc0_w = 0.0; inverter_ac_rated_w = 0.0; inverter_pdc0_w = 0.0; clipped_ac = pd.Series(0.0, index=rep_idx)
     for label, series in (("pv_dc_power_w", dc), ("pv_ac_power_w", ac), ("cell_temp_c", temp_cell)):
         if not all(math.isfinite(float(x)) for x in series.tolist()):
             raise ValueError(f"光伏计算结果含非有限值：{label}")
-    metadata = {"pvlib_version": PVLIB_VERSION, "solar_position": "pvlib Location.get_solarposition at interval midpoint", "transposition": "pvlib irradiance.get_total_irradiance; isotropic diffuse with albedo 0.20", "temperature_model": "pvlib SAPM cell temperature, explicit -3.56/-0.075/3.0 and 10m wind converted km/h→m/s", "dc_model": "pvlib PVWatts DC, pdc0=capacity_kWp*1000 and gamma_pdc=-0.0035/C", "inverter_model": "pvlib PVWatts inverter; pdc0 is explicit AC inverter rating (capacity_kWp*inverter_ratio*1000)", "azimuth_input_convention": "Open-Meteo 0 south/-90 east/90 west; converted to pvlib 0 north/90 east/180 south/270 west", "radiation_semantics": "GHI/DNI/DHI are preceding-hour means attached to [timestamp,timestamp+interval); solar position uses the interval midpoint", "interval_start_first": times[0], "interval_end_last": str(start_idx[-1] + pd.to_timedelta(intervals[-1], unit="s")), "representative_time_first": str(rep_idx[0]), "representative_time_last": str(rep_idx[-1]), "interval_seconds_first": intervals[0], "interval_seconds_last": intervals[-1], "loss_application": "shading, system loss and availability applied once after inverter clipping", "capacity_kwp": float(capacity_kwp), "inverter_ratio_ac_to_dc": float(scenario.inverter_ratio), "inverter_ac_capacity_kw": float(capacity_kwp) * float(scenario.inverter_ratio)}
+    metadata = {"pvlib_version": PVLIB_VERSION, "solar_position": "pvlib Location.get_solarposition at interval midpoint", "transposition": "pvlib irradiance.get_total_irradiance; isotropic diffuse with albedo 0.20", "temperature_model": "pvlib SAPM cell temperature, explicit -3.56/-0.075/3.0 and 10m wind converted km/h→m/s", "dc_model": "pvlib PVWatts DC, pdc0=capacity_kWp*1000 and gamma_pdc=-0.0035/C", "inverter_model": "pvlib PVWatts inverter; pdc0=pac0/eta_inv_nom", "azimuth_input_convention": "Open-Meteo 0 south/-90 east/90 west; converted to pvlib 0 north/90 east/180 south/270 west", "radiation_semantics": "GHI/DNI/DHI are normalized preceding-hour means attached to [interval_start,interval_end); solar position uses the interval midpoint", "interval_start_first": times[0], "interval_end_last": str(start_idx[-1] + pd.to_timedelta(intervals[-1], unit="s")), "representative_time_first": str(rep_idx[0]), "representative_time_last": str(rep_idx[-1]), "interval_seconds_first": intervals[0], "interval_seconds_last": intervals[-1], "loss_application": "shading, system loss and availability applied once after inverter clipping", "capacity_kwp": float(capacity_kwp), "module_dc_rated_w": float(pdc0_w), "inverter_ratio_ac_to_dc": float(scenario.inverter_ratio), "inverter_ac_rated_w": float(inverter_ac_rated_w), "inverter_pdc0_w": float(inverter_pdc0_w), "inverter_eta_inv_nom": DEFAULT_INVERTER_EFFICIENCY, "inverter_output_before_losses_max_w": float(max(clipped_ac.tolist())) if len(clipped_ac) else 0.0, "inverter_output_after_losses_max_w": float(max(ac.tolist())) if len(ac) else 0.0}
     return GenerationSeries(timestamps=times, interval_seconds=intervals, pv_dc_power_w=[round(float(v), 8) for v in dc.tolist()], pv_ac_power_w=[round(float(v), 8) for v in ac.tolist()], ghi_w_m2=ghi, dni_w_m2=dni, dhi_w_m2=dhi, poa_w_m2=[round(float(v), 8) for v in poa_global.tolist()], cell_temp_c=[round(float(v), 8) for v in temp_cell.tolist()], source=str(weather.get("source_file", "weather")), model="pvlib.PVWatts", metadata=metadata)
 
 
@@ -348,15 +354,34 @@ def generate_candidates(scenario: PVScenario) -> Tuple[List[float], List[str]]:
     return out, notes
 
 
-def _price_vectors(scenario: PVScenario, timestamps: Sequence[str]) -> Tuple[List[float], Dict[str, Any]]:
+def _price_vectors(scenario: PVScenario, timestamps: Sequence[str], interval_seconds: Optional[Sequence[int]] = None) -> Tuple[List[float], Dict[str, Any]]:
     if scenario.tariff_id in ("", "user_constant"):
-        return [float(scenario.import_price_cny_per_kwh)] * len(timestamps), {"tariff_id": "user_constant", "type": "constant_user_scenario", "price_cny_per_kwh": float(scenario.import_price_cny_per_kwh)}
-    from .tariffs import profile, profile_public_dict, rate_at, validate_profile
-    tariff = profile(scenario.tariff_id, scenario.custom_tariff); idx = _time_index(timestamps); days = (idx[-1].date() - idx[0].date()).days + 1; validate_profile(tariff, idx[0].date(), days)
-    prices: List[float] = []
-    for ts in idx:
-        second = int(ts.hour * 3600 + ts.minute * 60 + ts.second); prices.append(float(rate_at(tariff, ts.date(), second)[1]))
-    return prices, profile_public_dict(tariff)
+        return [float(scenario.import_price_cny_per_kwh)] * len(timestamps), {"tariff_id": "user_constant", "type": "constant_user_scenario", "price_cny_per_kwh": float(scenario.import_price_cny_per_kwh), "interval_pricing": "constant over each physical interval"}
+    from .tariffs import _clock, profile, profile_public_dict, rate_at, validate_profile
+    tariff = profile(scenario.tariff_id, scenario.custom_tariff); idx = _time_index(timestamps); intervals = _intervals(timestamps, interval_seconds)
+    physical_end = idx[-1] + pd.to_timedelta(int(intervals[-1]), unit="s")
+    last_included_date = (physical_end - pd.to_timedelta(1, unit="s")).date()
+    days = (last_included_date - idx[0].date()).days + 1; validate_profile(tariff, idx[0].date(), days)
+    prices: List[float] = []; examples: List[Dict[str, Any]] = []
+    for i, (start, seconds) in enumerate(zip(idx, intervals)):
+        end = start + pd.to_timedelta(int(seconds), unit="s"); cuts = {start, end}; cursor = start.normalize()
+        while cursor <= end:
+            day = cursor.date()
+            for item in tariff.periods:
+                a = _clock(item["start"]); b = _clock(item["end"]); b = 86400 if b <= a else b
+                cuts.add(cursor + pd.to_timedelta(a, unit="s")); cuts.add(cursor + pd.to_timedelta(b, unit="s"))
+            cursor += pd.Timedelta(days=1)
+        ordered = sorted(x for x in cuts if start <= x <= end); weighted = 0.0; segments: List[Dict[str, Any]] = []
+        for left, right in zip(ordered, ordered[1:]):
+            span = (right - left).total_seconds()
+            if span <= 0: continue
+            mid = left + (right - left) / 2; second = int(mid.hour * 3600 + mid.minute * 60 + mid.second)
+            name, rate = rate_at(tariff, mid.date(), second); weighted += span * float(rate)
+            segments.append({"start": str(left), "end": str(right), "period": name, "price_cny_per_kwh": float(rate), "seconds": span})
+        prices.append(weighted / float(seconds))
+        if i < 4: examples.append({"interval_start": str(start), "interval_end": str(end), "segments": segments, "weighted_price_cny_per_kwh": prices[-1]})
+    meta = profile_public_dict(tariff); meta.update({"interval_pricing": "constant average power; each physical interval split at tariff boundaries", "interval_examples": examples})
+    return prices, meta
 
 
 def _service_context(load_result: Dict[str, Any]) -> Dict[str, Any]:
@@ -365,8 +390,8 @@ def _service_context(load_result: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def _candidate_row(capacity: float, matched: Dict[str, Any], generation: GenerationSeries, economics: Dict[str, Any], include_series: bool) -> Dict[str, Any]:
-    summary = matched["summary"]; row: Dict[str, Any] = {"capacity_kwp": capacity, "generation_kwh": summary["pv_generation_kwh"], "self_use_kwh": summary["self_use_kwh"], "grid_import_kwh": summary["grid_import_kwh"], "grid_export_kwh": summary["grid_export_kwh"], "curtailment_kwh": summary["curtailment_kwh"], "self_consumption_rate": summary["self_consumption_rate"], "load_coverage_rate": summary["load_coverage_rate"], "economics": economics, "monthly": matched["monthly"]}
-    if include_series: row["hourly"] = {"timestamps": generation.timestamps, "interval_seconds": generation.interval_seconds, "load_kwh": matched["interval_kwh"]["load"], "pv_generation_kwh": matched["interval_kwh"]["pv_generation"], "self_use_kwh": matched["interval_kwh"]["self_use"], "grid_import_kwh": matched["interval_kwh"]["grid_import"], "grid_export_kwh": matched["interval_kwh"]["grid_export"], "curtailment_kwh": matched["interval_kwh"]["curtailment"], "cell_temp_c": generation.cell_temp_c}
+    summary = matched["summary"]; row: Dict[str, Any] = {"capacity_kwp": capacity, "generation_kwh": summary["pv_generation_kwh"], "self_use_kwh": summary["self_use_kwh"], "grid_import_kwh": summary["grid_import_kwh"], "grid_export_kwh": summary["grid_export_kwh"], "curtailment_kwh": summary["curtailment_kwh"], "self_consumption_rate": summary["self_consumption_rate"], "load_coverage_rate": summary["load_coverage_rate"], "economics": economics, "monthly": matched["monthly"], "generation_metadata": generation.metadata}
+    if include_series: row["hourly"] = {"timestamps": generation.timestamps, "interval_seconds": generation.interval_seconds, "load_kwh": matched["interval_kwh"]["load"], "pv_generation_kwh": matched["interval_kwh"]["pv_generation"], "self_use_kwh": matched["interval_kwh"]["self_use"], "grid_import_kwh": matched["interval_kwh"]["grid_import"], "grid_export_kwh": matched["interval_kwh"]["grid_export"], "curtailment_kwh": matched["interval_kwh"]["curtailment"], "pv_dc_power_w": generation.pv_dc_power_w, "pv_ac_power_w": generation.pv_ac_power_w, "poa_w_m2": generation.poa_w_m2, "cell_temp_c": generation.cell_temp_c}
     return row
 
 
@@ -374,7 +399,7 @@ def run_pv_planning(load_result: Dict[str, Any], weather: Dict[str, Any], scenar
     load = load_result.get("load_series") or {}; lt = list(load.get("timestamps", [])); wt = list(weather.get("time", []))
     if lt != wt: raise ValueError("第一阶段负荷与光伏天气不在同一时间区间，不能联算")
     intervals = _intervals(lt, load.get("interval_seconds")); weather = dict(weather); weather["interval_seconds"] = intervals
-    capacities, candidate_notes = generate_candidates(scenario); import_prices, tariff_meta = _price_vectors(scenario, lt); export_prices = ([float(scenario.export_price_cny_per_kwh)] * len(lt) if scenario.export_price_cny_per_kwh is not None else None)
+    capacities, candidate_notes = generate_candidates(scenario); import_prices, tariff_meta = _price_vectors(scenario, lt, intervals); export_prices = ([float(scenario.export_price_cny_per_kwh)] * len(lt) if scenario.export_price_cny_per_kwh is not None else None)
     base_generation = generate_pv(weather, 0.0, scenario); baseline = match_load(load, base_generation, allow_export=False, import_prices=import_prices); candidates: List[Dict[str, Any]] = []
     for capacity in capacities:
         generation = generate_pv(weather, capacity, scenario); matched = match_load(load, generation, allow_export=scenario.allow_export, export_limit_kw=scenario.export_limit_kw, import_prices=import_prices, export_prices=export_prices); economics = lifecycle_compare(matched, baseline, capacity, scenario, load_series=load, generation=generation, import_prices=import_prices, export_prices=export_prices); candidates.append(_candidate_row(capacity, matched, generation, economics, include_selected_series))
@@ -385,4 +410,4 @@ def run_pv_planning(load_result: Dict[str, Any], weather: Dict[str, Any], scenar
     service = _service_context(load_result)
     if service["status"] == "service_gap": recommendation["service_qualification"] = "当前空调负荷存在服务缺口；该推荐不能称为同等服务水平下的最优投资方案。"
     load_context = {"source": load.get("source"), "scope": load.get("scope"), "model_version": load.get("model_version"), "equipment_count": load.get("equipment_count"), "service_scope": load.get("service_scope"), "assumptions": load.get("assumptions"), "electric_load_kwh": baseline["summary"]["load_kwh"], "service_quality": service}
-    return {"status": "success", "scenario": asdict(scenario), "candidate_constraints": candidate_notes, "load_context": load_context, "service_quality": service, "tariff": tariff_meta, "weather_provenance": {"source_file": weather.get("source_file"), "hash": weather.get("hash"), "context": weather.get("context"), "pv_provenance": weather.get("pv_provenance", {})}, "baseline": {"capacity_kwp": 0.0, "matching": baseline["summary"], "monthly": baseline["monthly"]}, "candidates": candidates, "recommendation": recommendation, "selected_capacity_kwp": selected_key, "notes": ["第一阶段空调负荷是未校准城市级情景，不是楼宇精准负荷。", "本轮只评价当前建模空调用电；不含其他电器、储能、风电。", "逐时匹配不等于分钟级波动仿真。", "光伏候选有限枚举，不称全局最优。"]}
+    return {"status": "success", "scenario": asdict(scenario), "candidate_constraints": candidate_notes, "load_context": load_context, "service_quality": service, "tariff": tariff_meta, "weather_provenance": {"source_file": weather.get("source_file"), "boundary_file": weather.get("boundary_file"), "hash": weather.get("hash"), "context": weather.get("context"), "normalization": weather.get("weather_normalization"), "pv_provenance": weather.get("pv_provenance", {})}, "baseline": {"capacity_kwp": 0.0, "matching": baseline["summary"], "monthly": baseline["monthly"]}, "candidates": candidates, "recommendation": recommendation, "selected_capacity_kwp": selected_key, "notes": ["第一阶段空调负荷是未校准城市级情景，不是楼宇精准负荷。", "本轮只评价当前建模空调用电；不含其他电器、储能、风电。", "逐时匹配不等于分钟级波动仿真。", "光伏候选有限枚举，不称全局最优。"]}

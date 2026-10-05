@@ -1,0 +1,23 @@
+{
+  "scope": "广州2024同一报价与负荷接口，修复前结果目录仅作开发对照，不作为新独立样本",
+  "old_correctness_result": {
+    "0kwp_load_kwh": 1249.05760334538,
+    "1kwp_generation_kwh": 1086.63956878272,
+    "2kwp_generation_kwh": 2173.27913756574,
+    "2kwp_grid_import_kwh": 360.8471767318654
+  },
+  "new_interval_normalized_result": {
+    "0kwp_load_kwh": 1251.283914482373,
+    "1kwp_generation_kwh": 1106.99335504488,
+    "2kwp_generation_kwh": 2213.98671008967,
+    "2kwp_grid_import_kwh": 365.07838610434663,
+    "0kwp_npv_cny": -8258.473835583662
+  },
+  "reason_for_difference": [
+    "preceding-hour radiation moved to the left-labelled physical interval",
+    "real end boundary row used",
+    "inverter pdc0 now pac0/eta_inv_nom",
+    "interval tariff splitting is applied; user_constant remains unchanged"
+  ],
+  "recommendation_change": "没有调价或调参；有限候选在当前服务缺口和用户报价情景下仍为0kWp条件性推荐，不证明真实项目最优"
+}

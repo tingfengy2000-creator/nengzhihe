@@ -1,5 +1,11 @@
 # 变更记录
 
+## phase2a-interval-finalize · 2026-10-05
+
+基于 `1784cf4e64f30f54e5b4ad8cf8c7885df12b8269` 收尾阶段二A接口正确性：将 Open-Meteo 右标记的过去一小时辐照转换为左标记物理区间，保留真实末端边界并区分辐照与瞬时天气；按 pvlib 0.11.2 定义传入 `pdc0=pac0/eta_inv_nom`；分时电价按物理区间切分后计费。生命周期、固定负荷、0kWp、方向和 Agent 修改路径保留。
+
+新增 `tests/test_phase2a_correctness.py` 中的右标记/左标记、跨闰日边界、1700 W 额定边界、跨午夜分时计费回归；新结果写入 `operation_planning/results/pv_phase2a_interval_finalize/`，旧结果目录不覆盖。新增年度末端边界文件、完整重算、逐时证据和 Agent 回归记录。本轮未更新材料、未推送前置提交、未操作“乡艺有据”。
+
 ## phase2a-correctness-agent · 2026-10-05
 
 从 `a808c39d0aa4d398065aa7ef4f76fa701acf2927` 建立本地修复分支。修复生命周期逐年衰减误作用于固定负荷、东西朝向反转、声明间隔未核验、非有限天气值静默处理、0kWp继承光伏报价以及缺失外送价被当作完整经济比较的问题；PV 报告继续携带第一阶段服务缺口。

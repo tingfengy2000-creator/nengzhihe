@@ -1,0 +1,46 @@
+{
+  "calculation_version": "phase2a-interval-normalized-v2",
+  "tests": [
+    {
+      "name": "radiation_right_label_08_00",
+      "source_timestamp": "2024-01-01T08:00",
+      "interval_start": "2024-01-01T07:00",
+      "interval_end": "2024-01-01T08:00",
+      "representative_time": "2024-01-01T07:30",
+      "status": "pass"
+    },
+    {
+      "name": "inverter_rating_boundary",
+      "module_dc_rated_w": 2000.0,
+      "inverter_ac_rated_w": 1700.0,
+      "eta_inv_nom": 0.96,
+      "passed_pdc0_w": 1770.8333333333335,
+      "output_before_losses_w": 1700.0,
+      "output_after_losses_w": 1700.0,
+      "status": "pass"
+    },
+    {
+      "name": "tou_08_00_to_09_00",
+      "segments": [
+        {
+          "start": "08:00",
+          "end": "08:30",
+          "price_cny_per_kwh": 0.5
+        },
+        {
+          "start": "08:30",
+          "end": "09:00",
+          "price_cny_per_kwh": 1.0
+        }
+      ],
+      "constant_power_kw": 1.0,
+      "cost_cny": 0.75,
+      "status": "pass"
+    }
+  ],
+  "full_chain_reference": {
+    "weather_hash": "56632e1b83db122499363a93d75f2874296cfcfc3c040dc8140f5467ea16887b",
+    "weather_normalization_version": "preceding-hour-right-label-v2",
+    "representative_time_08_source": "2024-01-01T07:30"
+  }
+}
