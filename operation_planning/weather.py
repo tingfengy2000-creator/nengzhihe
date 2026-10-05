@@ -9,17 +9,25 @@ from urllib.request import Request, urlopen
 from .schemas import SiteContext, WeatherContext
 BASE = Path(__file__).resolve().parent
 WEATHER_DIR = BASE / "data" / "weather"
+PV_WEATHER_DIR = BASE / "data" / "weather_pv"
 OPEN_METEO_ARCHIVE = "https://archive-api.open-meteo.com/v1/archive"
 OPEN_METEO_FORECAST = "https://api.open-meteo.com/v1/forecast"
 VARIABLES = ["temperature_2m", "relative_humidity_2m", "surface_pressure", "shortwave_radiation", "wind_speed_10m", "wind_direction_10m"]
-UNITS = {"temperature_2m": "°C", "relative_humidity_2m": "%", "surface_pressure": "hPa", "shortwave_radiation": "W/m² hourly average", "wind_speed_10m": "km/h", "wind_direction_10m": "°"}
+PV_VARIABLES = VARIABLES + ["direct_normal_irradiance", "diffuse_radiation"]
+UNITS = {"temperature_2m": "°C", "relative_humidity_2m": "%", "surface_pressure": "hPa", "shortwave_radiation": "W/m² hourly average", "wind_speed_10m": "km/h", "wind_direction_10m": "°", "direct_normal_irradiance": "W/m² hourly average", "diffuse_radiation": "W/m² hourly average"}
 SITES = {"guangzhou": {"name": "广州", "latitude": 23.1291, "longitude": 113.2644, "file": "guangzhou_2024.json"}, "beijing": {"name": "北京", "latitude": 39.9042, "longitude": 116.4074, "file": "beijing_2024.json"}, "harbin": {"name": "哈尔滨", "latitude": 45.8038, "longitude": 126.5350, "file": "harbin_2024.json"}}
 
 def _context(site_id: str, payload: Dict[str, Any]) -> WeatherContext:
     hourly = payload.get("hourly", {}); times = hourly.get("time", []); spec = SITES.get(site_id, {"name": site_id, "latitude": payload.get("latitude", 0), "longitude": payload.get("longitude", 0)})
-    site = SiteContext(site_id, spec["name"], float(payload.get("latitude", spec["latitude"])), float(payload.get("longitude", spec["longitude"])), str(payload.get("timezone", "Asia/Shanghai")), float(payload.get("elevation", 0.0)), str(payload.get("source", "Open-Meteo Historical Weather API / ERA5")))
+    provenance = payload.get("_phase2_provenance", {})
+    site = SiteContext(site_id, spec["name"], float(payload.get("latitude", spec["latitude"])), float(payload.get("longitude", spec["longitude"])), str(payload.get("timezone", "Asia/Shanghai")), float(payload.get("elevation", 0.0)), str(payload.get("source", "Open-Meteo Historical Weather API")))
     missing = sum(sum(x is None for x in hourly.get(variable, [])) for variable in VARIABLES if variable in hourly)
-    return WeatherContext(site, str(payload.get("source", "Open-Meteo Historical Weather API (ERA5)")), str(payload.get("dataset_kind", "historical_reanalysis")), str(times[0]) if times else "", str(times[-1]) if times else "", [x for x in VARIABLES if x in hourly], UNITS, 10.0, missing, ["城市级再分析代表区域条件，不是楼宇微气候实测。", "shortwave_radiation 为过去一小时平均值；不与 instant 辐照混用。"])
+    notes = ["城市级再分析代表区域条件，不是楼宇微气候实测。", "shortwave_radiation 为过去一小时平均值；不与 instant 辐照混用。"]
+    requested = provenance.get("requested_model") or payload.get("requested_model")
+    response = provenance.get("response_model_metadata") or payload.get("response_model")
+    if requested and not response:
+        notes.append(f"API请求模型为 {requested}；响应未提供显式模型字段，不能仅凭来源名称声称响应模型。")
+    return WeatherContext(site, str(payload.get("source", "Open-Meteo Historical Weather API")), str(payload.get("dataset_kind", "historical_reanalysis")), str(times[0]) if times else "", str(times[-1]) if times else "", [x for x in VARIABLES if x in hourly], UNITS, 10.0, missing, notes, requested, response)
 
 def _validate_payload(payload: Dict[str, Any]) -> None:
     hourly = payload.get("hourly", {}); times = hourly.get("time", [])
@@ -37,6 +45,21 @@ def load_weather(site_id: str = "guangzhou", year: int = 2024) -> Dict[str, Any]
     if not path.exists(): raise FileNotFoundError(f"没有离线天气缓存：{path}")
     payload = json.loads(path.read_text(encoding="utf-8")); _validate_payload(payload); context = _context(site_id, payload)
     return {"context": asdict(context), "time": payload.get("hourly", {}).get("time", []), "hourly": payload.get("hourly", {}), "source_file": str(path), "hash": _sha256(path)}
+
+def load_pv_weather(site_id: str = "guangzhou", year: int = 2024) -> Dict[str, Any]:
+    """Load the phase-two cache with explicit GHI/DNI/DHI radiation components."""
+    if site_id not in SITES: raise ValueError(f"未支持的离线演示城市：{site_id}")
+    path = PV_WEATHER_DIR / f"{site_id}_{year}.json"
+    if not path.exists(): raise FileNotFoundError(f"没有光伏天气缓存：{path}")
+    payload = json.loads(path.read_text(encoding="utf-8")); _validate_payload(payload)
+    hourly = payload.get("hourly", {}); times = hourly.get("time", [])
+    for variable in ("direct_normal_irradiance", "diffuse_radiation", "wind_speed_10m"):
+        if len(hourly.get(variable, [])) != len(times) or any(value is None for value in hourly.get(variable, [])):
+            raise ValueError(f"光伏天气变量缺失或有缺测：{variable}")
+    context = _context(site_id, payload)
+    context.variables = [x for x in PV_VARIABLES if x in hourly]
+    context.notes.extend(["GHI=shortwave_radiation、DNI=direct_normal_irradiance、DHI=diffuse_radiation，均为过去一小时平均值。", "pvlib计算使用显式温度和10米风速，不使用默认20℃/0风速。"])
+    return {"context": asdict(context), "time": times, "hourly": hourly, "source_file": str(path), "hash": _sha256(path), "pv_provenance": payload.get("_phase2_provenance", {})}
 
 def parse_user_csv(text: str, site_id: str = "user_csv", timezone: str = "Asia/Shanghai") -> Dict[str, Any]:
     if len(text.encode("utf-8")) > 2_000_000: raise ValueError("用户天气CSV不得超过2MB")

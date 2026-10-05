@@ -234,6 +234,8 @@ class WeatherContext:
     wind_height_m: Optional[float] = None
     missing_count: int = 0
     notes: List[str] = field(default_factory=list)
+    requested_model: Optional[str] = None
+    response_model: Optional[str] = None
 
 
 @dataclass
@@ -245,6 +247,13 @@ class LoadSeries:
     latent_load_w: List[float]
     source: str
     scope: str
+    temperature_unmet_degree_hours: List[float] = field(default_factory=list)
+    rh_unmet_percent_hours: List[float] = field(default_factory=list)
+    capacity_shortfall_w: List[float] = field(default_factory=list)
+    equipment_count: int = 1
+    model_version: str = ""
+    assumptions: List[str] = field(default_factory=list)
+    service_scope: str = "cooling_only"
 
 
 @dataclass

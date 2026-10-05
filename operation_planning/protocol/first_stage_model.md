@@ -4,7 +4,7 @@
 
 ## 数据与可复现性
 
-`data/weather/` 保存广州、北京、哈尔滨 2023–2025 年的 Open-Meteo Historical Weather API / ERA5 逐时缓存。`weather_manifest.json` 记录每个文件的哈希、变量、单位、坐标和时区。再分析资料代表城市尺度参考气候，不是楼宇微气候实测；辐照字段是过去一小时平均值。用户 CSV 可通过工作台导入，必须提供时间戳、室外温度、相对湿度、气压和太阳辐照，长缺口或错序会拒绝。Open-Meteo 数据按 CC BY 4.0 使用，交付材料保留 Open-Meteo 与 ERA5 归因；免费 API 的非商业调用量和服务准确性遵循其当前条款，离线演示优先使用缓存。
+`data/weather/` 保存广州、北京、哈尔滨 2023–2025 年的 Open-Meteo Historical Weather API 逐时缓存；请求参数为 ERA5，但原始响应没有显式模型字段，因此 manifest 记录“ERA5 requested; response metadata absent”，不把来源名称当作响应模型。`weather_manifest.json` 记录每个文件的哈希、变量、单位、坐标和时区。再分析资料代表城市尺度参考气候，不是楼宇微气候实测；辐照字段是过去一小时平均值。用户 CSV 可通过工作台导入，必须提供时间戳、室外温度、相对湿度、气压和太阳辐照，长缺口或错序会拒绝。Open-Meteo 数据按 CC BY 4.0 使用，交付材料保留 Open-Meteo 与 ERA5 归因；免费 API 的非商业调用量和服务准确性遵循其当前条款，离线演示优先使用缓存。
 
 ## 热湿模型边界
 
@@ -30,3 +30,7 @@
 - Midea MSAGBU-12HRFN8 / MOX201-12HFN8: https://www.midea.com/it/hvac/monosplit/xtreme/climatizzatore-xtreme-msagbu-12hrfn8-mox201-12hfn8
 - Midea GAIA-12HRFN8: https://www.midea.com/ge-en/air-conditioners/inverter-conditioner/conditioner-gaia-12hrfn8.gaia-12hrfn8
 - Daikin FTXF35E5V1B / RXF35F5V1B: https://energylabel.daikin.eu/eu/en_US/lot10/jcr%3Acontent/root/services.json/lot10/datasheet/html?locale=en_US&product=FTXF35E5V1B+%2F+RXF35F5V1B
+
+## 阶段二交接
+
+阶段二 A 使用 `data/weather_pv/` 的同地点同年份补充缓存，保留 GHI、DNI、DHI 和 10 米风速；第一阶段热湿负荷仍来自原 `data/weather/`，两个缓存通过相同的本地时区时间戳对齐，不把辐照补充缓存改写成新的第一阶段成绩。光伏计算采用 pvlib，负荷仍是未校准城市级空调情景。

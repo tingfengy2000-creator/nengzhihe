@@ -18,12 +18,12 @@ python operation_planning/run_server.py
 - `POST /api/operation/thermal/run`：按城市/年份或导入天气运行单房间热湿模型；可传 `equipment_quote` 覆盖采购、安装、维护参考值。
 - `GET /api/operation/equipment`：查看型号来源和限制。
 
-完整数据哈希和范围说明见 `protocol/weather_manifest.json`、`protocol/first_stage_model.md`、`results/regional_product_v2/`。第二阶段只保留 `SiteContext`、`WeatherContext`、`LoadSeries`、`EquipmentProfile` 和现金流接口，本轮没有生成光伏或风电结果。
+完整数据哈希和范围说明见 `protocol/weather_manifest.json`、`protocol/weather_pv_manifest.json`、`protocol/first_stage_model.md`、`protocol/phase2a_handoff.md`、`results/regional_product_v2/`。第二阶段 A 已加入光伏配置页与 `POST /api/operation/pv/run`：同一空调负荷时间轴接入 GHI/DNI/DHI，逐时计算 PV 交流发电、供需匹配和有限候选生命周期成本；风电、储能和其他电器仍未接入。
 
-三个可复现演示可运行 `python scripts/first_stage_demo.py`，输出地区/年份比较、受控湿度目标变化和报价/批量房间场景到 `results/regional_product_v2/three_demos.json`。
+第一阶段三个可复现演示可运行 `python scripts/first_stage_demo.py`；第二阶段 A 证据可运行 `python scripts/phase2a_demo.py`，输出广州 2024 完整链、使用时段和屋顶/预算变化、以及固定 2 kWp 的 9 个历史年份比较到 `results/pv_phase2a/`。
 
 ## 证据边界
 
-天气是 Open-Meteo Historical Weather API / ERA5 城市级再分析，按 CC BY 4.0 归因，不是楼宇微气候实测。热湿模型是可审计的集总参考模型；PsychroLib 2.5.0 以 MIT 许可证随项目分发。三条设备记录是公开网页/能效标签的额定点，SHR、报价和完整部分负荷曲线缺失时会在结果中保持待补或参考情景。`results/regional_product_v2/summary.json` 的 27 条组合用于复现地区、年份与型号变化，不能写成实测精度、节能收益或采购承诺。
+天气是 Open-Meteo Historical Weather API 城市级再分析；第一阶段请求 ERA5 但响应未给出显式模型字段，manifest 保留该边界，不把来源名称当成响应模型，按 CC BY 4.0 归因，不是楼宇微气候实测。热湿模型是可审计的集总参考模型；PsychroLib 2.5.0 以 MIT 许可证随项目分发。三条设备记录是公开网页/能效标签的额定点，SHR、报价和完整部分负荷曲线缺失时会在结果中保持待补或参考情景。`results/regional_product_v2/summary.json` 的 27 条组合用于复现地区、年份与型号变化，不能写成实测精度、节能收益或采购承诺。
 
-旧轮次诊断源码、结果和发布包保持原状；本分支只在 `operation_planning/` 增加独立产品链。
+阶段二运行依赖锁定在仓库根目录 `requirements-phase2.txt`（pvlib 0.11.2）；Windows 可先执行 `python -m pip install -r requirements-phase2.txt`。旧轮次诊断源码、结果和发布包保持原状；本分支只在 `operation_planning/` 增加独立产品链。

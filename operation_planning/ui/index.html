@@ -14,6 +14,7 @@
   </header>
   <nav class="nav" aria-label="主导航">
     <button class="active" data-page="selection">空调选型</button>
+    <button data-page="pv">光伏配置</button>
     <button data-page="workbench">方案工作台</button>
     <button data-page="tariffs">地区与电价</button>
     <button data-page="history">历史方案</button>
@@ -43,6 +44,35 @@
       <div class="actions"><button class="primary" id="runSelection">开始空调选型试算</button><span class="helper" id="selectionStatus">等待输入</span></div><div class="notice warn" style="margin-top:18px">默认型号为公开额定点；厂家未公开的 SHR、报价和完整部分负荷曲线会明确标作参考值或用户输入。城市级再分析不代表楼宇微气候。</div></div>
       <aside class="side-stack"><div class="panel"><h3>当前会计算</h3><div class="assistant"><strong>温度与除湿分开核对</strong><span class="muted">围护传热、太阳得热、人员/设备显热、新风与渗透热湿交换、冷却能力和输入功率都会进入逐时结果。</span></div></div><div class="panel"><h3>第二阶段接口已预留</h3><p class="muted">统一输出 SiteContext、WeatherSeries、LoadSeries、EquipmentProfile 和 CashFlowScenario，后续先接光伏，再接风电；本轮不展示尚未计算的发电结果。</p></div></aside></div>
       <section class="panel" id="selectionResults" hidden style="margin-top:22px"><div class="result-head"><div><div class="eyebrow">选型结果</div><h2 id="selectionTitle">尚未计算</h2><p class="muted" id="selectionSubtitle"></p></div></div><div class="metric-grid" id="selectionMetrics"></div><div class="layout" style="margin-top:10px"><div><h3>第一型号逐月电量 / 电费</h3><div class="chart" id="selectionChart"><div class="empty">等待真实结果。</div></div></div><div><h3>结果解释</h3><div class="notice" id="selectionInterpretation">完成计算后显示。</div></div></div><div class="candidate-wrap" id="selectionTable"></div><details class="evidence"><summary>逐时证据、天气来源与成本明细</summary><pre id="selectionRaw"></pre></details></section>
+    </section>
+    <section class="page" id="pv">
+      <div class="hero"><div><div class="eyebrow">第二阶段 A · 光伏闭环</div><h1>先把发电和空调负荷对齐，再谈投资。</h1><p>固定第一阶段空调情景，逐时计算光伏交流发电、自用、购电与余电去向，再在有限候选中比较研究期成本。每次修改都会重新计算相关层。</p></div><span class="pill">pvlib · GHI/DNI/DHI逐时匹配 · 无储能</span></div>
+      <div class="layout"><div class="panel"><h2>建立光伏配置情景</h2><div class="form-grid">
+        <div class="field"><label for="pvSite">地点</label><select id="pvSite"><option value="guangzhou">广州</option><option value="beijing">北京</option><option value="harbin">哈尔滨</option></select></div>
+        <div class="field"><label for="pvYear">天气年份</label><select id="pvYear"><option value="2023">2023</option><option value="2024" selected>2024</option><option value="2025">2025</option></select></div>
+        <div class="field"><label for="pvRoof">可核验屋顶面积 m²</label><input id="pvRoof" type="number" value="50" min="1" step="1" /></div>
+        <div class="field"><label for="pvUsable">可用面积比例</label><input id="pvUsable" type="number" value="0.8" min="0.05" max="1" step="0.05" /></div>
+        <div class="field"><label for="pvTilt">组件倾角 °</label><input id="pvTilt" type="number" value="23" min="0" max="90" step="1" /></div>
+        <div class="field"><label for="pvAzimuth">朝向</label><select id="pvAzimuth"><option value="0">南（Open-Meteo 0°）</option><option value="-90">东（-90°）</option><option value="90">西（90°）</option><option value="180">北（180°）</option></select></div>
+        <div class="field"><label for="pvBudget">预算 CNY（可空）</label><input id="pvBudget" type="number" placeholder="不限制" min="0" step="100" /></div>
+        <div class="field"><label for="pvPrice">购电价 CNY/kWh</label><input id="pvPrice" type="number" value="0.66" min="0" step="0.01" /></div>
+        <div class="field"><label for="pvStudy">比较年限</label><select id="pvStudy"><option value="5">5年</option><option value="10" selected>10年</option><option value="15">15年</option></select></div>
+        <div class="field"><label for="pvStep">候选容量步长 kWp</label><select id="pvStep"><option value="0.5">0.5</option><option value="1" selected>1.0</option><option value="2">2.0</option></select></div>
+        <div class="field full"><label for="pvCaps">固定候选（逗号分隔，可空）</label><input id="pvCaps" value="0,1,2,3" placeholder="默认按屋顶和步长生成有限候选" /><span class="helper">0 kWp 始终保留；有限候选不称全局最优。</span></div>
+        <div class="field"><label for="pvModule">组件单价 CNY/kWp</label><input id="pvModule" type="number" value="1800" min="0" step="50" /></div>
+        <div class="field"><label for="pvInverter">逆变器单价 CNY/kWp</label><input id="pvInverter" type="number" value="600" min="0" step="50" /></div>
+        <div class="field"><label for="pvStructure">支架 CNY/kWp</label><input id="pvStructure" type="number" value="500" min="0" step="50" /></div>
+        <div class="field"><label for="pvInstall">施工 CNY/kWp</label><input id="pvInstall" type="number" value="800" min="0" step="50" /></div>
+        <div class="field"><label for="pvGrid">接入固定费用 CNY</label><input id="pvGrid" type="number" value="0" min="0" step="100" /></div>
+        <div class="field"><label for="pvMaintenance">维护 CNY/kWp·年</label><input id="pvMaintenance" type="number" value="30" min="0" step="5" /></div>
+        <div class="field"><label for="pvExport">余电处理</label><select id="pvExport"><option value="false" selected>不允许外送，余电弃用</option><option value="true">允许外送（需填写外送价）</option></select></div>
+        <div class="field"><label for="pvExportPrice">外送价 CNY/kWh（可空）</label><input id="pvExportPrice" type="number" placeholder="不填则不计算收入" min="0" step="0.01" /></div>
+        <div class="field"><label for="pvUseAgent">本地模型工具协同</label><select id="pvUseAgent"><option value="false" selected>关闭：直接确定性计算</option><option value="true">启用：模型只选择工具</option></select></div>
+      </div>
+      <details class="details"><summary>同一空调负荷条件</summary><div class="form-grid" style="margin-top:14px"><div class="field"><label for="pvArea">房间面积 m²</label><input id="pvArea" type="number" value="35" min="5" /></div><div class="field"><label for="pvPeople">工作日人数</label><input id="pvPeople" type="number" value="4" min="0" /></div><div class="field"><label for="pvStart">使用开始</label><input id="pvStart" type="number" value="8" min="0" max="23" /></div><div class="field"><label for="pvEnd">使用结束</label><input id="pvEnd" type="number" value="18" min="1" max="24" /></div><div class="field"><label for="pvTemp">室内温度目标 °C</label><input id="pvTemp" type="number" value="26" step="0.5" /></div><div class="field"><label for="pvRh">室内湿度目标 %RH</label><input id="pvRh" type="number" value="60" step="1" /></div></div></details>
+      <div class="actions"><button class="primary" id="runPV">运行光伏联算</button><span class="helper" id="pvStatus">使用同一第一阶段空调情景，等待输入。</span></div><div class="notice warn" style="margin-top:18px">屋顶面积是独立输入；房间面积和同类房间数量不会复制屋顶资源。设备、报价、可用面积和并网条件仍是待现场确认的情景。</div></div>
+      <aside class="side-stack"><div class="panel"><h3>本页只回答三件事</h3><div class="assistant"><strong>发多少、用多少、花多少。</strong><span class="muted">物理发电、逐时匹配和生命周期现金流分层计算。缺报价时保留发电结果，不给无条件投资推荐。</span></div></div><div class="panel"><h3>计算边界</h3><p class="muted">当前负荷是未校准的城市级空调情景，只评价该空调用电；不含储能、风电、其他电器，也不把年度发电量直接抵扣年度负荷。</p></div></aside></div>
+      <section class="panel" id="pvResults" hidden style="margin-top:22px"><div class="result-head"><div><div class="eyebrow">联算结果</div><h2 id="pvTitle">尚未计算</h2><p class="muted" id="pvSubtitle"></p></div></div><div class="metric-grid" id="pvMetrics"></div><div class="layout" style="margin-top:10px"><div><h3>负荷与光伏交流发电（逐时电量）</h3><div class="chart" id="pvChart"><div class="empty">等待真实结果。</div></div><div class="legend"><span><i class="room"></i>空调负荷</span><span><i class="pv"></i>光伏交流发电</span><span><i class="price"></i>同一时间轴</span></div></div><div><h3>推荐与边界</h3><div class="notice" id="pvRecommendation">完成计算后显示。</div><div class="notice warn" id="pvBoundary" style="margin-top:12px"></div></div></div><div class="candidate-wrap" id="pvTable"></div><details class="evidence"><summary>来源、输入、逐月和工具结果</summary><pre id="pvRaw"></pre></details></section>
     </section>
     <section class="page" id="workbench">
       <div class="hero"><div><div class="eyebrow">运行方案试算</div><h1>先试算，再安排空调运行。</h1><p>把使用时段、舒适温度和计费情景放在同一张核查卡里。程序回放真实模型、比较有限候选，并保留每一个证据窗口。</p></div><span class="pill">真实案例回放 · BOPTEST bestest_air v0.9.0</span></div>

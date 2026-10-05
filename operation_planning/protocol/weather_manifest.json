@@ -6,7 +6,7 @@
     "year": 2023,
     "site": "beijing",
     "source": "Open-Meteo Historical Weather API",
-    "model": "ERA5",
+    "model": "ERA5 requested; response metadata absent",
     "variables": [
       "time",
       "temperature_2m",
@@ -19,7 +19,9 @@
     "timezone": "Asia/Shanghai",
     "latitude": 40.0,
     "longitude": 116.5,
-    "note": "城市级再分析参考，不是楼宇微气候实测；shortwave_radiation为过去一小时平均值"
+    "note": "城市级再分析参考，不是楼宇微气候实测；Open-Meteo响应未提供显式模型字段，记录请求模型但不把来源名称当作响应模型；shortwave_radiation为过去一小时平均值",
+    "requested_model": "era5",
+    "response_model": null
   },
   {
     "file": "beijing_2024.json",
@@ -28,7 +30,7 @@
     "year": 2024,
     "site": "beijing",
     "source": "Open-Meteo Historical Weather API",
-    "model": "ERA5",
+    "model": "ERA5 requested; response metadata absent",
     "variables": [
       "time",
       "temperature_2m",
@@ -41,7 +43,9 @@
     "timezone": "Asia/Shanghai",
     "latitude": 40.0,
     "longitude": 116.5,
-    "note": "城市级再分析参考，不是楼宇微气候实测；shortwave_radiation为过去一小时平均值"
+    "note": "城市级再分析参考，不是楼宇微气候实测；Open-Meteo响应未提供显式模型字段，记录请求模型但不把来源名称当作响应模型；shortwave_radiation为过去一小时平均值",
+    "requested_model": "era5",
+    "response_model": null
   },
   {
     "file": "beijing_2025.json",
@@ -50,7 +54,7 @@
     "year": 2025,
     "site": "beijing",
     "source": "Open-Meteo Historical Weather API",
-    "model": "ERA5",
+    "model": "ERA5 requested; response metadata absent",
     "variables": [
       "time",
       "temperature_2m",
@@ -63,7 +67,9 @@
     "timezone": "Asia/Shanghai",
     "latitude": 40.0,
     "longitude": 116.5,
-    "note": "城市级再分析参考，不是楼宇微气候实测；shortwave_radiation为过去一小时平均值"
+    "note": "城市级再分析参考，不是楼宇微气候实测；Open-Meteo响应未提供显式模型字段，记录请求模型但不把来源名称当作响应模型；shortwave_radiation为过去一小时平均值",
+    "requested_model": "era5",
+    "response_model": null
   },
   {
     "file": "guangzhou_2023.json",
@@ -72,7 +78,7 @@
     "year": 2023,
     "site": "guangzhou",
     "source": "Open-Meteo Historical Weather API",
-    "model": "ERA5",
+    "model": "ERA5 requested; response metadata absent",
     "variables": [
       "time",
       "temperature_2m",
@@ -85,7 +91,9 @@
     "timezone": "Asia/Shanghai",
     "latitude": 23.25,
     "longitude": 113.25,
-    "note": "城市级再分析参考，不是楼宇微气候实测；shortwave_radiation为过去一小时平均值"
+    "note": "城市级再分析参考，不是楼宇微气候实测；Open-Meteo响应未提供显式模型字段，记录请求模型但不把来源名称当作响应模型；shortwave_radiation为过去一小时平均值",
+    "requested_model": "era5",
+    "response_model": null
   },
   {
     "file": "guangzhou_2024.json",
@@ -94,7 +102,7 @@
     "year": 2024,
     "site": "guangzhou",
     "source": "Open-Meteo Historical Weather API",
-    "model": "ERA5",
+    "model": "ERA5 requested; response metadata absent",
     "variables": [
       "time",
       "temperature_2m",
@@ -107,7 +115,9 @@
     "timezone": "Asia/Shanghai",
     "latitude": 23.25,
     "longitude": 113.25,
-    "note": "城市级再分析参考，不是楼宇微气候实测；shortwave_radiation为过去一小时平均值"
+    "note": "城市级再分析参考，不是楼宇微气候实测；Open-Meteo响应未提供显式模型字段，记录请求模型但不把来源名称当作响应模型；shortwave_radiation为过去一小时平均值",
+    "requested_model": "era5",
+    "response_model": null
   },
   {
     "file": "guangzhou_2025.json",
@@ -116,7 +126,7 @@
     "year": 2025,
     "site": "guangzhou",
     "source": "Open-Meteo Historical Weather API",
-    "model": "ERA5",
+    "model": "ERA5 requested; response metadata absent",
     "variables": [
       "time",
       "temperature_2m",
@@ -129,7 +139,9 @@
     "timezone": "Asia/Shanghai",
     "latitude": 23.25,
     "longitude": 113.25,
-    "note": "城市级再分析参考，不是楼宇微气候实测；shortwave_radiation为过去一小时平均值"
+    "note": "城市级再分析参考，不是楼宇微气候实测；Open-Meteo响应未提供显式模型字段，记录请求模型但不把来源名称当作响应模型；shortwave_radiation为过去一小时平均值",
+    "requested_model": "era5",
+    "response_model": null
   },
   {
     "file": "harbin_2023.json",
@@ -138,7 +150,7 @@
     "year": 2023,
     "site": "harbin",
     "source": "Open-Meteo Historical Weather API",
-    "model": "ERA5",
+    "model": "ERA5 requested; response metadata absent",
     "variables": [
       "time",
       "temperature_2m",
@@ -151,7 +163,9 @@
     "timezone": "Asia/Shanghai",
     "latitude": 45.75,
     "longitude": 126.5,
-    "note": "城市级再分析参考，不是楼宇微气候实测；shortwave_radiation为过去一小时平均值"
+    "note": "城市级再分析参考，不是楼宇微气候实测；Open-Meteo响应未提供显式模型字段，记录请求模型但不把来源名称当作响应模型；shortwave_radiation为过去一小时平均值",
+    "requested_model": "era5",
+    "response_model": null
   },
   {
     "file": "harbin_2024.json",
@@ -160,7 +174,7 @@
     "year": 2024,
     "site": "harbin",
     "source": "Open-Meteo Historical Weather API",
-    "model": "ERA5",
+    "model": "ERA5 requested; response metadata absent",
     "variables": [
       "time",
       "temperature_2m",
@@ -173,7 +187,9 @@
     "timezone": "Asia/Shanghai",
     "latitude": 45.75,
     "longitude": 126.5,
-    "note": "城市级再分析参考，不是楼宇微气候实测；shortwave_radiation为过去一小时平均值"
+    "note": "城市级再分析参考，不是楼宇微气候实测；Open-Meteo响应未提供显式模型字段，记录请求模型但不把来源名称当作响应模型；shortwave_radiation为过去一小时平均值",
+    "requested_model": "era5",
+    "response_model": null
   },
   {
     "file": "harbin_2025.json",
@@ -182,7 +198,7 @@
     "year": 2025,
     "site": "harbin",
     "source": "Open-Meteo Historical Weather API",
-    "model": "ERA5",
+    "model": "ERA5 requested; response metadata absent",
     "variables": [
       "time",
       "temperature_2m",
@@ -195,6 +211,8 @@
     "timezone": "Asia/Shanghai",
     "latitude": 45.75,
     "longitude": 126.5,
-    "note": "城市级再分析参考，不是楼宇微气候实测；shortwave_radiation为过去一小时平均值"
+    "note": "城市级再分析参考，不是楼宇微气候实测；Open-Meteo响应未提供显式模型字段，记录请求模型但不把来源名称当作响应模型；shortwave_radiation为过去一小时平均值",
+    "requested_model": "era5",
+    "response_model": null
   }
 ]

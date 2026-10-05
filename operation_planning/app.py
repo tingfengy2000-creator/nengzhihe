@@ -22,8 +22,11 @@ from .search import PlanEvaluator
 from .tariffs import registry
 from .equipment import catalogue
 from .weather import available_sites, load_weather, parse_user_csv
+from .weather import load_pv_weather
 from .thermal_model import RoomSpec, simulate_room
 from .lifecycle import life_cycle_cost
+from .pv import PVScenario, PVQuote, run_pv_planning
+from .pv_agent import PVPlanningAgent
 
 
 ROOT = Path(__file__).resolve().parent
@@ -136,6 +139,7 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/operation/health": return self._send(HTTPStatus.OK, {"ok": True, "product": "能智核——公共建筑空调运行方案试算与优化智能体", "mode": "local_replay"})
         if path == "/api/operation/tariffs": return self._send(HTTPStatus.OK, registry())
         if path == "/api/operation/weather/sites": return self._send(HTTPStatus.OK, {"items": available_sites()})
+        if path == "/api/operation/pv/provenance": return self._send(HTTPStatus.OK, {"engine": "pvlib", "scope": "phase2A photovoltaic generation, hourly load matching and lifecycle comparison", "radiation": "Open-Meteo GHI/DNI/DHI preceding-hour means", "status": "local_replay"})
         if path == "/api/operation/weather/import": return self._send(HTTPStatus.METHOD_NOT_ALLOWED, {"error": "请使用POST导入CSV"})
         if path == "/api/operation/equipment": return self._send(HTTPStatus.OK, {"items": catalogue()})
         if path == "/api/operation/provenance":
@@ -177,6 +181,29 @@ class Handler(BaseHTTPRequestHandler):
             try:
                 payload = self._read_json(); imported = parse_user_csv(str(payload.get("csv", "")), str(payload.get("site_id", "user_csv")), str(payload.get("timezone", "Asia/Shanghai")))
                 return self._send(HTTPStatus.OK, {"status": "success", "weather": imported})
+            except Exception as exc:
+                return self._send(HTTPStatus.BAD_REQUEST, {"status": "failed", "error": f"{type(exc).__name__}: {exc}"})
+        if path == "/api/operation/pv/run":
+            try:
+                payload = self._read_json()
+                site_id = str(payload.get("site_id", "guangzhou")); year = int(payload.get("year", 2024))
+                room_data = payload.get("room") or {}
+                room = RoomSpec(**{k: v for k, v in room_data.items() if k in RoomSpec.__dataclass_fields__})
+                load_weather_data = payload.get("weather") or load_weather(site_id, year)
+                pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year)
+                load_result = simulate_room(load_weather_data, room)
+                raw = payload.get("pv") or {}
+                quote_raw = raw.get("quote") or {}
+                quote = PVQuote(**{k: v for k, v in quote_raw.items() if k in PVQuote.__dataclass_fields__})
+                scenario_values = {k: v for k, v in raw.items() if k in PVScenario.__dataclass_fields__ and k != "quote"}
+                scenario_values.update(site_id=site_id, year=year, quote=quote)
+                scenario = PVScenario(**scenario_values)
+                report = run_pv_planning(load_result, pv_weather_data, scenario)
+                if bool(payload.get("use_agent", False)):
+                    report["agent"] = PVPlanningAgent().run(str(payload.get("request", "按现有空调负荷比较光伏容量")), report)
+                else:
+                    report["agent"] = {"requested": False, "status": "disabled", "mode": "deterministic_tools", "note": "本接口的数值全部由Python工具计算；可按需启用本地模型工具协同。"}
+                return self._send(HTTPStatus.OK, {"status": "success", "report": report})
             except Exception as exc:
                 return self._send(HTTPStatus.BAD_REQUEST, {"status": "failed", "error": f"{type(exc).__name__}: {exc}"})
         if path == "/api/operation/run":
