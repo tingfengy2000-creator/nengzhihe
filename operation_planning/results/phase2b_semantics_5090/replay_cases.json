@@ -1,0 +1,388 @@
+{
+  "source_commit": "a4d4bd139cab844eab0c1853889bd0320f45c941",
+  "cases": [
+    {
+      "case_id": "default_90000",
+      "source": {
+        "site": "guangzhou",
+        "year": 2024,
+        "weather_hash": "56632e1b83db122499363a93d75f2874296cfcfc3c040dc8140f5467ea16887b",
+        "calculation_version": "phase2b-semantics-5090-v1"
+      },
+      "request": {
+        "budget_cny": 90000,
+        "roof_area_m2": 50,
+        "pv_quote_complete": true
+      },
+      "service_quality": {
+        "status": "service_gap",
+        "gaps": {
+          "capacity_shortfall_hours": 1014.0,
+          "unmet_temp_degree_hours": 437.8122812453449,
+          "unmet_rh_percent_hours": 5186.618769797558
+        },
+        "scope": "cooling_only",
+        "note": "存在服务缺口时不代表同等服务水平下的投资最优。"
+      },
+      "recommendation": {
+        "status": "conditional",
+        "scenario_id": "S0_grid",
+        "complete_subset_best_scenario_id": "S0_grid",
+        "all_candidates_conclusion": "resolved_with_exclusions",
+        "eligible_scenario_ids": [
+          "S0_grid",
+          "S1_pv",
+          "S2_wind",
+          "S3_pv_wind"
+        ],
+        "excluded_scenario_ids": [],
+        "unknown_scenario_ids": [],
+        "reason": "已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。"
+      },
+      "candidates": [
+        {
+          "scenario_id": "S0_grid",
+          "pv_capacity_kwp": 0.0,
+          "wind_turbine_count": 0,
+          "generation_kwh": 0.0,
+          "grid_import_kwh": 1251.2839144823713,
+          "capex_cny": 0.0,
+          "incremental_npv_vs_s0_cny": 0.0,
+          "constraint_status": "feasible",
+          "admission_status": "eligible",
+          "constraint_reasons": [],
+          "economics_status": "complete"
+        },
+        {
+          "scenario_id": "S1_pv",
+          "pv_capacity_kwp": 2,
+          "wind_turbine_count": 0,
+          "generation_kwh": 2213.986710089667,
+          "grid_import_kwh": 365.07838610434663,
+          "capex_cny": 7400.0,
+          "incremental_npv_vs_s0_cny": -1858.7762883995056,
+          "constraint_status": "feasible",
+          "admission_status": "eligible",
+          "constraint_reasons": [],
+          "economics_status": "complete"
+        },
+        {
+          "scenario_id": "S2_wind",
+          "pv_capacity_kwp": 0.0,
+          "wind_turbine_count": 1,
+          "generation_kwh": 909.997121689495,
+          "grid_import_kwh": 1076.7289790458174,
+          "capex_cny": 82000.0,
+          "incremental_npv_vs_s0_cny": -88747.93742611879,
+          "constraint_status": "feasible",
+          "admission_status": "eligible",
+          "constraint_reasons": [],
+          "economics_status": "complete"
+        },
+        {
+          "scenario_id": "S3_pv_wind",
+          "pv_capacity_kwp": 2,
+          "wind_turbine_count": 1,
+          "generation_kwh": 3123.9838317791487,
+          "grid_import_kwh": 302.850277337929,
+          "capex_cny": 89400.0,
+          "incremental_npv_vs_s0_cny": -91335.62799713975,
+          "constraint_status": "feasible",
+          "admission_status": "eligible",
+          "constraint_reasons": [],
+          "economics_status": "complete"
+        }
+      ]
+    },
+    {
+      "case_id": "budget_60000",
+      "source": {
+        "site": "guangzhou",
+        "year": 2024,
+        "weather_hash": "56632e1b83db122499363a93d75f2874296cfcfc3c040dc8140f5467ea16887b",
+        "calculation_version": "phase2b-semantics-5090-v1"
+      },
+      "request": {
+        "budget_cny": 60000,
+        "roof_area_m2": 50,
+        "pv_quote_complete": true
+      },
+      "service_quality": {
+        "status": "service_gap",
+        "gaps": {
+          "capacity_shortfall_hours": 1014.0,
+          "unmet_temp_degree_hours": 437.8122812453449,
+          "unmet_rh_percent_hours": 5186.618769797558
+        },
+        "scope": "cooling_only",
+        "note": "存在服务缺口时不代表同等服务水平下的投资最优。"
+      },
+      "recommendation": {
+        "status": "conditional",
+        "scenario_id": "S0_grid",
+        "complete_subset_best_scenario_id": "S0_grid",
+        "all_candidates_conclusion": "resolved_with_exclusions",
+        "eligible_scenario_ids": [
+          "S0_grid",
+          "S1_pv"
+        ],
+        "excluded_scenario_ids": [
+          "S2_wind",
+          "S3_pv_wind"
+        ],
+        "unknown_scenario_ids": [],
+        "reason": "已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。"
+      },
+      "candidates": [
+        {
+          "scenario_id": "S0_grid",
+          "pv_capacity_kwp": 0.0,
+          "wind_turbine_count": 0,
+          "generation_kwh": 0.0,
+          "grid_import_kwh": 1251.2839144823713,
+          "capex_cny": 0.0,
+          "incremental_npv_vs_s0_cny": 0.0,
+          "constraint_status": "feasible",
+          "admission_status": "eligible",
+          "constraint_reasons": [],
+          "economics_status": "complete"
+        },
+        {
+          "scenario_id": "S1_pv",
+          "pv_capacity_kwp": 2,
+          "wind_turbine_count": 0,
+          "generation_kwh": 2213.986710089667,
+          "grid_import_kwh": 365.07838610434663,
+          "capex_cny": 7400.0,
+          "incremental_npv_vs_s0_cny": -1858.7762883995056,
+          "constraint_status": "feasible",
+          "admission_status": "eligible",
+          "constraint_reasons": [],
+          "economics_status": "complete"
+        },
+        {
+          "scenario_id": "S2_wind",
+          "pv_capacity_kwp": 0.0,
+          "wind_turbine_count": 1,
+          "generation_kwh": 909.997121689495,
+          "grid_import_kwh": 1076.7289790458174,
+          "capex_cny": 82000.0,
+          "incremental_npv_vs_s0_cny": -88747.93742611879,
+          "constraint_status": "over_budget",
+          "admission_status": "excluded",
+          "constraint_reasons": [
+            "初始投入超过预算60000元"
+          ],
+          "economics_status": "complete"
+        },
+        {
+          "scenario_id": "S3_pv_wind",
+          "pv_capacity_kwp": 2,
+          "wind_turbine_count": 1,
+          "generation_kwh": 3123.9838317791487,
+          "grid_import_kwh": 302.850277337929,
+          "capex_cny": 89400.0,
+          "incremental_npv_vs_s0_cny": -91335.62799713975,
+          "constraint_status": "over_budget",
+          "admission_status": "excluded",
+          "constraint_reasons": [
+            "初始投入超过预算60000元"
+          ],
+          "economics_status": "complete"
+        }
+      ]
+    },
+    {
+      "case_id": "missing_pv_quote",
+      "source": {
+        "site": "guangzhou",
+        "year": 2024,
+        "weather_hash": "56632e1b83db122499363a93d75f2874296cfcfc3c040dc8140f5467ea16887b",
+        "calculation_version": "phase2b-semantics-5090-v1"
+      },
+      "request": {
+        "budget_cny": 90000,
+        "roof_area_m2": 50,
+        "pv_quote_complete": false
+      },
+      "service_quality": {
+        "status": "service_gap",
+        "gaps": {
+          "capacity_shortfall_hours": 1014.0,
+          "unmet_temp_degree_hours": 437.8122812453449,
+          "unmet_rh_percent_hours": 5186.618769797558
+        },
+        "scope": "cooling_only",
+        "note": "存在服务缺口时不代表同等服务水平下的投资最优。"
+      },
+      "recommendation": {
+        "status": "conditional_subset",
+        "scenario_id": "S0_grid",
+        "complete_subset_best_scenario_id": "S0_grid",
+        "all_candidates_conclusion": "unresolved",
+        "eligible_scenario_ids": [
+          "S0_grid",
+          "S2_wind"
+        ],
+        "excluded_scenario_ids": [],
+        "unknown_scenario_ids": [
+          "S1_pv",
+          "S3_pv_wind"
+        ],
+        "reason": "仅能给出已核实子集内最优；仍有可能适用但报价/必要条件未知的候选，全候选结论未定，不能称它们已被其他方案击败。"
+      },
+      "candidates": [
+        {
+          "scenario_id": "S0_grid",
+          "pv_capacity_kwp": 0.0,
+          "wind_turbine_count": 0,
+          "generation_kwh": 0.0,
+          "grid_import_kwh": 1251.2839144823713,
+          "capex_cny": 0.0,
+          "incremental_npv_vs_s0_cny": 0.0,
+          "constraint_status": "feasible",
+          "admission_status": "eligible",
+          "constraint_reasons": [],
+          "economics_status": "complete"
+        },
+        {
+          "scenario_id": "S1_pv",
+          "pv_capacity_kwp": 2,
+          "wind_turbine_count": 0,
+          "generation_kwh": 2213.986710089667,
+          "grid_import_kwh": 365.07838610434663,
+          "capex_cny": null,
+          "incremental_npv_vs_s0_cny": null,
+          "constraint_status": "incomplete_quote",
+          "admission_status": "unknown",
+          "constraint_reasons": [],
+          "economics_status": "incomplete"
+        },
+        {
+          "scenario_id": "S2_wind",
+          "pv_capacity_kwp": 0.0,
+          "wind_turbine_count": 1,
+          "generation_kwh": 909.997121689495,
+          "grid_import_kwh": 1076.7289790458174,
+          "capex_cny": 82000.0,
+          "incremental_npv_vs_s0_cny": -88747.93742611879,
+          "constraint_status": "feasible",
+          "admission_status": "eligible",
+          "constraint_reasons": [],
+          "economics_status": "complete"
+        },
+        {
+          "scenario_id": "S3_pv_wind",
+          "pv_capacity_kwp": 2,
+          "wind_turbine_count": 1,
+          "generation_kwh": 3123.9838317791487,
+          "grid_import_kwh": 302.850277337929,
+          "capex_cny": null,
+          "incremental_npv_vs_s0_cny": null,
+          "constraint_status": "incomplete_quote",
+          "admission_status": "unknown",
+          "constraint_reasons": [],
+          "economics_status": "incomplete"
+        }
+      ]
+    },
+    {
+      "case_id": "roof_1m2",
+      "source": {
+        "site": "guangzhou",
+        "year": 2024,
+        "weather_hash": "56632e1b83db122499363a93d75f2874296cfcfc3c040dc8140f5467ea16887b",
+        "calculation_version": "phase2b-semantics-5090-v1"
+      },
+      "request": {
+        "budget_cny": 90000,
+        "roof_area_m2": 1,
+        "pv_quote_complete": true
+      },
+      "service_quality": {
+        "status": "service_gap",
+        "gaps": {
+          "capacity_shortfall_hours": 1014.0,
+          "unmet_temp_degree_hours": 437.8122812453449,
+          "unmet_rh_percent_hours": 5186.618769797558
+        },
+        "scope": "cooling_only",
+        "note": "存在服务缺口时不代表同等服务水平下的投资最优。"
+      },
+      "recommendation": {
+        "status": "conditional",
+        "scenario_id": "S0_grid",
+        "complete_subset_best_scenario_id": "S0_grid",
+        "all_candidates_conclusion": "resolved_with_exclusions",
+        "eligible_scenario_ids": [
+          "S0_grid",
+          "S2_wind"
+        ],
+        "excluded_scenario_ids": [
+          "S1_pv",
+          "S3_pv_wind"
+        ],
+        "unknown_scenario_ids": [],
+        "reason": "已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。"
+      },
+      "candidates": [
+        {
+          "scenario_id": "S0_grid",
+          "pv_capacity_kwp": 0.0,
+          "wind_turbine_count": 0,
+          "generation_kwh": 0.0,
+          "grid_import_kwh": 1251.2839144823713,
+          "capex_cny": 0.0,
+          "incremental_npv_vs_s0_cny": 0.0,
+          "constraint_status": "feasible",
+          "admission_status": "eligible",
+          "constraint_reasons": [],
+          "economics_status": "complete"
+        },
+        {
+          "scenario_id": "S1_pv",
+          "pv_capacity_kwp": 2,
+          "wind_turbine_count": 0,
+          "generation_kwh": 2213.986710089667,
+          "grid_import_kwh": 365.07838610434663,
+          "capex_cny": 7400.0,
+          "incremental_npv_vs_s0_cny": -1858.7762883995056,
+          "constraint_status": "not_applicable",
+          "admission_status": "excluded",
+          "constraint_reasons": [
+            "光伏容量2kWp超过可用屋顶上限0.16kWp"
+          ],
+          "economics_status": "complete"
+        },
+        {
+          "scenario_id": "S2_wind",
+          "pv_capacity_kwp": 0.0,
+          "wind_turbine_count": 1,
+          "generation_kwh": 909.997121689495,
+          "grid_import_kwh": 1076.7289790458174,
+          "capex_cny": 82000.0,
+          "incremental_npv_vs_s0_cny": -88747.93742611879,
+          "constraint_status": "feasible",
+          "admission_status": "eligible",
+          "constraint_reasons": [],
+          "economics_status": "complete"
+        },
+        {
+          "scenario_id": "S3_pv_wind",
+          "pv_capacity_kwp": 2,
+          "wind_turbine_count": 1,
+          "generation_kwh": 3123.9838317791487,
+          "grid_import_kwh": 302.850277337929,
+          "capex_cny": 89400.0,
+          "incremental_npv_vs_s0_cny": -91335.62799713975,
+          "constraint_status": "not_applicable",
+          "admission_status": "excluded",
+          "constraint_reasons": [
+            "光伏容量2kWp超过可用屋顶上限0.16kWp"
+          ],
+          "economics_status": "complete"
+        }
+      ]
+    }
+  ]
+}

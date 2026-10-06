@@ -1,0 +1,50 @@
+{
+  "run_id": "phase2b-5090-semantics-final",
+  "checked_at": "2026-10-06T12:06:42.8967034+08:00",
+  "source_commit": "a4d4bd139cab844eab0c1853889bd0320f45c941",
+  "machine_role": "5090",
+  "server": "127.0.0.1:18808",
+  "checks": [
+    {
+      "id": "api_default_four_scenarios",
+      "status": "passed",
+      "observed": {
+        "http": 200,
+        "api_status": "success",
+        "calculation_version": "phase2b-semantics-5090-v1",
+        "recommendation_status": "conditional",
+        "recommendation_scenario_id": "S0_grid",
+        "scenario_ids": "S0_grid,S1_pv,S2_wind,S3_pv_wind",
+        "service_status": "service_gap"
+      }
+    },
+    {
+      "id": "api_budget_60000",
+      "status": "passed",
+      "observed": {
+        "http": 200,
+        "api_status": "success",
+        "recommendation_status": "conditional",
+        "eligible": "S0_grid,S1_pv",
+        "excluded": "S2_wind,S3_pv_wind"
+      }
+    },
+    {
+      "id": "page_hybrid",
+      "status": "passed",
+      "observed": {
+        "http": 200,
+        "nav_label": "风光联算",
+        "labels": "预算 CNY（情景）,购电价 CNY/kWh,运行四方案联算,JSON证据/方案卡/CSV时刻表 not present on hybrid panel",
+        "visual_capture": "browser tab 7 at 127.0.0.1:18808"
+      }
+    },
+    {
+      "id": "export",
+      "status": "handoff_required",
+      "observed": {
+        "detail": "阶段二B无独立服务端导出路由；API完整report与replay_cases.json保持同一字段。5060前端接续时应从已显示report导出，不能重新计算。"
+      }
+    }
+  ]
+}
