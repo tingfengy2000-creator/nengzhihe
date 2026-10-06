@@ -1,6 +1,6 @@
 """Freeze and run the phase-two B four-plan comparison from cached public weather."""
 from __future__ import annotations
-import json, hashlib, sys
+import json, hashlib, sys, subprocess
 from dataclasses import asdict
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -28,7 +28,8 @@ def main():
             report=primary if (site,year)==("guangzhou",2024) else run(site,year,False)
             row={"site_id":site,"year":year,"calculation_version":report["calculation_version"],"weather_hash":report["weather_provenance"]["hash"],"profile_id":profile.profile_id,"candidates":[{"scenario_id":c["scenario_id"],"pv_generation_kwh":c["pv_generation_kwh"],"wind_generation_kwh":c["wind_generation_kwh"],"self_use_kwh":c["self_use_kwh"],"grid_import_kwh":c["grid_import_kwh"],"grid_export_kwh":c["grid_export_kwh"],"curtailment_kwh":c["curtailment_kwh"],"load_coverage_rate":c["load_coverage_rate"],"budget_ok":c["budget_ok"],"economics":c["economics"]} for c in report["candidates"]]}
             all_rows.append(row)
-    summary={"calculation_version":"phase2b-cost-fix-v1","profile":{"profile_id":profile.profile_id,"source_url":profile.source_url,"source_sha256":profile.source_sha256,"curve_hash":profile.curve_hash()},"fixed_configuration":{"pv_capacity_kwp":2,"wind_turbine_count":1,"hub_height_m":9,"hellman_exponent":.14,"budget_cny":90000,"allow_export":False,"shared_connection_cny":0,"study_years":10,"tariff":"user_constant 0.66 CNY/kWh"},"scope":"3 cities x 3 cached weather years; same fixed configuration; Guangzhou 2024 full hourly evidence; other groups summary evidence","groups":all_rows}
+    source_commit=subprocess.check_output(["git","rev-parse","HEAD"],cwd=ROOT,text=True).strip()
+    summary={"calculation_version":"phase2b-semantics-5090-v1","source_commit":source_commit,"profile":{"profile_id":profile.profile_id,"source_url":profile.source_url,"source_sha256":profile.source_sha256,"curve_hash":profile.curve_hash()},"fixed_configuration":{"pv_capacity_kwp":2,"wind_turbine_count":1,"hub_height_m":9,"hellman_exponent":.14,"budget_cny":90000,"allow_export":False,"shared_connection_cny":0,"study_years":10,"tariff":"user_constant 0.66 CNY/kWh"},"scope":"3 cities x 3 cached weather years; same fixed configuration; Guangzhou 2024 full hourly evidence; other groups summary evidence","groups":all_rows}
     (OUT/"fixed_configuration_9_groups.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2,default=str),encoding="utf-8")
     print(json.dumps({"primary":str(OUT/"guangzhou_2024_full_chain.json"),"fixed":str(OUT/"fixed_configuration_9_groups.json"),"groups":len(all_rows)},ensure_ascii=False))
 if __name__=="__main__": main()

@@ -1,6 +1,6 @@
 """Generate small 5090-only API/replay fixtures from the current source."""
 from __future__ import annotations
-import json, sys
+import json, sys, subprocess
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from operation_planning.weather import load_weather, load_pv_weather
@@ -30,7 +30,8 @@ def run_case(case_id, *, budget=90000, roof=50, quote=PVQ, service=True):
 def main():
     cases = [run_case("default_90000"), run_case("budget_60000", budget=60000), run_case("missing_pv_quote", quote=PVQuote()), run_case("roof_1m2", roof=1)]
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "replay_cases.json").write_text(json.dumps({"source_commit": "pending-source-commit", "cases": cases}, ensure_ascii=False, indent=2), encoding="utf-8")
+    source_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+    (OUT / "replay_cases.json").write_text(json.dumps({"source_commit": source_commit, "cases": cases}, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps({"cases": len(cases), "path": str(OUT / "replay_cases.json")}, ensure_ascii=False))
 
 

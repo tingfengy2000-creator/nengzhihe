@@ -1,6 +1,6 @@
 """Run the five bounded local-model phase-two B task probes and keep failures."""
 from __future__ import annotations
-import json, sys, time
+import json, sys, time, subprocess
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from operation_planning.hybrid_agent import HybridPlanningAgent
@@ -13,5 +13,6 @@ def main():
     for i,request in enumerate(TASKS,1):
         started=time.perf_counter(); out=agent.run(request,BASE); elapsed=round((time.perf_counter()-started)*1000,2); rows.append({"case_id":f"agent_{i}","request":request,"status":out.get("status"),"message":out.get("message"),"question":out.get("question"),"error":out.get("error"),"wall_time_ms":elapsed,"full_plan_calls":out.get("full_plan_calls",0),"trace":out.get("trace",[]),"report_summary":({"recommendation":out.get("report",{}).get("recommendation"),"agent_task":out.get("report",{}).get("agent_task")} if out.get("report") else None)})
         print(i,request,out.get("status"),out.get("error") or out.get("question") or "ok")
-    OUT.mkdir(parents=True,exist_ok=True); (OUT/"agent_task_records.json").write_text(json.dumps({"model":"local_configured_model","machine_role":"5090","source_commit":"pending-source-commit","cases":rows},ensure_ascii=False,indent=2,default=str),encoding="utf-8")
+    source_commit=subprocess.check_output(["git","rev-parse","HEAD"],cwd=Path(__file__).resolve().parents[1],text=True).strip()
+    OUT.mkdir(parents=True,exist_ok=True); (OUT/"agent_task_records.json").write_text(json.dumps({"model":"local_configured_model","machine_role":"5090","source_commit":source_commit,"cases":rows},ensure_ascii=False,indent=2,default=str),encoding="utf-8")
 if __name__=="__main__": main()
