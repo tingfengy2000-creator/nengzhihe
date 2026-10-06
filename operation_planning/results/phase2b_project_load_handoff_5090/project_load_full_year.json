@@ -1,0 +1,77 @@
+{
+  "status": "passed",
+  "run_id": "phase2b-project-load-5090-guangzhou-2024",
+  "source_commit": "611598be93e282cbc473287f5b3d8f173fe86793",
+  "machine_role": "5090",
+  "scope": "same-room aggregation only; no different-room physics",
+  "weather": {
+    "site_id": "guangzhou",
+    "year": 2024,
+    "rows": 8784,
+    "load_hash": "000fd1650cb811514c8e5eb7cf0325e3e96a0a75844c5b046c1098080e0c6557",
+    "pv_hash": "56632e1b83db122499363a93d75f2874296cfcfc3c040dc8140f5467ea16887b",
+    "load_source": "E:\\比赛\\nengzhihe\\operation_planning\\data\\weather\\guangzhou_2024.json",
+    "pv_source": "E:\\比赛\\nengzhihe\\operation_planning\\data\\weather_pv\\guangzhou_2024.json"
+  },
+  "room_contract": {
+    "one_room": {
+      "room_count": 1,
+      "units_per_room": 2,
+      "single_room_kwh": 1359.6639627709894,
+      "project_kwh": 1359.6639627709894
+    },
+    "three_rooms": {
+      "room_count": 3,
+      "units_per_room": 2,
+      "single_room_kwh": 1359.6639627709894,
+      "project_kwh": 4078.9918883129685
+    },
+    "project_to_one_ratio": 3.0,
+    "single_room_preserved": true,
+    "aggregation_contract": {
+      "scope": "project",
+      "room_count": 3,
+      "units_per_room": 2,
+      "source": "operation_planning.project_load.aggregate_project_load",
+      "single_room_preserved": true
+    },
+    "project_scope": "project; same-room aggregation of single-room trace",
+    "source_scope": "one-room; units_per_room included; room_count applied only in cost aggregation"
+  },
+  "pv": {
+    "one_room": {
+      "load_kwh": 1359.6639627709899,
+      "pv2_generation_kwh": 2213.98671008967,
+      "pv0_grid_import_kwh": 1359.6639627709899
+    },
+    "three_rooms": {
+      "load_kwh": 4078.9918883129694,
+      "pv2_generation_kwh": 2213.98671008967,
+      "pv0_grid_import_kwh": 4078.9918883129694
+    }
+  },
+  "hybrid": {
+    "one_room_s3": {
+      "load_kwh": 1359.6639627709894,
+      "generation_kwh": 3123.9838317791487,
+      "grid_import_kwh": 407.0029831082734
+    },
+    "three_rooms_s3": {
+      "load_kwh": 4078.991888312964,
+      "generation_kwh": 3123.9838317791487,
+      "grid_import_kwh": 2886.6492662126525
+    },
+    "three_rooms_s0": {
+      "load_kwh": 4078.9918883129685,
+      "grid_import_kwh": 4078.991888312964,
+      "generation_kwh": 0.0
+    }
+  },
+  "air_cost": {
+    "annual_load_kwh": 4078.9918883129694,
+    "cost_status": "complete",
+    "room_count": 3,
+    "units_per_room": 2
+  },
+  "contract_examples": "tests/test_aircost_handoff.py are short contract samples, not annual-plan demonstrations; this file is the formal full-year replay."
+}

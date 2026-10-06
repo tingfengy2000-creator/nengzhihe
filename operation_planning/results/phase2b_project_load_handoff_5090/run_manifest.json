@@ -1,0 +1,24 @@
+{
+  "run_id": "phase2b-project-load-5090-guangzhou-2024",
+  "source_commit": "611598be93e282cbc473287f5b3d8f173fe86793",
+  "machine_role": "5090",
+  "hostname": "DESKTOP-B5PNBNC",
+  "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+  "gpu": "NVIDIA GeForce RTX 5090, 32607 MiB",
+  "command": "python scripts/phase2b_project_load_handoff_5090.py",
+  "started_utc": "2026-10-06T09:21:04+00:00",
+  "ended_utc": "2026-10-06T09:22:20+00:00",
+  "exit_status": 0,
+  "weather_hashes": {
+    "load": "000fd1650cb811514c8e5eb7cf0325e3e96a0a75844c5b046c1098080e0c6557",
+    "pv": "56632e1b83db122499363a93d75f2874296cfcfc3c040dc8140f5467ea16887b"
+  },
+  "output_sha256": "bae2c00bf1610373c92167eebc3ec058aa458fb4ad0fb093e1b0720e7287f34c",
+  "short_tests": "contract examples only; not annual-plan demonstrations",
+  "formal_replay": "Guangzhou 2024 complete-year normalized weather; no historical experiment rerun",
+  "notes": [
+    "Only room_count aggregation is tested; heat/moisture and PV/wind formulas are unchanged.",
+    "Single-room trace, project aggregation and matching outputs are kept distinct.",
+    "No model weights, credentials or private data are included."
+  ]
+}
