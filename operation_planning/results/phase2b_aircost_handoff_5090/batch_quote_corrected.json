@@ -1,0 +1,286 @@
+{
+  "request": {
+    "site_id": "guangzhou",
+    "year": 2024,
+    "annual_price_cny_per_kwh": 0.66,
+    "study_years": 10,
+    "expected_life_years": 10,
+    "room": {
+      "equipment_count": 2,
+      "room_count": 1
+    },
+    "equipment_quote": {
+      "equipment_price_cny": 3200,
+      "installation_cny": 900,
+      "maintenance_cny_per_year": 280
+    }
+  },
+  "http_status": 200,
+  "response": {
+    "status": "success",
+    "input_contract": {
+      "room": {
+        "equipment_count": 2,
+        "room_count": 1
+      },
+      "cost": {
+        "study_years": 10,
+        "price_cny_per_kwh": 0.66,
+        "calendar_start": null,
+        "discount_rate": 0.0,
+        "room_count": 1,
+        "units_per_room": 2,
+        "expected_life_years": 10,
+        "warranty_years": null,
+        "quote_scope": "per_unit",
+        "quantity_semantics": "room_count × units_per_room; thermal energy is not multiplied by units_per_room again",
+        "quote": {
+          "equipment_price_cny": 3200,
+          "installation_cny": 900,
+          "maintenance_cny_per_year": 280
+        },
+        "tariff_mapping": null,
+        "tariff": null
+      }
+    },
+    "weather_hash": "000fd1650cb811514c8e5eb7cf0325e3e96a0a75844c5b046c1098080e0c6557",
+    "room": {
+      "area_m2": 35.0,
+      "height_m": 3.0,
+      "orientation": "south",
+      "window_wall_ratio": 0.25,
+      "insulation_u_w_m2k": 0.75,
+      "people_count": 4,
+      "equipment_gain_w": 300.0,
+      "ventilation_lps_person": 7.0,
+      "infiltration_ach": 0.35,
+      "weekdays_only": true,
+      "start_hour": 8,
+      "end_hour": 18,
+      "indoor_temp_c": 26.0,
+      "indoor_rh_percent": 60.0,
+      "cooling_setpoint_c": 26.0,
+      "rh_setpoint_percent": 60.0,
+      "equipment_id": "midea_msagbu12_mox201",
+      "equipment_count": 2,
+      "room_count": 1,
+      "units_per_room": 2,
+      "default_shr": 0.75
+    },
+    "summary": {
+      "cooling_kwh": 4620.422184091092,
+      "sensible_cooling_kwh": 3153.0669700424687,
+      "latent_cooling_kwh": 1467.3552140486324,
+      "electric_kwh": 1359.6639627709894,
+      "unmet_temp_degree_hours": 71.10515745692221,
+      "unmet_rh_percent_hours": 0.0,
+      "capacity_shortfall_hours": 118.0,
+      "active_hours": 2620.0,
+      "cooling_season_hours": 1576.0,
+      "source": "bounded single-room lumped model; reference consistency only, not measured-building validation",
+      "shr_source": "manufacturer value when published; otherwise editable default reference assumption",
+      "performance_source": "rated point with explicit temperature derate; no complete part-load map"
+    },
+    "load_series_contract": {
+      "scope": "one-room; units_per_room included; room_count applied only in cost aggregation",
+      "equipment_count": 2,
+      "room_count": 1,
+      "units_per_room": 2,
+      "model_version": "thermal_model_phase1_v2"
+    },
+    "cost": {
+      "monthly": {
+        "2024-01": {
+          "electric_kwh": 2.7719637272023485,
+          "cooling_kwh": 9.424676672487985,
+          "latent_kwh": 0.27738678648195,
+          "cost_cny": 1.8294960599535501,
+          "hours": 744.0
+        },
+        "2024-02": {
+          "electric_kwh": 3.901477010631845,
+          "cooling_kwh": 13.265021836148273,
+          "latent_kwh": 2.842587985534916,
+          "cost_cny": 2.574974827017018,
+          "hours": 696.0
+        },
+        "2024-03": {
+          "electric_kwh": 26.210917574272525,
+          "cooling_kwh": 89.11711975252656,
+          "latent_kwh": 20.81974373151528,
+          "cost_cny": 17.299205599019864,
+          "hours": 744.0
+        },
+        "2024-04": {
+          "electric_kwh": 127.14104796799427,
+          "cooling_kwh": 432.2795630911805,
+          "latent_kwh": 151.49526056463753,
+          "cost_cny": 83.91309165887624,
+          "hours": 720.0
+        },
+        "2024-05": {
+          "electric_kwh": 129.269903263812,
+          "cooling_kwh": 439.51767109696056,
+          "latent_kwh": 143.50034059531342,
+          "cost_cny": 85.31813615411592,
+          "hours": 744.0
+        },
+        "2024-06": {
+          "electric_kwh": 182.13122967787888,
+          "cooling_kwh": 619.242561135467,
+          "latent_kwh": 233.669943797524,
+          "cost_cny": 120.20661158740006,
+          "hours": 720.0
+        },
+        "2024-07": {
+          "electric_kwh": 262.9587882099299,
+          "cooling_kwh": 893.4996540050452,
+          "latent_kwh": 296.8357729283874,
+          "cost_cny": 173.5528002185538,
+          "hours": 744.0
+        },
+        "2024-08": {
+          "electric_kwh": 233.4451959380256,
+          "cooling_kwh": 792.4286426535954,
+          "latent_kwh": 279.9603439588606,
+          "cost_cny": 154.07382931909694,
+          "hours": 744.0
+        },
+        "2024-09": {
+          "electric_kwh": 208.1597059145367,
+          "cooling_kwh": 707.1565799928846,
+          "latent_kwh": 225.8212105751418,
+          "cost_cny": 137.3854059035942,
+          "hours": 720.0
+        },
+        "2024-10": {
+          "electric_kwh": 131.82635110902422,
+          "cooling_kwh": 448.20959377068215,
+          "latent_kwh": 81.5215710897044,
+          "cost_cny": 87.00539173195595,
+          "hours": 744.0
+        },
+        "2024-11": {
+          "electric_kwh": 51.35947808315637,
+          "cooling_kwh": 174.62222548273158,
+          "latent_kwh": 30.611052035528573,
+          "cost_cny": 33.8972555348832,
+          "hours": 720.0
+        },
+        "2024-12": {
+          "electric_kwh": 0.48790429452532325,
+          "cooling_kwh": 1.6588746013860989,
+          "latent_kwh": 0.0,
+          "cost_cny": 0.3220168343867133,
+          "hours": 744.0
+        }
+      },
+      "yearly": [
+        {
+          "year": 0,
+          "electricity_cny": 0.0,
+          "maintenance_cny": 0.0,
+          "replacement_cny": 0,
+          "cash_out_cny": 8200.0
+        },
+        {
+          "year": 1,
+          "electricity_cny": 897.3782154288535,
+          "maintenance_cny": 560.0,
+          "replacement_cny": 0,
+          "cash_out_cny": 1457.3782154288535
+        },
+        {
+          "year": 2,
+          "electricity_cny": 897.3782154288535,
+          "maintenance_cny": 560.0,
+          "replacement_cny": 0,
+          "cash_out_cny": 1457.3782154288535
+        },
+        {
+          "year": 3,
+          "electricity_cny": 897.3782154288535,
+          "maintenance_cny": 560.0,
+          "replacement_cny": 0,
+          "cash_out_cny": 1457.3782154288535
+        },
+        {
+          "year": 4,
+          "electricity_cny": 897.3782154288535,
+          "maintenance_cny": 560.0,
+          "replacement_cny": 0,
+          "cash_out_cny": 1457.3782154288535
+        },
+        {
+          "year": 5,
+          "electricity_cny": 897.3782154288535,
+          "maintenance_cny": 560.0,
+          "replacement_cny": 0,
+          "cash_out_cny": 1457.3782154288535
+        },
+        {
+          "year": 6,
+          "electricity_cny": 897.3782154288535,
+          "maintenance_cny": 560.0,
+          "replacement_cny": 0,
+          "cash_out_cny": 1457.3782154288535
+        },
+        {
+          "year": 7,
+          "electricity_cny": 897.3782154288535,
+          "maintenance_cny": 560.0,
+          "replacement_cny": 0,
+          "cash_out_cny": 1457.3782154288535
+        },
+        {
+          "year": 8,
+          "electricity_cny": 897.3782154288535,
+          "maintenance_cny": 560.0,
+          "replacement_cny": 0,
+          "cash_out_cny": 1457.3782154288535
+        },
+        {
+          "year": 9,
+          "electricity_cny": 897.3782154288535,
+          "maintenance_cny": 560.0,
+          "replacement_cny": 0,
+          "cash_out_cny": 1457.3782154288535
+        },
+        {
+          "year": 10,
+          "electricity_cny": 897.3782154288535,
+          "maintenance_cny": 560.0,
+          "replacement_cny": 0,
+          "cash_out_cny": 1457.3782154288535
+        }
+      ],
+      "lifecycle": {
+        "status": "complete",
+        "study_years": 10,
+        "expected_life_years": 10,
+        "expected_life_source": "user_scenario_override",
+        "warranty_years": null,
+        "discount_rate": 0.0,
+        "initial_cny": 8200.0,
+        "equipment_cny": 6400.0,
+        "installation_cny": 1800.0,
+        "electricity_pv_cny": 8973.782154288536,
+        "maintenance_pv_cny": 5600.0,
+        "replacement_pv_cny": 0.0,
+        "residual_cny": 0.0,
+        "total_pv_cny": 22773.782154288536,
+        "replacement_events": [],
+        "room_count": 1,
+        "units_per_room": 2,
+        "quote_scope": "per_unit",
+        "quote_quantity": 2,
+        "quantity_semantics": "explicit_room_count",
+        "energy_scope": "单房间热模型已包含units_per_room；总用电仅按room_count聚合",
+        "price_assumption_cny_per_kwh": 0.66,
+        "price_assumption_label": "用户/参考情景，非未来电价预测",
+        "electricity_scope": "重复参考年；需多年份输入才能报告年际成本"
+      }
+    }
+  },
+  "response_sha256": "5bceca9af5ef546cac2af372d474b68a2f239d5074b142929780f5eca45e9117"
+}

@@ -1,0 +1,8 @@
+{
+  "legacy_file": "operation_planning/results/regional_product_v2/three_demos.json",
+  "legacy_initial_cny": 4100.0,
+  "corrected_initial_cny": 8200.0,
+  "legacy_electric_kwh": 1356.601776631296,
+  "corrected_electric_kwh_one_room": 1359.6639627709894,
+  "explanation": "旧batch_quote把equipment_count=2同时当作费用数量和用电乘数；修正后单房间物理轨迹已经包含两台设备，费用按逐台报价计2台，room_count只有在同类房间聚合时才乘电量。"
+}

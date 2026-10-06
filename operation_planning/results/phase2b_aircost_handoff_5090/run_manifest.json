@@ -1,0 +1,50 @@
+{
+  "run_id": "phase2b-aircost-handoff-5090-20261006",
+  "source_commit": "a774f17757247840b00e752a3b66ab61f7757924",
+  "machine_role": "5090",
+  "workspace": "E:\\比赛\\nengzhihe",
+  "python": "3.14.7",
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "key_dependencies": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "pvlib": "0.11.2",
+    "windpowerlib": "0.2.2",
+    "requests": "2.34.2"
+  },
+  "local_model": {
+    "called": false,
+    "reason": "本轮仅验证确定性空调热湿和成本API"
+  },
+  "command": "python scripts/phase2_aircost_handoff_5090.py",
+  "started_utc": "2026-10-06T08:18:36.199112+00:00",
+  "finished_utc": "2026-10-06T08:18:38.026804+00:00",
+  "exit_status": "success",
+  "inputs": {
+    "short_weather_hash": "handoff-short-weather-v1",
+    "guangzhou_normalized_weather_hash": "000fd1650cb811514c8e5eb7cf0325e3e96a0a75844c5b046c1098080e0c6557",
+    "quote_and_parameter_hash": "0b426b15476304fe0f5bae1845d3a007039cb43b46c40920f2f927cf7dbcdf70"
+  },
+  "outputs": [
+    {
+      "path": "operation_planning\\results\\phase2b_aircost_handoff_5090\\aircost_api_cases.json",
+      "sha256": "5f146dbdad2160d8bec2d2c13fc6ce4a914898d79209982171c3450961bd82af"
+    },
+    {
+      "path": "operation_planning\\results\\phase2b_aircost_handoff_5090\\batch_quote_legacy_preserved.json",
+      "sha256": "168b045088c5d8af148ed4aecc2ed123baae43ab8936fbf2088ea81e33e2faf5"
+    },
+    {
+      "path": "operation_planning\\results\\phase2b_aircost_handoff_5090\\batch_quote_corrected.json",
+      "sha256": "6f04c65bea083fc502ab7ab4eee0afa2dda6aae95712acb95e59b79b2f2d2473"
+    },
+    {
+      "path": "operation_planning\\results\\phase2b_aircost_handoff_5090\\batch_quote_diff.json",
+      "sha256": "3b50bd72c997f5b199f115744869c21be92dcdf4c0709bba50b604a146e347db"
+    }
+  ],
+  "notes": [
+    "仅新增空调成本接口回归；阶段二A/B旧结果未覆盖。",
+    "短序列和广州2024完整天气均通过真实HTTP接口；本地模型未参与。"
+  ]
+}
