@@ -7,9 +7,15 @@ from __future__ import annotations
 
 import json
 from http.server import ThreadingHTTPServer
+from pathlib import Path
 import subprocess
+import sys
 import threading
 import urllib.request
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from operation_planning.app import Handler
 from operation_planning.thermal_model import RoomSpec, simulate_room
