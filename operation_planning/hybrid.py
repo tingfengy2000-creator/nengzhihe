@@ -148,9 +148,11 @@ def _connection_cost(scenario: HybridScenario, pv_on: bool, wind_on: bool, missi
 
 
 def _lifecycle(match: Dict[str, Any], baseline: Dict[str, Any], scenario: HybridScenario, *, pv_on: bool, wind_on: bool, load_series: Dict[str, Any], pv_generation: Dict[str, Any], wind_generation: Dict[str, Any], import_prices: Sequence[float], export_prices: Optional[Sequence[float]]) -> Dict[str, Any]:
+    pv_on = pv_on and scenario.pv_capacity_kwp > 1e-12
+    wind_on = wind_on and scenario.wind.turbine_count > 0
     pq, wq = scenario.pv_quote, scenario.wind_quote; missing: List[str] = []
-    pv_assets = _quote_cost(pq, 1, ["module_cny_per_kwp", "inverter_cny_per_kwp", "structure_cny_per_kwp", "installation_cny_per_kwp"])
-    wind_assets = _quote_cost(wq, 1, ["turbine_cny", "tower_cny", "foundation_cny", "installation_cny"])
+    pv_assets = _quote_cost(pq, int(pv_on), ["module_cny_per_kwp", "inverter_cny_per_kwp", "structure_cny_per_kwp", "installation_cny_per_kwp"])
+    wind_assets = _quote_cost(wq, int(wind_on), ["turbine_cny", "tower_cny", "foundation_cny", "installation_cny"])
     if pv_on:
         if pv_assets is None: missing.extend(["pv_" + field for field in ("module_cny_per_kwp", "inverter_cny_per_kwp", "structure_cny_per_kwp", "installation_cny_per_kwp") if getattr(pq, field) is None])
         else: pv_assets *= scenario.pv_capacity_kwp
@@ -163,11 +165,12 @@ def _lifecycle(match: Dict[str, Any], baseline: Dict[str, Any], scenario: Hybrid
         if wq.maintenance_cny_per_year is None: missing.append("wind_maintenance_cny_per_year")
     else: wind_assets = 0.0
     connection = _connection_cost(scenario, pv_on, wind_on, missing)
-    if scenario.allow_export and scenario.export_price_cny_per_kwh is None: missing.append("export_price_cny_per_kwh")
-    capex = None if missing else float(pv_assets or 0) + float(wind_assets or 0) + connection
+    if (pv_on or wind_on) and scenario.allow_export and scenario.export_price_cny_per_kwh is None: missing.append("export_price_cny_per_kwh")
+    capital_missing = [key for key in missing if "maintenance" not in key and key != "export_price_cny_per_kwh"]
+    capex = None if capital_missing else float(pv_assets or 0) + float(wind_assets or 0) + connection
     base_imp = float(baseline["summary"].get("import_cost_cny", 0.0))
-    if capex is None:
-        return {"status": "incomplete", "missing": sorted(set(missing)), "capex_cny": None, "yearly": [], "npv_cny": None, "total_cost_npv_cny": None, "incremental_npv_vs_s0_cny": None}
+    if missing:
+        return {"status": "incomplete", "missing": sorted(set(missing)), "capex_cny": capex, "yearly": [], "npv_cny": None, "total_cost_npv_cny": None, "incremental_npv_vs_s0_cny": None}
     rows: List[Dict[str, Any]] = [{"year": 0, "grid_import_cost_cny": 0.0, "export_income_cny": 0.0, "maintenance_cny": 0.0, "replacement_cny": 0.0, "residual_cny": 0.0, "capex_cny": capex, "net_cashflow_cny": -capex, "discounted_cny": -capex}]; year_end_cash: List[float] = []; pv_deg = 1.0
     for year in range(1, scenario.study_years + 1):
         pg = dict(pv_generation); pg["pv_ac_power_w"] = [float(value) * pv_deg for value in pv_generation.get("pv_ac_power_w", [])] if pv_on else [0.0] * len(load_series.get("timestamps", [])); wg = wind_generation if wind_on else {**wind_generation, "wind_power_w": [0.0] * len(load_series.get("timestamps", []))}
@@ -199,7 +202,34 @@ def run_hybrid_planning(load_result: Dict[str, Any], weather: Dict[str, Any], pv
         row = {"scenario_id": sid, "pv_capacity_kwp": hybrid.pv_capacity_kwp if pv_on else 0.0, "wind_turbine_count": hybrid.wind.turbine_count if wind_on else 0, "generation_kwh": matched["summary"]["total_generation_kwh"], "pv_generation_kwh": matched["summary"]["pv_generation_kwh"], "wind_generation_kwh": matched["summary"]["wind_generation_kwh"], "self_use_kwh": matched["summary"]["self_use_kwh"], "grid_import_kwh": matched["summary"]["grid_import_kwh"], "grid_export_kwh": matched["summary"]["grid_export_kwh"], "curtailment_kwh": matched["summary"]["curtailment_kwh"], "load_coverage_rate": matched["summary"]["load_coverage_rate"], "economics": econ, "budget_ok": budget_ok, "constraint_status": status, "constraint_reasons": constraint_reasons, "wind_metadata": wind["metadata"]}
         if include_hourly: row["hourly"] = {"timestamps": times, "interval_seconds": intervals, "load_kwh": [r["load_kwh"] for r in matched["intervals"]], "pv_generation_kwh": [r["pv_generation_kwh"] for r in matched["intervals"]], "wind_generation_kwh": [r["wind_generation_kwh"] for r in matched["intervals"]], "self_use_kwh": [r["self_use_kwh"] for r in matched["intervals"]], "grid_import_kwh": [r["grid_import_kwh"] for r in matched["intervals"]], "grid_export_kwh": [r["grid_export_kwh"] for r in matched["intervals"]], "curtailment_kwh": [r["curtailment_kwh"] for r in matched["intervals"]], "wind_speed_hub_m_s": wind["wind_speed_hub_m_s"] if wind_on else [0.0] * len(times)}
         candidates.append(row)
-    complete_feasible = [x for x in candidates if x["economics"].get("status") == "complete" and x["constraint_status"] == "feasible" and x.get("budget_ok", True)]; nonzero_incomplete = [x for x in candidates if x["scenario_id"] != "S0_grid" and (x["economics"].get("status") != "complete" or x["constraint_status"] != "feasible" or not x.get("budget_ok", True))]; rec = max(complete_feasible, key=lambda x: float(x["economics"].get("incremental_npv_vs_s0_cny", -math.inf))) if complete_feasible else None; subset = rec
-    rec_status = "conditional" if rec and not nonzero_incomplete else "not_available"; service = load_result.get("summary", {}); gaps = {key: float(service.get(key, 0) or 0) for key in ("capacity_shortfall_hours", "unmet_temp_degree_hours", "unmet_rh_percent_hours")}; has_gap = any(value > 1e-9 for value in gaps.values())
-    recommendation = {"status": rec_status, "scenario_id": rec["scenario_id"] if rec_status == "conditional" and rec else None, "complete_subset_best_scenario_id": subset["scenario_id"] if subset else None, "reason": "所有非零候选均已完成报价、约束和外送条件核验；在有限四方案中按相对S0增量NPV比较，不是全局优化。" if rec_status == "conditional" else "至少一个非零候选报价、外送价格或约束条件不完整；只能报告已完整计价可行子集，不能据此作全候选推荐。"}
-    return {"status": "success", "calculation_version": "phase2b-cost-fix-v1", "scenario": asdict(hybrid), "tariff": tariff_meta, "profile": asdict(profile), "load_context": {"electric_load_kwh": baseline["summary"]["load_kwh"], "service_quality": {"status": "service_gap" if has_gap else "within_modeled_scope", "gaps": gaps, "scope": load.get("service_scope"), "note": "存在服务缺口时不代表同等服务水平下的投资最优。" if has_gap else "未校准的城市级空调负荷情景。"}}, "weather_provenance": {"source_file": weather.get("source_file"), "hash": weather.get("hash"), "context": weather.get("context"), "normalization": weather.get("weather_normalization"), "wind_input": "reuse normalized 10m wind_speed_10m; instantaneous interval-start semantics"}, "baseline": baseline["summary"], "candidate_constraints": {"pv_capacity_limit_kwp": roof_limit, "roof_area_m2": pv_scenario.roof_area_m2, "usable_fraction": pv_scenario.usable_fraction, "budget_cny": hybrid.budget_cny, "shared_connection_cny": hybrid.shared_connection_cny}, "candidates": candidates, "recommendation": recommendation, "notes": ["S0=只购电，S1=仅光伏，S2=仅风电，S3=风光组合；同一小时级负荷与天气。", "经济字段区分total_cost_npv_cny与incremental_npv_vs_s0_cny；初始投入在t=0。", "组合接入费只采用shared_connection_cny或两个组件报价均明确为0，不再自动取max。", "风机档案为SWCC认证系统输出；当地温度/气压未参与风电输出修正。", "当前负荷仅为第一阶段未校准城市级空调情景。"]}
+    # Known hard exclusions do not block a decision among the survivors.
+    # Unknown potentially feasible candidates do: report only verified subset.
+    seen = {}
+    for candidate in candidates:
+        key = (candidate["pv_capacity_kwp"], candidate["wind_turbine_count"])
+        if key in seen:
+            candidate["equivalent_to"] = seen[key]
+            candidate["admission_status"] = "equivalent"
+        else:
+            seen[key] = candidate["scenario_id"]
+            candidate["equivalent_to"] = None
+            if candidate["constraint_status"] in {"not_applicable", "over_budget"}:
+                candidate["admission_status"] = "excluded"
+            elif candidate["economics"]["status"] != "complete":
+                candidate["admission_status"] = "unknown"
+            else:
+                candidate["admission_status"] = "eligible"
+    eligible = [x for x in candidates if x["admission_status"] == "eligible"]
+    unknown = [x for x in candidates if x["admission_status"] == "unknown"]
+    excluded = [x for x in candidates if x["admission_status"] == "excluded"]
+    subset = max(eligible, key=lambda x: float(x["economics"]["incremental_npv_vs_s0_cny"])) if eligible else None
+    status = "conditional" if subset and not unknown else ("conditional_subset" if subset and any(x["scenario_id"] != "S0_grid" for x in eligible) else "not_available")
+    recommendation = {"status": status, "scenario_id": subset["scenario_id"] if status != "not_available" and subset else None,
+        "complete_subset_best_scenario_id": subset["scenario_id"] if subset else None,
+        "all_candidates_conclusion": "unresolved" if unknown else "resolved_with_exclusions",
+        "eligible_scenario_ids": [x["scenario_id"] for x in eligible], "excluded_scenario_ids": [x["scenario_id"] for x in excluded],
+        "unknown_scenario_ids": [x["scenario_id"] for x in unknown],
+        "reason": ("已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。" if not unknown else
+                   "仅能给出已核实子集内最优；仍有可能适用但报价/必要条件未知的候选，全候选结论未定，不能称它们已被其他方案击败。")}
+    service = load_result.get("summary", {}); gaps = {key: float(service.get(key, 0) or 0) for key in ("capacity_shortfall_hours", "unmet_temp_degree_hours", "unmet_rh_percent_hours")}; has_gap = any(value > 1e-9 for value in gaps.values())
+    return {"status": "success", "calculation_version": "phase2b-semantics-5090-v1", "scenario": asdict(hybrid), "tariff": tariff_meta, "profile": asdict(profile), "load_context": {"electric_load_kwh": baseline["summary"]["load_kwh"], "service_quality": {"status": "service_gap" if has_gap else "within_modeled_scope", "gaps": gaps, "scope": load.get("service_scope"), "note": "存在服务缺口时不代表同等服务水平下的投资最优。" if has_gap else "未校准的城市级空调负荷情景。"}}, "weather_provenance": {"source_file": weather.get("source_file"), "hash": weather.get("hash"), "context": weather.get("context"), "normalization": weather.get("weather_normalization"), "wind_input": "reuse normalized 10m wind_speed_10m; instantaneous interval-start semantics"}, "baseline": baseline["summary"], "candidate_constraints": {"pv_capacity_limit_kwp": roof_limit, "roof_area_m2": pv_scenario.roof_area_m2, "usable_fraction": pv_scenario.usable_fraction, "budget_cny": hybrid.budget_cny, "shared_connection_cny": hybrid.shared_connection_cny}, "candidates": candidates, "recommendation": recommendation, "notes": ["S0=只购电，S1=仅光伏，S2=仅风电，S3=风光组合；同一小时级负荷与天气。", "经济字段区分total_cost_npv_cny与incremental_npv_vs_s0_cny；初始投入在t=0。", "组合接入费只采用shared_connection_cny或两个组件报价均明确为0，不再自动取max。", "风机档案为SWCC认证系统输出；当地温度/气压未参与风电输出修正。", "当前负荷仅为第一阶段未校准城市级空调情景。"]}

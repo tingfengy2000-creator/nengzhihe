@@ -10,6 +10,7 @@ from operation_planning.hybrid import HybridScenario, match_hybrid, run_hybrid_p
 from operation_planning.pv import PVScenario, PVQuote, lifecycle_compare, generate_pv, match_load
 from operation_planning.economics import discounted_cashflow_npv
 from operation_planning.hybrid_agent import HybridPlanningAgent
+from operation_planning.task_changes import apply_modifications, ModificationConflict, rule_modifications
 
 def _series(load, pv, wind, dt=3600):
     times=["2024-01-01T00:00+08:00"]*len(load)
@@ -68,6 +69,17 @@ def test_missing_quote_and_roof_constraint_do_not_select_s0():
     weather,load=_weather_case(); incomplete=PVQuote(); hs=HybridScenario(pv_capacity_kwp=2,wind=WindScenario(turbine_count=0),pv_quote=incomplete,wind_quote=WindQuote(),shared_connection_cny=0); report=run_hybrid_planning(load,weather,PVScenario(roof_area_m2=50,quote=incomplete),hs,WindTurbineProfile.from_file(),include_hourly=False); assert report["recommendation"]["status"]=="not_available"; assert report["recommendation"]["complete_subset_best_scenario_id"]=="S0_grid"
     pvq,wq=_complete_quotes(); hs=HybridScenario(pv_capacity_kwp=2,wind=WindScenario(turbine_count=0),pv_quote=pvq,wind_quote=wq,shared_connection_cny=0); report=run_hybrid_planning(load,weather,PVScenario(roof_area_m2=1,usable_fraction=1,quote=pvq),hs,WindTurbineProfile.from_file(),include_hourly=False); assert next(x for x in report["candidates"] if x["scenario_id"]=="S1_pv")["constraint_status"]=="not_applicable"
 
+def test_budget_exclusion_still_recommends_remaining_feasible_subset():
+    weather,load=_weather_case(); pvq,wq=_complete_quotes(); report=run_hybrid_planning(load,weather,PVScenario(roof_area_m2=50,quote=pvq),HybridScenario(pv_capacity_kwp=2,wind=WindScenario(turbine_count=1),budget_cny=60000,pv_quote=pvq,wind_quote=wq,shared_connection_cny=0),WindTurbineProfile.from_file(),include_hourly=False)
+    assert report["recommendation"]["status"] in {"conditional", "conditional_subset"}
+    assert next(x for x in report["candidates"] if x["scenario_id"]=="S2_wind")["admission_status"]=="excluded"
+    assert "S1_pv" in report["recommendation"]["eligible_scenario_ids"]
+
+def test_zero_pv_full_chain_has_zero_pv_fixed_costs():
+    weather,load=_weather_case(); pvq,wq=_complete_quotes(); report=run_hybrid_planning(load,weather,PVScenario(roof_area_m2=50,quote=pvq),HybridScenario(pv_capacity_kwp=0,wind=WindScenario(turbine_count=0),pv_quote=pvq,wind_quote=wq,shared_connection_cny=999),WindTurbineProfile.from_file(),include_hourly=False)
+    for row in report["candidates"]:
+        if row["scenario_id"] != "S0_grid": assert row["economics"]["capex_cny"]==0.0
+
 def test_match_rejects_nan_and_negative_export_limit():
     load,pv,wind=_series([1.0],[.8],[.7]); load["electric_power_w"][0]=float("nan")
     try: match_hybrid(load,pv,wind)
@@ -86,7 +98,14 @@ def test_authoritative_price_changes_cost_not_physics():
     weather,load=_weather_case(); pvq,wq=_complete_quotes(); pvs=PVScenario(roof_area_m2=50,quote=pvq); a=run_hybrid_planning(load,weather,pvs,HybridScenario(pv_capacity_kwp=2,wind=WindScenario(turbine_count=0),import_price_cny_per_kwh=.66,pv_quote=pvq,wind_quote=wq,shared_connection_cny=0),WindTurbineProfile.from_file(),include_hourly=False); b=run_hybrid_planning(load,weather,pvs,HybridScenario(pv_capacity_kwp=2,wind=WindScenario(turbine_count=0),import_price_cny_per_kwh=1.20,pv_quote=pvq,wind_quote=wq,shared_connection_cny=0),WindTurbineProfile.from_file(),include_hourly=False); ca=next(x for x in a["candidates"] if x["scenario_id"]=="S1_pv"); cb=next(x for x in b["candidates"] if x["scenario_id"]=="S1_pv"); assert ca["generation_kwh"]==cb["generation_kwh"]; assert ca["economics"]["total_grid_import_cost_cny"]!=cb["economics"]["total_grid_import_cost_cny"]
 
 def test_agent_usage_window_parser_and_single_plan(monkeypatch=None):
-    assert HybridPlanningAgent._changes("把使用时段改成18点到22点",{})["start_hour"]==18
+    assert HybridPlanningAgent._changes("把使用时段改成18点到22点",{})["room"]=={"start_hour":18,"end_hour":22}
+    assert rule_modifications("将空调使用时段改成18:00—22:00")["room"]=={"start_hour":18,"end_hour":22}
+    base_task={"room":{"start_hour":8,"end_hour":18},"hybrid":{"budget_cny":90000}}
+    assert apply_modifications(base_task,{"hybrid":{"budget_multiplier":2/3}})[0]["hybrid"]["budget_cny"]==60000
+    assert apply_modifications(base_task,{"hybrid":{"budget_cny":60000,"budget_multiplier":2/3}})[0]["hybrid"]["budget_cny"]==60000
+    try: apply_modifications(base_task,{"hybrid":{"budget_cny":50000,"budget_multiplier":2/3}})
+    except ModificationConflict: pass
+    else: raise AssertionError("inconsistent absolute and relative budget must ask")
     weather,load=_weather_case(); pvq,wq=_complete_quotes(); agent=HybridPlanningAgent(); state={"load_result":load,"pv_weather":weather,"pv":PVScenario(roof_area_m2=50,quote=pvq),"hybrid":HybridScenario(pv_capacity_kwp=2,wind=WindScenario(turbine_count=0),pv_quote=pvq,wind_quote=wq,shared_connection_cny=0),"profile":WindTurbineProfile.from_file()}
     from operation_planning.hybrid import run_hybrid_planning as real_plan
     with patch("operation_planning.hybrid_agent.run_hybrid_planning",side_effect=real_plan) as call:

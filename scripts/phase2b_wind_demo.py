@@ -10,7 +10,7 @@ from operation_planning.pv import PVScenario, PVQuote
 from operation_planning.wind import WindScenario, WindQuote, WindTurbineProfile
 from operation_planning.hybrid import HybridScenario, run_hybrid_planning
 
-ROOT=Path(__file__).resolve().parents[1]; OUT=ROOT/"operation_planning"/"results"/"phase2b_cost_fix"
+ROOT=Path(__file__).resolve().parents[1]; OUT=ROOT/"operation_planning"/"results"/"phase2b_semantics_5090"
 PVQ=PVQuote(module_cny_per_kwp=1800,inverter_cny_per_kwp=600,structure_cny_per_kwp=500,installation_cny_per_kwp=800,grid_connection_cny=0,maintenance_cny_per_kwp_year=30,inverter_replacement_year=12,inverter_replacement_fraction=.15,residual_fraction=.05)
 WQ=WindQuote(turbine_cny=45000,tower_cny=15000,foundation_cny=10000,installation_cny=12000,grid_connection_cny=0,maintenance_cny_per_year=1200,residual_fraction=.05)
 
