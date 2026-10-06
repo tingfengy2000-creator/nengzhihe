@@ -65,8 +65,8 @@ def _normalise_room_counts(room: RoomSpec) -> RoomSpec:
     """Resolve legacy equipment_count without multiplying room energy twice.
 
     The physical trace is always for one room.  ``units_per_room`` changes the
-    capacity inside that trace; ``room_count`` is applied only by lifecycle
-    aggregation.  Supplying both legacy and new fields with different values
+    capacity inside that trace; ``room_count`` is applied once by project_load
+    for supply matching or lifecycle for cost aggregation.  Supplying both legacy and new fields with different values
     is rejected instead of silently guessing what ``equipment_count`` meant.
     """
     legacy = room.equipment_count

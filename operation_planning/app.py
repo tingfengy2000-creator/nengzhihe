@@ -124,7 +124,9 @@ def _thermal_inputs(payload: dict) -> tuple[RoomSpec, dict, dict]:
     """Build one authoritative room/cost object for API and lifecycle."""
     room_data = dict(payload.get("room") or {})
     for name in ("room_count", "units_per_room"):
-        if name in payload and name not in room_data:
+        if name in payload:
+            if name in room_data and int(room_data[name]) != int(payload[name]):
+                raise ValueError(f"顶层{name} 与 room.{name} 不一致；请确认房间口径")
             room_data[name] = payload[name]
     # The old UI sends quantity for same-room batches. Make this migration
     # explicit in the returned task object instead of guessing in lifecycle.
