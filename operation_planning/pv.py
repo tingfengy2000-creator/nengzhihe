@@ -13,6 +13,7 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 import pandas as pd
 import pvlib
 from pvlib import irradiance, inverter, pvsystem, temperature
+from .economics import discounted_cashflow_npv, discounted_year_end, inverter_replacement_cost
 
 PVLIB_VERSION = getattr(pvlib, "__version__", "unknown")
 MODULE_AREA_M2_PER_KWP = 5.0
@@ -307,7 +308,7 @@ def lifecycle_compare(match: Dict[str, Any], baseline_match: Dict[str, Any], cap
         if scenario.allow_export and scenario.export_price_cny_per_kwh is None: missing.append("export_price_cny_per_kwh")
     baseline_import_cost = _match_cost(baseline_match, "import", scenario.import_price_cny_per_kwh)
     if baseline_import_cost is None: raise ValueError("缺少基准购电价格，不能计算生命周期成本")
-    yearly: List[Dict[str, Any]] = []; cumulative: Optional[float] = 0.0; npv: Optional[float] = 0.0
+    yearly: List[Dict[str, Any]] = []; cumulative: Optional[float] = 0.0; npv: Optional[float] = None if capex is None else -float(capex)
     for year in range(0, scenario.study_years + 1):
         if year == 0:
             row: Dict[str, Any] = {"year": 0, "grid_import_kwh": 0.0, "pv_generation_kwh": 0.0, "self_use_kwh": 0.0, "grid_export_kwh": 0.0, "curtailment_kwh": 0.0, "electricity_cost_cny": 0.0, "maintenance_cny": 0.0, "replacement_cny": 0.0, "export_income_cny": 0.0, "residual_cny": 0.0, "capex_cny": capex, "net_cash_flow_cny": -capex if capex is not None else None}
@@ -318,17 +319,21 @@ def lifecycle_compare(match: Dict[str, Any], baseline_match: Dict[str, Any], cap
             else: raise ValueError("生命周期逐年重算需要原始负荷与光伏序列")
             summary = annual_match["summary"]; electricity_cost = _match_cost(annual_match, "import", scenario.import_price_cny_per_kwh); export_income = _match_cost(annual_match, "export", scenario.export_price_cny_per_kwh) if scenario.allow_export else 0.0
             maintenance = float(quote.maintenance_cny_per_kwp_year or 0.0) * capacity_kwp if capacity_kwp > 1e-12 else 0.0; replacement = 0.0
-            if capacity_kwp > 1e-12 and quote.inverter_replacement_year and year == int(quote.inverter_replacement_year): replacement = capacity_kwp * float(quote.inverter_cny_per_kwp or 0.0) * float(quote.inverter_replacement_fraction)
+            if capacity_kwp > 1e-12 and quote.inverter_replacement_year and year == int(quote.inverter_replacement_year): replacement = inverter_replacement_cost(capacity_kwp, quote.inverter_cny_per_kwp, quote.inverter_replacement_fraction)
             residual = float(capex or 0.0) * float(quote.residual_fraction) if capacity_kwp > 1e-12 and year == scenario.study_years else 0.0
             known_cash = None if electricity_cost is None or export_income is None or (capex is None and capacity_kwp > 1e-12) else -(electricity_cost + maintenance + replacement) + export_income + residual
             row = {"year": year, "grid_import_kwh": summary["grid_import_kwh"], "pv_generation_kwh": summary["pv_generation_kwh"], "self_use_kwh": summary["self_use_kwh"], "grid_export_kwh": summary["grid_export_kwh"], "curtailment_kwh": summary["curtailment_kwh"], "electricity_cost_cny": electricity_cost, "maintenance_cny": maintenance, "replacement_cny": replacement, "export_income_cny": export_income, "residual_cny": residual, "capex_cny": 0.0, "net_cash_flow_cny": known_cash, "load_kwh": summary["load_kwh"], "matching_conservation": {"load_error_kwh": summary["load_kwh"] - summary["self_use_kwh"] - summary["grid_import_kwh"], "pv_error_kwh": summary["pv_generation_kwh"] - summary["self_use_kwh"] - summary["grid_export_kwh"] - summary["curtailment_kwh"]}}
         cash = row.get("net_cash_flow_cny")
         if cash is None: cumulative = None; npv = None
-        elif cumulative is not None and npv is not None: cumulative += float(cash); npv += float(cash) / ((1.0 + scenario.discount_rate) ** year)
+        elif cumulative is not None: cumulative += float(cash)
+        if cash is not None and year > 0 and npv is not None: npv += discounted_year_end(float(cash), year, scenario.discount_rate)
         row["cumulative_cash_flow_cny"] = cumulative; row["discounted_cash_flow_cny"] = None if cash is None else float(cash) / ((1.0 + scenario.discount_rate) ** year); yearly.append(row)
     first = yearly[1] if len(yearly) > 1 else yearly[0]; pv_import_cost = first.get("electricity_cost_cny"); pv_export_income = first.get("export_income_cny")
     annual_saving = None if pv_import_cost is None or pv_export_income is None else float(baseline_import_cost) - float(pv_import_cost) + float(pv_export_income) - (float(quote.maintenance_cny_per_kwp_year or 0.0) * capacity_kwp if capacity_kwp > 1e-12 else 0.0)
-    result = {"status": "complete" if not missing else ("incomplete_economics" if "export_price_cny_per_kwh" in missing else "incomplete_quote"), "missing_quote_fields": [x for x in missing if x != "export_price_cny_per_kwh"], "missing_economic_inputs": list(missing), "capex_cny": capex, "baseline_annual_import_cost_cny": baseline_import_cost, "pv_annual_import_cost_cny": pv_import_cost, "annual_grid_cost_saving_cny": None if pv_import_cost is None else float(baseline_import_cost) - float(pv_import_cost), "annual_export_income_cny": pv_export_income, "annual_saving_after_maintenance_cny": annual_saving, "study_years": scenario.study_years, "npv_cny": npv if not missing else None, "net_present_cost_cny": (-npv) if npv is not None and not missing else None, "yearly": yearly, "quote_source": quote.source, "cost_note": "光伏衰减只作用于发电；每年用固定空调负荷逐时重算自用、购电、外送和弃电。0kWp不承担任何光伏报价项。NPV是净现金流现值，成本比较使用较大的（较不负的）NPV。"}
+    net_npv = npv if not missing else None
+    baseline_npv = discounted_cashflow_npv(0.0, [-float(baseline_import_cost)] * int(scenario.study_years), scenario.discount_rate)
+    incremental_npv = None if net_npv is None else float(net_npv) - baseline_npv
+    result = {"status": "complete" if not missing else ("incomplete_economics" if "export_price_cny_per_kwh" in missing else "incomplete_quote"), "missing_quote_fields": [x for x in missing if x != "export_price_cny_per_kwh"], "missing_economic_inputs": list(missing), "capex_cny": capex, "baseline_annual_import_cost_cny": baseline_import_cost, "pv_annual_import_cost_cny": pv_import_cost, "annual_grid_cost_saving_cny": None if pv_import_cost is None else float(baseline_import_cost) - float(pv_import_cost), "annual_export_income_cny": pv_export_income, "annual_saving_after_maintenance_cny": annual_saving, "study_years": scenario.study_years, "npv_cny": net_npv, "total_cost_npv_cny": None if net_npv is None else -float(net_npv), "incremental_npv_vs_s0_cny": incremental_npv, "net_present_cost_cny": None if net_npv is None else -float(net_npv), "yearly": yearly, "quote_source": quote.source, "cost_note": "初始投入在t=0；运行、维护、更换、残值按年末计入并按该年份折现。光伏衰减只作用于发电；每年用固定空调负荷逐时重算自用、购电、外送和弃电。0kWp不承担任何光伏报价项。"}
     result["simple_payback_years"] = float(capex) / annual_saving if capex is not None and annual_saving is not None and annual_saving > 0 else None
     return result
 

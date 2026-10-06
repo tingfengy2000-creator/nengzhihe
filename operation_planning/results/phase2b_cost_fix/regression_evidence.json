@@ -1,0 +1,84 @@
+{
+  "calculation_version": "phase2b-cost-fix-v1",
+  "cashflow_definition": {
+    "initial_cny": 105.0,
+    "year_end_cny": [
+      110.0
+    ],
+    "discount_rate": 0.1,
+    "npv_cny": -5.0
+  },
+  "default_guangzhou_2024_old": {
+    "S0_grid": {
+      "capex_cny": 0.0,
+      "old_or_new_npv_cny": 0.0,
+      "incremental_npv_vs_s0_cny": null,
+      "total_lifecycle_spend_cny": 8258.473835583662
+    },
+    "S1_pv": {
+      "capex_cny": 7400.0,
+      "old_or_new_npv_cny": -1858.7762883995044,
+      "incremental_npv_vs_s0_cny": null,
+      "total_lifecycle_spend_cny": 10117.250123983165
+    },
+    "S2_wind": {
+      "capex_cny": 82000.0,
+      "old_or_new_npv_cny": -88747.93742611873,
+      "incremental_npv_vs_s0_cny": null,
+      "total_lifecycle_spend_cny": 97006.41126170241
+    },
+    "S3_pv_wind": {
+      "capex_cny": 89400.0,
+      "old_or_new_npv_cny": -91335.6279971397,
+      "incremental_npv_vs_s0_cny": null,
+      "total_lifecycle_spend_cny": 99594.10183272339
+    }
+  },
+  "default_guangzhou_2024_new": {
+    "S0_grid": {
+      "capex_cny": 0.0,
+      "old_or_new_npv_cny": -8258.473835583662,
+      "incremental_npv_vs_s0_cny": 0.0,
+      "total_lifecycle_spend_cny": 8258.473835583662
+    },
+    "S1_pv": {
+      "capex_cny": 7400.0,
+      "old_or_new_npv_cny": -10117.250123983167,
+      "incremental_npv_vs_s0_cny": -1858.7762883995056,
+      "total_lifecycle_spend_cny": 10117.250123983165
+    },
+    "S2_wind": {
+      "capex_cny": 82000.0,
+      "old_or_new_npv_cny": -97006.41126170245,
+      "incremental_npv_vs_s0_cny": -88747.93742611879,
+      "total_lifecycle_spend_cny": 97006.41126170241
+    },
+    "S3_pv_wind": {
+      "capex_cny": 89400.0,
+      "old_or_new_npv_cny": -99594.1018327234,
+      "incremental_npv_vs_s0_cny": -91335.62799713975,
+      "total_lifecycle_spend_cny": 99594.10183272339
+    }
+  },
+  "pv_only_15y_nonzero_discount_engine_compare": {
+    "pv_lifecycle_npv_cny": -7918.861716878671,
+    "hybrid_lifecycle_npv_cny": -7918.861716878671,
+    "absolute_difference_cny": 0.0
+  },
+  "short_case": {
+    "pv_15y_replacement_year12_cny": 180.0,
+    "zero_turbine_capex_cny": 0.0,
+    "missing_quote_recommendation": {
+      "status": "not_available",
+      "scenario_id": null,
+      "complete_subset_best_scenario_id": "S0_grid",
+      "reason": "至少一个非零候选报价、外送价格或约束条件不完整；只能报告已完整计价可行子集，不能据此作全候选推荐。"
+    },
+    "roof_1m2_s1_status": "not_applicable",
+    "nan_guard": "rejected: 负荷功率含缺测、非有限或负值"
+  },
+  "notes": [
+    "旧112条/九组结果只作回归；新结果使用同一缓存天气和修复后规则。",
+    "npv_cny为净现金流现值；incremental_npv_vs_s0_cny用于方案比较；total_cost_npv_cny为其相反数。"
+  ]
+}

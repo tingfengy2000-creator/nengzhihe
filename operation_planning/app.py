@@ -28,7 +28,7 @@ from .lifecycle import life_cycle_cost
 from .pv import PVScenario, PVQuote, run_pv_planning, scenario_from_dict
 from .pv_agent import PVPlanningAgent
 from .wind import WindTurbineProfile, WindScenario, WindQuote
-from .hybrid import HybridScenario, run_hybrid_planning
+from .hybrid import HybridScenario, hybrid_task_from_dict, run_hybrid_planning
 from .hybrid_agent import HybridPlanningAgent
 
 
@@ -229,13 +229,8 @@ class Handler(BaseHTTPRequestHandler):
                     return self._send(HTTPStatus.OK, {"status":"success","report":report})
                 room_data = payload.get("room") or {}; room = RoomSpec(**{k: v for k, v in room_data.items() if k in RoomSpec.__dataclass_fields__})
                 load_weather_data = payload.get("weather") or load_weather(site_id, year); pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year); load_result = simulate_room(load_weather_data, room)
-                pv_raw = payload.get("pv") or {}; pv = scenario_from_dict(pv_raw, site_id=site_id, year=year)
-                hraw = payload.get("hybrid") or {}; wind_raw = hraw.get("wind") or {}
-                wind = WindScenario(**{k:v for k,v in wind_raw.items() if k in WindScenario.__dataclass_fields__})
-                pv_quote = PVQuote(**{k:v for k,v in (hraw.get("pv_quote") or pv_raw.get("quote") or {}).items() if k in PVQuote.__dataclass_fields__})
-                wind_quote = WindQuote(**{k:v for k,v in (hraw.get("wind_quote") or {}).items() if k in WindQuote.__dataclass_fields__})
-                hvals = {k:v for k,v in hraw.items() if k in HybridScenario.__dataclass_fields__ and k not in {"wind","pv_quote","wind_quote"}}; hvals.update({"site_id":site_id,"year":year,"wind":wind,"pv_quote":pv_quote,"wind_quote":wind_quote})
-                hybrid = HybridScenario(**hvals); report = run_hybrid_planning(load_result, pv_weather_data, pv, hybrid, WindTurbineProfile.from_file())
+                pv, hybrid = hybrid_task_from_dict(payload, site_id=site_id, year=year)
+                report = run_hybrid_planning(load_result, pv_weather_data, pv, hybrid, WindTurbineProfile.from_file())
                 report["agent"] = {"requested": False, "status": "disabled", "mode": "phase2b_hybrid_tools", "request": payload.get("request", "")}
                 return self._send(HTTPStatus.OK, {"status":"success","report":report})
             except Exception as exc:
