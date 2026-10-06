@@ -5,7 +5,7 @@
 - 分支：fix/5090-room-contract-replay
 - 本轮已验证交接锚点（房间字段修复＋正式回放）：d9a9578e34fa1719ea945214eb3dc6339bb4bef9
 - 本轮正式回放实际运行源码：bc90c8a23ef9407f9765389e396a7ac5dfc7f223
-- 本轮HTTP API顶层room_count=3契约已包含在上述源码与测试中
+- 本轮HTTP API顶层room_count=3契约证据：4cb9695dd6ca7704f36198c4b71cc97d203f34ae
 - 本轮5090运行清单：phase2b-project-load-5090-guangzhou-2024
 - 本轮交接说明：operation_planning/protocol/phase2b_project_load_handoff_5090.md
 - 历史交接内容：990f25327599c8795682592c75653bc5e84a96af（仅作历史，不作为本轮起点）

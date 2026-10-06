@@ -164,7 +164,7 @@ python -m http.server 8060 --directory docs/handoff/replay_viewer
 
 ## 13. 最新5090项目负荷衔接
 
-本轮交接分支是 `fix/5090-room-contract-replay`。房间字段修复源码提交为 `bc90c8a23ef9407f9765389e396a7ac5dfc7f223`，正式回放证据提交为 `d9a9578e34fa1719ea945214eb3dc6339bb4bef9`；上一轮项目负荷适配仍由 `fix/5090-project-load-handoff` 的历史提交保留。详细契约见 `operation_planning/protocol/phase2b_project_load_handoff_5090.md`。
+本轮交接分支是 `fix/5090-room-contract-replay`。房间字段修复源码提交为 `bc90c8a23ef9407f9765389e396a7ac5dfc7f223`，正式回放证据提交为 `d9a9578e34fa1719ea945214eb3dc6339bb4bef9`，顶层 `room_count=3` API 探针证据提交为 `4cb9695dd6ca7704f36198c4b71cc97d203f34ae`；上一轮项目负荷适配仍由 `fix/5090-project-load-handoff` 的历史提交保留。详细契约见 `operation_planning/protocol/phase2b_project_load_handoff_5090.md`。
 
 热模型仍输出单房间轨迹，单房间轨迹已经包含 `units_per_room`。服务端通过 `aggregate_project_load` 按 `room_count` 聚合一次，再把同一项目总负荷交给 PV 和 Hybrid；原单房间结果、聚合数量、来源和范围都会返回。匹配后的自用、购电、外送、弃电不再按房间数放大，前端不得再次聚合。
 

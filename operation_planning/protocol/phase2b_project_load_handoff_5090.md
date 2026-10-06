@@ -52,9 +52,9 @@ PV 和 Hybrid HTTP API 也用三行契约样例验证：三间同类房间的 `l
 
 ## 5090本轮收尾（A1/A2/A3/A8/A9）
 
-本轮修复提交：`bc90c8a23ef9407f9765389e396a7ac5dfc7f223`；正式回放证据提交：`d9a9578e34fa1719ea945214eb3dc6339bb4bef9`。
+本轮修复提交：`bc90c8a23ef9407f9765389e396a7ac5dfc7f223`；正式回放证据提交：`d9a9578e34fa1719ea945214eb3dc6339bb4bef9`；顶层 `room_count=3` API 探针证据提交：`4cb9695dd6ca7704f36198c4b71cc97d203f34ae`。
 
-- PV/Hybrid 的非 Agent 路径现在统一调用 `_thermal_inputs`；顶层 `room_count`、`units_per_room`、`quantity` 会进入同一个房间契约，冲突会拒绝。三行 HTTP 契约探针覆盖顶层 `room_count=3`。
+- PV/Hybrid 的非 Agent 路径现在统一调用 `_thermal_inputs`；顶层 `room_count`、`units_per_room`、`quantity` 会进入同一个房间契约，冲突会拒绝。三行 HTTP 契约探针覆盖顶层 `room_count=3`，文件为 `operation_planning/results/phase2b_room_contract_replay_5090/api_probe_top_level_room_count.json`。
 - 任务修改 schema 已支持 `room.room_count`、`room.units_per_room` 和 `room.area_m2`；规则解析“3间办公室、每间2台空调”，应用时同步兼容字段 `equipment_count`，不再静默丢弃房间修改。
 - 正式回放位于 `docs/handoff/replay_viewer/replay_cases_room_contract.json`，数字全部由数据文件读取。1251.283914 kWh 对应广州2024默认热湿条件、1间、每间1台；1359.663963 kWh 对应同条件、1间、每间2台。两者均保留为服务缺口对照，不能混称同一个默认场景。
 - 主演示改用明确的容量充足参考情景：广州2024、35㎡、北向、窗墙比0.1、U值0.3、2人、每间6台、工作日8—18点；1间项目电量595.376387 kWh、3间项目电量1786.129162 kWh，服务状态为 `within_modeled_scope`。这是用于说明联算流程的模型参考，不是现场校准或采购建议。
