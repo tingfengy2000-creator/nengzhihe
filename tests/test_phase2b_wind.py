@@ -10,7 +10,7 @@ from operation_planning.hybrid import HybridScenario, match_hybrid, run_hybrid_p
 from operation_planning.pv import PVScenario, PVQuote, lifecycle_compare, generate_pv, match_load
 from operation_planning.economics import discounted_cashflow_npv
 from operation_planning.hybrid_agent import HybridPlanningAgent
-from operation_planning.task_changes import apply_modifications, ModificationConflict, rule_modifications
+from operation_planning.task_changes import apply_modifications, ModificationConflict, rule_modifications, validate_modifications
 
 def _series(load, pv, wind, dt=3600):
     times=["2024-01-01T00:00+08:00"]*len(load)
@@ -100,6 +100,11 @@ def test_authoritative_price_changes_cost_not_physics():
 def test_agent_usage_window_parser_and_single_plan(monkeypatch=None):
     assert HybridPlanningAgent._changes("把使用时段改成18点到22点",{})["room"]=={"start_hour":18,"end_hour":22}
     assert rule_modifications("将空调使用时段改成18:00—22:00")["room"]=={"start_hour":18,"end_hour":22}
+    room_changes = rule_modifications("改成3间办公室，每间2台空调")
+    assert room_changes["room"] == {"room_count": 3, "units_per_room": 2}
+    applied, normalized = apply_modifications({"room":{"equipment_count":1,"units_per_room":1,"room_count":1,"start_hour":8,"end_hour":18},"hybrid":{"budget_cny":90000}}, room_changes)
+    assert applied["room"]["room_count"] == 3 and applied["room"]["units_per_room"] == 2 and applied["room"]["equipment_count"] == 2
+    assert validate_modifications({"room":{"room_count":3,"units_per_room":2}})["room"]["room_count"] == 3
     base_task={"room":{"start_hour":8,"end_hour":18},"hybrid":{"budget_cny":90000}}
     assert apply_modifications(base_task,{"hybrid":{"budget_multiplier":2/3}})[0]["hybrid"]["budget_cny"]==60000
     assert apply_modifications(base_task,{"hybrid":{"budget_cny":60000,"budget_multiplier":2/3}})[0]["hybrid"]["budget_cny"]==60000

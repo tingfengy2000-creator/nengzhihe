@@ -109,11 +109,13 @@ def main() -> int:
     # (strong envelope, low internal gains, six units), not a procurement claim.
     adequate_one = RoomSpec(area_m2=35, orientation="north", window_wall_ratio=0.1, insulation_u_w_m2k=0.3, people_count=2, equipment_gain_w=100, equipment_count=6, units_per_room=6, room_count=1)
     adequate_three = RoomSpec(area_m2=35, orientation="north", window_wall_ratio=0.1, insulation_u_w_m2k=0.3, people_count=2, equipment_gain_w=100, equipment_count=6, units_per_room=6, room_count=3)
-    undersized = RoomSpec(room_count=1)
+    undersized = RoomSpec(equipment_count=1, units_per_room=1, room_count=1)
+    two_unit_reference = RoomSpec(equipment_count=2, units_per_room=2, room_count=1)
     cases = [
         _case("primary_adequate_one_room", "主演示：容量充足的单房间项目负荷", "primary_no_service_gap", adequate_one, weather, pv_weather, source_commit),
         _case("primary_adequate_three_rooms", "主演示：三间同类房间项目负荷", "primary_no_service_gap", adequate_three, weather, pv_weather, source_commit),
         _case("comparison_undersized_one_unit", "对照：默认一台设备的服务缺口", "undersized_comparison", undersized, weather, pv_weather, source_commit),
+        _case("comparison_two_unit_reference", "口径对照：默认房间改为每间两台设备", "two_unit_reference", two_unit_reference, weather, pv_weather, source_commit),
     ]
     package = {"format_version": "5090-project-load-replay-v1", "description": "5090完整年真实回放；主场景为无服务缺口的容量充足模型参考，对照场景保留默认一台设备的服务缺口。", "source": {"source_commit": source_commit, "calculation_version": "phase2b-semantics-5090-v1", "weather_hash": pv_weather.get("hash"), "mode": "fixed_replay_only"}, "cases": cases, "display_contract": {"numbers_from_data": True, "room_fields": ["room_count", "units_per_room", "project_load_contract"], "unknown_new_inputs": "待5090验算", "short_contract_samples_are_not_annual_demos": True}}
     OUT.mkdir(parents=True, exist_ok=True)

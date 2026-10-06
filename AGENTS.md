@@ -1,3 +1,7 @@
+# Current mainline notice
+- 当前主线是“能智核”阶段二空调—光伏—风电方案试算与项目总负荷衔接；交接以 `START_HERE_5060.md`、`docs/handoff/5060_start_prompt.txt` 和对应 5090 分支说明为准。后续阶段分支普通推送供审查，不把本历史文件中的 round4 “推送 main” 约定用于当前交接，也不改 main。
+- 下方 round4 条目是历史约束，适用于 round4 目录和旧证据；当前产品和交接规则优先读取上述入口。
+
 # Scope
 This project is independent of every other project under E:\比赛. Never modify, stop, or inspect private work in xiangyi-youju or 乡艺有据 directories for this task.
 

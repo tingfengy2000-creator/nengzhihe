@@ -22,7 +22,7 @@ from .project_load import aggregate_project_load
 
 CONFIG_PATH = Path(__file__).resolve().parents[1] / "runtime" / "local_model_config.json"
 PV_TOOLS = ["interpret_request", "validate_task", "read_load_context", "check_weather_inputs", "generate_candidates", "compute_pv_generation", "match_load_hourly", "calculate_lifecycle", "prepare_report"]
-ALLOWED_MODIFICATIONS = {"budget_cny", "roof_area_m2", "usable_fraction", "start_hour", "end_hour", "import_price_cny_per_kwh", "export_price_cny_per_kwh", "allow_export", "quote", "study_years"}
+ALLOWED_MODIFICATIONS = {"budget_cny", "roof_area_m2", "usable_fraction", "start_hour", "end_hour", "room_count", "units_per_room", "import_price_cny_per_kwh", "export_price_cny_per_kwh", "allow_export", "quote", "study_years"}
 
 
 class PVPlanningAgent:
@@ -76,6 +76,10 @@ class PVPlanningAgent:
         period = re.search(r"使用时段(?:改为|调整为|设为)\s*(\d{1,2})\s*[-至到]\s*(\d{1,2})\s*点", request)
         if period:
             changes["start_hour"], changes["end_hour"] = int(period.group(1)), int(period.group(2))
+        room_count = re.search(r"(?:房间数|房间数量|有)\s*(?:改为|调整为|设为)?\s*(\d+)\s*间", request)
+        if room_count: changes["room_count"] = int(room_count.group(1))
+        units = re.search(r"每间\s*(?:配置|安装|有)?\s*(\d+)\s*台(?:空调|设备)?", request)
+        if units: changes["units_per_room"] = int(units.group(1))
         if "允许外送" in request or "开启外送" in request:
             changes["allow_export"] = True
         if "不允许外送" in request or "关闭外送" in request:
@@ -88,6 +92,10 @@ class PVPlanningAgent:
         for key, value in changes.items():
             if key == "quote" and isinstance(value, dict): quote.update(value)
             elif key in {"start_hour", "end_hour"}: result["room"][key] = int(value)
+            elif key in {"room_count", "units_per_room"}:
+                result["room"][key] = int(value)
+                if key == "units_per_room" and "equipment_count" in result["room"]:
+                    result["room"]["equipment_count"] = int(value)
             elif key in ALLOWED_MODIFICATIONS: result["pv"][key] = value
         if quote: result["pv"]["quote"] = quote
         return result
