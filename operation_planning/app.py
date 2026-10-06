@@ -35,6 +35,10 @@ from .project_load import aggregate_project_load, project_load_context
 
 ROOT = Path(__file__).resolve().parent
 UI = ROOT / "ui"
+# Read-only fixed replay samples for the 5060 UI.  Only these two verified
+# 5090 files are exposed; nothing is copied into ui/ so evidence cannot drift.
+REPLAY_DIR = ROOT.parent / "docs" / "handoff" / "replay_viewer"
+REPLAY_SAMPLES = frozenset({"replay_cases.json", "aircost_cases.json"})
 JOBS: dict[str, dict] = {}
 LOCK = threading.RLock()
 MIME = {
@@ -216,6 +220,10 @@ class Handler(BaseHTTPRequestHandler):
                 for row in zip(result.get("time_seconds", []), result.get("temperature_c", []), result.get("electric_power_w", []), result.get("heating_power_w", [])): writer.writerow(row)
                 return self._send(HTTPStatus.OK, out.getvalue(), "text/csv; charset=utf-8")
             return self._send(HTTPStatus.OK, {"report": report, "selected": selected})
+        if path.startswith("/samples/"):
+            name = path.removeprefix("/samples/")
+            if name not in REPLAY_SAMPLES or not (REPLAY_DIR / name).is_file(): return self._send(HTTPStatus.NOT_FOUND, {"error": "样例不存在"})
+            return self._send(HTTPStatus.OK, (REPLAY_DIR / name).read_bytes(), "application/json; charset=utf-8")
         if path.startswith("/assets/"):
             candidate = (UI / "assets" / path.removeprefix("/assets/")).resolve()
             if UI.resolve() not in candidate.parents or not candidate.is_file(): return self._send(HTTPStatus.NOT_FOUND, {"error": "资源不存在"})
