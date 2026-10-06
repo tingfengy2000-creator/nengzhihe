@@ -14,6 +14,7 @@ import pandas as pd
 import pvlib
 from pvlib import irradiance, inverter, pvsystem, temperature
 from .economics import discounted_cashflow_npv, discounted_year_end, inverter_replacement_cost
+from .project_load import require_project_load, project_load_context
 
 PVLIB_VERSION = getattr(pvlib, "__version__", "unknown")
 MODULE_AREA_M2_PER_KWP = 5.0
@@ -401,6 +402,7 @@ def _candidate_row(capacity: float, matched: Dict[str, Any], generation: Generat
 
 
 def run_pv_planning(load_result: Dict[str, Any], weather: Dict[str, Any], scenario: PVScenario, include_selected_series: bool = True) -> Dict[str, Any]:
+    require_project_load(load_result)
     load = load_result.get("load_series") or {}; lt = list(load.get("timestamps", [])); wt = list(weather.get("time", []))
     if lt != wt: raise ValueError("第一阶段负荷与光伏天气不在同一时间区间，不能联算")
     intervals = _intervals(lt, load.get("interval_seconds")); weather = dict(weather); weather["interval_seconds"] = intervals
@@ -414,5 +416,5 @@ def run_pv_planning(load_result: Dict[str, Any], weather: Dict[str, Any], scenar
     else: recommendation = {"status": "not_available", "capacity_kwp": None, "reason": "非零候选缺少完整报价或外送价格，保留物理结果与0kWp基准，不能据此证明不安装最划算。"}
     service = _service_context(load_result)
     if service["status"] == "service_gap": recommendation["service_qualification"] = "当前空调负荷存在服务缺口；该推荐不能称为同等服务水平下的最优投资方案。"
-    load_context = {"source": load.get("source"), "scope": load.get("scope"), "model_version": load.get("model_version"), "equipment_count": load.get("equipment_count"), "service_scope": load.get("service_scope"), "assumptions": load.get("assumptions"), "electric_load_kwh": baseline["summary"]["load_kwh"], "service_quality": service}
+    load_context = {"source": load.get("source"), "scope": load.get("scope"), "model_version": load.get("model_version"), "equipment_count": load.get("equipment_count"), "room_count": load.get("room_count"), "units_per_room": load.get("units_per_room"), "project_aggregation": load.get("project_aggregation"), "service_scope": load.get("service_scope"), "assumptions": load.get("assumptions"), "electric_load_kwh": baseline["summary"]["load_kwh"], "service_quality": service, "project_load_context": project_load_context(load_result)}
     return {"status": "success", "scenario": asdict(scenario), "candidate_constraints": candidate_notes, "load_context": load_context, "service_quality": service, "tariff": tariff_meta, "weather_provenance": {"source_file": weather.get("source_file"), "boundary_file": weather.get("boundary_file"), "hash": weather.get("hash"), "context": weather.get("context"), "normalization": weather.get("weather_normalization"), "pv_provenance": weather.get("pv_provenance", {})}, "baseline": {"capacity_kwp": 0.0, "matching": baseline["summary"], "monthly": baseline["monthly"]}, "candidates": candidates, "recommendation": recommendation, "selected_capacity_kwp": selected_key, "notes": ["第一阶段空调负荷是未校准城市级情景，不是楼宇精准负荷。", "本轮只评价当前建模空调用电；不含其他电器、储能、风电。", "逐时匹配不等于分钟级波动仿真。", "光伏候选有限枚举，不称全局最优。"]}

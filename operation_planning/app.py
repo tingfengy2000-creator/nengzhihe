@@ -30,6 +30,7 @@ from .pv_agent import PVPlanningAgent
 from .wind import WindTurbineProfile, WindScenario, WindQuote
 from .hybrid import HybridScenario, hybrid_task_from_dict, run_hybrid_planning
 from .hybrid_agent import HybridPlanningAgent
+from .project_load import aggregate_project_load, project_load_context
 
 
 ROOT = Path(__file__).resolve().parent
@@ -230,6 +231,7 @@ class Handler(BaseHTTPRequestHandler):
                 room, cost_input, input_contract = _thermal_inputs(payload)
                 weather = payload.get("weather") or load_weather(site_id, year)
                 result = simulate_room(weather, room)
+                project_result = aggregate_project_load(result)
                 quote = cost_input["quote"]
                 cost = life_cycle_cost(
                     result,
@@ -248,7 +250,8 @@ class Handler(BaseHTTPRequestHandler):
                     maintenance_cny_per_year=quote.get("maintenance_cny_per_year"),
                 )
                 input_contract["cost"]["tariff"] = cost.get("lifecycle", {}).get("tariff_id")
-                return self._send(HTTPStatus.OK, {"status": "success", "weather": weather["context"], "weather_hash": weather["hash"], "input_contract": input_contract, "result": result, "cost": cost})
+                input_contract["project_load"] = project_load_context(project_result)
+                return self._send(HTTPStatus.OK, {"status": "success", "weather": weather["context"], "weather_hash": weather["hash"], "input_contract": input_contract, "result": result, "project_load": {"context": project_load_context(project_result), "summary": project_result.get("summary"), "load_series": project_result.get("load_series")}, "cost": cost})
             except Exception as exc:
                 return self._send(HTTPStatus.BAD_REQUEST, {"status": "failed", "error": f"{type(exc).__name__}: {exc}"})
         if path == "/api/operation/weather/import":
@@ -279,7 +282,7 @@ class Handler(BaseHTTPRequestHandler):
                     room = RoomSpec(**{k: v for k, v in room_data.items() if k in RoomSpec.__dataclass_fields__})
                     load_weather_data = payload.get("weather") or load_weather(site_id, year)
                     pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year)
-                    load_result = simulate_room(load_weather_data, room)
+                    load_result = aggregate_project_load(simulate_room(load_weather_data, room))
                     scenario = scenario_from_dict(payload.get("pv") or {}, site_id=site_id, year=year)
                     report = run_pv_planning(load_result, pv_weather_data, scenario)
                     report["agent"] = {"requested": False, "status": "disabled", "mode": "deterministic_tools", "note": "本接口的数值全部由Python工具计算；可按需启用本地模型工具协同。"}
@@ -296,7 +299,7 @@ class Handler(BaseHTTPRequestHandler):
                     report = agent_output.get("report") or {}; report["agent"] = {k:v for k,v in agent_output.items() if k != "report"}
                     return self._send(HTTPStatus.OK, {"status":"success","report":report})
                 room_data = payload.get("room") or {}; room = RoomSpec(**{k: v for k, v in room_data.items() if k in RoomSpec.__dataclass_fields__})
-                load_weather_data = payload.get("weather") or load_weather(site_id, year); pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year); load_result = simulate_room(load_weather_data, room)
+                load_weather_data = payload.get("weather") or load_weather(site_id, year); pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year); load_result = aggregate_project_load(simulate_room(load_weather_data, room))
                 pv, hybrid = hybrid_task_from_dict(payload, site_id=site_id, year=year)
                 report = run_hybrid_planning(load_result, pv_weather_data, pv, hybrid, WindTurbineProfile.from_file())
                 report["agent"] = {"requested": False, "status": "disabled", "mode": "phase2b_hybrid_tools", "request": payload.get("request", "")}

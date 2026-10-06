@@ -10,6 +10,7 @@ from .wind import WindScenario, WindQuote, WindTurbineProfile
 from .hybrid import HybridScenario, hybrid_task_from_dict, run_hybrid_planning
 from .task_changes import (MODIFICATION_SCHEMA, ModificationConflict, validate_modifications,
                           rule_modifications, merge_modifications, apply_modifications)
+from .project_load import aggregate_project_load
 
 CONFIG_PATH=Path(__file__).resolve().parents[1]/"runtime"/"local_model_config.json"
 TOOLS=["interpret_request","validate_task","read_load_context","check_weather_inputs","select_wind_profile","compute_generation","match_supply_demand","calculate_lifecycle","prepare_report"]
@@ -53,7 +54,7 @@ class HybridPlanningAgent:
             p=state["payload"]; state["room"]=RoomSpec(**{k:v for k,v in (p.get("room") or {}).items() if k in RoomSpec.__dataclass_fields__}); state["pv"],state["hybrid"]=hybrid_task_from_dict(p,site_id=state["site_id"],year=state["year"])
             if state["hybrid"].allow_export and state["hybrid"].export_price_cny_per_kwh is None: return {"status":"needs_clarification","question":"已允许外送但没有外送价格；请选择只保留物理结果，或提供外送价。"}
             return {"status":"validated","budget_cny":state["hybrid"].budget_cny,"turbine_count":state["hybrid"].wind.turbine_count}
-        if name=="read_load_context": state["load_weather"]=state["payload"].get("weather") or load_weather(state["site_id"],state["year"]); state["pv_weather"]=state["payload"].get("pv_weather") or load_pv_weather(state["site_id"],state["year"]); state["load_result"]=simulate_room(state["load_weather"],state["room"]); return {"load_kwh":state["load_result"].get("summary",{}).get("electric_kwh"),"service":state["load_result"].get("summary",{})}
+        if name=="read_load_context": state["load_weather"]=state["payload"].get("weather") or load_weather(state["site_id"],state["year"]); state["pv_weather"]=state["payload"].get("pv_weather") or load_pv_weather(state["site_id"],state["year"]); state["single_room_load_result"]=simulate_room(state["load_weather"],state["room"]); state["load_result"]=aggregate_project_load(state["single_room_load_result"]); return {"load_kwh":state["load_result"].get("summary",{}).get("electric_kwh"),"single_room_load_kwh":state["single_room_load_result"].get("summary",{}).get("electric_kwh"),"project_load_scope":state["load_result"].get("load_series",{}).get("project_aggregation"),"service":state["load_result"].get("summary",{})}
         if name=="check_weather_inputs":
             if state["load_result"]["load_series"]["timestamps"]!=state["pv_weather"]["time"]: raise ValueError("负荷与风光天气时间轴不一致")
             return {"source_file":state["pv_weather"].get("source_file"),"hash":state["pv_weather"].get("hash"),"records":len(state["pv_weather"].get("time",[]))}

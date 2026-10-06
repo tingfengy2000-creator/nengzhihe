@@ -18,6 +18,7 @@ from typing import Any, Dict, List
 from .pv import PVScenario, generate_candidates, generate_pv, match_load, run_pv_planning, scenario_from_dict, _price_vectors
 from .thermal_model import RoomSpec, simulate_room
 from .weather import load_pv_weather, load_weather
+from .project_load import aggregate_project_load
 
 CONFIG_PATH = Path(__file__).resolve().parents[1] / "runtime" / "local_model_config.json"
 PV_TOOLS = ["interpret_request", "validate_task", "read_load_context", "check_weather_inputs", "generate_candidates", "compute_pv_generation", "match_load_hourly", "calculate_lifecycle", "prepare_report"]
@@ -102,8 +103,8 @@ class PVPlanningAgent:
                 return {"status": "needs_clarification", "question": state["needs_clarification"]}
             return {"status": "validated", "scenario": {"budget_cny": state["scenario"].budget_cny, "roof_area_m2": state["scenario"].roof_area_m2, "allow_export": state["scenario"].allow_export}}
         if name == "read_load_context":
-            state["load_weather"] = state["payload"].get("weather") or load_weather(state["site_id"], state["year"]); state["pv_weather"] = state["payload"].get("pv_weather") or load_pv_weather(state["site_id"], state["year"]); state["load_result"] = simulate_room(state["load_weather"], state["room"])
-            return {"load_kwh": state["load_result"].get("summary", {}).get("electric_kwh"), "service": state["load_result"].get("summary", {})}
+            state["load_weather"] = state["payload"].get("weather") or load_weather(state["site_id"], state["year"]); state["pv_weather"] = state["payload"].get("pv_weather") or load_pv_weather(state["site_id"], state["year"]); state["single_room_load_result"] = simulate_room(state["load_weather"], state["room"]); state["load_result"] = aggregate_project_load(state["single_room_load_result"])
+            return {"load_kwh": state["load_result"].get("summary", {}).get("electric_kwh"), "single_room_load_kwh": state["single_room_load_result"].get("summary", {}).get("electric_kwh"), "project_load_scope": state["load_result"].get("load_series", {}).get("project_aggregation"), "service": state["load_result"].get("summary", {})}
         if name == "check_weather_inputs":
             if state["load_result"]["load_series"]["timestamps"] != state["pv_weather"]["time"]: raise ValueError("负荷和光伏天气时间轴不一致")
             return {"source_file": state["pv_weather"].get("source_file"), "hash": state["pv_weather"].get("hash"), "aligned_records": len(state["pv_weather"].get("time", []))}
