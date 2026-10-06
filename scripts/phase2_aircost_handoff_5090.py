@@ -118,8 +118,10 @@ def main() -> None:
         corrected_summary = corrected["response"]["summary"]
         (OUT / "batch_quote_diff.json").write_text(json.dumps({"legacy_file": "operation_planning/results/regional_product_v2/three_demos.json", "legacy_initial_cny": old_batch["response"]["cost"]["lifecycle"]["initial_cny"] if "response" in old_batch else old_batch["cost"]["initial_cny"], "corrected_initial_cny": corrected["response"]["cost"]["lifecycle"]["initial_cny"], "legacy_electric_kwh": old_batch["summary"]["electric_kwh"], "corrected_electric_kwh_one_room": corrected_summary["electric_kwh"], "explanation": "旧batch_quote把equipment_count=2同时当作费用数量和用电乘数；修正后单房间物理轨迹已经包含两台设备，费用按逐台报价计2台，room_count只有在同类房间聚合时才乘电量。"}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         cases["legacy_batch_quote_note"] = {"legacy_initial_cny": old_batch["cost"]["initial_cny"], "legacy_equipment_count": old_batch["room"].get("equipment_count"), "note": "旧记录保留；旧 quantity 同时影响电量与费用，不能作为本轮修正口径"}
-        (OUT / "aircost_api_cases.json").write_text(json.dumps({"source_commit": source_commit, "calculation_version": "phase2b-aircost-handoff-5090-v1", "cases": cases}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        output_paths = [OUT / name for name in ("aircost_api_cases.json", "batch_quote_legacy_preserved.json", "batch_quote_corrected.json", "batch_quote_diff.json")]
+        cases_text = json.dumps({"source_commit": source_commit, "calculation_version": "phase2b-aircost-handoff-5090-v1", "cases": cases}, ensure_ascii=False, indent=2) + "\n"
+        (OUT / "aircost_api_cases.json").write_text(cases_text, encoding="utf-8")
+        (ROOT / "docs" / "handoff" / "replay_viewer" / "aircost_cases.json").write_text(cases_text, encoding="utf-8")
+        output_paths = [OUT / name for name in ("aircost_api_cases.json", "batch_quote_legacy_preserved.json", "batch_quote_corrected.json", "batch_quote_diff.json")] + [ROOT / "docs" / "handoff" / "replay_viewer" / "aircost_cases.json"]
         package_versions = {}
         for package in ("numpy", "pandas", "pvlib", "windpowerlib", "requests"):
             try:
