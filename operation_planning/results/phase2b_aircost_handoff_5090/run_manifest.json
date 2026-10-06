@@ -1,6 +1,6 @@
 {
   "run_id": "phase2b-aircost-handoff-5090-20261006",
-  "source_commit": "a774f17757247840b00e752a3b66ab61f7757924",
+  "source_commit": "d397875e3aa6e3d2016628e46d1cf61d3275621e",
   "machine_role": "5090",
   "workspace": "E:\\比赛\\nengzhihe",
   "python": "3.14.7",
@@ -17,8 +17,8 @@
     "reason": "本轮仅验证确定性空调热湿和成本API"
   },
   "command": "python scripts/phase2_aircost_handoff_5090.py",
-  "started_utc": "2026-10-06T08:18:36.199112+00:00",
-  "finished_utc": "2026-10-06T08:18:38.026804+00:00",
+  "started_utc": "2026-10-06T08:24:23.657995+00:00",
+  "finished_utc": "2026-10-06T08:24:25.486096+00:00",
   "exit_status": "success",
   "inputs": {
     "short_weather_hash": "handoff-short-weather-v1",
@@ -28,7 +28,7 @@
   "outputs": [
     {
       "path": "operation_planning\\results\\phase2b_aircost_handoff_5090\\aircost_api_cases.json",
-      "sha256": "5f146dbdad2160d8bec2d2c13fc6ce4a914898d79209982171c3450961bd82af"
+      "sha256": "3a5fdec7672bf43c651047ca8d58d60d9a1d262194819ec6f3de788d4d3ca443"
     },
     {
       "path": "operation_planning\\results\\phase2b_aircost_handoff_5090\\batch_quote_legacy_preserved.json",
@@ -41,6 +41,10 @@
     {
       "path": "operation_planning\\results\\phase2b_aircost_handoff_5090\\batch_quote_diff.json",
       "sha256": "3b50bd72c997f5b199f115744869c21be92dcdf4c0709bba50b604a146e347db"
+    },
+    {
+      "path": "docs\\handoff\\replay_viewer\\aircost_cases.json",
+      "sha256": "3a5fdec7672bf43c651047ca8d58d60d9a1d262194819ec6f3de788d4d3ca443"
     }
   ],
   "notes": [
