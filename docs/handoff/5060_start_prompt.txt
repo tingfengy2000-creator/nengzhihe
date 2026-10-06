@@ -3,8 +3,9 @@
 固定交接基线：
 - 仓库：https://github.com/tingfengy2000-creator/nengzhihe
 - 分支：fix/5090-project-load-handoff
-- 本轮已验证交接锚点（代码＋完整年证据）：5d7e3d483a0943788133b892d6dffc4e5c2c7dd0
-- 本轮实际运行源码：611598be93e282cbc473287f5b3d8f173fe86793
+- 本轮已验证交接锚点（代码＋完整年及API证据）：fa506041a55886beb8adbe63bda3722632935c1d
+- 本轮完整年实际运行源码：611598be93e282cbc473287f5b3d8f173fe86793
+- 本轮HTTP API契约探针源码：dc2de4277e12e914993281c0bb3fa1e6e4106a8a
 - 本轮5090运行清单：phase2b-project-load-5090-guangzhou-2024
 - 本轮交接说明：operation_planning/protocol/phase2b_project_load_handoff_5090.md
 - 历史交接内容：990f25327599c8795682592c75653bc5e84a96af（仅作历史，不作为本轮起点）
