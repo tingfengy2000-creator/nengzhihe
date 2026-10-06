@@ -1,0 +1,75 @@
+{
+  "status": "passed",
+  "source_commit": "bc90c8a23ef9407f9765389e396a7ac5dfc7f223",
+  "started_utc": "2026-10-06T15:29:26+00:00",
+  "ended_utc": "2026-10-06T15:30:56+00:00",
+  "case_count": 4,
+  "cases": [
+    {
+      "case_id": "primary_adequate_one_room",
+      "demo_role": "primary_no_service_gap",
+      "room_count": 1,
+      "units_per_room": 6,
+      "electric_load_kwh": 595.376387453286,
+      "service_status": "within_modeled_scope",
+      "project_load_contract": {
+        "scope": "project",
+        "room_count": 1,
+        "units_per_room": 6,
+        "source": "operation_planning.project_load.aggregate_project_load",
+        "single_room_preserved": true
+      },
+      "case_hash": "3ffb81ed988dd7c68a14d4d2714ae6d05bba7bad97610fe863af1bf5314a3151"
+    },
+    {
+      "case_id": "primary_adequate_three_rooms",
+      "demo_role": "primary_no_service_gap",
+      "room_count": 3,
+      "units_per_room": 6,
+      "electric_load_kwh": 1786.1291623598556,
+      "service_status": "within_modeled_scope",
+      "project_load_contract": {
+        "scope": "project",
+        "room_count": 3,
+        "units_per_room": 6,
+        "source": "operation_planning.project_load.aggregate_project_load",
+        "single_room_preserved": true
+      },
+      "case_hash": "e29fb62d42fa312ee826e42b09c517dc150da3924ab329aafb5c70dafb93f83e"
+    },
+    {
+      "case_id": "comparison_undersized_one_unit",
+      "demo_role": "undersized_comparison",
+      "room_count": 1,
+      "units_per_room": 1,
+      "electric_load_kwh": 1251.2839144823713,
+      "service_status": "service_gap",
+      "project_load_contract": {
+        "scope": "project",
+        "room_count": 1,
+        "units_per_room": 1,
+        "source": "operation_planning.project_load.aggregate_project_load",
+        "single_room_preserved": true
+      },
+      "case_hash": "12cba528795742f986c154722ade0614798b97834dcefc999102cebe95cef71b"
+    },
+    {
+      "case_id": "comparison_two_unit_reference",
+      "demo_role": "two_unit_reference",
+      "room_count": 1,
+      "units_per_room": 2,
+      "electric_load_kwh": 1359.6639627709894,
+      "service_status": "service_gap",
+      "project_load_contract": {
+        "scope": "project",
+        "room_count": 1,
+        "units_per_room": 2,
+        "source": "operation_planning.project_load.aggregate_project_load",
+        "single_room_preserved": true
+      },
+      "case_hash": "b511abd656910e6bbfd8efebee0fc2a27de09bf58012860cc5d94fc790e405b1"
+    }
+  ],
+  "package_sha256": "b90f1bd1850e93f0d8f1e88f7caea1243897ad3cea847b412572af7dfb5f1c54",
+  "note": "完整年回放；旧 replay_cases.json 保留为历史固定样例，本文件供5060读取。"
+}

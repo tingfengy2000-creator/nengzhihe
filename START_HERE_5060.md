@@ -164,8 +164,8 @@ python -m http.server 8060 --directory docs/handoff/replay_viewer
 
 ## 13. 最新5090项目负荷衔接
 
-本轮交接分支是 `fix/5090-project-load-handoff`。核心代码提交为 `611598be93e282cbc473287f5b3d8f173fe86793`，完整年证据提交为 `5d7e3d483a0943788133b892d6dffc4e5c2c7dd0`；PV/Hybrid HTTP API 契约探针源码为 `dc2de4277e12e914993281c0bb3fa1e6e4106a8a`，证据为 `fa506041a55886beb8adbe63bda3722632935c1d`。详细契约见 `operation_planning/protocol/phase2b_project_load_handoff_5090.md`。
+本轮交接分支是 `fix/5090-room-contract-replay`。房间字段修复源码提交为 `bc90c8a23ef9407f9765389e396a7ac5dfc7f223`，正式回放证据提交为 `d9a9578e34fa1719ea945214eb3dc6339bb4bef9`，顶层 `room_count=3` API 探针证据提交为 `4cb9695dd6ca7704f36198c4b71cc97d203f34ae`；上一轮项目负荷适配仍由 `fix/5090-project-load-handoff` 的历史提交保留。详细契约见 `operation_planning/protocol/phase2b_project_load_handoff_5090.md`。
 
 热模型仍输出单房间轨迹，单房间轨迹已经包含 `units_per_room`。服务端通过 `aggregate_project_load` 按 `room_count` 聚合一次，再把同一项目总负荷交给 PV 和 Hybrid；原单房间结果、聚合数量、来源和范围都会返回。匹配后的自用、购电、外送、弃电不再按房间数放大，前端不得再次聚合。
 
-5090完整广州2024回放验证了：一间与三间同类房间的负荷比例为3，固定风光发电不变，0kWp且0台风机时购电量等于项目总负荷，空调成本页与PV/Hybrid使用相同项目年负荷。5060可以产品化展示这些字段，但不同朝向、不同使用时段、不同设备或独立房间状态仍未实现；超出同类房间适配范围的输入必须显示待5090验算或拒绝，不能静默返回一间房结果。
+5090完整广州2024回放验证了：一间与三间同类房间的负荷比例为3，固定风光发电不变，0kWp且0台风机时购电量等于项目总负荷，空调成本页与PV/Hybrid使用相同项目年负荷。新的正式回放 `docs/handoff/replay_viewer/replay_cases_room_contract.json` 同时解释了1台=1251.283914 kWh、2台=1359.663963 kWh，并提供无服务缺口的6台参考主场景及1/3间两个项目 case。5060可以产品化展示这些字段，但不同朝向、不同使用时段、不同设备或独立房间状态仍未实现；超出同类房间适配范围的输入必须显示待5090验算或拒绝，不能静默返回一间房结果。

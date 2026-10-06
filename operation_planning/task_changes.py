@@ -15,7 +15,10 @@ class ModificationConflict(ValueError):
 
 
 ROOM_PROPERTIES = {"start_hour": {"type": "integer", "minimum": 0, "maximum": 23},
-                   "end_hour": {"type": "integer", "minimum": 1, "maximum": 24}}
+                   "end_hour": {"type": "integer", "minimum": 1, "maximum": 24},
+                   "room_count": {"type": "integer", "minimum": 1},
+                   "units_per_room": {"type": "integer", "minimum": 1},
+                   "area_m2": {"type": "number", "exclusiveMinimum": 0}}
 WIND_PROPERTIES = {"turbine_count": {"type": "integer", "enum": [0, 1]},
                    "hub_height_m": {"type": "number", "exclusiveMinimum": 0},
                    "hub_height_max_m": {"type": "number", "exclusiveMinimum": 0}}
@@ -54,13 +57,14 @@ def validate_modifications(raw: Dict[str, Any]) -> Dict[str, Any]:
                 if key == "export_price_cny_per_kwh" and number is None: continue
                 if isinstance(number, bool) or not isinstance(number, (float, int)) or not math.isfinite(number):
                     raise ValueError(f"{key}必须为有限数值，不能使用公式字符串")
-                if number < 0 or (key in {"hub_height_m", "hub_height_max_m"} and number <= 0):
+                if number < 0 or (key in {"hub_height_m", "hub_height_max_m", "area_m2"} and number <= 0):
                     raise ValueError(f"{key}超出有效范围")
-                if key in {"start_hour", "end_hour", "turbine_count"} and int(number) != number:
+                if key in {"start_hour", "end_hour", "turbine_count", "room_count", "units_per_room"} and int(number) != number:
                     raise ValueError(f"{key}必须为整数")
                 if key == "turbine_count" and number not in (0, 1): raise ValueError("只支持0或1台风机")
                 if key == "start_hour" and number > 23: raise ValueError("start_hour超出范围")
                 if key == "end_hour" and not 1 <= number <= 24: raise ValueError("end_hour超出范围")
+                if key in {"room_count", "units_per_room"} and number < 1: raise ValueError(f"{key}必须至少为1")
     return out
 
 
@@ -81,6 +85,11 @@ def rule_modifications(request: str) -> Dict[str, Any]:
     if "使用时段改到晚上" in request: room.update(start_hour=18, end_hour=22)
     m = re.search(r"使用时段(?:改为|改成|调整为|设为)\s*(\d{1,2})(?::?\d{2})?\s*点?\s*[-至到—–]\s*(\d{1,2})(?::?\d{2})?\s*点?", request)
     if m: room.update(start_hour=int(m.group(1)), end_hour=int(m.group(2)))
+    m = re.search(r"(?:房间数|房间数量|有)\s*(?:改为|调整为|设为)?\s*(\d+)\s*间", request)
+    if not m: m = re.search(r"(?:改为|调整为|设为)?\s*(\d+)\s*间(?:房间|办公室|同类房间)?", request)
+    if m: room["room_count"] = int(m.group(1))
+    m = re.search(r"每间\s*(?:配置|安装|有)?\s*(\d+)\s*台(?:空调|设备)?", request)
+    if m: room["units_per_room"] = int(m.group(1))
     if wind: h["wind"] = wind
     return {**({"room": room} if room else {}), **({"hybrid": h} if h else {})}
 
@@ -120,6 +129,10 @@ def apply_modifications(base: Dict[str, Any], raw: Dict[str, Any]) -> tuple[Dict
         for key, value in values.items():
             if key == "wind": target.setdefault("wind", {}).update(value)
             else: target[key] = value
+    # RoomSpec retains equipment_count for backwards compatibility. Keep it
+    # synchronized when a user changes the canonical units_per_room field.
+    if "units_per_room" in normalized.get("room", {}) and "equipment_count" in (out.get("room") or {}):
+        out["room"]["equipment_count"] = normalized["room"]["units_per_room"]
     room = out.get("room") or {}
     if room.get("start_hour", 8) >= room.get("end_hour", 18):
         raise ValueError("使用结束时间必须大于开始时间（本版不支持跨午夜使用时段）")

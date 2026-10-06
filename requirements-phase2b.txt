@@ -1,2 +1,3 @@
 # Phase 2B wind coupling (pinned for reproducible hub-height and curve calls)
+-r requirements-phase2.txt
 windpowerlib==0.2.2

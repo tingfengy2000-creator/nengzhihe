@@ -10,6 +10,18 @@ permissions:
   contents: read
 
 jobs:
+  operation-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install operation-planning dependencies
+        run: python -m pip install -r requirements.txt -r requirements-phase2.txt
+      - name: Run GPU-free room and cost contracts
+        run: python -m unittest -v tests.test_project_load_adapter tests.test_aircost_handoff
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 10

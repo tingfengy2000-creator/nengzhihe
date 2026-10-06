@@ -7,6 +7,7 @@ from operation_planning.project_load import aggregate_project_load
 from operation_planning.thermal_model import RoomSpec, simulate_room
 from operation_planning.pv import PVScenario, run_pv_planning
 from operation_planning.hybrid import HybridScenario, run_hybrid_planning
+from operation_planning.app import _thermal_inputs
 
 
 def _weather() -> dict:
@@ -46,6 +47,15 @@ class ProjectLoadAdapterContracts(unittest.TestCase):
             run_pv_planning(load, {}, PVScenario())
         with self.assertRaisesRegex(ValueError, "aggregate_project_load"):
             run_hybrid_planning(load, {}, PVScenario(), HybridScenario())
+
+    def test_top_level_room_count_is_normalized_once(self):
+        room, cost, contract = _thermal_inputs({"room": {"equipment_count": 2, "units_per_room": 2}, "room_count": 3})
+        self.assertEqual(room.room_count, 3)
+        self.assertEqual(room.units_per_room, 2)
+        self.assertEqual(cost["room_count"], 3)
+        self.assertEqual(contract["room"]["room_count"], 3)
+        with self.assertRaisesRegex(ValueError, "quantity"):
+            _thermal_inputs({"room_count": 3, "quantity": 2})
 
 
 if __name__ == "__main__":
