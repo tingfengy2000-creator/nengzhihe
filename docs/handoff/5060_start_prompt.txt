@@ -2,11 +2,12 @@
 
 固定交接基线：
 - 仓库：https://github.com/tingfengy2000-creator/nengzhihe
-- 分支：handoff/5090-to-5060
-- 已验收起点提交：3c039c2344c4d80bacb76c347ce191437816149c
-- 本次交接内容提交：990f25327599c8795682592c75653bc5e84a96af
-- 实际数值实验源码：a4d4bd139cab844eab0c1853889bd0320f45c941
-- 5090运行清单：phase2b-5090-semantics-final
+- 分支：fix/5090-project-load-handoff
+- 本轮已验证交接锚点（代码＋完整年证据）：5d7e3d483a0943788133b892d6dffc4e5c2c7dd0
+- 本轮实际运行源码：611598be93e282cbc473287f5b3d8f173fe86793
+- 本轮5090运行清单：phase2b-project-load-5090-guangzhou-2024
+- 本轮交接说明：operation_planning/protocol/phase2b_project_load_handoff_5090.md
+- 历史交接内容：990f25327599c8795682592c75653bc5e84a96af（仅作历史，不作为本轮起点）
 
 这是已经完成核心计算的项目，不是从零立项。品牌是“能智核”，参赛方向是第十二届中国研究生智慧城市技术与创意设计大赛“智慧能源与环境”，产品主线是公共建筑空调选型与运行情景测算，进一步比较只购电、仅光伏、仅风电和风光组合。产品记忆点是“先试算，再决策”。目标是争取全国二等奖、冲击一等奖，但不能把目标写成已获奖或已有现场收益。
 

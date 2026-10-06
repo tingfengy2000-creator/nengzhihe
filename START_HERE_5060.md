@@ -161,3 +161,11 @@ python -m http.server 8060 --directory docs/handoff/replay_viewer
 常数 `annual_price_cny_per_kwh` 是用户确认的恒价情景；分时价格通过 `tariff_id`/`custom_tariff` 传入并按同一 `operation_planning.tariffs.integrate_power` 切分。档案有效期未覆盖评价区间时接口拒绝，不静默套用。`expected_life_years` 和 `warranty_years` 保存在本次任务情景，不修改设备目录默认寿命。
 
 5060可直接读取 `docs/handoff/replay_viewer/aircost_cases.json` 做前端回放；它只包含5090实际请求和响应摘要，未列出的新条件应显示“待5090验算”。
+
+## 13. 最新5090项目负荷衔接
+
+本轮交接分支是 `fix/5090-project-load-handoff`。已验证代码提交为 `611598be93e282cbc473287f5b3d8f173fe86793`，完整年证据提交为 `5d7e3d483a0943788133b892d6dffc4e5c2c7dd0`；详细契约见 `operation_planning/protocol/phase2b_project_load_handoff_5090.md`。
+
+热模型仍输出单房间轨迹，单房间轨迹已经包含 `units_per_room`。服务端通过 `aggregate_project_load` 按 `room_count` 聚合一次，再把同一项目总负荷交给 PV 和 Hybrid；原单房间结果、聚合数量、来源和范围都会返回。匹配后的自用、购电、外送、弃电不再按房间数放大，前端不得再次聚合。
+
+5090完整广州2024回放验证了：一间与三间同类房间的负荷比例为3，固定风光发电不变，0kWp且0台风机时购电量等于项目总负荷，空调成本页与PV/Hybrid使用相同项目年负荷。5060可以产品化展示这些字段，但不同朝向、不同使用时段、不同设备或独立房间状态仍未实现；超出同类房间适配范围的输入必须显示待5090验算或拒绝，不能静默返回一间房结果。
