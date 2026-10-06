@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+from dataclasses import asdict
 from html import escape
 import io
 import json
@@ -129,7 +130,7 @@ def _thermal_inputs(payload: dict) -> tuple[RoomSpec, dict, dict]:
     # explicit in the returned task object instead of guessing in lifecycle.
     if "room_count" not in room_data and "quantity" in payload:
         room_data["room_count"] = payload["quantity"]
-    if "quantity" in payload and "room_count" in (payload.get("room") or {}) and int(payload["quantity"]) != int((payload.get("room") or {})["room_count"]):
+    if "quantity" in payload and "room_count" in room_data and int(payload["quantity"]) != int(room_data["room_count"]):
         raise ValueError("quantity 与 room.room_count 不一致；请只保留 room_count")
     allowed = set(RoomSpec.__dataclass_fields__)
     room = RoomSpec(**{k: v for k, v in room_data.items() if k in allowed})
@@ -268,7 +269,8 @@ class Handler(BaseHTTPRequestHandler):
                     # Agent mode starts from the task only.  It must first
                     # interpret and validate the requested change; no final
                     # report is computed before the model invokes tools.
-                    task = {"site_id": site_id, "year": year, "room": payload.get("room") or {}, "pv": payload.get("pv") or {}, "weather": payload.get("weather"), "pv_weather": payload.get("pv_weather")}
+                    normalized_room, _, _ = _thermal_inputs(payload)
+                    task = {"site_id": site_id, "year": year, "room": asdict(normalized_room), "pv": payload.get("pv") or {}, "weather": payload.get("weather"), "pv_weather": payload.get("pv_weather")}
                     agent_output = PVPlanningAgent().run(str(payload.get("request", "按现有空调负荷比较光伏容量")), task)
                     if agent_output.get("status") != "success":
                         return self._send(HTTPStatus.UNPROCESSABLE_ENTITY, {"status": agent_output.get("status", "failed"), "agent": agent_output, "error": agent_output.get("error") or agent_output.get("question", "Agent未完成任务")})
@@ -278,8 +280,7 @@ class Handler(BaseHTTPRequestHandler):
                     # serializable and previously caused a circular result).
                     report["agent"] = {k: v for k, v in agent_output.items() if k != "report"}
                 else:
-                    room_data = payload.get("room") or {}
-                    room = RoomSpec(**{k: v for k, v in room_data.items() if k in RoomSpec.__dataclass_fields__})
+                    room, _, _ = _thermal_inputs(payload)
                     load_weather_data = payload.get("weather") or load_weather(site_id, year)
                     pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year)
                     load_result = aggregate_project_load(simulate_room(load_weather_data, room))
@@ -293,12 +294,14 @@ class Handler(BaseHTTPRequestHandler):
             try:
                 payload = self._read_json(); site_id = str(payload.get("site_id", "guangzhou")); year = int(payload.get("year", 2024))
                 if bool(payload.get("use_agent", False)):
-                    agent_output = HybridPlanningAgent().run(str(payload.get("request", "比较只购电、仅光伏、仅风电和风光组合")), payload)
+                    normalized_room, _, _ = _thermal_inputs(payload)
+                    agent_payload = dict(payload); agent_payload["room"] = asdict(normalized_room)
+                    agent_output = HybridPlanningAgent().run(str(payload.get("request", "比较只购电、仅光伏、仅风电和风光组合")), agent_payload)
                     if agent_output.get("status") != "success":
                         return self._send(HTTPStatus.UNPROCESSABLE_ENTITY, {"status":agent_output.get("status"),"agent":agent_output,"error":agent_output.get("error") or agent_output.get("question")})
                     report = agent_output.get("report") or {}; report["agent"] = {k:v for k,v in agent_output.items() if k != "report"}
                     return self._send(HTTPStatus.OK, {"status":"success","report":report})
-                room_data = payload.get("room") or {}; room = RoomSpec(**{k: v for k, v in room_data.items() if k in RoomSpec.__dataclass_fields__})
+                room, _, _ = _thermal_inputs(payload)
                 load_weather_data = payload.get("weather") or load_weather(site_id, year); pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year); load_result = aggregate_project_load(simulate_room(load_weather_data, room))
                 pv, hybrid = hybrid_task_from_dict(payload, site_id=site_id, year=year)
                 report = run_hybrid_planning(load_result, pv_weather_data, pv, hybrid, WindTurbineProfile.from_file())

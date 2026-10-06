@@ -52,8 +52,10 @@ def main() -> int:
             "wind_speed_10m": [10.0, 10.0, 10.0],
         },
     }
-    room = {"equipment_count": 2, "units_per_room": 2, "room_count": 3}
-    base = {"room": room, "weather": load_weather, "pv_weather": pv_weather}
+    # Exercise the migration path used by the 5060 form: room_count is at the
+    # top level while the per-room device count stays in room.
+    room = {"equipment_count": 2, "units_per_room": 2}
+    base = {"room": room, "room_count": 3, "weather": load_weather, "pv_weather": pv_weather}
     server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
