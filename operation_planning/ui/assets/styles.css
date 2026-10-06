@@ -602,3 +602,31 @@ svg.chart .baseline { stroke: var(--line-strong); }
   .form-grid .span-2 { grid-column: auto; }
   .sample-list { grid-template-columns: 1fr; }
 }
+
+/* 17 第 4 步与我的方案 ----------------------------------------------------- */
+.reasons { margin: var(--s4) 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: var(--s2); font-size: 15px; color: var(--ink); }
+.checklist { list-style: none; margin: var(--s4) 0 0; padding: 0; display: flex; flex-direction: column; gap: var(--s3); font-size: 14px; color: var(--ink-2); }
+.checklist li { display: flex; gap: var(--s2); align-items: flex-start; }
+.checklist svg { width: 18px; height: 18px; flex: none; color: var(--ink-3); margin-top: 2px; }
+.export-list { display: flex; flex-direction: column; gap: var(--s2); margin-top: var(--s4); }
+.export-item {
+  display: flex; align-items: center; gap: var(--s3); width: 100%; text-align: left; padding: var(--s3) var(--s4);
+  border-radius: var(--r); border: 1px solid var(--line); background: var(--surface); cursor: pointer;
+  transition: border-color .15s var(--ease), background .15s var(--ease);
+}
+.export-item:hover { border-color: var(--brand); background: var(--brand-weak); }
+.export-item svg { width: 20px; height: 20px; color: var(--brand); flex: none; }
+.export-item span { display: flex; flex-direction: column; }
+.export-item b { font-size: 14px; }
+.export-item small { font-size: var(--fs-xs); color: var(--ink-3); }
+.export-item[disabled] { opacity: .45; cursor: not-allowed; background: var(--surface); border-color: var(--line); }
+.plan h3 { line-height: 1.35; }
+
+/* 打印：只保留结果内容 */
+@media print {
+  .topbar, .stepper, .intro, .step-nav, .run-bar, .drawer, .scrim, .toast, .tooltip, #exportCard, [data-step-panel="1"] { display: none !important; }
+  body { background: #fff; }
+  .page { padding: 0; max-width: none; }
+  .card, .decision, .option { box-shadow: none; break-inside: avoid; }
+  .result-zone.is-stale { display: none; }
+}

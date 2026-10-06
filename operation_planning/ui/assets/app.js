@@ -623,6 +623,19 @@
     route();
   }
 
-  window.NZH.app = { state, FIELDS, FIELD, fieldDisplay, run, setStep, renderStep, openDrawer, toast, icon, tag, esc, parseAsk, buildLiveRequest, provenanceHtml };
+  function openSample(caseId) {
+    if (state.mode !== 'replay') setMode('replay');
+    pickSample(caseId); setStep(3);
+  }
+  function loadConditions(conds) {
+    const f = blankForm();
+    (conds || []).forEach((c) => { if (FIELD[c.key]) f[c.key] = c.value; });
+    state.form = f; state.ask = { text: '', applied: [], rejected: [] };
+    if (!state.resultForm) state.resultForm = JSON.parse(JSON.stringify(blankForm()));
+    markChanged(); renderStep(state.step);
+    toast('已载入保存的条件，请点击计算');
+  }
+
+  window.NZH.app = { openSample, loadConditions, state, FIELDS, FIELD, fieldDisplay, run, setStep, renderStep, openDrawer, toast, icon, tag, esc, parseAsk, buildLiveRequest, provenanceHtml };
   boot();
 })();
