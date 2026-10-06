@@ -19,7 +19,7 @@ from .boptest_adapter import LocalBestestAirFMUAdapter
 from .external_physical import summarize as summarize_external_physical
 from .schemas import TaskSpec
 from .search import PlanEvaluator
-from .tariffs import registry
+from .tariffs import registry, profile as tariff_profile
 from .equipment import catalogue
 from .weather import available_sites, load_weather, parse_user_csv
 from .weather import load_pv_weather
@@ -118,6 +118,52 @@ def _html_card(report: dict, selected: dict) -> str:
     return f"""<!doctype html><html lang='zh-CN'><meta charset='utf-8'><title>能智核方案卡</title><style>body{{font:15px/1.6 system-ui,'Microsoft YaHei',sans-serif;max-width:920px;margin:40px auto;color:#172033}}table{{border-collapse:collapse;width:100%}}td,th{{padding:8px;border-bottom:1px solid #dbe3ef;text-align:left}}.tag{{color:#2563eb}}</style><h1>能智核｜运行方案核查卡</h1><p class='tag'>当前推荐：{escape(str(name))}（{escape(str(plan.get('plan_id','')))}）</p><p>任务：{escape(str(task.get('user_request','')))}</p><table><tr><th>是否满足要求</th><td>{'满足使用要求' if selected.get('status')=='feasible' else '部分时段未达标'}</td></tr><tr><th>电费估算</th><td>{escape(str(amount))} {escape(str(currency))}；{escape(str(metrics.get('cost_period','目标日')))}</td></tr><tr><th>计费范围</th><td>{escape(str(metrics.get('cost_scope','')))}</td></tr><tr><th>空调电量</th><td>{escape(str(metrics.get('target_electric_kwh','')))} kWh</td></tr></table><h2>方案控制</h2><pre>{escape(json.dumps(plan.get('segments',[]),ensure_ascii=False,indent=2))}</pre><p>固定模型与天气下的地区电价情景试算，非当地楼宇预测。</p></html>"""
 
 
+def _thermal_inputs(payload: dict) -> tuple[RoomSpec, dict, dict]:
+    """Build one authoritative room/cost object for API and lifecycle."""
+    room_data = dict(payload.get("room") or {})
+    for name in ("room_count", "units_per_room"):
+        if name in payload and name not in room_data:
+            room_data[name] = payload[name]
+    # The old UI sends quantity for same-room batches. Make this migration
+    # explicit in the returned task object instead of guessing in lifecycle.
+    if "room_count" not in room_data and "quantity" in payload:
+        room_data["room_count"] = payload["quantity"]
+    if "quantity" in payload and "room_count" in (payload.get("room") or {}) and int(payload["quantity"]) != int((payload.get("room") or {})["room_count"]):
+        raise ValueError("quantity 与 room.room_count 不一致；请只保留 room_count")
+    allowed = set(RoomSpec.__dataclass_fields__)
+    room = RoomSpec(**{k: v for k, v in room_data.items() if k in allowed})
+    cost_data = dict(payload.get("cost") or {})
+    quote = dict(payload.get("equipment_quote") or cost_data.get("equipment_quote") or {})
+    def value(name: str, default: object = None) -> object:
+        return cost_data[name] if name in cost_data else payload.get(name, default)
+    tariff_id = value("tariff_id")
+    annual_price = value("annual_price_cny_per_kwh")
+    if tariff_id and annual_price is not None:
+        raise ValueError("annual_price_cny_per_kwh 与 tariff_id 不能同时提供")
+    tariff = None
+    tariff_mapping = None
+    calendar_start = value("tariff_calendar_start", value("tariff_calendar_date"))
+    if tariff_id:
+        tariff = tariff_profile(str(tariff_id), cost_data.get("custom_tariff") or payload.get("custom_tariff"))
+        tariff_mapping = {"tariff_id": tariff.tariff_id, "calendar_start": calendar_start, "note": "用户确认的电价有效期/评价日映射；未提供映射则使用天气首日并由有效期校验拒绝不覆盖情景"}
+    cost = {
+        "study_years": int(value("study_years", 10)),
+        "price_cny_per_kwh": None if annual_price is None else float(annual_price),
+        "tariff_profile": tariff,
+        "calendar_start": calendar_start,
+        "discount_rate": float(value("discount_rate", 0.0)),
+        "room_count": int(room.room_count),
+        "units_per_room": int(room.units_per_room if room.units_per_room is not None else (room.equipment_count or 1)),
+        "expected_life_years": value("expected_life_years"),
+        "warranty_years": value("warranty_years"),
+        "quote_scope": str(value("quote_scope", "per_unit")),
+        "quantity_semantics": "room_count × units_per_room; thermal energy is not multiplied by units_per_room again",
+        "quote": quote,
+        "tariff_mapping": tariff_mapping,
+    }
+    return room, cost, {"room": room_data, "cost": {k: v for k, v in cost.items() if k != "tariff_profile"}}
+
+
 class Handler(BaseHTTPRequestHandler):
     server_version = "NengzhiheOperation/0.2"
 
@@ -179,8 +225,30 @@ class Handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         if path == "/api/operation/thermal/run":
             try:
-                payload = self._read_json(); site_id = str(payload.get("site_id", "guangzhou")); year = int(payload.get("year", 2024)); room_data = payload.get("room") or {}; room = RoomSpec(**{k: v for k, v in room_data.items() if k in RoomSpec.__dataclass_fields__}); weather = payload.get("weather") or load_weather(site_id, year); result = simulate_room(weather, room); price = payload.get("annual_price_cny_per_kwh"); quote = payload.get("equipment_quote") or {}; cost = life_cycle_cost(result, int(payload.get("study_years", 10)), float(price) if price is not None else None, int(payload.get("quantity", 1)), float(payload.get("discount_rate", 0.0)), equipment_price_cny=quote.get("equipment_price_cny"), installation_cny=quote.get("installation_cny"), maintenance_cny_per_year=quote.get("maintenance_cny_per_year")) if price is not None else {"monthly": {}, "yearly": [], "lifecycle": {"status": "缺少可覆盖研究期的价格情景"}}
-                return self._send(HTTPStatus.OK, {"status": "success", "weather": weather["context"], "weather_hash": weather["hash"], "result": result, "cost": cost})
+                payload = self._read_json()
+                site_id = str(payload.get("site_id", "guangzhou")); year = int(payload.get("year", 2024))
+                room, cost_input, input_contract = _thermal_inputs(payload)
+                weather = payload.get("weather") or load_weather(site_id, year)
+                result = simulate_room(weather, room)
+                quote = cost_input["quote"]
+                cost = life_cycle_cost(
+                    result,
+                    study_years=cost_input["study_years"],
+                    price_cny_per_kwh=cost_input["price_cny_per_kwh"],
+                    room_count=cost_input["room_count"],
+                    units_per_room=cost_input["units_per_room"],
+                    discount_rate=cost_input["discount_rate"],
+                    expected_life_years=cost_input["expected_life_years"],
+                    warranty_years=cost_input["warranty_years"],
+                    quote_scope=cost_input["quote_scope"],
+                    tariff_profile=cost_input["tariff_profile"],
+                    calendar_start=cost_input["calendar_start"],
+                    equipment_price_cny=quote.get("equipment_price_cny"),
+                    installation_cny=quote.get("installation_cny"),
+                    maintenance_cny_per_year=quote.get("maintenance_cny_per_year"),
+                )
+                input_contract["cost"]["tariff"] = cost.get("lifecycle", {}).get("tariff_id")
+                return self._send(HTTPStatus.OK, {"status": "success", "weather": weather["context"], "weather_hash": weather["hash"], "input_contract": input_contract, "result": result, "cost": cost})
             except Exception as exc:
                 return self._send(HTTPStatus.BAD_REQUEST, {"status": "failed", "error": f"{type(exc).__name__}: {exc}"})
         if path == "/api/operation/weather/import":

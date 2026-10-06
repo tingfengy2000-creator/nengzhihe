@@ -27,3 +27,9 @@ python operation_planning/run_server.py
 天气是 Open-Meteo Historical Weather API 城市级再分析；第一阶段请求 ERA5 但响应未给出显式模型字段，manifest 保留该边界，不把来源名称当成响应模型，按 CC BY 4.0 归因，不是楼宇微气候实测。热湿模型是可审计的集总参考模型；PsychroLib 2.5.0 以 MIT 许可证随项目分发。三条设备记录是公开网页/能效标签的额定点，SHR、报价和完整部分负荷曲线缺失时会在结果中保持待补或参考情景。`results/regional_product_v2/summary.json` 的 27 条组合用于复现地区、年份与型号变化，不能写成实测精度、节能收益或采购承诺。
 
 阶段二运行依赖锁定在仓库根目录 `requirements-phase2.txt`（pvlib 0.11.2）；Windows 可先执行 `python -m pip install -r requirements-phase2.txt`。旧轮次诊断源码、结果和发布包保持原状；本分支只在 `operation_planning/` 增加独立产品链。
+
+### 空调成本接口（5090交接修复）
+
+`POST /api/operation/thermal/run` 接受 `room.room_count`、`room.units_per_room`（旧 `equipment_count` 仍兼容）以及 `quote_scope`。单房间热模型已把每间房的设备台数计入能力和电量，生命周期只按 `room_count` 聚合同类房间；逐台报价按 `room_count × units_per_room`，每房间报价按 `room_count`，项目报价只计一次。研究期、用户预计寿命和保修期分别由 `study_years`、`expected_life_years`、`warranty_years` 传入；寿命覆盖只影响更换事件，不改变既有负荷轨迹。
+
+电价二选一：`annual_price_cny_per_kwh` 为用户恒价情景，或 `tariff_id`/`custom_tariff` 为现有 `TariffProfile`。分时价格复用 `tariffs.integrate_power` 按负荷区间切分；电价档案未覆盖评价日期时返回错误，不套用其他日期。响应中的 `input_contract`、`result.room`、`result.load_series` 和 `cost.lifecycle` 是同一任务对象的口径来源。

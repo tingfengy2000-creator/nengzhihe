@@ -146,3 +146,18 @@ python -m http.server 8060 --directory docs/handoff/replay_viewer
 先提交一条可理解的桌面完整任务、固定样例回放、结果状态解释和从当前report导出的HTML/打印版/CSV或JSON；同时保留截图与变更说明。没有新的5090证据时，新增条件显示“待5090验算”。完成后按 `docs/handoff/5060_start_prompt.txt` 的格式回交GitHub，等待5090按影响范围审核。
 
 更短的可复制启动提示词见 `docs/handoff/5060_start_prompt.txt`。
+
+## 12. 5090空调成本功能交接（本轮）
+
+本轮在独立修复分支补齐了可编辑成本接口，5090的完整证据位于 `operation_planning/results/phase2b_aircost_handoff_5090/`。三个口径必须同时出现在请求、结果明细和导出对象中：`room_count` 是相同房间数，`units_per_room` 是每间房设备台数，`quote_scope` 是 `per_unit`、`per_room` 或 `project`。热模型每条轨迹已经包含每间房的 `units_per_room`，生命周期只把电量乘 `room_count`；逐台报价才按 `room_count × units_per_room` 计费。
+
+| 状态 | 内容与证据 |
+| --- | --- |
+| 已实现并有5090证据 | 一间房两台设备的单台报价示例初始费用8200元；三间同类房间按6台报价、用电按3份单房间结果；用户寿命8/10/12年替换边界；恒价与现有 `TariffProfile` 共用区间计费；请求—响应样例与运行清单。 |
+| 待5060完成 | 在既有空调表单中编辑房间数、每间台数、报价范围、研究期/寿命/保修期和价格来源；从同一响应对象生成可读费用明细与导出，不另算一次。 |
+| 仍未验证 | 三个公开参考型号仍是额定点情景；没有任意用户型号、完整厂家部分负荷性能曲线或实测校准，也没有现场采购、节能或人工提效证据。 |
+| 不在本轮范围 | 新型号库、不同朝向/时段房间自动组团、风电/光伏物理模型改造、储能、PPT/视频/申报材料。 |
+
+常数 `annual_price_cny_per_kwh` 是用户确认的恒价情景；分时价格通过 `tariff_id`/`custom_tariff` 传入并按同一 `operation_planning.tariffs.integrate_power` 切分。档案有效期未覆盖评价区间时接口拒绝，不静默套用。`expected_life_years` 和 `warranty_years` 保存在本次任务情景，不修改设备目录默认寿命。
+
+5060可直接读取 `docs/handoff/replay_viewer/aircost_cases.json` 做前端回放；它只包含5090实际请求和响应摘要，未列出的新条件应显示“待5090验算”。

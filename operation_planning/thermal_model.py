@@ -5,7 +5,7 @@ building simulation. Psychrometric state updates use PsychroLib; the equipment
 catalogue supplies only rated points unless a user provides a curve.
 """
 from __future__ import annotations
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from datetime import datetime
 import math
 from typing import Any, Dict, List
@@ -31,7 +31,11 @@ class RoomSpec:
     cooling_setpoint_c: float = 26.0
     rh_setpoint_percent: float = 60.0
     equipment_id: str = "midea_msagbu12_mox201"
-    equipment_count: int = 1
+    # ``equipment_count`` is retained as the phase-one compatibility field.
+    # New callers should use ``units_per_room`` and ``room_count`` explicitly.
+    equipment_count: int | None = 1
+    room_count: int = 1
+    units_per_room: int | None = None
     default_shr: float = 0.75
 
 
@@ -57,8 +61,31 @@ def _capacity_and_cop(eq: Any, outdoor_c: float, count: int) -> tuple[float, flo
     return capacity, cop
 
 
+def _normalise_room_counts(room: RoomSpec) -> RoomSpec:
+    """Resolve legacy equipment_count without multiplying room energy twice.
+
+    The physical trace is always for one room.  ``units_per_room`` changes the
+    capacity inside that trace; ``room_count`` is applied only by lifecycle
+    aggregation.  Supplying both legacy and new fields with different values
+    is rejected instead of silently guessing what ``equipment_count`` meant.
+    """
+    legacy = room.equipment_count
+    units = room.units_per_room
+    if units is None:
+        units = 1 if legacy is None else int(legacy)
+    elif legacy not in (None, 1, int(units)):
+        raise ValueError("equipment_count 与 units_per_room 不一致；请只保留一个台数口径")
+    room_count = int(room.room_count)
+    units = int(units)
+    if room_count < 1 or units < 1:
+        raise ValueError("room_count 与 units_per_room 必须至少为1")
+    if legacy is not None and int(legacy) < 1:
+        raise ValueError("equipment_count 必须至少为1")
+    return replace(room, equipment_count=units, units_per_room=units, room_count=room_count)
+
+
 def simulate_room(weather: Dict[str, Any], room: RoomSpec | None = None) -> Dict[str, Any]:
-    room = room or RoomSpec()
+    room = _normalise_room_counts(room or RoomSpec())
     if room.area_m2 <= 0 or room.height_m <= 0 or not 0 <= room.window_wall_ratio <= 1:
         raise ValueError("房间面积、高度和窗墙比必须有效")
     if not 0 <= room.start_hour < room.end_hour <= 24:
@@ -146,6 +173,6 @@ def simulate_room(weather: Dict[str, Any], room: RoomSpec | None = None) -> Dict
         rows.append({"timestamp": ts, "interval_seconds": dt_seconds, "outdoor_temp_c": tout, "outdoor_rh_percent": rhout, "surface_pressure_hpa": pressure / 100.0, "solar_w_m2": solar, "active": scheduled, "cooling_active": cooling_active, "sensible_load_w": sensible_load, "latent_load_w": latent_generation_w, "latent_demand_w": latent_demand, "cooling_load_w": sensible_load + latent_demand, "capacity_w": capacity_w, "delivered_cooling_w": delivered, "delivered_sensible_w": sensible_delivered, "delivered_latent_w": latent_delivered, "sensible_unmet_w": sensible_unmet, "latent_unmet_w": latent_unmet, "electric_power_w": power_w, "indoor_temp_c": temp, "indoor_rh_percent": indoor_rh, "outdoor_enthalpy_kj_kg": enthalpy_kj_kg(tout, outdoor_w), "humidity_ratio_outdoor": outdoor_w, "humidity_ratio_indoor": w})
     active_hours = sum(x["interval_seconds"] for x in rows if x["active"]) / 3600.0
     cooling_hours = sum(x["interval_seconds"] for x in rows if x["cooling_active"]) / 3600.0
-    load_series = {"timestamps": [x["timestamp"] for x in rows], "interval_seconds": [int(x["interval_seconds"]) for x in rows], "electric_power_w": [x["electric_power_w"] for x in rows], "cooling_load_w": [x["cooling_load_w"] for x in rows], "latent_load_w": [x["latent_load_w"] for x in rows], "temperature_unmet_degree_hours": [max(0.0, x["indoor_temp_c"] - room.cooling_setpoint_c) * x["interval_seconds"] / 3600.0 if x["cooling_active"] else 0.0 for x in rows], "rh_unmet_percent_hours": [max(0.0, x["indoor_rh_percent"] - room.rh_setpoint_percent) * x["interval_seconds"] / 3600.0 if x["cooling_active"] else 0.0 for x in rows], "capacity_shortfall_w": [max(0.0, x["sensible_unmet_w"] + x["latent_unmet_w"]) for x in rows], "source": "single-room lumped heat-moisture model", "scope": "one-room; equipment count included", "equipment_count": int(room.equipment_count), "model_version": "thermal_model_phase1_v2", "assumptions": ["city-scale hourly reference weather", "cooling-only; no heating load", "rated-point temperature derate; no complete part-load map", "SHR defaults to editable reference when manufacturer value is absent"], "service_scope": "cooling_only", "weather_provenance": {"source_file": weather.get("source_file"), "boundary_file": weather.get("boundary_file"), "hash": weather.get("hash"), "normalization": weather.get("weather_normalization")}}
+    load_series = {"timestamps": [x["timestamp"] for x in rows], "interval_seconds": [int(x["interval_seconds"]) for x in rows], "electric_power_w": [x["electric_power_w"] for x in rows], "cooling_load_w": [x["cooling_load_w"] for x in rows], "latent_load_w": [x["latent_load_w"] for x in rows], "temperature_unmet_degree_hours": [max(0.0, x["indoor_temp_c"] - room.cooling_setpoint_c) * x["interval_seconds"] / 3600.0 if x["cooling_active"] else 0.0 for x in rows], "rh_unmet_percent_hours": [max(0.0, x["indoor_rh_percent"] - room.rh_setpoint_percent) * x["interval_seconds"] / 3600.0 if x["cooling_active"] else 0.0 for x in rows], "capacity_shortfall_w": [max(0.0, x["sensible_unmet_w"] + x["latent_unmet_w"]) for x in rows], "source": "single-room lumped heat-moisture model", "scope": "one-room; units_per_room included; room_count applied only in cost aggregation", "equipment_count": int(room.equipment_count), "room_count": int(room.room_count), "units_per_room": int(room.units_per_room), "model_version": "thermal_model_phase1_v2", "assumptions": ["city-scale hourly reference weather", "cooling-only; no heating load", "rated-point temperature derate; no complete part-load map", "SHR defaults to editable reference when manufacturer value is absent"], "service_scope": "cooling_only", "weather_provenance": {"source_file": weather.get("source_file"), "boundary_file": weather.get("boundary_file"), "hash": weather.get("hash"), "normalization": weather.get("weather_normalization")}}
     totals.update({"capacity_shortfall_hours": shortfall_hours, "active_hours": active_hours, "cooling_season_hours": cooling_hours})
     return {"room": asdict(room), "equipment": asdict(eq), "rows": rows, "load_series": load_series, "summary": {**totals, "source": "bounded single-room lumped model; reference consistency only, not measured-building validation", "shr_source": "manufacturer value when published; otherwise editable default reference assumption", "performance_source": "rated point with explicit temperature derate; no complete part-load map"}}
