@@ -1,0 +1,29 @@
+{
+  "collected_at": "2026-10-06T15:04:57.3635865+08:00",
+  "purpose": "5090交接环境补录，不代表实验运行时采集，也不含机器序列号或个人信息",
+  "current_commit": "3c039c2344c4d80bacb76c347ce191437816149c",
+  "commands": [
+    "nvidia-smi --query-gpu=name,driver_version --format=csv,noheader",
+    "python --version",
+    "python -c importlib.metadata"
+  ],
+  "gpu": "NVIDIA GeForce RTX 5090, 610.88",
+  "python": "Python 3.14.7",
+  "key_dependencies": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "pvlib": "0.11.2",
+    "windpowerlib": "0.2.2",
+    "requests": "2.34.2"
+  },
+  "model_config": {
+    "model_id": "nengzhihe-qwen3-4b-q4km",
+    "runner": "llama.cpp",
+    "runner_release": "b11146",
+    "model_revision": "bc640142c66e1fdd12af0bd68f40445458f3869b",
+    "context_size": 4096,
+    "max_tokens": 192,
+    "external_api": false
+  },
+  "external_api": false
+}
