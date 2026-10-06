@@ -167,6 +167,13 @@
     const rec = mapRecommendation(c.recommendation);
     const candidates = (c.candidates || []).map((x) => mapCandidate(x, rec && rec.scenarioId)).sort((a, b) => a.order - b.order);
     const inputs = Object.assign({}, inherits ? base.input : {}, c.input || {});
+    // 5090 房间口径回放把房间参数放在 input.room，并在案例顶层给出 room_count / units_per_room
+    if (inputs.room && typeof inputs.room === 'object') {
+      const r = inputs.room;
+      for (const k of ['area_m2', 'start_hour', 'end_hour', 'cooling_setpoint_c', 'rh_setpoint_percent', 'orientation', 'window_wall_ratio', 'people_count']) if (r[k] !== undefined) inputs[k] = r[k];
+      inputs.room_count = c.room_count ?? r.room_count ?? null;
+      inputs.units_per_room = c.units_per_room ?? r.units_per_room ?? null;
+    }
 
     return {
       mode: 'replay',
@@ -180,7 +187,9 @@
         sourceSha256: (c.source || {}).source_result_sha256 || null,
         summaryFile: (c.source || {}).summary_result_file || null,
         summarySha256: (c.source || {}).summary_result_sha256 || null,
-        sampleFile: 'docs/handoff/replay_viewer/replay_cases.json',
+        sampleFile: `docs/handoff/replay_viewer/${c.__sample_file || 'replay_cases.json'}`,
+        caseHash: c.case_hash || null,
+        demoRole: c.demo_role || null,
         formatVersion: file.format_version || null,
         inheritsFrom: inherits ? base.case_id : null,
         inheritsLabel: inherits ? (base.label || base.case_id) : null,
@@ -189,18 +198,21 @@
       inputs,
       recordedInputs: c.input || {},
       // 样例 load_context 没有房间数/台数字段：明确返回 null，界面显示“待5090确认”，不猜。
-      roomConfig: (loadCtx && (loadCtx.room_count != null || loadCtx.units_per_room != null))
-        ? { roomCount: loadCtx.room_count ?? null, unitsPerRoom: loadCtx.units_per_room ?? null }
-        : null,
+      roomConfig: (c.room_count != null || c.units_per_room != null)
+        ? { roomCount: c.room_count ?? null, unitsPerRoom: c.units_per_room ?? null }
+        : (loadCtx && (loadCtx.room_count != null || loadCtx.units_per_room != null))
+          ? { roomCount: loadCtx.room_count ?? null, unitsPerRoom: loadCtx.units_per_room ?? null }
+          : null,
       load: { annualKwh: loadCtx ? loadCtx.electric_load_kwh ?? null : null, inherited: !c.load_context && !!loadCtx },
       service: mapService((loadCtx && loadCtx.service_quality) || c.service_quality),
       recommendation: rec,
       candidates,
-      hourly: chart ? mapHourly(chart, chart.scenario_id, c.chart ? null : base.case_id) : null,
+      hourly: chart ? mapHourly(chart, chart.scenario_id || null, c.chart ? null : base.case_id) : null,
       notProvided: c.not_provided || [],
       studyYears: inputs.study_years ?? null,
       importPrice: inputs.import_price_cny_per_kwh ?? null,
       displayContract: file.display_contract || null,
+      legacy: !!c.__legacy,
       computedAt: null
     };
   }

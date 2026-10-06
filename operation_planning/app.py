@@ -39,7 +39,7 @@ UI = ROOT / "ui"
 # Read-only fixed replay samples for the 5060 UI.  Only these two verified
 # 5090 files are exposed; nothing is copied into ui/ so evidence cannot drift.
 REPLAY_DIR = ROOT.parent / "docs" / "handoff" / "replay_viewer"
-REPLAY_SAMPLES = frozenset({"replay_cases.json", "aircost_cases.json"})
+REPLAY_SAMPLES = frozenset({"replay_cases.json", "aircost_cases.json", "replay_cases_room_contract.json"})
 JOBS: dict[str, dict] = {}
 LOCK = threading.RLock()
 MIME = {

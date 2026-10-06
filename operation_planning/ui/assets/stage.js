@@ -132,12 +132,12 @@
       return `<section class="card chart-card"><div class="chart-head"><div><h3 class="card-title">能源日历</h3>
         <p>该样例只保存了方案汇总，没有逐小时数据。选择“默认四方案”样例可查看全年 8784 小时的能源日历。</p></div></div></section>`;
     }
-    const sid = vm.hourly.scenarioId; const sname = (D.SCENARIOS[sid] || {}).name || sid;
+    const sid = vm.hourly.scenarioId; const sname = sid ? ((D.SCENARIOS[sid] || {}).name || sid) : null;
     const seg = [['match', '发电时空调在用吗'], ['load', '空调用电'], ['gen', '发电']]
       .map(([k, l]) => `<button type="button" data-heat="${k}" aria-pressed="${ui.heatView === k}">${l}</button>`).join('');
     return `<section class="card chart-card" id="heatCard">
       <div class="chart-head"><div><h3 class="card-title">能源日历：全年每一个小时</h3>
-        <p>横轴是日期，纵轴是一天中的小时。以「${esc(sname)}」方案为例（样例只保存了这一方案的逐时数据）。把鼠标移到格子上看当时的用电和发电。</p></div>
+        <p>横轴是日期，纵轴是一天中的小时。${sname ? `以「${esc(sname)}」方案为例（样例只保存了这一方案的逐时数据）。` : '样例保存了一组光伏与风机同时发电的逐时数据（未注明对应方案，待5090确认）。'}把鼠标移到格子上看当时的用电和发电。</p></div>
         <div class="segmented" role="group" aria-label="日历视图">${seg}</div></div>
       <div class="legend" id="heatLegend">${HEAT_LEGEND[ui.heatView]}</div>
       <div id="heatmap"></div>

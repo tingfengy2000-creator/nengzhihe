@@ -106,7 +106,12 @@
 
   function rawOf(state) {
     const vm = state.vm;
-    if (vm.mode === 'replay') return (state.file.cases || []).find((c) => c.case_id === vm.caseId) || null;
+    if (vm.mode === 'replay') {
+      const c = (state.file.cases || []).find((x) => x.case_id === vm.caseId);
+      if (!c) return null;
+      const { __sample_file, __legacy, ...original } = c;   // 去掉页面内部标记，导出原始样例对象
+      return original;
+    }
     return vm.raw || null;
   }
 

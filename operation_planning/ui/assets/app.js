@@ -76,7 +76,10 @@
     const map = {
       site_id: 'site_id', year: 'year', study_years: 'study_years', pv_capacity_kwp: 'pv_capacity_kwp', roof_area_m2: 'roof_area_m2',
       wind_turbine_count: 'wind_turbine_count', hub_height_m: 'hub_height_m', budget_cny: 'budget_cny',
-      import_price_cny_per_kwh: 'import_price_cny_per_kwh', allow_export: 'allow_export', pv_quote_complete: 'pv_quote_complete'
+      import_price_cny_per_kwh: 'import_price_cny_per_kwh', allow_export: 'allow_export', pv_quote_complete: 'pv_quote_complete',
+      area_m2: 'area_m2', room_count: 'room_count', units_per_room: 'units_per_room', start_hour: 'start_hour', end_hour: 'end_hour',
+      cooling_setpoint_c: 'cooling_setpoint_c', rh_setpoint_percent: 'rh_setpoint_percent', orientation: 'orientation',
+      window_wall_ratio: 'window_wall_ratio', people_count: 'people_count'
     };
     for (const [k, src] of Object.entries(map)) if (inputs && inputs[src] !== undefined) f[k] = inputs[src];
     return f;
@@ -210,14 +213,17 @@
     if (!state.file) return '';
     const items = state.file.cases.map((c) => {
       const vm = D.fromReplay(state.file, c.case_id);
-      const sub = c.case_id === state.file.cases[0].case_id ? '完整逐时数据' : '方案汇总';
+      const room = vm.roomConfig ? `${vm.roomConfig.roomCount} 间 × ${vm.roomConfig.unitsPerRoom} 台` : '房间配置未记录';
+      const svc = vm.service ? vm.service.label : '';
+      const sub = c.__legacy ? `旧版本状态示例 · 源码 ${fmt.sha(vm.provenance.sourceCommit)}` : `${room} · ${svc} · 源码 ${fmt.sha(vm.provenance.sourceCommit)}`;
       return `<button class="sample" type="button" data-action="pick-sample" data-case="${esc(c.case_id)}" aria-pressed="${state.caseId === c.case_id && !state.pending && state.mode === 'replay'}">
-        <b>${esc(vm.label)}</b><span>${esc(sub)} · 源码 ${esc(fmt.sha(vm.provenance.sourceCommit))}</span></button>`;
+        <b>${esc(vm.label)}</b><span>${esc(sub)}</span></button>`;
     }).join('');
     return `<section class="card card-flat">
       <div class="section-head"><div><h3 class="card-title">从已验算样例开始</h3>
         <p>以下样例由 5090 计算机完整运行并验收。选择一个即可走完四步；改动条件后会提示“待5090验算”，不会拿旧结果冒充。</p></div></div>
-      <div class="sample-list">${items}</div></section>`;
+      <div class="sample-list">${items}</div>
+      <p class="xs subtle mt-2">“旧版本状态示例”来自较早的源码提交，用于演示“已排除 / 条件不全”等状态；其费用口径与主演示不同，等待 5090 按新版本重新生成。</p></section>`;
   }
 
   function askHtml() {
@@ -613,7 +619,15 @@
   /* ------------------------------------------------------------------ */
   async function boot() {
     try {
-      state.file = await D.loadSampleFile('replay_cases.json');
+      // 主演示：5090 房间口径回放；状态示例：旧回放中的预算/报价/屋顶三个变体（旧默认样例已被新回放取代，不再列出）
+      const main = await D.loadSampleFile('replay_cases_room_contract.json');
+      const legacy = await D.loadSampleFile('replay_cases.json').catch(() => null);
+      const tagCase = (c, fileName, isLegacy) => Object.assign({}, c, { __sample_file: fileName, __legacy: isLegacy });
+      state.file = {
+        format_version: main.format_version, source: main.source, display_contract: main.display_contract,
+        cases: main.cases.map((c) => tagCase(c, 'replay_cases_room_contract.json', false))
+          .concat(legacy ? legacy.cases.slice(1).map((c) => tagCase(c, 'replay_cases.json', true)) : [])
+      };
       const first = state.file.cases[0].case_id;
       pickSample(first);
     } catch (err) {
