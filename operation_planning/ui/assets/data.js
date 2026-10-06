@@ -17,7 +17,7 @@
     S0_grid:    { name: '只用电网',     short: '电网',     desc: '不加装发电设备，作为比较基线', color: 'var(--c-grid)', order: 0 },
     S1_pv:      { name: '加装光伏',     short: '光伏',     desc: '屋顶光伏，发电优先供空调使用', color: 'var(--c-pv)',   order: 1 },
     S2_wind:    { name: '加装小风机',   short: '小风机',   desc: '小型风力发电机',               color: 'var(--c-wind)', order: 2 },
-    S3_pv_wind: { name: '光伏+小风机', short: '光伏+风机', desc: '两种发电设备组合',             color: 'var(--c-self)', order: 3 }
+    S3_pv_wind: { name: '光伏+小风机', short: '光伏+风机', desc: '两种发电设备组合',             color: 'linear-gradient(135deg, var(--c-pv) 50%, var(--c-wind) 50%)', order: 3 }
   };
 
   const ADMISSION = {
