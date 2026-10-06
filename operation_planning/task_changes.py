@@ -57,7 +57,7 @@ def validate_modifications(raw: Dict[str, Any]) -> Dict[str, Any]:
                 if key == "export_price_cny_per_kwh" and number is None: continue
                 if isinstance(number, bool) or not isinstance(number, (float, int)) or not math.isfinite(number):
                     raise ValueError(f"{key}必须为有限数值，不能使用公式字符串")
-                if number < 0 or (key in {"hub_height_m", "hub_height_max_m"} and number <= 0):
+                if number < 0 or (key in {"hub_height_m", "hub_height_max_m", "area_m2"} and number <= 0):
                     raise ValueError(f"{key}超出有效范围")
                 if key in {"start_hour", "end_hour", "turbine_count", "room_count", "units_per_room"} and int(number) != number:
                     raise ValueError(f"{key}必须为整数")
