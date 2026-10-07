@@ -63,6 +63,7 @@ def call(base_url: str, payload: dict) -> tuple[dict, float, int]:
 def main() -> None:
     parser = argparse.ArgumentParser(); parser.add_argument("--base-url", default="http://127.0.0.1:18765")
     args = parser.parse_args()
+    runtime_source_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     source = json.loads(V6.read_text(encoding="utf-8"))
     cases = []
     for tier in ("tier_small", "tier_medium", "tier_large"):
@@ -75,14 +76,14 @@ def main() -> None:
             report = response
             cases.append({"case_id": f"{tier}_{season}_week", "tier": tier, "season": season,
                           "label": f"{original.get('label', tier)}｜{season} fixed calendar week",
-                          "source_case_id": tier, "source_commit": source.get("source", {}).get("commit"),
+                          "source_case_id": tier, "source_commit": runtime_source_commit,
                           "request": payload, "request_sha256": _sha(payload),
                           "response": report, "response_sha256": _sha(report),
                           "http_status": http_status, "http_elapsed_ms": elapsed,
                           "generated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
                           "notes": ["固定日历预览：每年7月15日至22日或1月15日至22日，不声称统计最代表性。", "仅物理发电与逐时匹配；不计算经济、碳价或全年外推。"]})
     output = {"format_version": "preview_v6_http_5090", "source_v6_file": str(V6.relative_to(ROOT)),
-              "source_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
+              "source_commit": runtime_source_commit,
               "endpoint": "/api/operation/hybrid/preview", "period_rule": {"week": "month-day 15 00:00 through day 22 00:00 exclusive", "summer_month": 7, "winter_month": 1},
               "cases": cases, "http_call_count": len(cases),
               "timing_summary": {"total_http_elapsed_ms": round(sum(x["http_elapsed_ms"] for x in cases), 3),
