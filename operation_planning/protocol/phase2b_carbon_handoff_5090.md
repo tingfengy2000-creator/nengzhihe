@@ -113,8 +113,8 @@ v4 同时保留 `primary_not_worth_it`、`primary_worth_it`、三间/单台/双�
 - viewer：`docs/handoff/replay_viewer/replay_cases_v4.json`（S3与推荐曲线，逐时显示字段四舍五入4位）
 - 运行清单：`operation_planning/results/phase2b_carbon_5090/run_manifest_v4.json`
 - 运行命令：`python scripts/phase2b_carbon_replay_v4_5090.py`
-- v4 生成源提交：`83b14d9700a0b659dd70f605c63ec74e69772a27`；机器角色5090；11案；主价执行约4分16秒
-- 生成后文件 SHA-256：完整结果 `bd78eea4bba274a3ff50ab0d3010af828fd99f93e400636762baf7778aaaa127`；viewer `75cc1afe5ffad7298f9079d6483a5f5e015ad47d7b05a4bf53ffb96b5c2a9a1f`；manifest `run_manifest_v4.json` 内含同值与逐案例哈希
+- v4 生成源提交：`bcb3acea1664c48ccea3a64d3edc809f2b114d44`；机器角色5090；11案；主价执行约4分18秒
+- 生成后文件 SHA-256：完整结果 `7b24e48f160577d48dc4c8d9e5682fb97398ef04c6cd343cd5cffc30a27cfffd`；viewer `1101b792e2727b7f68475dfe444a8cc2027299ed9ab8d708ba0658b7548f51ea`；manifest `e02687a8f1c1ab5aeabec59f9970b4c30d40a5861beffa6450c0caeeee4451e5`（`run_manifest_v4.json`内含同值与逐案例哈希）
 
 ## v4 未解决边界
 
