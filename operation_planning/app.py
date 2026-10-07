@@ -348,6 +348,9 @@ def _hybrid_capacity_run(payload: dict, progress=None) -> dict:
             "requested_capacity_kwp": capacity,
             "status": row.get("constraint_status"),
             "admission_status": row.get("admission_status"),
+            "constraint_reasons": row.get("constraint_reasons"),
+            "economics_status": economics.get("status"),
+            "capex_cny": economics.get("capex_cny"),
             "total_cost_npv_cny": economics.get("total_cost_npv_cny"),
             "incremental_npv_vs_s0_cny": economics.get("incremental_npv_vs_s0_cny"),
             "self_use_kwh": row.get("self_use_kwh"),
@@ -356,7 +359,10 @@ def _hybrid_capacity_run(payload: dict, progress=None) -> dict:
             "self_use_rate": (row.get("self_use_kwh", 0.0) / row.get("generation_kwh", 1.0)) if row.get("generation_kwh", 0.0) else None,
             "curtailment_kwh": row.get("curtailment_kwh"),
             "waste_rate": (row.get("curtailment_kwh", 0.0) / row.get("generation_kwh", 1.0)) if row.get("generation_kwh", 0.0) else None,
+            "grid_import_kwh": row.get("grid_import_kwh"),
             "carbon": row.get("carbon"),
+            "avoided_tco2_study_period": (row.get("carbon") or {}).get("avoided_tco2_study_period"),
+            "cost_per_tco2_cny": (row.get("carbon") or {}).get("cost_per_tco2_cny"),
         })
     eligible = [row for row in sweep if row.get("status") in {"feasible", "over_budget", "not_applicable", "incomplete_quote"} and row.get("incremental_npv_vs_s0_cny") is not None and row.get("status") == "feasible"]
     # S0 is always retained.  If all nonzero rows are ineligible, the first
@@ -376,6 +382,9 @@ def _hybrid_capacity_run(payload: dict, progress=None) -> dict:
     selected = run_hybrid_planning(load_result, pv_weather_data, selected_pv_scenario, selected_hybrid_scenario,
                                    WindTurbineProfile.from_file(), include_hourly=True,
                                    carbon=payload.get("carbon"), storage=payload.get("storage"))
+    # Expose the project-load contract at a stable top-level key for replay
+    # consumers; the underlying engine keeps the same nested provenance too.
+    selected["project_load_contract"] = (selected.get("load_context") or {}).get("project_load_context")
     selected["pv_capacity_sweep"] = sweep
     selected["recommended_pv_capacity_kwp"] = best_capacity
     selected["recommendation_basis"] = "在有限、计价完整且满足屋顶/预算约束的PV-only容量候选中，按相对S0增量NPV选择；不是全局优化。"
