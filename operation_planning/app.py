@@ -7,6 +7,7 @@ from dataclasses import asdict
 from html import escape
 import io
 import json
+import math
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -26,7 +27,7 @@ from .weather import available_sites, load_weather, parse_user_csv
 from .weather import load_pv_weather
 from .thermal_model import RoomSpec, simulate_room
 from .lifecycle import life_cycle_cost
-from .pv import PVScenario, PVQuote, run_pv_planning, scenario_from_dict
+from .pv import PVScenario, PVQuote, run_pv_planning, scenario_from_dict, DEFAULT_KWP_PER_M2
 from .pv_agent import PVPlanningAgent
 from .wind import WindTurbineProfile, WindScenario, WindQuote
 from .hybrid import HybridScenario, hybrid_task_from_dict, run_hybrid_planning
@@ -49,6 +50,77 @@ MIME = {
     ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
     ".json": "application/json; charset=utf-8", ".csv": "text/csv; charset=utf-8",
 }
+
+
+def _api_error(exc: Exception, field: str | None = None) -> dict:
+    """Return a stable, directly displayable Chinese validation response.
+
+    Older clients only read ``error`` as a string, so that field remains a
+    string for compatibility.  New clients can use ``field`` to focus the
+    offending control and ``message`` as the display text.
+    """
+    message = str(exc) or "请求参数无效"
+    if field is None:
+        text = message
+        markers = {
+            "requested_capacities_kwp": "pv.requested_capacities_kwp",
+            "pv.capacity_kwp": "pv.capacity_kwp",
+            "光伏容量": "pv.capacity_kwp",
+            "预算": "hybrid.budget_cny",
+            "电价档案": "pv.tariff_id",
+            "电价": "pv.tariff_id",
+            "天气": "weather",
+            "房间": "room",
+            "设备型号": "room.equipment_id",
+            "外送": "hybrid.export_limit_kw",
+        }
+        for marker, key in markers.items():
+            if marker in text:
+                field = key
+                break
+    return {"status": "failed", "error": message, "message": message, "field": field}
+
+
+def _capacity_candidates(pv_payload: dict) -> list[float]:
+    """Resolve an explicit or automatic finite PV capacity sweep."""
+    raw = pv_payload.get("requested_capacities_kwp")
+    if raw is not None:
+        if not isinstance(raw, list) or not raw:
+            raise ValueError("pv.requested_capacities_kwp 必须是非空数组")
+        values = []
+        for value in raw:
+            if isinstance(value, bool):
+                raise ValueError("pv.requested_capacities_kwp 含非数值")
+            try:
+                value = float(value)
+            except Exception as exc:
+                raise ValueError("pv.requested_capacities_kwp 含非数值") from exc
+            if not math.isfinite(value) or value < 0:
+                raise ValueError("pv.requested_capacities_kwp 必须是非负有限数")
+            values.append(value)
+        return sorted(set(values))
+    if pv_payload.get("auto_capacity"):
+        try:
+            roof = float(pv_payload.get("roof_area_m2", 0.0))
+            usable = float(pv_payload.get("usable_fraction", 0.8))
+        except Exception as exc:
+            raise ValueError("pv.roof_area_m2 与 pv.usable_fraction 必须是数字") from exc
+        if not math.isfinite(roof) or roof <= 0 or not math.isfinite(usable) or not 0 < usable <= 1:
+            raise ValueError("自动比选需要有效的pv.roof_area_m2和pv.usable_fraction")
+        maximum = roof * usable * DEFAULT_KWP_PER_M2
+        # Keep the finite sweep explainable and bounded.  The capacity limit
+        # is always included so users can see the roof constraint.
+        return sorted(set([0.0, round(maximum * 0.25, 6), round(maximum * 0.5, 6), round(maximum, 6)]))
+    value = pv_payload.get("capacity_kwp", None)
+    if value is not None:
+        try:
+            value = float(value)
+        except Exception as exc:
+            raise ValueError("pv.capacity_kwp 必须是非负有限数") from exc
+        if not math.isfinite(value) or value < 0:
+            raise ValueError("pv.capacity_kwp 必须是非负有限数")
+        return [value]
+    return [2.0]
 
 
 def _task_from(payload: dict, job_id: str) -> TaskSpec:
@@ -173,6 +245,142 @@ def _thermal_inputs(payload: dict) -> tuple[RoomSpec, dict, dict]:
     return room, cost, {"room": room_data, "cost": {k: v for k, v in cost.items() if k != "tariff_profile"}}
 
 
+def _thermal_capacity_sweep(payload: dict) -> dict:
+    """Run the same thermal model for 1..N units and report service gaps.
+
+    Each run is a one-room trace; ``room_count`` is retained in the contract
+    but is deliberately not multiplied here.  Project aggregation remains the
+    responsibility of ``aggregate_project_load`` in the normal run endpoint.
+    """
+    room, _, contract = _thermal_inputs(payload)
+    raw_max = payload.get("max_units", payload.get("max_equipment_count", 12))
+    try:
+        max_units = int(raw_max)
+    except Exception as exc:
+        raise ValueError("max_units 必须是1到50之间的整数") from exc
+    if max_units < 1 or max_units > 50:
+        raise ValueError("max_units 必须是1到50之间的整数")
+    site_id = str(payload.get("site_id", "guangzhou")); year = int(payload.get("year", 2024))
+    weather = payload.get("weather") or load_weather(site_id, year)
+    rows = []
+    for units in range(1, max_units + 1):
+        trial_payload = dict(payload)
+        trial_room = dict(contract.get("room") or {})
+        trial_room["units_per_room"] = units
+        trial_room["equipment_count"] = units
+        trial_payload["room"] = trial_room
+        trial_room_obj, _, _ = _thermal_inputs(trial_payload)
+        result = simulate_room(weather, trial_room_obj)
+        summary = result.get("summary", {})
+        gaps = {
+            "capacity_shortfall_hours": float(summary.get("capacity_shortfall_hours", 0.0) or 0.0),
+            "unmet_temp_degree_hours": float(summary.get("unmet_temp_degree_hours", 0.0) or 0.0),
+            "unmet_rh_percent_hours": float(summary.get("unmet_rh_percent_hours", 0.0) or 0.0),
+        }
+        adequate = all(value <= 1e-9 for value in gaps.values())
+        rows.append({
+            "units_per_room": units,
+            "service_status": "within_modeled_scope" if adequate else "service_gap",
+            "service_quality": "within_modeled_scope" if adequate else "service_gap",
+            "annual_electric_kwh": float(summary.get("electric_kwh", 0.0) or 0.0),
+            "annual_cooling_kwh": float(summary.get("cooling_kwh", 0.0) or 0.0),
+            "capacity_shortfall_hours": gaps["capacity_shortfall_hours"],
+            "unmet_temp_degree_hours": gaps["unmet_temp_degree_hours"],
+            "unmet_rh_percent_hours": gaps["unmet_rh_percent_hours"],
+        })
+    minimum = next((row["units_per_room"] for row in rows if row["service_status"] == "within_modeled_scope"), None)
+    return {
+        "status": "success", "site_id": site_id, "year": year,
+        "weather_hash": weather.get("hash"), "input_contract": contract,
+        "max_units": max_units, "minimum_adequate_units_per_room": minimum,
+        "candidates": rows,
+        "notes": ["每个候选均为同一房间的独立热湿回放；未把room_count重复乘入。", "额定点设备适配，不等同现场实测选型。"],
+    }
+
+
+def _hybrid_capacity_run(payload: dict, progress=None) -> dict:
+    """Run hybrid planning through one deterministic API path.
+
+    A capacity sweep reuses the loaded weather and project load but executes
+    the complete hybrid tool for each capacity.  The selected report is the
+    one with the highest eligible S1 incremental NPV; all sweep rows remain
+    visible so the UI can explain the recommendation.
+    """
+    payload = dict(payload)
+    site_id = str(payload.get("site_id", "guangzhou")); year = int(payload.get("year", 2024))
+    room, _, _ = _thermal_inputs(payload)
+    load_weather_data = payload.get("weather") or load_weather(site_id, year)
+    pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year)
+    load_result = aggregate_project_load(simulate_room(load_weather_data, room))
+    pv_raw = dict(payload.get("pv") or {})
+    capacities = _capacity_candidates(pv_raw)
+    reports = []
+    total = len(capacities)
+    for index, capacity in enumerate(capacities, 1):
+        one_payload = dict(payload)
+        one_pv = dict(pv_raw)
+        one_pv.pop("requested_capacities_kwp", None); one_pv.pop("auto_capacity", None)
+        one_payload["pv"] = one_pv
+        one_hybrid = dict(payload.get("hybrid") or {})
+        one_hybrid["pv_capacity_kwp"] = capacity
+        one_payload["hybrid"] = one_hybrid
+        pv_scenario, hybrid = hybrid_task_from_dict(one_payload, site_id=site_id, year=year)
+        # Sweep rows do not need 8,784-row hourly payloads.  The selected
+        # capacity is rerun with hourly output below, keeping API memory
+        # bounded while preserving a complete selected result.
+        report = run_hybrid_planning(load_result, pv_weather_data, pv_scenario, hybrid,
+                                     WindTurbineProfile.from_file(), include_hourly=False,
+                                     carbon=payload.get("carbon"), storage=payload.get("storage"))
+        reports.append(report)
+        if progress:
+            progress(index, total, capacity)
+    if not reports:
+        raise ValueError("没有可计算的光伏容量")
+    # S1 is the PV-only option.  Preserve the full selected report (including
+    # S0/S2/S3 hourly traces), while the sweep carries the comparison rows.
+    sweep = []
+    for capacity, report in zip(capacities, reports):
+        row = next((candidate for candidate in report.get("candidates", []) if candidate.get("scenario_id") == "S1_pv"), None)
+        if row is None:
+            continue
+        economics = row.get("economics") or {}
+        sweep.append({
+            "requested_capacity_kwp": capacity,
+            "status": row.get("constraint_status"),
+            "admission_status": row.get("admission_status"),
+            "total_cost_npv_cny": economics.get("total_cost_npv_cny"),
+            "incremental_npv_vs_s0_cny": economics.get("incremental_npv_vs_s0_cny"),
+            "self_use_kwh": row.get("self_use_kwh"),
+            "generation_kwh": row.get("generation_kwh"),
+            "self_consumption_rate": (row.get("self_use_kwh", 0.0) / row.get("generation_kwh", 1.0)) if row.get("generation_kwh", 0.0) else None,
+            "curtailment_kwh": row.get("curtailment_kwh"),
+            "carbon": row.get("carbon"),
+        })
+    eligible = [row for row in sweep if row.get("status") in {"feasible", "over_budget", "not_applicable", "incomplete_quote"} and row.get("incremental_npv_vs_s0_cny") is not None and row.get("status") == "feasible"]
+    # S0 is always retained.  If all nonzero rows are ineligible, the first
+    # capacity remains the display report and recommendation says unresolved.
+    best_capacity = max(eligible, key=lambda row: float(row["incremental_npv_vs_s0_cny"]))["requested_capacity_kwp"] if eligible else 0.0
+    selected_index = capacities.index(best_capacity) if best_capacity in capacities else 0
+    selected = reports[selected_index]
+    # Re-run only the selected capacity with the complete hourly traces used
+    # by the UI.  This is a real deterministic computation, not a cached
+    # replay; the sweep reports above remain the source of the comparison.
+    selected_payload = dict(payload)
+    selected_pv = dict(pv_raw); selected_pv.pop("requested_capacities_kwp", None); selected_pv.pop("auto_capacity", None)
+    selected_payload["pv"] = selected_pv
+    selected_hybrid = dict(payload.get("hybrid") or {}); selected_hybrid["pv_capacity_kwp"] = best_capacity
+    selected_payload["hybrid"] = selected_hybrid
+    selected_pv_scenario, selected_hybrid_scenario = hybrid_task_from_dict(selected_payload, site_id=site_id, year=year)
+    selected = run_hybrid_planning(load_result, pv_weather_data, selected_pv_scenario, selected_hybrid_scenario,
+                                   WindTurbineProfile.from_file(), include_hourly=True,
+                                   carbon=payload.get("carbon"), storage=payload.get("storage"))
+    selected["pv_capacity_sweep"] = sweep
+    selected["recommended_pv_capacity_kwp"] = best_capacity
+    selected["recommendation_basis"] = "在有限、计价完整且满足屋顶/预算约束的PV-only容量候选中，按相对S0增量NPV选择；不是全局优化。"
+    selected["calculation_timing"] = {"capacity_count": total}
+    return selected
+
+
 class Handler(BaseHTTPRequestHandler):
     server_version = "NengzhiheOperation/0.2"
 
@@ -197,6 +405,12 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/operation/health": return self._send(HTTPStatus.OK, {"ok": True, "product": "能智核——公共建筑空调运行方案试算与优化智能体", "mode": "local_replay"})
         if path == "/api/operation/tariffs": return self._send(HTTPStatus.OK, registry())
         if path == "/api/operation/carbon/factors": return self._send(HTTPStatus.OK, factor_catalog())
+        if path == "/api/operation/options":
+            sites = available_sites()
+            years = sorted({int(year) for site in sites for year in site.get("cached_years", []) if str(year).isdigit()})
+            return self._send(HTTPStatus.OK, {"status": "success", "cities": sites, "years": years,
+                "equipment_models": catalogue(), "tariffs": registry(), "carbon_factors": factor_catalog(),
+                "units": {"area_m2": "m²", "height_m": "m", "power_kw": "kW", "energy_kwh": "kWh", "price_cny_per_kwh": "CNY/kWh"}})
         if path == "/api/operation/weather/sites": return self._send(HTTPStatus.OK, {"items": available_sites()})
         if path == "/api/operation/pv/provenance": return self._send(HTTPStatus.OK, {"engine": "pvlib", "scope": "phase2A photovoltaic generation, hourly load matching and lifecycle comparison", "radiation": "Open-Meteo GHI/DNI/DHI preceding-hour means", "status": "local_replay"})
         if path == "/api/operation/wind/profiles":
@@ -213,6 +427,18 @@ class Handler(BaseHTTPRequestHandler):
         if path.startswith("/api/operation/task/"):
             with LOCK: job = JOBS.get(path.rsplit("/", 1)[-1])
             return self._send(HTTPStatus.OK if job else HTTPStatus.NOT_FOUND, job or {"error": "任务不存在"})
+        if path.startswith("/api/operation/hybrid/jobs/") or path.startswith("/api/operation/hybrid/job/") or path.startswith("/api/operation/hybrid/task/"):
+            job_id = path.rsplit("/", 1)[-1]
+            with LOCK:
+                job = JOBS.get(job_id)
+                snapshot = dict(job) if job else None
+            if snapshot is None:
+                return self._send(HTTPStatus.NOT_FOUND, {"status": "failed", "error": "任务不存在", "message": "任务不存在", "field": "job_id"})
+            events = snapshot.get("events") or []
+            progress = snapshot.get("progress", 0.0)
+            return self._send(HTTPStatus.OK, {"job_id": job_id, "status": snapshot.get("status"), "progress": progress,
+                "events": events[-20:], "elapsed_ms": ((snapshot.get("finished_at") or time.time()) - snapshot.get("created_at", time.time())) * 1000.0,
+                "result": snapshot.get("output") if snapshot.get("status") == "done" else None})
         if path.startswith("/api/operation/export/"):
             with LOCK: job = JOBS.get(path.rsplit("/", 1)[-1])
             try: report, selected = _selected(job or {})
@@ -237,9 +463,17 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:  # noqa: N802
         path = urlparse(self.path).path
+        if path in ("/api/operation/thermal/size", "/api/operation/thermal/compare"):
+            try:
+                result = _thermal_capacity_sweep(self._read_json())
+                return self._send(HTTPStatus.OK, result)
+            except Exception as exc:
+                return self._send(HTTPStatus.BAD_REQUEST, _api_error(exc, "max_units" if "max_units" in str(exc) else None))
         if path == "/api/operation/thermal/run":
             try:
                 payload = self._read_json()
+                if bool(payload.get("compare_units", False)) or bool(payload.get("unit_sweep", False)):
+                    return self._send(HTTPStatus.OK, _thermal_capacity_sweep(payload))
                 site_id = str(payload.get("site_id", "guangzhou")); year = int(payload.get("year", 2024))
                 room, cost_input, input_contract = _thermal_inputs(payload)
                 weather = payload.get("weather") or load_weather(site_id, year)
@@ -266,13 +500,13 @@ class Handler(BaseHTTPRequestHandler):
                 input_contract["project_load"] = project_load_context(project_result)
                 return self._send(HTTPStatus.OK, {"status": "success", "weather": weather["context"], "weather_hash": weather["hash"], "input_contract": input_contract, "result": result, "project_load": {"context": project_load_context(project_result), "summary": project_result.get("summary"), "load_series": project_result.get("load_series")}, "cost": cost})
             except Exception as exc:
-                return self._send(HTTPStatus.BAD_REQUEST, {"status": "failed", "error": f"{type(exc).__name__}: {exc}"})
+                return self._send(HTTPStatus.BAD_REQUEST, _api_error(exc))
         if path == "/api/operation/weather/import":
             try:
                 payload = self._read_json(); imported = parse_user_csv(str(payload.get("csv", "")), str(payload.get("site_id", "user_csv")), str(payload.get("timezone", "Asia/Shanghai")))
                 return self._send(HTTPStatus.OK, {"status": "success", "weather": imported})
             except Exception as exc:
-                return self._send(HTTPStatus.BAD_REQUEST, {"status": "failed", "error": f"{type(exc).__name__}: {exc}"})
+                return self._send(HTTPStatus.BAD_REQUEST, _api_error(exc, "csv"))
         if path == "/api/operation/pv/run":
             try:
                 payload = self._read_json()
@@ -296,12 +530,18 @@ class Handler(BaseHTTPRequestHandler):
                     load_weather_data = payload.get("weather") or load_weather(site_id, year)
                     pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year)
                     load_result = aggregate_project_load(simulate_room(load_weather_data, room))
-                    scenario = scenario_from_dict(payload.get("pv") or {}, site_id=site_id, year=year)
+                    pv_input = dict(payload.get("pv") or {})
+                    # The PV endpoint accepts the same bounded sweep contract
+                    # as hybrid.  ``auto_capacity`` is resolved to explicit
+                    # candidates before the PV engine is called.
+                    if pv_input.get("auto_capacity") or pv_input.get("requested_capacities_kwp") is not None:
+                        pv_input["requested_capacities_kwp"] = _capacity_candidates(pv_input)
+                    scenario = scenario_from_dict(pv_input, site_id=site_id, year=year)
                     report = run_pv_planning(load_result, pv_weather_data, scenario, carbon=payload.get("carbon"), storage=payload.get("storage"))
                     report["agent"] = {"requested": False, "status": "disabled", "mode": "deterministic_tools", "note": "本接口的数值全部由Python工具计算；可按需启用本地模型工具协同。"}
                 return self._send(HTTPStatus.OK, {"status": "success", "report": report})
             except Exception as exc:
-                return self._send(HTTPStatus.BAD_REQUEST, {"status": "failed", "error": f"{type(exc).__name__}: {exc}"})
+                return self._send(HTTPStatus.BAD_REQUEST, _api_error(exc))
         if path == "/api/operation/hybrid/run":
             try:
                 payload = self._read_json(); site_id = str(payload.get("site_id", "guangzhou")); year = int(payload.get("year", 2024))
@@ -313,14 +553,42 @@ class Handler(BaseHTTPRequestHandler):
                         return self._send(HTTPStatus.UNPROCESSABLE_ENTITY, {"status":agent_output.get("status"),"agent":agent_output,"error":agent_output.get("error") or agent_output.get("question")})
                     report = agent_output.get("report") or {}; report["agent"] = {k:v for k,v in agent_output.items() if k != "report"}
                     return self._send(HTTPStatus.OK, {"status":"success","report":report})
-                room, _, _ = _thermal_inputs(payload)
-                load_weather_data = payload.get("weather") or load_weather(site_id, year); pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year); load_result = aggregate_project_load(simulate_room(load_weather_data, room))
-                pv, hybrid = hybrid_task_from_dict(payload, site_id=site_id, year=year)
-                report = run_hybrid_planning(load_result, pv_weather_data, pv, hybrid, WindTurbineProfile.from_file(), carbon=payload.get("carbon"), storage=payload.get("storage"))
+                report = _hybrid_capacity_run(payload)
                 report["agent"] = {"requested": False, "status": "disabled", "mode": "phase2b_hybrid_tools", "request": payload.get("request", "")}
                 return self._send(HTTPStatus.OK, {"status":"success","report":report})
             except Exception as exc:
-                return self._send(HTTPStatus.BAD_REQUEST, {"status":"failed","error":f"{type(exc).__name__}: {exc}"})
+                return self._send(HTTPStatus.BAD_REQUEST, _api_error(exc))
+        if path in ("/api/operation/hybrid/jobs", "/api/operation/hybrid/submit"):
+            try:
+                payload = self._read_json()
+                # Validate and normalize before accepting the job, so a typo
+                # is returned synchronously instead of becoming a failed job.
+                _thermal_inputs(payload)
+                _capacity_candidates(dict(payload.get("pv") or {}))
+            except Exception as exc:
+                return self._send(HTTPStatus.BAD_REQUEST, _api_error(exc))
+            job_id = uuid.uuid4().hex[:12]
+            with LOCK:
+                JOBS[job_id] = {"job_id": job_id, "kind": "hybrid", "status": "queued", "created_at": time.time(), "progress": 0.0, "events": []}
+            def worker() -> None:
+                with LOCK:
+                    JOBS[job_id]["status"] = "running"; JOBS[job_id]["started_at"] = time.time()
+                _event(job_id, {"type": "started", "message": "已开始实时风光容量比选"})
+                try:
+                    def progress(done, total, capacity):
+                        with LOCK:
+                            JOBS[job_id]["progress"] = float(done) / max(float(total), 1.0)
+                        _event(job_id, {"type": "capacity_completed", "completed": done, "total": total, "capacity_kwp": capacity, "message": f"已完成{capacity:g}kWp容量计算"})
+                    output = _hybrid_capacity_run(payload, progress=progress)
+                    with LOCK:
+                        JOBS[job_id].update(status="done", progress=1.0, finished_at=time.time(), output={"status": "success", "report": output})
+                    _event(job_id, {"type": "report_ready", "message": "实时计算结果已生成"})
+                except Exception as exc:
+                    with LOCK:
+                        JOBS[job_id].update(status="failed", finished_at=time.time(), output=_api_error(exc))
+                    _event(job_id, {"type": "failed", "message": str(exc)})
+            threading.Thread(target=worker, daemon=True).start()
+            return self._send(HTTPStatus.ACCEPTED, {"status": "queued", "job_id": job_id, "progress": 0.0})
         if path == "/api/operation/run":
             try:
                 payload = self._read_json(); task = _task_from(payload, "validation"); errors = task.validate()
