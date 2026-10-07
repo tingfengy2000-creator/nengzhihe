@@ -514,7 +514,7 @@ export async function openSample(caseId, step = 3) {
 export function show(root, args = []) {
   el = root;
   if (!built) {
-    T.form = blankForm(app.options);
+    if (!T.form) T.form = blankForm(app.options);
     el.innerHTML = skeleton(); bind(); built = true;
     data.loadSamples().then(() => { const q = $('[data-quick]', el); if (q) q.innerHTML = quickButtons(); }).catch(() => {});
   }
@@ -530,3 +530,12 @@ on('mode', () => {
   else if (app.options) { const b = blankForm(app.options); if (!T.form.equipment_id) T.form.equipment_id = b.equipment_id; if (!T.form.tariff_id && b.tariff_id) T.form.tariff_id = b.tariff_id; }
   if (built && !el.hidden) renderAll();
 });
+
+/** 我的方案：载入保存的条件（结果若存在则立即失效）。 */
+export function loadForm(form) {
+  const b = blankForm(app.options);
+  T.form = Object.assign(b, JSON.parse(JSON.stringify(form || {})));
+  if (!T.form._extras) T.form._extras = { room: {}, wind: {} };
+  T.errors = {}; T.ask = null; T.size = null; T.touched = true;
+  markChanged();
+}
