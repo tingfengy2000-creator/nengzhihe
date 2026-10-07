@@ -33,7 +33,7 @@ OUT = ROOT / "operation_planning" / "results" / "phase2b_carbon_5090"
 VIEWER_OUT = ROOT / "docs" / "handoff" / "replay_viewer" / "replay_cases_v8.json"
 API_DEFAULT = "http://127.0.0.1:18765"
 TARIFF_ID = "guangzhou_industrial_lt1kv_202610"
-TARIFF_URL = "https://energydc.cn/policy/guangdong/2026-09/ffdcada5-baab-11f1-959b-ce30ac533824"
+TARIFF_URL = "https://95598.csg.cn/#/gd/serviceInquire/information/detail/?infoId=8a592ed919684f97bc6abd030a79b807"
 WEATHER_REL = "operation_planning/data/weather_pv/guangzhou_2024.json"
 
 
@@ -244,7 +244,7 @@ def build(base_url: str) -> dict[str, Any]:
         _case(base_url, case_id="variant_missing_pv_quote", label="状态变体：缺少光伏报价（固定1kWp）", role="state_variant", room=one, capacities=[1], fixed_cap=1, roof=35, budget=90000, pv_complete=False, variant_reason="主卡固定1kWp；物理结果保留，经济报价状态为unknown"),
         _case(base_url, case_id="variant_roof_area_insufficient", label="状态变体：屋顶面积不足（固定1kWp）", role="state_variant", room=one, capacities=[1], fixed_cap=1, roof=1, budget=90000, variant_reason="主卡固定1kWp；1㎡屋顶导致光伏候选excluded"),
     ]
-    return {"format_version": "5090-carbon-replay-v8", "description": "v8由实时HTTP hybrid/run生成；三档为示例，用户输入实时计算为主；中档改为每日09:00-21:00建筑；状态变体固定1kWp。v5及早期回放保留。", "source": {"source_commit": _source(), "calculation_version": "phase2b-carbon-5090-v8-http", "mode": "http_api_replay", "machine_role": "5090", "api_base_url": base_url}, "main_tariff": {"tariff_id": TARIFF_ID, "source_url": TARIFF_URL, "application": "current_tariff_on_reference_weather", "provisional": True}, "tiers": {"small": "tier_small", "medium": "tier_medium", "large": "tier_large"}, "state_variants": ["variant_budget_insufficient", "variant_missing_pv_quote", "variant_roof_area_insufficient"], "cases": cases, "display_contract": {"numbers_from_http_response": True, "user_input_is_primary": True, "capacity_selection_basis": "PV-only eligible complete candidate with maximum incremental NPV; variants fixed at 1kWp", "old_replays_immutable": True}}
+    return {"format_version": "5090-carbon-replay-v8", "description": "v8由实时HTTP hybrid/run生成；三档为示例，用户输入实时计算为主；中档改为每日09:00-21:00建筑；状态变体固定1kWp。v5及早期回放保留。", "source": {"source_commit": _source(), "calculation_version": "phase2b-carbon-5090-v8-http", "mode": "http_api_replay", "machine_role": "5090", "api_base_url": base_url}, "main_tariff": {"tariff_id": TARIFF_ID, "source_url": TARIFF_URL, "application": "current_tariff_on_reference_weather", "verified": True, "official_pdf": "docs/evidence/tariffs/guangdong_agency_tariff_202610_official.pdf", "official_pdf_sha256": "36648B430E5F729037DF3D8766232057FEADF518BD39692BFE1EFE3758C91212"}, "tiers": {"small": "tier_small", "medium": "tier_medium", "large": "tier_large"}, "state_variants": ["variant_budget_insufficient", "variant_missing_pv_quote", "variant_roof_area_insufficient"], "cases": cases, "display_contract": {"numbers_from_http_response": True, "user_input_is_primary": True, "capacity_selection_basis": "PV-only eligible complete candidate with maximum incremental NPV; variants fixed at 1kWp", "old_replays_immutable": True}}
 
 
 def main() -> int:
