@@ -1,0 +1,9 @@
+{
+  "elapsed_s": 2.944244499958586,
+  "status": "success",
+  "capacity_count": 50,
+  "minimum_units": 14,
+  "case_id": "tier_large",
+  "source_commit": "e031655d2217112a82990227be3c9a93fb9c194b",
+  "note": "direct thermal capacity endpoint calculation; concurrent profiler running (not formal speed acceptance)"
+}

@@ -15,10 +15,17 @@ from .economics import discounted_cashflow_npv, discounted_year_end, inverter_re
 from .pv import PVScenario, PVQuote, generate_pv, scenario_from_dict as pv_scenario_from_dict, _intervals, _price_vectors, DEFAULT_KWP_PER_M2
 from .wind import WindScenario, WindQuote, WindTurbineProfile, generate_wind
 from .project_load import require_project_load, project_load_context
+from .carbon import candidate_carbon, context as carbon_context
+from .storage import ideal_storage_upper_bound, storage_input_from_match
+
+# An in-process capability, never a client-supplied boolean/JSON flag.
+_VALIDATED_SERIES = object()
 
 
-def _safe_intervals(times: Sequence[str], provided: Optional[Sequence[int]]) -> List[int]:
+def _safe_intervals(times: Sequence[str], provided: Optional[Sequence[int]], *, trusted: bool = False) -> List[int]:
     """Allow a one-interval arithmetic fixture while keeping real axes strict."""
+    if trusted and provided is not None:
+        return [int(x) for x in provided]
     if len(times) == 1:
         if provided is None or len(provided) != 1 or int(provided[0]) <= 0:
             raise ValueError("单区间必须显式提供正的interval_seconds")
@@ -26,9 +33,11 @@ def _safe_intervals(times: Sequence[str], provided: Optional[Sequence[int]]) -> 
     return _intervals(times, provided)
 
 
-def _finite_nonnegative(values: Sequence[Any], name: str, n: int) -> List[float]:
+def _finite_nonnegative(values: Sequence[Any], name: str, n: int, *, trusted: bool = False) -> List[float]:
     if values is None or len(values) != n:
         raise ValueError(f"{name}缺失或长度不一致")
+    if trusted:
+        return values if isinstance(values, list) else list(values)
     out: List[float] = []
     for raw in values:
         if isinstance(raw, bool):
@@ -106,26 +115,31 @@ def _quote_cost(q: Any, count: int, fields: Sequence[str]) -> Optional[float]:
     return float(count) * sum(numbers)
 
 
-def match_hybrid(load_series: Dict[str, Any], pv_generation: Dict[str, Any], wind_generation: Dict[str, Any], *, allow_export: bool = False, export_limit_kw: Optional[float] = None, import_prices: Optional[Sequence[float]] = None, export_prices: Optional[Sequence[float]] = None) -> Dict[str, Any]:
+def match_hybrid(load_series: Dict[str, Any], pv_generation: Dict[str, Any], wind_generation: Dict[str, Any], *, allow_export: bool = False, export_limit_kw: Optional[float] = None, import_prices: Optional[Sequence[float]] = None, export_prices: Optional[Sequence[float]] = None, include_intervals: bool = True) -> Dict[str, Any]:
     lt = list(load_series.get("timestamps", [])); pt = list(pv_generation.get("timestamps", [])); wt = list(wind_generation.get("timestamps", []))
     if lt != pt or lt != wt:
         raise ValueError("负荷、光伏和风电必须使用同一时间轴")
     if allow_export and export_limit_kw is not None and (not math.isfinite(float(export_limit_kw)) or float(export_limit_kw) < 0):
         raise ValueError("外送功率上限必须是非负有限数")
-    ints = _safe_intervals(lt, load_series.get("interval_seconds"))
-    if ints != _safe_intervals(pt, pv_generation.get("interval_seconds")) or ints != _safe_intervals(wt, wind_generation.get("interval_seconds")):
+    trusted = all(series.get("_validated_series") is _VALIDATED_SERIES for series in (load_series, pv_generation, wind_generation))
+    ints = _safe_intervals(lt, load_series.get("interval_seconds"), trusted=trusted)
+    if ints != _safe_intervals(pt, pv_generation.get("interval_seconds"), trusted=trusted) or ints != _safe_intervals(wt, wind_generation.get("interval_seconds"), trusted=trusted):
         raise ValueError("负荷、光伏和风电时间间隔不一致")
-    lp = _finite_nonnegative(load_series.get("electric_power_w", []), "负荷功率", len(lt)); pp = _finite_nonnegative(pv_generation.get("pv_ac_power_w", []), "光伏交流功率", len(lt)); wp = _finite_nonnegative(wind_generation.get("wind_power_w", []), "风电功率", len(lt))
-    imp_values = None if import_prices is None else _finite_nonnegative(import_prices, "购电价格", len(lt)); exp_values = None if export_prices is None else _finite_nonnegative(export_prices, "外送价格", len(lt))
+    lp = _finite_nonnegative(load_series.get("electric_power_w", []), "负荷功率", len(lt), trusted=trusted); pp = _finite_nonnegative(pv_generation.get("pv_ac_power_w", []), "光伏交流功率", len(lt), trusted=trusted); wp = _finite_nonnegative(wind_generation.get("wind_power_w", []), "风电功率", len(lt), trusted=trusted)
+    imp_values = None if import_prices is None else _finite_nonnegative(import_prices, "购电价格", len(lt), trusted=trusted); exp_values = None if export_prices is None else _finite_nonnegative(export_prices, "外送价格", len(lt), trusted=trusted)
     rows: List[Dict[str, Any]] = []; sums = {key: 0.0 for key in ("load_kwh", "pv_generation_kwh", "wind_generation_kwh", "total_generation_kwh", "self_use_kwh", "grid_import_kwh", "grid_export_kwh", "curtailment_kwh", "import_cost_cny", "export_income_cny")}
     for i, sec in enumerate(ints):
         l = lp[i] * sec / 3_600_000.0; p = pp[i] * sec / 3_600_000.0; w = wp[i] * sec / 3_600_000.0; total = p + w; self_use = min(l, total); surplus = max(0.0, total - self_use)
         exp = min(surplus, float(export_limit_kw) * sec / 3600.0) if allow_export and export_limit_kw is not None else (surplus if allow_export else 0.0); cur = surplus - exp; imp = l - self_use
         pv_self = self_use * (p / total) if total > 0 else 0.0; wind_self = self_use - pv_self
-        row = {"timestamp": lt[i], "interval_seconds": sec, "load_kwh": l, "pv_generation_kwh": p, "wind_generation_kwh": w, "total_generation_kwh": total, "self_use_kwh": self_use, "self_use_pv_kwh": pv_self, "self_use_wind_kwh": wind_self, "grid_import_kwh": imp, "grid_export_kwh": exp, "curtailment_kwh": cur}
-        if imp_values is not None: row["import_cost_cny"] = imp * imp_values[i]; sums["import_cost_cny"] += row["import_cost_cny"]
-        if exp_values is not None: row["export_income_cny"] = exp * exp_values[i]; sums["export_income_cny"] += row["export_income_cny"]
-        rows.append(row)
+        if include_intervals:
+            row = {"timestamp": lt[i], "interval_seconds": sec, "load_kwh": l, "pv_generation_kwh": p, "wind_generation_kwh": w, "total_generation_kwh": total, "self_use_kwh": self_use, "self_use_pv_kwh": pv_self, "self_use_wind_kwh": wind_self, "grid_import_kwh": imp, "grid_export_kwh": exp, "curtailment_kwh": cur}
+            if imp_values is not None: row["import_cost_cny"] = imp * imp_values[i]; sums["import_cost_cny"] += row["import_cost_cny"]
+            if exp_values is not None: row["export_income_cny"] = exp * exp_values[i]; sums["export_income_cny"] += row["export_income_cny"]
+            rows.append(row)
+        else:
+            if imp_values is not None: sums["import_cost_cny"] += imp * imp_values[i]
+            if exp_values is not None: sums["export_income_cny"] += exp * exp_values[i]
         for key, value in (("load_kwh", l), ("pv_generation_kwh", p), ("wind_generation_kwh", w), ("total_generation_kwh", total), ("self_use_kwh", self_use), ("grid_import_kwh", imp), ("grid_export_kwh", exp), ("curtailment_kwh", cur)): sums[key] += value
     if abs(sums["load_kwh"] - sums["self_use_kwh"] - sums["grid_import_kwh"]) > 1e-7: raise AssertionError("负荷守恒失败")
     if abs(sums["total_generation_kwh"] - sums["self_use_kwh"] - sums["grid_export_kwh"] - sums["curtailment_kwh"]) > 1e-7: raise AssertionError("风光发电守恒失败")
@@ -174,34 +188,67 @@ def _lifecycle(match: Dict[str, Any], baseline: Dict[str, Any], scenario: Hybrid
         return {"status": "incomplete", "missing": sorted(set(missing)), "capex_cny": capex, "yearly": [], "npv_cny": None, "total_cost_npv_cny": None, "incremental_npv_vs_s0_cny": None}
     rows: List[Dict[str, Any]] = [{"year": 0, "grid_import_cost_cny": 0.0, "export_income_cny": 0.0, "maintenance_cny": 0.0, "replacement_cny": 0.0, "residual_cny": 0.0, "capex_cny": capex, "net_cashflow_cny": -capex, "discounted_cny": -capex}]; year_end_cash: List[float] = []; pv_deg = 1.0
     for year in range(1, scenario.study_years + 1):
-        pg = dict(pv_generation); pg["pv_ac_power_w"] = [float(value) * pv_deg for value in pv_generation.get("pv_ac_power_w", [])] if pv_on else [0.0] * len(load_series.get("timestamps", [])); wg = wind_generation if wind_on else {**wind_generation, "wind_power_w": [0.0] * len(load_series.get("timestamps", []))}
-        ym = match_hybrid(load_series, pg, wg, allow_export=scenario.allow_export, export_limit_kw=scenario.export_limit_kw, import_prices=import_prices, export_prices=export_prices); imp = float(ym["summary"].get("import_cost_cny", 0.0)); export_income = float(ym["summary"].get("export_income_cny", 0.0))
+        # With no PV degradation the first-year physical match is invariant.
+        # Reusing it avoids repeating an identical full-year loop for S0/S2;
+        # the branch is algebraically the same as rematching the series.
+        if not pv_on:
+            ym = baseline if not wind_on else match
+        else:
+            pg = dict(pv_generation); pg["pv_ac_power_w"] = [float(value) * pv_deg for value in pv_generation.get("pv_ac_power_w", [])]
+            wg = wind_generation if wind_on else {**wind_generation, "wind_power_w": [0.0] * len(load_series.get("timestamps", []))}
+            ym = match_hybrid(load_series, pg, wg, allow_export=scenario.allow_export, export_limit_kw=scenario.export_limit_kw, import_prices=import_prices, export_prices=export_prices, include_intervals=False)
+        imp = float(ym["summary"].get("import_cost_cny", 0.0)); export_income = float(ym["summary"].get("export_income_cny", 0.0))
         maint = (float(pq.maintenance_cny_per_kwp_year or 0) * scenario.pv_capacity_kwp if pv_on else 0.0) + (float(wq.maintenance_cny_per_year or 0) if wind_on else 0.0); replacement = 0.0
         if pv_on and pq.inverter_replacement_year and year == int(pq.inverter_replacement_year): replacement += inverter_replacement_cost(scenario.pv_capacity_kwp, pq.inverter_cny_per_kwp, pq.inverter_replacement_fraction)
         if wind_on and wq.replacement_year and year == int(wq.replacement_year): replacement += float(wq.turbine_cny or 0.0) * float(wq.replacement_fraction)
         residual = 0.0 if year != scenario.study_years else (float(pv_assets or 0.0) * float(pq.residual_fraction) if pv_on else 0.0) + (float(wind_assets or 0.0) * float(wq.residual_fraction) if wind_on else 0.0)
         cash = -(imp + maint + replacement) + export_income + residual; year_end_cash.append(cash)
-        rows.append({"year": year, "grid_import_cost_cny": imp, "export_income_cny": export_income, "maintenance_cny": maint, "replacement_cny": replacement, "residual_cny": residual, "capex_cny": 0.0, "net_cashflow_cny": cash, "discounted_cny": discounted_year_end(cash, year, scenario.discount_rate), "grid_import_kwh": ym["summary"]["grid_import_kwh"], "grid_export_kwh": ym["summary"]["grid_export_kwh"], "curtailment_kwh": ym["summary"]["curtailment_kwh"]}); pv_deg *= 1.0 - float(scenario.pv_annual_degradation)
+        rows.append({"year": year, "grid_import_cost_cny": imp, "export_income_cny": export_income, "maintenance_cny": maint, "replacement_cny": replacement, "residual_cny": residual, "capex_cny": 0.0, "net_cashflow_cny": cash, "discounted_cny": discounted_year_end(cash, year, scenario.discount_rate), "grid_import_kwh": ym["summary"]["grid_import_kwh"], "self_use_kwh": ym["summary"]["self_use_kwh"], "pv_generation_kwh": ym["summary"]["pv_generation_kwh"], "wind_generation_kwh": ym["summary"]["wind_generation_kwh"], "total_generation_kwh": ym["summary"]["total_generation_kwh"], "grid_export_kwh": ym["summary"]["grid_export_kwh"], "curtailment_kwh": ym["summary"]["curtailment_kwh"]}); pv_deg *= 1.0 - float(scenario.pv_annual_degradation)
     net_npv = discounted_cashflow_npv(capex, year_end_cash, scenario.discount_rate); baseline_npv = discounted_cashflow_npv(0.0, [-base_imp] * int(scenario.study_years), scenario.discount_rate)
     total_grid = sum(float(row["grid_import_cost_cny"]) for row in rows[1:]); total_export = sum(float(row["export_income_cny"]) for row in rows[1:]); total_maint = sum(float(row["maintenance_cny"]) for row in rows[1:]); total_repl = sum(float(row["replacement_cny"]) for row in rows[1:]); total_residual = sum(float(row["residual_cny"]) for row in rows[1:]); annual_saving = base_imp - float(rows[1]["grid_import_cost_cny"]) - float(rows[1]["maintenance_cny"]) + float(rows[1]["export_income_cny"]) if len(rows) > 1 else None
-    return {"status": "complete", "capex_cny": capex, "npv_cny": net_npv, "total_cost_npv_cny": -net_npv, "incremental_npv_vs_s0_cny": net_npv - baseline_npv, "yearly": rows, "baseline_import_cost_cny": base_imp, "total_grid_import_cost_cny": total_grid, "total_export_income_cny": total_export, "total_maintenance_cny": total_maint, "total_replacement_cny": total_repl, "total_residual_cny": total_residual, "total_lifecycle_spend_cny": float(capex) + total_grid - total_export + total_maint + total_repl - total_residual, "annual_saving_after_maintenance_cny": annual_saving, "simple_payback_years": float(capex) / annual_saving if annual_saving and annual_saving > 0 else None, "cashflow_convention": "capex at t=0; operating and residual values at year end"}
+    return {"status": "complete", "capex_cny": capex, "npv_cny": net_npv, "total_cost_npv_cny": -net_npv, "incremental_npv_vs_s0_cny": net_npv - baseline_npv, "yearly": rows, "baseline_import_cost_cny": base_imp, "total_grid_import_cost_cny": total_grid, "total_export_income_cny": total_export, "total_maintenance_cny": total_maint, "total_replacement_cny": total_repl, "total_residual_cny": total_residual, "total_lifecycle_spend_cny": float(capex) + total_grid - total_export + total_maint + total_repl - total_residual, "annual_saving_after_maintenance_cny": annual_saving, "simple_payback_years": float(capex) / annual_saving if annual_saving and annual_saving > 0 else None, "discount_rate": scenario.discount_rate, "pv_annual_degradation": scenario.pv_annual_degradation, "cashflow_convention": "capex at t=0; operating and residual values at year end"}
 
 
-def run_hybrid_planning(load_result: Dict[str, Any], weather: Dict[str, Any], pv_scenario: PVScenario, hybrid: HybridScenario, profile: Optional[WindTurbineProfile] = None, *, include_hourly: bool = True) -> Dict[str, Any]:
+def run_hybrid_planning(load_result: Dict[str, Any], weather: Dict[str, Any], pv_scenario: PVScenario, hybrid: HybridScenario, profile: Optional[WindTurbineProfile] = None, *, include_hourly: bool = True, carbon: Optional[Dict[str, Any]] = None, storage: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     require_project_load(load_result)
-    load = load_result.get("load_series") or {}; times = list(load.get("timestamps", []))
+    load = dict(load_result.get("load_series") or {}); times = list(load.get("timestamps", []))
     if times != list(weather.get("time", [])): raise ValueError("负荷和风光天气不在同一时间区间")
-    intervals = _intervals(times, load.get("interval_seconds")); weather = dict(weather); weather["interval_seconds"] = intervals; profile = profile or WindTurbineProfile.from_file()
+    intervals = _intervals(times, load.get("interval_seconds")); load["electric_power_w"] = _finite_nonnegative(load.get("electric_power_w"), "负荷功率", len(times)); load["interval_seconds"] = intervals; load["_validated_series"] = _VALIDATED_SERIES; weather = dict(weather); weather["interval_seconds"] = intervals; profile = profile or WindTurbineProfile.from_file()
     authoritative_pv = replace(pv_scenario, import_price_cny_per_kwh=hybrid.import_price_cny_per_kwh, allow_export=hybrid.allow_export, export_limit_kw=hybrid.export_limit_kw); prices, tariff_meta = _price_vectors(authoritative_pv, times, intervals); export_prices = [float(hybrid.export_price_cny_per_kwh)] * len(times) if hybrid.export_price_cny_per_kwh is not None else None
-    pv0 = asdict(generate_pv(weather, 0.0, authoritative_pv)); pv = asdict(generate_pv(weather, hybrid.pv_capacity_kwp, authoritative_pv)); wind = generate_wind(weather, profile, hybrid.wind); wind0 = dict(wind); wind0["wind_power_w"] = [0.0] * len(times); wind0["wind_energy_kwh"] = [0.0] * len(times); wind0["metadata"] = {**wind["metadata"], "turbine_count": 0}
+    prices = _finite_nonnegative(prices, "购电价格", len(times)); export_prices = None if export_prices is None else _finite_nonnegative(export_prices, "外送价格", len(times))
+    pv0 = asdict(generate_pv(weather, 0.0, authoritative_pv)); pv = asdict(generate_pv(weather, hybrid.pv_capacity_kwp, authoritative_pv)); pv0["_validated_series"] = _VALIDATED_SERIES; pv["_validated_series"] = _VALIDATED_SERIES; wind = generate_wind(weather, profile, hybrid.wind); wind["_validated_series"] = _VALIDATED_SERIES; wind0 = dict(wind); wind0["wind_power_w"] = [0.0] * len(times); wind0["wind_energy_kwh"] = [0.0] * len(times); wind0["metadata"] = {**wind["metadata"], "turbine_count": 0}; wind0["_validated_series"] = _VALIDATED_SERIES
     combos = [("S0_grid", False, False), ("S1_pv", True, False), ("S2_wind", False, True), ("S3_pv_wind", True, True)]; candidates: List[Dict[str, Any]] = []; baseline: Optional[Dict[str, Any]] = None; roof_limit = pv_scenario.roof_area_m2 * pv_scenario.usable_fraction * DEFAULT_KWP_PER_M2
+    carbon_ctx = carbon_context(hybrid.site_id, carbon)
+    storage_request = storage or {}
+    storage_capacities = storage_request.get("capacities_kwh", [0, 5, 10, 20, 50])
+    storage_eta = float(storage_request.get("round_trip_efficiency", 0.90))
     for sid, pv_on, wind_on in combos:
         pg = pv if pv_on else pv0; wg = wind if wind_on else wind0; matched = match_hybrid(load, pg, wg, allow_export=hybrid.allow_export, export_limit_kw=hybrid.export_limit_kw, import_prices=prices, export_prices=export_prices); baseline = baseline or matched; econ = _lifecycle(matched, baseline, hybrid, pv_on=pv_on, wind_on=(wind_on and hybrid.wind.turbine_count > 0), load_series=load, pv_generation=pg, wind_generation=wg, import_prices=prices, export_prices=export_prices)
         constraint_reasons: List[str] = []
         if pv_on and hybrid.pv_capacity_kwp > roof_limit + 1e-9: constraint_reasons.append(f"光伏容量{hybrid.pv_capacity_kwp:g}kWp超过可用屋顶上限{roof_limit:g}kWp")
         if hybrid.budget_cny is not None and econ.get("capex_cny") is not None and float(econ["capex_cny"]) > float(hybrid.budget_cny) + 1e-9: constraint_reasons.append(f"初始投入超过预算{hybrid.budget_cny:g}元")
         budget_ok = hybrid.budget_cny is None or (econ.get("capex_cny") is not None and float(econ["capex_cny"]) <= float(hybrid.budget_cny) + 1e-9); status = "not_applicable" if any("屋顶" in reason for reason in constraint_reasons) else ("over_budget" if constraint_reasons else ("incomplete_quote" if econ.get("status") != "complete" else "feasible"))
+        econ["discount_rate"] = hybrid.discount_rate
+        yearly_matches = [r for r in econ["yearly"] if r["year"] > 0]
+        if not yearly_matches:
+            # Missing quotes must not suppress physical carbon quantities.
+            # Complete economic cases reuse the already rematched years.
+            pv_factor = 1.0
+            for _year in range(1, hybrid.study_years + 1):
+                yearly_pv = dict(pg); yearly_pv["pv_ac_power_w"] = [float(value) * pv_factor for value in pg.get("pv_ac_power_w", [])]
+                yearly_matches.append(match_hybrid(load, yearly_pv, wg, allow_export=hybrid.allow_export, export_limit_kw=hybrid.export_limit_kw, import_prices=prices, export_prices=export_prices)["summary"])
+                pv_factor *= 1.0 - float(hybrid.pv_annual_degradation)
         row = {"scenario_id": sid, "pv_capacity_kwp": hybrid.pv_capacity_kwp if pv_on else 0.0, "wind_turbine_count": hybrid.wind.turbine_count if wind_on else 0, "generation_kwh": matched["summary"]["total_generation_kwh"], "pv_generation_kwh": matched["summary"]["pv_generation_kwh"], "wind_generation_kwh": matched["summary"]["wind_generation_kwh"], "self_use_kwh": matched["summary"]["self_use_kwh"], "grid_import_kwh": matched["summary"]["grid_import_kwh"], "grid_export_kwh": matched["summary"]["grid_export_kwh"], "curtailment_kwh": matched["summary"]["curtailment_kwh"], "load_coverage_rate": matched["summary"]["load_coverage_rate"], "economics": econ, "budget_ok": budget_ok, "constraint_status": status, "constraint_reasons": constraint_reasons, "wind_metadata": wind["metadata"]}
+        row["carbon"] = candidate_carbon(site_id=hybrid.site_id, request=carbon, baseline_match=baseline, candidate_match=matched, yearly_matches=yearly_matches, economics=econ, annual_generation_kwh=matched["summary"]["total_generation_kwh"], annual_load_kwh=matched["summary"]["load_kwh"], annual_import_price_cny_per_kwh=hybrid.import_price_cny_per_kwh)
+        row["annual_offset_estimate"] = row["carbon"].pop("annual_offset_estimate")
+        if matched["summary"]["total_generation_kwh"] > 1e-12:
+            storage_intervals = storage_input_from_match(matched)
+            upper = ideal_storage_upper_bound(storage_intervals, capacities_kwh=storage_capacities, round_trip_efficiency=storage_eta, allow_export=hybrid.allow_export)
+            factor = float(carbon_ctx["factor"]["value_kgco2_per_kwh"])
+            if upper.get("candidates") is not None:
+                for storage_candidate in upper["candidates"]:
+                    storage_candidate["additional_avoided_kgco2_year1"] = storage_candidate["recovered_kwh_year1"] * factor
+            row["storage_upper_bound"] = upper
         if include_hourly: row["hourly"] = {"timestamps": times, "interval_seconds": intervals, "load_kwh": [r["load_kwh"] for r in matched["intervals"]], "pv_generation_kwh": [r["pv_generation_kwh"] for r in matched["intervals"]], "wind_generation_kwh": [r["wind_generation_kwh"] for r in matched["intervals"]], "self_use_kwh": [r["self_use_kwh"] for r in matched["intervals"]], "grid_import_kwh": [r["grid_import_kwh"] for r in matched["intervals"]], "grid_export_kwh": [r["grid_export_kwh"] for r in matched["intervals"]], "curtailment_kwh": [r["curtailment_kwh"] for r in matched["intervals"]], "wind_speed_hub_m_s": wind["wind_speed_hub_m_s"] if wind_on else [0.0] * len(times)}
         candidates.append(row)
     # Known hard exclusions do not block a decision among the survivors.
@@ -234,4 +281,4 @@ def run_hybrid_planning(load_result: Dict[str, Any], weather: Dict[str, Any], pv
         "reason": ("已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。" if not unknown else
                    "仅能给出已核实子集内最优；仍有可能适用但报价/必要条件未知的候选，全候选结论未定，不能称它们已被其他方案击败。")}
     service = load_result.get("summary", {}); gaps = {key: float(service.get(key, 0) or 0) for key in ("capacity_shortfall_hours", "unmet_temp_degree_hours", "unmet_rh_percent_hours")}; has_gap = any(value > 1e-9 for value in gaps.values())
-    return {"status": "success", "calculation_version": "phase2b-semantics-5090-v1", "scenario": asdict(hybrid), "tariff": tariff_meta, "profile": asdict(profile), "load_context": {"electric_load_kwh": baseline["summary"]["load_kwh"], "room_count": load.get("room_count"), "units_per_room": load.get("units_per_room"), "project_aggregation": load.get("project_aggregation"), "service_quality": {"status": "service_gap" if has_gap else "within_modeled_scope", "gaps": gaps, "scope": load.get("service_scope"), "note": "存在服务缺口时不代表同等服务水平下的投资最优。" if has_gap else "未校准的城市级空调负荷情景。"}, "project_load_context": project_load_context(load_result)}, "weather_provenance": {"source_file": weather.get("source_file"), "hash": weather.get("hash"), "context": weather.get("context"), "normalization": weather.get("weather_normalization"), "wind_input": "reuse normalized 10m wind_speed_10m; instantaneous interval-start semantics"}, "baseline": baseline["summary"], "candidate_constraints": {"pv_capacity_limit_kwp": roof_limit, "roof_area_m2": pv_scenario.roof_area_m2, "usable_fraction": pv_scenario.usable_fraction, "budget_cny": hybrid.budget_cny, "shared_connection_cny": hybrid.shared_connection_cny}, "candidates": candidates, "recommendation": recommendation, "notes": ["S0=只购电，S1=仅光伏，S2=仅风电，S3=风光组合；同一小时级负荷与天气。", "经济字段区分total_cost_npv_cny与incremental_npv_vs_s0_cny；初始投入在t=0。", "组合接入费只采用shared_connection_cny或两个组件报价均明确为0，不再自动取max。", "风机档案为SWCC认证系统输出；当地温度/气压未参与风电输出修正。", "当前负荷仅为第一阶段未校准城市级空调情景。"]}
+    return {"status": "success", "calculation_version": "phase2b-carbon-5090-v1", "scenario": asdict(hybrid), "carbon_context": carbon_ctx, "storage_context": {"enabled": True, "capacities_kwh": list(storage_capacities), "round_trip_efficiency": storage_eta, "note": "ideal dispatch upper bound; excludes battery cost, degradation and replacement; not a storage recommendation"}, "tariff": tariff_meta, "profile": asdict(profile), "load_context": {"electric_load_kwh": baseline["summary"]["load_kwh"], "room_count": load.get("room_count"), "units_per_room": load.get("units_per_room"), "project_aggregation": load.get("project_aggregation"), "service_quality": {"status": "service_gap" if has_gap else "within_modeled_scope", "gaps": gaps, "scope": load.get("service_scope"), "note": "存在服务缺口时不代表同等服务水平下的投资最优。" if has_gap else "未校准的城市级空调负荷情景。"}, "project_load_context": project_load_context(load_result)}, "weather_provenance": {"source_file": weather.get("source_file"), "hash": weather.get("hash"), "context": weather.get("context"), "normalization": weather.get("weather_normalization"), "wind_input": "reuse normalized 10m wind_speed_10m; instantaneous interval-start semantics"}, "baseline": baseline["summary"], "candidate_constraints": {"pv_capacity_limit_kwp": roof_limit, "roof_area_m2": pv_scenario.roof_area_m2, "usable_fraction": pv_scenario.usable_fraction, "budget_cny": hybrid.budget_cny, "shared_connection_cny": hybrid.shared_connection_cny}, "candidates": candidates, "recommendation": recommendation, "notes": ["S0=只购电，S1=仅光伏，S2=仅风电，S3=风光组合；同一小时级负荷与天气。", "经济字段区分total_cost_npv_cny与incremental_npv_vs_s0_cny；初始投入在t=0。", "组合接入费只采用shared_connection_cny或两个组件报价均明确为0，不再自动取max。", "风机档案为SWCC认证系统输出；当地温度/气压未参与风电输出修正。", "储能字段是allow_export=false的理想调度上限，不包含成本、衰减或更换，不是储能推荐。", "当前负荷仅为第一阶段未校准城市级空调情景。"]}

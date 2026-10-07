@@ -1,0 +1,283 @@
+{
+  "status": "passed",
+  "source_commit": "bcb3acea1664c48ccea3a64d3edc809f2b114d44",
+  "started_utc": "2026-10-07T04:49:13+00:00",
+  "ended_utc": "2026-10-07T04:53:31+00:00",
+  "machine_role": "5090",
+  "case_count": 11,
+  "case_summaries": [
+    {
+      "case_id": "primary_not_worth_it",
+      "room_count": 1,
+      "units_per_room": 6,
+      "service_status": "within_modeled_scope",
+      "recommendation": {
+        "status": "conditional",
+        "scenario_id": "S0_grid",
+        "complete_subset_best_scenario_id": "S0_grid",
+        "all_candidates_conclusion": "resolved_with_exclusions",
+        "eligible_scenario_ids": [
+          "S0_grid",
+          "S1_pv",
+          "S2_wind",
+          "S3_pv_wind"
+        ],
+        "excluded_scenario_ids": [],
+        "unknown_scenario_ids": [],
+        "reason": "已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。"
+      },
+      "chart_scenario_id": "S3_pv_wind",
+      "chart_recommended_scenario_id": "S0_grid",
+      "case_hash": "38d5bacdd245897a8ef45ab1c0bf9c0f92bddbd09584db4bbcca5c6041c27f55"
+    },
+    {
+      "case_id": "primary_worth_it",
+      "room_count": 40,
+      "units_per_room": 6,
+      "service_status": "within_modeled_scope",
+      "recommendation": {
+        "status": "conditional",
+        "scenario_id": "S1_pv",
+        "complete_subset_best_scenario_id": "S1_pv",
+        "all_candidates_conclusion": "resolved_with_exclusions",
+        "eligible_scenario_ids": [
+          "S0_grid",
+          "S1_pv",
+          "S2_wind",
+          "S3_pv_wind"
+        ],
+        "excluded_scenario_ids": [],
+        "unknown_scenario_ids": [],
+        "reason": "已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。"
+      },
+      "chart_scenario_id": "S3_pv_wind",
+      "chart_recommended_scenario_id": "S1_pv",
+      "case_hash": "ff6b531a96108f44c0b18becae606d1bea650d33d9216d095c4aa50af766948e"
+    },
+    {
+      "case_id": "primary_adequate_three_rooms",
+      "room_count": 3,
+      "units_per_room": 6,
+      "service_status": "within_modeled_scope",
+      "recommendation": {
+        "status": "conditional",
+        "scenario_id": "S1_pv",
+        "complete_subset_best_scenario_id": "S1_pv",
+        "all_candidates_conclusion": "resolved_with_exclusions",
+        "eligible_scenario_ids": [
+          "S0_grid",
+          "S1_pv",
+          "S2_wind",
+          "S3_pv_wind"
+        ],
+        "excluded_scenario_ids": [],
+        "unknown_scenario_ids": [],
+        "reason": "已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。"
+      },
+      "chart_scenario_id": "S3_pv_wind",
+      "chart_recommended_scenario_id": "S1_pv",
+      "case_hash": "79a9acd675af8bc82a4e81c7886be7573bfe743376c66d2f77e5d5c4eff8cd07"
+    },
+    {
+      "case_id": "comparison_undersized_one_unit",
+      "room_count": 1,
+      "units_per_room": 1,
+      "service_status": "service_gap",
+      "recommendation": {
+        "status": "conditional",
+        "scenario_id": "S1_pv",
+        "complete_subset_best_scenario_id": "S1_pv",
+        "all_candidates_conclusion": "resolved_with_exclusions",
+        "eligible_scenario_ids": [
+          "S0_grid",
+          "S1_pv",
+          "S2_wind",
+          "S3_pv_wind"
+        ],
+        "excluded_scenario_ids": [],
+        "unknown_scenario_ids": [],
+        "reason": "已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。"
+      },
+      "chart_scenario_id": "S3_pv_wind",
+      "chart_recommended_scenario_id": "S1_pv",
+      "case_hash": "abdcbcf6be96740c9365d60008f11b0f94999e7e2084b4e6731bdec419d555c8"
+    },
+    {
+      "case_id": "comparison_two_unit_reference",
+      "room_count": 1,
+      "units_per_room": 2,
+      "service_status": "service_gap",
+      "recommendation": {
+        "status": "conditional",
+        "scenario_id": "S1_pv",
+        "complete_subset_best_scenario_id": "S1_pv",
+        "all_candidates_conclusion": "resolved_with_exclusions",
+        "eligible_scenario_ids": [
+          "S0_grid",
+          "S1_pv",
+          "S2_wind",
+          "S3_pv_wind"
+        ],
+        "excluded_scenario_ids": [],
+        "unknown_scenario_ids": [],
+        "reason": "已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。"
+      },
+      "chart_scenario_id": "S3_pv_wind",
+      "chart_recommended_scenario_id": "S1_pv",
+      "case_hash": "df198a07b93d24fe48079f3a16306f5cb52a06c79dcef9e1e32e5d0ee9a17cc3"
+    },
+    {
+      "case_id": "variant_budget_insufficient",
+      "room_count": 1,
+      "units_per_room": 6,
+      "service_status": "within_modeled_scope",
+      "recommendation": {
+        "status": "conditional",
+        "scenario_id": "S0_grid",
+        "complete_subset_best_scenario_id": "S0_grid",
+        "all_candidates_conclusion": "resolved_with_exclusions",
+        "eligible_scenario_ids": [
+          "S0_grid",
+          "S1_pv"
+        ],
+        "excluded_scenario_ids": [
+          "S2_wind",
+          "S3_pv_wind"
+        ],
+        "unknown_scenario_ids": [],
+        "reason": "已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。"
+      },
+      "chart_scenario_id": "S3_pv_wind",
+      "chart_recommended_scenario_id": "S0_grid",
+      "case_hash": "aca162ed8339646ada282748410eaadb2dc62d74aa1f2f2213f6e9d9b4b3de36"
+    },
+    {
+      "case_id": "variant_missing_pv_quote",
+      "room_count": 1,
+      "units_per_room": 6,
+      "service_status": "within_modeled_scope",
+      "recommendation": {
+        "status": "conditional_subset",
+        "scenario_id": "S0_grid",
+        "complete_subset_best_scenario_id": "S0_grid",
+        "all_candidates_conclusion": "unresolved",
+        "eligible_scenario_ids": [
+          "S0_grid",
+          "S2_wind"
+        ],
+        "excluded_scenario_ids": [],
+        "unknown_scenario_ids": [
+          "S1_pv",
+          "S3_pv_wind"
+        ],
+        "reason": "仅能给出已核实子集内最优；仍有可能适用但报价/必要条件未知的候选，全候选结论未定，不能称它们已被其他方案击败。"
+      },
+      "chart_scenario_id": "S3_pv_wind",
+      "chart_recommended_scenario_id": "S0_grid",
+      "case_hash": "8905738315da1b22880697d8eaa0b5bcadea93691596d2b4717cafbd9f1afebc"
+    },
+    {
+      "case_id": "variant_roof_area_insufficient",
+      "room_count": 1,
+      "units_per_room": 6,
+      "service_status": "within_modeled_scope",
+      "recommendation": {
+        "status": "conditional",
+        "scenario_id": "S0_grid",
+        "complete_subset_best_scenario_id": "S0_grid",
+        "all_candidates_conclusion": "resolved_with_exclusions",
+        "eligible_scenario_ids": [
+          "S0_grid",
+          "S2_wind"
+        ],
+        "excluded_scenario_ids": [
+          "S1_pv",
+          "S3_pv_wind"
+        ],
+        "unknown_scenario_ids": [],
+        "reason": "已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。"
+      },
+      "chart_scenario_id": "S3_pv_wind",
+      "chart_recommended_scenario_id": "S0_grid",
+      "case_hash": "81ca459d06f2b5f4495bad66320f2e9fab5080238edb4d31126043fa774da083"
+    },
+    {
+      "case_id": "tier_small",
+      "room_count": 1,
+      "units_per_room": 6,
+      "service_status": "within_modeled_scope",
+      "recommendation": {
+        "status": "conditional",
+        "scenario_id": "S0_grid",
+        "complete_subset_best_scenario_id": "S0_grid",
+        "all_candidates_conclusion": "resolved_with_exclusions",
+        "eligible_scenario_ids": [
+          "S0_grid",
+          "S1_pv",
+          "S2_wind",
+          "S3_pv_wind"
+        ],
+        "excluded_scenario_ids": [],
+        "unknown_scenario_ids": [],
+        "reason": "已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。"
+      },
+      "chart_scenario_id": "S3_pv_wind",
+      "chart_recommended_scenario_id": "S0_grid",
+      "case_hash": "fa8473d1015bd08f71267896c9154683084144dc80480b8ce90237391df825a6"
+    },
+    {
+      "case_id": "tier_medium",
+      "room_count": 40,
+      "units_per_room": 6,
+      "service_status": "within_modeled_scope",
+      "recommendation": {
+        "status": "conditional",
+        "scenario_id": "S1_pv",
+        "complete_subset_best_scenario_id": "S1_pv",
+        "all_candidates_conclusion": "resolved_with_exclusions",
+        "eligible_scenario_ids": [
+          "S0_grid",
+          "S1_pv",
+          "S2_wind",
+          "S3_pv_wind"
+        ],
+        "excluded_scenario_ids": [],
+        "unknown_scenario_ids": [],
+        "reason": "已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。"
+      },
+      "chart_scenario_id": "S3_pv_wind",
+      "chart_recommended_scenario_id": "S1_pv",
+      "case_hash": "3ca6f46b07ec95e7ba7631a2ef09077c0aea01c254a80e5a3eb6055aa0fc31a0"
+    },
+    {
+      "case_id": "tier_large",
+      "room_count": 100,
+      "units_per_room": 6,
+      "service_status": "within_modeled_scope",
+      "recommendation": {
+        "status": "conditional",
+        "scenario_id": "S0_grid",
+        "complete_subset_best_scenario_id": "S0_grid",
+        "all_candidates_conclusion": "resolved_with_exclusions",
+        "eligible_scenario_ids": [
+          "S0_grid",
+          "S1_pv",
+          "S2_wind",
+          "S3_pv_wind"
+        ],
+        "excluded_scenario_ids": [],
+        "unknown_scenario_ids": [],
+        "reason": "已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。"
+      },
+      "chart_scenario_id": "S3_pv_wind",
+      "chart_recommended_scenario_id": "S0_grid",
+      "case_hash": "c19cd13fab977bbd2dd4f952628c0d57b1093c00b23a7e26406b4ced78b7acb0"
+    }
+  ],
+  "package_file_sha256": "7b24e48f160577d48dc4c8d9e5682fb97398ef04c6cd343cd5cffc30a27cfffd",
+  "viewer_file_sha256": "1101b792e2727b7f68475dfe444a8cc2027299ed9ab8d708ba0658b7548f51ea",
+  "package_sha256": "c43d4aa7527a97da8b1151d821c3d8088b4645a6ad12d89d4a420cb5b80ea470",
+  "viewer_sha256": "366eedaf982c060031e774914fe6b9e74c19ba2e0748f2d9579b3bd94d796315",
+  "viewer_path": "docs/handoff/replay_viewer/replay_cases_v4.json",
+  "previous_replay_preserved": "replay_cases_v3.json"
+}

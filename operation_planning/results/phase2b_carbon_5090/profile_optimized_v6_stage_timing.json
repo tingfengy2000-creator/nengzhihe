@@ -1,0 +1,64 @@
+{
+  "source_commit": "working-tree",
+  "case_id": "tier_small",
+  "elapsed_s": 6.0770713000092655,
+  "status": "success",
+  "sweep_count": 4,
+  "stages": {
+    "load_weather": {
+      "calls": 1,
+      "seconds": 0.04187750001437962,
+      "percent_of_total": 0.689
+    },
+    "load_pv_weather": {
+      "calls": 1,
+      "seconds": 0.042372999945655465,
+      "percent_of_total": 0.697
+    },
+    "simulate_room": {
+      "calls": 1,
+      "seconds": 0.051606299995910376,
+      "percent_of_total": 0.849
+    },
+    "aggregate_project_load": {
+      "calls": 1,
+      "seconds": 0.03611669997917488,
+      "percent_of_total": 0.594
+    },
+    "_price_vectors": {
+      "calls": 5,
+      "seconds": 2.9684573999256827,
+      "percent_of_total": 48.847
+    },
+    "generate_pv": {
+      "calls": 10,
+      "seconds": 0.5127443002420478,
+      "percent_of_total": 8.437
+    },
+    "generate_wind": {
+      "calls": 5,
+      "seconds": 1.124453199969139,
+      "percent_of_total": 18.503
+    },
+    "match_hybrid": {
+      "calls": 100,
+      "seconds": 0.8162229997687973,
+      "percent_of_total": 13.431
+    },
+    "_lifecycle": {
+      "calls": 20,
+      "seconds": 0.5834984999964945,
+      "percent_of_total": 9.602
+    },
+    "ideal_storage_upper_bound": {
+      "calls": 14,
+      "seconds": 0.32619560009334236,
+      "percent_of_total": 5.368
+    },
+    "_hybrid_capacity_run": {
+      "calls": 1,
+      "seconds": 6.0770713000092655,
+      "percent_of_total": 100.0
+    }
+  }
+}

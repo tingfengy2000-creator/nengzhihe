@@ -1,0 +1,8 @@
+{
+  "elapsed_s": 383.49894630000927,
+  "status": "success",
+  "capacity_count": 4,
+  "profiled_function": "_hybrid_capacity_run",
+  "source_note": "HEAD e031655 frozen old interval validation via monkeypatch, same calculation path",
+  "source_commit": "e031655d2217112a82990227be3c9a93fb9c194b"
+}

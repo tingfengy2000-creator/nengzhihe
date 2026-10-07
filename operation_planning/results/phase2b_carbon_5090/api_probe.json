@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "source_commit": "ed3f17d23121a4f97b1bdbff577d6c769ff9506d",
+  "factor_count": 41,
+  "guangdong_2023": {
+    "factor_id": "grid_avg_guangdong_2023",
+    "value_kgco2_per_kwh": 0.4419,
+    "data_year": 2023,
+    "scope": "省",
+    "region": "广东",
+    "basis": "电力平均",
+    "source_title": "关于发布2023年电力二氧化碳排放因子的公告（附件表3）",
+    "issuer": "生态环境部、国家统计局",
+    "notice_no": "公告2025年第47号",
+    "published": "2025-12-31",
+    "url": "https://www.mee.gov.cn/xxgk2018/xxgk/xxgk01/202512/t20251231_1139517.html",
+    "attachment_url": "https://www.mee.gov.cn/xxgk2018/xxgk/xxgk01/202512/W020251231726284332528.pdf",
+    "retrieved": "2026-10-07"
+  },
+  "invalid_factor_rejected": "ValueError: 未知排放因子：does_not_exist"
+}
