@@ -18,6 +18,9 @@ from .project_load import require_project_load, project_load_context
 from .carbon import candidate_carbon, context as carbon_context
 from .storage import ideal_storage_upper_bound, storage_input_from_match
 
+# An in-process capability, never a client-supplied boolean/JSON flag.
+_VALIDATED_SERIES = object()
+
 
 def _safe_intervals(times: Sequence[str], provided: Optional[Sequence[int]], *, trusted: bool = False) -> List[int]:
     """Allow a one-interval arithmetic fixture while keeping real axes strict."""
@@ -118,7 +121,7 @@ def match_hybrid(load_series: Dict[str, Any], pv_generation: Dict[str, Any], win
         raise ValueError("负荷、光伏和风电必须使用同一时间轴")
     if allow_export and export_limit_kw is not None and (not math.isfinite(float(export_limit_kw)) or float(export_limit_kw) < 0):
         raise ValueError("外送功率上限必须是非负有限数")
-    trusted = bool(load_series.get("_validated_series")) and bool(pv_generation.get("_validated_series")) and bool(wind_generation.get("_validated_series"))
+    trusted = all(series.get("_validated_series") is _VALIDATED_SERIES for series in (load_series, pv_generation, wind_generation))
     ints = _safe_intervals(lt, load_series.get("interval_seconds"), trusted=trusted)
     if ints != _safe_intervals(pt, pv_generation.get("interval_seconds"), trusted=trusted) or ints != _safe_intervals(wt, wind_generation.get("interval_seconds"), trusted=trusted):
         raise ValueError("负荷、光伏和风电时间间隔不一致")
@@ -208,11 +211,12 @@ def _lifecycle(match: Dict[str, Any], baseline: Dict[str, Any], scenario: Hybrid
 
 def run_hybrid_planning(load_result: Dict[str, Any], weather: Dict[str, Any], pv_scenario: PVScenario, hybrid: HybridScenario, profile: Optional[WindTurbineProfile] = None, *, include_hourly: bool = True, carbon: Optional[Dict[str, Any]] = None, storage: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     require_project_load(load_result)
-    load = load_result.get("load_series") or {}; times = list(load.get("timestamps", []))
+    load = dict(load_result.get("load_series") or {}); times = list(load.get("timestamps", []))
     if times != list(weather.get("time", [])): raise ValueError("负荷和风光天气不在同一时间区间")
-    intervals = _intervals(times, load.get("interval_seconds")); load["interval_seconds"] = intervals; load["_validated_series"] = True; weather = dict(weather); weather["interval_seconds"] = intervals; profile = profile or WindTurbineProfile.from_file()
+    intervals = _intervals(times, load.get("interval_seconds")); load["electric_power_w"] = _finite_nonnegative(load.get("electric_power_w"), "负荷功率", len(times)); load["interval_seconds"] = intervals; load["_validated_series"] = _VALIDATED_SERIES; weather = dict(weather); weather["interval_seconds"] = intervals; profile = profile or WindTurbineProfile.from_file()
     authoritative_pv = replace(pv_scenario, import_price_cny_per_kwh=hybrid.import_price_cny_per_kwh, allow_export=hybrid.allow_export, export_limit_kw=hybrid.export_limit_kw); prices, tariff_meta = _price_vectors(authoritative_pv, times, intervals); export_prices = [float(hybrid.export_price_cny_per_kwh)] * len(times) if hybrid.export_price_cny_per_kwh is not None else None
-    pv0 = asdict(generate_pv(weather, 0.0, authoritative_pv)); pv = asdict(generate_pv(weather, hybrid.pv_capacity_kwp, authoritative_pv)); pv0["_validated_series"] = True; pv["_validated_series"] = True; wind = generate_wind(weather, profile, hybrid.wind); wind["_validated_series"] = True; wind0 = dict(wind); wind0["wind_power_w"] = [0.0] * len(times); wind0["wind_energy_kwh"] = [0.0] * len(times); wind0["metadata"] = {**wind["metadata"], "turbine_count": 0}; wind0["_validated_series"] = True
+    prices = _finite_nonnegative(prices, "购电价格", len(times)); export_prices = None if export_prices is None else _finite_nonnegative(export_prices, "外送价格", len(times))
+    pv0 = asdict(generate_pv(weather, 0.0, authoritative_pv)); pv = asdict(generate_pv(weather, hybrid.pv_capacity_kwp, authoritative_pv)); pv0["_validated_series"] = _VALIDATED_SERIES; pv["_validated_series"] = _VALIDATED_SERIES; wind = generate_wind(weather, profile, hybrid.wind); wind["_validated_series"] = _VALIDATED_SERIES; wind0 = dict(wind); wind0["wind_power_w"] = [0.0] * len(times); wind0["wind_energy_kwh"] = [0.0] * len(times); wind0["metadata"] = {**wind["metadata"], "turbine_count": 0}; wind0["_validated_series"] = _VALIDATED_SERIES
     combos = [("S0_grid", False, False), ("S1_pv", True, False), ("S2_wind", False, True), ("S3_pv_wind", True, True)]; candidates: List[Dict[str, Any]] = []; baseline: Optional[Dict[str, Any]] = None; roof_limit = pv_scenario.roof_area_m2 * pv_scenario.usable_fraction * DEFAULT_KWP_PER_M2
     carbon_ctx = carbon_context(hybrid.site_id, carbon)
     storage_request = storage or {}
