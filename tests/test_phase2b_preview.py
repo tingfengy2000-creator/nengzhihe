@@ -66,15 +66,20 @@ def test_preview_selection_rule():
 
 
 def test_preview_is_physical_only_and_matches_same_rows():
-    weather = _fixture()
+    # Include two weeks so the test proves that the endpoint slices a fixed
+    # calendar window rather than merely replaying the only rows supplied.
+    weather = _fixture(datetime(2024, 7, 1), hours=504)
     payload = _payload(weather)
     result = app._hybrid_preview(payload)
     room, _, _ = app._thermal_inputs(payload)
     load = aggregate_project_load(simulate_room(weather, room))
+    indices, _ = app._preview_period_indices(weather["time"], "week", "summer", 7)
+    selected_load = app._slice_project_load(load, indices)
+    selected_weather = app._slice_weather(weather, indices)
     pv_scenario, hybrid = app.hybrid_task_from_dict(payload, site_id="guangzhou", year=2024)
-    pv = asdict(generate_pv(weather, hybrid.pv_capacity_kwp, pv_scenario))
-    wind = generate_wind(weather, WindTurbineProfile.from_file(), hybrid.wind)
-    expected = match_hybrid(load["load_series"], pv, wind, allow_export=False)
+    pv = asdict(generate_pv(selected_weather, hybrid.pv_capacity_kwp, pv_scenario))
+    wind = generate_wind(selected_weather, WindTurbineProfile.from_file(), hybrid.wind)
+    expected = match_hybrid(selected_load["load_series"], pv, wind, allow_export=False)
     s3 = next(row for row in result["candidates"] if row["scenario_id"] == "S3_pv_wind")
     assert s3["summary"] == expected["summary"]
     assert s3["intervals"] == expected["intervals"]
