@@ -24,6 +24,8 @@
 
 `report.calculation_timing.elapsed_ms` 是本次服务端实际计算耗时（包括负荷、发电、匹配和经济层）。
 
+评审回放的状态卡可在 `pv.fixed_capacity_kwp` 中明确锁定用户要求的容量（例如 `1`）；这只用于展示该容量的真实 `unknown`（报价缺失）或 `excluded`（屋顶/预算硬约束）状态，不参与普通用户的容量推荐逻辑。
+
 请求片段：
 
 ```json

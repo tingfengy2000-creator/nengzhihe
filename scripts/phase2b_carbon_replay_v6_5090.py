@@ -68,9 +68,10 @@ def _quotes(pv_complete: bool = True) -> tuple[dict[str, Any], dict[str, Any]]:
 
 def _request_payload(room: RoomSpec, *, cap: float, requested: Sequence[float],
                      roof: float, budget: Optional[float], pv_complete: bool,
-                     wind_count: int, study_years: int = 10) -> dict[str, Any]:
+                     wind_count: int, study_years: int = 10,
+                     fixed_capacity: Optional[float] = None) -> dict[str, Any]:
     pv_quote, wind_quote = _quotes(pv_complete)
-    return {
+    payload = {
         "site_id": "guangzhou", "year": 2024, "room": asdict(room),
         "pv": {
             "roof_area_m2": roof, "usable_fraction": 0.8,
@@ -92,6 +93,9 @@ def _request_payload(room: RoomSpec, *, cap: float, requested: Sequence[float],
         "carbon": {"carbon_price_cny_per_t": None},
         "storage": {"capacities_kwh": [0, 5, 10, 20, 50], "round_trip_efficiency": 0.90},
     }
+    if fixed_capacity is not None:
+        payload["pv"]["fixed_capacity_kwp"] = float(fixed_capacity)
+    return payload
 
 
 def _http_post(base_url: str, payload: dict[str, Any], timeout: int = 600) -> tuple[dict[str, Any], float, int]:
@@ -189,7 +193,7 @@ def _case(base_url: str, *, case_id: str, label: str, role: str, room: RoomSpec,
     for cap in call_caps:
         # A normal tier lets the endpoint execute the complete bounded sweep
         # in one real request; variants deliberately use one fixed capacity.
-        payload = _request_payload(room, cap=cap, requested=requested, roof=roof, budget=budget, pv_complete=pv_complete, wind_count=wind_count)
+        payload = _request_payload(room, cap=cap, requested=requested, roof=roof, budget=budget, pv_complete=pv_complete, wind_count=wind_count, fixed_capacity=fixed_cap)
         report, elapsed, status = _http_post(base_url, payload)
         reports[cap] = report
         traces.append({"capacity_kwp": cap, "elapsed_ms": round(elapsed, 3), "http_status": status, "request_sha256": _sha(payload), "response_sha256": _sha(report), "endpoint": "/api/operation/hybrid/run"})
@@ -208,7 +212,7 @@ def _case(base_url: str, *, case_id: str, label: str, role: str, room: RoomSpec,
         else:
             basis = selected.get("recommendation_basis") or "由实时接口在满足约束且完整计价的PV候选中按增量NPV选择"
     recommendation_id = "S1_pv" if fixed_cap is not None else ((selected.get("recommendation") or {}).get("scenario_id") or "S0_grid")
-    input_payload = _request_payload(room, cap=selected_cap, requested=requested, roof=roof, budget=budget, pv_complete=pv_complete, wind_count=wind_count)
+    input_payload = _request_payload(room, cap=selected_cap, requested=requested, roof=roof, budget=budget, pv_complete=pv_complete, wind_count=wind_count, fixed_capacity=fixed_cap)
     context = selected.get("load_context") or {}
     main_input = {"site_id": "guangzhou", "year": 2024, "room": asdict(room), "building": building or {}, "pv_capacity_kwp": selected_cap, "requested_capacities_kwp": requested, "recommended_pv_capacity_kwp": selected_cap, "roof_area_m2": roof, "budget_cny": budget, "tariff_id": TARIFF_ID, "tariff_application": "current_tariff_on_reference_weather", "allow_export": False, "wind_turbine_count": wind_count, "pv_quote": input_payload["pv"].get("quote"), "wind_quote": input_payload["hybrid"].get("wind_quote"), "hub_height_m": input_payload["hybrid"]["wind"].get("hub_height_m"), "hellman_exponent": input_payload["hybrid"]["wind"].get("hellman_exponent"), "carbon": input_payload["carbon"], "storage": input_payload["storage"], "request_sha256": _sha(input_payload)}
     candidates = [_candidate(x) for x in selected.get("candidates", [])]

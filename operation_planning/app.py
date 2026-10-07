@@ -313,13 +313,28 @@ def _hybrid_capacity_run(payload: dict, progress=None) -> dict:
     pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year)
     load_result = aggregate_project_load(simulate_room(load_weather_data, room))
     pv_raw = dict(payload.get("pv") or {})
-    capacities = _capacity_candidates(pv_raw)
+    # State/review variants may pin one user-requested capacity so the API
+    # returns its real unknown/excluded status instead of silently replacing
+    # it with the 0 kWp baseline.  This is a validated task constraint, not a
+    # recommendation shortcut; normal user requests continue to sweep.
+    fixed_capacity_raw = pv_raw.get("fixed_capacity_kwp")
+    fixed_capacity = None
+    if fixed_capacity_raw is not None:
+        try:
+            fixed_capacity = float(fixed_capacity_raw)
+        except (TypeError, ValueError) as exc:
+            raise ValueError("pv.fixed_capacity_kwp必须是非负有限数") from exc
+        if not math.isfinite(fixed_capacity) or fixed_capacity < 0:
+            raise ValueError("pv.fixed_capacity_kwp必须是非负有限数")
+        capacities = [fixed_capacity]
+    else:
+        capacities = _capacity_candidates(pv_raw)
     reports = []
     total = len(capacities)
     for index, capacity in enumerate(capacities, 1):
         one_payload = dict(payload)
         one_pv = dict(pv_raw)
-        one_pv.pop("requested_capacities_kwp", None); one_pv.pop("auto_capacity", None)
+        one_pv.pop("requested_capacities_kwp", None); one_pv.pop("auto_capacity", None); one_pv.pop("fixed_capacity_kwp", None)
         one_payload["pv"] = one_pv
         one_hybrid = dict(payload.get("hybrid") or {})
         one_hybrid["pv_capacity_kwp"] = capacity
@@ -364,17 +379,17 @@ def _hybrid_capacity_run(payload: dict, progress=None) -> dict:
             "avoided_tco2_study_period": (row.get("carbon") or {}).get("avoided_tco2_study_period"),
             "cost_per_tco2_cny": (row.get("carbon") or {}).get("cost_per_tco2_cny"),
         })
-    eligible = [row for row in sweep if row.get("status") in {"feasible", "over_budget", "not_applicable", "incomplete_quote"} and row.get("incremental_npv_vs_s0_cny") is not None and row.get("status") == "feasible"]
+    eligible = [row for row in sweep if row.get("status") == "feasible" and row.get("incremental_npv_vs_s0_cny") is not None]
     # S0 is always retained.  If all nonzero rows are ineligible, the first
     # capacity remains the display report and recommendation says unresolved.
-    best_capacity = max(eligible, key=lambda row: float(row["incremental_npv_vs_s0_cny"]))["requested_capacity_kwp"] if eligible else 0.0
+    best_capacity = fixed_capacity if fixed_capacity is not None else (max(eligible, key=lambda row: float(row["incremental_npv_vs_s0_cny"]))["requested_capacity_kwp"] if eligible else 0.0)
     selected_index = capacities.index(best_capacity) if best_capacity in capacities else 0
     selected = reports[selected_index]
     # Re-run only the selected capacity with the complete hourly traces used
     # by the UI.  This is a real deterministic computation, not a cached
     # replay; the sweep reports above remain the source of the comparison.
     selected_payload = dict(payload)
-    selected_pv = dict(pv_raw); selected_pv.pop("requested_capacities_kwp", None); selected_pv.pop("auto_capacity", None)
+    selected_pv = dict(pv_raw); selected_pv.pop("requested_capacities_kwp", None); selected_pv.pop("auto_capacity", None); selected_pv.pop("fixed_capacity_kwp", None)
     selected_payload["pv"] = selected_pv
     selected_hybrid = dict(payload.get("hybrid") or {}); selected_hybrid["pv_capacity_kwp"] = best_capacity
     selected_payload["hybrid"] = selected_hybrid
@@ -387,7 +402,7 @@ def _hybrid_capacity_run(payload: dict, progress=None) -> dict:
     selected["project_load_contract"] = (selected.get("load_context") or {}).get("project_load_context")
     selected["pv_capacity_sweep"] = sweep
     selected["recommended_pv_capacity_kwp"] = best_capacity
-    selected["recommendation_basis"] = "在有限、计价完整且满足屋顶/预算约束的PV-only容量候选中，按相对S0增量NPV选择；不是全局优化。"
+    selected["recommendation_basis"] = ("按用户固定容量计算；不进行容量寻优，候选状态仍按报价与屋顶约束判定。" if fixed_capacity is not None else "在有限、计价完整且满足屋顶/预算约束的PV-only容量候选中，按相对S0增量NPV选择；不是全局优化。")
     selected["calculation_timing"] = {"capacity_count": total}
     return selected
 

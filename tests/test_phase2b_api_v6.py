@@ -47,6 +47,26 @@ def test_v6_thermal_capacity_contract():
     assert all("annual_electric_kwh" in row and "capacity_shortfall_hours" in row for row in result["candidates"])
 
 
+def test_v6_fixed_capacity_preserves_unknown_and_excluded_status():
+    import operation_planning.app as app
+    base = {"site_id": "guangzhou", "year": 2024,
+        "room": {"area_m2": 35, "equipment_id": "midea_msagbu12_mox201", "equipment_count": 1,
+                 "units_per_room": 1, "room_count": 1}, "weather": _weather_fixture(),
+        "pv_weather": _weather_fixture(), "pv": {"roof_area_m2": 35, "usable_fraction": 0.8,
+            "requested_capacities_kwp": [1], "fixed_capacity_kwp": 1, "quote": {}},
+        "hybrid": {"pv_capacity_kwp": 1, "budget_cny": 90000, "allow_export": False,
+            "wind": {"turbine_count": 0}, "pv_quote": {}, "wind_quote": {}},
+        "storage": {"capacities_kwh": [0]}}
+    unknown = app._hybrid_capacity_run(base)
+    s1 = next(row for row in unknown["candidates"] if row["scenario_id"] == "S1_pv")
+    assert unknown["recommended_pv_capacity_kwp"] == 1 and s1["admission_status"] == "unknown"
+    excluded_payload = dict(base)
+    excluded_payload["pv"] = {**base["pv"], "roof_area_m2": 1}
+    excluded = app._hybrid_capacity_run(excluded_payload)
+    s1 = next(row for row in excluded["candidates"] if row["scenario_id"] == "S1_pv")
+    assert excluded["recommended_pv_capacity_kwp"] == 1 and s1["admission_status"] == "excluded"
+
+
 def test_v6_async_contract_schema():
     # The HTTP worker returns these exact fields at submit/poll boundaries;
     # keep this test independent from a long full-year calculation.
