@@ -11,6 +11,7 @@ from datetime import datetime
 import hashlib
 import json
 from pathlib import Path
+import subprocess
 import time
 from urllib.request import Request, urlopen
 
@@ -81,6 +82,7 @@ def main() -> None:
                           "generated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
                           "notes": ["固定日历预览：每年7月15日至22日或1月15日至22日，不声称统计最代表性。", "仅物理发电与逐时匹配；不计算经济、碳价或全年外推。"]})
     output = {"format_version": "preview_v6_http_5090", "source_v6_file": str(V6.relative_to(ROOT)),
+              "source_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
               "endpoint": "/api/operation/hybrid/preview", "period_rule": {"week": "month-day 15 00:00 through day 22 00:00 exclusive", "summer_month": 7, "winter_month": 1},
               "cases": cases, "http_call_count": len(cases),
               "timing_summary": {"total_http_elapsed_ms": round(sum(x["http_elapsed_ms"] for x in cases), 3),

@@ -1,6 +1,7 @@
 {
   "format_version": "preview_v6_http_5090",
   "source_v6_file": "docs\\handoff\\replay_viewer\\replay_cases_v6.json",
+  "source_commit": "54b8460128f8a324df1e382b91f9c8f4030ac83f",
   "endpoint": "/api/operation/hybrid/preview",
   "period_rule": {
     "week": "month-day 15 00:00 through day 22 00:00 exclusive",
@@ -9666,7 +9667,7 @@
           "reason": "preview endpoint does not calculate lifecycle, tariff, carbon price or payback"
         },
         "calculation_timing": {
-          "elapsed_ms": 297.252,
+          "elapsed_ms": 290.309,
           "timing_scope": "selected typical week/month physical generation and matching only"
         },
         "notes": [
@@ -9674,10 +9675,10 @@
           "改变电价或报价不会改变本接口物理结果；如需经济比较请调用hybrid/run。"
         ]
       },
-      "response_sha256": "ba0c89f68ba6f2e7ca0d26a8a5ff9d87c62977d43b09d771b066ccf2f55d761d",
+      "response_sha256": "b90c6481eefb5ac6de10e7203b210f4ffe986ec320a428ecf10a6d4193796670",
       "http_status": 200,
-      "http_elapsed_ms": 317.842,
-      "generated_at": "2026-10-07T16:14:22+08:00",
+      "http_elapsed_ms": 312.209,
+      "generated_at": "2026-10-07T16:20:39+08:00",
       "notes": [
         "固定日历预览：每年7月15日至22日或1月15日至22日，不声称统计最代表性。",
         "仅物理发电与逐时匹配；不计算经济、碳价或全年外推。"
@@ -19341,7 +19342,7 @@
           "reason": "preview endpoint does not calculate lifecycle, tariff, carbon price or payback"
         },
         "calculation_timing": {
-          "elapsed_ms": 247.011,
+          "elapsed_ms": 231.302,
           "timing_scope": "selected typical week/month physical generation and matching only"
         },
         "notes": [
@@ -19349,10 +19350,10 @@
           "改变电价或报价不会改变本接口物理结果；如需经济比较请调用hybrid/run。"
         ]
       },
-      "response_sha256": "3645324d01c3e9c57bac4d67d0c2e7299b9a9dbb9f24f13a309af5aba1f25945",
+      "response_sha256": "45d5f38dc1c47b0f33bd190bd8600f32c7949d69f09bfefac1579d7078b65205",
       "http_status": 200,
-      "http_elapsed_ms": 257.85,
-      "generated_at": "2026-10-07T16:14:22+08:00",
+      "http_elapsed_ms": 240.851,
+      "generated_at": "2026-10-07T16:20:39+08:00",
       "notes": [
         "固定日历预览：每年7月15日至22日或1月15日至22日，不声称统计最代表性。",
         "仅物理发电与逐时匹配；不计算经济、碳价或全年外推。"
@@ -29016,7 +29017,7 @@
           "reason": "preview endpoint does not calculate lifecycle, tariff, carbon price or payback"
         },
         "calculation_timing": {
-          "elapsed_ms": 279.173,
+          "elapsed_ms": 250.487,
           "timing_scope": "selected typical week/month physical generation and matching only"
         },
         "notes": [
@@ -29024,10 +29025,10 @@
           "改变电价或报价不会改变本接口物理结果；如需经济比较请调用hybrid/run。"
         ]
       },
-      "response_sha256": "032ad86d28f5bb0eebcf6f2043ee680d1365dde034f5559cce78f885acba26ae",
+      "response_sha256": "6a786f2c124cf228797ef28455c9da769810991624ffbc3be588e2726d986c5c",
       "http_status": 200,
-      "http_elapsed_ms": 310.5,
-      "generated_at": "2026-10-07T16:14:23+08:00",
+      "http_elapsed_ms": 275.696,
+      "generated_at": "2026-10-07T16:20:39+08:00",
       "notes": [
         "固定日历预览：每年7月15日至22日或1月15日至22日，不声称统计最代表性。",
         "仅物理发电与逐时匹配；不计算经济、碳价或全年外推。"
@@ -38691,7 +38692,7 @@
           "reason": "preview endpoint does not calculate lifecycle, tariff, carbon price or payback"
         },
         "calculation_timing": {
-          "elapsed_ms": 251.971,
+          "elapsed_ms": 225.977,
           "timing_scope": "selected typical week/month physical generation and matching only"
         },
         "notes": [
@@ -38699,10 +38700,10 @@
           "改变电价或报价不会改变本接口物理结果；如需经济比较请调用hybrid/run。"
         ]
       },
-      "response_sha256": "75dcf5500fe8889eb7de15b53ff59f6161f33fca0870560cdaeea1eb6e597764",
+      "response_sha256": "0807e82b1d355139865e5983a3ea99f10a9b979f3ff8cdeda086a4e5b5c63456",
       "http_status": 200,
-      "http_elapsed_ms": 280.79,
-      "generated_at": "2026-10-07T16:14:23+08:00",
+      "http_elapsed_ms": 254.488,
+      "generated_at": "2026-10-07T16:20:39+08:00",
       "notes": [
         "固定日历预览：每年7月15日至22日或1月15日至22日，不声称统计最代表性。",
         "仅物理发电与逐时匹配；不计算经济、碳价或全年外推。"
@@ -48366,7 +48367,7 @@
           "reason": "preview endpoint does not calculate lifecycle, tariff, carbon price or payback"
         },
         "calculation_timing": {
-          "elapsed_ms": 246.626,
+          "elapsed_ms": 226.052,
           "timing_scope": "selected typical week/month physical generation and matching only"
         },
         "notes": [
@@ -48374,10 +48375,10 @@
           "改变电价或报价不会改变本接口物理结果；如需经济比较请调用hybrid/run。"
         ]
       },
-      "response_sha256": "53e16bb6a936c51de3dcb9b855adf0615d8cd33fab8ee2e9cf1de38bcef77e8e",
+      "response_sha256": "783e047dda0b21c700297fbd960f4cef99f5d2beed33118b3de5d47f58a97c81",
       "http_status": 200,
-      "http_elapsed_ms": 270.214,
-      "generated_at": "2026-10-07T16:14:23+08:00",
+      "http_elapsed_ms": 258.66,
+      "generated_at": "2026-10-07T16:20:40+08:00",
       "notes": [
         "固定日历预览：每年7月15日至22日或1月15日至22日，不声称统计最代表性。",
         "仅物理发电与逐时匹配；不计算经济、碳价或全年外推。"
@@ -58041,7 +58042,7 @@
           "reason": "preview endpoint does not calculate lifecycle, tariff, carbon price or payback"
         },
         "calculation_timing": {
-          "elapsed_ms": 249.006,
+          "elapsed_ms": 228.384,
           "timing_scope": "selected typical week/month physical generation and matching only"
         },
         "notes": [
@@ -58049,10 +58050,10 @@
           "改变电价或报价不会改变本接口物理结果；如需经济比较请调用hybrid/run。"
         ]
       },
-      "response_sha256": "8757ea39557a303e735a4da91bccad94f17d64100923dbb0594d5a8cf123fac6",
+      "response_sha256": "9967f0878c1464585cb37829c1d1e8e900442195cbac759878f388cb5af97728",
       "http_status": 200,
-      "http_elapsed_ms": 277.457,
-      "generated_at": "2026-10-07T16:14:23+08:00",
+      "http_elapsed_ms": 261.754,
+      "generated_at": "2026-10-07T16:20:40+08:00",
       "notes": [
         "固定日历预览：每年7月15日至22日或1月15日至22日，不声称统计最代表性。",
         "仅物理发电与逐时匹配；不计算经济、碳价或全年外推。"
@@ -58061,8 +58062,8 @@
   ],
   "http_call_count": 6,
   "timing_summary": {
-    "total_http_elapsed_ms": 1714.653,
-    "mean_http_elapsed_ms": 285.776,
-    "max_http_elapsed_ms": 317.842
+    "total_http_elapsed_ms": 1603.658,
+    "mean_http_elapsed_ms": 267.276,
+    "max_http_elapsed_ms": 312.209
   }
 }
