@@ -1,0 +1,115 @@
+{
+  "run_id": "phase2b-perf-preview-v7-5090",
+  "source_commit": "566ead011b23e07572a720ef0f538a23d029b6fa",
+  "source_worktree_status": "?? operation_planning/results/phase2b_carbon_5090/preview_v7_equivalence.json\n",
+  "machine_role": "5090",
+  "start": "2026-10-07T17:13:21.847875+08:00",
+  "end": "2026-10-07T17:14:05.962405+08:00",
+  "command": "python scripts/phase2b_performance_acceptance_5090.py",
+  "environment": {
+    "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "dependencies": {
+      "pandas": "3.0.6",
+      "numpy": "2.5.3",
+      "pvlib": "0.11.2",
+      "windpowerlib": "0.2.2"
+    },
+    "gpu_name_command": "nvidia-smi --query-gpu=name --format=csv,noheader",
+    "gpu_name_result": "NVIDIA GeForce RTX 5090"
+  },
+  "frozen_input_sha256": "19e9fa832037cd44627a34e41238c6174c97dab4b81cfc6f723bfa6fd32e3ab5",
+  "cases": [
+    {
+      "case_id": "tier_small",
+      "http_elapsed_s": 6.284022100036964,
+      "server_elapsed_ms": 6142.85,
+      "pass": true,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "fields": 529922,
+      "numeric": 476450,
+      "max_relative_error": 0.0
+    },
+    {
+      "case_id": "tier_medium",
+      "http_elapsed_s": 7.3887870000326075,
+      "server_elapsed_ms": 7255.099,
+      "pass": true,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "fields": 529941,
+      "numeric": 476462,
+      "max_relative_error": 0.0
+    },
+    {
+      "case_id": "tier_large",
+      "http_elapsed_s": 8.774335800029803,
+      "server_elapsed_ms": 8638.23,
+      "pass": true,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "fields": 529958,
+      "numeric": 476474,
+      "max_relative_error": 0.0
+    },
+    {
+      "case_id": "variant_budget_insufficient",
+      "http_elapsed_s": 2.767662299971562,
+      "server_elapsed_ms": 2617.025,
+      "pass": true,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "fields": 529870,
+      "numeric": 476417,
+      "max_relative_error": 0.0
+    },
+    {
+      "case_id": "variant_missing_pv_quote",
+      "http_elapsed_s": 2.9606591999763623,
+      "server_elapsed_ms": 2832.914,
+      "pass": true,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "fields": 529508,
+      "numeric": 476053,
+      "max_relative_error": 0.0
+    },
+    {
+      "case_id": "variant_roof_area_insufficient",
+      "http_elapsed_s": 2.736534500028938,
+      "server_elapsed_ms": 2589.292,
+      "pass": true,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "fields": 529872,
+      "numeric": 476417,
+      "max_relative_error": 0.0
+    }
+  ],
+  "all_equivalent": true,
+  "single_core": {
+    "measured": true,
+    "affinity_mask": "0x1",
+    "original_mask": "0xffffffff",
+    "hybrid_http_s": 6.5115723999915645,
+    "hybrid_status": "success",
+    "thermal_max_units": 50,
+    "thermal_http_s": 2.980266200029291,
+    "thermal_status": "success"
+  },
+  "preview_max_week_http_s": 0.30217460001586005,
+  "preview_month_http_s": 0.2795756999985315,
+  "outputs": [
+    {
+      "path": "operation_planning\\results\\phase2b_carbon_5090\\replay_previews_v7.json",
+      "sha256": "65e2d95693e3dd9bc6aefb513a81dfdfb5939756546f93c08479a3f92fe0cd56"
+    },
+    {
+      "path": "operation_planning\\results\\phase2b_carbon_5090\\preview_month_v7.json",
+      "sha256": "547adde14bb334ff6dc0322bb935bb187f584f532e25c393780977917d61334a"
+    }
+  ],
+  "scope": "cached official weather; real local HTTP calculation and serialization; no model or GPU needed; no laptop measurement claimed"
+}
