@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "source_commit": "e14c9f117030e7438c7a2ee807b241612077002c",
+  "source_commit": "ed3f17d23121a4f97b1bdbff577d6c769ff9506d",
   "factor_count": 41,
   "guangdong_2023": {
     "factor_id": "grid_avg_guangdong_2023",
