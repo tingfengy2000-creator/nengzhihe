@@ -78,6 +78,8 @@ def ideal_storage_upper_bound(
             direct = min(load[idx], generation[idx])
             surplus = max(0.0, generation[idx] - direct)
             deficit = max(0.0, load[idx] - direct)
+            if abs(surplus - curtailment[idx]) > 1e-7 or abs(deficit - grid_import[idx]) > 1e-7:
+                raise ValueError("储能输入必须来自同一无储能匹配的弃电与购电")
             # Charge from curtailment only. Input energy is reported as
             # charged_kwh; internal SOC receives the one-way efficiency.
             charge_in = min(surplus, power_bound, max(0.0, (capacity - soc) / eta_one_way)) if capacity > 0 else 0.0
@@ -97,6 +99,8 @@ def ideal_storage_upper_bound(
         expected_remaining = max(0.0, initial_curtailment - charged_total)
         if abs(remaining_total - expected_remaining) > 1e-8:
             raise AssertionError("储能弃电守恒失败")
+        expected_soc = charged_total * eta_one_way - recovered_total / eta_one_way
+        soc_balance_error = soc - expected_soc
         result = {
             "capacity_kwh": capacity,
             "power_limit_kw": power_limit_kw,
@@ -113,7 +117,8 @@ def ideal_storage_upper_bound(
                 "soc_change_kwh": soc,
                 "charge_input_times_eta_kwh": charged_total * eta_one_way,
                 "discharge_output_kwh": recovered_total,
-                "passed": recovered_total <= charged_total * float(round_trip_efficiency) + 1e-9 and soc >= -1e-9 and soc <= capacity + 1e-9,
+                "soc_balance_error_kwh": soc_balance_error,
+                "passed": abs(soc_balance_error) <= 1e-8 and recovered_total <= charged_total * float(round_trip_efficiency) + 1e-9 and soc >= -1e-9 and soc <= capacity + 1e-9,
             },
             "note": STORAGE_NOTE,
         }
