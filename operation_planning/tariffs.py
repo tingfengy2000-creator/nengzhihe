@@ -1,10 +1,11 @@
 """Small, provenance-first regional tariff registry and integrator.
 
-The registry intentionally contains only two historical, verified official
-profiles plus a user supplied custom profile.  It is not a nationwide tariff
-service.  Physical model output is evaluated first and tariff prices are then
-applied to the same time series, so changing a tariff never changes the
-temperature or electrical trajectory.
+The registry intentionally contains a small set of historical, verified
+official profiles plus one explicitly provisional latest Guangzhou profile and
+a user supplied custom profile.  It is not a nationwide tariff service.
+Physical model output is evaluated first and tariff prices are then applied to
+the same time series, so changing a tariff never changes the temperature or
+electrical trajectory.
 """
 
 from __future__ import annotations
@@ -20,11 +21,18 @@ from .schemas import RegionProfile, TariffProfile, stable_hash
 
 FUJIAN_URL = "https://www.dehua.gov.cn/zwgk/zdxxgk/ggqsy/gd/202607/t20260715_3309391.htm"
 GUANGDONG_URL = "https://www.heyuan.gov.cn/zwgk/ggqsydwxx/gd/content/post_709619.html"
+# The October 2026 table was located in the public Guangdong tariff index while
+# the original CSG attachment was not yet exposed by the searchable government
+# pages.  Keep the profile explicitly provisional until the original PDF is
+# independently retrieved and checked; it must not be described as verified
+# official evidence in a submission.
+GUANGZHOU_202610_INDEX_URL = "https://energydc.cn/policy/guangdong/2026-09/ffdcada5-baab-11f1-959b-ce30ac533824"
 
 
 REGIONS: Dict[str, RegionProfile] = {
     "fujian_dehua": RegionProfile("fujian_dehua", "福建省", "德化县", "国网福建省电力有限公司代理购电区域", "Asia/Shanghai", ["fujian_industrial_lt1kv_202607"]),
     "guangdong_north": RegionProfile("guangdong_north", "广东省", "河源市（粤北山区）", "广东电网粤北山区供电区域", "Asia/Shanghai", ["guangdong_north_industrial_lt1kv_202607"]),
+    "guangzhou_prd": RegionProfile("guangzhou_prd", "广东省", "广州（珠三角六市）", "广东电网珠三角六市供电区域", "Asia/Shanghai", ["guangzhou_industrial_lt1kv_202610", "guangzhou_industrial_lt1kv_202110"]),
     "model_reference": RegionProfile("model_reference", "模型参考", "模型日期", "固定模型天气样本，不对应当地楼宇", "UTC", ["boptest_dynamic", "boptest_constant", "boptest_highly_dynamic"]),
 }
 
@@ -111,6 +119,38 @@ TARIFFS: Dict[str, TariffProfile] = {
         inclusions=["粤北山区工商业单一制不满1kV电度电费", "按官方峰平谷及时段尖峰规则计价"],
         exclusions=["不含需量/容量基本电费", "不含燃气供热费用", "不代表广东全省或建筑总表"],
         notes=["官方适用区域为粤北山区；谷00:00–08:00，峰10:00–12:00、14:00–19:00，其余平段。7–9月11:00–12:00、15:00–17:00尖峰覆盖。", "历史档案，日期超出有效期时必须显式选择并提示。"],
+    ),
+    "guangzhou_industrial_lt1kv_202610": TariffProfile(
+        tariff_id="guangzhou_industrial_lt1kv_202610",
+        version="2026-10-provisional-v1",
+        area="广东省珠三角六市（含广州、珠海、佛山、中山、东莞、江门除恩平/台山/开平）",
+        category="工商业单一制",
+        voltage_level="不满1kV",
+        billing_type="单一制电度电费",
+        price_type="TOU",
+        effective_start="2026-10-01",
+        effective_end="2026-10-31",
+        currency="CNY",
+        unit="CNY/kWh",
+        periods=[
+            {"name": "valley", "start": "00:00", "end": "08:00", "price": 0.32136875},
+            {"name": "peak", "start": "10:00", "end": "12:00", "price": 1.34176875},
+            {"name": "peak", "start": "14:00", "end": "19:00", "price": 1.34176875},
+            {"name": "super_peak", "start": "11:00", "end": "12:00", "price": 1.67036875, "months": [7, 8, 9]},
+            {"name": "super_peak", "start": "15:00", "end": "17:00", "price": 1.67036875, "months": [7, 8, 9]},
+            {"name": "flat", "start": "00:00", "end": "24:00", "price": 0.80066875},
+        ],
+        source_url=GUANGZHOU_202610_INDEX_URL,
+        source_title="广东电网有限责任公司关于2026年10月代理购电工商业用户价格的公告（珠三角六市；原始公告待核验）",
+        verified=False,
+        inclusions=["珠三角六市工商业单一制不满1kV电度电费（当前公开索引转录）", "峰平谷与7–9月尖峰时段规则"],
+        exclusions=["不含需量/容量基本电费", "不含建筑总表其他负荷", "原始广东电网公告PDF尚未从官方可检索入口取得；不得写作已完成官方核验"],
+        notes=[
+            "公开索引标示适用广州、珠海、佛山、中山、东莞、江门六市（不含恩平、台山、开平），执行时间2026-10。",
+            "不满1kV单一制：平0.80066875、谷0.32136875、峰1.34176875、尖峰1.67036875元/kWh；原表单位为分/kWh并含税。",
+            "尖峰价格仅在7–9月全月及广州日最高气温≥35℃高温日11–12、15–17执行；本档案按官方时段规则保留，当前有效期为10月。",
+            "价格数值和适用区域待直接核对广东电网原始公告PDF后再将verified改为True；套用2024参考天气必须显式选择tariff_application=current_tariff_on_reference_weather。",
+        ],
     ),
 }
 
