@@ -15,6 +15,7 @@ import pvlib
 from pvlib import irradiance, inverter, pvsystem, temperature
 from .economics import discounted_cashflow_npv, discounted_year_end, inverter_replacement_cost
 from .project_load import require_project_load, project_load_context
+from .carbon import candidate_carbon, context as carbon_context
 
 PVLIB_VERSION = getattr(pvlib, "__version__", "unknown")
 MODULE_AREA_M2_PER_KWP = 5.0
@@ -334,7 +335,7 @@ def lifecycle_compare(match: Dict[str, Any], baseline_match: Dict[str, Any], cap
     net_npv = npv if not missing else None
     baseline_npv = discounted_cashflow_npv(0.0, [-float(baseline_import_cost)] * int(scenario.study_years), scenario.discount_rate)
     incremental_npv = None if net_npv is None else float(net_npv) - baseline_npv
-    result = {"status": "complete" if not missing else ("incomplete_economics" if "export_price_cny_per_kwh" in missing else "incomplete_quote"), "missing_quote_fields": [x for x in missing if x != "export_price_cny_per_kwh"], "missing_economic_inputs": list(missing), "capex_cny": capex, "baseline_annual_import_cost_cny": baseline_import_cost, "pv_annual_import_cost_cny": pv_import_cost, "annual_grid_cost_saving_cny": None if pv_import_cost is None else float(baseline_import_cost) - float(pv_import_cost), "annual_export_income_cny": pv_export_income, "annual_saving_after_maintenance_cny": annual_saving, "study_years": scenario.study_years, "npv_cny": net_npv, "total_cost_npv_cny": None if net_npv is None else -float(net_npv), "incremental_npv_vs_s0_cny": incremental_npv, "net_present_cost_cny": None if net_npv is None else -float(net_npv), "yearly": yearly, "quote_source": quote.source, "cost_note": "初始投入在t=0；运行、维护、更换、残值按年末计入并按该年份折现。光伏衰减只作用于发电；每年用固定空调负荷逐时重算自用、购电、外送和弃电。0kWp不承担任何光伏报价项。"}
+    result = {"status": "complete" if not missing else ("incomplete_economics" if "export_price_cny_per_kwh" in missing else "incomplete_quote"), "missing_quote_fields": [x for x in missing if x != "export_price_cny_per_kwh"], "missing_economic_inputs": list(missing), "capex_cny": capex, "baseline_annual_import_cost_cny": baseline_import_cost, "pv_annual_import_cost_cny": pv_import_cost, "annual_grid_cost_saving_cny": None if pv_import_cost is None else float(baseline_import_cost) - float(pv_import_cost), "annual_export_income_cny": pv_export_income, "annual_saving_after_maintenance_cny": annual_saving, "study_years": scenario.study_years, "discount_rate": scenario.discount_rate, "pv_annual_degradation": scenario.annual_degradation, "npv_cny": net_npv, "total_cost_npv_cny": None if net_npv is None else -float(net_npv), "incremental_npv_vs_s0_cny": incremental_npv, "net_present_cost_cny": None if net_npv is None else -float(net_npv), "yearly": yearly, "quote_source": quote.source, "cost_note": "初始投入在t=0；运行、维护、更换、残值按年末计入并按该年份折现。光伏衰减只作用于发电；每年用固定空调负荷逐时重算自用、购电、外送和弃电。0kWp不承担任何光伏报价项。"}
     result["simple_payback_years"] = float(capex) / annual_saving if capex is not None and annual_saving is not None and annual_saving > 0 else None
     return result
 
@@ -401,15 +402,21 @@ def _candidate_row(capacity: float, matched: Dict[str, Any], generation: Generat
     return row
 
 
-def run_pv_planning(load_result: Dict[str, Any], weather: Dict[str, Any], scenario: PVScenario, include_selected_series: bool = True) -> Dict[str, Any]:
+def run_pv_planning(load_result: Dict[str, Any], weather: Dict[str, Any], scenario: PVScenario, include_selected_series: bool = True, carbon: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     require_project_load(load_result)
     load = load_result.get("load_series") or {}; lt = list(load.get("timestamps", [])); wt = list(weather.get("time", []))
     if lt != wt: raise ValueError("第一阶段负荷与光伏天气不在同一时间区间，不能联算")
     intervals = _intervals(lt, load.get("interval_seconds")); weather = dict(weather); weather["interval_seconds"] = intervals
     capacities, candidate_notes = generate_candidates(scenario); import_prices, tariff_meta = _price_vectors(scenario, lt, intervals); export_prices = ([float(scenario.export_price_cny_per_kwh)] * len(lt) if scenario.export_price_cny_per_kwh is not None else None)
     base_generation = generate_pv(weather, 0.0, scenario); baseline = match_load(load, base_generation, allow_export=False, import_prices=import_prices); candidates: List[Dict[str, Any]] = []
+    carbon_ctx = carbon_context(scenario.site_id, carbon)
     for capacity in capacities:
-        generation = generate_pv(weather, capacity, scenario); matched = match_load(load, generation, allow_export=scenario.allow_export, export_limit_kw=scenario.export_limit_kw, import_prices=import_prices, export_prices=export_prices); economics = lifecycle_compare(matched, baseline, capacity, scenario, load_series=load, generation=generation, import_prices=import_prices, export_prices=export_prices); candidates.append(_candidate_row(capacity, matched, generation, economics, include_selected_series))
+        generation = generate_pv(weather, capacity, scenario); matched = match_load(load, generation, allow_export=scenario.allow_export, export_limit_kw=scenario.export_limit_kw, import_prices=import_prices, export_prices=export_prices); economics = lifecycle_compare(matched, baseline, capacity, scenario, load_series=load, generation=generation, import_prices=import_prices, export_prices=export_prices)
+        yearly_matches = [r for r in economics["yearly"] if r["year"] > 0]
+        row = _candidate_row(capacity, matched, generation, economics, include_selected_series)
+        row["carbon"] = candidate_carbon(site_id=scenario.site_id, request=carbon, baseline_match=baseline, candidate_match=matched, yearly_matches=yearly_matches, economics=economics, annual_generation_kwh=matched["summary"]["pv_generation_kwh"], annual_load_kwh=matched["summary"]["load_kwh"], annual_import_price_cny_per_kwh=scenario.import_price_cny_per_kwh)
+        row["annual_offset_estimate"] = row["carbon"].pop("annual_offset_estimate")
+        candidates.append(row)
     baseline_candidate = next(x for x in candidates if x["capacity_kwp"] == 0.0); complete_nonzero = [x for x in candidates if x["capacity_kwp"] > 0 and x["economics"]["status"] == "complete"]; selected_key: Optional[float] = None
     if complete_nonzero:
         selected = max([baseline_candidate] + complete_nonzero, key=lambda x: float(x["economics"]["npv_cny"])); selected_key = selected["capacity_kwp"]; recommendation = {"status": "conditional", "capacity_kwp": selected_key, "reason": "在报价、电价、研究年限和历史天气情景均已填写的有限候选中，净现金流现值最大；不是全局优化，也不是未来保证。"}
@@ -417,4 +424,4 @@ def run_pv_planning(load_result: Dict[str, Any], weather: Dict[str, Any], scenar
     service = _service_context(load_result)
     if service["status"] == "service_gap": recommendation["service_qualification"] = "当前空调负荷存在服务缺口；该推荐不能称为同等服务水平下的最优投资方案。"
     load_context = {"source": load.get("source"), "scope": load.get("scope"), "model_version": load.get("model_version"), "equipment_count": load.get("equipment_count"), "room_count": load.get("room_count"), "units_per_room": load.get("units_per_room"), "project_aggregation": load.get("project_aggregation"), "service_scope": load.get("service_scope"), "assumptions": load.get("assumptions"), "electric_load_kwh": baseline["summary"]["load_kwh"], "service_quality": service, "project_load_context": project_load_context(load_result)}
-    return {"status": "success", "scenario": asdict(scenario), "candidate_constraints": candidate_notes, "load_context": load_context, "service_quality": service, "tariff": tariff_meta, "weather_provenance": {"source_file": weather.get("source_file"), "boundary_file": weather.get("boundary_file"), "hash": weather.get("hash"), "context": weather.get("context"), "normalization": weather.get("weather_normalization"), "pv_provenance": weather.get("pv_provenance", {})}, "baseline": {"capacity_kwp": 0.0, "matching": baseline["summary"], "monthly": baseline["monthly"]}, "candidates": candidates, "recommendation": recommendation, "selected_capacity_kwp": selected_key, "notes": ["第一阶段空调负荷是未校准城市级情景，不是楼宇精准负荷。", "本轮只评价当前建模空调用电；不含其他电器、储能、风电。", "逐时匹配不等于分钟级波动仿真。", "光伏候选有限枚举，不称全局最优。"]}
+    return {"status": "success", "calculation_version": "phase2a-carbon-5090-v1", "scenario": asdict(scenario), "carbon_context": carbon_ctx, "candidate_constraints": candidate_notes, "load_context": load_context, "service_quality": service, "tariff": tariff_meta, "weather_provenance": {"source_file": weather.get("source_file"), "boundary_file": weather.get("boundary_file"), "hash": weather.get("hash"), "context": weather.get("context"), "normalization": weather.get("weather_normalization"), "pv_provenance": weather.get("pv_provenance", {})}, "baseline": {"capacity_kwp": 0.0, "matching": baseline["summary"], "monthly": baseline["monthly"]}, "candidates": candidates, "recommendation": recommendation, "selected_capacity_kwp": selected_key, "notes": ["第一阶段空调负荷是未校准城市级情景，不是楼宇精准负荷。", "本轮只评价当前建模空调用电；不含其他电器、储能、风电。", "逐时匹配不等于分钟级波动仿真。", "光伏候选有限枚举，不称全局最优。", "碳字段只使用当时用上的自发电；年度抵扣为不参与推荐的粗算对照。"]}

@@ -32,6 +32,7 @@ from .wind import WindTurbineProfile, WindScenario, WindQuote
 from .hybrid import HybridScenario, hybrid_task_from_dict, run_hybrid_planning
 from .hybrid_agent import HybridPlanningAgent
 from .project_load import aggregate_project_load, project_load_context
+from .carbon import factor_catalog
 
 
 ROOT = Path(__file__).resolve().parent
@@ -195,6 +196,7 @@ class Handler(BaseHTTPRequestHandler):
         if path in ("/", "/index.html"): return self._send(HTTPStatus.OK, (UI / "index.html").read_bytes(), MIME[".html"])
         if path == "/api/operation/health": return self._send(HTTPStatus.OK, {"ok": True, "product": "能智核——公共建筑空调运行方案试算与优化智能体", "mode": "local_replay"})
         if path == "/api/operation/tariffs": return self._send(HTTPStatus.OK, registry())
+        if path == "/api/operation/carbon/factors": return self._send(HTTPStatus.OK, factor_catalog())
         if path == "/api/operation/weather/sites": return self._send(HTTPStatus.OK, {"items": available_sites()})
         if path == "/api/operation/pv/provenance": return self._send(HTTPStatus.OK, {"engine": "pvlib", "scope": "phase2A photovoltaic generation, hourly load matching and lifecycle comparison", "radiation": "Open-Meteo GHI/DNI/DHI preceding-hour means", "status": "local_replay"})
         if path == "/api/operation/wind/profiles":
@@ -280,7 +282,7 @@ class Handler(BaseHTTPRequestHandler):
                     # interpret and validate the requested change; no final
                     # report is computed before the model invokes tools.
                     normalized_room, _, _ = _thermal_inputs(payload)
-                    task = {"site_id": site_id, "year": year, "room": asdict(normalized_room), "pv": payload.get("pv") or {}, "weather": payload.get("weather"), "pv_weather": payload.get("pv_weather")}
+                    task = {"site_id": site_id, "year": year, "room": asdict(normalized_room), "pv": payload.get("pv") or {}, "carbon": payload.get("carbon"), "weather": payload.get("weather"), "pv_weather": payload.get("pv_weather")}
                     agent_output = PVPlanningAgent().run(str(payload.get("request", "按现有空调负荷比较光伏容量")), task)
                     if agent_output.get("status") != "success":
                         return self._send(HTTPStatus.UNPROCESSABLE_ENTITY, {"status": agent_output.get("status", "failed"), "agent": agent_output, "error": agent_output.get("error") or agent_output.get("question", "Agent未完成任务")})
@@ -295,7 +297,7 @@ class Handler(BaseHTTPRequestHandler):
                     pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year)
                     load_result = aggregate_project_load(simulate_room(load_weather_data, room))
                     scenario = scenario_from_dict(payload.get("pv") or {}, site_id=site_id, year=year)
-                    report = run_pv_planning(load_result, pv_weather_data, scenario)
+                    report = run_pv_planning(load_result, pv_weather_data, scenario, carbon=payload.get("carbon"))
                     report["agent"] = {"requested": False, "status": "disabled", "mode": "deterministic_tools", "note": "本接口的数值全部由Python工具计算；可按需启用本地模型工具协同。"}
                 return self._send(HTTPStatus.OK, {"status": "success", "report": report})
             except Exception as exc:
@@ -314,7 +316,7 @@ class Handler(BaseHTTPRequestHandler):
                 room, _, _ = _thermal_inputs(payload)
                 load_weather_data = payload.get("weather") or load_weather(site_id, year); pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year); load_result = aggregate_project_load(simulate_room(load_weather_data, room))
                 pv, hybrid = hybrid_task_from_dict(payload, site_id=site_id, year=year)
-                report = run_hybrid_planning(load_result, pv_weather_data, pv, hybrid, WindTurbineProfile.from_file())
+                report = run_hybrid_planning(load_result, pv_weather_data, pv, hybrid, WindTurbineProfile.from_file(), carbon=payload.get("carbon"))
                 report["agent"] = {"requested": False, "status": "disabled", "mode": "phase2b_hybrid_tools", "request": payload.get("request", "")}
                 return self._send(HTTPStatus.OK, {"status":"success","report":report})
             except Exception as exc:

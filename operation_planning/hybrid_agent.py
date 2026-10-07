@@ -64,7 +64,7 @@ class HybridPlanningAgent:
             # tools inspect its intermediate result instead of running all
             # weather, generation, matching and lifecycle steps again.
             if "report" not in state:
-                state["report"] = run_hybrid_planning(state["load_result"],state["pv_weather"],state["pv"],state["hybrid"],state["profile"])
+                state["report"] = run_hybrid_planning(state["load_result"],state["pv_weather"],state["pv"],state["hybrid"],state["profile"],carbon=(state.get("payload") or {}).get("carbon"))
                 state["full_plan_calls"] = int(state.get("full_plan_calls",0)) + 1
             report=state["report"]
             if name=="compute_generation":
