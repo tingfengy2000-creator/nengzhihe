@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import csv
 from dataclasses import asdict
+from copy import deepcopy
+from datetime import datetime, timedelta
 from html import escape
 import io
 import json
@@ -29,11 +31,12 @@ from .thermal_model import RoomSpec, simulate_room
 from .lifecycle import life_cycle_cost
 from .pv import PVScenario, PVQuote, run_pv_planning, scenario_from_dict, DEFAULT_KWP_PER_M2
 from .pv_agent import PVPlanningAgent
-from .wind import WindTurbineProfile, WindScenario, WindQuote
-from .hybrid import HybridScenario, hybrid_task_from_dict, run_hybrid_planning
+from .wind import WindTurbineProfile, WindScenario, WindQuote, generate_wind
+from .hybrid import HybridScenario, hybrid_task_from_dict, run_hybrid_planning, match_hybrid
 from .hybrid_agent import HybridPlanningAgent
 from .project_load import aggregate_project_load, project_load_context
 from .carbon import factor_catalog
+from .pv import generate_pv
 
 
 ROOT = Path(__file__).resolve().parent
@@ -416,6 +419,210 @@ def _hybrid_capacity_run(payload: dict, progress=None) -> dict:
     return selected
 
 
+def _preview_period_indices(times: list[str], period: str, season: str, month: int | None = None) -> tuple[list[int], dict]:
+    """Return a deterministic contiguous typical-week/month selection.
+
+    The preview is deliberately a fixed replay window, rather than a
+    data-dependent "most representative" choice.  Summer is July 15--21
+    (inclusive) and winter is January 15--21; a month preview uses the whole
+    corresponding July or January.  This keeps API calls reproducible across
+    machines and avoids looking at the output before choosing the window.
+    """
+    normalized_period = str(period or "week").strip().lower()
+    if normalized_period in {"typical_week", "summer_week", "winter_week"}:
+        normalized_period = "week"
+    if normalized_period in {"typical_month", "summer_month", "winter_month"}:
+        normalized_period = "month"
+    if normalized_period not in {"week", "month"}:
+        raise ValueError("preview.period必须是week或month")
+    normalized_season = str(season or "summer").strip().lower()
+    if normalized_season in {"夏", "夏季", "july"}:
+        normalized_season = "summer"
+    elif normalized_season in {"冬", "冬季", "january"}:
+        normalized_season = "winter"
+    if normalized_season not in {"summer", "winter"}:
+        raise ValueError("preview.season必须是summer或winter")
+    if month is None:
+        month = 7 if normalized_season == "summer" else 1
+    else:
+        try:
+            month = int(month)
+        except (TypeError, ValueError) as exc:
+            raise ValueError("preview.month必须是1到12的整数") from exc
+        if not 1 <= month <= 12:
+            raise ValueError("preview.month必须是1到12的整数")
+    parsed: list[datetime] = []
+    for value in times:
+        try:
+            parsed.append(datetime.fromisoformat(str(value).replace("Z", "+00:00")))
+        except Exception as exc:
+            raise ValueError(f"时间戳无法解析：{value}") from exc
+    if not parsed:
+        raise ValueError("预览时间序列为空")
+    years = sorted({dt.year for dt in parsed if dt.month == month})
+    if not years:
+        raise ValueError(f"缓存天气中没有{month}月记录，无法生成{normalized_season}预览")
+    year = years[0]
+    day = 15
+    if normalized_period == "month":
+        day = 1
+    start = parsed[0].replace(year=year, month=month, day=day, hour=0, minute=0, second=0, microsecond=0)
+    if normalized_period == "week":
+        end = start + timedelta(days=7)
+        rule = f"固定选择每年{month}月15日00:00至{month}月22日00:00；未指定月份时夏季7月、冬季1月"
+    else:
+        if month == 12:
+            end = start.replace(year=year + 1, month=1, day=1)
+        else:
+            end = start.replace(month=month + 1, day=1)
+        rule = f"固定选择每年{month}月完整月份；未指定月份时夏季7月、冬季1月"
+    indices = [i for i, dt in enumerate(parsed) if start <= dt < end]
+    if not indices:
+        raise ValueError("固定预览窗口在当前天气时间轴中没有记录")
+    expected_seconds = (end - start).total_seconds()
+    # Do not silently accept a partial week/month.  The cache may be a user
+    # upload, in which case the caller gets a clear boundary error instead of
+    # a deceptively short "typical" curve.
+    if len(parsed) >= 2:
+        interval_seconds = (parsed[1] - parsed[0]).total_seconds()
+    else:
+        interval_seconds = 0
+    if interval_seconds <= 0 or len(indices) * interval_seconds != expected_seconds:
+        raise ValueError("典型预览需要完整连续的周或月记录")
+    return indices, {"period": normalized_period, "season": normalized_season,
+                     "month": month,
+                     "selection_rule": rule, "start": str(times[indices[0]]),
+                     "end_exclusive": end.isoformat(timespec="minutes"),
+                     "expected_duration_hours": expected_seconds / 3600.0,
+                     "row_count": len(indices)}
+
+
+def _slice_weather(weather: dict, indices: list[int]) -> dict:
+    """Slice an already-normalized weather object without changing values."""
+    out = dict(weather)
+    n = len(weather.get("time", []))
+    out["time"] = [weather["time"][i] for i in indices]
+    out["interval_seconds"] = [weather.get("interval_seconds", [3600] * n)[i] for i in indices]
+    if "source_timestamp" in weather:
+        out["source_timestamp"] = [weather["source_timestamp"][i] for i in indices]
+    for field in ("interval_start", "interval_end", "representative_time"):
+        if field in weather:
+            out[field] = [weather[field][i] for i in indices]
+    hourly = {}
+    for name, values in (weather.get("hourly") or {}).items():
+        if isinstance(values, list) and len(values) == n:
+            hourly[name] = [values[i] for i in indices]
+        else:
+            hourly[name] = values
+    out["hourly"] = hourly
+    # Keep provenance, but expose the selected physical interval explicitly.
+    normalization = deepcopy(weather.get("weather_normalization") or {})
+    for field in ("source_timestamp", "interval_start", "interval_end", "representative_time", "interval_seconds"):
+        if isinstance(normalization.get(field), list) and len(normalization[field]) == n:
+            normalization[field] = [normalization[field][i] for i in indices]
+    if normalization:
+        out["weather_normalization"] = normalization
+    return out
+
+
+def _slice_project_load(load_result: dict, indices: list[int]) -> dict:
+    """Keep a project load trace while selecting the same physical intervals."""
+    out = deepcopy(load_result)
+    series = out.get("load_series") or {}
+    n = len(series.get("timestamps", []))
+    for field, values in list(series.items()):
+        if isinstance(values, list) and len(values) == n:
+            series[field] = [values[i] for i in indices]
+    seconds = [series.get("interval_seconds", [3600] * len(indices))[i] for i in range(len(indices))]
+    summary = {}
+    power_map = {"electric_kwh": "electric_power_w", "cooling_kwh": "cooling_load_w", "latent_cooling_kwh": "latent_load_w"}
+    for energy, power in power_map.items():
+        vals = series.get(power)
+        if vals is not None:
+            summary[energy] = sum(float(v) * float(sec) / 3_600_000.0 for v, sec in zip(vals, seconds))
+    if "capacity_shortfall_w" in series:
+        summary["capacity_shortfall_hours"] = sum(float(sec) / 3600.0 for value, sec in zip(series["capacity_shortfall_w"], seconds) if float(value) > 0)
+    summary["unmet_temp_degree_hours"] = sum(float(v) for v in series.get("temperature_unmet_degree_hours", []))
+    summary["unmet_rh_percent_hours"] = sum(float(v) for v in series.get("rh_unmet_percent_hours", []))
+    out["summary"] = summary
+    out["load_series"] = series
+    return out
+
+
+def _hybrid_preview(payload: dict) -> dict:
+    """Compute physical matching for one fixed typical week or month.
+
+    No lifecycle, tariff, carbon or annual extrapolation is run here.  The
+    same thermal, pvlib and wind generation functions as the annual endpoint
+    are applied to the selected interval rows, so the preview is a view of
+    the annual physical series rather than a new approximation.
+    """
+    started = time.perf_counter()
+    payload = dict(payload or {})
+    site_id = str(payload.get("site_id", "guangzhou")); year = int(payload.get("year", 2024))
+    preview = dict(payload.get("preview") or {})
+    period = preview.get("period", payload.get("period", "week"))
+    season = preview.get("season", payload.get("season", "summer"))
+    room, _, _ = _thermal_inputs(payload)
+    weather_full = payload.get("weather") or load_weather(site_id, year)
+    pv_weather_full = payload.get("pv_weather") or load_pv_weather(site_id, year)
+    if list(weather_full.get("time", [])) != list(pv_weather_full.get("time", [])):
+        raise ValueError("负荷与风光天气时间轴不一致，拒绝生成预览")
+    indices, selection = _preview_period_indices(list(weather_full.get("time", [])), period, season, preview.get("month"))
+    full_load = aggregate_project_load(simulate_room(weather_full, room))
+    load = _slice_project_load(full_load, indices)
+    pv_weather = _slice_weather(pv_weather_full, indices)
+    # Capacity is a user input for preview.  No candidate sweep or economic
+    # recommendation is made; defaulting to the ordinary 2 kWp example is
+    # explicit in the response metadata.
+    hybrid_raw = dict(payload.get("hybrid") or {})
+    pv_raw = dict(payload.get("pv") or {})
+    if payload.get("pv_capacity_kwp") is not None:
+        hybrid_raw["pv_capacity_kwp"] = payload["pv_capacity_kwp"]
+    elif pv_raw.get("capacity_kwp") is not None:
+        hybrid_raw["pv_capacity_kwp"] = pv_raw.get("capacity_kwp")
+    hybrid_payload = dict(payload); hybrid_payload["hybrid"] = hybrid_raw
+    pv_scenario, hybrid = hybrid_task_from_dict(hybrid_payload, site_id=site_id, year=year)
+    explicit_capacity = (payload.get("pv_capacity_kwp") is not None or pv_raw.get("capacity_kwp") is not None or hybrid_raw.get("pv_capacity_kwp") is not None)
+    roof_limit = float(pv_scenario.roof_area_m2) * float(pv_scenario.usable_fraction) * DEFAULT_KWP_PER_M2
+    capacity_defaulted = not explicit_capacity
+    if capacity_defaulted:
+        # Preview is a physical view, not an optimization.  The fallback is
+        # bounded by the stated roof input so a tiny roof never yields an
+        # apparently executable over-sized array.
+        hybrid.pv_capacity_kwp = min(2.0, roof_limit)
+    pv_generation = asdict(generate_pv(pv_weather, hybrid.pv_capacity_kwp, pv_scenario))
+    wind_generation = generate_wind(pv_weather, WindTurbineProfile.from_file(), hybrid.wind)
+    zero_pv = dict(pv_generation); zero_pv["pv_ac_power_w"] = [0.0] * len(indices); zero_pv["pv_dc_power_w"] = [0.0] * len(indices)
+    zero_wind = dict(wind_generation); zero_wind["wind_power_w"] = [0.0] * len(indices); zero_wind["wind_energy_kwh"] = [0.0] * len(indices)
+    combinations = [("S0_grid", zero_pv, zero_wind, 0.0, 0),
+                    ("S1_pv", pv_generation, zero_wind, hybrid.pv_capacity_kwp, 0),
+                    ("S2_wind", zero_pv, wind_generation, 0.0, hybrid.wind.turbine_count),
+                    ("S3_pv_wind", pv_generation, wind_generation, hybrid.pv_capacity_kwp, hybrid.wind.turbine_count)]
+    candidates = []
+    for scenario_id, pv_series, wind_series, capacity, turbine_count in combinations:
+        matched = match_hybrid(load["load_series"], pv_series, wind_series,
+                               allow_export=hybrid.allow_export,
+                               export_limit_kw=hybrid.export_limit_kw)
+        candidates.append({"scenario_id": scenario_id, "pv_capacity_kwp": capacity,
+                           "wind_turbine_count": turbine_count,
+                           "summary": matched["summary"], "intervals": matched["intervals"],
+                           "economics": {"status": "not_calculated", "reason": "典型时段预览只做物理匹配，不做经济结论或全年外推"}})
+    elapsed_ms = round((time.perf_counter() - started) * 1000.0, 3)
+    return {"status": "success", "preview": selection,
+            "site_id": site_id, "year": year,
+            "project_load_contract": project_load_context(load),
+            "service_quality": {"scope": "selected_preview_period", "capacity_shortfall_hours": load["summary"].get("capacity_shortfall_hours"), "unmet_temp_degree_hours": load["summary"].get("unmet_temp_degree_hours"), "unmet_rh_percent_hours": load["summary"].get("unmet_rh_percent_hours")},
+            "load_context": {"scope": "selected physical intervals from annual project load", "annual_extrapolation": False, "source": "same thermal trace as hybrid/run"},
+            "weather_provenance": {"source_file": pv_weather_full.get("source_file"), "hash": pv_weather_full.get("hash"), "selected_interval_start": selection["start"], "selected_interval_end_exclusive": selection["end_exclusive"]},
+            "pv_input": {"capacity_kwp": hybrid.pv_capacity_kwp, "capacity_defaulted": capacity_defaulted, "roof_area_m2": pv_scenario.roof_area_m2, "tilt_deg": pv_scenario.tilt_deg, "azimuth_open_meteo_deg": pv_scenario.azimuth_open_meteo_deg},
+            "wind_input": {"turbine_count": hybrid.wind.turbine_count, "hub_height_m": hybrid.wind.hub_height_m},
+            "candidates": candidates,
+            "economics": {"status": "not_calculated", "reason": "preview endpoint does not calculate lifecycle, tariff, carbon price or payback"},
+            "calculation_timing": {"elapsed_ms": elapsed_ms, "timing_scope": "selected typical week/month physical generation and matching only"},
+            "notes": ["预览固定选择，不代表全年外推；数值来自同一热湿、pvlib、风电和match_hybrid物理链。", "改变电价或报价不会改变本接口物理结果；如需经济比较请调用hybrid/run。"]}
+
+
 class Handler(BaseHTTPRequestHandler):
     server_version = "NengzhiheOperation/0.2"
 
@@ -592,6 +799,13 @@ class Handler(BaseHTTPRequestHandler):
                     report = run_pv_planning(load_result, pv_weather_data, scenario, carbon=payload.get("carbon"), storage=payload.get("storage"))
                     report["agent"] = {"requested": False, "status": "disabled", "mode": "deterministic_tools", "note": "本接口的数值全部由Python工具计算；可按需启用本地模型工具协同。"}
                 return self._send(HTTPStatus.OK, {"status": "success", "report": report})
+            except Exception as exc:
+                return self._send(HTTPStatus.BAD_REQUEST, _api_error(exc))
+        if path == "/api/operation/hybrid/preview":
+            try:
+                payload = self._read_json()
+                result = _hybrid_preview(payload)
+                return self._send(HTTPStatus.OK, result)
             except Exception as exc:
                 return self._send(HTTPStatus.BAD_REQUEST, _api_error(exc))
         if path == "/api/operation/hybrid/run":
