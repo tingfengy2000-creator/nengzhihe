@@ -80,12 +80,29 @@ def _compact_candidate(candidate: Any) -> Any:
     return out
 
 
+def _compact_chart(chart: Any) -> Any:
+    """Keep the full source-resolution chart but use UI precision for numbers."""
+    if not isinstance(chart, dict):
+        return chart
+    out = {}
+    for key, value in chart.items():
+        if isinstance(value, list):
+            # Two decimals keeps the review file below a decimal 8 MB while
+            # leaving the full-precision evidence package untouched.
+            out[key] = [round(float(item), 2) if isinstance(item, (int, float)) and not isinstance(item, bool) else item for item in value]
+        else:
+            out[key] = value
+    return out
+
+
 def compact_case(case: dict[str, Any]) -> dict[str, Any]:
     out = _sanitize(copy.deepcopy(case))
     if "weather" in out:
         out["weather"] = _compact_weather(case.get("weather"))
     if isinstance(out.get("candidates"), list):
         out["candidates"] = [_compact_candidate(x) for x in out["candidates"]]
+    out["chart"] = _compact_chart(out.get("chart"))
+    out["chart_recommended"] = _compact_chart(out.get("chart_recommended"))
     # Keep chart/chart_recommended at their real source resolution (8784 for a
     # leap year); do not silently truncate the calendar or alter physical data.
     out["ui_replay_contract"] = {

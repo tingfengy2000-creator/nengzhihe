@@ -286,6 +286,8 @@ v6运行时仍使用当时的公开抄录档案，代码保持 `verified=false/p
 - `storage`：按时序先用发电供负荷，再以原余电充电、缺电放电的理想上限。返回容量、恢复电量、自用率变化、年分时电费节省、初始投入、研究期净收益、替换次数和简单回本期。默认效率为明确的用户情景；不含电池衰减、温度、功率电子限制、峰谷套利优化或现场并网约束。
 - `export.path`：按同一余电乘用户 `price_cny_per_kwh` 的卖电粗算，另列 `connection_cny`、年/研究期收入和回本字段。缺少卖电价时保留物理余电但经济状态为 `incomplete`；不把缺价当0，也不声称已有并网资格。
 
+第16节回放的示例报价带公开来源：储能采用 CNESA Datalink 2025 年 2 小时系统均价 553.94 元/kWh 与 2 小时 EPC 均价 1043.82 元/kWh（<https://www.esresearch.com.cn/report/info/detail/?id=6645>），以差额 489.88 元/kWh 作为容量线性安装项；这是为字段拆分的示例，不是逐项采购报价。卖电 0.25 元/kWh 参考公开行业市场化余电示例（<https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf>），同时以国家发改委市场化改革通知（<https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html>）为政策边界，不称广东固定结算价。回放小档 `connection_cny=0` 表示尚未取得并网/计量报价的粗算假设。
+
 非零储能容量缺任一报价字段时为 `incomplete`；容量0不承担电池固定费用、维护、更换或残值。外送开启时储能仍独立计算，卖电路径也独立计算，不将两者误作联合调度。`storage_upper_bound` 作为旧字段继续保留以兼容历史回放，但新审阅应读取 `surplus_paths.storage`。
 
 请求/响应完整字段、缺价状态和手算守恒见 `operation_planning/protocol/storage_surplus_paths_contract.md`、`tests/test_phase2b_storage.py`；v8 HTTP回放及哈希见 `operation_planning/results/phase2b_carbon_5090/replay_cases_v8.json`、`run_manifest_v8.json`。v8生成后以清单的 `source_commit`、逐案例哈希和包哈希为准，旧 v3–v7 文件不覆盖。
