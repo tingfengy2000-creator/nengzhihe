@@ -73,7 +73,7 @@ def _chart(report: Dict[str, Any], scenario_id: str) -> Dict[str, Any]:
 
 def _compact_chart(chart: Dict[str, Any]) -> Dict[str, Any]:
     fields = ("timestamps", "load_kwh", "pv_generation_kwh", "wind_generation_kwh", "self_use_kwh", "grid_import_kwh", "curtailment_kwh")
-    out = {k: [round(float(v), 4) if isinstance(v, (int, float)) and not isinstance(v, bool) else v for v in chart.get(k, [])] if isinstance(chart.get(k), list) else chart.get(k) for k in fields}
+    out = {"scenario_id": chart.get("scenario_id"), **{k: [round(float(v), 4) if isinstance(v, (int, float)) and not isinstance(v, bool) else v for v in chart.get(k, [])] if isinstance(chart.get(k), list) else chart.get(k) for k in fields}}
     if any(abs(float(v)) > 1e-12 for v in chart.get("grid_export_kwh", [])):
         out["grid_export_kwh"] = [round(float(v), 4) for v in chart["grid_export_kwh"]]
     return out
