@@ -413,7 +413,7 @@ def _hybrid_capacity_run(payload: dict, progress=None) -> dict:
     selected["project_load_contract"] = (selected.get("load_context") or {}).get("project_load_context")
     selected["pv_capacity_sweep"] = sweep
     selected["recommended_pv_capacity_kwp"] = best_capacity
-    selected["recommendation_basis"] = ("按用户固定容量计算；不进行容量寻优，候选状态仍按报价与屋顶约束判定。" if fixed_capacity is not None else "在有限、计价完整且满足屋顶/预算约束的PV-only容量候选中，按相对S0增量NPV选择；不是全局优化。")
+    selected["recommendation_basis"] = ("状态变体按12.1固定1kWp主方案" if fixed_capacity is not None else "在有限、计价完整且满足屋顶/预算约束的PV-only容量候选中，按相对S0增量NPV选择；不是全局优化。")
     selected["calculation_timing"] = {"capacity_count": total}
     return selected
 

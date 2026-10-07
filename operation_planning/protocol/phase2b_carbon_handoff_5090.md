@@ -213,3 +213,48 @@ python scripts/phase2b_carbon_replay_v6_5090.py --base-url http://127.0.0.1:1876
 v6仍使用 `guangzhou_industrial_lt1kv_202610` 的公开抄录档案，代码保持 `verified=false/provisional=true`。已核对的官方政策原件 [粤发改价格〔2026〕242号](https://drc.gd.gov.cn/attachment/0/620/620700/4934183.PDF) 是输配电价政策，不是该月广州代理购电终端价表；月度原始广东电网/南方电网PDF仍未找到，不能宣称已完成官方原件核验。抄录页保留在 [energydc.cn公开页面](https://energydc.cn/policy/guangdong/2026-09/ffdcada5-baab-11f1-959b-ce30ac533824) 作为可追溯情景来源。
 
 仍未证明现场精度、真实楼宇收益、人工提效、工程审批、完整建筑总负荷或全国电价适用性。光伏容量比选是有限候选，不是全局优化；第一阶段空调轨迹仍是未校准冷却情景。前端由5060分支产品化，本轮未修改前端、PPT、视频、main或“乡艺有据”。
+
+## 第13节：计算提速与典型周/月预览（5090）
+
+本节对应 `feat/5060-product-ui@8d14581` 的第13节要求。三档仍是预置示例，实时输入接口是主路径；v6 年度回放保留不覆盖。
+
+### 13.1 性能基线与优化
+
+先对冻结 v6 路径做 `cProfile` 和分段计时。以 `tier_small`（4 个 PV 容量候选，含选中容量重算，共5次 `run_hybrid`）为例，旧路径 cProfile 用时 `383.4989463 s`（该工具会放大绝对耗时），调用热点为：`pv._intervals` `363.116 s`、`hybrid._safe_intervals` `352.504 s`、`match_hybrid` `360.087 s`、`DatetimeIndex.__getitem__` `350.915 s`；`_lifecycle` `327.513 s`。全年 HTTP v6 历史记录约94 s均值、最长163 s，作为用户等待基线，不与 cProfile 绝对值混用。
+
+修复将实际时间轴间隔验证改为一次性 `DatetimeIndex.as_unit("ns").asi8`差分，经过统一验证的序列在生命周期循环中复用间隔/数值校验，非 UI 小时序仍保留原有严格校验；生命周期只对衰减确实改变的 PV轨迹重算，固定 S0/S2 轨迹复用已验证匹配。优化不改变模型公式、报价、电价、容量候选或状态判据。
+
+当前 5090 单进程 CPU 分段记录（`profile_optimized_v6_stage_timing.json`）为 `6.0770713 s`：天气 `0.0842505 s`、热湿负荷与项目聚合 `0.087722999 s`、价格向量 `2.9684574 s`、PV `0.5127443 s`、风电 `1.1244532 s`、逐时匹配 `0.8162230 s`、生命周期 `0.5834985 s`、储能 `0.3261956 s`；价格向量仍是主要可优化项。三档优化后 HTTP 实测（同一 5090、本地 loopback、含容量比选和完整选中结果）为：`tier_small 6.2518 s`、`tier_medium 8.0273 s`、`tier_large 9.3161 s`（18769服务端 `elapsed_ms`，墙钟分别约6.51/8.31/9.60 s），均低于10秒目标；台数比选基线 `profile_baseline_v6_thermal50.json` 为 `max_units=50`，约 `2.1 s`，低于5秒。未在普通笔记本上虚构实测；上述是5090无GPU单进程结果，较慢设备继续使用异步接口。
+
+### 13.2 v6 等价性验收
+
+以 `replay_cases_v6.json` 六个 HTTP 请求作为冻结输入，在优化服务重启后逐案回放。三档及三个状态变体的数值字段相对误差均 `0.0`（阈值 `1e-9`），推荐容量、推荐状态、候选 admission 状态和排除原因一致；状态变体的固定 `1 kWp` 仅按展示契约固定，不参与容量寻优。记录见 `operation_planning/results/phase2b_carbon_5090/v6_equivalence_result_current.json` 与 `scripts/compare_v6_equivalence_5090.py`。cProfile 文件和分段计时均保留在结果目录；其中 cProfile 绝对值含分析器开销，不用作用户等待承诺。
+
+### 13.3 典型周/月物理预览
+
+新增 `POST /api/operation/hybrid/preview`。请求沿用 `hybrid/run` 的地点、年份、房间、屋顶、光伏和风机字段，另加：
+
+```json
+{"preview":{"period":"typical_week","month":7,"week_rule":"fixed_calendar_day_15_to_22"}}
+```
+
+`period` 支持 `typical_week` 与 `typical_month`；未指定月份时夏季默认为7月、冬季默认为1月。典型周固定选该月15日00:00至22日00:00（左闭右开、完整168条小时记录）；典型月选所选月份首日00:00至下月首日00:00。规则不读取结果后择优，响应返回 `start`、`end_exclusive`、`month`、`selection_rule`。输入缺失完整连续区间时返回中文错误，不补0、不循环移位。
+
+接口只计算所选区间内的热湿负荷、PV/风电物理发电和逐时匹配，不计算生命周期经济、碳价、研究期累计或全年外推。响应固定包含 `scope:"preview_period_physics_only"`、`scope_note`、S0/S1/S2/S3 的 `candidates[].intervals`（`load_kwh`、`pv_generation_kwh`、`wind_generation_kwh`、`self_use_kwh`、`grid_import_kwh`、`curtailment_kwh` 等）及区间合计、自用率和弃电率；电价、报价变化不会影响预览物理结果。未填写容量时使用屋顶上限内的默认容量并在 `pv_input` 中回显。
+
+预览沿用同一年度热湿、pvlib、风电和 `match_hybrid` 链，按同一时间轴切片，不将时段结果按比例外推全年。`tests/test_phase2b_preview.py` 覆盖固定选择、非法月份、物理-only字段及HTTP错误；`docs/handoff/replay_viewer/replay_previews_v7.json` 和 `operation_planning/results/phase2b_carbon_5090/replay_previews_v7.json` 为6个真实HTTP案例（三档各夏季/冬季周），总服务端耗时 `1555.882 ms`，均值 `259.314 ms`，最大 `275.359 ms`，低于典型周3秒目标。典型月按相同接口读取整月，仍不返回经济结论；月度耗时需以实际请求清单为准。
+
+示例 HTTP 响应最小结构：
+
+```json
+{"status":"success","scope":"preview_period_physics_only","scope_note":"仅对固定典型时段执行负荷与风光逐区间物理匹配；不计算经济、碳排、回本或全年外推。","preview":{"period":"week","month":7,"start":"2024-07-15T00:00","end_exclusive":"2024-07-22T00:00","row_count":168},"candidates":[{"scenario_id":"S0_grid","summary":{"load_kwh":0,"self_use_kwh":0,"grid_import_kwh":0,"curtailment_kwh":0},"intervals":[{"timestamp":"2024-07-15T00:00","load_kwh":0,"pv_generation_kwh":0,"wind_generation_kwh":0,"self_use_kwh":0,"grid_import_kwh":0,"curtailment_kwh":0}]}],"economics":{"status":"not_calculated"}}
+```
+
+示例数据仅作预览接口回放；完整年度金额、碳和容量推荐仍以 `hybrid/run` 或异步任务结果为准。预览是物理窗口视图，不是全年代表性承诺。
+
+### 13.4 交付边界
+
+新增代码、测试、性能剖析、等价性记录和预览回放均不修改 `operation_planning/ui/**`、PPT、视频、`main` 或“乡艺有据”。单进程 5090 实测不能证明普通笔记本等待时间、现场楼宇精度、真实节能收益或人工提效；缺少普通笔记本实测时，前端仍应优先调用预览并在全年任务较慢时使用真实进度异步任务。
+
+
+

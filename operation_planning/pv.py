@@ -160,7 +160,11 @@ def _intervals(times: Sequence[str], provided: Optional[Sequence[int]] = None) -
     idx = _time_index(times)
     if len(idx) < 2:
         raise ValueError("PV时间序列至少需要两个时刻")
-    actual = [int((idx[i + 1] - idx[i]).total_seconds()) for i in range(len(idx) - 1)]
+    # ``DatetimeIndex.__getitem__`` in a Python loop dominates the yearly
+    # hybrid path.  Datetime64 nanoseconds retain the same timestamp
+    # arithmetic and validation while computing every delta in one pass.
+    nanos = idx.as_unit("ns").asi8
+    actual = ((nanos[1:] - nanos[:-1]) // 1_000_000_000).astype("int64").tolist()
     if any(x <= 0 or x > 3 * 3600 for x in actual):
         raise ValueError("PV时间轴存在重复、倒序或超过3小时的间隔")
     expected = actual + [actual[-1]]
