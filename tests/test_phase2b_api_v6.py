@@ -61,7 +61,7 @@ def test_v6_http_options_thermal_and_async_contract():
     original_weather = app.load_weather
     original_hybrid = app._hybrid_capacity_run
     app.load_weather = lambda site, year: _weather_fixture()
-    app._hybrid_capacity_run = lambda payload, progress=None: {"status": "success", "pv_capacity_sweep": [], "candidates": []}
+    app._hybrid_capacity_run = lambda payload, progress=None: {"status": "success", "pv_capacity_sweep": [], "candidates": [], "recommended_pv_capacity_kwp": 0.0}
     server = ThreadingHTTPServer(("127.0.0.1", 0), app.Handler)
     thread = threading.Thread(target=server.serve_forever, daemon=True); thread.start()
     base = f"http://127.0.0.1:{server.server_address[1]}"
@@ -74,6 +74,10 @@ def test_v6_http_options_thermal_and_async_contract():
         with urlopen(req) as response:
             thermal = json.loads(response.read().decode("utf-8")); assert response.status == 200
         assert len(thermal["candidates"]) == 2 and "minimum_adequate_units_per_room" in thermal
+        req = Request(base + "/api/operation/hybrid/run", data=json.dumps({"room": {"equipment_id": "midea_msagbu12_mox201"}, "pv": {"requested_capacities_kwp": [0]}}).encode("utf-8"), headers={"Content-Type": "application/json"})
+        with urlopen(req) as response:
+            hybrid = json.loads(response.read().decode("utf-8")); assert response.status == 200
+        assert hybrid["status"] == "success" and "pv_capacity_sweep" in hybrid["report"]
         req = Request(base + "/api/operation/hybrid/jobs", data=json.dumps({"room": {"equipment_id": "midea_msagbu12_mox201"}, "pv": {"requested_capacities_kwp": [0]}}).encode("utf-8"), headers={"Content-Type": "application/json"})
         with urlopen(req) as response:
             accepted = json.loads(response.read().decode("utf-8")); assert response.status == 202
