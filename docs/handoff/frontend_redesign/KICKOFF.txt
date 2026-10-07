@@ -1,0 +1,8 @@
+你现在接手“能见度”（仓库包名仍为 nengzhihe / operation_planning）的前端重构。
+
+1. 拉取仓库 tingfengy2000-creator/nengzhihe，切到分支 feat/5060-product-ui（起点提交 29fc660），从这里新建分支 feat/frontend-redesign。
+2. 完整阅读 docs/handoff/frontend_redesign/PROMPT.md，这是唯一的任务书；再按其中第 2 节的顺序阅读设计确认稿、接口手册、交接说明和示例数据。
+3. 按 PROMPT.md 第 8 节分批提交并普通推送到 feat/frontend-redesign；不改 main、不强推、不建 Release、不修改后端算法和任何数据/回放/结果文件（允许的后端改动只有第 6.3 节所列）。
+4. 完成第 8 节第 7 批（截图与回交记录）后停下，回复：分支、各批提交 SHA、第 9 节验收自查结果、已知问题和需要 5090 处理的问题。
+
+最重要的原则：这是用户自己能用的系统，实时计算为主，三档只是示例；所有数字来自后端或回放文件；视觉以已批准的设计确认稿为准；诚实规则一条都不能违反。

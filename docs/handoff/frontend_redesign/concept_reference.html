@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- 已批准的设计确认稿（2026-10-07 用户审核通过）。仅作视觉参考：此文件用 CDN 加载 three.js 与 Google Fonts，正式产品须离线 vendored。数字取自 5090 房间口径回放主演示（源码 bc90c8a），新数据以 replay_cases_v6.json 为准。 -->
+</head><body>
+<title>能见度设计确认稿</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Sora:wght@300;500;600;700&display=swap">
+<style>
+/* Layout: 苹果式产品长页——全幅分段、超大字、明暗交替；首屏为真实数据驱动的 3D 微缩建筑场景；能源日历段为深色舞台 */
+:root{
+  --bg:#FBFBFA; --bg-2:#F2F4F3; --ink:#111716; --ink-2:#4B5654; --ink-3:#7C8785; --line:rgba(17,23,22,.08);
+  --brand:#0E7C73; --brand-2:#14A394; --sun:#E8A317; --wind:#3B8BD9; --waste:#E0802A; --self:#16A394; --grid:#7568C8;
+  --stage:#0B1413; --stage-ink:#EAF2F0; --stage-ink-2:#93A5A1; --stage-line:rgba(234,242,240,.10);
+  --glass:rgba(251,251,250,.72);
+  --display:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --num:"Sora","Noto Sans SC",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0C1110; --bg-2:#121918; --ink:#EEF3F2; --ink-2:#AEBBB8; --ink-3:#7F8D8A; --line:rgba(238,243,242,.09);
+  --brand:#2FC0B1; --brand-2:#5AD8CA; --glass:rgba(12,17,16,.7); color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0C1110; --bg-2:#121918; --ink:#EEF3F2; --ink-2:#AEBBB8; --ink-3:#7F8D8A; --line:rgba(238,243,242,.09);
+  --brand:#2FC0B1; --brand-2:#5AD8CA; --glass:rgba(12,17,16,.7); color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.65 var(--display);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,p{margin:0}
+h1,h2{text-wrap:balance}
+.num{font-family:var(--num);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.container{max-width:1180px;margin:0 auto;padding-inline:24px}
+
+/* 顶栏 */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--glass);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}
+.nav .container{display:flex;align-items:center;gap:28px;height:56px}
+.wordmark{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:.04em;color:var(--ink)}
+.wordmark svg{width:22px;height:22px}
+.nav .links{display:flex;gap:22px;font-size:14px;color:var(--ink-2)}
+.nav .cta{margin-left:auto;height:32px;padding:0 16px;border-radius:999px;background:var(--ink);color:var(--bg);font-size:13px;font-weight:600;display:inline-flex;align-items:center;border:0}
+.draft{font-size:12px;color:var(--ink-3)}
+
+/* 首屏 */
+.hero{position:relative;overflow:hidden;isolation:isolate}
+.sky{position:absolute;inset:0;z-index:-2;transition:background 1.2s linear}
+.hero .container{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);align-items:center;gap:24px;padding-block:72px 40px;min-height:min(760px,92vh)}
+.eyebrow{font-size:14px;font-weight:600;letter-spacing:.14em;color:var(--brand)}
+.hero h1{font-size:clamp(36px,4.3vw,58px);font-weight:900;line-height:1.04;letter-spacing:-.045em;margin-top:18px}
+.hero h1 .soft{color:var(--ink-3);font-weight:300;display:block;font-size:.66em;letter-spacing:-.02em;margin-top:.25em}
+.hero .lead{font-size:clamp(17px,1.6vw,20px);color:var(--ink-2);max-width:30ch;margin-top:22px;font-weight:400}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.btn{height:50px;padding:0 26px;border-radius:999px;font:600 16px var(--display);display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.btn.primary{background:var(--brand);color:#fff;border-color:transparent;box-shadow:0 10px 30px -10px var(--brand)}
+.btn svg{width:18px;height:18px}
+.stage3d{position:relative;width:100%;aspect-ratio:1/0.86;max-width:100%}
+.stage3d canvas{width:100%!important;height:100%!important;display:block}
+.hud{position:absolute;left:4%;right:4%;bottom:2%;display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;pointer-events:none}
+.chip{background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px;padding:10px 14px;font-size:13px;color:var(--ink-2);display:flex;flex-direction:column;gap:2px;min-width:0}
+.chip b{font:600 20px var(--num);color:var(--ink);letter-spacing:-.02em}
+.chip .row{display:flex;gap:16px;flex-wrap:wrap}
+.chip i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.timeline{height:3px;border-radius:3px;background:var(--line);overflow:hidden;width:100%;margin-top:6px}
+.timeline span{display:block;height:100%;width:0;background:var(--brand)}
+.fallback{position:absolute;inset:0;display:grid;place-items:center;color:var(--ink-3);font-size:14px}
+
+/* 通用段落 */
+.section{padding-block:120px}
+.section.tight{padding-block:96px}
+.kicker{font-size:15px;font-weight:600;color:var(--brand);letter-spacing:.08em}
+.h2{font-size:clamp(32px,4.2vw,56px);font-weight:900;letter-spacing:-.035em;line-height:1.2;margin-top:14px;max-width:16em}
+.sub{font-size:19px;color:var(--ink-2);max-width:46ch;margin-top:20px}
+.reveal{transition:transform .9s cubic-bezier(.2,.7,.1,1),filter .9s;will-change:transform}
+.reveal.pre{transform:translateY(28px)}
+
+/* 大数字带 */
+.statement{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px;margin-top:72px}
+.stat .v{font-size:clamp(48px,6vw,80px);font-weight:600;line-height:1;color:var(--ink)}
+.stat .v small{font:500 18px var(--display);color:var(--ink-3);margin-left:6px;letter-spacing:0}
+.stat p{color:var(--ink-2);margin-top:14px;font-size:16px;max-width:24ch}
+.stat .bar{height:2px;background:var(--line);margin-bottom:22px;position:relative;overflow:hidden}
+.stat .bar span{position:absolute;inset:0;background:var(--brand);transform-origin:left;transform:scaleX(1);transition:transform 1.4s cubic-bezier(.2,.7,.1,1)}
+
+/* 深色日历舞台 */
+.dark{background:var(--stage);color:var(--stage-ink)}
+.dark .kicker{color:#5AD8CA}
+.dark .sub{color:var(--stage-ink-2)}
+.calwrap{margin-top:56px}
+.caltools{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.seg{display:inline-flex;padding:4px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--stage-line)}
+.seg button{height:36px;padding:0 16px;border:0;border-radius:999px;background:transparent;color:var(--stage-ink-2);font:600 14px var(--display);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--stage-ink);color:var(--stage)}
+.calkeys{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--stage-ink-2)}
+.calkeys i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.calscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:18px;border:1px solid var(--stage-line);background:rgba(255,255,255,.02);padding:18px 18px 12px}
+#cal{display:block}
+.calnote{margin-top:14px;font-size:13px;color:var(--stage-ink-2)}
+.calcaption{margin-top:40px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+.calcaption div{border-top:1px solid var(--stage-line);padding-top:18px}
+.calcaption b{display:block;font-size:17px;margin-bottom:6px}
+.calcaption p{color:var(--stage-ink-2);font-size:15px}
+
+/* 发电去向 */
+.where{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:center;margin-top:64px}
+.ringbox{position:relative;width:min(440px,100%);aspect-ratio:1;margin:0 auto}
+.ringbox svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ringbox .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.ringbox .center .num{font-size:clamp(56px,7vw,92px);font-weight:600;line-height:1;color:var(--waste)}
+.ringbox .center span{color:var(--ink-2);font-size:15px;margin-top:8px;max-width:16ch}
+.legendlist{display:flex;flex-direction:column;gap:22px}
+.legendlist .li{display:grid;grid-template-columns:14px 1fr auto;gap:14px;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:18px}
+.legendlist i{width:14px;height:14px;border-radius:4px;display:block;transform:translateY(2px)}
+.legendlist b{font:600 28px var(--num);letter-spacing:-.02em}
+.legendlist .t{font-size:16px;color:var(--ink-2)}
+.toggle{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:var(--bg-2);border:1px solid var(--line);margin-top:28px}
+.toggle button{height:34px;padding:0 14px;border:0;border-radius:999px;background:transparent;color:var(--ink-2);font:600 14px var(--display);cursor:pointer}
+.toggle button[aria-pressed="true"]{background:var(--bg);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+
+/* 两种算法 */
+.versus{display:grid;grid-template-columns:1fr 1fr;margin-top:64px;border-radius:28px;overflow:hidden;border:1px solid var(--line)}
+.versus > div{padding:48px 44px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.versus .old{background:var(--bg-2)}
+.versus .new{background:linear-gradient(160deg,rgba(14,124,115,.10),rgba(14,124,115,.02))}
+.versus .lab{font-size:14px;font-weight:600;letter-spacing:.1em;color:var(--ink-3)}
+.versus .new .lab{color:var(--brand)}
+.versus .say{font-size:clamp(28px,3.2vw,42px);font-weight:900;letter-spacing:-.03em;line-height:1.15}
+.versus .old .say{color:var(--ink-3);text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--waste)}
+.versus .how{color:var(--ink-2);font-size:16px}
+.pending{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--waste);border:1px dashed currentColor;border-radius:999px;padding:3px 10px;width:max-content}
+
+/* 方案价格表 */
+.compare{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:64px;border-top:1px solid var(--line)}
+.opt{padding:32px 24px 8px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:12px;min-width:0;position:relative}
+.opt:last-child{border-right:0}
+.opt .icon{width:44px;height:44px}
+.opt .name{font-size:20px;font-weight:700}
+.opt .price{font:600 clamp(30px,3vw,42px)/1.05 var(--num);letter-spacing:-.03em}
+.opt .price small{font:500 15px var(--display);color:var(--ink-3);margin-left:4px;letter-spacing:0}
+.opt .delta{font-size:15px;font-weight:600}
+.opt .delta.more{color:#C2410C}
+.opt .delta.base{color:var(--ink-3);font-weight:500}
+.opt .meta{font-size:14px;color:var(--ink-2);border-top:1px solid var(--line);padding-top:14px;margin-top:6px;display:grid;gap:6px}
+.opt.rec::before{content:"推荐";position:absolute;top:-13px;left:24px;background:var(--brand);color:#fff;font-size:12px;font-weight:700;border-radius:999px;padding:3px 12px}
+.opt.rec{background:linear-gradient(180deg,rgba(14,124,115,.07),transparent 70%)}
+
+/* 演示 */
+.demo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center;margin-top:56px}
+.player{border-radius:28px;background:#14211F;border:1px solid var(--stage-line);color:var(--stage-ink);padding:28px;aspect-ratio:16/10;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;max-width:100%}
+.player .scene-t{font:600 13px var(--num);color:#5AD8CA;letter-spacing:.1em}
+.player .cap{font-size:clamp(20px,2.2vw,28px);font-weight:700;line-height:1.35;max-width:22ch;transition:opacity .5s}
+.player .ctrls{display:flex;align-items:center;gap:12px}
+.player .dots{display:flex;gap:6px;flex:1}
+.player .dots span{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.15);overflow:hidden}
+.player .dots span i{display:block;height:100%;width:0;background:#5AD8CA}
+.player button{width:40px;height:40px;border-radius:50%;border:1px solid var(--stage-line);background:rgba(255,255,255,.06);color:var(--stage-ink);display:grid;place-items:center;cursor:pointer}
+.player .glow{position:absolute;right:-20%;top:-30%;width:70%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(232,163,23,.35),transparent 65%);pointer-events:none}
+.steps{display:flex;flex-direction:column;gap:2px}
+.steps div{padding:16px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:48px 1fr;gap:8px;color:var(--ink-3);transition:color .4s}
+.steps div.on{color:var(--ink)}
+.steps .n{font:600 14px var(--num)}
+
+/* 确认清单 */
+.confirm{margin-top:56px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.cbox{border:1px solid var(--line);border-radius:22px;padding:26px;background:var(--bg-2);min-width:0}
+.cbox b{font-size:18px;display:block;margin-bottom:8px}
+.cbox p{color:var(--ink-2);font-size:15px}
+footer{padding-block:48px 64px;border-top:1px solid var(--line);color:var(--ink-3);font-size:13px}
+
+:focus-visible{outline:2px solid var(--brand);outline-offset:3px;border-radius:8px}
+@media (max-width:900px){
+  .hero .container{grid-template-columns:1fr;min-height:0;padding-block:48px 24px}
+  .statement,.calcaption{grid-template-columns:1fr;gap:36px}
+  .where,.demo{grid-template-columns:1fr;gap:40px}
+  .versus{grid-template-columns:1fr}
+  .compare{grid-template-columns:1fr 1fr}
+  .opt:nth-child(2){border-right:0}
+  .opt{border-bottom:1px solid var(--line);padding-bottom:24px}
+  .confirm{grid-template-columns:1fr}
+  .nav .links{display:none}
+  .section{padding-block:88px}
+}
+@media (max-width:520px){
+  .compare{grid-template-columns:1fr}
+  .opt{border-right:0}
+  .versus > div{padding:32px 24px}
+  .container{padding-inline:18px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+</style>
+<nav class="nav" aria-label="主导航"><div class="container">
+  <span class="wordmark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>能见度</span>
+  <div class="links"><span>全年日历</span><span>电去哪了</span><span>两种算法</span><span>方案对比</span><span>演示</span></div>
+  <span class="draft">设计确认稿</span>
+  <button class="cta" type="button" data-go="demo">一键演示</button>
+</div></nav>
+
+<header class="hero">
+  <div class="sky" id="sky" aria-hidden="true"></div>
+  <div class="container">
+    <div class="reveal">
+      <p class="eyebrow">低碳改造决策助手</p>
+      <h1>看见每一小时的电。<span class="soft">再决定花不花这笔钱。</span></h1>
+      <p class="lead">装光伏、装风机之前，用当地全年 8,784 个小时的天气，把空调什么时候用电、设备什么时候发电一一对齐，算清 10 年总账。</p>
+      <div class="btns">
+        <button class="btn primary" type="button" data-go="demo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>一键演示</button>
+        <button class="btn" type="button" data-go="cal">看全年日历</button>
+      </div>
+    </div>
+    <div class="stage3d" id="stage3d" role="img" aria-label="三维微缩场景：一栋办公楼、屋顶光伏和一台小风机，按真实逐小时数据播放一周的用电与发电">
+      <canvas id="three"></canvas>
+      <div class="fallback" id="fallback" hidden>当前浏览器不支持三维场景</div>
+      <div class="hud">
+        <div class="chip" style="flex:1 1 220px">
+          <span id="hudDate">2024-09-30 周一 08:00</span>
+          <div class="row"><span><i style="background:var(--ink)"></i>空调 <b class="num" id="hudLoad">0.00</b></span><span><i style="background:var(--sun)"></i>发电 <b class="num" id="hudGen">0.00</b></span></div>
+          <div class="timeline"><span id="hudBar"></span></div>
+        </div>
+        <div class="chip"><span>这一小时发的电</span><div class="row"><span><i style="background:var(--self)"></i>用上 <b class="num" id="hudSelf">0.00</b></span><span><i style="background:var(--waste)"></i>浪费 <b class="num" id="hudWaste">0.00</b></span></div><span style="font-size:11px">单位 kWh · 5090 真实回放 · 一周</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="section tight" aria-labelledby="t1"><div class="container">
+  <p class="kicker reveal">一个被忽略的事实</p>
+  <h2 class="h2 reveal" id="t1">发电多，不等于省钱，也不等于减碳多。</h2>
+  <p class="sub reveal">广州一间 35㎡ 办公室，6 台空调达标运行。2 kWp 光伏一年发的电是空调用电的三倍多，可大部分电发出来的时候，房间里没人开空调。</p>
+  <div class="statement">
+    <div class="stat reveal"><div class="bar"><span></span></div><div class="v num" data-count="2214">2,214<small>kWh</small></div><p>光伏一年发电</p></div>
+    <div class="stat reveal"><div class="bar"><span></span></div><div class="v num" data-count="595">595<small>kWh</small></div><p>空调一年用电</p></div>
+    <div class="stat reveal"><div class="bar"><span></span></div><div class="v num" data-count="1742" style="color:var(--waste)">1,742<small>kWh</small></div><p>发了没人用的电，占光伏发电的 79%</p></div>
+  </div>
+</div></section>
+
+<section class="section dark" id="cal-sec" aria-labelledby="t2"><div class="container">
+  <p class="kicker reveal">全年能源日历</p>
+  <h2 class="h2 reveal" id="t2">8,784 个小时，一格一格摊开看。</h2>
+  <p class="sub reveal">横轴是一年 366 天，纵轴是一天 24 小时。切换三种视图，看用电和发电在哪里重合、在哪里错开。</p>
+  <div class="calwrap">
+    <div class="caltools">
+      <div class="seg" role="group" aria-label="日历视图">
+        <button type="button" data-view="load" aria-pressed="false">空调用电</button>
+        <button type="button" data-view="gen" aria-pressed="false">光伏与风机发电</button>
+        <button type="button" data-view="cat" aria-pressed="true">发电时空调在用吗</button>
+      </div>
+      <div class="calkeys" id="calkeys"></div>
+    </div>
+    <div class="calscroll"><canvas id="cal" aria-label="全年逐小时能源日历"></canvas></div>
+    <p class="calnote">数据：5090 房间口径回放，广州 2024 全年逐小时，光伏 2 kWp + 小风机 1 台方案。颜色只表示当时哪种去向最多。</p>
+  </div>
+  <div class="calcaption">
+    <div class="reveal"><b>正午的光伏</b><p>每天中午发电最多，工作日能被空调用掉一部分。</p></div>
+    <div class="reveal"><b>周末和夜里</b><p>周末整列、每天傍晚以后，发出来的电几乎全部浪费。</p></div>
+    <div class="reveal"><b>冬季</b><p>空调不开，发的电没有去处。年发电量越大，浪费越多。</p></div>
+  </div>
+</div></section>
+
+<section class="section" aria-labelledby="t3"><div class="container">
+  <p class="kicker reveal">电去哪了</p>
+  <h2 class="h2 reveal" id="t3">只有当时用上的电，才真正替代了电网。</h2>
+  <div class="where">
+    <div class="ringbox reveal">
+      <svg viewBox="0 0 220 220" aria-hidden="true">
+        <circle cx="110" cy="110" r="92" fill="none" stroke="var(--line)" stroke-width="16"/>
+        <circle id="ringWaste" cx="110" cy="110" r="92" fill="none" stroke="var(--waste)" stroke-width="16" stroke-linecap="round"/>
+        <circle id="ringSelf" cx="110" cy="110" r="92" fill="none" stroke="var(--self)" stroke-width="16" stroke-linecap="round"/>
+      </svg>
+      <div class="center"><span class="num" id="ringPct">79%</span><span id="ringLab">的光伏发电，发出来时没人用</span></div>
+    </div>
+    <div>
+      <div class="legendlist">
+        <div class="li"><i style="background:var(--self)"></i><span class="t">当时给空调用上</span><b class="num" id="lSelf">472</b></div>
+        <div class="li"><i style="background:var(--waste)"></i><span class="t">发了没人用（浪费）</span><b class="num" id="lWaste">1,742</b></div>
+        <div class="li"><i style="background:var(--grid)"></i><span class="t">空调仍需从电网买</span><b class="num" id="lImp">123</b></div>
+      </div>
+      <div class="toggle" role="group" aria-label="选择方案"><button type="button" data-ring="pv" aria-pressed="true">加装光伏</button><button type="button" data-ring="combo" aria-pressed="false">光伏 + 小风机</button></div>
+      <p class="sub" style="font-size:15px">单位 kWh / 年。减碳量只按“当时用上”的电计算 <span class="pending">待5090计算</span></p>
+    </div>
+  </div>
+</div></section>
+
+<section class="section" style="background:var(--bg-2)" aria-labelledby="t4"><div class="container">
+  <p class="kicker reveal">我们的创新</p>
+  <h2 class="h2 reveal" id="t4">同一栋楼，两种算法，两个相反的结论。</h2>
+  <div class="versus reveal">
+    <div class="old"><span class="lab">常见算法 · 年度抵扣</span><p class="say">“装了就省电，还能减碳。”</p><p class="how">年发电 2,214 kWh ≥ 年用电 595 kWh，于是认为空调用电全部由光伏覆盖。</p><span class="pending">粗算结果待5090计算</span></div>
+    <div class="new"><span class="lab">能见度 · 逐小时匹配</span><p class="say">10 年反而多花 4,899 元。</p><p class="how">8,784 个小时逐一对齐。发电时没人用就是浪费，只有当时用上的电才计入省钱和减碳。</p><span class="pending">每吨减碳成本待5090计算</span></div>
+  </div>
+</div></section>
+
+<section class="section" aria-labelledby="t5"><div class="container">
+  <p class="kicker reveal">10 年总账</p>
+  <h2 class="h2 reveal" id="t5">只用电网，是这间办公室最划算的选择。</h2>
+  <p class="sub reveal">“只用电网”永远作为基线。每个方案都写明比基线多花还是省下，不需要自己算差价。</p>
+  <div class="compare">
+    <div class="opt rec reveal"><svg class="icon" viewBox="0 0 48 48" fill="none" stroke="var(--grid)" stroke-width="2" stroke-linejoin="round"><path d="M24 4 14 44M24 4l10 40M17 30h14M15 38h18M19 20h10M8 14h32M12 14l12-10 12 10"/></svg><span class="name">只用电网</span><span class="price num" data-count="3929">3,929<small>元</small></span><span class="delta base">比较基线</span><div class="meta"><span>年发电 0 kWh</span><span>空调用电自给 0%</span></div></div>
+    <div class="opt reveal"><svg class="icon" viewBox="0 0 48 48" fill="none" stroke="var(--sun)" stroke-width="2" stroke-linejoin="round"><path d="M6 36 14 20h28l-8 16z"/><path d="M10 28h28M20 20l-4 16M30 20l-4 16"/><circle cx="36" cy="9" r="4"/></svg><span class="name">加装光伏</span><span class="price num" data-count="8829">8,829<small>元</small></span><span class="delta more">多花 4,899 元</span><div class="meta"><span>年发电 2,214 kWh</span><span>空调用电自给 79%</span></div></div>
+    <div class="opt reveal"><svg class="icon" viewBox="0 0 48 48" fill="none" stroke="var(--wind)" stroke-width="2" stroke-linecap="round"><path d="M24 22v24M20 46h8"/><circle cx="24" cy="20" r="2.5"/><path d="M24 17.5 22 4c4 1 5 8 2 13.5zM26 21.5l12 7c-3 3-10 0-12-7zM21.8 21.3 10 28c-1-4 5-8 11.8-6.7z"/></svg><span class="name">加装小风机</span><span class="price num" data-count="97281">97,281<small>元</small></span><span class="delta more">多花 93,351 元</span><div class="meta"><span>年发电 910 kWh</span><span>空调用电自给 17%</span></div></div>
+    <div class="opt reveal"><svg class="icon" viewBox="0 0 48 48" fill="none" stroke-width="2" stroke-linejoin="round"><path d="M4 40 10 28h18l-6 12z" stroke="var(--sun)"/><path d="M36 22v24" stroke="var(--wind)"/><circle cx="36" cy="20" r="2.5" stroke="var(--wind)"/><path d="M36 17.5 34 6c3.5 1 4.5 7 2 11.5zM38 21.5l10 6c-3 2.5-8.5 0-10-6z" stroke="var(--wind)"/></svg><span class="name">光伏 + 小风机</span><span class="price num" data-count="102736">102,736<small>元</small></span><span class="delta more">多花 98,807 元</span><div class="meta"><span>年发电 3,124 kWh</span><span>空调用电自给 82%</span></div></div>
+  </div>
+  <p class="sub" style="font-size:14px;color:var(--ink-3)">10 年总花费为空调用电购电费加发电设备投入与运维的折现成本，不含空调设备本身。报价为用户情景，未经采购核实。</p>
+</div></section>
+
+<section class="section dark" id="demo-sec" aria-labelledby="t6"><div class="container">
+  <p class="kicker reveal">一键演示</p>
+  <h2 class="h2 reveal" id="t6">答辩时点一下，自动讲完一个真实案例。</h2>
+  <div class="demo">
+    <div class="player" id="player" aria-live="polite">
+      <div class="glow"></div>
+      <span class="scene-t" id="sceneT">第 1 幕 / 5</span>
+      <p class="cap" id="cap">广州一间 35㎡ 办公室，工作日 8 点到 18 点开空调，6 台设备全年达标。</p>
+      <div class="ctrls"><button type="button" id="pp" aria-label="暂停"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button><div class="dots" id="dots"></div></div>
+    </div>
+    <div class="steps" id="steps" style="color:var(--stage-ink-2)"></div>
+  </div>
+</div></section>
+
+<section class="section" aria-labelledby="t7"><div class="container">
+  <p class="kicker">请你确认</p>
+  <h2 class="h2" id="t7">这个方向对了，就交给 claude.ai/code cloud 一次做完。</h2>
+  <div class="confirm">
+    <div class="cbox"><b>1 · 名称与主线</b><p>“能见度”，主标题“看见每一小时的电。再决定花不花这笔钱。”，定位为低碳改造决策助手。正式使用前做商标与重名检索。</p></div>
+    <div class="cbox"><b>2 · 视觉与动画</b><p>首屏 3D 微缩场景由真实一周逐小时数据驱动：太阳、光影、窗灯、风机转速、能量粒子流向都对应当时的数字。全站苹果式长页、明暗分段、大字号。</p></div>
+    <div class="cbox"><b>3 · 需要 5090 新增的数据</b><p>年度粗算结果、真实减碳量、每吨减碳成本（注明排放因子出处），以及按主演示口径重做的三个状态示例。</p></div>
+    <div class="cbox"><b>4 · 网站结构</b><p>首页即本页叙事 → 进入四步试算工具 → 一键演示覆盖全程。四步工具保留现有全部数据规则与导出。</p></div>
+  </div>
+</div></section>
+
+<footer><div class="container">设计确认稿，不是作品本身。数字来自 5090 房间口径回放（源码 bc90c8a）主演示：广州 2024，1 间 × 6 台，空调达标。标注“待5090计算”的内容暂无数据。</div></footer>
+<script id="data" type="application/json">
+{"start":"2024-01-01T00:00","n":8784,"load":"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003233333332000000000000003232333332000000000000003233333322000000000000000000000022000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000322000000000000000000000000000000000000000000000000000000000000005233333333000000000000002233333333000000000000003333333322000000000000000022222222000000000000000032322222000000000000000000000000000000000000000000000000000000000000000000000022000000000000000000032222000000000000000032223322000000000000000002233322000000000000000002223333000000000000000000000000000000000000000000000000000000000000004233333333000000000000003333332222000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003333000000000000000033333333000000000000000022233322000000000000000002222222000000000000000002222222000000000000000000000000000000000000000000000000000000000000005222222222000000000000000003223222000000000000000003333222000000000000000032222222000000000000000002222222000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000033333000000000000000222233332000000000000000033333332000000000000000000000000000000000000000000000000000000000000005333333333000000000000003333333333000000000000002222222222000000000000002233333322000000000000003333333333000000000000000000000000000000000000000000000000000000000000006222222222000000000000000002222222000000000000000000032222000000000000000000322222000000000000000222222222000000000000000000000000000000000000000000000000000000000000005333333333000000000000003333333333000000000000003333333333000000000000004333333333000000000000004333333333000000000000000000000000000000000000000000000000000000000000005333333333000000000000004333333333000000000000004333333333000000000000004333333333000000000000004333333333000000000000000000000000000000000000000000000000000000000000008333333333000000000000004333333333000000000000003333333333000000000000003333333333000000000000004333333333000000000000000000000000000000000000000000000000000000000000008333333333000000000000004333333333000000000000004333333333000000000000003333333333000000000000004333333333000000000000000000000000000000000000000000000000000000000000008333333333000000000000004333333333000000000000004333333333000000000000004333333333000000000000004333333333000000000000000000000000000000000000000000000000000000000000008333333333000000000000004333333333000000000000003333333333000000000000004333333333000000000000003333333333000000000000000000000000000000000000000000000000000000000000008333333333000000000000004333333333000000000000004333333333000000000000004333333333000000000000005333333333000000000000000000000000000000000000000000000000000000000000005333333333000000000000003333333333000000000000003333333333000000000000003333333333000000000000004333333333000000000000000000000000000000000000000000000000000000000000009333333333000000000000004333333333000000000000003333333333000000000000004333333333000000000000004333333333000000000000000000000000000000000000000000000000000000000000008333333333000000000000003333333333000000000000003333333333000000000000003333333332000000000000003333333333000000000000000000000000000000000000000000000000000000000000005333333333000000000000003333333333000000000000003333333322000000000000003333333333000000000000003333333333000000000000000000000000000000000000000000000000000000000000007333333333000000000000004333333333000000000000004333333333000000000000004333333333000000000000003333333333000000000000000000000000000000000000000000000000000000000000008333333333000000000000003333333333000000000000004333333333000000000000004333333333000000000000004233333332000000000000000000000000000000000000000000000000000000000000006333333333000000000000003333333333000000000000003333333333000000000000004333333333000000000000003333333333000000000000000000000000000000000000000000000000000000000000007333333333000000000000004333333333000000000000004333333333000000000000004333333333000000000000004333333333000000000000000000000000000000000000000000000000000000000000005222222222000000000000000000000000000000000000000000333333000000000000003333333333000000000000003333333333000000000000000000000000000000000000000000000000000000000000007333333333000000000000004333333322000000000000000002222222000000000000000002222222000000000000000000222222000000000000000000000000000000000000000000000000000000000000005222333322000000000000000222222222000000000000000002222222000000000000000003222222000000000000000002222222000000000000000000000000000000000000000000000000000000000000005233333333000000000000002233333322000000000000002233333322000000000000000333333322000000000000000333332222000000000000000000000000000000000000000000000000000000000000005223333222000000000000000032222222000000000000000002222221000000000000000000000222000000000000000000022222000000000000000000000000000000000000000000000000000000000000000002222222000000000000000000000000000000000000000000022222000000000000000000032222000000000000000022222222000000000000000000000000000000000000000000000000000000000000000003222222000000000000000000322222000000000000000000032222000000000000000000002221000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000032222000000000000000002222222000000000000000000322222000000000000000222222222000000000000000002222222000000000000000000000000000000000000000000000000000000000000002222222221000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","gen":"000000023455555432000001100000013445554321000002333233345667777664122221111111124455655442000000000000013455555432000000000000023455654432000111111111024556655322000011111000024555554322000100000000013444445432000000001122124567666543011222222222223444454442000000000000013445553321000000000000011222334332000000000000013456655542000000000000023556665542001211100000024556665542011110000000024556663211000000000000023455444432000000000000023456665432000111100000012345666555344443333333234566666553122323334445345656666667556665555555345556665554345544444344334344334333222212221222222334445543122111110111122344433322111111111111112223332222111122222222122233333332110000000000012333333321000000000000012234444322000000000000012333333221000000000000012234454432000000000000012345555443111221222221112345445432100000000000012233343332233333334444333333433322111111111111112344554432222222223222223344444343223333322233233344333332222223322222233466662212000111222222224566666543111111110100024566666543000010011100024566666543111111010000024556655443111110000000023455554432111110000000023455555432001234443433233456665542000122111111112345555443222222211122012356777665222211111101013445544433233332222233223467778876333333333333223577777765222221100001012244556654443333344444454455545544333333322333333344343333333333222333333444433332222211111122223334444443222232333333333344553332211111111111112334554332111110000001112334555544233444444444333456655543222212223322222456664432100000000000012233334321011110001112223455566665333333222222223457765543112221002555445556655543234443333323222334444443111222222222233555655543100000000000012233333222111111111111112222332121000000000000112222334543100110000111134566666543111110010000023445544322000000000000012233333221000000000000012344433221000000000000012334444432100000000000022444543222100000000000023445554433211100234443334555667665111233322222134566666543100100010000124555666543222211111111123465666554212211111122123565655444223333322222023566676654212222111111123445566543100000012233334444555543100000000012234544444443112223321111122345555432100000000000123455655432101111100000123455654322111111122222113444555432100010010001022445678887544454444444236889888887444332332221123465667775220000110000122455554332100001000101232234443322100000011111233334443322000222212212122344442322211000011111122323333322111112222222123445554322111000000000122334554332100001110000123345544432100011000000133455555543100000000000134555455543222222211000124555555543111121110000123455554543111121011110123555655543111222211111124556664442100010121000123344453442111112212222245676766555122222222222123445542221112432112222222322343432110000000000123444444444210001000000122333343432100000000000123445444432100000100111122233556532100011011000222344445543111100011100123344544432100000111232013445554321222222221111123567877665333222234433223555553222102332222221222333335432122211111111123333343321111111110000123444433111001221111112122334455443121000100011122334454433100000000000223445555432112211000000134455545442100000000000112334545422100000000000122233333331100000000000233444542433100011110000234455555443100000000000123455554432100000000001123345555543100000000000134555655543100121000000234556655433100000000000234555555543101111100000234455453422100000000000122333334322211000000000223233333222111111100011122333332222122122211000112223443332100000000000123445543432100000000000122233454432112110000000133445443333222100000000123445555332210111011111133433333322110011111222123444454432100000000000123444454432100012221111123344445443100000000000233455554332100000000111233456554543122223333433455654444333333322221111234555544433100000000000234344443232111122222233232444443322111111111101123444332211111100000111122344443322100000000000123344342332111000000000223333444332111111100011122344444332110000011111123455555432100000000000233444444322100000000000223455554443200000000000223333333332100011111221123345654332100111111122123334443222111110000000111223343332100000001111223455545443211212112111233445554433221111001101233455555543200001100011234455555544212322111110234556666544211211111110234555555544212111000000234556554443201111111111223445655433110011111111123345545443200011222100123444545443200000000000233455555543200011110000224455655543221010000000234556666553211111122222234556554432111112222221234556666544222222233322223454564443211122222211234555555543101111000000123445554433200000000000134555555443210000000000134555555543201011011000134555555544200100000000134455555543201000000000134555555543210001100000134455655443211110000000234455554443222121211110134555654433200000000110134455555444211010000000234555555543201110001100134556665543211111010000234455655443211111110001233455555443221111110000134555554333100000000000134556643322100000110000134556654443210011110000133455555432200011000000123555555543201000000000134455555443200000000000234555555443101111222223234566666654211111111222133445554433111122111111111222222222101122232211123233443333232111222321223444444432211110000000123344554432111111111000123544455443100111111111123455555544211111100000133455555543200111000000134555555443100000000000134556655543100000000000134556665543200000000000134556655432210000000000134556655543100000000000134556655543100111111100134555555543121101110000123455554332211100000000123455555432100000000000124455543232100110000000123332325542100000000000134455555432100000000000122233454322100000000000123334444322100000111001112233333422100000000000112334333322100000000111122333444432100000000000122334444332111100000000123344332222100000000000122334433332100000000000123344433332100000000000134455555542100000000000134555555432100000000000134555655543100000000000134556665543100000000000134555655432100000000000134555555432100000000000134455555442101000000000123455444442100000000000134455555442100000000000134555555442111011000000134556665442100000010000133456655443100000000000134566666543102222223334345555566555344444444444334455665433111111111001123455554332000000000000123445554432100000000000134555555442100000000000134555555442100000000000134555554432100000000000123455555442100000000000134555554322000000000000134556555442100000000000124455555442100000000000134566666542000000000000134555665543000000000000134555555442000000000000134555555542000000000000123444344331111112101122134555555533234433333334233344444444222122222212222222323321111111100000124455555432000000000000134555555432000000000000134555555432000000000000134455555432001111000000124555555442000000000000134556655542011000111112135678888876355655544455356788887764111211112222245778777653011112222222234566666542000000011112234556665542000000011111133556655432000000011111134566666542112233222222245666666542111111111222234566654331000111111111134566665432111000111111134556654432000000000000134555554432000000000000134556655432000000000000134555655432000000000000134554554422000000000000134555444432000000000000134556654431000000000000123345443221000000000000134555554432001112322222134455555532011222211111134566664432000000011111134566677653233344444444356888877653211123333333245677777653111122233344245677777664223445544556455665543333234554444433245666764433334333333333345666654332122222222222223444433322222222222222134556654421111011112222135677777652112334333333245677777654333333333333244566664431000000011111124566554431000000000011123455654433223333332222234566664432111112332222235666666542111223222222134666666542100111111221135566666542111001111111134555554431011111111123233455443321011111111111123456665431000000000000034566665431000001100000034555544331000111111111022335554321000000000000011222222221000000000000022334443331000000000111124556654431101234444444345777776544223333445454334433333222112222233333233333333322222222233333234566665542122222222232234556665542122222222222123456655431000000000111112333343321000000000000023455544331001235555555345778777652122222222222234566676652111111111222234567776642111111011111134567666541111111000000024556665431000000000000034556665431000000000000024556665431000000000000024556665431000000000000023445655431000000000000023466653321000111122221024666655532112222222233334666666654234444444444345667766542011112222222124555555431000000000000024455555431000000000000012345666665355443444443234556565542112233333344235778777665345555555555456777766653233344443333334455543331001111111111113455665432000000000000024556665542111110111122234677766653223333333333335677666542011111112222124566665542001111100111124567776653122223333333234666666542011121111222224556654331001122333333334666666542100011111222223345563321001111111222233455554432112122222222224566665443344444555555445788877653111222211111124566665542000000000000024556665542111110011222224566665542111100","cat":"000000022222222222000002200000022222222222000002222222222222222222222222222222222222222222000000000000022222222222000000000000022222222222000222222222022222222222000022222000022222222222000200000000022222222222000000002222222222222222022222222222222222222222000000000000022222222222000000000000022222222222000000000000022222222222000000000000022222222222002222200000022222222222022220000000022222222222000000000000022222222222000000000000022222222222000222200000022222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222220222222222222222222222222222222222222222222222222222222222222222220000000000022222222222000000000000022222222222000000000000022222222222000000000000022222222222000000000000022222222222222222222222222222222222200000000000022222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222000222222222222222222222222222220200022222222222000020022200022222222222222222020000022222222222222220000000022222222222222220000000022222222222002222222222222222222222000222222222222222222222222222222222022222222222222222222202022222222222222222222222222222222222222222222222222222222222222222200002022222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222220000002222222222222222222222222222222222222222222222222222222222222200000000000022222222222022220002222222222222222222222222222222222222222222222002222222222222222222222222222222222222222222222222222222222222222200000000000022222222222222222222222222222222222000000000000222222222222200220000222222222222222222220020000022222222222000000000000022222222222000000000000022222222222000000000000022222222222200000000000022222222222200000000000022222222222222200222222222222222222222222222222222222222222200200020000222222222222222222222222222222222222222222222222222222222222222222222222022222222222222222222222222222222222200000022222222222222222200000000022222222222222222222222222222222222222200000000000222222222222202222200000222222222222222222222222222222222222200020020002022222222222222222222222222222222222222222222222221222222222220000220000221122221113200002000202222222222211200000022222222222222222000222222222222222222222222000022222222222222222222222222222222222222222222000000000222222222222200002220000222222222222200022000000222222222111200000000000222222222222222222222000222222222222222222220000223222221211222222022220221222222211222222222222221222222211200020222000222212221221222222222222222222222222222222222222222222222222222222222222222222222222220000000000222222222211220002000000222222211111200000000000222222212113200000200222222221222211200022022000222221112211222200022200222222222222200000222222022222222222222222222222223222222222222222222222221222221113202222222222222222222222222222222222222222222222222222220000222222222222002222222222222222222222222000200022222222222222200000000000222222221113222222000000222222212111200000000000222212222113200000000000222221111113200000000000222222221111200022220000222222222222200000000000222222222222200000000002223222222221200000000000222222222221200222000000222222222211200000000000222222222221202222200000222222221213200000000000222222222222222000000000222222222222222222200022222222222222222222222000222222222222200000000000222222211111200000000000222111121113222220000000222212111111222200000000222222222222220222022222222222222222220022222222223111111113200000000000221111121111200022222222221122222211200000000000221222221113200000000222221122121211222222222222222222222222222222222222222222222222200000000000223111111111222222222222222222221111222222222202222222211133222200000222222222111113200000000000222111111111222000000000222222222222222222200022222222222222220000022222223112211113200000000000223111111133200000000000221111211111200000000000223111111133200022222222223112221113200222222222222222222222222220000000222222222222200000002222223111211111222222222222223111211111222222002202221112121211200002200022221112111111222222222220221112222211222222222220222222222222222222000000222222222222202222222222223112211111220022222222223112211111200022222200221111111111200000000000221122211111200022220000221121222111222020000000222222222222222222222222222222222222222222222222223122222111222222222222223111221111222222222222221111212111202222000000221112221111200000000000221112221111220000000000222222222222202022022000222222222222200200000000223112111111202000000000221122211111220002200000221122221111222220000000223122111111222222222220221112221111200000000220222222222222222020000000222222222222202220002200223122221111222222020000221121221111222222220002221111122111222222220000221112221111200000000000221222211133200000220000222222222222220022220000222222222222200022000000223121222111202000000000221112111111200000000000221122221111202222222222221222222211222222222222223111111111222222222222222222222222202222222222222222222222222222222222223111111111222220000000221111221111222222222000221211111111200222222222221112222111222222200000223112221111200222000000222222222222200000000000222222222222200000000000223122221111200000000000221112221113220000000000221222211111200000000000221122211111200222222200221122221111222202220000222222222222222200000000222222222222200000000000223121111313200220000000223113131113200000000000221111112113200000000000223111111113200000000000221111111133200000222002222222222222200000000000222222222222200000000222223111111113200000000000223111111113222200000000223111113133200000000000223111111113200000000000223111111113200000000000222222222222200000000000222222222222200000000000223222212111200000000000221222221111200000000000221112221113200000000000221212222113200000000000221112221113202000000000222222222222200000000000222222222222200000000000223212211113222022000000221222221113200000020000221222221113200000000000221222222211202222222222221222222222222222222222222222222222222222222002222222222222000000000000223112221113200000000000221222221113200000000000221222221113200000000000221222211113200000000000221222211113200000000000222222222222000000000000222222222222200000000000223221221113200000000000221222222113000000000000221222222113000000000000221222221113000000000000221222212113000000000000222222222222222222202222222222222222222222222222223222222222222222222222222222222222222222200000222222222113000000000000221222222113000000000000221222222113000000000000222222222222002222000000222222222222000000000000223222222213022000222222221222222222222222222222222222222222222222222222222222222221022222222222222222222221000000022222222222222222000000022222222222222222000000022222223222222221222222222222222222222221222222222222222222222213000222222222222222222221222000222222222222222213000000000000222222222222000000000000222222222222000000000000223222222113000000000000222222221113000000000000221222111113000000000000222222222113000000000000222112111333000000000000222222222222002222222222222222222222022222222222223222222213000000022222222222222221222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222221222222222222222222222222222222222222222222222213222022222222222222222221222222222222222222222222222222222222222222222222000000022222222222222222000000000022222222222221222222222222222222222221222222222222222222222221222222222222222222222221200222222222222222222222222002222222222222222222022222222222222222222222022222222222222222222213000000000000022222222213000002200000022222222113000222222222022112221133000000000000022221331333000000000000022222222222000000000222222222222222202222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222000000000222222222222222000000000000022222222222002222222222222222222222222222222222222222222222222222222222222222222222222222022222222222222222222222000000022222222222000000000000022222222222000000000000022222222222000000000000022222222222000000000000022222222222000000000000022222222222000222222222022222222222222222222222222222222222222222222222222222222222022222222222222222222222000000000000022222222222000000000000022222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222002222222222222222222222000000000000022222222222222220222222222222222222222222222222222222222222022222222222222222222222002222200222222222222222222222222222222222222222022222222222222222222222002222222222222222222222200022222222222222222222002222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222000000000000022222222222222220022222222222222222222200","day":"2024-08-05","dayLoad":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,4.999,0.473,0.562,0.57,0.565,0.592,0.577,0.563,0.529,0.501,0.0,0.0,0.0,0.0,0.0,0.0],"dayPv":[0.0,0.0,0.0,0.0,0.0,0.0,0.033,0.292,0.615,0.911,1.129,1.274,1.254,1.199,0.977,0.844,0.571,0.29,0.051,0.0,0.0,0.0,0.0,0.0],"dayWind":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.01,0.012,0.016,0.014,0.018,0.016,0.016,0.0,0.0,0.0,0.0,0.0,0.0],"week":{"load_kwh":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.405,0.388,0.479,0.493,0.477,0.478,0.474,0.458,0.406,0.395,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.788,0.328,0.385,0.397,0.398,0.38,0.368,0.343,0.263,0.232,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.232,0.186,0.215,0.202,0.18,0.145,0.123,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.226,0.184,0.207,0.195,0.174,0.144,0.117,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.241,0.219,0.205,0.187,0.171,0.154,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pv_generation_kwh":[0.0,0.0,0.0,0.0,0.0,0.0,0.02,0.3,0.652,0.982,1.187,1.34,1.347,1.08,1.103,0.842,0.466,0.164,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.021,0.312,0.67,0.993,1.231,1.331,1.241,1.274,1.128,0.845,0.5,0.163,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.018,0.295,0.66,0.996,1.241,1.344,1.444,1.349,1.142,0.841,0.495,0.152,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.021,0.329,0.688,1.034,1.244,1.426,1.447,1.347,1.179,0.893,0.536,0.163,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.008,0.153,0.476,0.99,1.219,1.394,1.415,1.307,1.138,0.859,0.51,0.151,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.011,0.219,0.456,0.711,0.82,1.122,1.26,1.253,1.073,0.795,0.486,0.137,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.006,0.166,0.357,0.711,0.995,1.225,1.279,1.117,0.934,0.622,0.346,0.104,0.0,0.0,0.0,0.0,0.0,0.0],"wind_generation_kwh":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.012,0.05,0.082,0.094,0.094,0.094,0.065,0.008,0.0,0.006,0.003,0.0,0.0,0.0,0.002,0.01,0.011,0.008,0.016,0.07,0.008,0.094,0.242,0.522,0.975,1.367,1.629,1.651,1.651,1.629,1.455,1.307,0.378,0.85,1.073,1.207,1.14,0.944,0.771,0.603,0.617,0.699,0.834,0.865,0.306,0.576,0.685,1.345,1.651,1.542,1.345,1.157,1.073,1.007,0.756,0.306,0.032,0.037,0.047,0.062,0.044,0.021,0.016,0.042,0.098,0.129,0.125,0.152,0.035,0.107,0.229,0.771,1.056,0.96,0.865,0.787,0.713,0.522,0.262,0.032,0.0,0.008,0.01,0.007,0.014,0.056,0.07,0.079,0.082,0.094,0.134,0.17,0.143,0.134,0.161,0.176,0.183,0.152,0.143,0.125,0.098,0.088,0.07,0.007,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.011,0.032,0.037,0.044,0.053,0.039,0.053,0.079,0.138,0.166,0.134,0.134,0.116,0.111,0.134,0.107,0.011,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.005,0.008,0.012,0.019,0.025,0.012,0.034,0.053,0.059,0.073,0.07,0.05,0.027,0.016,0.014,0.019,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"self_use_kwh":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.652,0.388,0.479,0.493,0.477,0.478,0.474,0.458,0.406,0.172,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.788,0.328,0.385,0.397,0.398,0.38,0.368,0.343,0.263,0.232,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.232,0.186,0.215,0.202,0.18,0.145,0.123,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.226,0.184,0.207,0.195,0.174,0.144,0.117,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.241,0.219,0.205,0.187,0.171,0.154,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"curtailment_kwh":[0.0,0.0,0.0,0.0,0.0,0.0,0.02,0.3,0.0,0.594,0.72,0.896,0.953,0.696,0.723,0.479,0.125,0.0,0.0,0.006,0.003,0.0,0.0,0.0,0.002,0.01,0.011,0.008,0.016,0.07,0.029,0.406,0.125,1.186,1.821,2.301,2.473,2.545,2.411,2.131,1.692,1.238,0.378,0.85,1.073,1.207,1.14,0.944,0.771,0.603,0.617,0.699,0.834,0.865,0.324,0.872,1.346,2.342,2.893,2.654,2.603,2.291,2.013,1.668,1.105,0.334,0.032,0.037,0.047,0.062,0.044,0.021,0.016,0.042,0.098,0.129,0.125,0.152,0.057,0.436,0.918,1.805,2.3,2.159,2.128,1.927,1.697,1.241,0.654,0.078,0.0,0.008,0.01,0.007,0.014,0.056,0.07,0.079,0.082,0.094,0.134,0.17,0.152,0.287,0.637,1.166,1.401,1.546,1.317,1.214,1.031,0.76,0.409,0.004,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.011,0.032,0.037,0.044,0.053,0.05,0.272,0.536,0.849,0.985,1.256,1.394,1.369,1.185,0.929,0.593,0.147,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.005,0.008,0.012,0.019,0.025,0.018,0.2,0.409,0.77,1.068,1.296,1.329,1.143,0.95,0.636,0.365,0.104,0.0,0.0,0.0,0.0,0.0,0.0],"grid_import_kwh":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.753,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.223,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"start":"2024-09-30T00:00"}}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+'use strict';
+var D = JSON.parse(document.getElementById('data').textContent);
+var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+function isDark(){var a=document.documentElement.getAttribute('data-theme');if(a)return a==='dark';return matchMedia('(prefers-color-scheme: dark)').matches;}
+function fmt(v,d){return Number(v).toLocaleString('zh-CN',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});}
+function lerp(a,b,t){return a+(b-a)*t;}
+function mixHex(a,b,t){var A=parseInt(a.slice(1),16),B=parseInt(b.slice(1),16);var r=Math.round(lerp(A>>16,B>>16,t)),g=Math.round(lerp(A>>8&255,B>>8&255,t)),bl=Math.round(lerp(A&255,B&255,t));return 'rgb('+r+','+g+','+bl+')';}
+
+/* ---------------- 按钮跳转 ---------------- */
+document.querySelectorAll('[data-go]').forEach(function(b){b.addEventListener('click',function(){var id=b.dataset.go==='demo'?'demo-sec':'cal-sec';document.getElementById(id).scrollIntoView({behavior:reduce?'auto':'smooth'});});});
+
+/* ---------------- 进入视野：位移出现 + 数字滚动 ---------------- */
+var io = 'IntersectionObserver' in window ? new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.remove('pre');var c=e.target.querySelector('[data-count]')||(e.target.dataset.count?e.target:null);if(c&&!c._done){c._done=1;countUp(c);}io.unobserve(e.target);}});},{threshold:.18}) : null;
+document.querySelectorAll('.reveal').forEach(function(el){var r=el.getBoundingClientRect();if(io&&!reduce&&r.top>innerHeight){el.classList.add('pre');io.observe(el);}});
+function countUp(el){if(reduce)return;var to=+el.dataset.count,small=el.querySelector('small'),unit=small?small.outerHTML:'',t0=performance.now();function f(n){var p=Math.min(1,(n-t0)/900),e=1-Math.pow(1-p,3);el.innerHTML=fmt(to*e)+unit;if(p<1)requestAnimationFrame(f);}requestAnimationFrame(f);}
+
+/* ---------------- 首屏 3D 场景 ---------------- */
+var W = D.week, HOURS = W.load_kwh.length, start = new Date(W.start+':00');
+var hud = {date:document.getElementById('hudDate'),load:document.getElementById('hudLoad'),gen:document.getElementById('hudGen'),self:document.getElementById('hudSelf'),waste:document.getElementById('hudWaste'),bar:document.getElementById('hudBar')};
+var sky = document.getElementById('sky');
+var WEEK=['周日','周一','周二','周三','周四','周五','周六'];
+function at(arr,h){var i=Math.floor(h)%HOURS,j=(i+1)%HOURS,t=h-Math.floor(h);return lerp(arr[i],arr[j],t);}
+
+function setSky(elev){
+  var dark=isDark();
+  var day=dark?['#1D3A44','#0C1110']:['#FFE7B8','#FBFBFA'], dusk=dark?['#3A2A33','#0C1110']:['#FFC9A6','#FBFBFA'], night=dark?['#0E1C2C','#0C1110']:['#C9D6EA','#FBFBFA'];
+  var a,b; if(elev<=0){a=night;b=night;} else if(elev<.25){var t=elev/.25;a=[mixHex(dusk[0],day[0],t),day[1]];b=a;} else {a=day;b=day;}
+  sky.style.background='radial-gradient(58% 70% at 74% 46%,'+a[0]+' 0%,'+a[1]+' 70%)';
+}
+
+function initThree(){
+  if(!window.THREE){document.getElementById('fallback').hidden=false;return;}
+  var canvas=document.getElementById('three'), box=document.getElementById('stage3d');
+  var renderer; try{renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});}catch(e){document.getElementById('fallback').hidden=false;return;}
+  renderer.setPixelRatio(Math.min(2,window.devicePixelRatio||1));
+  renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  renderer.outputEncoding=THREE.sRGBEncoding; renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.1;
+  var scene=new THREE.Scene();
+  var cam=new THREE.OrthographicCamera(-1,1,1,-1,.1,100);
+  function size(){var w=box.clientWidth,h=box.clientHeight,f=8.6,asp=w/h;cam.left=-f*asp;cam.right=f*asp;cam.top=f;cam.bottom=-f;cam.updateProjectionMatrix();renderer.setSize(w,h,false);}
+  size(); addEventListener('resize',size);
+  var L=function(c){return new THREE.Color(c).convertSRGBToLinear();};
+  var M=function(c,o){return new THREE.MeshStandardMaterial(Object.assign({color:L(c),roughness:.85,metalness:0},o||{}));};
+  function mesh(g,m,x,y,z,cast,rec){var o=new THREE.Mesh(g,m);o.position.set(x||0,y||0,z||0);o.castShadow=cast!==false;o.receiveShadow=rec!==false;scene.add(o);return o;}
+
+  // 底座
+  mesh(new THREE.CylinderGeometry(9.2,9.5,.8,96),M('#9FB8AB'),0,-.4,0,false,true);
+  mesh(new THREE.CylinderGeometry(9.2,9.2,.02,96),M('#C3DCCB'),0,.01,0,false,true);
+  mesh(new THREE.BoxGeometry(2.2,.03,7.5),M('#F3F1EC'),-0.6,.03,4.6,false,true); // 步道
+  // 主楼
+  var wall=M('#F3EFE7');
+  mesh(new THREE.BoxGeometry(5.6,3.4,3.6),wall,-.6,1.7,0);
+  mesh(new THREE.BoxGeometry(5.9,.18,3.9),M('#2F4A50'),-.6,3.49,0);              // 檐口
+  mesh(new THREE.BoxGeometry(2.4,1.9,2.6),wall,3.0,.95,.5);                      // 附楼
+  mesh(new THREE.BoxGeometry(2.6,.14,2.8),M('#2F4A50'),3.0,1.97,.5);
+  mesh(new THREE.BoxGeometry(1.8,.12,.9),M('#DDE3E1'),-.6,1.2,2.2);              // 入口雨棚
+  // 窗户（发光材质，空调运行时点亮）
+  var winMats=[];
+  function win(x,y,z,ry){var m=new THREE.MeshStandardMaterial({color:L('#1E2E35'),roughness:.2,metalness:.3,emissive:L('#FFC872'),emissiveIntensity:0});winMats.push(m);var o=mesh(new THREE.PlaneGeometry(.78,.72),m,x,y,z,false,false);o.rotation.y=ry||0;return o;}
+  for(var r=0;r<2;r++)for(var c=0;c<5;c++){ if(!(r===0&&c===2)) win(-2.8+c*1.1,1.15+r*1.25,1.81); }
+  for(var r2=0;r2<2;r2++)for(var c2=0;c2<3;c2++) win(2.21,1.15+r2*1.25,-1.15+c2*1.15,Math.PI/2);
+  mesh(new THREE.PlaneGeometry(.9,1.15),M('#3B4A50',{roughness:.3}),-.6,.58,1.81,false,false); // 门
+  [0.72,1.97].forEach(function(y){mesh(new THREE.BoxGeometry(5.62,.08,.02),M('#D9D2C5'),-.6,y,1.805,false,false);});
+  mesh(new THREE.BoxGeometry(5.62,.35,.02),M('#2F4A50'),-.6,3.18,1.805,false,false);
+  // 空调外机
+  var fans=[];
+  for(var k=0;k<3;k++){mesh(new THREE.BoxGeometry(.62,.46,.3),M('#EEF1F0'),-3.6+k*.0,0.6+k*0.0,0,true,true).position.set(-3.75,.55+k*1.05,-.6+k*0.0);
+    var f=new THREE.Mesh(new THREE.CircleGeometry(.15,24),M('#9AA6A3'));f.position.set(-4.065,.55+k*1.05,-.6);f.rotation.y=-Math.PI/2;scene.add(f);fans.push(f);}
+  // 屋顶光伏
+  var pvMats=[];
+  for(var pr=0;pr<2;pr++)for(var pc=0;pc<4;pc++){
+    var pm=new THREE.MeshStandardMaterial({color:L('#24385A'),roughness:.28,metalness:.55,emissive:L('#FFB547'),emissiveIntensity:0});pvMats.push(pm);
+    var p=mesh(new THREE.BoxGeometry(1.15,.06,.82),pm,-2.55+pc*1.3,3.85,-.75+pr*1.25);p.rotation.x=-.42;
+    mesh(new THREE.BoxGeometry(.06,.36,.06),M('#B9C3C0'),-2.55+pc*1.3,3.68,-.45+pr*1.25);
+  }
+  // 小风机
+  var tx=5.3,tz=-3.2;
+  mesh(new THREE.CylinderGeometry(.09,.18,6.6,24),M('#F4F6F5',{roughness:.5}),tx,3.3,tz);
+  mesh(new THREE.BoxGeometry(.8,.36,.36),M('#EEF1F0',{roughness:.45}),tx,6.66,tz);
+  var hub=new THREE.Group();hub.position.set(tx,6.66,tz+.28);scene.add(hub);
+  var blade=M('#FFFFFF',{roughness:.4});
+  for(var b=0;b<3;b++){var bl=new THREE.Mesh(new THREE.BoxGeometry(.16,2.6,.04),blade);bl.geometry.translate(0,1.3,0);bl.rotation.z=b*Math.PI*2/3;bl.castShadow=true;hub.add(bl);}
+  var cone=new THREE.Mesh(new THREE.SphereGeometry(.14,16,12),M('#DDE3E1'));hub.add(cone);
+  // 树
+  var leaf=M('#7FB59A',{flatShading:true}),leaf2=M('#5E9E83',{flatShading:true}),trunk=M('#9C8B78');
+  [[-6.6,2.4,1],[-5.8,4.4,.8],[-7.0,-1.6,1.1],[1.6,5.8,.75],[6.9,1.8,.9],[-3.4,-5.6,.95],[2.6,-5.4,.8]].forEach(function(t,i){mesh(new THREE.CylinderGeometry(.07,.1,.6,8),trunk,t[0],.3,t[1]);mesh(new THREE.IcosahedronGeometry(.62*t[2],0),i%2?leaf:leaf2,t[0],.95*t[2]+.35,t[1]);});
+  // 灯光
+  var hemi=new THREE.HemisphereLight('#EAF4FF','#8FA59A',.55);scene.add(hemi);
+  var sun=new THREE.DirectionalLight('#FFFFFF',1.6);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
+  var sc=sun.shadow.camera;sc.left=-12;sc.right=12;sc.top=12;sc.bottom=-12;sc.near=1;sc.far=60;sun.shadow.bias=-.0006;sun.shadow.radius=5;
+  scene.add(sun);scene.add(sun.target);
+  var fill=new THREE.DirectionalLight('#9FC2FF',.15);fill.position.set(-10,8,6);scene.add(fill);
+  // 能量粒子
+  var parts=[],pg=new THREE.SphereGeometry(.07,10,8);
+  function spawn(kind,src){var m=new THREE.MeshBasicMaterial({color:kind==='self'?'#16A394':'#E8A317',transparent:true,opacity:1});var o=new THREE.Mesh(pg,m);scene.add(o);
+    var a=src.clone(),end=kind==='self'?new THREE.Vector3(-2.8+Math.random()*4.4,1.2+Math.random()*1.3,1.9):new THREE.Vector3(src.x+(Math.random()-.5)*5,9.5+Math.random()*2,src.z+(Math.random()-.5)*4);
+    var mid=a.clone().lerp(end,.5);mid.y+=kind==='self'?1.6:1.0;parts.push({o:o,a:a,b:mid,c:end,t:0,kind:kind,spd:.5+Math.random()*.3});}
+  var pvSrc=new THREE.Vector3(-.6,4.1,0),wSrc=new THREE.Vector3(tx,6.66,tz);
+
+  cam.position.set(16,13.5,17);cam.lookAt(.4,1.9,0);
+  var base=cam.position.clone();
+  var hour=8,last=performance.now(),acc={self:0,waste:0},rot=0,SPEED=reduce?0:2.6; // 小时/秒
+  var hudTick=0;
+  function frame(now){
+    var dt=Math.min(.05,(now-last)/1000);last=now;
+    hour=(hour+dt*SPEED)%HOURS;
+    var hd=hour%24, load=at(W.load_kwh,hour), pv=at(W.pv_generation_kwh,hour), wind=at(W.wind_generation_kwh,hour), self=at(W.self_use_kwh,hour), waste=at(W.curtailment_kwh,hour);
+    // 太阳：6 点升起，18 点落下（示意轨迹），强度按真实光伏发电
+    var s=(hd-6)/12, elev=Math.sin(Math.PI*Math.max(0,Math.min(1,s)));
+    var az=lerp(-1.25,1.25,Math.max(0,Math.min(1,s)));
+    sun.position.set(Math.sin(az)*14,Math.max(.5,elev*16),Math.cos(az)*10+4);
+    sun.intensity=s>0&&s<1?.35+1.5*Math.min(1,pv/1.3+elev*.4):0;
+    sun.color.set(elev<.35?'#FFC08A':'#FFF6EA');
+    hemi.intensity=.18+.42*elev; hemi.color.set(elev>0?'#EAF4FF':'#5E7398');
+    setSky(s>0&&s<1?elev:0);
+    renderer.toneMappingExposure=.62+.3*elev;
+    winMats.forEach(function(m){m.emissiveIntensity=load>0.01?Math.min(1.6,.6+load*1.6):0;});
+    pvMats.forEach(function(m){m.emissiveIntensity=Math.min(.55,pv*.42);});
+    rot+=dt*(wind>0?(1.2+wind*9):.15);hub.rotation.z=-rot;
+    fans.forEach(function(f){f.rotation.z+=load>0.01?dt*14:0;});
+    // 粒子：按真实“用上 / 浪费”电量生成
+    if(!reduce){acc.self+=self*dt*SPEED*9;acc.waste+=waste*dt*SPEED*9;
+      while(acc.self>=1){acc.self-=1;spawn('self',pv>wind?pvSrc:wSrc);}
+      while(acc.waste>=1){acc.waste-=1;spawn('waste',Math.random()<pv/(pv+wind+1e-9)?pvSrc:wSrc);}}
+    for(var i=parts.length-1;i>=0;i--){var q=parts[i];q.t+=dt*q.spd;var t=q.t,u=1-t;
+      q.o.position.set(u*u*q.a.x+2*u*t*q.b.x+t*t*q.c.x,u*u*q.a.y+2*u*t*q.b.y+t*t*q.c.y,u*u*q.a.z+2*u*t*q.b.z+t*t*q.c.z);
+      q.o.material.opacity=q.kind==='waste'?Math.max(0,1-t):Math.min(1,1.4-t);
+      if(t>=1){scene.remove(q.o);q.o.material.dispose();parts.splice(i,1);}}
+    // 镜头轻微环绕
+    var sw=reduce?0:Math.sin(now/9000)*.09;cam.position.set(base.x*Math.cos(sw)-base.z*Math.sin(sw),base.y,base.x*Math.sin(sw)+base.z*Math.cos(sw));cam.lookAt(.4,1.9,0);
+    if(now-hudTick>120){hudTick=now;var dtm=new Date(start.getTime()+Math.floor(hour)*3600e3);
+      hud.date.textContent=dtm.getFullYear()+'-'+String(dtm.getMonth()+1).padStart(2,'0')+'-'+String(dtm.getDate()).padStart(2,'0')+' '+WEEK[dtm.getDay()]+' '+String(dtm.getHours()).padStart(2,'0')+':00';
+      var i0=Math.floor(hour);hud.load.textContent=W.load_kwh[i0].toFixed(2);hud.gen.textContent=(W.pv_generation_kwh[i0]+W.wind_generation_kwh[i0]).toFixed(2);
+      hud.self.textContent=W.self_use_kwh[i0].toFixed(2);hud.waste.textContent=W.curtailment_kwh[i0].toFixed(2);hud.bar.style.width=(hour/HOURS*100).toFixed(1)+'%';}
+    renderer.render(scene,cam);
+    if(!reduce)requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+initThree();
+
+/* ---------------- 能源日历 ---------------- */
+var cal=document.getElementById('cal'),keys=document.getElementById('calkeys');
+var days=Math.ceil(D.n/24),view='cat',drawnTo=days,anim=null,userPicked=false;
+var C={empty:'rgba(234,242,240,0.05)',self:'#16A394',waste:'#E0802A',imp:'#7568C8',ink:'#93A5A1'};
+var RAMP={load:['#12302C','#5AD8CA'],gen:['#2A2108','#F2B33D']};
+var KEYS={load:'<span><i style="background:linear-gradient(90deg,#12302C,#5AD8CA);width:40px"></i>少 → 多</span>',gen:'<span><i style="background:linear-gradient(90deg,#2A2108,#F2B33D);width:40px"></i>少 → 多</span>',
+  cat:'<span><i style="background:#16A394"></i>发的电当时用上</span><span><i style="background:#E0802A"></i>发了没人用</span><span><i style="background:#7568C8"></i>主要靠电网</span>'};
+var geo={};
+function layout(){var wrap=cal.parentElement,w=Math.max(720,wrap.clientWidth-36),ml=34,mb=22;var cw=(w-ml)/days,ch=11;geo={w:w,h:ch*24+mb,ml:ml,cw:cw,ch:ch};var dpr=Math.min(2,devicePixelRatio||1);cal.width=w*dpr;cal.height=geo.h*dpr;cal.style.width=w+'px';cal.style.height=geo.h+'px';cal.getContext('2d').setTransform(dpr,0,0,dpr,0,0);}
+function colorAt(i){var ch=(view==='load'?D.load:view==='gen'?D.gen:D.cat).charCodeAt(i)-48;
+  if(view==='cat')return ch===1?C.self:ch===2?C.waste:ch===3?C.imp:C.empty;
+  if(!ch)return C.empty; return mixHex(RAMP[view][0],RAMP[view][1],(ch-1)/8);}
+function draw(upto){var ctx=cal.getContext('2d');ctx.clearRect(0,0,geo.w,geo.h);
+  for(var d=0;d<days;d++){for(var h=0;h<24;h++){var i=d*24+h;if(i>=D.n)break;ctx.fillStyle=d<upto?colorAt(i):C.empty;ctx.fillRect(geo.ml+d*geo.cw,h*geo.ch,Math.max(1,geo.cw-.6),geo.ch-1.5);}}
+  ctx.fillStyle=C.ink;ctx.font='11px "Noto Sans SC",sans-serif';ctx.textAlign='right';ctx.textBaseline='middle';
+  [0,6,12,18,23].forEach(function(h){ctx.fillText(h+'时',geo.ml-6,h*geo.ch+geo.ch/2);});
+  ctx.textAlign='left';ctx.textBaseline='alphabetic';var sd=new Date(D.start+':00');
+  for(var d2=0;d2<days;d2++){var dt=new Date(sd.getTime()+d2*864e5);if(dt.getDate()===1)ctx.fillText((dt.getMonth()+1)+'月',geo.ml+d2*geo.cw,geo.h-6);}}
+function setView(v,animate){view=v;keys.innerHTML=KEYS[v];document.querySelectorAll('[data-view]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.view===v));});
+  if(anim)cancelAnimationFrame(anim);if(!animate||reduce){draw(days);return;}var t0=performance.now();(function f(n){var p=Math.min(1,(n-t0)/1100),e=1-Math.pow(1-p,3);draw(Math.ceil(days*e));if(p<1)anim=requestAnimationFrame(f);})(t0);}
+layout();setView('cat',false);
+addEventListener('resize',function(){layout();draw(days);});
+document.querySelectorAll('[data-view]').forEach(function(b){b.addEventListener('click',function(){userPicked=true;setView(b.dataset.view,true);});});
+var order=['cat','load','gen'],cyc=0,calTimer=null;
+if(io&&!reduce){new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&!calTimer){setView(view,true);calTimer=setInterval(function(){if(userPicked){clearInterval(calTimer);return;}cyc=(cyc+1)%3;setView(order[cyc],true);},5200);}else if(!e.isIntersecting&&calTimer){clearInterval(calTimer);calTimer=null;}});},{threshold:.35}).observe(cal);}
+
+/* ---------------- 电去哪了 ---------------- */
+var R={pv:{self:472,waste:1742,imp:123,total:2214,pct:79,lab:'的光伏发电，发出来时没人用'},combo:{self:486,waste:2638,imp:110,total:3124,pct:84,lab:'的光伏+风机发电，发出来时没人用'}};
+var circ=2*Math.PI*92,rs=document.getElementById('ringSelf'),rw=document.getElementById('ringWaste');
+function ring(k){var d=R[k];var fs=d.self/d.total*circ,fw=d.waste/d.total*circ;
+  rs.setAttribute('stroke-dasharray',fs+' '+circ);rw.setAttribute('stroke-dasharray',fw+' '+circ);rw.setAttribute('stroke-dashoffset',-fs);
+  rs.style.transition=rw.style.transition=reduce?'none':'stroke-dasharray 1s cubic-bezier(.2,.7,.1,1), stroke-dashoffset 1s cubic-bezier(.2,.7,.1,1)';
+  document.getElementById('ringPct').textContent=d.pct+'%';document.getElementById('ringLab').textContent=d.lab;
+  document.getElementById('lSelf').textContent=fmt(d.self);document.getElementById('lWaste').textContent=fmt(d.waste);document.getElementById('lImp').textContent=fmt(d.imp);
+  document.querySelectorAll('[data-ring]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.ring===k));});}
+ring('pv');document.querySelectorAll('[data-ring]').forEach(function(b){b.addEventListener('click',function(){ring(b.dataset.ring);});});
+
+/* ---------------- 一键演示（示意） ---------------- */
+var SC=[['场景','广州一间 35㎡ 办公室，工作日 8 点到 18 点开空调，6 台设备全年达标。'],['有人建议','装 2 kWp 光伏和一台小风机。一年能发 3,124 kWh，是空调用电的五倍。'],['能源日历','把 8,784 个小时铺开：正午发电、夜里风机转，房间却没人用电。'],['10 年总账','只用电网最省。加装光伏多花 4,899 元，加装小风机多花约 9.3 万元。'],['换个条件','三间同类房间时，光伏多花降到 2,719 元。导出决策简报，带走结论。']];
+var dots=document.getElementById('dots'),steps=document.getElementById('steps'),cap=document.getElementById('cap'),st=document.getElementById('sceneT'),pp=document.getElementById('pp');
+SC.forEach(function(s,i){dots.insertAdjacentHTML('beforeend','<span><i></i></span>');steps.insertAdjacentHTML('beforeend','<div><span class="n num">0'+(i+1)+'</span><span><b>'+s[0]+'</b><br>'+s[1]+'</span></div>');});
+var cur=0,playing=!reduce,t0d=performance.now(),DUR=4800;
+function show(i){cur=i;st.textContent='第 '+(i+1)+' 幕 / 5';cap.textContent=SC[i][1];steps.querySelectorAll('div').forEach(function(d,k){d.classList.toggle('on',k===i);d.style.color=k===i?'var(--stage-ink)':'';});dots.querySelectorAll('i').forEach(function(d,k){d.style.width=k<i?'100%':'0';});}
+show(0);
+pp.addEventListener('click',function(){playing=!playing;t0d=performance.now()-(parseFloat(dots.children[cur].firstChild.style.width)||0)/100*DUR;pp.innerHTML=playing?'<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>':'<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';pp.setAttribute('aria-label',playing?'暂停':'播放');});
+(function loop(n){if(playing){var p=(n-t0d)/DUR;if(p>=1){t0d=n;show((cur+1)%5);p=0;}dots.children[cur].firstChild.style.width=(p*100)+'%';}requestAnimationFrame(loop);})(performance.now());
+})();
+</script>
+</body></html>
