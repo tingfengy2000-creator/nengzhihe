@@ -1,0 +1,1423 @@
+{
+  "source_commit": "9ff9304b60ba5cae5ff19c37220c077c67a1efb2",
+  "fixture_type": "3-hour contract fixture; not annual demonstration",
+  "note": "Actual HTTP request/response projections; no mocked calculators. Short fixture is not an annual demo.",
+  "full_response_evidence": "operation_planning/results/phase2b_carbon_5090/api_contracts_v6/http_contract_results.json",
+  "examples": [
+    {
+      "method": "GET",
+      "path": "/api/operation/options",
+      "http_status": 200,
+      "request": null,
+      "response": {
+        "status": "success",
+        "cities": [
+          {
+            "site_id": "guangzhou",
+            "name": "广州",
+            "latitude": 23.1291,
+            "longitude": 113.2644,
+            "cached_years": [
+              "2023",
+              "2024",
+              "2025"
+            ]
+          },
+          {
+            "site_id": "beijing",
+            "name": "北京",
+            "latitude": 39.9042,
+            "longitude": 116.4074,
+            "cached_years": [
+              "2023",
+              "2024",
+              "2025"
+            ]
+          },
+          {
+            "site_id": "harbin",
+            "name": "哈尔滨",
+            "latitude": 45.8038,
+            "longitude": 126.535,
+            "cached_years": [
+              "2023",
+              "2024",
+              "2025"
+            ]
+          }
+        ],
+        "years": [
+          2023,
+          2024,
+          2025
+        ],
+        "equipment_model_count": 3,
+        "tariffs": [
+          {
+            "tariff_id": "fujian_industrial_lt1kv_202607",
+            "verified": true,
+            "provisional": false,
+            "verification_status": "verified",
+            "source_url": "https://www.dehua.gov.cn/zwgk/zdxxgk/ggqsy/gd/202607/t20260715_3309391.htm"
+          },
+          {
+            "tariff_id": "guangzhou_industrial_lt1kv_202110",
+            "verified": true,
+            "provisional": false,
+            "verification_status": "verified",
+            "source_url": "https://fgw.gz.gov.cn/ztzl/gzsfzggwzdlyxxgkzl/ys/content/post_9497778.html"
+          },
+          {
+            "tariff_id": "guangdong_north_industrial_lt1kv_202607",
+            "verified": true,
+            "provisional": false,
+            "verification_status": "verified",
+            "source_url": "https://www.heyuan.gov.cn/zwgk/ggqsydwxx/gd/content/post_709619.html"
+          },
+          {
+            "tariff_id": "guangzhou_industrial_lt1kv_202610",
+            "verified": false,
+            "provisional": true,
+            "verification_status": "provisional",
+            "source_url": "https://energydc.cn/policy/guangdong/2026-09/ffdcada5-baab-11f1-959b-ce30ac533824"
+          }
+        ],
+        "carbon_factor_count": 41
+      },
+      "response_projection": true,
+      "actual_http_elapsed_ms": 3.624
+    },
+    {
+      "method": "POST",
+      "path": "/api/operation/thermal/size",
+      "http_status": 200,
+      "request": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "area_m2": 35,
+          "equipment_id": "midea_msagbu12_mox201",
+          "equipment_count": 2,
+          "units_per_room": 2,
+          "room_count": 1
+        },
+        "weather": {
+          "time": [
+            "2024-07-01T08:00",
+            "2024-07-01T09:00",
+            "2024-07-01T10:00"
+          ],
+          "hourly": {
+            "temperature_2m": [
+              30,
+              31,
+              32
+            ],
+            "relative_humidity_2m": [
+              70,
+              70,
+              70
+            ],
+            "surface_pressure": [
+              1010,
+              1010,
+              1010
+            ],
+            "shortwave_radiation": [
+              200,
+              400,
+              600
+            ],
+            "wind_speed_10m": [
+              10,
+              10,
+              10
+            ],
+            "wind_direction_10m": [
+              180,
+              180,
+              180
+            ],
+            "direct_normal_irradiance": [
+              300,
+              500,
+              700
+            ],
+            "diffuse_radiation": [
+              50,
+              50,
+              50
+            ]
+          },
+          "context": {
+            "site": {
+              "timezone": "Asia/Shanghai",
+              "latitude": 23.1291,
+              "longitude": 113.2644
+            }
+          },
+          "hash": "fixture"
+        },
+        "max_units": 2
+      },
+      "response": {
+        "status": "success",
+        "site_id": "guangzhou",
+        "year": 2024,
+        "weather_hash": "fixture",
+        "input_contract": {
+          "room": {
+            "area_m2": 35,
+            "equipment_id": "midea_msagbu12_mox201",
+            "equipment_count": 2,
+            "units_per_room": 2,
+            "room_count": 1
+          },
+          "cost": {
+            "study_years": 10,
+            "price_cny_per_kwh": null,
+            "calendar_start": null,
+            "discount_rate": 0.0,
+            "room_count": 1,
+            "units_per_room": 2,
+            "expected_life_years": null,
+            "warranty_years": null,
+            "quote_scope": "per_unit",
+            "quantity_semantics": "room_count × units_per_room; thermal energy is not multiplied by units_per_room again",
+            "quote": {},
+            "tariff_mapping": null
+          }
+        },
+        "max_units": 2,
+        "minimum_adequate_units_per_room": 2,
+        "candidates": [
+          {
+            "units_per_room": 1,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 2.282301224097723,
+            "annual_cooling_kwh": 7.759824161932258,
+            "capacity_shortfall_hours": 2.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 8.856151958539485
+          },
+          {
+            "units_per_room": 2,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 2.3961917517551967,
+            "annual_cooling_kwh": 8.147051955967669,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          }
+        ],
+        "notes": [
+          "每个候选均为同一房间的独立热湿回放；未把room_count重复乘入。",
+          "额定点设备适配，不等同现场实测选型。"
+        ]
+      },
+      "response_projection": true,
+      "actual_http_elapsed_ms": 1.399
+    },
+    {
+      "method": "POST",
+      "path": "/api/operation/hybrid/run",
+      "http_status": 200,
+      "request": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "area_m2": 35,
+          "equipment_id": "midea_msagbu12_mox201",
+          "equipment_count": 2,
+          "units_per_room": 2,
+          "room_count": 1
+        },
+        "weather": {
+          "time": [
+            "2024-07-01T08:00",
+            "2024-07-01T09:00",
+            "2024-07-01T10:00"
+          ],
+          "hourly": {
+            "temperature_2m": [
+              30,
+              31,
+              32
+            ],
+            "relative_humidity_2m": [
+              70,
+              70,
+              70
+            ],
+            "surface_pressure": [
+              1010,
+              1010,
+              1010
+            ],
+            "shortwave_radiation": [
+              200,
+              400,
+              600
+            ],
+            "wind_speed_10m": [
+              10,
+              10,
+              10
+            ],
+            "wind_direction_10m": [
+              180,
+              180,
+              180
+            ],
+            "direct_normal_irradiance": [
+              300,
+              500,
+              700
+            ],
+            "diffuse_radiation": [
+              50,
+              50,
+              50
+            ]
+          },
+          "context": {
+            "site": {
+              "timezone": "Asia/Shanghai",
+              "latitude": 23.1291,
+              "longitude": 113.2644
+            }
+          },
+          "hash": "fixture"
+        },
+        "pv_weather": {
+          "time": [
+            "2024-07-01T08:00",
+            "2024-07-01T09:00",
+            "2024-07-01T10:00"
+          ],
+          "hourly": {
+            "temperature_2m": [
+              30,
+              31,
+              32
+            ],
+            "relative_humidity_2m": [
+              70,
+              70,
+              70
+            ],
+            "surface_pressure": [
+              1010,
+              1010,
+              1010
+            ],
+            "shortwave_radiation": [
+              200,
+              400,
+              600
+            ],
+            "wind_speed_10m": [
+              10,
+              10,
+              10
+            ],
+            "wind_direction_10m": [
+              180,
+              180,
+              180
+            ],
+            "direct_normal_irradiance": [
+              300,
+              500,
+              700
+            ],
+            "diffuse_radiation": [
+              50,
+              50,
+              50
+            ]
+          },
+          "context": {
+            "site": {
+              "timezone": "Asia/Shanghai",
+              "latitude": 23.1291,
+              "longitude": 113.2644
+            }
+          },
+          "hash": "fixture"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "usable_fraction": 0.8,
+          "auto_capacity": true,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "wind": {
+            "turbine_count": 0
+          },
+          "study_years": 2,
+          "budget_cny": 90000,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "residual_fraction": 0.05
+          },
+          "shared_connection_cny": 0
+        },
+        "storage": {
+          "capacities_kwh": [
+            0
+          ],
+          "round_trip_efficiency": 0.9
+        }
+      },
+      "response": {
+        "status": "success",
+        "report": {
+          "project_load_contract": {
+            "scope": "project; same-room aggregation of single-room trace",
+            "room_count": 1,
+            "units_per_room": 2,
+            "electric_load_kwh": 2.3961917517551967,
+            "source": "single-room thermal trace aggregated once by room_count",
+            "source_scope": "one-room; units_per_room included; room_count applied once by project_load / lifecycle",
+            "single_room_preserved": true
+          },
+          "recommended_pv_capacity_kwp": 0.0,
+          "recommendation": {
+            "status": "conditional",
+            "scenario_id": "S0_grid",
+            "complete_subset_best_scenario_id": "S0_grid",
+            "all_candidates_conclusion": "resolved_with_exclusions",
+            "eligible_scenario_ids": [
+              "S0_grid"
+            ],
+            "excluded_scenario_ids": [],
+            "unknown_scenario_ids": [],
+            "reason": "已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。"
+          },
+          "calculation_timing": {
+            "capacity_count": 4,
+            "elapsed_ms": 67.734,
+            "timing_scope": "本次HTTP请求内天气读取、空调负荷、容量比选、匹配和经济计算；不含浏览器网络等待"
+          },
+          "pv_capacity_sweep": [
+            {
+              "requested_capacity_kwp": 0.0,
+              "admission_status": "equivalent",
+              "status": "feasible",
+              "incremental_npv_vs_s0_cny": 0.0
+            },
+            {
+              "requested_capacity_kwp": 1.4,
+              "admission_status": "eligible",
+              "status": "feasible",
+              "incremental_npv_vs_s0_cny": -5003.348251421834
+            },
+            {
+              "requested_capacity_kwp": 2.8,
+              "admission_status": "eligible",
+              "status": "feasible",
+              "incremental_npv_vs_s0_cny": -10007.145754041943
+            },
+            {
+              "requested_capacity_kwp": 5.6,
+              "admission_status": "eligible",
+              "status": "feasible",
+              "incremental_npv_vs_s0_cny": -20016.837026887682
+            }
+          ],
+          "candidates": [
+            {
+              "scenario_id": "S0_grid",
+              "pv_capacity_kwp": 0.0,
+              "admission_status": "eligible",
+              "constraint_status": "feasible",
+              "generation_kwh": 0.0,
+              "self_use_kwh": 0.0,
+              "grid_import_kwh": 2.3961917517551967,
+              "hourly_row_count": 3,
+              "total_cost_npv_cny": 3.162973112317
+            },
+            {
+              "scenario_id": "S1_pv",
+              "pv_capacity_kwp": 0.0,
+              "admission_status": "equivalent",
+              "constraint_status": "feasible",
+              "generation_kwh": 0.0,
+              "self_use_kwh": 0.0,
+              "grid_import_kwh": 2.3961917517551967,
+              "hourly_row_count": 3,
+              "total_cost_npv_cny": 3.162973112317
+            },
+            {
+              "scenario_id": "S2_wind",
+              "pv_capacity_kwp": 0.0,
+              "admission_status": "equivalent",
+              "constraint_status": "feasible",
+              "generation_kwh": 0.0,
+              "self_use_kwh": 0.0,
+              "grid_import_kwh": 2.3961917517551967,
+              "hourly_row_count": 3,
+              "total_cost_npv_cny": 3.162973112317
+            },
+            {
+              "scenario_id": "S3_pv_wind",
+              "pv_capacity_kwp": 0.0,
+              "admission_status": "equivalent",
+              "constraint_status": "feasible",
+              "generation_kwh": 0.0,
+              "self_use_kwh": 0.0,
+              "grid_import_kwh": 2.3961917517551967,
+              "hourly_row_count": 3,
+              "total_cost_npv_cny": 3.162973112317
+            }
+          ]
+        }
+      },
+      "response_projection": true,
+      "actual_http_elapsed_ms": 69.627
+    },
+    {
+      "method": "POST",
+      "path": "/api/operation/hybrid/run",
+      "http_status": 200,
+      "request": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "area_m2": 35,
+          "equipment_id": "midea_msagbu12_mox201",
+          "equipment_count": 2,
+          "units_per_room": 2,
+          "room_count": 1
+        },
+        "weather": {
+          "time": [
+            "2024-07-01T08:00",
+            "2024-07-01T09:00",
+            "2024-07-01T10:00"
+          ],
+          "hourly": {
+            "temperature_2m": [
+              30,
+              31,
+              32
+            ],
+            "relative_humidity_2m": [
+              70,
+              70,
+              70
+            ],
+            "surface_pressure": [
+              1010,
+              1010,
+              1010
+            ],
+            "shortwave_radiation": [
+              200,
+              400,
+              600
+            ],
+            "wind_speed_10m": [
+              10,
+              10,
+              10
+            ],
+            "wind_direction_10m": [
+              180,
+              180,
+              180
+            ],
+            "direct_normal_irradiance": [
+              300,
+              500,
+              700
+            ],
+            "diffuse_radiation": [
+              50,
+              50,
+              50
+            ]
+          },
+          "context": {
+            "site": {
+              "timezone": "Asia/Shanghai",
+              "latitude": 23.1291,
+              "longitude": 113.2644
+            }
+          },
+          "hash": "fixture"
+        },
+        "pv_weather": {
+          "time": [
+            "2024-07-01T08:00",
+            "2024-07-01T09:00",
+            "2024-07-01T10:00"
+          ],
+          "hourly": {
+            "temperature_2m": [
+              30,
+              31,
+              32
+            ],
+            "relative_humidity_2m": [
+              70,
+              70,
+              70
+            ],
+            "surface_pressure": [
+              1010,
+              1010,
+              1010
+            ],
+            "shortwave_radiation": [
+              200,
+              400,
+              600
+            ],
+            "wind_speed_10m": [
+              10,
+              10,
+              10
+            ],
+            "wind_direction_10m": [
+              180,
+              180,
+              180
+            ],
+            "direct_normal_irradiance": [
+              300,
+              500,
+              700
+            ],
+            "diffuse_radiation": [
+              50,
+              50,
+              50
+            ]
+          },
+          "context": {
+            "site": {
+              "timezone": "Asia/Shanghai",
+              "latitude": 23.1291,
+              "longitude": 113.2644
+            }
+          },
+          "hash": "fixture"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "usable_fraction": 0.8,
+          "quote": {},
+          "fixed_capacity_kwp": 1,
+          "requested_capacities_kwp": [
+            1
+          ]
+        },
+        "hybrid": {
+          "wind": {
+            "turbine_count": 0
+          },
+          "study_years": 2,
+          "budget_cny": 90000,
+          "pv_quote": {},
+          "shared_connection_cny": 0
+        },
+        "storage": {
+          "capacities_kwh": [
+            0
+          ],
+          "round_trip_efficiency": 0.9
+        }
+      },
+      "response": {
+        "status": "success",
+        "report": {
+          "project_load_contract": {
+            "scope": "project; same-room aggregation of single-room trace",
+            "room_count": 1,
+            "units_per_room": 2,
+            "electric_load_kwh": 2.3961917517551967,
+            "source": "single-room thermal trace aggregated once by room_count",
+            "source_scope": "one-room; units_per_room included; room_count applied once by project_load / lifecycle",
+            "single_room_preserved": true
+          },
+          "recommended_pv_capacity_kwp": 1.0,
+          "recommendation": {
+            "status": "not_available",
+            "scenario_id": null,
+            "complete_subset_best_scenario_id": "S0_grid",
+            "all_candidates_conclusion": "unresolved",
+            "eligible_scenario_ids": [
+              "S0_grid"
+            ],
+            "excluded_scenario_ids": [],
+            "unknown_scenario_ids": [
+              "S1_pv"
+            ],
+            "reason": "仅能给出已核实子集内最优；仍有可能适用但报价/必要条件未知的候选，全候选结论未定，不能称它们已被其他方案击败。"
+          },
+          "calculation_timing": {
+            "capacity_count": 1,
+            "elapsed_ms": 26.423,
+            "timing_scope": "本次HTTP请求内天气读取、空调负荷、容量比选、匹配和经济计算；不含浏览器网络等待"
+          },
+          "pv_capacity_sweep": [
+            {
+              "requested_capacity_kwp": 1.0,
+              "admission_status": "unknown",
+              "status": "incomplete_quote",
+              "incremental_npv_vs_s0_cny": null
+            }
+          ],
+          "candidates": [
+            {
+              "scenario_id": "S0_grid",
+              "pv_capacity_kwp": 0.0,
+              "admission_status": "eligible",
+              "constraint_status": "feasible",
+              "generation_kwh": 0.0,
+              "self_use_kwh": 0.0,
+              "grid_import_kwh": 2.3961917517551967,
+              "hourly_row_count": 3,
+              "total_cost_npv_cny": 3.162973112317
+            },
+            {
+              "scenario_id": "S1_pv",
+              "pv_capacity_kwp": 1.0,
+              "admission_status": "unknown",
+              "constraint_status": "incomplete_quote",
+              "generation_kwh": 0.89604345179,
+              "self_use_kwh": 0.89604345179,
+              "grid_import_kwh": 1.5001482999651967,
+              "hourly_row_count": 3,
+              "total_cost_npv_cny": null
+            },
+            {
+              "scenario_id": "S2_wind",
+              "pv_capacity_kwp": 0.0,
+              "admission_status": "equivalent",
+              "constraint_status": "feasible",
+              "generation_kwh": 0.0,
+              "self_use_kwh": 0.0,
+              "grid_import_kwh": 2.3961917517551967,
+              "hourly_row_count": 3,
+              "total_cost_npv_cny": 3.162973112317
+            },
+            {
+              "scenario_id": "S3_pv_wind",
+              "pv_capacity_kwp": 1.0,
+              "admission_status": "equivalent",
+              "constraint_status": "incomplete_quote",
+              "generation_kwh": 0.89604345179,
+              "self_use_kwh": 0.89604345179,
+              "grid_import_kwh": 1.5001482999651967,
+              "hourly_row_count": 3,
+              "total_cost_npv_cny": null
+            }
+          ]
+        }
+      },
+      "response_projection": true,
+      "actual_http_elapsed_ms": 43.569
+    },
+    {
+      "method": "POST",
+      "path": "/api/operation/hybrid/run",
+      "http_status": 200,
+      "request": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "area_m2": 35,
+          "equipment_id": "midea_msagbu12_mox201",
+          "equipment_count": 2,
+          "units_per_room": 2,
+          "room_count": 1
+        },
+        "weather": {
+          "time": [
+            "2024-07-01T08:00",
+            "2024-07-01T09:00",
+            "2024-07-01T10:00"
+          ],
+          "hourly": {
+            "temperature_2m": [
+              30,
+              31,
+              32
+            ],
+            "relative_humidity_2m": [
+              70,
+              70,
+              70
+            ],
+            "surface_pressure": [
+              1010,
+              1010,
+              1010
+            ],
+            "shortwave_radiation": [
+              200,
+              400,
+              600
+            ],
+            "wind_speed_10m": [
+              10,
+              10,
+              10
+            ],
+            "wind_direction_10m": [
+              180,
+              180,
+              180
+            ],
+            "direct_normal_irradiance": [
+              300,
+              500,
+              700
+            ],
+            "diffuse_radiation": [
+              50,
+              50,
+              50
+            ]
+          },
+          "context": {
+            "site": {
+              "timezone": "Asia/Shanghai",
+              "latitude": 23.1291,
+              "longitude": 113.2644
+            }
+          },
+          "hash": "fixture"
+        },
+        "pv_weather": {
+          "time": [
+            "2024-07-01T08:00",
+            "2024-07-01T09:00",
+            "2024-07-01T10:00"
+          ],
+          "hourly": {
+            "temperature_2m": [
+              30,
+              31,
+              32
+            ],
+            "relative_humidity_2m": [
+              70,
+              70,
+              70
+            ],
+            "surface_pressure": [
+              1010,
+              1010,
+              1010
+            ],
+            "shortwave_radiation": [
+              200,
+              400,
+              600
+            ],
+            "wind_speed_10m": [
+              10,
+              10,
+              10
+            ],
+            "wind_direction_10m": [
+              180,
+              180,
+              180
+            ],
+            "direct_normal_irradiance": [
+              300,
+              500,
+              700
+            ],
+            "diffuse_radiation": [
+              50,
+              50,
+              50
+            ]
+          },
+          "context": {
+            "site": {
+              "timezone": "Asia/Shanghai",
+              "latitude": 23.1291,
+              "longitude": 113.2644
+            }
+          },
+          "hash": "fixture"
+        },
+        "pv": {
+          "roof_area_m2": 1,
+          "usable_fraction": 0.8,
+          "quote": {},
+          "fixed_capacity_kwp": 1,
+          "requested_capacities_kwp": [
+            1
+          ]
+        },
+        "hybrid": {
+          "wind": {
+            "turbine_count": 0
+          },
+          "study_years": 2,
+          "budget_cny": 90000,
+          "pv_quote": {},
+          "shared_connection_cny": 0
+        },
+        "storage": {
+          "capacities_kwh": [
+            0
+          ],
+          "round_trip_efficiency": 0.9
+        }
+      },
+      "response": {
+        "status": "success",
+        "report": {
+          "project_load_contract": {
+            "scope": "project; same-room aggregation of single-room trace",
+            "room_count": 1,
+            "units_per_room": 2,
+            "electric_load_kwh": 2.3961917517551967,
+            "source": "single-room thermal trace aggregated once by room_count",
+            "source_scope": "one-room; units_per_room included; room_count applied once by project_load / lifecycle",
+            "single_room_preserved": true
+          },
+          "recommended_pv_capacity_kwp": 1.0,
+          "recommendation": {
+            "status": "conditional",
+            "scenario_id": "S0_grid",
+            "complete_subset_best_scenario_id": "S0_grid",
+            "all_candidates_conclusion": "resolved_with_exclusions",
+            "eligible_scenario_ids": [
+              "S0_grid"
+            ],
+            "excluded_scenario_ids": [
+              "S1_pv"
+            ],
+            "unknown_scenario_ids": [],
+            "reason": "已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。"
+          },
+          "calculation_timing": {
+            "capacity_count": 1,
+            "elapsed_ms": 26.176,
+            "timing_scope": "本次HTTP请求内天气读取、空调负荷、容量比选、匹配和经济计算；不含浏览器网络等待"
+          },
+          "pv_capacity_sweep": [
+            {
+              "requested_capacity_kwp": 1.0,
+              "admission_status": "excluded",
+              "status": "not_applicable",
+              "incremental_npv_vs_s0_cny": null
+            }
+          ],
+          "candidates": [
+            {
+              "scenario_id": "S0_grid",
+              "pv_capacity_kwp": 0.0,
+              "admission_status": "eligible",
+              "constraint_status": "feasible",
+              "generation_kwh": 0.0,
+              "self_use_kwh": 0.0,
+              "grid_import_kwh": 2.3961917517551967,
+              "hourly_row_count": 3,
+              "total_cost_npv_cny": 3.162973112317
+            },
+            {
+              "scenario_id": "S1_pv",
+              "pv_capacity_kwp": 1.0,
+              "admission_status": "excluded",
+              "constraint_status": "not_applicable",
+              "generation_kwh": 0.89604345179,
+              "self_use_kwh": 0.89604345179,
+              "grid_import_kwh": 1.5001482999651967,
+              "hourly_row_count": 3,
+              "total_cost_npv_cny": null
+            },
+            {
+              "scenario_id": "S2_wind",
+              "pv_capacity_kwp": 0.0,
+              "admission_status": "equivalent",
+              "constraint_status": "feasible",
+              "generation_kwh": 0.0,
+              "self_use_kwh": 0.0,
+              "grid_import_kwh": 2.3961917517551967,
+              "hourly_row_count": 3,
+              "total_cost_npv_cny": 3.162973112317
+            },
+            {
+              "scenario_id": "S3_pv_wind",
+              "pv_capacity_kwp": 1.0,
+              "admission_status": "equivalent",
+              "constraint_status": "not_applicable",
+              "generation_kwh": 0.89604345179,
+              "self_use_kwh": 0.89604345179,
+              "grid_import_kwh": 1.5001482999651967,
+              "hourly_row_count": 3,
+              "total_cost_npv_cny": null
+            }
+          ]
+        }
+      },
+      "response_projection": true,
+      "actual_http_elapsed_ms": 27.774
+    },
+    {
+      "method": "POST",
+      "path": "/api/operation/hybrid/jobs",
+      "http_status": 202,
+      "request": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "area_m2": 35,
+          "equipment_id": "midea_msagbu12_mox201",
+          "equipment_count": 2,
+          "units_per_room": 2,
+          "room_count": 1
+        },
+        "weather": {
+          "time": [
+            "2024-07-01T08:00",
+            "2024-07-01T09:00",
+            "2024-07-01T10:00"
+          ],
+          "hourly": {
+            "temperature_2m": [
+              30,
+              31,
+              32
+            ],
+            "relative_humidity_2m": [
+              70,
+              70,
+              70
+            ],
+            "surface_pressure": [
+              1010,
+              1010,
+              1010
+            ],
+            "shortwave_radiation": [
+              200,
+              400,
+              600
+            ],
+            "wind_speed_10m": [
+              10,
+              10,
+              10
+            ],
+            "wind_direction_10m": [
+              180,
+              180,
+              180
+            ],
+            "direct_normal_irradiance": [
+              300,
+              500,
+              700
+            ],
+            "diffuse_radiation": [
+              50,
+              50,
+              50
+            ]
+          },
+          "context": {
+            "site": {
+              "timezone": "Asia/Shanghai",
+              "latitude": 23.1291,
+              "longitude": 113.2644
+            }
+          },
+          "hash": "fixture"
+        },
+        "pv_weather": {
+          "time": [
+            "2024-07-01T08:00",
+            "2024-07-01T09:00",
+            "2024-07-01T10:00"
+          ],
+          "hourly": {
+            "temperature_2m": [
+              30,
+              31,
+              32
+            ],
+            "relative_humidity_2m": [
+              70,
+              70,
+              70
+            ],
+            "surface_pressure": [
+              1010,
+              1010,
+              1010
+            ],
+            "shortwave_radiation": [
+              200,
+              400,
+              600
+            ],
+            "wind_speed_10m": [
+              10,
+              10,
+              10
+            ],
+            "wind_direction_10m": [
+              180,
+              180,
+              180
+            ],
+            "direct_normal_irradiance": [
+              300,
+              500,
+              700
+            ],
+            "diffuse_radiation": [
+              50,
+              50,
+              50
+            ]
+          },
+          "context": {
+            "site": {
+              "timezone": "Asia/Shanghai",
+              "latitude": 23.1291,
+              "longitude": 113.2644
+            }
+          },
+          "hash": "fixture"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "usable_fraction": 0.8,
+          "auto_capacity": true,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "wind": {
+            "turbine_count": 0
+          },
+          "study_years": 2,
+          "budget_cny": 90000,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "residual_fraction": 0.05
+          },
+          "shared_connection_cny": 0
+        },
+        "storage": {
+          "capacities_kwh": [
+            0
+          ],
+          "round_trip_efficiency": 0.9
+        }
+      },
+      "response": {
+        "status": "queued",
+        "job_id": "cc71735ee7c5",
+        "progress": 0.0
+      },
+      "response_projection": true,
+      "actual_http_elapsed_ms": 1.293
+    },
+    {
+      "method": "GET",
+      "path": "/api/operation/hybrid/jobs/cc71735ee7c5",
+      "http_status": 200,
+      "request": null,
+      "response": {
+        "job_id": "cc71735ee7c5",
+        "status": "done",
+        "progress": 1.0,
+        "elapsed_ms": 67.67392158508301,
+        "events": [
+          {
+            "at": 1791358008.4559364,
+            "type": "started",
+            "message": "已开始实时风光容量比选"
+          },
+          {
+            "at": 1791358008.4692082,
+            "type": "capacity_completed",
+            "completed": 1,
+            "total": 4,
+            "capacity_kwp": 0.0,
+            "message": "已完成0kWp容量计算"
+          },
+          {
+            "at": 1791358008.482591,
+            "type": "capacity_completed",
+            "completed": 2,
+            "total": 4,
+            "capacity_kwp": 1.4,
+            "message": "已完成1.4kWp容量计算"
+          },
+          {
+            "at": 1791358008.4964592,
+            "type": "capacity_completed",
+            "completed": 3,
+            "total": 4,
+            "capacity_kwp": 2.8,
+            "message": "已完成2.8kWp容量计算"
+          },
+          {
+            "at": 1791358008.5096524,
+            "type": "capacity_completed",
+            "completed": 4,
+            "total": 4,
+            "capacity_kwp": 5.6,
+            "message": "已完成5.6kWp容量计算"
+          },
+          {
+            "at": 1791358008.523488,
+            "type": "report_ready",
+            "message": "实时计算结果已生成"
+          }
+        ],
+        "error": null,
+        "message": null,
+        "field": null
+      },
+      "response_projection": true,
+      "actual_http_elapsed_ms": 1.552
+    },
+    {
+      "method": "POST",
+      "path": "/api/operation/hybrid/jobs",
+      "http_status": 202,
+      "request": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "area_m2": 35,
+          "equipment_id": "unsupported_contract_model",
+          "equipment_count": 2,
+          "units_per_room": 2,
+          "room_count": 1
+        },
+        "weather": {
+          "time": [
+            "2024-07-01T08:00",
+            "2024-07-01T09:00",
+            "2024-07-01T10:00"
+          ],
+          "hourly": {
+            "temperature_2m": [
+              30,
+              31,
+              32
+            ],
+            "relative_humidity_2m": [
+              70,
+              70,
+              70
+            ],
+            "surface_pressure": [
+              1010,
+              1010,
+              1010
+            ],
+            "shortwave_radiation": [
+              200,
+              400,
+              600
+            ],
+            "wind_speed_10m": [
+              10,
+              10,
+              10
+            ],
+            "wind_direction_10m": [
+              180,
+              180,
+              180
+            ],
+            "direct_normal_irradiance": [
+              300,
+              500,
+              700
+            ],
+            "diffuse_radiation": [
+              50,
+              50,
+              50
+            ]
+          },
+          "context": {
+            "site": {
+              "timezone": "Asia/Shanghai",
+              "latitude": 23.1291,
+              "longitude": 113.2644
+            }
+          },
+          "hash": "fixture"
+        },
+        "pv_weather": {
+          "time": [
+            "2024-07-01T08:00",
+            "2024-07-01T09:00",
+            "2024-07-01T10:00"
+          ],
+          "hourly": {
+            "temperature_2m": [
+              30,
+              31,
+              32
+            ],
+            "relative_humidity_2m": [
+              70,
+              70,
+              70
+            ],
+            "surface_pressure": [
+              1010,
+              1010,
+              1010
+            ],
+            "shortwave_radiation": [
+              200,
+              400,
+              600
+            ],
+            "wind_speed_10m": [
+              10,
+              10,
+              10
+            ],
+            "wind_direction_10m": [
+              180,
+              180,
+              180
+            ],
+            "direct_normal_irradiance": [
+              300,
+              500,
+              700
+            ],
+            "diffuse_radiation": [
+              50,
+              50,
+              50
+            ]
+          },
+          "context": {
+            "site": {
+              "timezone": "Asia/Shanghai",
+              "latitude": 23.1291,
+              "longitude": 113.2644
+            }
+          },
+          "hash": "fixture"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "usable_fraction": 0.8,
+          "auto_capacity": true,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "wind": {
+            "turbine_count": 0
+          },
+          "study_years": 2,
+          "budget_cny": 90000,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "residual_fraction": 0.05
+          },
+          "shared_connection_cny": 0
+        },
+        "storage": {
+          "capacities_kwh": [
+            0
+          ],
+          "round_trip_efficiency": 0.9
+        }
+      },
+      "response": {
+        "status": "queued",
+        "job_id": "054c4dcf42b6",
+        "progress": 0.0
+      },
+      "response_projection": true,
+      "actual_http_elapsed_ms": 1.069
+    },
+    {
+      "method": "GET",
+      "path": "/api/operation/hybrid/jobs/054c4dcf42b6",
+      "http_status": 200,
+      "request": null,
+      "response": {
+        "job_id": "054c4dcf42b6",
+        "status": "failed",
+        "progress": 0.0,
+        "elapsed_ms": 0.1773834228515625,
+        "events": [
+          {
+            "at": 1791358008.542826,
+            "type": "started",
+            "message": "已开始实时风光容量比选"
+          },
+          {
+            "at": 1791358008.542864,
+            "type": "failed",
+            "message": "未支持的设备型号：unsupported_contract_model"
+          }
+        ],
+        "error": "未支持的设备型号：unsupported_contract_model",
+        "message": "未支持的设备型号：unsupported_contract_model",
+        "field": "room.equipment_id"
+      },
+      "response_projection": true,
+      "actual_http_elapsed_ms": 0.686
+    }
+  ]
+}

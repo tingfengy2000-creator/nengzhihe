@@ -1,0 +1,64 @@
+{
+  "run_id": "phase2b-v6-short-http-contracts-5090",
+  "status": "passed",
+  "machine_role": "5090",
+  "source_commit": "9ff9304b60ba5cae5ff19c37220c077c67a1efb2",
+  "formal_annual_v6_source_commit": "ec8a7cf",
+  "source_change_note": "Post-annual-run interface-only change adds explicit provisional option fields and polling error payloads; annual v6 physics/results preserved.",
+  "workspace_at_start": [
+    " M operation_planning/protocol/phase2b_carbon_handoff_5090.md",
+    "?? docs/handoff/api_examples_v6.json",
+    "?? docs/handoff/replay_viewer/replay_cases_v6.json",
+    "?? operation_planning/results/phase2b_carbon_5090/api_contracts_v6/",
+    "?? operation_planning/results/phase2b_carbon_5090/replay_cases_v6.json",
+    "?? operation_planning/results/phase2b_carbon_5090/run_manifest_v6.json"
+  ],
+  "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+  "dependencies": {
+    "pvlib": "0.11.2",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "windpowerlib": "0.2.2"
+  },
+  "command": "python -X utf8 scripts/phase2b_api_contracts_v6_5090.py",
+  "started_utc": "2026-10-07T07:26:47.590049+00:00",
+  "finished_utc": "2026-10-07T07:26:49.064569+00:00",
+  "elapsed_ms": 1428.737,
+  "tests": [
+    {
+      "test": "test_v6_options_and_capacity_validation_contract",
+      "status": "passed"
+    },
+    {
+      "test": "test_v6_thermal_capacity_contract",
+      "status": "passed"
+    },
+    {
+      "test": "test_v6_fixed_capacity_preserves_unknown_and_excluded_status",
+      "status": "passed"
+    },
+    {
+      "test": "test_v6_async_contract_schema",
+      "status": "passed"
+    },
+    {
+      "test": "test_v6_http_options_thermal_and_async_contract",
+      "status": "passed"
+    },
+    {
+      "test": "test_v6_real_short_http_contract",
+      "status": "passed"
+    }
+  ],
+  "port_strategy": "independent ephemeral loopback port; no port 18765 restart",
+  "source_hashes": {
+    "operation_planning\\app.py": "1eb6bf5f867ff6298768795ff7f87bfd28cc077273d248400a18dbcc6e913924",
+    "tests\\test_phase2b_api_v6.py": "015105598db79e9ba8215bb177a9290f9ebc4e430eff46cd364b66ee4410d737",
+    "scripts\\phase2b_api_contracts_v6_5090.py": "75b5052dcc4786d0229a1fa48f29f668714a3153a1e495cd666e89ec8a105168"
+  },
+  "output_hashes": {
+    "operation_planning\\results\\phase2b_carbon_5090\\api_contracts_v6\\http_contract_results.json": "e2c58f326bd263ebec8cbe46600780ae1b3e2aaf6da7faa9202dbfd33b48f490",
+    "docs\\handoff\\api_examples_v6.json": "b3fa2d54c6450e9df8009952cacb49d94b5dc495d39c49ab5048c50e443b6b82"
+  }
+}
