@@ -1,0 +1,6 @@
+/* 能见度 · 示例、我的方案、关于数据、一键演示、模式提示 */
+.mode-banner { background: var(--warn-weak); border-bottom: 1px solid var(--line); font-size: 14px; }
+.mode-banner .container { display: flex; gap: 10px; align-items: center; padding-block: 10px; flex-wrap: wrap; }
+.mode-banner svg { width: 18px; height: 18px; color: var(--warn); flex: none; }
+.mode-banner span { flex: 1 1 320px; min-width: 0; }
+.mode-banner code { font-family: var(--mono); font-size: 12.5px; background: var(--surface); padding: 1px 6px; border-radius: 6px; word-break: break-all; }

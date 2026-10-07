@@ -1,0 +1,7 @@
+three.js r128 (npm package three@0.128.0), UMD build file build/three.min.js
+License: MIT (see LICENSE in this directory, copied from the same npm package)
+Source: https://registry.npmjs.org/three/-/three-0.128.0.tgz
+npm dist shasum (sha1 of the tarball): 884dacca6a330e45600a09ec5439283f50b76aa6 (verified on download)
+SHA-256 of three.min.js: 9274bbcec8d96168626c732b5d31c775aa8cfb7eaa0599bec0c175908a2c1ce2
+Same release as the approved design concept (docs/handoff/frontend_redesign/concept_reference.html), vendored so the product works offline.
+Retrieved: 2026-10-07

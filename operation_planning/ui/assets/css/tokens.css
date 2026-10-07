@@ -1,0 +1,169 @@
+/* 能见度 · 设计令牌
+ *
+ * 视觉以已批准的设计确认稿为准（docs/handoff/frontend_redesign/concept_reference.html）：
+ * 浅色为主、全幅分段、明暗区块交替、超大字号标题、等宽数字、玻璃顶栏。
+ * 深色模式是单独调色（不是反色），图表系列色在深色下换用另一组经校验的色阶。
+ *
+ * 图表系列色分两组，永远不在同一张图里混用（光伏琥珀与“浪费”橙在色觉上无法区分）：
+ *   去向组：用上 --c-self、浪费 --c-waste、从电网买 --c-import
+ *   来源组：光伏 --c-pv、风机 --c-wind（用电曲线用墨色 --c-load）
+ * 两组均用 dataviz 校验脚本（validate_palette.js，--pairs all）在浅色 #FBFBFA、
+ * 深色 #0C1110、深色舞台 #0B1413 三种底色上检查通过；浅色光伏琥珀对底色 2.97:1，
+ * 因此光伏系列一律配图例文字或数值标注。
+ */
+:root {
+  color-scheme: light;
+  /* 中性色 */
+  --bg: #FBFBFA;
+  --bg-2: #F2F4F3;
+  --surface: #FFFFFF;
+  --ink: #111716;
+  --ink-2: #4B5654;
+  --ink-3: #5F6B69;            /* 对 --bg 约 5.4:1 */
+  --line: rgba(17, 23, 22, .09);
+  --line-strong: rgba(17, 23, 22, .18);
+  --glass: rgba(251, 251, 250, .74);
+  --shadow-1: 0 1px 2px rgba(16, 24, 22, .05), 0 1px 3px rgba(16, 24, 22, .07);
+  --shadow-2: 0 12px 32px -12px rgba(16, 24, 22, .18);
+
+  /* 品牌青绿 */
+  --brand: #0E7C73;            /* 白字对比约 5.0:1 */
+  --brand-2: #0A625B;
+  --brand-ink: #FFFFFF;
+  --brand-weak: rgba(14, 124, 115, .09);
+  --brand-glow: rgba(14, 124, 115, .45);
+
+  /* 图表：去向组 */
+  --c-self: #0E9384;
+  --c-waste: #D4760A;
+  --c-import: #6B5FB5;
+  /* 图表：来源组 */
+  --c-pv: #C98500;
+  --c-wind: #2F80C9;
+  --c-load: #111716;
+  --c-grid: #6B5FB5;
+  --chart-grid: rgba(17, 23, 22, .08);
+  --chart-axis: #5F6B69;
+
+  /* 状态色（保留色，不作系列色；状态永远同时有文字 + 图标） */
+  --ok: #1B7A4B;      --ok-weak: #E6F4EC;
+  --warn: #8A5200;    --warn-weak: #FFF3DC;
+  --bad: #B42318;     --bad-weak: #FDEBE9;
+  --unknown: #4F5866; --unknown-weak: #ECEFF2;
+  --more: #B3400B;    /* “多花”文字色 */
+  --less: #1B7A4B;    /* “省下”文字色 */
+
+  /* 深色舞台（能源日历、一键演示；浅深主题下都保持深色） */
+  --stage: #0B1413;
+  --stage-2: #12201E;
+  --stage-ink: #EAF2F0;
+  --stage-ink-2: #A3B4B0;
+  --stage-line: rgba(234, 242, 240, .12);
+  --stage-accent: #5AD8CA;
+  --stage-self: #1E9E8E;
+  --stage-waste: #D17C26;
+  --stage-import: #8A7FDB;
+  --stage-empty: rgba(234, 242, 240, .05);
+
+  /* 字体：系统字体栈，不加载在线字体 */
+  --font: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+          "Noto Sans SC", "Noto Sans CJK SC", "Source Han Sans SC", "Segoe UI", sans-serif;
+  --num: "SF Pro Display", -apple-system, "Segoe UI Variable Display", "Segoe UI", "Roboto",
+         "Helvetica Neue", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+
+  /* 形状与动效 */
+  --r-sm: 10px;
+  --r: 16px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+  --ease: cubic-bezier(.2, .7, .1, 1);
+  --nav-h: 56px;
+  --max: 1180px;
+  --gutter: 24px;
+}
+
+/* 深色：重新调色 */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0C1110;
+  --bg-2: #121918;
+  --surface: #151D1C;
+  --ink: #EEF3F2;
+  --ink-2: #B3C0BD;
+  --ink-3: #8D9B98;
+  --line: rgba(238, 243, 242, .10);
+  --line-strong: rgba(238, 243, 242, .2);
+  --glass: rgba(12, 17, 16, .72);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, .4);
+  --shadow-2: 0 16px 40px -16px rgba(0, 0, 0, .7);
+
+  --brand: #2FC0B1;
+  --brand-2: #5AD8CA;
+  --brand-ink: #062320;
+  --brand-weak: rgba(47, 192, 177, .12);
+  --brand-glow: rgba(47, 192, 177, .35);
+
+  --c-self: #1E9E8E;
+  --c-waste: #D17C26;
+  --c-import: #8A7FDB;
+  --c-pv: #B88A12;
+  --c-wind: #4A93E0;
+  --c-load: #EEF3F2;
+  --c-grid: #8A7FDB;
+  --chart-grid: rgba(238, 243, 242, .09);
+  --chart-axis: #8D9B98;
+
+  --ok: #5BC98F;      --ok-weak: rgba(91, 201, 143, .12);
+  --warn: #F0B455;    --warn-weak: rgba(240, 180, 85, .12);
+  --bad: #F2867A;     --bad-weak: rgba(242, 134, 122, .12);
+  --unknown: #AAB4C0; --unknown-weak: rgba(170, 180, 192, .12);
+  --more: #F29B6B;
+  --less: #5BC98F;
+
+  --stage: #070D0C;
+  --stage-2: #0F1A18;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0C1110;
+    --bg-2: #121918;
+    --surface: #151D1C;
+    --ink: #EEF3F2;
+    --ink-2: #B3C0BD;
+    --ink-3: #8D9B98;
+    --line: rgba(238, 243, 242, .10);
+    --line-strong: rgba(238, 243, 242, .2);
+    --glass: rgba(12, 17, 16, .72);
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, .4);
+    --shadow-2: 0 16px 40px -16px rgba(0, 0, 0, .7);
+
+    --brand: #2FC0B1;
+    --brand-2: #5AD8CA;
+    --brand-ink: #062320;
+    --brand-weak: rgba(47, 192, 177, .12);
+    --brand-glow: rgba(47, 192, 177, .35);
+
+    --c-self: #1E9E8E;
+    --c-waste: #D17C26;
+    --c-import: #8A7FDB;
+    --c-pv: #B88A12;
+    --c-wind: #4A93E0;
+    --c-load: #EEF3F2;
+    --c-grid: #8A7FDB;
+    --chart-grid: rgba(238, 243, 242, .09);
+    --chart-axis: #8D9B98;
+
+    --ok: #5BC98F;      --ok-weak: rgba(91, 201, 143, .12);
+    --warn: #F0B455;    --warn-weak: rgba(240, 180, 85, .12);
+    --bad: #F2867A;     --bad-weak: rgba(242, 134, 122, .12);
+    --unknown: #AAB4C0; --unknown-weak: rgba(170, 180, 192, .12);
+    --more: #F29B6B;
+    --less: #5BC98F;
+
+    --stage: #070D0C;
+    --stage-2: #0F1A18;
+  }
+}

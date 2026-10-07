@@ -2,105 +2,104 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>能智核｜先试算，再决策</title>
-  <meta name="description" content="建筑空调用电与光伏、小风机投资的逐小时测算与10年总账比较。">
-  <link rel="stylesheet" href="/assets/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>能见度｜看见每一小时的电</title>
+  <meta name="description" content="低碳改造决策助手：按当地全年逐小时天气，算清空调用电、光伏与小风机发电能不能当时用上，再比较 10 年总账和真实减碳。">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    /* 主题：在样式加载前应用，避免闪烁。只在本机浏览器记住手动选择。 */
+    (function () { try { var t = localStorage.getItem('njd.theme'); if (t) t = JSON.parse(t); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {} })();
+  </script>
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/home.css">
+  <link rel="stylesheet" href="assets/css/tool.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
 </head>
 <body>
-  <a class="sr-only" href="#main">跳到主要内容</a>
+  <a class="skip" href="#main" id="skipLink">跳到主要内容</a>
 
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a class="brand" href="#/new" aria-label="能智核 首页">
-        <span class="brand-mark" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg>
-        </span>
-        <span>
-          <span class="brand-name">能智核</span>
-          <span class="brand-sub" id="brandSub">先试算，再决策 · 建筑空调与风光投资测算</span>
-        </span>
+  <nav class="nav" aria-label="主导航">
+    <div class="container">
+      <a class="wordmark" href="#/" aria-label="能见度 首页">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>能见度
       </a>
-      <nav class="nav" aria-label="主导航">
-        <a href="#/new" data-nav="new">新建试算</a>
+      <div class="navlinks" id="navlinks">
+        <a href="#/" data-nav="home">首页</a>
+        <a href="#/tool" data-nav="tool">开始试算</a>
+        <a href="#/samples" data-nav="samples">示例</a>
         <a href="#/plans" data-nav="plans">我的方案</a>
-      </nav>
-      <div class="topbar-right">
-        <button class="mode-pill" id="modePill" type="button" data-mode="replay" aria-label="当前数据模式，点击查看说明">
-          <span class="dot" aria-hidden="true"></span>
-          <span id="modeLabel">5090已验算样例</span>
+        <a href="#/about" data-nav="about">关于数据</a>
+      </div>
+      <div class="nav-right">
+        <span class="mode-badge" id="modeBadge" data-mode="probing" role="status" aria-live="polite" title="当前数据模式">
+          <i aria-hidden="true"></i><span id="modeText">正在连接计算服务</span>
+        </span>
+        <button class="iconbtn" type="button" id="themeBtn" aria-label="切换主题"></button>
+        <button class="cta" type="button" data-action="demo" aria-label="一键演示">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span>一键演示</span>
         </button>
-        <button class="btn btn-ghost btn-sm" id="aboutBtn" type="button">数据与边界</button>
+        <button class="iconbtn menu-btn" type="button" id="menuBtn" aria-label="打开菜单" aria-expanded="false" aria-controls="mobileMenu"></button>
       </div>
     </div>
-  </header>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#/" data-nav="home">首页</a>
+      <a href="#/tool" data-nav="tool">开始试算</a>
+      <a href="#/samples" data-nav="samples">示例</a>
+      <a href="#/plans" data-nav="plans">我的方案</a>
+      <a href="#/about" data-nav="about">关于数据</a>
+    </div>
+  </nav>
 
-  <main id="main">
-    <!-- ============ 新建试算 ============ -->
-    <section class="page" id="view-new" aria-labelledby="newTitle">
-      <div class="intro" id="intro">
-        <p class="eyebrow">公共建筑 · 空调用电 · 光伏与小风机</p>
-        <h1 id="newTitle">装不装光伏、风机？先把这笔账算清楚</h1>
-        <p class="intro-sub">按当地逐小时天气算出空调什么时候用电、发电设备什么时候发电，再比较 10 年总花费。发的电如果当时没人用，就不算省钱。</p>
-        <ul class="intro-points" aria-label="作品特点">
-          <li><b>逐小时匹配</b><span>不用“年发电量抵年用电量”的粗算</span></li>
-          <li><b>10 年总账</b><span>设备、运维、电费放在同一张表比</span></li>
-          <li><b>边界透明</b><span>每个数字可追溯到数据与源码版本</span></li>
-        </ul>
-      </div>
+  <div class="mode-banner" id="modeBanner" role="status" aria-live="polite" hidden></div>
 
-      <nav class="stepper" id="stepper" aria-label="试算步骤">
-        <a href="#/new/1" data-step="1"><span class="n">1</span><span class="t"><b>描述场景</b><span>房间、使用时段、预算</span></span></a>
-        <a href="#/new/2" data-step="2"><span class="n">2</span><span class="t"><b>空调用电</b><span>一年用多少电、是否达标</span></span></a>
-        <a href="#/new/3" data-step="3"><span class="n">3</span><span class="t"><b>比较方案</b><span>四种供电方式 10 年总账</span></span></a>
-        <a href="#/new/4" data-step="4"><span class="n">4</span><span class="t"><b>决策与导出</b><span>推荐理由、适用边界</span></span></a>
-      </nav>
-
-      <!-- 第 1 步 -->
-      <div class="step" data-step-panel="1" id="step1"></div>
-      <!-- 第 2–4 步共用结果区：条件改动后整体失效 -->
-      <div class="result-zone" id="resultZone">
-        <div class="result-content">
-          <div class="step" data-step-panel="2" id="step2"></div>
-          <div class="step" data-step-panel="3" id="step3"></div>
-          <div class="step" data-step-panel="4" id="step4"></div>
-        </div>
-        <div class="stale-mask" role="alert" aria-live="assertive">
-          <div class="stale-card">
-            <h3>条件已修改，结果已失效</h3>
-            <p>下方结果对应修改前的条件，已停止显示和导出。请重新计算。</p>
-            <div class="row" style="justify-content:center">
-              <button class="btn btn-primary" type="button" data-action="run">重新计算</button>
-              <button class="btn" type="button" data-action="goto-step" data-step="1">查看条件</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ 我的方案 ============ -->
-    <section class="page" id="view-plans" hidden aria-labelledby="plansTitle"></section>
+  <main id="main" tabindex="-1">
+    <div class="view" id="view-home" data-view="home" hidden></div>
+    <div class="view" id="view-tool" data-view="tool" hidden></div>
+    <div class="view" id="view-samples" data-view="samples" hidden></div>
+    <div class="view" id="view-plans" data-view="plans" hidden></div>
+    <div class="view" id="view-about" data-view="about" hidden></div>
   </main>
 
-  <!-- 依据抽屉 -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div>
+        <b>能见度 · 低碳改造决策助手</b>
+        <p>页面上的数字全部来自本机计算服务的实时结果或随仓库保存的回放文件，前端不复制计算公式。空调负荷是未经现场校准的城市级天气情景；只计空调用电；小风机未做当地气压与温度修正；报价、屋顶条件需现场确认。</p>
+      </div>
+      <div>
+        <b>数据来源</b>
+        <ul>
+          <li>天气：Open-Meteo 历史再分析逐时数据（仓库缓存）</li>
+          <li>排放因子：生态环境部、国家统计局公开公告</li>
+          <li>电价：公开电价档案（部分待核验）</li>
+        </ul>
+      </div>
+      <div>
+        <b>说明</b>
+        <ul>
+          <li><a href="#/about">关于数据与边界</a></li>
+          <li>作品匿名展示，不含个人信息</li>
+          <li>示例不代表真实客户、试点或节能收益</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
   <div class="scrim" id="scrim"></div>
   <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true">
     <div class="drawer-head">
-      <h3 id="drawerTitle">数据与边界</h3>
-      <button class="btn btn-ghost btn-icon" type="button" data-action="close-drawer" aria-label="关闭">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
-      </button>
+      <h2 id="drawerTitle">依据</h2>
+      <button class="iconbtn" type="button" data-action="close-drawer" aria-label="关闭"></button>
     </div>
     <div class="drawer-body" id="drawerBody"></div>
   </aside>
 
+  <div class="demo" id="demo" role="dialog" aria-modal="false" aria-label="一键演示" hidden></div>
   <div class="tooltip" id="tooltip" role="status" aria-live="polite"></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="/assets/data.js"></script>
-  <script src="/assets/charts.js"></script>
-  <script src="/assets/stage.js"></script>
-  <script src="/assets/deliver.js"></script>
-  <script src="/assets/app.js"></script>
+  <script src="assets/vendor/three/three.min.js" defer></script>
+  <script type="module" src="assets/js/main.js"></script>
 </body>
 </html>
