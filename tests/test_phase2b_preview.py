@@ -94,6 +94,56 @@ def test_preview_is_physical_only_and_matches_same_rows():
     assert app._hybrid_preview(changed)["candidates"] == result["candidates"]
 
 
+def test_preview_capacity_shortfall_uses_occupied_mask():
+    """Off-hours residuals must not become preview service failures.
+
+    The thermal model retains envelope residuals outside the schedule for
+    state/electric trace purposes.  Annual service scoring counts only
+    occupied intervals; the preview summary must use the same denominator.
+    """
+    load = {
+        "load_series": {
+            "timestamps": ["2024-07-15T00:00", "2024-07-15T08:00", "2024-07-15T09:00"],
+            "interval_seconds": [3600, 3600, 3600],
+            "electric_power_w": [0.0, 100.0, 100.0],
+            "capacity_shortfall_w": [200.0, 0.0, 30.0],
+            "active": [False, True, True],
+            "cooling_active": [False, True, True],
+        },
+        "summary": {},
+    }
+    selected = app._slice_project_load(load, [0, 1, 2])
+    assert selected["summary"]["capacity_shortfall_hours"] == 1.0
+
+
+def test_preview_intervals_equal_annual_same_window():
+    """The preview is an exact view of the annual physical trace."""
+    weather = _fixture(datetime(2024, 7, 1), hours=504)
+    payload = _payload(weather)
+    room, _, _ = app._thermal_inputs(payload)
+    annual_load = aggregate_project_load(simulate_room(weather, room))
+    indices, _ = app._preview_period_indices(weather["time"], "week", "summer", 7)
+    pv_scenario, hybrid = app.hybrid_task_from_dict(payload, site_id="guangzhou", year=2024)
+    annual_pv = asdict(generate_pv(weather, hybrid.pv_capacity_kwp, pv_scenario))
+    annual_wind = generate_wind(weather, WindTurbineProfile.from_file(), hybrid.wind)
+    annual = match_hybrid(annual_load["load_series"], annual_pv, annual_wind, allow_export=False)
+    preview = app._hybrid_preview(payload)
+    actual = next(row for row in preview["candidates"] if row["scenario_id"] == "S3_pv_wind")["intervals"]
+    expected = [annual["intervals"][i] for i in indices]
+    assert len(actual) == len(expected) == 168
+    fields = ("timestamp", "interval_seconds", "load_kwh", "pv_generation_kwh",
+              "wind_generation_kwh", "self_use_kwh", "grid_import_kwh", "curtailment_kwh")
+    max_abs_diff = 0.0
+    for got, want in zip(actual, expected):
+        for field in fields:
+            if isinstance(got[field], (int, float)) and isinstance(want[field], (int, float)):
+                max_abs_diff = max(max_abs_diff, abs(float(got[field]) - float(want[field])))
+            assert got[field] == want[field], (field, got[field], want[field])
+    assert max_abs_diff <= 1e-12
+    selected_load = app._slice_project_load(annual_load, indices)
+    assert preview["service_quality"]["capacity_shortfall_hours"] == selected_load["summary"]["capacity_shortfall_hours"]
+
+
 def test_preview_http_and_chinese_error():
     server = ThreadingHTTPServer(("127.0.0.1", 0), app.Handler)
     threading.Thread(target=server.serve_forever, daemon=True).start()
@@ -122,5 +172,7 @@ def test_preview_http_and_chinese_error():
 if __name__ == "__main__":
     test_preview_selection_rule()
     test_preview_is_physical_only_and_matches_same_rows()
+    test_preview_capacity_shortfall_uses_occupied_mask()
+    test_preview_intervals_equal_annual_same_window()
     test_preview_http_and_chinese_error()
-    print("preview contracts: 3 passed")
+    print("preview contracts: 5 passed")

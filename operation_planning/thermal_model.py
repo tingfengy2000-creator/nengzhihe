@@ -30,6 +30,15 @@ class RoomSpec:
     indoor_rh_percent: float = 60.0
     cooling_setpoint_c: float = 26.0
     rh_setpoint_percent: float = 60.0
+    # A bounded start-up pre-cooling window models the common practice of
+    # starting the unit before occupancy.  It is deliberately explicit in
+    # the room contract: the energy used during this window is retained in
+    # the load, while service adequacy is scored only during occupancy.
+    pre_cool_minutes: int = 60
+    # Effective thermal capacitance per floor area.  100 kJ/(m²·K) is an
+    # explicit lightweight-office reference assumption; it is not a measured
+    # building value and remains user-overridable for a calibrated study.
+    thermal_mass_kj_per_m2: float = 100.0
     equipment_id: str = "midea_msagbu12_mox201"
     # ``equipment_count`` is retained as the phase-one compatibility field.
     # New callers should use ``units_per_room`` and ``room_count`` explicitly.
@@ -90,6 +99,10 @@ def simulate_room(weather: Dict[str, Any], room: RoomSpec | None = None) -> Dict
         raise ValueError("房间面积、高度和窗墙比必须有效")
     if not 0 <= room.start_hour < room.end_hour <= 24:
         raise ValueError("使用时段必须为合法小时")
+    if not isinstance(room.pre_cool_minutes, int) or not 0 <= room.pre_cool_minutes <= 180:
+        raise ValueError("pre_cool_minutes 必须是0到180之间的整数")
+    if not math.isfinite(float(room.thermal_mass_kj_per_m2)) or not 50.0 <= float(room.thermal_mass_kj_per_m2) <= 2_000.0:
+        raise ValueError("thermal_mass_kj_per_m2 必须在50到2000之间")
     if not 0 < room.default_shr <= 1:
         raise ValueError("默认显热比必须在(0,1]")
     eq = get_equipment(room.equipment_id)
@@ -112,7 +125,7 @@ def simulate_room(weather: Dict[str, Any], room: RoomSpec | None = None) -> Dict
     # parameters.  They are intentionally conservative references, exposed
     # through the room assumptions rather than presented as a measured site.
     ua = max(20.0, room.area_m2 * (room.insulation_u_w_m2k + 0.45))
-    capacitance = max(1_000_000.0, room.area_m2 * 1_200_000.0)
+    capacitance = max(1_000_000.0, room.area_m2 * float(room.thermal_mass_kj_per_m2) * 1_000.0)
     dry_air_mass = max(1.0, rho * volume)
     pressure0 = float(h["surface_pressure"][0]) * 100.0
     temp = float(room.indoor_temp_c)
@@ -132,11 +145,26 @@ def simulate_room(weather: Dict[str, Any], room: RoomSpec | None = None) -> Dict
             raise ValueError(f"天气变量在 {ts} 超出物理输入范围")
         tout, rhout, pressure_hpa, solar = values
         pressure = pressure_hpa * 100.0
-        dt_seconds = float(intervals[i]); scheduled = _active(ts, room); people = room.people_count if scheduled else 0
+        dt_seconds = float(intervals[i]); scheduled = _active(ts, room)
+        # Pre-cooling is allowed before occupancy, but never carries people
+        # or equipment gains.  The weather interval is still charged to the
+        # electrical load, and any remaining startup shortfall is excluded
+        # from the occupancy service score below.
+        dt = datetime.fromisoformat(ts)
+        pre_start = room.start_hour * 60 - int(room.pre_cool_minutes)
+        minute_of_day = dt.hour * 60 + dt.minute
+        precooling = (
+            room.pre_cool_minutes > 0
+            and not scheduled
+            and pre_start <= minute_of_day < room.start_hour * 60
+            and (not room.weekdays_only or dt.weekday() < 5)
+        )
+        operating = scheduled or precooling
+        people = room.people_count if scheduled else 0
         # This first-stage model is cooling-only.  A scheduled winter hour is
         # retained in the trace, but it cannot be scored as an AC cooling
         # failure or given a fictitious cooling load.
-        cooling_active = scheduled and tout >= 18.0 and temp >= room.cooling_setpoint_c
+        cooling_active = operating and tout >= 18.0 and temp >= room.cooling_setpoint_c
         envelope = ua * (tout - temp)
         solar_gain = solar * window_area * 0.18 * _orientation_factor(room.orientation)
         internal_sensible = people * 75.0 + (room.equipment_gain_w if scheduled else 0.0)
@@ -163,16 +191,22 @@ def simulate_room(weather: Dict[str, Any], room: RoomSpec | None = None) -> Dict
         sensible_unmet = max(0.0, sensible_load - sensible_delivered)
         latent_unmet = max(0.0, latent_demand - latent_delivered)
         if cooling_active:
-            shortfall_hours += dt_seconds / 3600.0 if sensible_unmet > 1.0 or latent_unmet > 1.0 else 0.0
-            totals["unmet_temp_degree_hours"] += max(0.0, temp - room.cooling_setpoint_c - 0.25) * dt_seconds / 3600.0
-            totals["unmet_rh_percent_hours"] += max(0.0, indoor_rh - room.rh_setpoint_percent - 5.0) * dt_seconds / 3600.0
+            # ``cooling_active`` also covers pre-cooling.  Only occupied
+            # intervals are service checks; pre-cooling still contributes to
+            # energy and state evolution but cannot be reported as an
+            # occupancy shortfall.
+            if scheduled:
+                shortfall_hours += dt_seconds / 3600.0 if sensible_unmet > 1.0 or latent_unmet > 1.0 else 0.0
+                totals["unmet_temp_degree_hours"] += max(0.0, temp - room.cooling_setpoint_c - 0.25) * dt_seconds / 3600.0
+                totals["unmet_rh_percent_hours"] += max(0.0, indoor_rh - room.rh_setpoint_percent - 5.0) * dt_seconds / 3600.0
         totals["cooling_kwh"] += delivered * dt_seconds / 3_600_000.0
         totals["sensible_cooling_kwh"] += sensible_delivered * dt_seconds / 3_600_000.0
         totals["latent_cooling_kwh"] += latent_delivered * dt_seconds / 3_600_000.0
         totals["electric_kwh"] += power_w * dt_seconds / 3_600_000.0
-        rows.append({"timestamp": ts, "interval_seconds": dt_seconds, "outdoor_temp_c": tout, "outdoor_rh_percent": rhout, "surface_pressure_hpa": pressure / 100.0, "solar_w_m2": solar, "active": scheduled, "cooling_active": cooling_active, "sensible_load_w": sensible_load, "latent_load_w": latent_generation_w, "latent_demand_w": latent_demand, "cooling_load_w": sensible_load + latent_demand, "capacity_w": capacity_w, "delivered_cooling_w": delivered, "delivered_sensible_w": sensible_delivered, "delivered_latent_w": latent_delivered, "sensible_unmet_w": sensible_unmet, "latent_unmet_w": latent_unmet, "electric_power_w": power_w, "indoor_temp_c": temp, "indoor_rh_percent": indoor_rh, "outdoor_enthalpy_kj_kg": enthalpy_kj_kg(tout, outdoor_w), "humidity_ratio_outdoor": outdoor_w, "humidity_ratio_indoor": w})
+        rows.append({"timestamp": ts, "interval_seconds": dt_seconds, "outdoor_temp_c": tout, "outdoor_rh_percent": rhout, "surface_pressure_hpa": pressure / 100.0, "solar_w_m2": solar, "active": scheduled, "pre_cooling": precooling, "cooling_active": cooling_active, "sensible_load_w": sensible_load, "latent_load_w": latent_generation_w, "latent_demand_w": latent_demand, "cooling_load_w": sensible_load + latent_demand, "capacity_w": capacity_w, "delivered_cooling_w": delivered, "delivered_sensible_w": sensible_delivered, "delivered_latent_w": latent_delivered, "sensible_unmet_w": sensible_unmet, "latent_unmet_w": latent_unmet, "electric_power_w": power_w, "indoor_temp_c": temp, "indoor_rh_percent": indoor_rh, "outdoor_enthalpy_kj_kg": enthalpy_kj_kg(tout, outdoor_w), "humidity_ratio_outdoor": outdoor_w, "humidity_ratio_indoor": w})
     active_hours = sum(x["interval_seconds"] for x in rows if x["active"]) / 3600.0
-    cooling_hours = sum(x["interval_seconds"] for x in rows if x["cooling_active"]) / 3600.0
-    load_series = {"timestamps": [x["timestamp"] for x in rows], "interval_seconds": [int(x["interval_seconds"]) for x in rows], "electric_power_w": [x["electric_power_w"] for x in rows], "cooling_load_w": [x["cooling_load_w"] for x in rows], "latent_load_w": [x["latent_load_w"] for x in rows], "temperature_unmet_degree_hours": [max(0.0, x["indoor_temp_c"] - room.cooling_setpoint_c) * x["interval_seconds"] / 3600.0 if x["cooling_active"] else 0.0 for x in rows], "rh_unmet_percent_hours": [max(0.0, x["indoor_rh_percent"] - room.rh_setpoint_percent) * x["interval_seconds"] / 3600.0 if x["cooling_active"] else 0.0 for x in rows], "capacity_shortfall_w": [max(0.0, x["sensible_unmet_w"] + x["latent_unmet_w"]) for x in rows], "source": "single-room lumped heat-moisture model", "scope": "one-room; units_per_room included; room_count applied once by project_load / lifecycle", "equipment_count": int(room.equipment_count), "room_count": int(room.room_count), "units_per_room": int(room.units_per_room), "model_version": "thermal_model_phase1_v2", "assumptions": ["city-scale hourly reference weather", "cooling-only; no heating load", "rated-point temperature derate; no complete part-load map", "SHR defaults to editable reference when manufacturer value is absent"], "service_scope": "cooling_only", "weather_provenance": {"source_file": weather.get("source_file"), "boundary_file": weather.get("boundary_file"), "hash": weather.get("hash"), "normalization": weather.get("weather_normalization")}}
-    totals.update({"capacity_shortfall_hours": shortfall_hours, "active_hours": active_hours, "cooling_season_hours": cooling_hours})
+    cooling_hours = sum(x["interval_seconds"] for x in rows if x["cooling_active"] and x["active"]) / 3600.0
+    pre_cooling_hours = sum(x["interval_seconds"] for x in rows if x.get("pre_cooling")) / 3600.0
+    load_series = {"timestamps": [x["timestamp"] for x in rows], "interval_seconds": [int(x["interval_seconds"]) for x in rows], "electric_power_w": [x["electric_power_w"] for x in rows], "cooling_load_w": [x["cooling_load_w"] for x in rows], "latent_load_w": [x["latent_load_w"] for x in rows], "active": [bool(x["active"]) for x in rows], "cooling_active": [bool(x["cooling_active"]) for x in rows], "pre_cooling": [bool(x.get("pre_cooling")) for x in rows], "temperature_unmet_degree_hours": [max(0.0, x["indoor_temp_c"] - room.cooling_setpoint_c) * x["interval_seconds"] / 3600.0 if x["cooling_active"] and x["active"] else 0.0 for x in rows], "rh_unmet_percent_hours": [max(0.0, x["indoor_rh_percent"] - room.rh_setpoint_percent) * x["interval_seconds"] / 3600.0 if x["cooling_active"] and x["active"] else 0.0 for x in rows], "capacity_shortfall_w": [max(0.0, x["sensible_unmet_w"] + x["latent_unmet_w"]) if x["active"] and x["cooling_active"] else 0.0 for x in rows], "source": "single-room lumped heat-moisture model", "scope": "one-room; units_per_room included; room_count applied once by project_load / lifecycle", "equipment_count": int(room.equipment_count), "room_count": int(room.room_count), "units_per_room": int(room.units_per_room), "model_version": "thermal_model_phase1_v3_pre_cool_lightweight_mass", "assumptions": ["city-scale hourly reference weather", "cooling-only; no heating load", "bounded 60-minute pre-cooling before occupancy; energy included in load; service scored only in occupied intervals", "effective thermal mass 100 kJ/(m²·K) is an editable lightweight-office reference, not measured calibration", "rated-point temperature derate; no complete part-load map", "SHR defaults to editable reference when manufacturer value is absent"], "adequacy_rule": {"name": "occupied_hours_only_with_bounded_precooling", "pre_cool_minutes": int(room.pre_cool_minutes), "service_metrics_exclude_precooling": True, "thermal_mass_kj_per_m2": float(room.thermal_mass_kj_per_m2), "description": "允许营业前预冷；预冷电量计入负荷，但冷量不足和温湿度服务指标仅在使用时段判定。有效热容为轻质办公参考假设，可由用户覆盖。"}, "service_scope": "cooling_only", "weather_provenance": {"source_file": weather.get("source_file"), "boundary_file": weather.get("boundary_file"), "hash": weather.get("hash"), "normalization": weather.get("weather_normalization")}}
+    totals.update({"capacity_shortfall_hours": shortfall_hours, "active_hours": active_hours, "cooling_season_hours": cooling_hours, "pre_cooling_hours": pre_cooling_hours})
     return {"room": asdict(room), "equipment": asdict(eq), "rows": rows, "load_series": load_series, "summary": {**totals, "source": "bounded single-room lumped model; reference consistency only, not measured-building validation", "shr_source": "manufacturer value when published; otherwise editable default reference assumption", "performance_source": "rated point with explicit temperature derate; no complete part-load map"}}

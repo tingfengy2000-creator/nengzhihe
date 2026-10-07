@@ -277,6 +277,7 @@ def _thermal_capacity_sweep(payload: dict) -> dict:
     site_id = str(payload.get("site_id", "guangzhou")); year = int(payload.get("year", 2024))
     weather = payload.get("weather") or load_weather(site_id, year)
     rows = []
+    adequacy_rule = None
     for units in range(1, max_units + 1):
         trial_payload = dict(payload)
         trial_room = dict(contract.get("room") or {})
@@ -285,6 +286,8 @@ def _thermal_capacity_sweep(payload: dict) -> dict:
         trial_payload["room"] = trial_room
         trial_room_obj, _, _ = _thermal_inputs(trial_payload)
         result = simulate_room(weather, trial_room_obj)
+        if adequacy_rule is None:
+            adequacy_rule = (result.get("load_series") or {}).get("adequacy_rule")
         summary = result.get("summary", {})
         gaps = {
             "capacity_shortfall_hours": float(summary.get("capacity_shortfall_hours", 0.0) or 0.0),
@@ -308,6 +311,7 @@ def _thermal_capacity_sweep(payload: dict) -> dict:
         "weather_hash": weather.get("hash"), "input_contract": contract,
         "max_units": max_units, "minimum_adequate_units_per_room": minimum,
         "candidates": rows,
+        "adequacy_rule": adequacy_rule,
         "notes": ["每个候选均为同一房间的独立热湿回放；未把room_count重复乘入。", "额定点设备适配，不等同现场实测选型。"],
     }
 
@@ -543,7 +547,24 @@ def _slice_project_load(load_result: dict, indices: list[int]) -> dict:
         if vals is not None:
             summary[energy] = sum(float(v) * float(sec) / 3_600_000.0 for v, sec in zip(vals, seconds))
     if "capacity_shortfall_w" in series:
-        summary["capacity_shortfall_hours"] = sum(float(sec) / 3600.0 for value, sec in zip(series["capacity_shortfall_w"], seconds) if float(value) > 0)
+        # ``capacity_shortfall_w`` is a physical residual and can be non-zero
+        # while a room is unoccupied (for example the envelope-only trace
+        # outside the schedule).  The annual thermal summary scores service
+        # only in occupied/cooling intervals, so a preview must use the same
+        # mask instead of counting every positive residual.  ``active`` is
+        # preferred because cooling_active also includes bounded pre-cooling;
+        # legacy uploaded traces without masks retain the old conservative
+        # fallback and are explicitly covered by the contract tests.
+        active_mask = series.get("active")
+        cooling_mask = series.get("cooling_active")
+        mask = active_mask if isinstance(active_mask, list) and len(active_mask) == len(seconds) else cooling_mask
+        if not isinstance(mask, list) or len(mask) != len(seconds):
+            mask = [True] * len(seconds)
+        summary["capacity_shortfall_hours"] = sum(
+            float(sec) / 3600.0
+            for value, sec, is_service_interval in zip(series["capacity_shortfall_w"], seconds, mask)
+            if bool(is_service_interval) and float(value) > 0
+        )
     summary["unmet_temp_degree_hours"] = sum(float(v) for v in series.get("temperature_unmet_degree_hours", []))
     summary["unmet_rh_percent_hours"] = sum(float(v) for v in series.get("rh_unmet_percent_hours", []))
     out["summary"] = summary
