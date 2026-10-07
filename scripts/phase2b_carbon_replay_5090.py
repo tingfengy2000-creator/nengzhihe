@@ -38,6 +38,10 @@ def _sha(value: Any) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
+def _file_sha(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
 def _source() -> str:
     return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
 
@@ -185,7 +189,7 @@ def main() -> int:
     (OUT / "replay_cases_v3.json").write_text(raw, encoding="utf-8")
     viewer = _viewer_package(package)
     VIEWER_OUT.write_text(json.dumps(viewer, ensure_ascii=False, indent=2), encoding="utf-8")
-    manifest = {"status": "passed", "source_commit": source_commit, "started_utc": started, "ended_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"), "machine_role": "5090", "case_count": len(cases), "case_summaries": [{"case_id": c["case_id"], "room_count": c["room_count"], "units_per_room": c["units_per_room"], "service_status": c["service_quality"]["status"], "carbon_factor_id": c["carbon_context"]["factor"]["factor_id"], "reference_price_cny_per_t": REFERENCE_CARBON_PRICE_CNY_PER_T if "carbon_price_scenarios" in c else None, "chart_scenario_id": c["chart"]["scenario_id"], "case_hash": c["case_hash"]} for c in cases], "search_audit": search, "package_sha256": _sha(package), "viewer_sha256": _sha(viewer), "viewer_path": "docs/handoff/replay_viewer/replay_cases_v3.json", "note": "完整年回放；旧 replay_cases.json 与 replay_cases_room_contract.json 保留为历史证据；viewer逐时字段为7列、4位小数。"}
+    manifest = {"status": "passed", "source_commit": source_commit, "started_utc": started, "ended_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"), "machine_role": "5090", "case_count": len(cases), "case_summaries": [{"case_id": c["case_id"], "room_count": c["room_count"], "units_per_room": c["units_per_room"], "service_status": c["service_quality"]["status"], "carbon_factor_id": c["carbon_context"]["factor"]["factor_id"], "reference_price_cny_per_t": REFERENCE_CARBON_PRICE_CNY_PER_T if "carbon_price_scenarios" in c else None, "chart_scenario_id": c["chart"]["scenario_id"], "case_hash": c["case_hash"]} for c in cases], "search_audit": search, "package_sha256": _sha(package), "viewer_sha256": _sha(viewer), "package_file_sha256": _file_sha(OUT / "replay_cases_v3.json"), "viewer_file_sha256": _file_sha(VIEWER_OUT), "viewer_path": "docs/handoff/replay_viewer/replay_cases_v3.json", "note": "完整年回放；旧 replay_cases.json 与 replay_cases_room_contract.json 保留为历史证据；viewer逐时字段为7列、4位小数。"}
     (OUT / "run_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     # Windows console may use GBK; keep the machine-readable output printable.
     print(json.dumps(manifest, ensure_ascii=True))

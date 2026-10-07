@@ -154,5 +154,7 @@
   "package_sha256": "3621f06fcb06eaa824ad45162471b4160518baa5bb393e9e1a49a1af01ff83f8",
   "viewer_sha256": "9a718d6c0e1109dfec8db3b3b19dcb1a0d943412f75b35b06d84a9c11382e9b8",
   "viewer_path": "docs/handoff/replay_viewer/replay_cases_v3.json",
-  "note": "完整年回放；旧 replay_cases.json 与 replay_cases_room_contract.json 保留为历史证据；viewer逐时字段为7列、4位小数。"
+  "note": "完整年回放；旧 replay_cases.json 与 replay_cases_room_contract.json 保留为历史证据；viewer逐时字段为7列、4位小数。",
+  "package_file_sha256": "2615b330ee823925148287c3266235966fe6380118477120a341e7445d792096",
+  "viewer_file_sha256": "80a4fc2773d38a68be31a3240f10574641a6d217d3ff8f80a067d0780436d8cc"
 }

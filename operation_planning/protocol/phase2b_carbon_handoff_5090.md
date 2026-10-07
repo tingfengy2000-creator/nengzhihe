@@ -43,8 +43,8 @@ B=0和守恒测试见 `tests/test_phase2b_storage.py`；储能上限是物理挪
 
 ## v3文件与哈希
 
-- viewer：`docs/handoff/replay_viewer/replay_cases_v3.json`，SHA-256 `9a718d6c0e1109dfec8db3b3b19dcb1a0d943412f75b35b06d84a9c11382e9b8`
-- 完整结果原件：`operation_planning/results/phase2b_carbon_5090/replay_cases_v3.json`，SHA-256 `3621f06fcb06eaa824ad45162471b4160518baa5bb393e9e1a49a1af01ff83f8`
+- viewer：`docs/handoff/replay_viewer/replay_cases_v3.json`；文件 SHA-256 `80a4fc2773d38a68be31a3240f10574641a6d217d3ff8f80a067d0780436d8cc`，规范化对象哈希 `9a718d6c0e1109dfec8db3b3b19dcb1a0d943412f75b35b06d84a9c11382e9b8`
+- 完整结果原件：`operation_planning/results/phase2b_carbon_5090/replay_cases_v3.json`；文件 SHA-256 `2615b330ee823925148287c3266235966fe6380118477120a341e7445d792096`，规范化对象哈希 `3621f06fcb06eaa824ad45162471b4160518baa5bb393e9e1a49a1af01ff83f8`
 - 运行清单：`operation_planning/results/phase2b_carbon_5090/run_manifest.json`
 - 旧七案例碳回放字节备份：`operation_planning/results/phase2b_carbon_5090/replay_cases_v3_carbon_only_7cases.json`
 - API因子探针：`operation_planning/results/phase2b_carbon_5090/api_probe.json`
