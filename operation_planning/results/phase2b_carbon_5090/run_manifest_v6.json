@@ -1,0 +1,121 @@
+{
+  "status": "passed",
+  "source_commit": "ec8a7cf8feade2a7464bb00e4ccb761391711389",
+  "started_utc": "2026-10-07T07:14:34+00:00",
+  "ended_utc": "2026-10-07T07:24:00+00:00",
+  "machine_role": "5090",
+  "api_base_url": "http://127.0.0.1:18765",
+  "case_count": 6,
+  "http_call_count": 6,
+  "http_elapsed_ms": {
+    "total": 562597.433,
+    "mean": 93766.239,
+    "max": 163067.274
+  },
+  "case_summaries": [
+    {
+      "case_id": "tier_small",
+      "recommended_pv_capacity_kwp": 1.0,
+      "service_quality": {
+        "status": "within_modeled_scope",
+        "gaps": {
+          "capacity_shortfall_hours": 0.0,
+          "unmet_temp_degree_hours": 0.0,
+          "unmet_rh_percent_hours": 0.0
+        },
+        "scope": "cooling_only",
+        "note": "未校准的城市级空调负荷情景。"
+      },
+      "http_calls": 1,
+      "case_hash": "21f324ac31153f0263edb42f02fbcc2a4a5ed14b3354e1ee8e8582de089e0ebb"
+    },
+    {
+      "case_id": "tier_medium",
+      "recommended_pv_capacity_kwp": 40.0,
+      "service_quality": {
+        "status": "within_modeled_scope",
+        "gaps": {
+          "capacity_shortfall_hours": 0.0,
+          "unmet_temp_degree_hours": 0.0,
+          "unmet_rh_percent_hours": 0.0
+        },
+        "scope": "cooling_only",
+        "note": "未校准的城市级空调负荷情景。"
+      },
+      "http_calls": 1,
+      "case_hash": "4f49242bc4b61498c79773bd4f4a6ed1c2f36925ce76264992fdb5c1eb05e198"
+    },
+    {
+      "case_id": "tier_large",
+      "recommended_pv_capacity_kwp": 50.0,
+      "service_quality": {
+        "status": "within_modeled_scope",
+        "gaps": {
+          "capacity_shortfall_hours": 0.0,
+          "unmet_temp_degree_hours": 0.0,
+          "unmet_rh_percent_hours": 0.0
+        },
+        "scope": "cooling_only",
+        "note": "未校准的城市级空调负荷情景。"
+      },
+      "http_calls": 1,
+      "case_hash": "5e30b9909fdcbc7412f6b44b41b8bd001bfd9a492b060c584ed2ba4f18d6da23"
+    },
+    {
+      "case_id": "variant_budget_insufficient",
+      "recommended_pv_capacity_kwp": 1.0,
+      "service_quality": {
+        "status": "within_modeled_scope",
+        "gaps": {
+          "capacity_shortfall_hours": 0.0,
+          "unmet_temp_degree_hours": 0.0,
+          "unmet_rh_percent_hours": 0.0
+        },
+        "scope": "cooling_only",
+        "note": "未校准的城市级空调负荷情景。"
+      },
+      "http_calls": 1,
+      "case_hash": "651bf4152cbc749631e3eff5fe1bd4bf32051f942a74ad14a373d7753a93cd1e"
+    },
+    {
+      "case_id": "variant_missing_pv_quote",
+      "recommended_pv_capacity_kwp": 1.0,
+      "service_quality": {
+        "status": "within_modeled_scope",
+        "gaps": {
+          "capacity_shortfall_hours": 0.0,
+          "unmet_temp_degree_hours": 0.0,
+          "unmet_rh_percent_hours": 0.0
+        },
+        "scope": "cooling_only",
+        "note": "未校准的城市级空调负荷情景。"
+      },
+      "http_calls": 1,
+      "case_hash": "6402ec4ede1d7ffe74a37bec3218c46b6f0bd625839fba672a4aa615f4ce50bf"
+    },
+    {
+      "case_id": "variant_roof_area_insufficient",
+      "recommended_pv_capacity_kwp": 1.0,
+      "service_quality": {
+        "status": "within_modeled_scope",
+        "gaps": {
+          "capacity_shortfall_hours": 0.0,
+          "unmet_temp_degree_hours": 0.0,
+          "unmet_rh_percent_hours": 0.0
+        },
+        "scope": "cooling_only",
+        "note": "未校准的城市级空调负荷情景。"
+      },
+      "http_calls": 1,
+      "case_hash": "6f141700e6b5d97df8badcf563ac184b21db1eecb2b7a70a36ca1df9f3e0f1fc"
+    }
+  ],
+  "package_file_sha256": "19e9fa832037cd44627a34e41238c6174c97dab4b81cfc6f723bfa6fd32e3ab5",
+  "viewer_file_sha256": "92fc5a89e545617aa684a62747b146630a8e51bc334a35a6575bd1fc6b74fa9a",
+  "viewer_path": "docs/handoff/replay_viewer/replay_cases_v6.json",
+  "previous_replays_preserved": [
+    "replay_cases_v5.json",
+    "replay_cases_v4.json",
+    "replay_cases_v3.json"
+  ]
+}

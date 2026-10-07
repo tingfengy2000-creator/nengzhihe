@@ -170,3 +170,46 @@ v5 仅保留 `tier_small`、`tier_medium`、`tier_large` 三个主案例；`prim
 - 空调负荷是未校准的冷却情景；大档不含厂房生产负荷，不能证明全厂节能、现场投资回收或实际人工提效。
 - 屋顶可用面积、承重、消防间距、并网和报价仍需现场/合同确认；容量扫描是有限候选，不是全局优化。
 - 风机仍为1台公开曲线参考，未做当地温度/气压修正；碳价情景不代表可成交或减排资格。
+
+## 第12节 v6：用户输入优先与实时接口回放（5090，2026-10-07）
+
+本节接续 `feat/5060-product-ui@b99bf8b` 的接口要求；该要求以文档提交 `65b4533` 纳入本分支。三档只是示例，产品主路径是用户提交城市、年份、房间与台数、时段、屋顶、报价、电价和预算后由后端实时计算。回放脚本同样只通过 HTTP 调用，不直接导入计算函数；v5 及更早结果保留不覆盖。
+
+### 12.1 示例修正
+
+- `tier_small` 为1间35㎡办公房间、6台，广州2024空调年用电 `595.376387 kWh`，容量 `[0,1,2,5.6] kWp`，推荐1 kWp，S1增量NPV `+481.465元`。
+- `tier_medium` 不再是小档的简单倍增：采用20个70㎡阅读区、每区8台、全年每天09:00–21:00，4层×5区，空调区总面积1400㎡；屋顶输入350㎡，明确按单层占地而非楼层相乘。年用电 `57721.348058 kWh`，容量 `[0,10,20,40,80] kWp`，80 kWp因屋顶上限排除，推荐40 kWp，S1增量NPV `+104794.508元`。
+- `tier_large` 保留6个250㎡、6m高、20人、3kW设备显热、每天08:00–20:00的厂房空调区有界代理，14台/区；年用电 `66338.773814 kWh`，推荐50 kWp，S1增量NPV `+154089.749元`。这仍不是全厂能源模型。
+- 三个状态变体的主卡固定1 kWp：缺报价的 S1 为 `unknown/incomplete_quote`；1㎡屋顶的 S1 为 `excluded/not_applicable`；预算变体保留固定容量的实际预算判定。状态卡不会再因容量寻优把主方案替换为0 kWp。
+
+### 12.2 实时接口与契约
+
+接口手册为 `docs/handoff/phase2b_realtime_api_manual_v6.md`，契约测试为 `tests/test_phase2b_api_v6.py`。已实现并在本地通过直接 Python 契约调用：
+
+- `GET /api/operation/options`：城市、缓存年份、型号目录、含 `verified/provisional` 的电价档案、排放因子和单位表。
+- `POST /api/operation/thermal/size`（及 `/thermal/compare`、`thermal/run` 的 `compare_units`）：返回1..N台的服务状态、年电量、容量缺口小时和最少达标台数。
+- `POST /api/operation/hybrid/run`：接受 `pv.requested_capacities_kwp` 或 `pv.auto_capacity`，容量扫按 S1 增量NPV选择；返回碳字段、年度粗算、储能理想上限、选中容量逐时 `hourly` 和 `calculation_timing.elapsed_ms`。
+- `POST /api/operation/hybrid/jobs`（`/submit`）及 `/jobs/{id}`（`/job/`、`/task/`）：全年或大容量扫可提交异步任务，进度事件只在真实容量计算完成后递增。
+- 参数错误、非法JSON、未知型号/电价、缺测天气和非法外送上限返回中文 `error/message/field`。
+
+接口短契约和请求/响应示例见 `docs/handoff/api_examples_v6.json`；对应真实短HTTP运行清单为 `operation_planning/results/phase2b_carbon_5090/api_contracts_v6/run_manifest.json`，6项测试在5090随机loopback端口通过，耗时 `1428.737 ms`。该短序列只是接口契约样例，不是年度方案演示。Windows 启动入口为 `scripts/start_operation_planning.ps1` 和 `.bat`；只使用仓库缓存天气，不调用付费API。
+
+### 12.3 5090 HTTP 回放运行证据
+
+正式 v6 由源码提交 `ec8a7cf8feade2a7464bb00e4ccb761391711389` 运行，命令为：
+
+```powershell
+python scripts/phase2b_carbon_replay_v6_5090.py --base-url http://127.0.0.1:18765
+```
+
+5090实际清单记录6次 HTTP 调用、总耗时 `562597.433 ms`（均值 `93766.239 ms`，最大 `163067.274 ms`）；单次全年大于约10秒，因此异步接口作为产品路径提供。每档一次请求携带有限容量列表，服务端逐候选计算并返回 `pv_capacity_sweep`，状态变体一次请求固定1 kWp。清单内保存请求/响应哈希与逐案例哈希。
+
+- 完整结果：`operation_planning/results/phase2b_carbon_5090/replay_cases_v6.json`，SHA-256 `19e9fa832037cd44627a34e412238c6174c97dab4b81cfc6f723bfa6fd32e3ab5`。
+- 评审 viewer：`docs/handoff/replay_viewer/replay_cases_v6.json`，SHA-256 `92fc5a89e545617aa684a62747b146630a8e51bc334a35a6575bd1fc6b74fa9a`。
+- 运行清单：`operation_planning/results/phase2b_carbon_5090/run_manifest_v6.json`，source commit 为上述 `ec8a7cf...`。
+
+### 12.4 电价与边界
+
+v6仍使用 `guangzhou_industrial_lt1kv_202610` 的公开抄录档案，代码保持 `verified=false/provisional=true`。已核对的官方政策原件 [粤发改价格〔2026〕242号](https://drc.gd.gov.cn/attachment/0/620/620700/4934183.PDF) 是输配电价政策，不是该月广州代理购电终端价表；月度原始广东电网/南方电网PDF仍未找到，不能宣称已完成官方原件核验。抄录页保留在 [energydc.cn公开页面](https://energydc.cn/policy/guangdong/2026-09/ffdcada5-baab-11f1-959b-ce30ac533824) 作为可追溯情景来源。
+
+仍未证明现场精度、真实楼宇收益、人工提效、工程审批、完整建筑总负荷或全国电价适用性。光伏容量比选是有限候选，不是全局优化；第一阶段空调轨迹仍是未校准冷却情景。前端由5060分支产品化，本轮未修改前端、PPT、视频、main或“乡艺有据”。
