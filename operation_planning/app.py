@@ -29,14 +29,13 @@ from .weather import available_sites, load_weather, parse_user_csv
 from .weather import load_pv_weather
 from .thermal_model import RoomSpec, simulate_room
 from .lifecycle import life_cycle_cost
-from .pv import PVScenario, PVQuote, run_pv_planning, scenario_from_dict, DEFAULT_KWP_PER_M2
+from .pv import PVScenario, PVQuote, run_pv_planning, scenario_from_dict, DEFAULT_KWP_PER_M2, generate_pv
 from .pv_agent import PVPlanningAgent
 from .wind import WindTurbineProfile, WindScenario, WindQuote, generate_wind
 from .hybrid import HybridScenario, hybrid_task_from_dict, run_hybrid_planning, match_hybrid
 from .hybrid_agent import HybridPlanningAgent
 from .project_load import aggregate_project_load, project_load_context
 from .carbon import factor_catalog
-from .pv import generate_pv
 
 
 ROOT = Path(__file__).resolve().parent
