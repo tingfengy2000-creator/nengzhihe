@@ -408,7 +408,15 @@ class Handler(BaseHTTPRequestHandler):
         length = int(self.headers.get("Content-Length", "0"))
         if length > 2_000_000: raise ValueError("请求过大")
         raw = self.rfile.read(length)
-        return json.loads(raw.decode("utf-8")) if raw else {}
+        if not raw:
+            return {}
+        try:
+            value = json.loads(raw.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise ValueError("请求体必须是有效JSON") from exc
+        if not isinstance(value, dict):
+            raise ValueError("请求体必须是JSON对象")
+        return value
 
     def do_GET(self) -> None:  # noqa: N802
         parsed = urlparse(self.path); path = parsed.path
