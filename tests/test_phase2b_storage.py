@@ -64,6 +64,23 @@ class StorageUpperBoundTests(unittest.TestCase):
         self.assertIsNone(paths["storage"]["recommended_capacity_kwh"])
         self.assertEqual(paths["export"]["path"]["economics_status"], "incomplete")
 
+    def test_capacity_scaled_installation_quote(self):
+        paths = surplus_paths_from_match(
+            self._intervals(), capacities_kwh=[5, 10],
+            storage_quote={"cny_per_kwh": 100,
+                           "installation_cny_per_kwh": 20,
+                           "maintenance_cny_per_year": 0,
+                           "life_years": 10},
+            import_prices=[0.5, 1.0, 0.5], study_years=10,
+        )
+        rows = paths["storage"]["candidates"]
+        self.assertEqual(rows[0]["economics_status"], "complete")
+        self.assertEqual(rows[1]["economics_status"], "complete")
+        self.assertAlmostEqual(rows[0]["initial_investment_cny"], 600.0)
+        self.assertAlmostEqual(rows[1]["initial_investment_cny"], 1200.0)
+        self.assertEqual(rows[0]["installation_cny"], None)
+        self.assertAlmostEqual(rows[0]["installation_cny_per_kwh"], 20.0)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -97,12 +97,31 @@ def project_load_context(load_result: Dict[str, Any]) -> Dict[str, Any]:
     """Small serializable context for UI/API evidence, without duplicating rows."""
     series = load_result.get("load_series") or {}
     summary = load_result.get("summary") or {}
+    single_summary = load_result.get("single_room_summary") or {}
     aggregation = series.get("project_aggregation") or {}
+    gap_keys = ("capacity_shortfall_hours", "unmet_temp_degree_hours", "unmet_rh_percent_hours")
+    single_gaps = {key: float(single_summary.get(key, 0.0) or 0.0) for key in gap_keys} if single_summary else None
+    single_service = None
+    if single_summary:
+        single_service = {
+            "status": "service_gap" if any(value > 1e-9 for value in single_gaps.values()) else "within_modeled_scope",
+            "gaps": single_gaps,
+            "active_hours": single_summary.get("active_hours"),
+            "cooling_season_hours": single_summary.get("cooling_season_hours"),
+            "pre_cooling_hours": single_summary.get("pre_cooling_hours"),
+            "scope": series.get("service_scope"),
+        }
     return {
         "scope": series.get("scope"),
         "room_count": aggregation.get("room_count", series.get("room_count", 1)),
         "units_per_room": series.get("units_per_room", (load_result.get("room") or {}).get("units_per_room", (load_result.get("room") or {}).get("equipment_count", 1))),
         "electric_load_kwh": summary.get("electric_kwh"),
+        # The thermal trace remains a one-room trace with units_per_room already
+        # applied.  Expose its annual result explicitly so clients never infer
+        # it by dividing the project total (which may be rounded or invalid for
+        # heterogeneous future room groups).
+        "single_room_annual_kwh": single_summary.get("electric_kwh") if single_summary else None,
+        "single_room_service_quality": single_service,
         "source": "single-room thermal trace aggregated once by room_count",
         "source_scope": aggregation.get("source_scope", series.get("scope")),
         "single_room_preserved": bool(load_result.get("single_room_summary")) or not _already_project(series),

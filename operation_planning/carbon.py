@@ -26,6 +26,25 @@ REFERENCE_CARBON_PRICE_SOURCE = {
 }
 
 
+def carbon_price_scenarios() -> list[Dict[str, Any]]:
+    """Return explicitly labelled carbon-price scenarios for option UIs.
+
+    These are user-selectable sensitivity inputs only.  They are deliberately
+    kept separate from the emission-factor registry and never affect the main
+    energy/economic recommendation.
+    """
+    return [{
+        "carbon_price_cny_per_t": REFERENCE_CARBON_PRICE_CNY_PER_T,
+        "value_cny_per_t": REFERENCE_CARBON_PRICE_CNY_PER_T,
+        "source": REFERENCE_CARBON_PRICE_SOURCE["title"],
+        "source_title": REFERENCE_CARBON_PRICE_SOURCE["title"],
+        "source_url": REFERENCE_CARBON_PRICE_SOURCE["url"],
+        "date": REFERENCE_CARBON_PRICE_SOURCE["date"],
+        "note": "仅为情景，资格未核实；不代表可成交、CCER或地方碳普惠收益。",
+        "qualification": "unverified_scenario",
+    }]
+
+
 def load_factors() -> list[Dict[str, Any]]:
     raw = json.loads(FACTOR_PATH.read_text(encoding="utf-8"))
     if not isinstance(raw, dict) or not isinstance(raw.get("factors"), list):
@@ -39,6 +58,7 @@ def factor_catalog() -> Dict[str, Any]:
         "unit": "kgCO2/kWh",
         "default_selection": "site province latest year with basis=电力平均",
         "factors": load_factors(),
+        "carbon_price_scenarios": carbon_price_scenarios(),
         "notes": [
             "电网平均因子用于情景估算，不是经核证的减排量。",
             "未计入光伏、风机制造、运输和回收的隐含排放。",

@@ -154,9 +154,23 @@ TARIFFS: Dict[str, TariffProfile] = {
 
 
 def registry() -> Dict[str, Any]:
+    # Keep geographic matching explicit for clients.  ``TariffProfile`` is a
+    # stable calculation dataclass, so site mapping lives in the public
+    # registry rather than being smuggled into the pricing engine.
+    site_ids_by_tariff = {
+        "fujian_industrial_lt1kv_202607": ["dehua", "fujian_dehua"],
+        "guangdong_north_industrial_lt1kv_202607": ["guangdong_north", "heyuan"],
+        "guangzhou_industrial_lt1kv_202110": ["guangzhou"],
+        "guangzhou_industrial_lt1kv_202610": ["guangzhou"],
+    }
+    tariffs = []
+    for item in TARIFFS.values():
+        row = asdict(item)
+        row["site_ids"] = list(site_ids_by_tariff.get(item.tariff_id, []))
+        tariffs.append(row)
     return {
         "regions": [asdict(x) for x in REGIONS.values()],
-        "tariffs": [asdict(x) for x in TARIFFS.values()],
+        "tariffs": tariffs,
         "scope": "仅为空调冷却设备与风机计算电功率做地区电价情景试算，不含建筑总表、需量/容量基本电费或燃气供热。",
     }
 
@@ -375,6 +389,13 @@ def integrate_power(times: Sequence[float], power_w: Sequence[float], tariff: Ta
 
 def profile_public_dict(tariff: TariffProfile) -> Dict[str, Any]:
     data = asdict(tariff)
+    site_ids_by_tariff = {
+        "fujian_industrial_lt1kv_202607": ["dehua", "fujian_dehua"],
+        "guangdong_north_industrial_lt1kv_202607": ["guangdong_north", "heyuan"],
+        "guangzhou_industrial_lt1kv_202110": ["guangzhou"],
+        "guangzhou_industrial_lt1kv_202610": ["guangzhou"],
+    }
+    data["site_ids"] = list(site_ids_by_tariff.get(tariff.tariff_id, []))
     data["hash"] = tariff_hash(tariff)
     data["status"] = "verified" if tariff.verified else "user-supplied"
     return data

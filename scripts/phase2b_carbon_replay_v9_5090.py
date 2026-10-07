@@ -1,4 +1,4 @@
-"""Generate v6 replay cases through the public HTTP API.
+"""Generate v9 replay cases through the public HTTP API.
 
 The v6 package is intentionally produced by POSTing each tier (or fixed
 variant) request to ``/api/operation/hybrid/run``.  The tier request carries
@@ -30,7 +30,7 @@ if str(ROOT) not in sys.path:
 from operation_planning.thermal_model import RoomSpec
 
 OUT = ROOT / "operation_planning" / "results" / "phase2b_carbon_5090"
-VIEWER_OUT = ROOT / "docs" / "handoff" / "replay_viewer" / "replay_cases_v8.json"
+VIEWER_OUT = ROOT / "docs" / "handoff" / "replay_viewer" / "replay_cases_ui_v9.json"
 API_DEFAULT = "http://127.0.0.1:18765"
 TARIFF_ID = "guangzhou_industrial_lt1kv_202610"
 TARIFF_URL = "https://95598.csg.cn/#/gd/serviceInquire/information/detail/?infoId=8a592ed919684f97bc6abd030a79b807"
@@ -247,21 +247,29 @@ def _case(base_url: str, *, case_id: str, label: str, role: str, room: RoomSpec,
             selected_cap, basis = _choose(rows)
         else:
             basis = selected.get("recommendation_basis") or "由实时接口在满足约束且完整计价的PV候选中按增量NPV选择"
-    recommendation_id = "S1_pv" if fixed_cap is not None else ((selected.get("recommendation") or {}).get("scenario_id") or "S0_grid")
+    # A fixed-capacity variant still needs to reflect the endpoint's actual
+    # recommendation.  It is a featured 1 kWp physical result, not an
+    # implicit recommendation when the report correctly recommends S0.
+    recommendation_id = ((selected.get("recommendation") or {}).get("scenario_id") or
+                         ("S1_pv" if fixed_cap is not None else "S0_grid"))
     input_payload = _request_payload(room, cap=selected_cap, requested=requested, roof=roof, budget=budget, pv_complete=pv_complete, wind_count=wind_count, fixed_capacity=fixed_cap)
     context = selected.get("load_context") or {}
     main_input = {"site_id": "guangzhou", "year": 2024, "room": asdict(room), "building": building or {}, "pv_capacity_kwp": selected_cap, "requested_capacities_kwp": requested, "recommended_pv_capacity_kwp": selected_cap, "roof_area_m2": roof, "budget_cny": budget, "tariff_id": TARIFF_ID, "tariff_application": "current_tariff_on_reference_weather", "allow_export": False, "wind_turbine_count": wind_count, "pv_quote": input_payload["pv"].get("quote"), "wind_quote": input_payload["hybrid"].get("wind_quote"), "hub_height_m": input_payload["hybrid"]["wind"].get("hub_height_m"), "hellman_exponent": input_payload["hybrid"]["wind"].get("hellman_exponent"), "carbon": input_payload["carbon"], "storage": input_payload["storage"], "request_sha256": _sha(input_payload)}
     candidates = [_candidate(x) for x in selected.get("candidates", [])]
     total_cost = {x.get("scenario_id"): (x.get("economics") or {}).get("total_cost_npv_cny") for x in selected.get("candidates", [])}
-    case = {"case_id": case_id, "label": label, "demo_role": role, "aliases": aliases or [], "variant_reason": variant_reason, "feasibility": feasibility, "source": {"source_commit": _source(), "calculation_version": selected.get("calculation_version") or "phase2b-carbon-api", "mode": "http_api_replay", "endpoint": "/api/operation/hybrid/run", "base_url": base_url}, "input": main_input, "request": input_payload, "http_trace": traces, "weather": {"source": WEATHER_REL, "provenance": selected.get("weather_provenance"), "context": (selected.get("weather_provenance") or {}).get("context")}, "tariff": selected.get("tariff"), "load_context": context, "project_load_contract": selected.get("project_load_contract") or context.get("project_load_contract") or context.get("project_load_context"), "room_count": room.room_count, "units_per_room": room.units_per_room, "service_quality": context.get("service_quality"), "carbon_context": selected.get("carbon_context"), "recommendation": selected.get("recommendation"), "pv_recommendation": {"recommended_capacity_kwp": selected_cap, "basis": basis, "selected_capacity_row": next((r for r in rows if float(r["requested_capacity_kwp"]) == selected_cap), None)}, "total_cost_npv_cny": total_cost, "candidates": candidates, "pv_capacity_sweep": rows, "chart": _chart(selected, "S3_pv_wind"), "chart_recommended": _chart(selected, recommendation_id), "carbon": {x.get("scenario_id"): x.get("carbon") for x in selected.get("candidates", [])}, "annual_offset_estimate": {x.get("scenario_id"): x.get("annual_offset_estimate") for x in selected.get("candidates", [])}, "storage_upper_bound": {x.get("scenario_id"): x.get("storage_upper_bound") for x in selected.get("candidates", [])}, "surplus_paths": {x.get("scenario_id"): x.get("surplus_paths") for x in selected.get("candidates", [])}, "not_provided": ["只计当前空调负荷，不含照明、插座、生产工艺和建筑总表负荷", "报价与月度代理购电档案是用户确认/公开情景，不是现场账单", "车间大档为有界空调分区代理，不代表全厂"], "case_hash": None}
+    not_provided = ["只计当前空调负荷，不含照明、插座、生产工艺和建筑总表负荷",
+                    "报价与月度代理购电档案是用户确认/公开情景，不是现场账单"]
+    if case_id == "tier_large":
+        not_provided.append("车间大档为有界空调分区代理，不代表全厂")
+    case = {"case_id": case_id, "label": label, "demo_role": role, "aliases": aliases or [], "variant_reason": variant_reason, "feasibility": feasibility, "source": {"source_commit": _source(), "calculation_version": selected.get("calculation_version") or "phase2b-carbon-api", "mode": "http_api_replay", "endpoint": "/api/operation/hybrid/run", "base_url": base_url}, "input": main_input, "request": input_payload, "http_trace": traces, "weather": {"source": WEATHER_REL, "provenance": selected.get("weather_provenance"), "context": (selected.get("weather_provenance") or {}).get("context")}, "tariff": selected.get("tariff"), "load_context": context, "project_load_contract": selected.get("project_load_contract") or context.get("project_load_contract") or context.get("project_load_context"), "room_count": room.room_count, "units_per_room": room.units_per_room, "service_quality": context.get("service_quality"), "carbon_context": selected.get("carbon_context"), "recommendation": selected.get("recommendation"), "pv_recommendation": {"recommended_capacity_kwp": selected_cap, "basis": basis, "selected_capacity_row": next((r for r in rows if float(r["requested_capacity_kwp"]) == selected_cap), None)}, "total_cost_npv_cny": total_cost, "candidates": candidates, "pv_capacity_sweep": rows, "chart": _chart(selected, "S3_pv_wind"), "chart_recommended": _chart(selected, recommendation_id), "carbon": {x.get("scenario_id"): x.get("carbon") for x in selected.get("candidates", [])}, "annual_offset_estimate": {x.get("scenario_id"): x.get("annual_offset_estimate") for x in selected.get("candidates", [])}, "storage_upper_bound": {x.get("scenario_id"): x.get("storage_upper_bound") for x in selected.get("candidates", [])}, "surplus_paths": {x.get("scenario_id"): x.get("surplus_paths") for x in selected.get("candidates", [])}, "not_provided": not_provided, "case_hash": None}
     case["case_hash"] = _sha(case)
     return case
 
 
 def build(base_url: str) -> dict[str, Any]:
-    one = RoomSpec(area_m2=35, orientation="north", window_wall_ratio=0.1, insulation_u_w_m2k=0.3, people_count=2, equipment_gain_w=100, equipment_count=6, units_per_room=6, room_count=1)
+    one = RoomSpec(area_m2=35, orientation="north", window_wall_ratio=0.1, insulation_u_w_m2k=0.3, people_count=2, equipment_gain_w=100, equipment_count=2, units_per_room=2, room_count=1)
     # Medium tier deliberately changes temporal use rather than scaling the small tier.
-    medium = RoomSpec(area_m2=70, height_m=3.6, orientation="north", window_wall_ratio=0.1, insulation_u_w_m2k=0.3, people_count=8, equipment_gain_w=300, equipment_count=8, units_per_room=8, room_count=20, weekdays_only=False, start_hour=9, end_hour=21)
+    medium = RoomSpec(area_m2=70, height_m=3.6, orientation="north", window_wall_ratio=0.1, insulation_u_w_m2k=0.3, people_count=8, equipment_gain_w=300, equipment_count=5, units_per_room=5, room_count=20, weekdays_only=False, start_hour=9, end_hour=21)
     large = RoomSpec(area_m2=250, height_m=6, orientation="north", window_wall_ratio=0.1, insulation_u_w_m2k=0.3, people_count=20, equipment_gain_w=3000, weekdays_only=False, start_hour=8, end_hour=20, equipment_count=14, units_per_room=14, room_count=6)
     large_building = {"floors": 1, "conditioned_zones": 6, "zone_area_m2": 250, "total_conditioned_area_m2": 1500, "roof_area_m2": 2000, "daily_operation": "08:00-20:00 every day", "scope": "air-conditioned workshop zones only"}
     large_feasibility = {"status": "bounded_proxy_feasible", "conclusion": "可计算为厂房空调分区代理，不代表全厂", "parameter_basis": ["6区×250㎡、层高6m、20人/区、设备显热3kW/区、每天08:00-20:00", "每区14台为当前热湿模型范围内满足服务状态的最小整数扫描值，非工程选型"], "not_modelled": ["生产工艺、照明、插座、VRF/冷水机组和实测校准"]}
@@ -273,7 +281,7 @@ def build(base_url: str) -> dict[str, Any]:
         _case(base_url, case_id="variant_missing_pv_quote", label="状态变体：缺少光伏报价（固定1kWp）", role="state_variant", room=one, capacities=[1], fixed_cap=1, roof=35, budget=90000, pv_complete=False, variant_reason="主卡固定1kWp；物理结果保留，经济报价状态为unknown"),
         _case(base_url, case_id="variant_roof_area_insufficient", label="状态变体：屋顶面积不足（固定1kWp）", role="state_variant", room=one, capacities=[1], fixed_cap=1, roof=1, budget=90000, variant_reason="主卡固定1kWp；1㎡屋顶导致光伏候选excluded"),
     ]
-    return {"format_version": "5090-carbon-replay-v8", "description": "v8由实时HTTP hybrid/run生成；三档为示例，用户输入实时计算为主；中档改为每日09:00-21:00建筑；状态变体固定1kWp。v5及早期回放保留。", "source": {"source_commit": _source(), "calculation_version": "phase2b-carbon-5090-v8-http", "mode": "http_api_replay", "machine_role": "5090", "api_base_url": base_url}, "main_tariff": {"tariff_id": TARIFF_ID, "source_url": TARIFF_URL, "application": "current_tariff_on_reference_weather", "verified": True, "official_pdf": "docs/evidence/tariffs/guangdong_agency_tariff_202610_official.pdf", "official_pdf_sha256": "36648B430E5F729037DF3D8766232057FEADF518BD39692BFE1EFE3758C91212"}, "tiers": {"small": "tier_small", "medium": "tier_medium", "large": "tier_large"}, "state_variants": ["variant_budget_insufficient", "variant_missing_pv_quote", "variant_roof_area_insufficient"], "cases": cases, "display_contract": {"numbers_from_http_response": True, "user_input_is_primary": True, "capacity_selection_basis": "PV-only eligible complete candidate with maximum incremental NPV; variants fixed at 1kWp", "old_replays_immutable": True}}
+    return {"format_version": "5090-carbon-replay-v9", "description": "v9由实时HTTP hybrid/run生成；三档按thermal/size新判据采用各自最少达标台数；用户输入实时计算为主；中档改为每日09:00-21:00建筑；状态变体固定1kWp。v8及早期回放保留。", "source": {"source_commit": _source(), "calculation_version": "phase2b-carbon-5090-v9-http", "mode": "http_api_replay", "machine_role": "5090", "api_base_url": base_url}, "main_tariff": {"tariff_id": TARIFF_ID, "source_url": TARIFF_URL, "application": "current_tariff_on_reference_weather", "verified": True, "official_pdf": "docs/evidence/tariffs/guangdong_agency_tariff_202610_official.pdf", "official_pdf_sha256": "36648B430E5F729037DF3D8766232057FEADF518BD39692BFE1EFE3758C91212"}, "tiers": {"small": "tier_small", "medium": "tier_medium", "large": "tier_large"}, "state_variants": ["variant_budget_insufficient", "variant_missing_pv_quote", "variant_roof_area_insufficient"], "cases": cases, "display_contract": {"numbers_from_http_response": True, "user_input_is_primary": True, "capacity_selection_basis": "PV-only eligible complete candidate with maximum incremental NPV; variants fixed at 1kWp", "old_replays_immutable": True, "full_precision_results": "operation_planning/results/phase2b_carbon_5090/replay_cases_v9.json", "ui_compact_results": "docs/handoff/replay_viewer/replay_cases_ui_v9.json", "hourly_display_decimals": 4}}
 
 
 def main() -> int:
@@ -284,18 +292,11 @@ def main() -> int:
     started = datetime.now(timezone.utc).isoformat(timespec="seconds")
     package = build(args.base_url)
     OUT.mkdir(parents=True, exist_ok=True)
-    full = OUT / "replay_cases_v8.json"
+    full = OUT / "replay_cases_v9.json"
     full.write_text(json.dumps(package, ensure_ascii=False, indent=2), encoding="utf-8")
-    viewer = json.loads(json.dumps(package, ensure_ascii=False))
-    for case in viewer["cases"]:
-        case["chart"] = _compact_chart(case["chart"])
-        case["chart_recommended"] = _compact_chart(case["chart_recommended"])
-    viewer["display_contract"].update({"full_precision_results": "operation_planning/results/phase2b_carbon_5090/replay_cases_v8.json", "hourly_display_decimals": 4})
-    VIEWER_OUT.parent.mkdir(parents=True, exist_ok=True)
-    VIEWER_OUT.write_text(json.dumps(viewer, ensure_ascii=False, indent=2), encoding="utf-8")
     traces = [t for c in package["cases"] for t in c["http_trace"]]
-    manifest = {"status": "passed", "source_commit": package["source"]["source_commit"], "started_utc": started, "ended_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"), "machine_role": "5090", "api_base_url": args.base_url, "case_count": len(package["cases"]), "http_call_count": len(traces), "http_elapsed_ms": {"total": round(sum(t["elapsed_ms"] for t in traces), 3), "mean": round(sum(t["elapsed_ms"] for t in traces) / len(traces), 3), "max": round(max(t["elapsed_ms"] for t in traces), 3)}, "case_summaries": [{"case_id": c["case_id"], "recommended_pv_capacity_kwp": c["pv_recommendation"]["recommended_capacity_kwp"], "service_quality": c.get("service_quality"), "http_calls": len(c["http_trace"]), "case_hash": c["case_hash"]} for c in package["cases"]], "package_file_sha256": _file_sha(full), "viewer_file_sha256": _file_sha(VIEWER_OUT), "viewer_path": "docs/handoff/replay_viewer/replay_cases_v8.json", "previous_replays_preserved": ["replay_cases_v5.json", "replay_cases_v4.json", "replay_cases_v3.json"]}
-    (OUT / "run_manifest_v8.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+    manifest = {"status": "passed", "source_commit": package["source"]["source_commit"], "started_utc": started, "ended_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"), "machine_role": "5090", "api_base_url": args.base_url, "case_count": len(package["cases"]), "http_call_count": len(traces), "http_elapsed_ms": {"total": round(sum(t["elapsed_ms"] for t in traces), 3), "mean": round(sum(t["elapsed_ms"] for t in traces) / len(traces), 3), "max": round(max(t["elapsed_ms"] for t in traces), 3)}, "case_summaries": [{"case_id": c["case_id"], "recommended_pv_capacity_kwp": c["pv_recommendation"]["recommended_capacity_kwp"], "units_per_room": c.get("units_per_room"), "annual_load_kwh": (c.get("load_context") or {}).get("electric_load_kwh"), "service_quality": c.get("service_quality"), "http_calls": len(c["http_trace"]), "case_hash": c["case_hash"]} for c in package["cases"]], "package_file_sha256": _file_sha(full), "viewer_file_sha256": None, "viewer_path": "docs/handoff/replay_viewer/replay_cases_ui_v9.json", "previous_replays_preserved": ["replay_cases_v8.json", "replay_cases_v7.json", "replay_cases_v6.json", "replay_cases_v5.json", "replay_cases_v4.json", "replay_cases_v3.json"]}
+    (OUT / "run_manifest_v9.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(manifest, ensure_ascii=False))
     return 0
 
