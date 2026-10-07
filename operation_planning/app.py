@@ -297,7 +297,7 @@ class Handler(BaseHTTPRequestHandler):
                     pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year)
                     load_result = aggregate_project_load(simulate_room(load_weather_data, room))
                     scenario = scenario_from_dict(payload.get("pv") or {}, site_id=site_id, year=year)
-                    report = run_pv_planning(load_result, pv_weather_data, scenario, carbon=payload.get("carbon"))
+                    report = run_pv_planning(load_result, pv_weather_data, scenario, carbon=payload.get("carbon"), storage=payload.get("storage"))
                     report["agent"] = {"requested": False, "status": "disabled", "mode": "deterministic_tools", "note": "本接口的数值全部由Python工具计算；可按需启用本地模型工具协同。"}
                 return self._send(HTTPStatus.OK, {"status": "success", "report": report})
             except Exception as exc:
@@ -316,7 +316,7 @@ class Handler(BaseHTTPRequestHandler):
                 room, _, _ = _thermal_inputs(payload)
                 load_weather_data = payload.get("weather") or load_weather(site_id, year); pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year); load_result = aggregate_project_load(simulate_room(load_weather_data, room))
                 pv, hybrid = hybrid_task_from_dict(payload, site_id=site_id, year=year)
-                report = run_hybrid_planning(load_result, pv_weather_data, pv, hybrid, WindTurbineProfile.from_file(), carbon=payload.get("carbon"))
+                report = run_hybrid_planning(load_result, pv_weather_data, pv, hybrid, WindTurbineProfile.from_file(), carbon=payload.get("carbon"), storage=payload.get("storage"))
                 report["agent"] = {"requested": False, "status": "disabled", "mode": "phase2b_hybrid_tools", "request": payload.get("request", "")}
                 return self._send(HTTPStatus.OK, {"status":"success","report":report})
             except Exception as exc:

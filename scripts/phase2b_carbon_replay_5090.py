@@ -48,10 +48,10 @@ def _quotes(*, pv_complete: bool = True) -> tuple[PVQuote, WindQuote]:
     return pv, wind
 
 
-def _scenarios(*, budget: Optional[float] = 90000, roof: float = 50, pv_complete: bool = True) -> tuple[PVScenario, HybridScenario, Dict[str, Any]]:
+def _scenarios(*, budget: Optional[float] = 90000, roof: float = 50, pv_complete: bool = True, pv_capacity: float = 2, wind_count: int = 1, import_price: float = 0.66, study_years: int = 10) -> tuple[PVScenario, HybridScenario, Dict[str, Any]]:
     pv_quote, wind_quote = _quotes(pv_complete=pv_complete)
-    pv = PVScenario(site_id="guangzhou", year=2024, roof_area_m2=roof, requested_capacities_kwp=[0, 2], quote=pv_quote, import_price_cny_per_kwh=0.66, study_years=10)
-    hybrid = HybridScenario(site_id="guangzhou", year=2024, pv_capacity_kwp=2, wind=WindScenario(site_id="guangzhou", year=2024, turbine_count=1, hub_height_m=9, source_height_m=10, hellman_exponent=0.14), budget_cny=budget, allow_export=False, import_price_cny_per_kwh=0.66, study_years=10, pv_quote=pv_quote, wind_quote=wind_quote, shared_connection_cny=0)
+    pv = PVScenario(site_id="guangzhou", year=2024, roof_area_m2=roof, requested_capacities_kwp=[0, pv_capacity], quote=pv_quote, import_price_cny_per_kwh=import_price, study_years=study_years)
+    hybrid = HybridScenario(site_id="guangzhou", year=2024, pv_capacity_kwp=pv_capacity, wind=WindScenario(site_id="guangzhou", year=2024, turbine_count=wind_count, hub_height_m=9, source_height_m=10, hellman_exponent=0.14), budget_cny=budget, allow_export=False, import_price_cny_per_kwh=import_price, study_years=study_years, pv_quote=pv_quote, wind_quote=wind_quote, shared_connection_cny=0)
     return pv, hybrid, {"pv_quote": asdict(pv_quote), "wind_quote": asdict(wind_quote), "hub_height_m": hybrid.wind.hub_height_m, "hellman_exponent": hybrid.wind.hellman_exponent}
 
 
@@ -81,24 +81,26 @@ def _candidate(item: Dict[str, Any]) -> Dict[str, Any]:
         "economics": {"study_years": econ.get("study_years"), "yearly": econ.get("yearly"), "cashflow_convention": econ.get("cashflow_convention")},
         "carbon": item.get("carbon"),
         "annual_offset_estimate": item.get("annual_offset_estimate"),
+        "storage_upper_bound": item.get("storage_upper_bound"),
     }
 
 
-def _case(case_id: str, label: str, demo_role: str, room_spec: RoomSpec, weather: Dict[str, Any], pv_weather: Dict[str, Any], source_commit: str, *, budget: Optional[float] = 90000, roof: float = 50, pv_complete: bool = True, carbon_request: Optional[Dict[str, Any]] = None, variant_reason: Optional[str] = None, add_price_view: bool = False) -> Dict[str, Any]:
+def _case(case_id: str, label: str, demo_role: str, room_spec: RoomSpec, weather: Dict[str, Any], pv_weather: Dict[str, Any], source_commit: str, *, budget: Optional[float] = 90000, roof: float = 50, pv_complete: bool = True, carbon_request: Optional[Dict[str, Any]] = None, variant_reason: Optional[str] = None, add_price_view: bool = False, pv_capacity: float = 2, wind_count: int = 1, import_price: float = 0.66, study_years: int = 10, building: Optional[Dict[str, Any]] = None, storage_capacities: Optional[list[float]] = None) -> Dict[str, Any]:
     single = simulate_room(weather, room_spec)
     project = aggregate_project_load(single)
-    pv, hybrid, quote_input = _scenarios(budget=budget, roof=roof, pv_complete=pv_complete)
-    report = run_hybrid_planning(project, pv_weather, pv, hybrid, WindTurbineProfile.from_file(), include_hourly=True, carbon=carbon_request)
+    pv, hybrid, quote_input = _scenarios(budget=budget, roof=roof, pv_complete=pv_complete, pv_capacity=pv_capacity, wind_count=wind_count, import_price=import_price, study_years=study_years)
+    storage_request = {"capacities_kwh": storage_capacities or ([0, 50, 100, 200, 500] if room_spec.room_count >= 20 else [0, 5, 10, 20, 50]), "round_trip_efficiency": 0.90}
+    report = run_hybrid_planning(project, pv_weather, pv, hybrid, WindTurbineProfile.from_file(), include_hourly=True, carbon=carbon_request, storage=storage_request)
     s3 = next(item for item in report["candidates"] if item["scenario_id"] == "S3_pv_wind")
     weather_context = pv_weather.get("context") or {}
     input_data = {
-        "site_id": "guangzhou", "year": 2024, "room": asdict(room_spec),
-        "pv_capacity_kwp": 2, "wind_turbine_count": 1, "budget_cny": budget,
+        "site_id": "guangzhou", "year": 2024, "room": asdict(room_spec), "building": building or {"floors": 1, "rooms_per_floor": room_spec.room_count, "roof_area_basis": "room_count × 35m² footprint (pending site confirmation)"},
+        "pv_capacity_kwp": pv_capacity, "wind_turbine_count": wind_count, "budget_cny": budget,
         "roof_area_m2": roof, "usable_fraction": pv.usable_fraction,
-        "import_price_cny_per_kwh": 0.66, "allow_export": False, "study_years": 10,
+        "import_price_cny_per_kwh": import_price, "tariff_basis": "user constant scenario; not Guangzhou 2024 official tariff", "allow_export": False, "study_years": study_years,
         "pv_quote": quote_input["pv_quote"], "wind_quote": quote_input["wind_quote"],
         "hub_height_m": quote_input["hub_height_m"], "hellman_exponent": quote_input["hellman_exponent"],
-        "carbon": carbon_request or {"carbon_price_cny_per_t": None},
+        "carbon": carbon_request or {"carbon_price_cny_per_t": None}, "storage": storage_request,
     }
     total_cost = {item["scenario_id"]: (item.get("economics") or {}).get("total_cost_npv_cny") for item in report["candidates"]}
     case = {
@@ -111,7 +113,7 @@ def _case(case_id: str, label: str, demo_role: str, room_spec: RoomSpec, weather
         "total_cost_npv_cny": total_cost,
         "candidates": [_candidate(item) for item in report["candidates"]],
         "chart": {"scenario_id": "S3_pv_wind", **s3["hourly"]},
-        "not_provided": ["不同房间朝向、时段、设备和独立天气未建模", "报价、电价、寿命和碳价为用户情景", "不代表现场精度、经核证减排量、采购建议或碳市场资格"],
+        "not_provided": ["不同房间朝向、时段、设备和独立天气未建模", "报价、电价、寿命和碳价为用户情景", "屋顶面积按楼层占地近似，待现场确认", "不代表现场精度、经核证减排量、采购建议或碳市场资格"],
     }
     if add_price_view:
         ref_request = {"carbon_price_cny_per_t": REFERENCE_CARBON_PRICE_CNY_PER_T}
@@ -124,6 +126,33 @@ def _case(case_id: str, label: str, demo_role: str, room_spec: RoomSpec, weather
     return case
 
 
+def _round_display(value: Any) -> Any:
+    if isinstance(value, bool) or value is None:
+        return value
+    if isinstance(value, int):
+        return value
+    if isinstance(value, float):
+        return round(value, 4)
+    return value
+
+
+def _compact_chart(chart: Dict[str, Any]) -> Dict[str, Any]:
+    """Keep only the viewer's seven hourly columns, rounded for display."""
+    fields = ("timestamps", "load_kwh", "pv_generation_kwh", "wind_generation_kwh", "self_use_kwh", "grid_import_kwh", "curtailment_kwh")
+    compact = {field: [_round_display(item) for item in chart.get(field, [])] if isinstance(chart.get(field), list) else chart.get(field) for field in fields}
+    if any(abs(float(value)) > 1e-12 for value in chart.get("grid_export_kwh", [])):
+        compact["grid_export_kwh"] = [_round_display(item) for item in chart.get("grid_export_kwh", [])]
+    return compact
+
+
+def _viewer_package(package: Dict[str, Any]) -> Dict[str, Any]:
+    viewer = json.loads(json.dumps(package, ensure_ascii=False))
+    for case in viewer.get("cases", []):
+        case["chart"] = {"scenario_id": case["chart"]["scenario_id"], **_compact_chart(case["chart"])}
+    viewer["display_contract"].update({"hourly_columns": ["timestamps", "load_kwh", "pv_generation_kwh", "wind_generation_kwh", "self_use_kwh", "grid_import_kwh", "curtailment_kwh"], "hourly_display_decimals": 4, "full_precision_results": "operation_planning/results/phase2b_carbon_5090/replay_cases_v3.json"})
+    return viewer
+
+
 def main() -> int:
     started = datetime.now(timezone.utc).isoformat(timespec="seconds")
     source_commit = _source()
@@ -132,12 +161,14 @@ def main() -> int:
     if list(weather["time"]) != list(pv_weather["time"]):
         raise AssertionError("负荷与风光天气时间轴不一致")
     adequate_one = RoomSpec(area_m2=35, orientation="north", window_wall_ratio=0.1, insulation_u_w_m2k=0.3, people_count=2, equipment_gain_w=100, equipment_count=6, units_per_room=6, room_count=1)
+    adequate_worth = RoomSpec(area_m2=35, orientation="north", window_wall_ratio=0.1, insulation_u_w_m2k=0.3, people_count=2, equipment_gain_w=100, equipment_count=6, units_per_room=6, room_count=40)
     adequate_three = RoomSpec(area_m2=35, orientation="north", window_wall_ratio=0.1, insulation_u_w_m2k=0.3, people_count=2, equipment_gain_w=100, equipment_count=6, units_per_room=6, room_count=3)
     undersized = RoomSpec(equipment_count=1, units_per_room=1, room_count=1)
     two_unit = RoomSpec(equipment_count=2, units_per_room=2, room_count=1)
     no_price = {"carbon_price_cny_per_t": None}
     cases = [
-        _case("primary_adequate_one_room", "主演示：容量充足的单房间项目负荷", "primary_no_service_gap", adequate_one, weather, pv_weather, source_commit, carbon_request=no_price, add_price_view=True),
+        _case("primary_not_worth_it", "主案例A：小屋顶、常规电价下不安装更合算", "primary_not_worth_it", adequate_one, weather, pv_weather, source_commit, carbon_request=no_price, add_price_view=True, building={"floors": 1, "rooms_per_floor": 1, "roof_area_m2": 35, "roof_area_basis": "single-floor footprint; usable area is input condition"}),
+        _case("primary_worth_it", "主案例B：同一广州天气、公共建筑规模下光伏划算", "primary_worth_it", adequate_worth, weather, pv_weather, source_commit, carbon_request=no_price, add_price_view=True, roof=350, pv_capacity=20, import_price=1.20, budget=300000, building={"floors": 4, "rooms_per_floor": 10, "room_count": 40, "roof_area_m2": 350, "roof_area_basis": "single-floor footprint = 10 rooms × 35m²; four floors; roof is not multiplied by floors", "tariff_basis": "user constant 1.20 CNY/kWh sensitivity; not Guangzhou 2024 official tariff"}),
         _case("primary_adequate_three_rooms", "主演示：三间同类房间项目负荷", "primary_no_service_gap", adequate_three, weather, pv_weather, source_commit, carbon_request=no_price),
         _case("comparison_undersized_one_unit", "对照：默认一台设备的服务缺口", "undersized_comparison", undersized, weather, pv_weather, source_commit, carbon_request=no_price),
         _case("comparison_two_unit_reference", "口径对照：默认房间改为每间两台设备", "two_unit_reference", two_unit, weather, pv_weather, source_commit, carbon_request=no_price),
@@ -145,14 +176,17 @@ def main() -> int:
         _case("variant_missing_pv_quote", "状态变体：缺少光伏报价", "state_variant", adequate_one, weather, pv_weather, source_commit, pv_complete=False, carbon_request=no_price, variant_reason="光伏物理结果保留，S1/S3经济字段未决；不证明S0最优"),
         _case("variant_roof_area_insufficient", "状态变体：屋顶面积不足", "state_variant", adequate_one, weather, pv_weather, source_commit, roof=1, carbon_request=no_price, variant_reason="2kWp超过可用屋顶上限，PV相关候选明确排除"),
     ]
-    package = {"format_version": "5090-carbon-replay-v3", "description": "阶段二B碳排放与年度粗算对照回放；旧回放保留。所有物理数值、碳字段和经济字段来自5090确定性工具。", "source": {"source_commit": source_commit, "calculation_version": "phase2b-carbon-5090-v1", "weather_hash": pv_weather.get("hash"), "mode": "fixed_replay_only"}, "cases": cases, "display_contract": {"numbers_from_data": True, "carbon_fields_from_backend": True, "annual_offset_is_comparison_only": True, "unknown_new_inputs": "待5090验算", "old_replays_immutable": True}}
+    search = {"site_id": "guangzhou", "weather_year": 2024, "same_weather_as": "primary_not_worth_it", "searched_room_counts": [20, 40, 80], "searched_pv_capacities_kwp": [2, 10, 20, 40], "searched_constant_prices_cny_per_kwh": [0.66, 1.20], "study_years": [10], "roof_rule": "rooms_per_floor × 35m² single-floor footprint; floors do not multiply roof", "selected": {"room_count": 40, "floors": 4, "rooms_per_floor": 10, "roof_area_m2": 350, "pv_capacity_kwp": 20, "import_price_cny_per_kwh": 1.20, "reason": "有限检索中获得正的增量NPV；电价为明确用户敏感性情景"}}
+    package = {"format_version": "5090-carbon-replay-v3", "description": "阶段二B碳排放、年度粗算和储能理想上限回放；旧回放保留。所有物理数值、碳字段、储能上限和经济字段来自5090确定性工具。", "source": {"source_commit": source_commit, "calculation_version": "phase2b-carbon-5090-v2", "weather_hash": pv_weather.get("hash"), "mode": "fixed_replay_only"}, "search_audit": search, "cases": cases, "display_contract": {"numbers_from_data": True, "carbon_fields_from_backend": True, "annual_offset_is_comparison_only": True, "storage_is_ideal_upper_bound_only": True, "unknown_new_inputs": "待5090验算", "old_replays_immutable": True}}
     OUT.mkdir(parents=True, exist_ok=True)
     raw = json.dumps(package, ensure_ascii=False, indent=2)
-    VIEWER_OUT.write_text(raw, encoding="utf-8")
     (OUT / "replay_cases_v3.json").write_text(raw, encoding="utf-8")
-    manifest = {"status": "passed", "source_commit": source_commit, "started_utc": started, "ended_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"), "machine_role": "5090", "case_count": len(cases), "case_summaries": [{"case_id": c["case_id"], "room_count": c["room_count"], "units_per_room": c["units_per_room"], "service_status": c["service_quality"]["status"], "carbon_factor_id": c["carbon_context"]["factor"]["factor_id"], "reference_price_cny_per_t": REFERENCE_CARBON_PRICE_CNY_PER_T if "carbon_price_scenarios" in c else None, "chart_scenario_id": c["chart"]["scenario_id"], "case_hash": c["case_hash"]} for c in cases], "package_sha256": _sha(package), "viewer_path": "docs/handoff/replay_viewer/replay_cases_v3.json", "note": "完整年回放；旧 replay_cases.json 与 replay_cases_room_contract.json 保留为历史证据。"}
+    viewer = _viewer_package(package)
+    VIEWER_OUT.write_text(json.dumps(viewer, ensure_ascii=False, indent=2), encoding="utf-8")
+    manifest = {"status": "passed", "source_commit": source_commit, "started_utc": started, "ended_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"), "machine_role": "5090", "case_count": len(cases), "case_summaries": [{"case_id": c["case_id"], "room_count": c["room_count"], "units_per_room": c["units_per_room"], "service_status": c["service_quality"]["status"], "carbon_factor_id": c["carbon_context"]["factor"]["factor_id"], "reference_price_cny_per_t": REFERENCE_CARBON_PRICE_CNY_PER_T if "carbon_price_scenarios" in c else None, "chart_scenario_id": c["chart"]["scenario_id"], "case_hash": c["case_hash"]} for c in cases], "search_audit": search, "package_sha256": _sha(package), "viewer_sha256": _sha(viewer), "viewer_path": "docs/handoff/replay_viewer/replay_cases_v3.json", "note": "完整年回放；旧 replay_cases.json 与 replay_cases_room_contract.json 保留为历史证据；viewer逐时字段为7列、4位小数。"}
     (OUT / "run_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(json.dumps(manifest, ensure_ascii=False))
+    # Windows console may use GBK; keep the machine-readable output printable.
+    print(json.dumps(manifest, ensure_ascii=True))
     return 0
 
 
