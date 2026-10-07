@@ -1,0 +1,83 @@
+{
+  "status": "passed",
+  "source_commit": "e14c9f117030e7438c7a2ee807b241612077002c",
+  "started_utc": "2026-10-07T02:54:43+00:00",
+  "ended_utc": "2026-10-07T02:57:47+00:00",
+  "machine_role": "5090",
+  "case_count": 7,
+  "case_summaries": [
+    {
+      "case_id": "primary_adequate_one_room",
+      "room_count": 1,
+      "units_per_room": 6,
+      "service_status": "within_modeled_scope",
+      "carbon_factor_id": "grid_avg_guangdong_2023",
+      "reference_price_cny_per_t": 97.49,
+      "chart_scenario_id": "S3_pv_wind",
+      "case_hash": "7cc9e279b92b605efebabc5e0aa12ec65d407b93a8b5db480f46f824e7f4a263"
+    },
+    {
+      "case_id": "primary_adequate_three_rooms",
+      "room_count": 3,
+      "units_per_room": 6,
+      "service_status": "within_modeled_scope",
+      "carbon_factor_id": "grid_avg_guangdong_2023",
+      "reference_price_cny_per_t": null,
+      "chart_scenario_id": "S3_pv_wind",
+      "case_hash": "69bfc424f12751a303b0924359c1994b49c927c1c2a927e0963906c7be6bd7bd"
+    },
+    {
+      "case_id": "comparison_undersized_one_unit",
+      "room_count": 1,
+      "units_per_room": 1,
+      "service_status": "service_gap",
+      "carbon_factor_id": "grid_avg_guangdong_2023",
+      "reference_price_cny_per_t": null,
+      "chart_scenario_id": "S3_pv_wind",
+      "case_hash": "03a0f762e19cf18ebf24793e52eee5e0a3c3827a5746b5695936070f2ea7a459"
+    },
+    {
+      "case_id": "comparison_two_unit_reference",
+      "room_count": 1,
+      "units_per_room": 2,
+      "service_status": "service_gap",
+      "carbon_factor_id": "grid_avg_guangdong_2023",
+      "reference_price_cny_per_t": null,
+      "chart_scenario_id": "S3_pv_wind",
+      "case_hash": "8104e8c3a0c5a4799f3e8d1d47e62568fa8a2a9a39aa307443d51cf03c1aee0c"
+    },
+    {
+      "case_id": "variant_budget_insufficient",
+      "room_count": 1,
+      "units_per_room": 6,
+      "service_status": "within_modeled_scope",
+      "carbon_factor_id": "grid_avg_guangdong_2023",
+      "reference_price_cny_per_t": null,
+      "chart_scenario_id": "S3_pv_wind",
+      "case_hash": "1c56ee060c532a8f7414db8916f2f823d39f7eee4943d94a68b4c4f8906286ff"
+    },
+    {
+      "case_id": "variant_missing_pv_quote",
+      "room_count": 1,
+      "units_per_room": 6,
+      "service_status": "within_modeled_scope",
+      "carbon_factor_id": "grid_avg_guangdong_2023",
+      "reference_price_cny_per_t": null,
+      "chart_scenario_id": "S3_pv_wind",
+      "case_hash": "5db81196fcf4706266a7f504cbb4559d6ede9bc658ada97ffa8d1c1be31f42ae"
+    },
+    {
+      "case_id": "variant_roof_area_insufficient",
+      "room_count": 1,
+      "units_per_room": 6,
+      "service_status": "within_modeled_scope",
+      "carbon_factor_id": "grid_avg_guangdong_2023",
+      "reference_price_cny_per_t": null,
+      "chart_scenario_id": "S3_pv_wind",
+      "case_hash": "3e82715bc349987e96054250d10e3d5d935fe6c40426bbc87d549fc57c5ecff0"
+    }
+  ],
+  "package_sha256": "917112329e552c5a3cf96a6f0c12f7f9af16d8945c845a447a9c4b06a7296192",
+  "viewer_path": "docs/handoff/replay_viewer/replay_cases_v3.json",
+  "note": "完整年回放；旧 replay_cases.json 与 replay_cases_room_contract.json 保留为历史证据。"
+}

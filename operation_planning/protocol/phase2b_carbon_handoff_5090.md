@@ -1,6 +1,6 @@
 # 阶段二B：5090 碳指标与 v3 回放交接
 
-本交接对应分支 `fix/5090-carbon-metrics`。本轮只增加后端碳排放计算、年度粗算对照、碳因子只读接口和 v3 回放；未修改 `operation_planning/ui/**`，旧回放文件保留。
+本交接对应分支 `fix/5090-carbon-metrics`。实现与正式回放的 `source_commit` 为 `e14c9f117030e7438c7a2ee807b241612077002c`；v3 JSON SHA-256 为 `a27f397ac01c842a2ec7f6e66841adb7cd60a18eea69881871c0e306e9046681`。本轮只增加后端碳排放计算、年度粗算对照、碳因子只读接口和 v3 回放；未修改 `operation_planning/ui/**`，旧回放文件保留。
 
 ## 本轮新增能力
 
