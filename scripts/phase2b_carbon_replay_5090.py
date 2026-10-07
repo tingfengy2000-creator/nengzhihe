@@ -167,7 +167,7 @@ def main() -> int:
     two_unit = RoomSpec(equipment_count=2, units_per_room=2, room_count=1)
     no_price = {"carbon_price_cny_per_t": None}
     cases = [
-        _case("primary_not_worth_it", "主案例A：小屋顶、常规电价下不安装更合算", "primary_not_worth_it", adequate_one, weather, pv_weather, source_commit, carbon_request=no_price, add_price_view=True, building={"floors": 1, "rooms_per_floor": 1, "roof_area_m2": 35, "roof_area_basis": "single-floor footprint; usable area is input condition"}),
+        _case("primary_not_worth_it", "主案例A：小型35㎡、常规电价下不安装更合算", "primary_not_worth_it", adequate_one, weather, pv_weather, source_commit, roof=35, carbon_request=no_price, add_price_view=True, building={"floors": 1, "rooms_per_floor": 1, "roof_area_m2": 35, "roof_area_basis": "single-floor footprint; usable area is input condition"}),
         _case("primary_worth_it", "主案例B：同一广州天气、公共建筑规模下光伏划算", "primary_worth_it", adequate_worth, weather, pv_weather, source_commit, carbon_request=no_price, add_price_view=True, roof=350, pv_capacity=20, import_price=1.20, budget=300000, building={"floors": 4, "rooms_per_floor": 10, "room_count": 40, "roof_area_m2": 350, "roof_area_basis": "single-floor footprint = 10 rooms × 35m²; four floors; roof is not multiplied by floors", "tariff_basis": "user constant 1.20 CNY/kWh sensitivity; not Guangzhou 2024 official tariff"}),
         _case("primary_adequate_three_rooms", "主演示：三间同类房间项目负荷", "primary_no_service_gap", adequate_three, weather, pv_weather, source_commit, carbon_request=no_price),
         _case("comparison_undersized_one_unit", "对照：默认一台设备的服务缺口", "undersized_comparison", undersized, weather, pv_weather, source_commit, carbon_request=no_price),
