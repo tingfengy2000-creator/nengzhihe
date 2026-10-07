@@ -6,6 +6,11 @@ without GPU, network or the front end.  Full-year timing is covered by the
 """
 from __future__ import annotations
 
+import json
+import threading
+from http.server import ThreadingHTTPServer
+from urllib.request import Request, urlopen
+
 from operation_planning.app import _api_error, _capacity_candidates, _thermal_capacity_sweep
 
 
@@ -49,3 +54,32 @@ def test_v6_async_contract_schema():
     polled = {"job_id": "abc123", "status": "running", "progress": 0.5, "events": [], "result": None}
     assert set(("status", "job_id", "progress")) <= accepted.keys()
     assert set(("job_id", "status", "progress", "events", "result")) <= polled.keys()
+
+
+def test_v6_http_options_thermal_and_async_contract():
+    import operation_planning.app as app
+    original_weather = app.load_weather
+    original_hybrid = app._hybrid_capacity_run
+    app.load_weather = lambda site, year: _weather_fixture()
+    app._hybrid_capacity_run = lambda payload, progress=None: {"status": "success", "pv_capacity_sweep": [], "candidates": []}
+    server = ThreadingHTTPServer(("127.0.0.1", 0), app.Handler)
+    thread = threading.Thread(target=server.serve_forever, daemon=True); thread.start()
+    base = f"http://127.0.0.1:{server.server_address[1]}"
+    try:
+        with urlopen(base + "/api/operation/options") as response:
+            options = json.loads(response.read().decode("utf-8")); assert response.status == 200
+        assert "equipment_models" in options and "tariffs" in options and "carbon_factors" in options
+        body = {"max_units": 2, "room": {"equipment_id": "midea_msagbu12_mox201", "equipment_count": 1, "units_per_room": 1, "room_count": 1}}
+        req = Request(base + "/api/operation/thermal/size", data=json.dumps(body).encode("utf-8"), headers={"Content-Type": "application/json"})
+        with urlopen(req) as response:
+            thermal = json.loads(response.read().decode("utf-8")); assert response.status == 200
+        assert len(thermal["candidates"]) == 2 and "minimum_adequate_units_per_room" in thermal
+        req = Request(base + "/api/operation/hybrid/jobs", data=json.dumps({"room": {"equipment_id": "midea_msagbu12_mox201"}, "pv": {"requested_capacities_kwp": [0]}}).encode("utf-8"), headers={"Content-Type": "application/json"})
+        with urlopen(req) as response:
+            accepted = json.loads(response.read().decode("utf-8")); assert response.status == 202
+        with urlopen(base + "/api/operation/hybrid/jobs/" + accepted["job_id"]) as response:
+            polled = json.loads(response.read().decode("utf-8"))
+        assert polled["status"] in {"queued", "running", "done"} and "progress" in polled
+    finally:
+        server.shutdown(); server.server_close()
+        app.load_weather = original_weather; app._hybrid_capacity_run = original_hybrid
