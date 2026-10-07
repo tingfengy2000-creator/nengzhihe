@@ -8,6 +8,8 @@ from __future__ import annotations
 
 import json
 import threading
+import time
+from copy import deepcopy
 from http.server import ThreadingHTTPServer
 from urllib.request import Request, urlopen
 
@@ -107,3 +109,105 @@ def test_v6_http_options_thermal_and_async_contract():
     finally:
         server.shutdown(); server.server_close()
         app.load_weather = original_weather; app._hybrid_capacity_run = original_hybrid
+
+
+def real_short_http_probe() -> dict:
+    """Exercise real thermal/PV/wind/matching/economic tools over three hours.
+
+    No calculation function or weather loader is mocked.  Embedded weather
+    is a short contractual fixture, explicitly not an annual replay case.
+    The independent ephemeral port avoids the 18765 full-year service.
+    """
+    import operation_planning.app as app
+    server = ThreadingHTTPServer(("127.0.0.1", 0), app.Handler)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    base_url = f"http://127.0.0.1:{server.server_address[1]}"
+    records = []
+
+    def request(method, path, payload=None):
+        started = time.perf_counter()
+        data = None if payload is None else json.dumps(payload, ensure_ascii=False).encode("utf-8")
+        req = Request(base_url + path, data=data, headers={"Content-Type": "application/json"}, method=method)
+        with urlopen(req, timeout=30) as response:
+            status = response.status; output = json.loads(response.read().decode("utf-8"))
+        records.append({"method": method, "path": path, "http_status": status,
+                        "elapsed_ms": round((time.perf_counter() - started) * 1000, 3),
+                        "request": payload, "response": output})
+        return output
+
+    pv_quote = {"module_cny_per_kwp": 1800, "inverter_cny_per_kwp": 600,
+                "structure_cny_per_kwp": 500, "installation_cny_per_kwp": 800,
+                "grid_connection_cny": 0, "maintenance_cny_per_kwp_year": 30,
+                "residual_fraction": 0.05}
+    payload = {"site_id": "guangzhou", "year": 2024,
+        "room": {"area_m2": 35, "equipment_id": "midea_msagbu12_mox201", "equipment_count": 2,
+                 "units_per_room": 2, "room_count": 1},
+        "weather": _weather_fixture(), "pv_weather": _weather_fixture(),
+        "pv": {"roof_area_m2": 35, "usable_fraction": 0.8, "auto_capacity": True, "quote": pv_quote},
+        "hybrid": {"wind": {"turbine_count": 0}, "study_years": 2,
+                   "budget_cny": 90000, "pv_quote": pv_quote, "shared_connection_cny": 0},
+        "storage": {"capacities_kwh": [0], "round_trip_efficiency": 0.90}}
+
+    def wait_job(job_id):
+        deadline = time.monotonic() + 30
+        snapshots = []
+        while time.monotonic() < deadline:
+            snapshot = request("GET", "/api/operation/hybrid/jobs/" + job_id)
+            snapshots.append(snapshot)
+            if snapshot["status"] in {"done", "failed"}:
+                return snapshot, snapshots
+            time.sleep(0.02)
+        raise AssertionError("short HTTP job timed out")
+
+    try:
+        options = request("GET", "/api/operation/options")
+        provisional = next(row for row in options["tariffs"]["tariffs"] if row["tariff_id"] == "guangzhou_industrial_lt1kv_202610")
+        assert provisional["provisional"] is True and provisional["verified"] is False
+
+        thermal = request("POST", "/api/operation/thermal/size",
+                          {"site_id": "guangzhou", "year": 2024, "room": payload["room"],
+                           "weather": payload["weather"], "max_units": 2})
+        assert len(thermal["candidates"]) == 2
+
+        automatic = request("POST", "/api/operation/hybrid/run", payload)
+        sweep = automatic["report"]["pv_capacity_sweep"]
+        assert [row["requested_capacity_kwp"] for row in sweep] == [0.0, 1.4, 2.8, 5.6]
+        for candidate in automatic["report"]["candidates"]:
+            assert len(candidate["hourly"]["timestamps"]) == 3
+
+        fixed = deepcopy(payload); fixed["pv"].pop("auto_capacity")
+        fixed["pv"].update({"fixed_capacity_kwp": 1, "requested_capacities_kwp": [1], "quote": {}})
+        fixed["hybrid"]["pv_quote"] = {}
+        unknown = request("POST", "/api/operation/hybrid/run", fixed)
+        s1 = next(row for row in unknown["report"]["candidates"] if row["scenario_id"] == "S1_pv")
+        assert s1["pv_capacity_kwp"] == 1 and s1["admission_status"] == "unknown"
+        excluded_input = deepcopy(fixed); excluded_input["pv"]["roof_area_m2"] = 1
+        excluded = request("POST", "/api/operation/hybrid/run", excluded_input)
+        s1 = next(row for row in excluded["report"]["candidates"] if row["scenario_id"] == "S1_pv")
+        assert s1["pv_capacity_kwp"] == 1 and s1["admission_status"] == "excluded"
+
+        accepted = request("POST", "/api/operation/hybrid/jobs", payload)
+        done, done_snapshots = wait_job(accepted["job_id"])
+        assert done["status"] == "done" and done["progress"] == 1
+        assert done["result"]["status"] == "success"
+        events = [event for event in done["events"] if event["type"] == "capacity_completed"]
+        assert len(events) == 4 and [event["completed"] for event in events] == [1, 2, 3, 4]
+        assert all(0 <= snapshot["progress"] <= 1 for snapshot in done_snapshots)
+        assert [snapshot["progress"] for snapshot in done_snapshots] == sorted(snapshot["progress"] for snapshot in done_snapshots)
+
+        failed_input = deepcopy(payload); failed_input["room"]["equipment_id"] = "unsupported_contract_model"
+        failed_accepted = request("POST", "/api/operation/hybrid/jobs", failed_input)
+        failed, _ = wait_job(failed_accepted["job_id"])
+        assert failed["status"] == "failed" and "未支持的设备型号" in failed["error"]
+        assert failed["field"] == "room.equipment_id" and failed["result"]["error"] == failed["error"]
+        return {"status": "passed", "fixture_type": "3-hour contract fixture; not annual demonstration",
+                "port_strategy": "independent ephemeral loopback port", "calculators_mocked": False,
+                "assertions": ["options provisional", "real thermal size", "auto capacities 0/1.4/2.8/5.6 kWp",
+                    "fixed 1kWp unknown", "fixed 1kWp excluded", "real async progress/done", "real async failed Chinese message"],
+                "records": records}
+    finally:
+        server.shutdown(); server.server_close()
+
+
+def test_v6_real_short_http_contract():
+    assert real_short_http_probe()["status"] == "passed"

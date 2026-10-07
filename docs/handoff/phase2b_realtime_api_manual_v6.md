@@ -4,7 +4,7 @@
 
 ## 选项
 
-`GET /api/operation/options` 返回 `cities`（缓存城市与年份）、`years`、`equipment_models`（型号、额定制冷量、COP、来源）、`tariffs`（电价档案及 `verified`/`notes`）、`carbon_factors`（kgCO2/kWh）和单位表。
+`GET /api/operation/options` 返回 `cities`（缓存城市与年份）、`years`、`equipment_models`（型号、额定制冷量、COP、来源）、`tariffs`（电价档案及 `verified`、`provisional`、`verification_status`、`notes`）、`carbon_factors`（kgCO2/kWh）和单位表。公开抄录但未取得原始公告的电价标为 `verified:false, provisional:true`。
 
 ## 空调台数比选
 
@@ -42,6 +42,15 @@
 ## 异步任务
 
 容量候选较多时使用 `POST /api/operation/hybrid/jobs`（`/hybrid/submit` 为别名），返回 `{status:"queued",job_id,progress:0}`。轮询 `GET /api/operation/hybrid/jobs/{job_id}`（`/job/`、`/task/` 为别名），`progress` 只在真实容量完成后递增，完成时 `result.report` 与同步接口相同。
+
+任务失败时轮询仍返回 HTTP 200 的任务状态，并在顶层给出可直接展示的 `error`、`message`、`field`，同时 `result` 保留同一错误对象。例如：
+
+```json
+{"job_id":"abc123","status":"failed","progress":0,
+ "error":"未支持的设备型号：unsupported_contract_model",
+ "message":"未支持的设备型号：unsupported_contract_model",
+ "field":"room.equipment_id"}
+```
 
 ## 错误
 

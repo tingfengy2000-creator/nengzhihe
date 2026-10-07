@@ -52,6 +52,15 @@ MIME = {
 }
 
 
+def _tariff_options() -> dict:
+    """Make verification status explicit for the UI option contract."""
+    data = registry()
+    for item in data.get("tariffs", []):
+        item["provisional"] = not bool(item.get("verified"))
+        item["verification_status"] = "verified" if item.get("verified") else "provisional"
+    return data
+
+
 def _api_error(exc: Exception, field: str | None = None) -> dict:
     """Return a stable, directly displayable Chinese validation response.
 
@@ -437,13 +446,13 @@ class Handler(BaseHTTPRequestHandler):
         parsed = urlparse(self.path); path = parsed.path
         if path in ("/", "/index.html"): return self._send(HTTPStatus.OK, (UI / "index.html").read_bytes(), MIME[".html"])
         if path == "/api/operation/health": return self._send(HTTPStatus.OK, {"ok": True, "product": "能智核——公共建筑空调运行方案试算与优化智能体", "mode": "local_replay"})
-        if path == "/api/operation/tariffs": return self._send(HTTPStatus.OK, registry())
+        if path == "/api/operation/tariffs": return self._send(HTTPStatus.OK, _tariff_options())
         if path == "/api/operation/carbon/factors": return self._send(HTTPStatus.OK, factor_catalog())
         if path == "/api/operation/options":
             sites = available_sites()
             years = sorted({int(year) for site in sites for year in site.get("cached_years", []) if str(year).isdigit()})
             return self._send(HTTPStatus.OK, {"status": "success", "cities": sites, "years": years,
-                "equipment_models": catalogue(), "tariffs": registry(), "carbon_factors": factor_catalog(),
+                "equipment_models": catalogue(), "tariffs": _tariff_options(), "carbon_factors": factor_catalog(),
                 "units": {"area_m2": "m²", "height_m": "m", "power_kw": "kW", "energy_kwh": "kWh", "price_cny_per_kwh": "CNY/kWh"}})
         if path in ("/api/operation/cities", "/api/operation/years"):
             sites = available_sites()
@@ -474,9 +483,14 @@ class Handler(BaseHTTPRequestHandler):
                 return self._send(HTTPStatus.NOT_FOUND, {"status": "failed", "error": "任务不存在", "message": "任务不存在", "field": "job_id"})
             events = snapshot.get("events") or []
             progress = snapshot.get("progress", 0.0)
+            output = snapshot.get("output") or {}
+            failed = snapshot.get("status") == "failed"
             return self._send(HTTPStatus.OK, {"job_id": job_id, "status": snapshot.get("status"), "progress": progress,
                 "events": events[-20:], "elapsed_ms": ((snapshot.get("finished_at") or time.time()) - snapshot.get("created_at", time.time())) * 1000.0,
-                "result": snapshot.get("output") if snapshot.get("status") == "done" else None})
+                "result": output if snapshot.get("status") in {"done", "failed"} else None,
+                "error": output.get("error") if failed else None,
+                "message": output.get("message") if failed else None,
+                "field": output.get("field") if failed else None})
         if path.startswith("/api/operation/export/"):
             with LOCK: job = JOBS.get(path.rsplit("/", 1)[-1])
             try: report, selected = _selected(job or {})
