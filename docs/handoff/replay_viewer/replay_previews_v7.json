@@ -1,7 +1,7 @@
 {
   "format_version": "preview_v6_http_5090",
   "source_v6_file": "docs\\handoff\\replay_viewer\\replay_cases_v6.json",
-  "source_commit": "b660489904ef20231303de7f11c1462e86d3e91c",
+  "source_commit": "abb33166fba9f7141a2e7408f8f9d4a1db72611d",
   "endpoint": "/api/operation/hybrid/preview",
   "period_rule": {
     "week": "month-day 15 00:00 through day 22 00:00 exclusive",
@@ -15,7 +15,7 @@
       "season": "summer",
       "label": "小档：35㎡办公房间｜summer fixed calendar week",
       "source_case_id": "tier_small",
-      "source_commit": "b660489904ef20231303de7f11c1462e86d3e91c",
+      "source_commit": "abb33166fba9f7141a2e7408f8f9d4a1db72611d",
       "request": {
         "site_id": "guangzhou",
         "year": 2024,
@@ -9669,7 +9669,7 @@
           "reason": "preview endpoint does not calculate lifecycle, tariff, carbon price or payback"
         },
         "calculation_timing": {
-          "elapsed_ms": 253.572,
+          "elapsed_ms": 227.861,
           "timing_scope": "selected typical week/month physical generation and matching only"
         },
         "notes": [
@@ -9677,10 +9677,10 @@
           "改变电价或报价不会改变本接口物理结果；如需经济比较请调用hybrid/run。"
         ]
       },
-      "response_sha256": "d105509d58cae5661759aeb82e7a8fe6c45f9b6ca7777c9541e4e04ce7045d21",
+      "response_sha256": "7f14731c5b49823abd0c73bf40e9ebdd1bd4f2b7626f106f9b44bf472f8b6fe8",
       "http_status": 200,
-      "http_elapsed_ms": 275.359,
-      "generated_at": "2026-10-07T16:58:04+08:00",
+      "http_elapsed_ms": 249.611,
+      "generated_at": "2026-10-07T17:08:54+08:00",
       "notes": [
         "固定日历预览：每年7月15日至22日或1月15日至22日，不声称统计最代表性。",
         "仅物理发电与逐时匹配；不计算经济、碳价或全年外推。"
@@ -9692,7 +9692,7 @@
       "season": "winter",
       "label": "小档：35㎡办公房间｜winter fixed calendar week",
       "source_case_id": "tier_small",
-      "source_commit": "b660489904ef20231303de7f11c1462e86d3e91c",
+      "source_commit": "abb33166fba9f7141a2e7408f8f9d4a1db72611d",
       "request": {
         "site_id": "guangzhou",
         "year": 2024,
@@ -19346,7 +19346,7 @@
           "reason": "preview endpoint does not calculate lifecycle, tariff, carbon price or payback"
         },
         "calculation_timing": {
-          "elapsed_ms": 229.655,
+          "elapsed_ms": 245.615,
           "timing_scope": "selected typical week/month physical generation and matching only"
         },
         "notes": [
@@ -19354,10 +19354,10 @@
           "改变电价或报价不会改变本接口物理结果；如需经济比较请调用hybrid/run。"
         ]
       },
-      "response_sha256": "8475ef51f8823cb91dbd216188f2dcbabbef3dcc3939a90278dc26cff7a65de8",
+      "response_sha256": "c953abe09fb92c6157047039058d99f39d66f2b8839d0589059f24b534516da4",
       "http_status": 200,
-      "http_elapsed_ms": 239.872,
-      "generated_at": "2026-10-07T16:58:05+08:00",
+      "http_elapsed_ms": 256.401,
+      "generated_at": "2026-10-07T17:08:55+08:00",
       "notes": [
         "固定日历预览：每年7月15日至22日或1月15日至22日，不声称统计最代表性。",
         "仅物理发电与逐时匹配；不计算经济、碳价或全年外推。"
@@ -19369,7 +19369,7 @@
       "season": "summer",
       "label": "中档：每天09:00-21:00开放的图书馆阅读区｜summer fixed calendar week",
       "source_case_id": "tier_medium",
-      "source_commit": "b660489904ef20231303de7f11c1462e86d3e91c",
+      "source_commit": "abb33166fba9f7141a2e7408f8f9d4a1db72611d",
       "request": {
         "site_id": "guangzhou",
         "year": 2024,
@@ -29023,7 +29023,7 @@
           "reason": "preview endpoint does not calculate lifecycle, tariff, carbon price or payback"
         },
         "calculation_timing": {
-          "elapsed_ms": 231.596,
+          "elapsed_ms": 236.854,
           "timing_scope": "selected typical week/month physical generation and matching only"
         },
         "notes": [
@@ -29031,10 +29031,10 @@
           "改变电价或报价不会改变本接口物理结果；如需经济比较请调用hybrid/run。"
         ]
       },
-      "response_sha256": "d42c09bc828be37ec0d519f20a5f73fcd853344645c3cf6bfc51f9317d5aa8be",
+      "response_sha256": "724f4faecae66d55963d17c0583f53baebbbef6f9c194c890338005448eabe94",
       "http_status": 200,
-      "http_elapsed_ms": 262.675,
-      "generated_at": "2026-10-07T16:58:05+08:00",
+      "http_elapsed_ms": 272.177,
+      "generated_at": "2026-10-07T17:08:55+08:00",
       "notes": [
         "固定日历预览：每年7月15日至22日或1月15日至22日，不声称统计最代表性。",
         "仅物理发电与逐时匹配；不计算经济、碳价或全年外推。"
@@ -29046,7 +29046,7 @@
       "season": "winter",
       "label": "中档：每天09:00-21:00开放的图书馆阅读区｜winter fixed calendar week",
       "source_case_id": "tier_medium",
-      "source_commit": "b660489904ef20231303de7f11c1462e86d3e91c",
+      "source_commit": "abb33166fba9f7141a2e7408f8f9d4a1db72611d",
       "request": {
         "site_id": "guangzhou",
         "year": 2024,
@@ -38700,7 +38700,7 @@
           "reason": "preview endpoint does not calculate lifecycle, tariff, carbon price or payback"
         },
         "calculation_timing": {
-          "elapsed_ms": 229.435,
+          "elapsed_ms": 233.832,
           "timing_scope": "selected typical week/month physical generation and matching only"
         },
         "notes": [
@@ -38708,10 +38708,10 @@
           "改变电价或报价不会改变本接口物理结果；如需经济比较请调用hybrid/run。"
         ]
       },
-      "response_sha256": "e655378e28022651558fe02d334b7e452011ff20fa0ddbeca8198e5e2f2768bf",
+      "response_sha256": "bb7cde6fa4f68f977ab15ac14b715ab480fc3d39f7cc993b64bf1ce841d8498f",
       "http_status": 200,
-      "http_elapsed_ms": 256.796,
-      "generated_at": "2026-10-07T16:58:05+08:00",
+      "http_elapsed_ms": 254.107,
+      "generated_at": "2026-10-07T17:08:55+08:00",
       "notes": [
         "固定日历预览：每年7月15日至22日或1月15日至22日，不声称统计最代表性。",
         "仅物理发电与逐时匹配；不计算经济、碳价或全年外推。"
@@ -38723,7 +38723,7 @@
       "season": "summer",
       "label": "大档：工业厂房空调分区有界代理｜summer fixed calendar week",
       "source_case_id": "tier_large",
-      "source_commit": "b660489904ef20231303de7f11c1462e86d3e91c",
+      "source_commit": "abb33166fba9f7141a2e7408f8f9d4a1db72611d",
       "request": {
         "site_id": "guangzhou",
         "year": 2024,
@@ -48377,7 +48377,7 @@
           "reason": "preview endpoint does not calculate lifecycle, tariff, carbon price or payback"
         },
         "calculation_timing": {
-          "elapsed_ms": 233.3,
+          "elapsed_ms": 231.444,
           "timing_scope": "selected typical week/month physical generation and matching only"
         },
         "notes": [
@@ -48385,10 +48385,10 @@
           "改变电价或报价不会改变本接口物理结果；如需经济比较请调用hybrid/run。"
         ]
       },
-      "response_sha256": "d347c25ca39967d7181346729617aea006cb9479c30b57f47d989242b91fc5ea",
+      "response_sha256": "9d7d980ae910f53685bbd5ae4931f7dc820172589684bf1e07290382fbfe0ac7",
       "http_status": 200,
-      "http_elapsed_ms": 265.657,
-      "generated_at": "2026-10-07T16:58:05+08:00",
+      "http_elapsed_ms": 241.771,
+      "generated_at": "2026-10-07T17:08:55+08:00",
       "notes": [
         "固定日历预览：每年7月15日至22日或1月15日至22日，不声称统计最代表性。",
         "仅物理发电与逐时匹配；不计算经济、碳价或全年外推。"
@@ -48400,7 +48400,7 @@
       "season": "winter",
       "label": "大档：工业厂房空调分区有界代理｜winter fixed calendar week",
       "source_case_id": "tier_large",
-      "source_commit": "b660489904ef20231303de7f11c1462e86d3e91c",
+      "source_commit": "abb33166fba9f7141a2e7408f8f9d4a1db72611d",
       "request": {
         "site_id": "guangzhou",
         "year": 2024,
@@ -58054,7 +58054,7 @@
           "reason": "preview endpoint does not calculate lifecycle, tariff, carbon price or payback"
         },
         "calculation_timing": {
-          "elapsed_ms": 228.136,
+          "elapsed_ms": 247.773,
           "timing_scope": "selected typical week/month physical generation and matching only"
         },
         "notes": [
@@ -58062,10 +58062,10 @@
           "改变电价或报价不会改变本接口物理结果；如需经济比较请调用hybrid/run。"
         ]
       },
-      "response_sha256": "4c1da0f4d6cc53d6eed49b4112a8495e03584a131625972abc13f0acacec68f9",
+      "response_sha256": "ecbfd81d19d755e409a7c5b6171a2304b43d3bd165a536b5b0b334bf8077040f",
       "http_status": 200,
-      "http_elapsed_ms": 255.523,
-      "generated_at": "2026-10-07T16:58:06+08:00",
+      "http_elapsed_ms": 258.439,
+      "generated_at": "2026-10-07T17:08:56+08:00",
       "notes": [
         "固定日历预览：每年7月15日至22日或1月15日至22日，不声称统计最代表性。",
         "仅物理发电与逐时匹配；不计算经济、碳价或全年外推。"
@@ -58074,8 +58074,8 @@
   ],
   "http_call_count": 6,
   "timing_summary": {
-    "total_http_elapsed_ms": 1555.882,
-    "mean_http_elapsed_ms": 259.314,
-    "max_http_elapsed_ms": 275.359
+    "total_http_elapsed_ms": 1532.506,
+    "mean_http_elapsed_ms": 255.418,
+    "max_http_elapsed_ms": 272.177
   }
 }
