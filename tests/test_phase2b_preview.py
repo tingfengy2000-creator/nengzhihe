@@ -142,6 +142,9 @@ def test_preview_intervals_equal_annual_same_window():
     assert max_abs_diff <= 1e-12
     selected_load = app._slice_project_load(annual_load, indices)
     assert preview["service_quality"]["capacity_shortfall_hours"] == selected_load["summary"]["capacity_shortfall_hours"]
+    assert preview["service_quality"]["unmet_temp_degree_hours"] == selected_load["summary"]["unmet_temp_degree_hours"]
+    assert preview["service_quality"]["unmet_rh_percent_hours"] == selected_load["summary"]["unmet_rh_percent_hours"]
+    assert preview["project_load_contract"]["electric_load_kwh"] == selected_load["summary"]["electric_kwh"]
 
 
 def test_preview_http_and_chinese_error():
