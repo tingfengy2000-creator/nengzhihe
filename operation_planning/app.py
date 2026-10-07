@@ -40,10 +40,13 @@ from .carbon import factor_catalog
 
 ROOT = Path(__file__).resolve().parent
 UI = ROOT / "ui"
-# Read-only fixed replay samples for the 5060 UI.  Only these two verified
-# 5090 files are exposed; nothing is copied into ui/ so evidence cannot drift.
+# Read-only fixed replay samples for the 5060 UI.  Only these whitelisted
+# 5090 files are exposed (exact names, no paths); nothing is copied into ui/
+# so evidence cannot drift.  v6 cases and v7 typical-week previews back the
+# redesigned UI's sample mode.
 REPLAY_DIR = ROOT.parent / "docs" / "handoff" / "replay_viewer"
-REPLAY_SAMPLES = frozenset({"replay_cases.json", "aircost_cases.json", "replay_cases_room_contract.json"})
+REPLAY_SAMPLES = frozenset({"replay_cases.json", "aircost_cases.json", "replay_cases_room_contract.json",
+                            "replay_cases_v6.json", "replay_previews_v7.json"})
 JOBS: dict[str, dict] = {}
 LOCK = threading.RLock()
 MIME = {
