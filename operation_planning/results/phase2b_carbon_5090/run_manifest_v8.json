@@ -1,16 +1,16 @@
 {
   "status": "passed",
-  "source_commit": "3376e5148e6f3fa608ba3e57e20e04d71c30ed65",
-  "started_utc": "2026-10-07T15:36:07+00:00",
-  "ended_utc": "2026-10-07T15:37:55+00:00",
+  "source_commit": "9ce2d2c43e0978c329bdc2d55cf4a30cd9165b53",
+  "started_utc": "2026-10-07T15:49:45+00:00",
+  "ended_utc": "2026-10-07T15:50:23+00:00",
   "machine_role": "5090",
   "api_base_url": "http://127.0.0.1:18765",
   "case_count": 6,
   "http_call_count": 6,
   "http_elapsed_ms": {
-    "total": 106067.474,
-    "mean": 17677.912,
-    "max": 30624.934
+    "total": 35006.113,
+    "mean": 5834.352,
+    "max": 9821.556
   },
   "case_summaries": [
     {
@@ -27,7 +27,7 @@
         "note": "未校准的城市级空调负荷情景。"
       },
       "http_calls": 1,
-      "case_hash": "aa41c96dc6d0aacba18773a86c1be6e91f5780621e390d836a69a5c76713f089"
+      "case_hash": "c9cd64a8ad70adaa89f8a37a71f176a2aa6c199dce85f815627364d1aa817b05"
     },
     {
       "case_id": "tier_medium",
@@ -43,7 +43,7 @@
         "note": "未校准的城市级空调负荷情景。"
       },
       "http_calls": 1,
-      "case_hash": "c7e48dd4960583d35c2491c7d5825d64872fe75fd7d1dde646a8ec6d0ca622ee"
+      "case_hash": "3823389b862e0e9e58303335a82ee65b0ba9a9f488fc9649e34b49cd477a8e58"
     },
     {
       "case_id": "tier_large",
@@ -59,7 +59,7 @@
         "note": "未校准的城市级空调负荷情景。"
       },
       "http_calls": 1,
-      "case_hash": "1cf7e89c2bc16965043e58aca477ebe6547de7d82d965c675286bb7cf4ec94cf"
+      "case_hash": "517cc47a0215279d94718f27de91dcf06af8fa307fefbf863dd1cfc584f19478"
     },
     {
       "case_id": "variant_budget_insufficient",
@@ -75,7 +75,7 @@
         "note": "未校准的城市级空调负荷情景。"
       },
       "http_calls": 1,
-      "case_hash": "ee7e27507c5a5dc7f99657dfacfae1fda0b29374cbec94e46d64820909657a6e"
+      "case_hash": "d2cbf1a8417a7295b50b5173c894d608195bea25e82dd280a9789c536a51128e"
     },
     {
       "case_id": "variant_missing_pv_quote",
@@ -91,7 +91,7 @@
         "note": "未校准的城市级空调负荷情景。"
       },
       "http_calls": 1,
-      "case_hash": "902a5648623388dd04d17a6706b97fd90b68b70cdd0d7d5fff0d7623bfe36356"
+      "case_hash": "6c51a666cc957951b568e21eefbd11bd0ad60dc50778edf8cfc9fde2c5d52462"
     },
     {
       "case_id": "variant_roof_area_insufficient",
@@ -107,11 +107,11 @@
         "note": "未校准的城市级空调负荷情景。"
       },
       "http_calls": 1,
-      "case_hash": "15420017c65ec15f7e125d87b7803aa07de342c5cd0eb7bebd48fb165d5b321f"
+      "case_hash": "3090008f0ad76d59271746b55a432e87000a73308f4a0ab8c919dbd15270c99a"
     }
   ],
-  "package_file_sha256": "b2834cd179effeb3d22b63164106e1918bf14bae7d59bd4f46a207f530a8171c",
-  "viewer_file_sha256": "ddc126f36f4a71a917bb7f2200e39780973790d10a6dac89c906001642f739fd",
+  "package_file_sha256": "301c52d94485b5195fba0bcc36d14a6fe9e10dbcf36c98e670531c980412a312",
+  "viewer_file_sha256": "a20e53236887e891102c89fb0ab041b48f4373f542f56eb954fae7ce922bfb79",
   "viewer_path": "docs/handoff/replay_viewer/replay_cases_v8.json",
   "previous_replays_preserved": [
     "replay_cases_v5.json",
