@@ -583,7 +583,9 @@ def _hybrid_preview(payload: dict) -> dict:
         hybrid_raw["pv_capacity_kwp"] = pv_raw.get("capacity_kwp")
     hybrid_payload = dict(payload); hybrid_payload["hybrid"] = hybrid_raw
     pv_scenario, hybrid = hybrid_task_from_dict(hybrid_payload, site_id=site_id, year=year)
-    explicit_capacity = (payload.get("pv_capacity_kwp") is not None or pv_raw.get("capacity_kwp") is not None or hybrid_raw.get("pv_capacity_kwp") is not None)
+    explicit_capacity = (payload.get("pv_capacity_kwp") is not None or pv_raw.get("capacity_kwp") is not None or pv_raw.get("fixed_capacity_kwp") is not None or hybrid_raw.get("pv_capacity_kwp") is not None)
+    if hybrid_raw.get("pv_capacity_kwp") is None and pv_raw.get("fixed_capacity_kwp") is not None:
+        hybrid.pv_capacity_kwp = float(pv_raw["fixed_capacity_kwp"])
     roof_limit = float(pv_scenario.roof_area_m2) * float(pv_scenario.usable_fraction) * DEFAULT_KWP_PER_M2
     capacity_defaulted = not explicit_capacity
     if capacity_defaulted:
@@ -609,7 +611,9 @@ def _hybrid_preview(payload: dict) -> dict:
                            "summary": matched["summary"], "intervals": matched["intervals"],
                            "economics": {"status": "not_calculated", "reason": "典型时段预览只做物理匹配，不做经济结论或全年外推"}})
     elapsed_ms = round((time.perf_counter() - started) * 1000.0, 3)
-    return {"status": "success", "preview": selection,
+    return {"status": "success", "scope": "preview_period_physics_only",
+            "scope_note": "仅对固定典型时段执行负荷与风光逐区间物理匹配；不计算经济、碳排、回本或全年外推。",
+            "preview": selection,
             "site_id": site_id, "year": year,
             "project_load_contract": project_load_context(load),
             "service_quality": {"scope": "selected_preview_period", "capacity_shortfall_hours": load["summary"].get("capacity_shortfall_hours"), "unmet_temp_degree_hours": load["summary"].get("unmet_temp_degree_hours"), "unmet_rh_percent_hours": load["summary"].get("unmet_rh_percent_hours")},
