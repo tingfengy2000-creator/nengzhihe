@@ -15,7 +15,7 @@ from operation_planning.hybrid import match_hybrid
 from operation_planning.project_load import aggregate_project_load
 from operation_planning.pv import generate_pv
 from operation_planning.thermal_model import simulate_room
-from operation_planning.weather import load_weather
+from operation_planning.weather import load_weather, load_pv_weather
 from operation_planning.wind import WindTurbineProfile, generate_wind
 
 PREVIEW = ROOT / "operation_planning/results/phase2b_carbon_5090/replay_previews_v7.json"
@@ -40,8 +40,9 @@ def main() -> None:
         room, _, _ = app._thermal_inputs(payload)
         load = aggregate_project_load(simulate_room(weather, room))
         pv_scenario, hybrid = app.hybrid_task_from_dict(payload, site_id=str(payload.get("site_id", "guangzhou")), year=int(payload.get("year", 2024)))
-        pv = asdict(generate_pv(weather, hybrid.pv_capacity_kwp, pv_scenario))
-        wind = generate_wind(weather, WindTurbineProfile.from_file(), hybrid.wind)
+        pv_weather = load_pv_weather(str(payload.get("site_id", "guangzhou")), int(payload.get("year", 2024)))
+        pv = asdict(generate_pv(pv_weather, hybrid.pv_capacity_kwp, pv_scenario))
+        wind = generate_wind(pv_weather, WindTurbineProfile.from_file(), hybrid.wind)
         annual = match_hybrid(load["load_series"], pv, wind, allow_export=False)
         selected_load = app._slice_project_load(load, indices)
         expected_service = selected_load["summary"]

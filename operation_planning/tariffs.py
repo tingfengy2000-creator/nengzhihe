@@ -1,8 +1,8 @@
 """Small, provenance-first regional tariff registry and integrator.
 
 The registry intentionally contains a small set of historical, verified
-official profiles plus one explicitly provisional latest Guangzhou profile and
-a user supplied custom profile.  It is not a nationwide tariff service.
+official profiles and a user supplied custom profile.  It is not a nationwide
+tariff service.
 Physical model output is evaluated first and tariff prices are then applied to
 the same time series, so changing a tariff never changes the temperature or
 electrical trajectory.
@@ -21,12 +21,10 @@ from .schemas import RegionProfile, TariffProfile, stable_hash
 
 FUJIAN_URL = "https://www.dehua.gov.cn/zwgk/zdxxgk/ggqsy/gd/202607/t20260715_3309391.htm"
 GUANGDONG_URL = "https://www.heyuan.gov.cn/zwgk/ggqsydwxx/gd/content/post_709619.html"
-# The October 2026 table was located in the public Guangdong tariff index while
-# the original CSG attachment was not yet exposed by the searchable government
-# pages.  Keep the profile explicitly provisional until the original PDF is
-# independently retrieved and checked; it must not be described as verified
-# official evidence in a submission.
+# Legacy index URL retained for provenance of the earlier provisional profile;
+# the active October 2026 record below now points at the official CSG notice.
 GUANGZHOU_202610_INDEX_URL = "https://energydc.cn/policy/guangdong/2026-09/ffdcada5-baab-11f1-959b-ce30ac533824"
+GUANGZHOU_202610_OFFICIAL_URL = "https://95598.csg.cn/#/gd/serviceInquire/information/detail/?infoId=8a592ed919684f97bc6abd030a79b807"
 
 
 REGIONS: Dict[str, RegionProfile] = {
@@ -122,7 +120,7 @@ TARIFFS: Dict[str, TariffProfile] = {
     ),
     "guangzhou_industrial_lt1kv_202610": TariffProfile(
         tariff_id="guangzhou_industrial_lt1kv_202610",
-        version="2026-10-provisional-v1",
+        version="2026-10-official-v2",
         area="广东省珠三角六市（含广州、珠海、佛山、中山、东莞、江门除恩平/台山/开平）",
         category="工商业单一制",
         voltage_level="不满1kV",
@@ -136,20 +134,20 @@ TARIFFS: Dict[str, TariffProfile] = {
             {"name": "valley", "start": "00:00", "end": "08:00", "price": 0.32136875},
             {"name": "peak", "start": "10:00", "end": "12:00", "price": 1.34176875},
             {"name": "peak", "start": "14:00", "end": "19:00", "price": 1.34176875},
-            {"name": "super_peak", "start": "11:00", "end": "12:00", "price": 1.67036875, "months": [7, 8, 9]},
-            {"name": "super_peak", "start": "15:00", "end": "17:00", "price": 1.67036875, "months": [7, 8, 9]},
+            {"name": "super_peak", "start": "11:00", "end": "12:00", "price": 1.67036875, "months": [7, 8, 9], "high_temp_threshold_c": 35.0, "high_temp_outside_months": True},
+            {"name": "super_peak", "start": "15:00", "end": "17:00", "price": 1.67036875, "months": [7, 8, 9], "high_temp_threshold_c": 35.0, "high_temp_outside_months": True},
             {"name": "flat", "start": "00:00", "end": "24:00", "price": 0.80066875},
         ],
-        source_url=GUANGZHOU_202610_INDEX_URL,
-        source_title="广东电网有限责任公司关于2026年10月代理购电工商业用户价格的公告（珠三角六市；原始公告待核验）",
-        verified=False,
-        inclusions=["珠三角六市工商业单一制不满1kV电度电费（当前公开索引转录）", "峰平谷与7–9月尖峰时段规则"],
-        exclusions=["不含需量/容量基本电费", "不含建筑总表其他负荷", "原始广东电网公告PDF尚未从官方可检索入口取得；不得写作已完成官方核验"],
+        source_url=GUANGZHOU_202610_OFFICIAL_URL,
+        source_title="广东电网有限责任公司关于2026年10月代理购电工商业用户价格的公告",
+        verified=True,
+        inclusions=["珠三角六市工商业单一制不满1kV电度电费（官方公告第一张表）", "峰平谷与7–9月及高温日尖峰时段规则"],
+        exclusions=["不含需量/容量基本电费", "不含建筑总表其他负荷", "高温日规则仅在提供逐时户外温度且按本地日历判定时启用"],
         notes=[
-            "公开索引标示适用广州、珠海、佛山、中山、东莞、江门六市（不含恩平、台山、开平），执行时间2026-10。",
+            "官方公告第一张表适用珠三角六市（广州、珠海、佛山、中山、东莞、江门；不含恩平、台山、开平），执行时间2026-10。",
             "不满1kV单一制：平0.80066875、谷0.32136875、峰1.34176875、尖峰1.67036875元/kWh；原表单位为分/kWh并含税。",
-            "尖峰价格仅在7–9月全月及广州日最高气温≥35℃高温日11–12、15–17执行；本档案按官方时段规则保留，当前有效期为10月。",
-            "价格数值和适用区域待直接核对广东电网原始公告PDF后再将verified改为True；套用2024参考天气必须显式选择tariff_application=current_tariff_on_reference_weather。",
+            "尖峰价格仅在7–9月全月及广州日最高气温≥35℃高温日11–12、15–17执行；高温日由所选天气逐时temperature_2m按当地日历计算。",
+            "官方原件：docs/evidence/tariffs/guangdong_agency_tariff_202610_official.pdf；SHA-256=36648B430E5F729037DF3D8766232057FEADF518BD39692BFE1EFE3758C91212。套用2024参考天气必须显式选择tariff_application=current_tariff_on_reference_weather。",
         ],
     ),
 }
@@ -281,13 +279,48 @@ def item_price(tariff: TariffProfile, name: str, month: int, second: int) -> flo
     raise ValueError(f"缺少 {name} 时段单价")
 
 
-def rate_at(tariff: TariffProfile, calendar: date, second: int, *, validate_dates: bool = True) -> Tuple[str, float]:
+def high_temperature_dates(timestamps: Sequence[str], temperatures_c: Sequence[float], threshold_c: float = 35.0) -> List[str]:
+    """Return local calendar dates whose supplied hourly maximum reaches threshold.
+
+    This deliberately consumes the weather samples as observations only.  It does
+    not infer temperatures for missing samples or silently fill NaN values.  The
+    returned ISO dates are passed to tariff evaluation and are also recorded in
+    the report for auditability.
+    """
+    if len(timestamps) != len(temperatures_c):
+        raise ValueError("高温日判定的时间轴与温度长度不一致")
+    maxima: Dict[str, float] = {}
+    for raw, value in zip(timestamps, temperatures_c):
+        try:
+            stamp = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+            temp = float(value)
+        except (TypeError, ValueError) as exc:
+            raise ValueError("高温日判定需要有效时间戳和有限温度") from exc
+        if temp != temp or temp in (float("inf"), float("-inf")):
+            raise ValueError("高温日判定不能包含NaN或无穷温度")
+        key = stamp.date().isoformat()
+        maxima[key] = max(maxima.get(key, float("-inf")), temp)
+    return sorted(key for key, value in maxima.items() if value >= float(threshold_c))
+
+
+def _period_applies(item: Dict[str, Any], calendar: date, high_temp_dates: Optional[Sequence[str]]) -> bool:
+    months = item.get("months")
+    if not months or calendar.month in months:
+        return True
+    # The Guangzhou 2026-10 notice extends the two super-peak windows to
+    # 35°C+ days outside July–September.  It is opt-in through weather-derived
+    # dates, so an ordinary tariff lookup remains deterministic and unchanged.
+    if item.get("high_temp_outside_months") and calendar.isoformat() in set(high_temp_dates or ()):
+        return True
+    return False
+
+
+def rate_at(tariff: TariffProfile, calendar: date, second: int, *, validate_dates: bool = True, high_temp_dates: Optional[Sequence[str]] = None) -> Tuple[str, float]:
     if validate_dates:
         validate_profile(tariff, calendar, 1)
     candidates: List[Tuple[str, int, float]] = []
     for item in tariff.periods:
-        months = item.get("months")
-        if months and calendar.month not in months:
+        if not _period_applies(item, calendar, high_temp_dates):
             continue
         a, b = _clock(item["start"]), _clock(item["end"])
         if b <= a:
@@ -301,7 +334,7 @@ def rate_at(tariff: TariffProfile, calendar: date, second: int, *, validate_date
     return candidates[0][0], candidates[0][2]
 
 
-def integrate_power(times: Sequence[float], power_w: Sequence[float], tariff: TariffProfile, calendar_start: date, start: float, end: float, timeline_origin: Optional[float] = None) -> Tuple[float, Dict[str, float]]:
+def integrate_power(times: Sequence[float], power_w: Sequence[float], tariff: TariffProfile, calendar_start: date, start: float, end: float, timeline_origin: Optional[float] = None, high_temp_dates: Optional[Sequence[str]] = None) -> Tuple[float, Dict[str, float]]:
     """Integrate W over actual intervals, splitting at price jumps."""
     if len(times) != len(power_w):
         raise ValueError("功率与时间轴长度不一致")
@@ -332,7 +365,7 @@ def integrate_power(times: Sequence[float], power_w: Sequence[float], tariff: Ta
             mid = (x + y) / 2.0
             day = calendar_start + timedelta(days=int((mid - origin) // 86400))
             sec = int((mid - origin) % 86400)
-            name, price = rate_at(tariff, day, sec)
+            name, price = rate_at(tariff, day, sec, high_temp_dates=high_temp_dates)
             kwh = max(0.0, (va + vb) * (y - x) / 2.0 / 3600000.0)
             cost = kwh * price
             total += cost

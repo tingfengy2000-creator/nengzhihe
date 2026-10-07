@@ -12,7 +12,7 @@ from datetime import date, datetime, time
 import math
 from typing import Any, Dict, Optional
 
-from .tariffs import TariffProfile, integrate_power
+from .tariffs import TariffProfile, high_temperature_dates, integrate_power
 
 
 def _finite(value: Any, name: str, *, nonnegative: bool = False) -> float:
@@ -39,7 +39,7 @@ def _timeline_seconds(timestamp: str, calendar_start: date) -> float:
     return (parsed - origin).total_seconds()
 
 
-def _tariff_cost(rows: list[dict], tariff: TariffProfile, calendar_start: date) -> float:
+def _tariff_cost(rows: list[dict], tariff: TariffProfile, calendar_start: date, high_temp_dates: Optional[list[str]] = None) -> float:
     """Use tariffs.integrate_power while keeping a monthly result breakdown."""
     if not rows:
         return 0.0
@@ -56,7 +56,7 @@ def _tariff_cost(rows: list[dict], tariff: TariffProfile, calendar_start: date) 
         # shared tariffs.integrate_power implementation.
         times.extend([start, start + interval])
         powers.extend([power, power])
-    return integrate_power(times, powers, tariff, calendar_start, min(times), max(times), timeline_origin=0.0)[0]
+    return integrate_power(times, powers, tariff, calendar_start, min(times), max(times), timeline_origin=0.0, high_temp_dates=high_temp_dates)[0]
 
 
 def monthly_detail(
@@ -99,9 +99,14 @@ def monthly_detail(
         day["hours"] += dt / 3600.0
         if constant_price is not None:
             day["cost_cny"] += power * factor * constant_price
+    hot_dates: Optional[list[str]] = None
+    if tariff_profile is not None and any(bool(item.get("high_temp_outside_months")) for item in tariff_profile.periods):
+        weather_temps = [row.get("outdoor_temp_c") for row in rows]
+        if all(value is not None for value in weather_temps):
+            hot_dates = high_temperature_dates([str(row["timestamp"]) for row in rows], weather_temps)
     if tariff_profile is not None:
         for month, month_rows in groups.items():
-            result[month]["cost_cny"] = _tariff_cost(month_rows, tariff_profile, billing_start) * quantity
+            result[month]["cost_cny"] = _tariff_cost(month_rows, tariff_profile, billing_start, hot_dates) * quantity
     return result
 
 

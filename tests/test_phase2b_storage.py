@@ -1,6 +1,6 @@
 import unittest
 
-from operation_planning.storage import ideal_storage_upper_bound
+from operation_planning.storage import ideal_storage_upper_bound, surplus_paths_from_match
 
 
 class StorageUpperBoundTests(unittest.TestCase):
@@ -32,9 +32,37 @@ class StorageUpperBoundTests(unittest.TestCase):
         self.assertAlmostEqual(row["grid_import_kwh_year1"], 0.75, places=8)
         self.assertTrue(row["conservation"]["passed"])
 
-    def test_export_is_not_applicable(self):
+    def test_export_path_can_be_evaluated_independently(self):
         result = ideal_storage_upper_bound(self._intervals(), capacities_kwh=[5], allow_export=True)
-        self.assertEqual(result["status"], "not_applicable")
+        self.assertEqual(result["status"], "calculated")
+        self.assertTrue(result["allow_export"])
+        self.assertAlmostEqual(result["candidates"][0]["remaining_curtailment_kwh_year1"], 1.5)
+
+    def test_surplus_paths_quote_and_export(self):
+        paths = surplus_paths_from_match(
+            self._intervals(), capacities_kwh=[0, 5], round_trip_efficiency=0.90,
+            allow_export=False,
+            storage_quote={"cny_per_kwh": 100, "installation_cny": 20,
+                           "maintenance_cny_per_year": 10, "life_years": 5},
+            export={"price_cny_per_kwh": 0.50, "connection_cny": 10,
+                    "source": "test scenario"},
+            import_prices=[0.50, 1.00, 0.50], study_years=10,
+        )
+        self.assertAlmostEqual(paths["surplus_kwh_year1"], 4.0)
+        self.assertEqual(paths["storage"]["candidates"][0]["economics_status"], "complete")
+        self.assertEqual(paths["storage"]["candidates"][0]["initial_investment_cny"], 0.0)
+        self.assertEqual(paths["storage"]["candidates"][0]["annual_bill_saving_cny"], 0.0)
+        self.assertEqual(paths["storage"]["candidates"][0]["study_period_total_cost_cny"], 0.0)
+        self.assertEqual(paths["storage"]["candidates"][1]["economics_status"], "complete")
+        self.assertAlmostEqual(paths["export"]["path"]["annual_revenue_cny"], 2.0)
+
+    def test_missing_storage_quote_is_incomplete_for_nonzero(self):
+        paths = surplus_paths_from_match(self._intervals(), capacities_kwh=[0, 5], import_prices=[0.5, 1.0, 0.5])
+        rows = paths["storage"]["candidates"]
+        self.assertEqual(rows[0]["economics_status"], "complete")
+        self.assertEqual(rows[1]["economics_status"], "incomplete")
+        self.assertIsNone(paths["storage"]["recommended_capacity_kwh"])
+        self.assertEqual(paths["export"]["path"]["economics_status"], "incomplete")
 
 
 if __name__ == "__main__":

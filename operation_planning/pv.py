@@ -16,7 +16,7 @@ from pvlib import irradiance, inverter, pvsystem, temperature
 from .economics import discounted_cashflow_npv, discounted_year_end, inverter_replacement_cost
 from .project_load import require_project_load, project_load_context
 from .carbon import candidate_carbon, context as carbon_context
-from .storage import ideal_storage_upper_bound
+from .storage import surplus_paths_from_match
 
 PVLIB_VERSION = getattr(pvlib, "__version__", "unknown")
 MODULE_AREA_M2_PER_KWP = 5.0
@@ -371,11 +371,18 @@ def generate_candidates(scenario: PVScenario) -> Tuple[List[float], List[str]]:
     return out, notes
 
 
-def _price_vectors(scenario: PVScenario, timestamps: Sequence[str], interval_seconds: Optional[Sequence[int]] = None) -> Tuple[List[float], Dict[str, Any]]:
+def _price_vectors(scenario: PVScenario, timestamps: Sequence[str], interval_seconds: Optional[Sequence[int]] = None, weather: Optional[Dict[str, Any]] = None) -> Tuple[List[float], Dict[str, Any]]:
     if scenario.tariff_id in ("", "user_constant"):
         return [float(scenario.import_price_cny_per_kwh)] * len(timestamps), {"tariff_id": "user_constant", "type": "constant_user_scenario", "price_cny_per_kwh": float(scenario.import_price_cny_per_kwh), "interval_pricing": "constant over each physical interval"}
-    from .tariffs import _clock, profile, profile_public_dict, rate_at, validate_profile
+    from .tariffs import _clock, high_temperature_dates, profile, profile_public_dict, rate_at, validate_profile
     tariff = profile(scenario.tariff_id, scenario.custom_tariff); idx = _time_index(timestamps); intervals = _intervals(timestamps, interval_seconds)
+    hot_dates: List[str] = []
+    if any(bool(item.get("high_temp_outside_months")) for item in tariff.periods):
+        hourly = (weather or {}).get("hourly", {}) or {}
+        weather_times = list((weather or {}).get("time", timestamps))
+        temperatures = hourly.get("temperature_2m")
+        if temperatures is not None:
+            hot_dates = high_temperature_dates(weather_times, temperatures)
     physical_end = idx[-1] + pd.to_timedelta(int(intervals[-1]), unit="s")
     last_included_date = (physical_end - pd.to_timedelta(1, unit="s")).date()
     days = (last_included_date - idx[0].date()).days + 1
@@ -401,11 +408,15 @@ def _price_vectors(scenario: PVScenario, timestamps: Sequence[str], interval_sec
             span = (right - left).total_seconds()
             if span <= 0: continue
             mid = left + (right - left) / 2; second = int(mid.hour * 3600 + mid.minute * 60 + mid.second)
-            name, rate = rate_at(tariff, mid.date(), second, validate_dates=not apply_current); weighted += span * float(rate)
+            name, rate = rate_at(tariff, mid.date(), second, validate_dates=not apply_current, high_temp_dates=hot_dates); weighted += span * float(rate)
             segments.append({"start": str(left), "end": str(right), "period": name, "price_cny_per_kwh": float(rate), "seconds": span})
         prices.append(weighted / float(seconds))
         if i < 4: examples.append({"interval_start": str(start), "interval_end": str(end), "segments": segments, "weighted_price_cny_per_kwh": prices[-1]})
-    meta = profile_public_dict(tariff); meta.update({"interval_pricing": "constant average power; each physical interval split at tariff boundaries", "interval_examples": examples, "tariff_application": scenario.tariff_application, "tariff_application_note": ("published tariff benchmark applied to reference weather dates; not a historical 2024 bill" if apply_current else "tariff validity checked against weather dates")})
+    observed_dates = sorted({stamp.date().isoformat() for stamp in idx})
+    super_peak_months = sorted({month for item in tariff.periods if item.get("name") == "super_peak" for month in (item.get("months") or [])})
+    extra_hot_dates = [day for day in hot_dates if int(day[5:7]) not in super_peak_months]
+    effective_super_peak_dates = [day for day in observed_dates if int(day[5:7]) in super_peak_months or day in extra_hot_dates]
+    meta = profile_public_dict(tariff); meta.update({"interval_pricing": "constant average power; each physical interval split at tariff boundaries", "interval_examples": examples, "tariff_application": scenario.tariff_application, "tariff_application_note": ("published tariff benchmark applied to reference weather dates; not a historical 2024 bill" if apply_current else "tariff validity checked against weather dates"), "high_temp_super_peak_days": extra_hot_dates, "high_temp_super_peak_day_count": len(extra_hot_dates), "super_peak_day_count": len(effective_super_peak_dates), "super_peak_dates_in_window": effective_super_peak_dates, "high_temp_rule": "35°C以上日的11:00–12:00、15:00–17:00在7–9月之外按尖峰；无逐时温度时不启用"})
     return prices, meta
 
 
@@ -425,7 +436,7 @@ def run_pv_planning(load_result: Dict[str, Any], weather: Dict[str, Any], scenar
     load = load_result.get("load_series") or {}; lt = list(load.get("timestamps", [])); wt = list(weather.get("time", []))
     if lt != wt: raise ValueError("第一阶段负荷与光伏天气不在同一时间区间，不能联算")
     intervals = _intervals(lt, load.get("interval_seconds")); weather = dict(weather); weather["interval_seconds"] = intervals
-    capacities, candidate_notes = generate_candidates(scenario); import_prices, tariff_meta = _price_vectors(scenario, lt, intervals); export_prices = ([float(scenario.export_price_cny_per_kwh)] * len(lt) if scenario.export_price_cny_per_kwh is not None else None)
+    capacities, candidate_notes = generate_candidates(scenario); import_prices, tariff_meta = _price_vectors(scenario, lt, intervals, weather); export_prices = ([float(scenario.export_price_cny_per_kwh)] * len(lt) if scenario.export_price_cny_per_kwh is not None else None)
     base_generation = generate_pv(weather, 0.0, scenario); baseline = match_load(load, base_generation, allow_export=False, import_prices=import_prices); candidates: List[Dict[str, Any]] = []
     carbon_ctx = carbon_context(scenario.site_id, carbon)
     storage_request = storage or {}
@@ -437,21 +448,25 @@ def run_pv_planning(load_result: Dict[str, Any], weather: Dict[str, Any], scenar
         row = _candidate_row(capacity, matched, generation, economics, include_selected_series)
         row["carbon"] = candidate_carbon(site_id=scenario.site_id, request=carbon, baseline_match=baseline, candidate_match=matched, yearly_matches=yearly_matches, economics=economics, annual_generation_kwh=matched["summary"]["pv_generation_kwh"], annual_load_kwh=matched["summary"]["load_kwh"], annual_import_price_cny_per_kwh=scenario.import_price_cny_per_kwh)
         row["annual_offset_estimate"] = row["carbon"].pop("annual_offset_estimate")
-        if matched["summary"]["pv_generation_kwh"] > 1e-12:
-            storage_intervals = {
-                "timestamps": matched["interval_kwh"].get("timestamps", generation.timestamps),
-                "interval_seconds": generation.interval_seconds,
-                "load_kwh": matched["interval_kwh"]["load"],
-                "generation_kwh": matched["interval_kwh"]["pv_generation"],
-                "self_use_kwh": matched["interval_kwh"]["self_use"],
-                "grid_import_kwh": matched["interval_kwh"]["grid_import"],
-                "curtailment_kwh": matched["interval_kwh"]["curtailment"],
-            }
-            upper = ideal_storage_upper_bound(storage_intervals, capacities_kwh=storage_capacities, round_trip_efficiency=storage_eta, allow_export=scenario.allow_export)
-            factor = float(carbon_ctx["factor"]["value_kgco2_per_kwh"])
-            for storage_candidate in upper.get("candidates", []):
-                storage_candidate["additional_avoided_kgco2_year1"] = storage_candidate["recovered_kwh_year1"] * factor
-            row["storage_upper_bound"] = upper
+        storage_intervals = {
+            "timestamps": matched["interval_kwh"].get("timestamps", generation.timestamps),
+            "interval_seconds": generation.interval_seconds,
+            "load_kwh": matched["interval_kwh"]["load"],
+            "generation_kwh": matched["interval_kwh"]["pv_generation"],
+            "self_use_kwh": matched["interval_kwh"]["self_use"],
+            "grid_import_kwh": matched["interval_kwh"]["grid_import"],
+            "curtailment_kwh": matched["interval_kwh"]["curtailment"],
+        }
+        paths = surplus_paths_from_match(storage_intervals, capacities_kwh=storage_capacities,
+                                         round_trip_efficiency=storage_eta, allow_export=scenario.allow_export,
+                                         storage_quote=storage_request.get("quote"), export=storage_request.get("export"),
+                                         import_prices=import_prices, study_years=scenario.study_years)
+        factor = float(carbon_ctx["factor"]["value_kgco2_per_kwh"])
+        for storage_candidate in paths["storage"].get("candidates", []):
+            storage_candidate["additional_avoided_kgco2_year1"] = storage_candidate["recovered_kwh_year1"] * factor
+        row["surplus_paths"] = paths
+        # Backward-compatible field for v1/v2 replay consumers.
+        row["storage_upper_bound"] = paths["storage"]
         candidates.append(row)
     baseline_candidate = next(x for x in candidates if x["capacity_kwp"] == 0.0); complete_nonzero = [x for x in candidates if x["capacity_kwp"] > 0 and x["economics"]["status"] == "complete"]; selected_key: Optional[float] = None
     if complete_nonzero:
@@ -460,4 +475,4 @@ def run_pv_planning(load_result: Dict[str, Any], weather: Dict[str, Any], scenar
     service = _service_context(load_result)
     if service["status"] == "service_gap": recommendation["service_qualification"] = "当前空调负荷存在服务缺口；该推荐不能称为同等服务水平下的最优投资方案。"
     load_context = {"source": load.get("source"), "scope": load.get("scope"), "model_version": load.get("model_version"), "equipment_count": load.get("equipment_count"), "room_count": load.get("room_count"), "units_per_room": load.get("units_per_room"), "project_aggregation": load.get("project_aggregation"), "service_scope": load.get("service_scope"), "assumptions": load.get("assumptions"), "adequacy_rule": load.get("adequacy_rule"), "electric_load_kwh": baseline["summary"]["load_kwh"], "service_quality": service, "project_load_context": project_load_context(load_result)}
-    return {"status": "success", "calculation_version": "phase2a-carbon-5090-v1", "scenario": asdict(scenario), "carbon_context": carbon_ctx, "storage_context": {"enabled": True, "capacities_kwh": list(storage_capacities), "round_trip_efficiency": storage_eta, "note": "ideal dispatch upper bound; excludes battery cost, degradation and replacement; not a storage recommendation"}, "candidate_constraints": candidate_notes, "load_context": load_context, "service_quality": service, "tariff": tariff_meta, "weather_provenance": {"source_file": weather.get("source_file"), "boundary_file": weather.get("boundary_file"), "hash": weather.get("hash"), "context": weather.get("context"), "normalization": weather.get("weather_normalization"), "pv_provenance": weather.get("pv_provenance", {})}, "baseline": {"capacity_kwp": 0.0, "matching": baseline["summary"], "monthly": baseline["monthly"]}, "candidates": candidates, "recommendation": recommendation, "selected_capacity_kwp": selected_key, "notes": ["第一阶段空调负荷是未校准城市级情景，不是楼宇精准负荷。", "本轮只评价当前建模空调用电；不含其他电器、储能、风电。", "逐时匹配不等于分钟级波动仿真。", "光伏候选有限枚举，不称全局最优。", "储能字段是allow_export=false的理想调度上限，不包含成本、衰减或更换，不是储能推荐。", "碳字段只使用当时用上的自发电；年度抵扣为不参与推荐的粗算对照。"]}
+    return {"status": "success", "calculation_version": "phase2a-carbon-5090-v1", "scenario": asdict(scenario), "carbon_context": carbon_ctx, "storage_context": {"enabled": True, "capacities_kwh": list(storage_capacities), "round_trip_efficiency": storage_eta, "quote": storage_request.get("quote"), "export": storage_request.get("export"), "note": "surplus_paths附加粗算：储能理想调度与卖电独立计算，不改变主推荐"}, "candidate_constraints": candidate_notes, "load_context": load_context, "service_quality": service, "tariff": tariff_meta, "weather_provenance": {"source_file": weather.get("source_file"), "boundary_file": weather.get("boundary_file"), "hash": weather.get("hash"), "context": weather.get("context"), "normalization": weather.get("weather_normalization"), "pv_provenance": weather.get("pv_provenance", {})}, "baseline": {"capacity_kwp": 0.0, "matching": baseline["summary"], "monthly": baseline["monthly"]}, "candidates": candidates, "recommendation": recommendation, "selected_capacity_kwp": selected_key, "notes": ["第一阶段空调负荷是未校准城市级情景，不是楼宇精准负荷。", "本轮只评价当前建模空调用电；不含其他电器、储能、风电。", "逐时匹配不等于分钟级波动仿真。", "光伏候选有限枚举，不称全局最优。", "储能与卖电为同一余电的独立附加路径；储能不含衰减、温度影响和峰谷套利，不改变主推荐。", "碳字段只使用当时用上的自发电；年度抵扣为不参与推荐的粗算对照。"]}
