@@ -138,7 +138,7 @@ export function sweepChart(el, rows, bestKwp, opts = {}) {
   for (const t of ticks) s += `<line class="${t === 0 ? 'baseline' : 'gridline'}" x1="${m.l}" x2="${W - m.r}" y1="${Y(t)}" y2="${Y(t)}"${t === 0 ? ' stroke-width="1.5"' : ''}/><text class="axis" x="${m.l - 8}" y="${Y(t) + 4}" text-anchor="end">${axisLabel(t)}</text>`;
   for (const t of xt) s += `<text class="axis" x="${X(t)}" y="${H - 18}" text-anchor="middle">${axisLabel(t)}</text>`;
   s += `<text class="axis-title" x="${W - m.r}" y="${H - 2}" text-anchor="end">光伏容量（kWp）</text>`;
-  s += `<text class="axis-title" x="${m.l}" y="${m.t - 12}" text-anchor="start">10 年比只用电网省下（元；负数为多花）</text>`;
+  s += `<text class="axis-title" x="${m.l}" y="${m.t - 12}" text-anchor="start">${esc(opts.yTitle || '比只用电网省下')}（元；负数为多花）</text>`;
   const line = pts.filter((r) => isNum(r.incremental));
   if (line.length > 1) s += `<polyline points="${line.map((r) => `${X(r.kwp)},${Y(r.incremental)}`).join(' ')}" fill="none" stroke="var(--brand)" stroke-width="2" stroke-linejoin="round"/>`;
   pts.forEach((r, i) => {

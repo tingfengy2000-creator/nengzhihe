@@ -136,7 +136,7 @@ function skeleton() {
       <div class="new"><span class="lab">能见度 · 逐小时匹配</span><p class="say" data-k="vsNew">—</p><p class="how" data-k="vsNewHow"></p></div>
     </div>
     <div class="vs-table" data-vs-table></div>
-    <p class="source-note">粗算只作对照：它把一年发电量直接抵一年用电量，不看发电时有没有人用电，不参与推荐。两列数字都由计算服务给出（粗算字段 annual_offset_estimate 的说明见“关于数据”）。</p>
+    <p class="source-note">粗算只作对照：它把一年发电量直接抵一年用电量，不看发电时有没有人用电，不参与推荐。两列数字都由计算服务给出，粗算口径见“关于数据”。</p>
   </div></section>
 
   <section class="section" aria-labelledby="h-sweep"><div class="container">
@@ -300,8 +300,8 @@ function renderSweep() {
   if (!st) { setText('sweepSub', '这份结果没有容量比选。'); box.innerHTML = '<div class="empty-state">无容量比选数据</div>'; return; }
   setText('sweepTitle', st.title);
   setText('sweepSub', st.text);
-  sweepChart(box, vm.sweep, vm.recommendedKwp, { label: '光伏容量比选曲线：横轴容量，纵轴比只用电网省下的钱' });
-  setText('sweepNote', `${srcLine(vm)} · 每个点是一次完整的全年逐小时计算（字段 pv_capacity_sweep）；虚线空心点为已排除或条件不全的容量。候选容量是有限个，不是全局最优。`);
+  sweepChart(box, vm.sweep, vm.recommendedKwp, { label: '光伏容量比选曲线：横轴容量，纵轴比只用电网省下的钱', yTitle: `${story.yearsText(vm.studyYears)}比只用电网省下` });
+  setText('sweepNote', `${srcLine(vm)} · 每个点是一次完整的全年逐小时计算；虚线空心点为已排除或条件不全的容量。候选容量是有限个，不是全局最优。`);
 }
 
 export function priceTable(v, { compact = false } = {}) {

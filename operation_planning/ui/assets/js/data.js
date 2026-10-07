@@ -318,7 +318,7 @@ function buildVM(src, ctx) {
     carbonContext: mapCarbonContext(src.carbon_context),
     tariff,
     tariffApplication: r.tariffApplication,
-    studyYears: num(pick(r.studyYears, (src.scenario || {}).study_years)),
+    studyYears: num(r.studyYears ?? (src.scenario || {}).study_years ?? null),
     feasibility: src.feasibility || null,
     variantReason: src.variant_reason || null,
     notProvided: src.not_provided || [],

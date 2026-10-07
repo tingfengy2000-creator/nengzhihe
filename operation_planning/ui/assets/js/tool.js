@@ -324,7 +324,7 @@ async function compute() {
     await pvPromise;
     const vm = data.fromLive(report, request, { jobId: job.job_id });
     T.run.status = 'done'; T.run.elapsedMs = (report.calculation_timing || {}).elapsed_ms;
-    T.result = { vm, kind: 'live', previews, form, at: Date.now() };
+    T.result = { vm, kind: 'live', previews, form, at: Date.now(), raw: report };
     T.stale = false;
     app.lastLive = { vm, previews, request, at: Date.now() };
     emit('live-result', app.lastLive);
@@ -506,7 +506,7 @@ export async function openSample(caseId, step = 3) {
   const vm = data.fromSample(c, s.file);
   const tier = data.previewTierOf(caseId);
   const previews = tier ? { summer: data.samplePreview(s, tier, 'summer'), winter: data.samplePreview(s, tier, 'winter') } : null;
-  T.result = { vm, kind: 'sample', previews, form: JSON.parse(JSON.stringify(T.form)), at: Date.now() };
+  T.result = { vm, kind: 'sample', previews, form: JSON.parse(JSON.stringify(T.form)), at: Date.now(), raw: c };
   T.stale = false; T.run = null;
   if (location.hash !== `#/tool/${step}`) location.hash = `#/tool/${step}`; else if (built) renderAll();
 }

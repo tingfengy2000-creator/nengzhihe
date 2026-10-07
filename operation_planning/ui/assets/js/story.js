@@ -57,13 +57,17 @@ export function headline(vm) {
 export function sweepStory(vm) {
   const rows = vm.sweep || [];
   if (!rows.length) return null;
+  const fixed = vm.req && vm.req.fixedCapacity != null;
   const best = rows.find((r) => isNum(vm.recommendedKwp) && Math.abs(r.kwp - vm.recommendedKwp) < 1e-9) || null;
   const eligible = rows.filter((r) => r.admission.status === 'eligible' && isNum(r.incremental));
   const losers = eligible.filter((r) => r.incremental < 0 && (!best || r.kwp > best.kwp));
   const worse = losers.length ? losers[0] : null;
   const excluded = rows.filter((r) => r.admission.status === 'excluded');
   let title, text;
-  if (best && best.kwp > 0 && isNum(best.incremental) && best.incremental > 0) {
+  if (fixed || rows.length < 2) {
+    title = '装多大，要看逐小时能用上多少。';
+    text = best ? `本次只计算了光伏 ${fmt.d(best.kwp, 2)} kWp 一个容量（${best.admission.label}${fixed ? '，固定容量用来查看该容量的状态' : ''}）。` : '本次没有可比较的容量。';
+  } else if (best && best.kwp > 0 && isNum(best.incremental) && best.incremental > 0 && best.admission.status === 'eligible') {
     title = worse ? '装多大，比装不装更关键。' : `装 ${fmt.d(best.kwp, 2)} kWp 最划算。`;
     text = `在 ${rows.length} 个候选容量里，光伏 ${fmt.d(best.kwp, 2)} kWp 的 ${yearsText(vm.studyYears)}总账${fmt.delta(best.incremental).text}`;
     if (worse) text += `；装到 ${fmt.d(worse.kwp, 2)} kWp 反而${fmt.delta(worse.incremental).text}`;
@@ -98,3 +102,9 @@ export function sayDelta(v, years) {
 }
 
 export const SCEN_NAME = (id) => (SCEN[id] ? SCEN[id].name : id);
+
+/** 容量推荐依据的中文说明（后端原文含技术名，只放在依据抽屉）。 */
+export function basisPlain(vm) {
+  if (vm.req && vm.req.fixedCapacity != null) return '本次固定一个光伏容量，用来查看该容量的状态，不做容量比选。';
+  return '在有限个计价完整、满足屋顶与预算约束的“只装光伏”容量候选中，选 10 年比只用电网省下最多的一个；不是全局最优。';
+}
