@@ -559,7 +559,11 @@ class Handler(BaseHTTPRequestHandler):
                         return self._send(HTTPStatus.UNPROCESSABLE_ENTITY, {"status":agent_output.get("status"),"agent":agent_output,"error":agent_output.get("error") or agent_output.get("question")})
                     report = agent_output.get("report") or {}; report["agent"] = {k:v for k,v in agent_output.items() if k != "report"}
                     return self._send(HTTPStatus.OK, {"status":"success","report":report})
+                started = time.perf_counter()
                 report = _hybrid_capacity_run(payload)
+                timing = report.setdefault("calculation_timing", {})
+                timing["elapsed_ms"] = round((time.perf_counter() - started) * 1000.0, 3)
+                timing["timing_scope"] = "本次HTTP请求内天气读取、空调负荷、容量比选、匹配和经济计算；不含浏览器网络等待"
                 report["agent"] = {"requested": False, "status": "disabled", "mode": "phase2b_hybrid_tools", "request": payload.get("request", "")}
                 return self._send(HTTPStatus.OK, {"status":"success","report":report})
             except Exception as exc:
@@ -581,11 +585,14 @@ class Handler(BaseHTTPRequestHandler):
                     JOBS[job_id]["status"] = "running"; JOBS[job_id]["started_at"] = time.time()
                 _event(job_id, {"type": "started", "message": "已开始实时风光容量比选"})
                 try:
+                    started = time.perf_counter()
                     def progress(done, total, capacity):
                         with LOCK:
                             JOBS[job_id]["progress"] = float(done) / max(float(total), 1.0)
                         _event(job_id, {"type": "capacity_completed", "completed": done, "total": total, "capacity_kwp": capacity, "message": f"已完成{capacity:g}kWp容量计算"})
                     output = _hybrid_capacity_run(payload, progress=progress)
+                    output.setdefault("calculation_timing", {})["elapsed_ms"] = round((time.perf_counter() - started) * 1000.0, 3)
+                    output["calculation_timing"]["timing_scope"] = "异步任务真实计算耗时，不含排队与客户端轮询"
                     with LOCK:
                         JOBS[job_id].update(status="done", progress=1.0, finished_at=time.time(), output={"status": "success", "report": output})
                     _event(job_id, {"type": "report_ready", "message": "实时计算结果已生成"})
