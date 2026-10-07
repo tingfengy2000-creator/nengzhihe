@@ -58,6 +58,33 @@ TARIFFS: Dict[str, TariffProfile] = {
         exclusions=["不含需量/容量基本电费", "不含燃气供热费用", "不代表建筑总表"],
         notes=["官方时段：谷00:00–08:00；峰10:00–12:00、15:00–20:00、21:00–22:00；其余平段。7–9月11:00–12:00、17:00–18:00为尖峰覆盖。", "历史档案，日期超出有效期时必须显式选择并提示。"],
     ),
+    "guangzhou_industrial_lt1kv_202110": TariffProfile(
+        tariff_id="guangzhou_industrial_lt1kv_202110",
+        version="2021-10-official-v1",
+        area="广州市（广州、珠海、佛山、中山、东莞五市）一般工商业不满1kV",
+        category="一般工商业原普通工业专变用户",
+        voltage_level="不满1kV",
+        billing_type="单一制电度电费",
+        price_type="TOU",
+        effective_start="2021-10-01",
+        effective_end="2021-12-31",
+        currency="CNY",
+        unit="CNY/kWh",
+        periods=[
+            {"name": "valley", "start": "00:00", "end": "08:00", "price": 0.2556},
+            {"name": "peak", "start": "10:00", "end": "12:00", "price": 1.1433},
+            {"name": "peak", "start": "14:00", "end": "19:00", "price": 1.1433},
+            {"name": "super_peak", "start": "11:00", "end": "12:00", "price": 1.4291, "months": [7, 8, 9]},
+            {"name": "super_peak", "start": "15:00", "end": "17:00", "price": 1.4291, "months": [7, 8, 9]},
+            {"name": "flat", "start": "00:00", "end": "24:00", "price": 0.6725},
+        ],
+        source_url="https://fgw.gz.gov.cn/ztzl/gzsfzggwzdlyxxgkzl/ys/content/post_9497778.html",
+        source_title="广东省发展改革委粤发改价格〔2021〕331号附件：广州、珠海、佛山、中山、东莞五市电价价目表（2021年10月1日起）",
+        verified=True,
+        inclusions=["广州五市一般工商业不满1kV电度电价", "峰平谷与7–9月尖峰时段规则"],
+        exclusions=["不含政府性基金及附加", "不含需量/容量基本电费", "仅适用于原普通工业专变用户；普通商业用户不自动适用", "不是2024年度广州实际账单"],
+        notes=["官方表格单位为分/千瓦时：平67.25、谷25.56、峰114.33；尖峰按峰段上浮25%并按表格四舍五入。", "本档案有效期登记为2021-10-01至2021-12-31；套用2024参考天气必须显式选择 tariff_application=current_tariff_on_reference_weather，不能绕过默认日期校验。"],
+    ),
     "guangdong_north_industrial_lt1kv_202607": TariffProfile(
         tariff_id="guangdong_north_industrial_lt1kv_202607",
         version="2026-07-official-v1",
@@ -214,8 +241,9 @@ def item_price(tariff: TariffProfile, name: str, month: int, second: int) -> flo
     raise ValueError(f"缺少 {name} 时段单价")
 
 
-def rate_at(tariff: TariffProfile, calendar: date, second: int) -> Tuple[str, float]:
-    validate_profile(tariff, calendar, 1)
+def rate_at(tariff: TariffProfile, calendar: date, second: int, *, validate_dates: bool = True) -> Tuple[str, float]:
+    if validate_dates:
+        validate_profile(tariff, calendar, 1)
     candidates: List[Tuple[str, int, float]] = []
     for item in tariff.periods:
         months = item.get("months")

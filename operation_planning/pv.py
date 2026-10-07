@@ -61,6 +61,11 @@ class PVScenario:
     export_price_cny_per_kwh: Optional[float] = None
     tariff_id: str = "user_constant"
     custom_tariff: Optional[Dict[str, Any]] = None
+    # ``historical_weather_date`` keeps the strict tariff validity check.  The
+    # explicit current-tariff application is only for a published tariff
+    # benchmark applied to a reference weather year and is recorded in the
+    # report metadata.
+    tariff_application: str = "historical_weather_date"
     study_years: int = 10
     discount_rate: float = 0.0
     annual_degradation: float = 0.005
@@ -369,7 +374,15 @@ def _price_vectors(scenario: PVScenario, timestamps: Sequence[str], interval_sec
     tariff = profile(scenario.tariff_id, scenario.custom_tariff); idx = _time_index(timestamps); intervals = _intervals(timestamps, interval_seconds)
     physical_end = idx[-1] + pd.to_timedelta(int(intervals[-1]), unit="s")
     last_included_date = (physical_end - pd.to_timedelta(1, unit="s")).date()
-    days = (last_included_date - idx[0].date()).days + 1; validate_profile(tariff, idx[0].date(), days)
+    days = (last_included_date - idx[0].date()).days + 1
+    apply_current = scenario.tariff_application == "current_tariff_on_reference_weather"
+    if scenario.tariff_application not in {"historical_weather_date", "current_tariff_on_reference_weather"}:
+        raise ValueError("未知 tariff_application；请使用 historical_weather_date 或 current_tariff_on_reference_weather")
+    # Published tariffs remain date-checked by default.  The only exception is
+    # an explicit benchmark application recorded in the task and report; this
+    # does not make the historical profile a 2024 bill.
+    if not apply_current:
+        validate_profile(tariff, idx[0].date(), days)
     prices: List[float] = []; examples: List[Dict[str, Any]] = []
     for i, (start, seconds) in enumerate(zip(idx, intervals)):
         end = start + pd.to_timedelta(int(seconds), unit="s"); cuts = {start, end}; cursor = start.normalize()
@@ -384,11 +397,11 @@ def _price_vectors(scenario: PVScenario, timestamps: Sequence[str], interval_sec
             span = (right - left).total_seconds()
             if span <= 0: continue
             mid = left + (right - left) / 2; second = int(mid.hour * 3600 + mid.minute * 60 + mid.second)
-            name, rate = rate_at(tariff, mid.date(), second); weighted += span * float(rate)
+            name, rate = rate_at(tariff, mid.date(), second, validate_dates=not apply_current); weighted += span * float(rate)
             segments.append({"start": str(left), "end": str(right), "period": name, "price_cny_per_kwh": float(rate), "seconds": span})
         prices.append(weighted / float(seconds))
         if i < 4: examples.append({"interval_start": str(start), "interval_end": str(end), "segments": segments, "weighted_price_cny_per_kwh": prices[-1]})
-    meta = profile_public_dict(tariff); meta.update({"interval_pricing": "constant average power; each physical interval split at tariff boundaries", "interval_examples": examples})
+    meta = profile_public_dict(tariff); meta.update({"interval_pricing": "constant average power; each physical interval split at tariff boundaries", "interval_examples": examples, "tariff_application": scenario.tariff_application, "tariff_application_note": ("published tariff benchmark applied to reference weather dates; not a historical 2024 bill" if apply_current else "tariff validity checked against weather dates")})
     return prices, meta
 
 
