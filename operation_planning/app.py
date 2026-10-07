@@ -353,7 +353,9 @@ def _hybrid_capacity_run(payload: dict, progress=None) -> dict:
             "self_use_kwh": row.get("self_use_kwh"),
             "generation_kwh": row.get("generation_kwh"),
             "self_consumption_rate": (row.get("self_use_kwh", 0.0) / row.get("generation_kwh", 1.0)) if row.get("generation_kwh", 0.0) else None,
+            "self_use_rate": (row.get("self_use_kwh", 0.0) / row.get("generation_kwh", 1.0)) if row.get("generation_kwh", 0.0) else None,
             "curtailment_kwh": row.get("curtailment_kwh"),
+            "waste_rate": (row.get("curtailment_kwh", 0.0) / row.get("generation_kwh", 1.0)) if row.get("generation_kwh", 0.0) else None,
             "carbon": row.get("carbon"),
         })
     eligible = [row for row in sweep if row.get("status") in {"feasible", "over_budget", "not_applicable", "incomplete_quote"} and row.get("incremental_npv_vs_s0_cny") is not None and row.get("status") == "feasible"]
