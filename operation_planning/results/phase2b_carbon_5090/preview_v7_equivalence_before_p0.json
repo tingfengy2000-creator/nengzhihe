@@ -1,0 +1,58 @@
+{
+  "source_preview_commit": "566ead011b23e07572a720ef0f538a23d029b6fa",
+  "annual_sha256": "19e9fa832037cd44627a34e41238c6174c97dab4b81cfc6f723bfa6fd32e3ab5",
+  "preview_sha256": "65e2d95693e3dd9bc6aefb513a81dfdfb5939756546f93c08479a3f92fe0cd56",
+  "tolerance": 1e-09,
+  "cases": [
+    {
+      "case_id": "tier_small_summer_week",
+      "checked_numeric_fields": 4704,
+      "max_relative_error": 0.0,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "pass": true
+    },
+    {
+      "case_id": "tier_small_winter_week",
+      "checked_numeric_fields": 4704,
+      "max_relative_error": 0.0,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "pass": true
+    },
+    {
+      "case_id": "tier_medium_summer_week",
+      "checked_numeric_fields": 4704,
+      "max_relative_error": 0.0,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "pass": true
+    },
+    {
+      "case_id": "tier_medium_winter_week",
+      "checked_numeric_fields": 4704,
+      "max_relative_error": 0.0,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "pass": true
+    },
+    {
+      "case_id": "tier_large_summer_week",
+      "checked_numeric_fields": 4704,
+      "max_relative_error": 0.0,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "pass": true
+    },
+    {
+      "case_id": "tier_large_winter_week",
+      "checked_numeric_fields": 4704,
+      "max_relative_error": 0.0,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "warmup": "full annual thermal trace is simulated before slicing; PV and wind are computed on the same selected interval values"
+}

@@ -290,6 +290,8 @@ v6运行时仍使用当时的公开抄录档案，代码保持 `verified=false/p
 
 请求/响应完整字段、缺价状态和手算守恒见 `operation_planning/protocol/storage_surplus_paths_contract.md`、`tests/test_phase2b_storage.py`；v8 HTTP回放及哈希见 `operation_planning/results/phase2b_carbon_5090/replay_cases_v8.json`、`run_manifest_v8.json`。v8生成后以清单的 `source_commit`、逐案例哈希和包哈希为准，旧 v3–v7 文件不覆盖。
 
+最终5090回放（source `3376e5148e6f3fa608ba3e57e20e04d71c30ed65`）的三档主卡仍分别推荐 1/40/50 kWp；S1 年1物理余电分别为 700.185、19740.361、22470.873 kWh。以示例 5 kWh 电池报价计算，年分时购电节省为 123.721、1151.028、1036.800 元，10年粗算净收益为 -1762.794、-6489.721、-7632.004 元；以 0.25 元/kWh 的卖电情景，年粗收入为 175.046、4935.090、5617.718 元。上述两条是同一余电的独立附加估算，不叠加进入主方案NPV。六次HTTP调用总耗时 106067.474 ms（均值 17677.912 ms，最大 30624.934 ms）；这只是5090运行记录，不是用户人工等待承诺。
+
 ### 15.2 已核验广州主价与高温尖峰
 
 `guangzhou_industrial_lt1kv_202610` 现标记 `verified=true`，来源 URL 为南方电网95598公告详情页：
@@ -298,7 +300,7 @@ v6运行时仍使用当时的公开抄录档案，代码保持 `verified=false/p
 
 除7–9月公告尖峰外，提供逐时 `temperature_2m` 时启用高温日规则：当地日最高气温达到35℃的7–9月外日期，在11:00–12:00及15:00–17:00按尖峰价计费；不提供逐时温度时不启用。`tariff` 元数据回传 `high_temp_super_peak_days`、`high_temp_super_peak_day_count`、`super_peak_day_count` 和 `high_temp_rule`，便于追溯本次价格向量实际覆盖的日期。测试 `tests/test_phase2b_tariff_verified.py` 已验证2024-10-10的35℃日期在11:00进入尖峰，而次日同一时段仍为峰段，并检查价格向量的高温日计数。
 
-高温规则只改变分时计费；光伏/风电物理发电、余电量和主推荐不因价格向量重算而改变。v8回放需以最终 `run_manifest_v8.json` 的高温日计数、逐案例输入/输出哈希和重算时间为准，不能把一次重价结果写成现场电费结算。
+高温规则只改变分时计费；光伏/风电物理发电、余电量和主推荐不因价格向量重算而改变。最终v8回放每案记录 `high_temp_super_peak_day_count=1`（2024-06-21）和 `super_peak_day_count=93`；年购电费用相对旧未启用高温规则的参考值增加约0.50元（小档S0）、30.34元（中档S0）、33.82元（大档S0），仅表示该价格情景的计费差异。不能把一次重价结果写成现场电费结算。
 
 ### 15.3 第15节验证边界
 

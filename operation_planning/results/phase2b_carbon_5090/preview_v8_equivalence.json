@@ -1,0 +1,139 @@
+{
+  "format_version": "preview_v8_equivalence",
+  "source_preview": "operation_planning\\results\\phase2b_carbon_5090\\replay_previews_v7.json",
+  "case_count": 6,
+  "fields": [
+    "load_kwh",
+    "pv_generation_kwh",
+    "wind_generation_kwh",
+    "self_use_kwh",
+    "grid_import_kwh",
+    "curtailment_kwh"
+  ],
+  "max_abs_diff": 0.0,
+  "max_relative_error": 0.0,
+  "tolerance": 1e-09,
+  "cases": [
+    {
+      "case_id": "tier_small_summer_week",
+      "scenario_checks": [
+        {
+          "scenario_id": "S3_pv_wind",
+          "rows": 168
+        }
+      ],
+      "service_actual": {
+        "capacity_shortfall_hours": 0,
+        "unmet_temp_degree_hours": 0.0,
+        "unmet_rh_percent_hours": 0.0
+      },
+      "service_expected": {
+        "capacity_shortfall_hours": 0,
+        "unmet_temp_degree_hours": 0.0,
+        "unmet_rh_percent_hours": 0.0
+      },
+      "service_equal": true
+    },
+    {
+      "case_id": "tier_small_winter_week",
+      "scenario_checks": [
+        {
+          "scenario_id": "S3_pv_wind",
+          "rows": 168
+        }
+      ],
+      "service_actual": {
+        "capacity_shortfall_hours": 0,
+        "unmet_temp_degree_hours": 0.0,
+        "unmet_rh_percent_hours": 0.0
+      },
+      "service_expected": {
+        "capacity_shortfall_hours": 0,
+        "unmet_temp_degree_hours": 0.0,
+        "unmet_rh_percent_hours": 0.0
+      },
+      "service_equal": true
+    },
+    {
+      "case_id": "tier_medium_summer_week",
+      "scenario_checks": [
+        {
+          "scenario_id": "S3_pv_wind",
+          "rows": 168
+        }
+      ],
+      "service_actual": {
+        "capacity_shortfall_hours": 0,
+        "unmet_temp_degree_hours": 0.0,
+        "unmet_rh_percent_hours": 0.0
+      },
+      "service_expected": {
+        "capacity_shortfall_hours": 0,
+        "unmet_temp_degree_hours": 0.0,
+        "unmet_rh_percent_hours": 0.0
+      },
+      "service_equal": true
+    },
+    {
+      "case_id": "tier_medium_winter_week",
+      "scenario_checks": [
+        {
+          "scenario_id": "S3_pv_wind",
+          "rows": 168
+        }
+      ],
+      "service_actual": {
+        "capacity_shortfall_hours": 0,
+        "unmet_temp_degree_hours": 0.0,
+        "unmet_rh_percent_hours": 0.6051698751984844
+      },
+      "service_expected": {
+        "capacity_shortfall_hours": 0,
+        "unmet_temp_degree_hours": 0.0,
+        "unmet_rh_percent_hours": 0.6051698751984844
+      },
+      "service_equal": true
+    },
+    {
+      "case_id": "tier_large_summer_week",
+      "scenario_checks": [
+        {
+          "scenario_id": "S3_pv_wind",
+          "rows": 168
+        }
+      ],
+      "service_actual": {
+        "capacity_shortfall_hours": 0,
+        "unmet_temp_degree_hours": 0.0,
+        "unmet_rh_percent_hours": 0.0
+      },
+      "service_expected": {
+        "capacity_shortfall_hours": 0,
+        "unmet_temp_degree_hours": 0.0,
+        "unmet_rh_percent_hours": 0.0
+      },
+      "service_equal": true
+    },
+    {
+      "case_id": "tier_large_winter_week",
+      "scenario_checks": [
+        {
+          "scenario_id": "S3_pv_wind",
+          "rows": 168
+        }
+      ],
+      "service_actual": {
+        "capacity_shortfall_hours": 0,
+        "unmet_temp_degree_hours": 0.0,
+        "unmet_rh_percent_hours": 0.4424343722347359
+      },
+      "service_expected": {
+        "capacity_shortfall_hours": 0,
+        "unmet_temp_degree_hours": 0.0,
+        "unmet_rh_percent_hours": 0.4424343722347359
+      },
+      "service_equal": true
+    }
+  ],
+  "pass": true
+}
