@@ -411,6 +411,10 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(HTTPStatus.OK, {"status": "success", "cities": sites, "years": years,
                 "equipment_models": catalogue(), "tariffs": registry(), "carbon_factors": factor_catalog(),
                 "units": {"area_m2": "m²", "height_m": "m", "power_kw": "kW", "energy_kwh": "kWh", "price_cny_per_kwh": "CNY/kWh"}})
+        if path in ("/api/operation/cities", "/api/operation/years"):
+            sites = available_sites()
+            years = sorted({int(year) for site in sites for year in site.get("cached_years", []) if str(year).isdigit()})
+            return self._send(HTTPStatus.OK, {"status": "success", "cities": sites, "years": years})
         if path == "/api/operation/weather/sites": return self._send(HTTPStatus.OK, {"items": available_sites()})
         if path == "/api/operation/pv/provenance": return self._send(HTTPStatus.OK, {"engine": "pvlib", "scope": "phase2A photovoltaic generation, hourly load matching and lifecycle comparison", "radiation": "Open-Meteo GHI/DNI/DHI preceding-hour means", "status": "local_replay"})
         if path == "/api/operation/wind/profiles":
