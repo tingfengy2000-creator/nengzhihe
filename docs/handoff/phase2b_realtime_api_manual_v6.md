@@ -22,6 +22,8 @@
 
 `POST /api/operation/hybrid/run` 使用 `room`、`pv`、`hybrid`、可选 `carbon` 和 `storage`。`pv.requested_capacities_kwp` 为用户指定的有限容量列表；`pv.auto_capacity:true` 在 `roof_area_m2 × usable_fraction × 0.2 kWp/m²` 上限内生成 0/25%/50%/100% 候选。响应的 `report.pv_capacity_sweep` 列出每个候选的成本、增量NPV、自用率和碳字段，`report.recommended_pv_capacity_kwp` 为计价完整且满足约束候选中增量NPV最大的容量；完整 `hourly` 只保留被选容量的四方案。
 
+`report.calculation_timing.elapsed_ms` 是本次服务端实际计算耗时（包括负荷、发电、匹配和经济层）。
+
 请求片段：
 
 ```json
