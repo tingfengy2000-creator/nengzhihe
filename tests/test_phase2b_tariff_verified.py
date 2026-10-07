@@ -35,6 +35,7 @@ def test_pv_price_vector_records_hot_day_count() -> None:
     )
     prices, meta = _price_vectors(scenario, timestamps, [3600, 3600], weather)
     assert len(prices) == 2
+    assert meta["high_temp_day_count"] == 1
     assert meta["high_temp_super_peak_day_count"] == 1
     assert meta["high_temp_super_peak_days"] == ["2024-10-10"]
     assert meta["super_peak_day_count"] == 1

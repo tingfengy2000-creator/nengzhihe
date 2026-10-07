@@ -74,6 +74,7 @@
 除7–9月固定尖峰时段外，若输入天气提供逐时 `temperature_2m`，日最高气温达到35℃的其他月份日期，在11:00–12:00及15:00–17:00按尖峰计费。价格响应的 `tariff` 元数据包含：
 
 - `high_temp_super_peak_days`：实际触发规则的日期；
+- `high_temp_days` / `high_temp_day_count`：输入天气中日最高温达到阈值的全部日期及数量；
 - `high_temp_super_peak_day_count`：上述日期数；
 - `super_peak_day_count` / `super_peak_dates_in_window`：固定季节尖峰和高温尖峰合并后的覆盖统计；
 - `high_temp_rule`：阈值、时段、缺温度时不启用的说明。
