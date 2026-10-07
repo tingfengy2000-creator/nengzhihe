@@ -13,6 +13,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+from copy import deepcopy
 from typing import Any, Dict, Optional
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,6 +22,7 @@ if str(ROOT) not in sys.path:
 
 from operation_planning.carbon import REFERENCE_CARBON_PRICE_CNY_PER_T, REFERENCE_CARBON_PRICE_SOURCE
 from operation_planning.hybrid import HybridScenario, run_hybrid_planning
+from operation_planning.economics import discounted_cashflow_npv
 from operation_planning.pv import PVQuote, PVScenario
 from operation_planning.project_load import aggregate_project_load
 from operation_planning.thermal_model import RoomSpec, simulate_room
@@ -77,8 +79,58 @@ def _compact_chart(chart: Dict[str, Any]) -> Dict[str, Any]:
     return out
 
 
-def _sensitivity(report: Dict[str, Any], tariff_id: str, label: str) -> Dict[str, Any]:
-    return {"label": label, "tariff_id": tariff_id, "recommendation": report["recommendation"], "candidates": [{"scenario_id": x["scenario_id"], "total_cost_npv_cny": (x.get("economics") or {}).get("total_cost_npv_cny"), "incremental_npv_vs_s0_cny": (x.get("economics") or {}).get("incremental_npv_vs_s0_cny"), "self_use_kwh": x.get("self_use_kwh"), "generation_kwh": x.get("generation_kwh"), "curtailment_kwh": x.get("curtailment_kwh"), "carbon": x.get("carbon")} for x in report["candidates"]]}
+def _constant_sensitivity(report: Dict[str, Any], price: float, label: str) -> Dict[str, Any]:
+    """Reprice the already matched annual trajectories; physics is unchanged."""
+    rows = []
+    baseline = next(x for x in report["candidates"] if x["scenario_id"] == "S0_grid")
+    base_econ = baseline.get("economics") or {}
+    rate = float(base_econ.get("discount_rate", 0.0) or 0.0)
+    base_yearly = list(base_econ.get("yearly") or [])
+    base_costs = [float(r.get("grid_import_kwh", 0.0) or 0.0) * float(price) for r in base_yearly if int(r.get("year", 0)) > 0]
+    baseline_npv = discounted_cashflow_npv(0.0, [-x for x in base_costs], rate)
+    for source in report["candidates"]:
+        econ = deepcopy(source.get("economics") or {})
+        if econ.get("status") not in {"complete", "feasible"}:
+            new_econ = {"status": econ.get("status"), "total_cost_npv_cny": None, "incremental_npv_vs_s0_cny": None}
+        else:
+            yearly = list(econ.get("yearly") or [])
+            cash = []
+            for row in yearly:
+                if int(row.get("year", 0)) == 0:
+                    continue
+                imp = float(row.get("grid_import_kwh", 0.0) or 0.0) * float(price)
+                cash.append(-imp - float(row.get("maintenance_cny", 0.0) or 0.0) - float(row.get("replacement_cny", 0.0) or 0.0) + float(row.get("residual_cny", 0.0) or 0.0))
+            npv = discounted_cashflow_npv(float(econ.get("capex_cny", 0.0) or 0.0), cash, rate)
+            new_econ = {"status": econ.get("status"), "total_cost_npv_cny": -npv, "incremental_npv_vs_s0_cny": npv - baseline_npv, "capex_cny": econ.get("capex_cny"), "study_years": econ.get("study_years"), "discount_rate": rate}
+        rows.append({"scenario_id": source["scenario_id"], "total_cost_npv_cny": new_econ.get("total_cost_npv_cny"), "incremental_npv_vs_s0_cny": new_econ.get("incremental_npv_vs_s0_cny"), "self_use_kwh": source.get("self_use_kwh"), "generation_kwh": source.get("generation_kwh"), "curtailment_kwh": source.get("curtailment_kwh"), "constraint_status": source.get("constraint_status"), "admission_status": source.get("admission_status"), "economics_status": new_econ.get("status")})
+    eligible = [x for x in rows if x.get("admission_status") == "eligible" and x.get("incremental_npv_vs_s0_cny") is not None]
+    best = max(eligible, key=lambda x: float(x["incremental_npv_vs_s0_cny"])) if eligible else None
+    unknown = [x for x in rows if x.get("admission_status") == "unknown"]
+    return {"label": label, "tariff_id": "user_constant", "price_cny_per_kwh": float(price), "recommendation": {"status": "conditional" if best and not unknown else ("conditional_subset" if best else "not_available"), "scenario_id": best["scenario_id"] if best else None, "all_candidates_conclusion": "unresolved" if unknown else "resolved_with_exclusions"}, "candidates": rows, "reprice_basis": "same matched hourly trajectories and quote constraints; only tariff cashflow recalculated"}
+
+
+def _carbon_reference(null_carbon: Dict[str, Any]) -> Dict[str, Any]:
+    """Add the public reference carbon-price scenario without rerunning physics."""
+    out = deepcopy(null_carbon)
+    rate = float(out.get("yearly", [{}])[0].get("carbon_revenue_present_value_cny") or 0.0) if out.get("yearly") else 0.0
+    revenues = []
+    for row in out.get("yearly", []):
+        year = int(row.get("year", 0))
+        avoided_t = float(row.get("avoided_kgco2", 0.0) or 0.0) / 1000.0
+        rev = avoided_t * REFERENCE_CARBON_PRICE_CNY_PER_T
+        pv = rev / ((1.0 + rate) ** year) if year > 0 else 0.0
+        row["carbon_revenue_cny"] = rev
+        row["carbon_revenue_present_value_cny"] = pv
+        revenues.append((rev, pv))
+    out["carbon_revenue_cny_study_period"] = sum(x[0] for x in revenues)
+    out["carbon_revenue_present_value_cny"] = sum(x[1] for x in revenues)
+    inc = out.get("cost_per_tco2_cny")
+    # Use the candidate's original incremental NPV when available.
+    original_incremental = None
+    if out.get("avoided_tco2_study_period") and inc is not None:
+        original_incremental = -float(inc) * float(out["avoided_tco2_study_period"])
+    out["incremental_npv_with_carbon_cny"] = None if original_incremental is None else original_incremental + out["carbon_revenue_present_value_cny"]
+    return out
 
 
 def _case(case_id: str, label: str, demo_role: str, room_spec: RoomSpec, weather: Dict[str, Any], pv_weather: Dict[str, Any], source_commit: str, *, budget: Optional[float] = 90000, roof: float = 50, pv_complete: bool = True, pv_capacity: float = 2, wind_count: int = 1, study_years: int = 10, building: Optional[Dict[str, Any]] = None, variant_reason: Optional[str] = None, storage_capacities: Optional[list[float]] = None, feasibility: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
@@ -88,18 +140,16 @@ def _case(case_id: str, label: str, demo_role: str, room_spec: RoomSpec, weather
     main_pv, main_hybrid, quote_input = _scenarios(budget=budget, roof=roof, pv_complete=pv_complete, pv_capacity=pv_capacity, wind_count=wind_count, import_price=0.66, study_years=study_years, tariff_id=OFFICIAL_TARIFF_ID, tariff_application="current_tariff_on_reference_weather")
     null_carbon = {"carbon_price_cny_per_t": None}
     report = run_hybrid_planning(project, pv_weather, main_pv, main_hybrid, WindTurbineProfile.from_file(), include_hourly=True, carbon=null_carbon, storage=storage_request)
-    ref_report = run_hybrid_planning(project, pv_weather, main_pv, main_hybrid, WindTurbineProfile.from_file(), include_hourly=False, carbon={"carbon_price_cny_per_t": REFERENCE_CARBON_PRICE_CNY_PER_T}, storage=storage_request)
-    # Sensitivities use the same physical load/weather/quotes; only tariff is changed.
-    sensitivity = []
-    for price, name in ((0.66, "恒价0.66用户情景"), (1.20, "恒价1.20用户情景")):
-        pv_s, hy_s, _ = _scenarios(budget=budget, roof=roof, pv_complete=pv_complete, pv_capacity=pv_capacity, wind_count=wind_count, import_price=price, study_years=study_years, tariff_id="user_constant", tariff_application="historical_weather_date")
-        sr = run_hybrid_planning(project, pv_weather, pv_s, hy_s, WindTurbineProfile.from_file(), include_hourly=False, carbon=null_carbon, storage=storage_request)
-        sensitivity.append(_sensitivity(sr, "user_constant", name))
+    # Sensitivities use the same physical trajectories; only annual cashflows
+    # are repriced.  The carbon-price view is likewise derived from the
+    # validated yearly avoided-emission rows.
+    sensitivity = [_constant_sensitivity(report, price, name) for price, name in ((0.66, "恒价0.66用户情景"), (1.20, "恒价1.20用户情景"))]
     recommendation_id = report["recommendation"].get("scenario_id") or "S0_grid"
     total_cost = {x["scenario_id"]: (x.get("economics") or {}).get("total_cost_npv_cny") for x in report["candidates"]}
     context = pv_weather.get("context") or {}
     main_input = {"site_id": "guangzhou", "year": 2024, "room": asdict(room_spec), "building": building or {"floors": 1, "rooms_per_floor": room_spec.room_count, "roof_area_m2": roof, "roof_area_basis": "single-floor footprint; site condition"}, "pv_capacity_kwp": pv_capacity, "wind_turbine_count": wind_count, "budget_cny": budget, "roof_area_m2": roof, "usable_fraction": main_pv.usable_fraction, "tariff_id": OFFICIAL_TARIFF_ID, "tariff_application": "current_tariff_on_reference_weather", "tariff_basis": "广州官方2021-10峰平谷表；用于2024参考天气的现行档案情景，不是2024实际账单", "sensitivity_import_prices_cny_per_kwh": [0.66, 1.20], "allow_export": False, "study_years": study_years, "pv_quote": quote_input["pv_quote"], "wind_quote": quote_input["wind_quote"], "hub_height_m": quote_input["hub_height_m"], "hellman_exponent": quote_input["hellman_exponent"], "carbon": null_carbon, "carbon_price_reference": {"carbon_price_cny_per_t": REFERENCE_CARBON_PRICE_CNY_PER_T, "source": REFERENCE_CARBON_PRICE_SOURCE}, "storage": storage_request}
-    case = {"case_id": case_id, "label": label, "demo_role": demo_role, "variant_reason": variant_reason, "feasibility": feasibility, "source": {"source_commit": source_commit, "calculation_version": report["calculation_version"], "source_result_file": "operation_planning/results/phase2b_carbon_5090/replay_cases_v4.json", "mode": "fixed_replay_only; 5090 full-year calculation"}, "input": main_input, "weather": {"source": WEATHER_REL, "hash": pv_weather.get("hash"), "site": context.get("site"), "start": context.get("start"), "end": context.get("end"), "normalization_version": (pv_weather.get("weather_normalization") or {}).get("version")}, "load_context": {**report["load_context"], "project_load_contract": project.get("project_load_contract"), "single_room_summary": project.get("single_room_summary"), "project_scope": project["load_series"].get("scope")}, "project_load_contract": project.get("project_load_contract"), "room_count": project["load_series"].get("room_count"), "units_per_room": project["load_series"].get("units_per_room"), "service_quality": report["load_context"]["service_quality"], "carbon_context": report["carbon_context"], "recommendation": report["recommendation"], "total_cost_npv_cny": total_cost, "candidates": [_candidate(x) for x in report["candidates"]], "chart": _chart(report, "S3_pv_wind"), "chart_recommended": _chart(report, recommendation_id), "carbon_price_scenarios": [{"carbon_price_cny_per_t": None, "label": "不计碳收益", "source": None, "candidate_carbon": {x["scenario_id"]: x["carbon"] for x in report["candidates"]}}, {"carbon_price_cny_per_t": REFERENCE_CARBON_PRICE_CNY_PER_T, "label": "公开报告参考情景，不代表可成交", "source": REFERENCE_CARBON_PRICE_SOURCE, "candidate_carbon": {x["scenario_id"]: x["carbon"] for x in ref_report["candidates"]}}], "tariff_sensitivities": sensitivity, "not_provided": ["只计空调用电，不含照明、插座、生产工艺和建筑总表负荷", "报价、电价、寿命和碳价为用户情景或公开档案情景", "官方广州档案为2021-10公布的广州五市一般工商业不满1kV表，套用2024天气不是2024实际账单", "屋顶承重、消防间距、并网审批待现场确认", "不代表现场精度、经核证减排量、采购建议或碳市场资格"]}
+    ref_carbon = {x["scenario_id"]: _carbon_reference(x["carbon"]) for x in report["candidates"]}
+    case = {"case_id": case_id, "label": label, "demo_role": demo_role, "variant_reason": variant_reason, "feasibility": feasibility, "source": {"source_commit": source_commit, "calculation_version": report["calculation_version"], "source_result_file": "operation_planning/results/phase2b_carbon_5090/replay_cases_v4.json", "mode": "fixed_replay_only; 5090 full-year calculation"}, "input": main_input, "weather": {"source": WEATHER_REL, "hash": pv_weather.get("hash"), "site": context.get("site"), "start": context.get("start"), "end": context.get("end"), "normalization_version": (pv_weather.get("weather_normalization") or {}).get("version")}, "load_context": {**report["load_context"], "project_load_contract": project.get("project_load_contract"), "single_room_summary": project.get("single_room_summary"), "project_scope": project["load_series"].get("scope")}, "project_load_contract": project.get("project_load_contract"), "room_count": project["load_series"].get("room_count"), "units_per_room": project["load_series"].get("units_per_room"), "service_quality": report["load_context"]["service_quality"], "carbon_context": report["carbon_context"], "recommendation": report["recommendation"], "total_cost_npv_cny": total_cost, "candidates": [_candidate(x) for x in report["candidates"]], "chart": _chart(report, "S3_pv_wind"), "chart_recommended": _chart(report, recommendation_id), "carbon_price_scenarios": [{"carbon_price_cny_per_t": None, "label": "不计碳收益", "source": None, "candidate_carbon": {x["scenario_id"]: x["carbon"] for x in report["candidates"]}}, {"carbon_price_cny_per_t": REFERENCE_CARBON_PRICE_CNY_PER_T, "label": "公开报告参考情景，不代表可成交", "source": REFERENCE_CARBON_PRICE_SOURCE, "candidate_carbon": ref_carbon}], "tariff_sensitivities": sensitivity, "not_provided": ["只计空调用电，不含照明、插座、生产工艺和建筑总表负荷", "报价、电价、寿命和碳价为用户情景或公开档案情景", "官方广州档案为2021-10公布的广州五市一般工商业不满1kV表，套用2024天气不是2024实际账单", "屋顶承重、消防间距、并网审批待现场确认", "不代表现场精度、经核证减排量、采购建议或碳市场资格"]}
     case["case_hash"] = _sha(case)
     return case
 
