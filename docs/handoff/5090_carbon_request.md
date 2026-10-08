@@ -456,7 +456,7 @@ v6 记录的全年 `hybrid/run` 平均约 94 秒、最长约 163 秒（5090）�
 
 ```json
 {
-  "status": "ok",                       
+  "status": "ok",
   "changes": [
     {"field": "room.units_per_room", "from": 2, "to": 3, "label": "每间空调台数"},
     {"field": "hybrid.budget_cny", "from": 30000, "to": 50000, "label": "预算"},
