@@ -238,6 +238,16 @@ def _assert_request_supports_changes(request_text: str, changes: list[dict[str, 
         field = item["field"]
         if not any(str(hint).lower() in text for hint in _FIELD_HINTS[field]):
             raise ValueError(f"模型修改了用户未提及的字段：{field}")
+        # The task schema stores installed PV capacity in kWp. Reject a model
+        # that silently converts an explicit kWp amount into W (2 -> 2000).
+        # This is validation of the proposal, never a rule-generated substitute.
+        if field in {"pv.capacity_kwp", "hybrid.pv_capacity_kwp"}:
+            explicit = re.findall(r"(?<![\d.])(\d+(?:\.\d+)?)\s*(kwp|kw|千瓦|wp|瓦)(?!h)", text)
+            if len(explicit) == 1:
+                amount, unit = explicit[0]
+                expected = float(amount) / (1000 if unit in {"wp", "瓦"} else 1)
+                if not math.isclose(float(item["to"]), expected, rel_tol=1e-9, abs_tol=1e-9):
+                    raise ValueError("模型光伏容量与用户明确输入的数值/单位不一致，请重新说明容量")
 
 
 def _unsupported_brand_notes(request_text: str) -> list[str]:

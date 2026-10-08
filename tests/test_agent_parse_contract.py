@@ -93,6 +93,24 @@ class AgentParseContractTests(unittest.TestCase):
         self.assertEqual(result["status"], "ok")
         self.assertEqual(result["changes"][0]["to"], 2)
 
+    def test_model_cannot_convert_kwp_to_w_without_converting_back(self):
+        with patch("operation_planning.agent_parse._read_config", return_value={"model_id": "test"}), patch(
+            "operation_planning.agent_parse._model_parse",
+            return_value={"changes": [{"field": "pv.capacity_kwp", "to": 2000}], "unsupported": [], "question": None},
+        ):
+            result = parse_agent_request("光伏改为2kWp，其他条件不变", self.task)
+        self.assertEqual(result["status"], "failed")
+        self.assertEqual(result["changes"], [])
+        self.assertIn("单位", result["reason"])
+
+    def test_explicit_wp_to_kwp_proposal_is_valid(self):
+        with patch("operation_planning.agent_parse._read_config", return_value={"model_id": "test"}), patch(
+            "operation_planning.agent_parse._model_parse",
+            return_value={"changes": [{"field": "pv.capacity_kwp", "to": 2}], "unsupported": [], "question": None},
+        ):
+            result = parse_agent_request("光伏容量改为2000Wp", self.task)
+        self.assertEqual(result["status"], "ok")
+
     def test_vague_budget_cannot_invent_a_half_budget(self):
         with patch("operation_planning.agent_parse._read_config", return_value={"model_id": "test"}), patch(
             "operation_planning.agent_parse._model_parse",
