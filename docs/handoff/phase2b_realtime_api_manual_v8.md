@@ -209,3 +209,5 @@
 | 输入无效 | `request=""` 或缺少 `current_task` | `failed` | 中文 `reason`；HTTP入口当前统一带 `field=request`，message说明具体缺失项 |
 
 `unsupported`、`needs_clarification`、`unavailable` 和 `failed` 都是可见状态，不得由确定性兜底结果改写为 Agent 成功。真正的计算仍使用 `/api/operation/pv/run`、`/api/operation/hybrid/run` 或异步任务；参数校验、报价缺失、外送价缺失及服务缺口的原有错误语义继续有效。
+
+界面精简回放 `replay_cases_ui_v9.json` 的每个候选 `economics` 还保留 `simple_payback_years` 和 `annual_saving_after_maintenance_cny`；缺报价或年净节省不为正时回本年限为 `null`。这两个字段由精简脚本从已有第1年现金流恢复，不触发重新计算。

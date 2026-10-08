@@ -145,3 +145,7 @@
 ## 6. 5090 实测记录
 
 在提交 `b14c53ce707d2ea118a672829f2aa1fe7154785a` 的代码上，使用 `python scripts/verify_agent_parse_round18.py` 对 loopback 服务执行六个支持样例和三个边界请求；六个支持样例的模型 `latency_ms` 为 186.98–394.33 ms，状态探测 HTTP 往返为 31.93 ms，所有断言通过。离线状态由 `tests.test_agent_parse_contract` 的补丁配置契约覆盖；不会把确定性结果冒充模型成功。原始响应和哈希见 `operation_planning/results/phase2b_agent_round18/agent_parse_http_results.json`，运行清单见同目录 `run_manifest_round18.json`。该解析请求只返回修改建议，没有调用任何规划计算函数。
+
+## 7. 18.4 精简回放补字段
+
+`scripts/compact_replay_v9.py` 在保留完整回放现金流的前提下，为每个候选 `economics` 保留或恢复 `simple_payback_years` 与 `annual_saving_after_maintenance_cny`；缺报价或年净节省不为正时回本年限仍为 `null`。本次只重生界面精简文件，没有重跑热湿、发电或生命周期模型：`docs/handoff/replay_viewer/replay_cases_ui_v9.json` 共6案、7,849,491 bytes（约7.49 MiB），所有候选均含这两个字段；完整回放未覆盖。

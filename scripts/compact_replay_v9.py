@@ -70,10 +70,59 @@ def _compact_weather(weather: Any) -> Any:
     return out
 
 
-def _compact_candidate(candidate: Any) -> Any:
+def _year_one(rows: Any) -> dict[str, Any] | None:
+    if not isinstance(rows, list):
+        return None
+    for row in rows:
+        if isinstance(row, dict) and int(row.get("year", -1)) == 1:
+            return row
+    return None
+
+
+def _ensure_payback_fields(candidate: dict[str, Any], baseline: dict[str, Any] | None) -> None:
+    """Carry the two UI payback fields without rerunning a physical model.
+
+    Older v9 summaries retained the yearly cash-flow rows but dropped these
+    two scalar fields.  They are reconstructed from the already stored year-1
+    rows using the same simple-payback definition used by ``hybrid._lifecycle``.
+    If a future full replay already contains either field, its authoritative
+    value is kept unchanged.
+    """
+    economics = candidate.get("economics")
+    if not isinstance(economics, dict):
+        return
+    if "simple_payback_years" in economics and "annual_saving_after_maintenance_cny" in economics:
+        return
+    row = _year_one(economics.get("yearly"))
+    base_econ = (baseline or {}).get("economics") if isinstance(baseline, dict) else None
+    base_row = _year_one(base_econ.get("yearly")) if isinstance(base_econ, dict) else None
+    annual = None
+    if row is not None and base_row is not None:
+        try:
+            annual = (
+                float(base_row.get("grid_import_cost_cny", 0.0))
+                - float(row.get("grid_import_cost_cny", 0.0))
+                - float(row.get("maintenance_cny", 0.0))
+                + float(row.get("export_income_cny", 0.0))
+            )
+        except (TypeError, ValueError):
+            annual = None
+    capex = candidate.get("capex_cny")
+    payback = None
+    if capex is not None and annual is not None and annual > 0:
+        try:
+            payback = float(capex) / annual
+        except (TypeError, ValueError, ZeroDivisionError):
+            payback = None
+    economics.setdefault("annual_saving_after_maintenance_cny", annual)
+    economics.setdefault("simple_payback_years", payback)
+
+
+def _compact_candidate(candidate: Any, baseline: dict[str, Any] | None = None) -> Any:
     if not isinstance(candidate, dict):
         return candidate
     out = _sanitize(copy.deepcopy(candidate))
+    _ensure_payback_fields(out, baseline)
     # The chart and chart_recommended fields carry the only UI time series.
     # Candidate.hourly duplicates all four scenarios and is evidence-only.
     out.pop("hourly", None)
@@ -100,7 +149,8 @@ def compact_case(case: dict[str, Any]) -> dict[str, Any]:
     if "weather" in out:
         out["weather"] = _compact_weather(case.get("weather"))
     if isinstance(out.get("candidates"), list):
-        out["candidates"] = [_compact_candidate(x) for x in out["candidates"]]
+        baseline = out["candidates"][0] if out["candidates"] else None
+        out["candidates"] = [_compact_candidate(x, baseline) for x in out["candidates"]]
     out["chart"] = _compact_chart(out.get("chart"))
     out["chart_recommended"] = _compact_chart(out.get("chart_recommended"))
     # Keep chart/chart_recommended at their real source resolution (8784 for a
