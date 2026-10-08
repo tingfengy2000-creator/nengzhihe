@@ -141,3 +141,7 @@
 ## 5. 离线与安全边界
 
 本地模型端点必须是 loopback `/v1`；不存在公网回退。模型不可用时仍可使用确定性接口和仓库缓存天气，但这两种路径的结果必须在记录中分开标记。任何模型返回的价格、设备、容量或时段修改，都要经过同一任务对象的类型/范围校验；未被支持的字段必须显式显示，不能通过正则兜底后标记 Agent 成功。
+
+## 6. 5090 实测记录
+
+在提交 `b14c53ce707d2ea118a672829f2aa1fe7154785a` 的代码上，使用 `python scripts/verify_agent_parse_round18.py` 对 loopback 服务执行六个支持样例和三个边界请求；六个支持样例的模型 `latency_ms` 为 186.98–449.13 ms，状态探测 HTTP 往返为 31.93 ms，所有断言通过。离线状态由 `tests.test_agent_parse_contract` 的补丁配置契约覆盖；不会把确定性结果冒充模型成功。原始响应和哈希见 `operation_planning/results/phase2b_agent_round18/agent_parse_http_results.json`，运行清单见同目录 `run_manifest_round18.json`。该解析请求只返回修改建议，没有调用任何规划计算函数。
