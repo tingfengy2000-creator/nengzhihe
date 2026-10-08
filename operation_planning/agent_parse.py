@@ -313,9 +313,11 @@ def _model_parse(config: dict[str, Any], request_text: str, current_task: dict[s
         "只允许使用给定字段；不支持的内容写入unsupported，不能静默丢弃。数字只能来自用户原话或相对修改；"
         "预算相对修改可返回budget_multiplier；如果请求只有‘降低一些/适当增加’而没有数值或比例，必须question追问，不能把当前值当新值。"
         "时间范围‘18:00到22:00’必须同时返回room.start_hour=18和room.end_hour=22，不能只返回一端。只返回JSON对象changes、unsupported、question。"
+        "选择型号时room.equipment_id必须填写equipment_options中的equipment_id，不要填写品牌名或型号展示名。"
     )
     user = json.dumps({"request": request_text, "current_task": current_task, "allowed_fields": fields,
-                       "equipment_options": sorted(_equipment_ids())}, ensure_ascii=False)
+                       "equipment_options": [{"equipment_id": item["equipment_id"], "brand": item["brand"], "model": item["model"]}
+                                             for item in catalogue()]}, ensure_ascii=False)
     schema = {"type": "object", "properties": {
         "changes": {"type": "array", "items": {"type": "object", "properties": {
             "field": {"type": "string"}, "to": {}, "label": {"type": "string"}},
@@ -409,7 +411,7 @@ def parse_agent_request(request_text: str, current_task: dict[str, Any]) -> dict
         # still the source of the interpretation; this only prevents an
         # unchanged value from being presented as a successful modification.
         vague_budget = any(token in request_text for token in ("预算调低一些", "预算降低一些", "预算减少一些", "预算增加一些", "预算提高一些", "预算适当"))
-        if vague_budget and any(item["field"] == "hybrid.budget_cny" and item["to"] == item["from"] for item in changes):
+        if vague_budget and not any(ch.isdigit() for ch in request_text):
             changes = []
             question = "预算要调整为多少元，或减少/增加多少比例？"
         status = "needs_clarification" if question else "ok"

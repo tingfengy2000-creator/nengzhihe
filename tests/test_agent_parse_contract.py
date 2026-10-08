@@ -93,6 +93,16 @@ class AgentParseContractTests(unittest.TestCase):
         self.assertEqual(result["status"], "ok")
         self.assertEqual(result["changes"][0]["to"], 2)
 
+    def test_vague_budget_cannot_invent_a_half_budget(self):
+        with patch("operation_planning.agent_parse._read_config", return_value={"model_id": "test"}), patch(
+            "operation_planning.agent_parse._model_parse",
+            return_value={"changes": [{"field": "hybrid.budget_multiplier", "to": 0.5}], "unsupported": [], "question": None},
+        ):
+            result = parse_agent_request("预算调低一些", self.task)
+        self.assertEqual(result["status"], "needs_clarification")
+        self.assertEqual(result["changes"], [])
+        self.assertIsNotNone(result["question"])
+
     def test_explicit_existing_value_is_not_ambiguous(self):
         self.task["hybrid"]["allow_export"] = False
         with patch("operation_planning.agent_parse._read_config", return_value={"model_id": "test"}), patch(
