@@ -1,0 +1,562 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1080" width="1800" height="1080" role="img" aria-label="Framework of Nengjiandu: multi-source inputs feed a physics-based hourly simulation, decision analytics and a decision interface, closed by a human-in-the-loop local-LLM interface.">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7B8794"/></marker><marker id="ahl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6B3FB5"/></marker><marker id="ahp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1D5FA8"/></marker><marker id="ahd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1E7A57"/></marker></defs>
+<rect x="0" y="0" width="1800" height="1080" fill="#FFFFFF"/>
+<rect x="20" y="18" width="1760" height="160" rx="14" fill="#FBF9FE" stroke="#E0D3F6" stroke-width="1"/>
+<text x="34" y="40" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="600" fill="#6B3FB5" text-anchor="start" ><tspan font-weight="700">(e)</tspan>  Human-in-the-loop language interface</text>
+<text x="1766" y="40" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#52606D" text-anchor="end" font-style="italic">re-planning loop runs right → left</text>
+<rect x="1530" y="58" width="240" height="92" rx="10" fill="#F5F0FD" stroke="#6B3FB5" stroke-width="1.4"/>
+<text x="1546" y="82" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#6B3FB5" text-anchor="start" >Decision maker</text>
+<text x="1546" y="104" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#52606D" text-anchor="start" >Natural-language request</text>
+<text x="1546" y="124" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1F2933" text-anchor="start" font-style="italic">“3 units per room,</text>
+<text x="1546" y="141" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1F2933" text-anchor="start" font-style="italic"> no grid export”</text>
+<rect x="1110" y="58" width="360" height="92" rx="10" fill="#F5F0FD" stroke="#6B3FB5" stroke-width="1.4"/>
+<text x="1126" y="82" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#6B3FB5" text-anchor="start" >Local LLM (on-premise)</text>
+<text x="1126" y="104" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#52606D" text-anchor="start" >Tool-calling under a strict JSON schema</text>
+<text x="1126" y="123" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#52606D" text-anchor="start" >Edits task fields only — never emits results</text>
+<text x="1126" y="142" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#52606D" text-anchor="start" >No data leaves the machine</text>
+<g><circle cx="1458" cy="62" r="13" fill="#B83232" stroke="#FFFFFF" stroke-width="2"/><text x="1458" y="66.2" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">C5</text></g>
+<rect x="690" y="58" width="360" height="92" rx="10" fill="#F5F0FD" stroke="#6B3FB5" stroke-width="1.4"/>
+<text x="706" y="82" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#6B3FB5" text-anchor="start" >Proposed edits ΔΘ</text>
+<text x="706" y="105" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" fill="#52606D" text-anchor="start" xml:space="preserve"><tspan>field: </tspan><tspan font-style="italic">from</tspan><tspan> → </tspan><tspan font-style="italic">to</tspan><tspan>   (validated against API ranges)</tspan></text>
+<text x="706" y="124" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#52606D" text-anchor="start" >Unsupported items listed, not dropped</text>
+<text x="706" y="143" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#52606D" text-anchor="start" >Ambiguity → clarification question</text>
+<rect x="350" y="58" width="280" height="92" rx="10" fill="#F5F0FD" stroke="#6B3FB5" stroke-width="1.4"/>
+<text x="366" y="82" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#6B3FB5" text-anchor="start" >User confirmation</text>
+<text x="366" y="104" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#52606D" text-anchor="start" >Accept / revise proposed edits</text>
+<text x="366" y="124" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" fill="#52606D" text-anchor="start" xml:space="preserve"><tspan>→ structured task </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="14.5" font-style="italic">Θ</tspan></text>
+<text x="366" y="143" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#52606D" text-anchor="start" >(room, AC, PV, wind, tariff, quotes)</text>
+<path d="M1530,104.0 L1472,104.0" fill="none" stroke="#6B3FB5" stroke-width="1.6" marker-end="url(#ahl)"/>
+<path d="M1110,104.0 L1052,104.0" fill="none" stroke="#6B3FB5" stroke-width="1.6" marker-end="url(#ahl)"/>
+<path d="M690,104.0 L632,104.0" fill="none" stroke="#6B3FB5" stroke-width="1.6" marker-end="url(#ahl)"/>
+<path d="M350,104.0 L165,104.0 L165,203" fill="none" stroke="#6B3FB5" stroke-width="1.6" marker-end="url(#ahl)"/>
+<rect x="212.84" y="79.0" width="54.32000000000001" height="19" rx="9.5" fill="#FFFFFF" stroke="none"/>
+<text x="240.0" y="93.5" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="500" fill="#6B3FB5" text-anchor="middle" font-style="italic">task Θ</text>
+<path d="M1650,203 L1650,152" fill="none" stroke="#6B3FB5" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#ahl)"/>
+<rect x="1653.48" y="174" width="117.04" height="19" rx="9.5" fill="#FFFFFF" stroke="none"/>
+<text x="1712.0" y="188.5" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="500" fill="#6B3FB5" text-anchor="middle" font-style="italic">inspect / revise</text>
+<rect x="30" y="205" width="270" height="34" rx="8" fill="#3E4C59"/>
+<text x="44" y="227.5" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="500" fill="#FFFFFF" text-anchor="start" ><tspan font-weight="700">(a)</tspan>  Multi-source inputs</text>
+<rect x="30" y="255" width="270" height="140" rx="10" fill="#F5F7FA" stroke="#3E4C59" stroke-width="1.4"/>
+<text x="44" y="281" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#3E4C59" text-anchor="start" >Hourly weather</text>
+<circle cx="49" cy="305" r="2.2" fill="#7B8794"/>
+<text x="58" y="309" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Reanalysis, 8,784 h (2024)</text>
+<circle cx="49" cy="329" r="2.2" fill="#7B8794"/>
+<text x="58" y="333" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Air temp., RH, pressure, irradiance, wind</text>
+<circle cx="49" cy="353" r="2.2" fill="#7B8794"/>
+<text x="58" y="357" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Interval semantics normalised</text>
+<rect x="30" y="409" width="270" height="140" rx="10" fill="#F5F7FA" stroke="#3E4C59" stroke-width="1.4"/>
+<text x="44" y="435" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#3E4C59" text-anchor="start" >Building &amp; HVAC</text>
+<circle cx="49" cy="459" r="2.2" fill="#7B8794"/>
+<text x="58" y="463" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Room geometry, envelope, schedule</text>
+<circle cx="49" cy="483" r="2.2" fill="#7B8794"/>
+<text x="58" y="487" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >AC catalog: rated capacity, COP</text>
+<circle cx="49" cy="507" r="2.2" fill="#7B8794"/>
+<text x="58" y="511" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >N rooms × n units per room</text>
+<rect x="30" y="563" width="270" height="140" rx="10" fill="#F5F7FA" stroke="#3E4C59" stroke-width="1.4"/>
+<text x="44" y="589" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#3E4C59" text-anchor="start" >Site &amp; equipment</text>
+<circle cx="49" cy="613" r="2.2" fill="#7B8794"/>
+<text x="58" y="617" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Roof area → PV capacity bound</text>
+<circle cx="49" cy="637" r="2.2" fill="#7B8794"/>
+<text x="58" y="641" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Certified small-wind power curve</text>
+<circle cx="49" cy="661" r="2.2" fill="#7B8794"/>
+<text x="58" y="665" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >User quotes: PV, wind, storage</text>
+<rect x="30" y="717" width="270" height="140" rx="10" fill="#F5F7FA" stroke="#3E4C59" stroke-width="1.4"/>
+<text x="44" y="743" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#3E4C59" text-anchor="start" >Policy &amp; market</text>
+<circle cx="49" cy="767" r="2.2" fill="#7B8794"/>
+<text x="58" y="771" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Official 4-period TOU tariff</text>
+<circle cx="49" cy="791" r="2.2" fill="#7B8794"/>
+<text x="58" y="795" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Critical peak: Jul–Sep, Tmax ≥ 35 °C</text>
+<circle cx="49" cy="815" r="2.2" fill="#7B8794"/>
+<text x="58" y="819" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Grid EF 0.4419 kgCO₂/kWh (GD)</text>
+<g><circle cx="292" cy="723" r="13" fill="#B83232" stroke="#FFFFFF" stroke-width="2"/><text x="292" y="727.2" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">C3</text></g>
+<path d="M300,325.0 L325,325.0" stroke="#7B8794" stroke-width="1.4" fill="none"/>
+<path d="M300,479.0 L325,479.0" stroke="#7B8794" stroke-width="1.4" fill="none"/>
+<path d="M300,633.0 L325,633.0" stroke="#7B8794" stroke-width="1.4" fill="none"/>
+<path d="M325,325.0 L325,633.0" stroke="#7B8794" stroke-width="1.4" fill="none"/>
+<circle cx="325" cy="325.0" r="2.6" fill="#7B8794"/>
+<circle cx="325" cy="479.0" r="2.6" fill="#7B8794"/>
+<circle cx="325" cy="633.0" r="2.6" fill="#7B8794"/>
+<rect x="350" y="205" width="560" height="34" rx="8" fill="#1D5FA8"/>
+<text x="364" y="227.5" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="500" fill="#FFFFFF" text-anchor="start" ><tspan font-weight="700">(b)</tspan>  Physics-based hourly simulation</text>
+<rect x="350" y="255" width="560" height="238" rx="10" fill="#EEF5FD" stroke="#1D5FA8" stroke-width="1.4"/>
+<circle cx="375" cy="277" r="9" fill="#1D5FA8"/>
+<text x="375" y="281" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle" >1</text>
+<text x="390" y="282" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#1D5FA8" text-anchor="start" >Lumped RC heat–moisture room model</text>
+<text x="374" y="317" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1F2933" text-anchor="start" xml:space="preserve"><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">C</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> dT</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">/</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">dt</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> = </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">UA</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">(</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">T</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">out</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> − </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">T</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">)</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> + </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">Q</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">sol</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> + </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">Q</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">int</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> + </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">Q</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">vent</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> − </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">Q</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">AC</tspan></text>
+<text x="374" y="347" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1F2933" text-anchor="start" xml:space="preserve"><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">m</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">a</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> dw</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">/</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">dt</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> = </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">ṁ</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">w</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">(</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">w</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">out</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> − </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">w</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">)</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> + </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">G</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">lat</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> − </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">Q</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">lat</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">/</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">h</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">fg</tspan></text>
+<text x="374" y="377" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1F2933" text-anchor="start" xml:space="preserve"><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">P</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">AC</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">(</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">t</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">)</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> = </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">Q</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">AC</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">(</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">t</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">)</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> / COP(</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">T</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">out</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">)</tspan><tspan>     sensible + latent,  </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">Q</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">AC</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> ≤ </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">n</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">Q</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%">rated</tspan></text>
+<rect x="366" y="397" width="528" height="80" rx="8" fill="#FFFFFF" stroke="#1D5FA8" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="380" y="419" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.8" font-weight="400" fill="#1F2933" text-anchor="start" ><tspan font-weight="650" fill="#1D5FA8">Comfort-gated sizing</tspan>  ·  60-min pre-cooling (energy counted)</text>
+<text x="380" y="440" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#52606D" text-anchor="start" >Shortfall & unmet temperature/RH scored in occupied hours only</text>
+<text x="380" y="462" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.8" fill="#52606D" text-anchor="start" xml:space="preserve"><tspan>Unit sweep </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="14.8" font-style="italic">n</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="14.8"> = 1…</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="14.8" font-style="italic">n</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="10.8" baseline-shift="-25%">max</tspan><tspan>  →  </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="14.8" font-style="italic">n*</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="14.8"> = min{ </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="14.8" font-style="italic">n</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="14.8"> : shortfall = 0 }</tspan><tspan>   (min. adequate units)</tspan></text>
+<g><circle cx="900" cy="261" r="13" fill="#B83232" stroke="#FFFFFF" stroke-width="2"/><text x="900" y="265.2" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">C2</text></g>
+<rect x="396.0" y="511" width="250.0" height="128" rx="10" fill="#EEF5FD" stroke="#1D5FA8" stroke-width="1.4"/>
+<circle cx="419.0" cy="532" r="9" fill="#1D5FA8"/>
+<text x="419.0" y="536" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle" >2</text>
+<text x="434.0" y="537" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#1D5FA8" text-anchor="start" >PV generation</text>
+<text x="412.0" y="563" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >pvlib (PVWatts) · POA transposition</text>
+<text x="412.0" y="585" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Cell temperature from air temp. &amp; wind</text>
+<text x="412.0" y="607" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Capacity bounded by roof area</text>
+<rect x="660.0" y="511" width="250.0" height="128" rx="10" fill="#EEF5FD" stroke="#1D5FA8" stroke-width="1.4"/>
+<circle cx="683.0" cy="532" r="9" fill="#1D5FA8"/>
+<text x="683.0" y="536" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle" >3</text>
+<text x="698.0" y="537" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#1D5FA8" text-anchor="start" >Wind generation</text>
+<text x="676.0" y="563" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Certified SD6 power curve</text>
+<text x="676.0" y="585" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Hub-height speed (Hellman law):</text>
+<text x="676.0" y="611" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1F2933" text-anchor="start" xml:space="preserve"><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">v</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">h</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> = </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">v</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%">ref</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">(</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">h</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">/</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">h</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%">ref</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">)</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="40%">α</tspan></text>
+<rect x="350" y="657" width="560" height="211" rx="10" fill="#EEF5FD" stroke="#1D5FA8" stroke-width="1.4"/>
+<circle cx="375" cy="679" r="9" fill="#1D5FA8"/>
+<text x="375" y="683" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle" >4</text>
+<text x="390" y="684" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#1D5FA8" text-anchor="start" >Hourly energy matching</text>
+<text x="616" y="684" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#52606D" text-anchor="start" font-style="italic">t = 1 … 8,784</text>
+<text x="374" y="717" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1F2933" text-anchor="start" xml:space="preserve"><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">s</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">(</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">t</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">)</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> = min{</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">G</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">(</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">t</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">), </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">L</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">(</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">t</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">)}</tspan></text>
+<text x="374" y="743" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1F2933" text-anchor="start" xml:space="preserve"><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">g</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%">imp</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> = </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">L</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> − </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">s</tspan></text>
+<text x="500" y="743" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1F2933" text-anchor="start" xml:space="preserve"><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">e</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%">sur</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> = </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">G</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> − </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">s</tspan></text>
+<text x="374" y="769" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >self-use · grid import · surplus</text>
+<line x1="374" y1="783" x2="612" y2="783" stroke="#D3E4F8" stroke-width="1"/>
+<text x="374" y="803" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#B83232" text-anchor="start" >vs. conventional annual estimate</text>
+<text x="374" y="825" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" fill="#52606D" text-anchor="start" xml:space="preserve"><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="14.5" font-style="italic">E</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="10.5" baseline-shift="-25%">gen</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="14.5"> × </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="14.5" font-style="italic">p̄</tspan><tspan>  (ignores timing &amp; TOU)</tspan></text>
+<g><circle cx="900" cy="663" r="13" fill="#B83232" stroke="#FFFFFF" stroke-width="2"/><text x="900" y="667.2" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">C1</text></g>
+<rect x="650" y="713" width="238" height="125" fill="#FFFFFF" stroke="#D3E4F8" stroke-width="1"/>
+<path d="M650.0,838.0 L652.5,838.0 L655.0,838.0 L657.4,838.0 L659.9,838.0 L662.4,838.0 L664.9,838.0 L667.4,838.0 L669.8,838.0 L672.3,838.0 L674.8,838.0 L677.3,838.0 L679.8,838.0 L682.2,838.0 L684.7,838.0 L687.2,838.0 L689.7,838.0 L692.1,838.0 L694.6,838.0 L697.1,838.0 L699.6,838.0 L702.1,838.0 L704.5,838.0 L707.0,838.0 L709.5,838.0 L712.0,838.0 L714.5,838.0 L716.9,838.0 L719.4,814.9 L721.9,808.3 L724.4,801.7 L726.9,795.2 L729.3,788.7 L731.8,782.3 L734.3,776.1 L736.8,772.5 L739.2,772.5 L741.7,772.5 L744.2,772.5 L746.7,772.5 L749.2,772.5 L751.6,772.5 L754.1,772.5 L756.6,772.5 L759.1,772.5 L761.6,772.5 L764.0,772.5 L766.5,772.5 L769.0,772.5 L771.5,772.5 L774.0,772.5 L776.4,772.5 L778.9,772.5 L781.4,772.5 L783.9,772.5 L786.4,772.5 L788.8,772.5 L791.3,772.5 L793.8,772.5 L796.3,772.5 L798.8,772.5 L801.2,772.5 L803.7,776.1 L806.2,782.3 L808.7,788.7 L811.1,795.2 L813.6,801.7 L816.1,808.3 L818.6,814.9 L821.1,821.3 L823.5,827.5 L826.0,833.2 L828.5,838.0 L831.0,838.0 L833.5,838.0 L835.9,838.0 L838.4,838.0 L840.9,838.0 L843.4,838.0 L845.9,838.0 L848.3,838.0 L850.8,838.0 L853.3,838.0 L855.8,838.0 L858.2,838.0 L860.7,838.0 L863.2,838.0 L865.7,838.0 L868.2,838.0 L870.6,838.0 L873.1,838.0 L875.6,838.0 L878.1,838.0 L880.6,838.0 L883.0,838.0 L885.5,838.0 L888.0,838.0 L888.0,838.0 L885.5,838.0 L883.0,838.0 L880.6,838.0 L878.1,838.0 L875.6,838.0 L873.1,838.0 L870.6,838.0 L868.2,838.0 L865.7,838.0 L863.2,838.0 L860.7,838.0 L858.2,838.0 L855.8,838.0 L853.3,838.0 L850.8,838.0 L848.3,838.0 L845.9,838.0 L843.4,838.0 L840.9,838.0 L838.4,838.0 L835.9,838.0 L833.5,838.0 L831.0,838.0 L828.5,838.0 L826.0,838.0 L823.5,838.0 L821.1,838.0 L818.6,838.0 L816.1,838.0 L813.6,838.0 L811.1,838.0 L808.7,838.0 L806.2,838.0 L803.7,838.0 L801.2,838.0 L798.8,838.0 L796.3,838.0 L793.8,838.0 L791.3,838.0 L788.8,838.0 L786.4,838.0 L783.9,838.0 L781.4,838.0 L778.9,838.0 L776.4,838.0 L774.0,838.0 L771.5,838.0 L769.0,838.0 L766.5,838.0 L764.0,838.0 L761.6,838.0 L759.1,838.0 L756.6,838.0 L754.1,838.0 L751.6,838.0 L749.2,838.0 L746.7,838.0 L744.2,838.0 L741.7,838.0 L739.2,838.0 L736.8,838.0 L734.3,838.0 L731.8,838.0 L729.3,838.0 L726.9,838.0 L724.4,838.0 L721.9,838.0 L719.4,838.0 L716.9,838.0 L714.5,838.0 L712.0,838.0 L709.5,838.0 L707.0,838.0 L704.5,838.0 L702.1,838.0 L699.6,838.0 L697.1,838.0 L694.6,838.0 L692.1,838.0 L689.7,838.0 L687.2,838.0 L684.7,838.0 L682.2,838.0 L679.8,838.0 L677.3,838.0 L674.8,838.0 L672.3,838.0 L669.8,838.0 L667.4,838.0 L664.9,838.0 L662.4,838.0 L659.9,838.0 L657.4,838.0 L655.0,838.0 L652.5,838.0 L650.0,838.0 Z" fill="#2F9E6B" fill-opacity="0.55"/>
+<path d="M650.0,838.0 L652.5,838.0 L655.0,838.0 L657.4,838.0 L659.9,838.0 L662.4,838.0 L664.9,838.0 L667.4,838.0 L669.8,838.0 L672.3,838.0 L674.8,838.0 L677.3,838.0 L679.8,838.0 L682.2,838.0 L684.7,838.0 L687.2,838.0 L689.7,838.0 L692.1,838.0 L694.6,838.0 L697.1,838.0 L699.6,838.0 L702.1,838.0 L704.5,838.0 L707.0,838.0 L709.5,838.0 L712.0,833.2 L714.5,827.5 L716.9,821.3 L719.4,814.9 L721.9,808.3 L724.4,801.7 L726.9,795.2 L729.3,788.7 L731.8,782.3 L734.3,776.1 L736.8,770.2 L739.2,764.5 L741.7,759.1 L744.2,754.1 L746.7,749.5 L749.2,745.2 L751.6,741.4 L754.1,738.0 L756.6,735.2 L759.1,732.8 L761.6,730.9 L764.0,729.6 L766.5,728.8 L769.0,728.5 L771.5,728.8 L774.0,729.6 L776.4,730.9 L778.9,732.8 L781.4,735.2 L783.9,738.0 L786.4,741.4 L788.8,745.2 L791.3,749.5 L793.8,754.1 L796.3,759.1 L798.8,764.5 L801.2,770.2 L803.7,776.1 L806.2,782.3 L808.7,788.7 L811.1,795.2 L813.6,801.7 L816.1,808.3 L818.6,814.9 L821.1,821.3 L823.5,827.5 L826.0,833.2 L828.5,838.0 L831.0,838.0 L833.5,838.0 L835.9,838.0 L838.4,838.0 L840.9,838.0 L843.4,838.0 L845.9,838.0 L848.3,838.0 L850.8,838.0 L853.3,838.0 L855.8,838.0 L858.2,838.0 L860.7,838.0 L863.2,838.0 L865.7,838.0 L868.2,838.0 L870.6,838.0 L873.1,838.0 L875.6,838.0 L878.1,838.0 L880.6,838.0 L883.0,838.0 L885.5,838.0 L888.0,838.0 L888.0,838.0 L885.5,838.0 L883.0,838.0 L880.6,838.0 L878.1,838.0 L875.6,838.0 L873.1,838.0 L870.6,838.0 L868.2,838.0 L865.7,838.0 L863.2,838.0 L860.7,838.0 L858.2,838.0 L855.8,838.0 L853.3,838.0 L850.8,838.0 L848.3,838.0 L845.9,838.0 L843.4,838.0 L840.9,838.0 L838.4,838.0 L835.9,838.0 L833.5,838.0 L831.0,838.0 L828.5,838.0 L826.0,833.2 L823.5,827.5 L821.1,821.3 L818.6,814.9 L816.1,808.3 L813.6,801.7 L811.1,795.2 L808.7,788.7 L806.2,782.3 L803.7,776.1 L801.2,772.5 L798.8,772.5 L796.3,772.5 L793.8,772.5 L791.3,772.5 L788.8,772.5 L786.4,772.5 L783.9,772.5 L781.4,772.5 L778.9,772.5 L776.4,772.5 L774.0,772.5 L771.5,772.5 L769.0,772.5 L766.5,772.5 L764.0,772.5 L761.6,772.5 L759.1,772.5 L756.6,772.5 L754.1,772.5 L751.6,772.5 L749.2,772.5 L746.7,772.5 L744.2,772.5 L741.7,772.5 L739.2,772.5 L736.8,772.5 L734.3,776.1 L731.8,782.3 L729.3,788.7 L726.9,795.2 L724.4,801.7 L721.9,808.3 L719.4,814.9 L716.9,838.0 L714.5,838.0 L712.0,838.0 L709.5,838.0 L707.0,838.0 L704.5,838.0 L702.1,838.0 L699.6,838.0 L697.1,838.0 L694.6,838.0 L692.1,838.0 L689.7,838.0 L687.2,838.0 L684.7,838.0 L682.2,838.0 L679.8,838.0 L677.3,838.0 L674.8,838.0 L672.3,838.0 L669.8,838.0 L667.4,838.0 L664.9,838.0 L662.4,838.0 L659.9,838.0 L657.4,838.0 L655.0,838.0 L652.5,838.0 L650.0,838.0 Z" fill="#E8A33D" fill-opacity="0.55"/>
+<path d="M650.0,838.0 L652.5,838.0 L655.0,838.0 L657.4,838.0 L659.9,838.0 L662.4,838.0 L664.9,838.0 L667.4,838.0 L669.8,838.0 L672.3,838.0 L674.8,838.0 L677.3,838.0 L679.8,838.0 L682.2,838.0 L684.7,838.0 L687.2,838.0 L689.7,838.0 L692.1,838.0 L694.6,838.0 L697.1,838.0 L699.6,838.0 L702.1,838.0 L704.5,838.0 L707.0,838.0 L709.5,838.0 L712.0,838.0 L714.5,838.0 L716.9,838.0 L719.4,752.3 L721.9,752.3 L724.4,752.3 L726.9,752.3 L729.3,772.5 L731.8,772.5 L734.3,772.5 L736.8,772.5 L739.2,772.5 L741.7,772.5 L744.2,772.5 L746.7,772.5 L749.2,772.5 L751.6,772.5 L754.1,772.5 L756.6,772.5 L759.1,772.5 L761.6,772.5 L764.0,772.5 L766.5,772.5 L769.0,772.5 L771.5,772.5 L774.0,772.5 L776.4,772.5 L778.9,772.5 L781.4,772.5 L783.9,772.5 L786.4,772.5 L788.8,772.5 L791.3,772.5 L793.8,772.5 L796.3,772.5 L798.8,772.5 L801.2,772.5 L803.7,772.5 L806.2,772.5 L808.7,772.5 L811.1,772.5 L813.6,772.5 L816.1,772.5 L818.6,772.5 L821.1,772.5 L823.5,772.5 L826.0,772.5 L828.5,838.0 L831.0,838.0 L833.5,838.0 L835.9,838.0 L838.4,838.0 L840.9,838.0 L843.4,838.0 L845.9,838.0 L848.3,838.0 L850.8,838.0 L853.3,838.0 L855.8,838.0 L858.2,838.0 L860.7,838.0 L863.2,838.0 L865.7,838.0 L868.2,838.0 L870.6,838.0 L873.1,838.0 L875.6,838.0 L878.1,838.0 L880.6,838.0 L883.0,838.0 L885.5,838.0 L888.0,838.0 L888.0,838.0 L885.5,838.0 L883.0,838.0 L880.6,838.0 L878.1,838.0 L875.6,838.0 L873.1,838.0 L870.6,838.0 L868.2,838.0 L865.7,838.0 L863.2,838.0 L860.7,838.0 L858.2,838.0 L855.8,838.0 L853.3,838.0 L850.8,838.0 L848.3,838.0 L845.9,838.0 L843.4,838.0 L840.9,838.0 L838.4,838.0 L835.9,838.0 L833.5,838.0 L831.0,838.0 L828.5,838.0 L826.0,833.2 L823.5,827.5 L821.1,821.3 L818.6,814.9 L816.1,808.3 L813.6,801.7 L811.1,795.2 L808.7,788.7 L806.2,782.3 L803.7,776.1 L801.2,772.5 L798.8,772.5 L796.3,772.5 L793.8,772.5 L791.3,772.5 L788.8,772.5 L786.4,772.5 L783.9,772.5 L781.4,772.5 L778.9,772.5 L776.4,772.5 L774.0,772.5 L771.5,772.5 L769.0,772.5 L766.5,772.5 L764.0,772.5 L761.6,772.5 L759.1,772.5 L756.6,772.5 L754.1,772.5 L751.6,772.5 L749.2,772.5 L746.7,772.5 L744.2,772.5 L741.7,772.5 L739.2,772.5 L736.8,772.5 L734.3,776.1 L731.8,782.3 L729.3,788.7 L726.9,795.2 L724.4,801.7 L721.9,808.3 L719.4,814.9 L716.9,838.0 L714.5,838.0 L712.0,838.0 L709.5,838.0 L707.0,838.0 L704.5,838.0 L702.1,838.0 L699.6,838.0 L697.1,838.0 L694.6,838.0 L692.1,838.0 L689.7,838.0 L687.2,838.0 L684.7,838.0 L682.2,838.0 L679.8,838.0 L677.3,838.0 L674.8,838.0 L672.3,838.0 L669.8,838.0 L667.4,838.0 L664.9,838.0 L662.4,838.0 L659.9,838.0 L657.4,838.0 L655.0,838.0 L652.5,838.0 L650.0,838.0 Z" fill="#9AA5B1" fill-opacity="0.55"/>
+<polyline points="650.0,838.0 652.5,838.0 655.0,838.0 657.4,838.0 659.9,838.0 662.4,838.0 664.9,838.0 667.4,838.0 669.8,838.0 672.3,838.0 674.8,838.0 677.3,838.0 679.8,838.0 682.2,838.0 684.7,838.0 687.2,838.0 689.7,838.0 692.1,838.0 694.6,838.0 697.1,838.0 699.6,838.0 702.1,838.0 704.5,838.0 707.0,838.0 709.5,838.0 712.0,833.2 714.5,827.5 716.9,821.3 719.4,814.9 721.9,808.3 724.4,801.7 726.9,795.2 729.3,788.7 731.8,782.3 734.3,776.1 736.8,770.2 739.2,764.5 741.7,759.1 744.2,754.1 746.7,749.5 749.2,745.2 751.6,741.4 754.1,738.0 756.6,735.2 759.1,732.8 761.6,730.9 764.0,729.6 766.5,728.8 769.0,728.5 771.5,728.8 774.0,729.6 776.4,730.9 778.9,732.8 781.4,735.2 783.9,738.0 786.4,741.4 788.8,745.2 791.3,749.5 793.8,754.1 796.3,759.1 798.8,764.5 801.2,770.2 803.7,776.1 806.2,782.3 808.7,788.7 811.1,795.2 813.6,801.7 816.1,808.3 818.6,814.9 821.1,821.3 823.5,827.5 826.0,833.2 828.5,838.0 831.0,838.0 833.5,838.0 835.9,838.0 838.4,838.0 840.9,838.0 843.4,838.0 845.9,838.0 848.3,838.0 850.8,838.0 853.3,838.0 855.8,838.0 858.2,838.0 860.7,838.0 863.2,838.0 865.7,838.0 868.2,838.0 870.6,838.0 873.1,838.0 875.6,838.0 878.1,838.0 880.6,838.0 883.0,838.0 885.5,838.0 888.0,838.0" fill="none" stroke="#C47A12" stroke-width="1.8"/>
+<polyline points="650.0,838.0 652.5,838.0 655.0,838.0 657.4,838.0 659.9,838.0 662.4,838.0 664.9,838.0 667.4,838.0 669.8,838.0 672.3,838.0 674.8,838.0 677.3,838.0 679.8,838.0 682.2,838.0 684.7,838.0 687.2,838.0 689.7,838.0 692.1,838.0 694.6,838.0 697.1,838.0 699.6,838.0 702.1,838.0 704.5,838.0 707.0,838.0 709.5,838.0 712.0,838.0 714.5,838.0 716.9,838.0 719.4,752.3 721.9,752.3 724.4,752.3 726.9,752.3 729.3,772.5 731.8,772.5 734.3,772.5 736.8,772.5 739.2,772.5 741.7,772.5 744.2,772.5 746.7,772.5 749.2,772.5 751.6,772.5 754.1,772.5 756.6,772.5 759.1,772.5 761.6,772.5 764.0,772.5 766.5,772.5 769.0,772.5 771.5,772.5 774.0,772.5 776.4,772.5 778.9,772.5 781.4,772.5 783.9,772.5 786.4,772.5 788.8,772.5 791.3,772.5 793.8,772.5 796.3,772.5 798.8,772.5 801.2,772.5 803.7,772.5 806.2,772.5 808.7,772.5 811.1,772.5 813.6,772.5 816.1,772.5 818.6,772.5 821.1,772.5 823.5,772.5 826.0,772.5 828.5,838.0 831.0,838.0 833.5,838.0 835.9,838.0 838.4,838.0 840.9,838.0 843.4,838.0 845.9,838.0 848.3,838.0 850.8,838.0 853.3,838.0 855.8,838.0 858.2,838.0 860.7,838.0 863.2,838.0 865.7,838.0 868.2,838.0 870.6,838.0 873.1,838.0 875.6,838.0 878.1,838.0 880.6,838.0 883.0,838.0 885.5,838.0 888.0,838.0" fill="none" stroke="#1D5FA8" stroke-width="1.8"/>
+<text x="650.0" y="853" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#52606D" text-anchor="middle" >00h</text>
+<text x="709.5" y="853" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#52606D" text-anchor="middle" >06h</text>
+<text x="769.0" y="853" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#52606D" text-anchor="middle" >12h</text>
+<text x="828.5" y="853" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#52606D" text-anchor="middle" >18h</text>
+<text x="888.0" y="853" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#52606D" text-anchor="middle" >24h</text>
+<line x1="650" y1="838" x2="888" y2="838" stroke="#7B8794" stroke-width="1"/>
+<rect x="652" y="693" width="10" height="10" fill="#2F9E6B" fill-opacity="0.7"/>
+<text x="666" y="702.5" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="500" fill="#52606D" text-anchor="start" >self-use s</text>
+<rect x="734" y="693" width="10" height="10" fill="#E8A33D" fill-opacity="0.7"/>
+<text x="748" y="702.5" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="500" fill="#52606D" text-anchor="start" >surplus</text>
+<rect x="816" y="693" width="10" height="10" fill="#9AA5B1" fill-opacity="0.7"/>
+<text x="830" y="702.5" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="500" fill="#52606D" text-anchor="start" >import</text>
+<text x="774.95" y="722.57" font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="11" font-weight="600" fill="#C47A12" text-anchor="start" font-style="italic" >G(t)</text>
+<text x="832.4666666666667" y="764.22" font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="11" font-weight="600" fill="#1D5FA8" text-anchor="start" font-style="italic" >L(t)</text>
+<text x="705.5333333333333" y="742.8" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="9.5" font-weight="500" fill="#1D5FA8" text-anchor="middle" >pre-cool</text>
+<path d="M372,493 L372,655" stroke="#1D5FA8" stroke-width="1.6" fill="none" marker-end="url(#ahp)"/>
+<text x="365" y="575.0" font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12.5" font-weight="600" fill="#1D5FA8" text-anchor="middle" font-style="italic" transform="rotate(-90 365 575.0)">L(t)</text>
+<path d="M521.0,639 L521.0,655" stroke="#1D5FA8" stroke-width="1.6" fill="none" marker-end="url(#ahp)"/>
+<path d="M785.0,639 L785.0,655" stroke="#1D5FA8" stroke-width="1.6" fill="none" marker-end="url(#ahp)"/>
+<text x="653.0" y="652" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" fill="#1D5FA8" text-anchor="middle" xml:space="preserve"><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="13.5" font-style="italic">G</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="13.5">(</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="13.5" font-style="italic">t</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="13.5">)</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="13.5"> = </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="13.5" font-style="italic">G</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="9.5" baseline-shift="-25%">PV</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="13.5"> + </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="13.5" font-style="italic">G</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="9.5" baseline-shift="-25%">wind</tspan></text>
+<path d="M325,375 L348,375" fill="none" stroke="#7B8794" stroke-width="1.5" marker-end="url(#ah)"/>
+<path d="M325,633.0 L325,575" stroke="#7B8794" stroke-width="1.4" fill="none"/>
+<path d="M325,575 L394,575" fill="none" stroke="#7B8794" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="313.8" y="347" width="43.400000000000006" height="19" rx="9.5" fill="#FFFFFF" stroke="none"/>
+<text x="335.5" y="361.5" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="500" fill="#52606D" text-anchor="middle" font-style="italic">Θ, wx</text>
+<rect x="970" y="205" width="510" height="34" rx="8" fill="#1E7A57"/>
+<text x="984" y="227.5" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="500" fill="#FFFFFF" text-anchor="start" ><tspan font-weight="700">(c)</tspan>  Decision analytics</text>
+<rect x="992" y="255" width="488" height="92" rx="10" fill="#EEF8F3" stroke="#1E7A57" stroke-width="1.4"/>
+<circle cx="1015" cy="276" r="9" fill="#1E7A57"/>
+<text x="1015" y="280" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle" >5</text>
+<text x="1030" y="281" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#1E7A57" text-anchor="start" >Scenario &amp; capacity sweep</text>
+<rect x="1008" y="295" width="100.80000000000001" height="22" rx="11" fill="#CDEBDD" stroke="#1E7A57" stroke-width="0.8"/>
+<text x="1058.4" y="310" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="500" fill="#1E7A57" text-anchor="middle" >S0 grid only</text>
+<rect x="1116.8" y="295" width="52.5" height="22" rx="11" fill="#CDEBDD" stroke="#1E7A57" stroke-width="0.8"/>
+<text x="1143.05" y="310" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="500" fill="#1E7A57" text-anchor="middle" >S1 PV</text>
+<rect x="1177.3" y="295" width="66.30000000000001" height="22" rx="11" fill="#CDEBDD" stroke="#1E7A57" stroke-width="0.8"/>
+<text x="1210.45" y="310" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="500" fill="#1E7A57" text-anchor="middle" >S2 wind</text>
+<rect x="1251.6" y="295" width="100.80000000000001" height="22" rx="11" fill="#CDEBDD" stroke="#1E7A57" stroke-width="0.8"/>
+<text x="1302.0" y="310" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="500" fill="#1E7A57" text-anchor="middle" >S3 PV + wind</text>
+<text x="1008" y="337" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" fill="#52606D" text-anchor="start" xml:space="preserve"><tspan>PV capacity </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="14.3" font-style="italic">k</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="14.3"> ∈ </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="14.3" font-style="italic">K</tspan><tspan> (roof-bounded);  S0 kept as baseline</tspan></text>
+<rect x="992" y="361" width="488" height="128" rx="10" fill="#EEF8F3" stroke="#1E7A57" stroke-width="1.4"/>
+<circle cx="1015" cy="382" r="9" fill="#1E7A57"/>
+<text x="1015" y="386" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle" >6</text>
+<text x="1030" y="387" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#1E7A57" text-anchor="start" >TOU-aware lifecycle economics</text>
+<text x="1008" y="419" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1F2933" text-anchor="start" xml:space="preserve"><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">TC</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> = </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">I</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%">0</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> + Σ</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">y</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> [ Σ</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">t</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">p</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">(</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">t</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">)</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">g</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%">imp</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">(</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">t</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">)</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> + </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">M</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">y</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> + </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">R</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">y</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> ] / (1+</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">r</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">)</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="40%">y</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> − </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">V</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%">res</tspan></text>
+<text x="1008" y="447" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >p(t): valley / flat / peak / critical-peak by hour, month and daily Tmax</text>
+<text x="1008" y="469" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" fill="#52606D" text-anchor="start" xml:space="preserve"><tspan>Outputs: 10-yr total cost, </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="14.3">Δ</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="14.3" font-style="italic">TC</tspan><tspan> vs. S0 (sign kept), simple payback</tspan></text>
+<rect x="992" y="503" width="488" height="92" rx="10" fill="#EEF8F3" stroke="#1E7A57" stroke-width="1.4"/>
+<circle cx="1015" cy="524" r="9" fill="#1E7A57"/>
+<text x="1015" y="528" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle" >7</text>
+<text x="1030" y="529" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#1E7A57" text-anchor="start" >Carbon accounting</text>
+<text x="1008" y="559" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#1F2933" text-anchor="start" xml:space="preserve"><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">Δ</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">CO</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%">2</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> = Σ</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%" font-style="italic">t</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">s</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">(</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">t</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16">)</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16"> · </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="16" font-style="italic">EF</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="12" baseline-shift="-25%">grid</tspan></text>
+<text x="1008" y="583" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Official provincial factor; carbon price shown as a scenario only</text>
+<rect x="992" y="609" width="488" height="96" rx="10" fill="#EEF8F3" stroke="#1E7A57" stroke-width="1.4"/>
+<circle cx="1015" cy="630" r="9" fill="#1E7A57"/>
+<text x="1015" y="634" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle" >8</text>
+<text x="1030" y="635" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#1E7A57" text-anchor="start" >Surplus valorisation (add-on paths)</text>
+<text x="1008" y="661" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Storage: rule-based dispatch, η = 0.90 → investment, payback</text>
+<text x="1008" y="683" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Grid export: rough revenue from the same surplus</text>
+<text x="1466" y="697" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#52606D" text-anchor="end" font-style="italic">not added to the main ranking</text>
+<rect x="992" y="719" width="488" height="149" rx="10" fill="#EEF8F3" stroke="#1E7A57" stroke-width="1.4"/>
+<circle cx="1015" cy="740" r="9" fill="#1E7A57"/>
+<text x="1015" y="744" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle" >9</text>
+<text x="1030" y="745" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#1E7A57" text-anchor="start" >Constraint-aware status &amp; recommendation</text>
+<rect x="1008" y="759" width="73.2" height="22" rx="11" fill="#CDEBDD" stroke="#1E7A57" stroke-width="0.8"/>
+<text x="1044.6" y="774" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="500" fill="#1E7A57" text-anchor="middle" >feasible</text>
+<rect x="1089.2" y="759" width="93.9" height="22" rx="11" fill="#CDEBDD" stroke="#1E7A57" stroke-width="0.8"/>
+<text x="1136.15" y="774" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="500" fill="#1E7A57" text-anchor="middle" >over budget</text>
+<rect x="1191.1000000000001" y="759" width="107.7" height="22" rx="11" fill="#CDEBDD" stroke="#1E7A57" stroke-width="0.8"/>
+<text x="1244.95" y="774" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="500" fill="#1E7A57" text-anchor="middle" >quote unknown</text>
+<rect x="1306.8000000000002" y="759" width="93.9" height="22" rx="11" fill="#CDEBDD" stroke="#1E7A57" stroke-width="0.8"/>
+<text x="1353.7500000000002" y="774" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="500" fill="#1E7A57" text-anchor="middle" >service gap</text>
+<text x="1008" y="803" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" fill="#52606D" text-anchor="start" xml:space="preserve"><tspan>Recommend </tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="14.3">argmin</tspan><tspan font-family="'Latin Modern Roman', 'LM Roman 10', 'Times New Roman', serif" font-size="14.3" font-style="italic"> TC</tspan><tspan> over comparable candidates;</tspan></text>
+<text x="1008" y="823" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >unknown ≠ excluded; service gap never shown as adequate</text>
+<g><circle cx="1470" cy="725" r="13" fill="#B83232" stroke="#FFFFFF" stroke-width="2"/><text x="1470" y="729.2" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">C4</text></g>
+<g><circle cx="1470" cy="367" r="13" fill="#B83232" stroke="#FFFFFF" stroke-width="2"/><text x="1470" y="371.2" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">C3</text></g>
+<path d="M976,301.0 L976,793.5" stroke="#1E7A57" stroke-width="1.6" fill="none"/>
+<path d="M976,301.0 L990,301.0" fill="none" stroke="#1E7A57" stroke-width="1.5" marker-end="url(#ahd)"/>
+<path d="M976,425.0 L990,425.0" fill="none" stroke="#1E7A57" stroke-width="1.5" marker-end="url(#ahd)"/>
+<path d="M976,549.0 L990,549.0" fill="none" stroke="#1E7A57" stroke-width="1.5" marker-end="url(#ahd)"/>
+<path d="M976,657.0 L990,657.0" fill="none" stroke="#1E7A57" stroke-width="1.5" marker-end="url(#ahd)"/>
+<path d="M976,793.5 L990,793.5" fill="none" stroke="#1E7A57" stroke-width="1.5" marker-end="url(#ahd)"/>
+<path d="M910,727 L976,727" fill="none" stroke="#1D5FA8" stroke-width="1.8" marker-end="url(#ahp)"/>
+<rect x="902.72" y="700" width="84.56" height="19" rx="9.5" fill="#FFFFFF" stroke="none"/>
+<text x="945.0" y="714.5" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="500" fill="#1D5FA8" text-anchor="middle" font-style="italic">hourly flows</text>
+<path d="M165.0,857 L165.0,886 L976,886 L976,793.5" stroke="#3E4C59" stroke-width="1.5" fill="none" stroke-dasharray="6 4" marker-end="url(#ah)"/>
+<rect x="512.12" y="873" width="235.76000000000002" height="19" rx="9.5" fill="#FFFFFF" stroke="none"/>
+<text x="630.0" y="887.5" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="500" fill="#3E4C59" text-anchor="middle" font-style="italic">tariff p(t), emission factor, quotes</text>
+<rect x="1530" y="205" width="240" height="34" rx="8" fill="#B35A12"/>
+<text x="1544" y="227.5" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="500" fill="#FFFFFF" text-anchor="start" ><tspan font-weight="700">(d)</tspan>  Decision interface</text>
+<rect x="1530" y="255" width="240" height="140" rx="10" fill="#FFF6EC" stroke="#B35A12" stroke-width="1.4"/>
+<text x="1544" y="281" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#B35A12" text-anchor="start" >Progressive computing</text>
+<text x="1546" y="307" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="600" fill="#1F2933" text-anchor="start" >Typical-week preview</text>
+<text x="1546" y="325" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >physics only, < 1 s</text>
+<text x="1546" y="351" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="600" fill="#1F2933" text-anchor="start" >Full-year async job</text>
+<text x="1546" y="369" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >real backend progress</text>
+<g><circle cx="1760" cy="261" r="13" fill="#B83232" stroke="#FFFFFF" stroke-width="2"/><text x="1760" y="265.2" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">C6</text></g>
+<rect x="1530" y="409" width="240" height="300" rx="10" fill="#FFF6EC" stroke="#B35A12" stroke-width="1.4"/>
+<text x="1544" y="435" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#B35A12" text-anchor="start" >Visual evidence</text>
+<rect x="1546.0" y="451.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1554.7" y="451.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1563.3" y="451.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1572.0" y="451.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1580.7" y="451.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1589.3" y="451.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1598.0" y="451.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1606.7" y="451.0" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.41"/>
+<rect x="1615.3" y="451.0" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.53"/>
+<rect x="1624.0" y="451.0" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.62"/>
+<rect x="1632.7" y="451.0" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.70"/>
+<rect x="1641.3" y="451.0" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.74"/>
+<rect x="1650.0" y="451.0" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.76"/>
+<rect x="1658.7" y="451.0" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.74"/>
+<rect x="1667.3" y="451.0" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.70"/>
+<rect x="1676.0" y="451.0" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.62"/>
+<rect x="1684.7" y="451.0" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.53"/>
+<rect x="1693.3" y="451.0" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.41"/>
+<rect x="1702.0" y="451.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1710.7" y="451.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1719.3" y="451.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1728.0" y="451.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1736.7" y="451.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1745.3" y="451.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1546.0" y="457.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1554.7" y="457.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1563.3" y="457.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1572.0" y="457.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1580.7" y="457.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1589.3" y="457.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1598.0" y="457.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1606.7" y="457.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.43"/>
+<rect x="1615.3" y="457.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.55"/>
+<rect x="1624.0" y="457.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.66"/>
+<rect x="1632.7" y="457.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.74"/>
+<rect x="1641.3" y="457.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.79"/>
+<rect x="1650.0" y="457.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.81"/>
+<rect x="1658.7" y="457.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.79"/>
+<rect x="1667.3" y="457.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.74"/>
+<rect x="1676.0" y="457.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.66"/>
+<rect x="1684.7" y="457.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.55"/>
+<rect x="1693.3" y="457.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.43"/>
+<rect x="1702.0" y="457.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1710.7" y="457.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1719.3" y="457.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1728.0" y="457.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1736.7" y="457.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1745.3" y="457.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1546.0" y="463.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1554.7" y="463.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1563.3" y="463.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1572.0" y="463.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1580.7" y="463.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1589.3" y="463.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1598.0" y="463.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1606.7" y="463.8" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.46"/>
+<rect x="1615.3" y="463.8" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.61"/>
+<rect x="1624.0" y="463.8" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.75"/>
+<rect x="1632.7" y="463.8" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.85"/>
+<rect x="1641.3" y="463.8" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.91"/>
+<rect x="1650.0" y="463.8" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.93"/>
+<rect x="1658.7" y="463.8" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.91"/>
+<rect x="1667.3" y="463.8" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.85"/>
+<rect x="1676.0" y="463.8" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.75"/>
+<rect x="1684.7" y="463.8" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.61"/>
+<rect x="1693.3" y="463.8" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.46"/>
+<rect x="1702.0" y="463.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1710.7" y="463.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1719.3" y="463.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1728.0" y="463.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1736.7" y="463.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1745.3" y="463.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1546.0" y="470.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1554.7" y="470.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1563.3" y="470.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1572.0" y="470.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1580.7" y="470.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1589.3" y="470.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1598.0" y="470.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1606.7" y="470.2" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.55"/>
+<rect x="1615.3" y="470.2" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.57"/>
+<rect x="1624.0" y="470.2" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.67"/>
+<rect x="1632.7" y="470.2" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.79"/>
+<rect x="1641.3" y="470.2" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.86"/>
+<rect x="1650.0" y="470.2" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.89"/>
+<rect x="1658.7" y="470.2" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.86"/>
+<rect x="1667.3" y="470.2" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.79"/>
+<rect x="1676.0" y="470.2" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.67"/>
+<rect x="1684.7" y="470.2" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.57"/>
+<rect x="1693.3" y="470.2" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.55"/>
+<rect x="1702.0" y="470.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1710.7" y="470.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1719.3" y="470.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1728.0" y="470.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1736.7" y="470.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1745.3" y="470.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1546.0" y="476.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1554.7" y="476.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1563.3" y="476.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1572.0" y="476.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1580.7" y="476.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1589.3" y="476.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1598.0" y="476.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1606.7" y="476.6" width="7.9" height="5.2" fill="#9AA5B1" fill-opacity="0.65"/>
+<rect x="1615.3" y="476.6" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.77"/>
+<rect x="1624.0" y="476.6" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.87"/>
+<rect x="1632.7" y="476.6" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.87"/>
+<rect x="1641.3" y="476.6" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.87"/>
+<rect x="1650.0" y="476.6" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.87"/>
+<rect x="1658.7" y="476.6" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.87"/>
+<rect x="1667.3" y="476.6" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.87"/>
+<rect x="1676.0" y="476.6" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.87"/>
+<rect x="1684.7" y="476.6" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.77"/>
+<rect x="1693.3" y="476.6" width="7.9" height="5.2" fill="#9AA5B1" fill-opacity="0.65"/>
+<rect x="1702.0" y="476.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1710.7" y="476.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1719.3" y="476.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1728.0" y="476.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1736.7" y="476.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1745.3" y="476.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1546.0" y="483.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1554.7" y="483.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1563.3" y="483.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1572.0" y="483.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1580.7" y="483.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1589.3" y="483.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1598.0" y="483.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1606.7" y="483.0" width="7.9" height="5.2" fill="#9AA5B1" fill-opacity="0.87"/>
+<rect x="1615.3" y="483.0" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.80"/>
+<rect x="1624.0" y="483.0" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.99"/>
+<rect x="1632.7" y="483.0" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1641.3" y="483.0" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1650.0" y="483.0" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1658.7" y="483.0" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1667.3" y="483.0" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1676.0" y="483.0" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.99"/>
+<rect x="1684.7" y="483.0" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.80"/>
+<rect x="1693.3" y="483.0" width="7.9" height="5.2" fill="#9AA5B1" fill-opacity="0.87"/>
+<rect x="1702.0" y="483.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1710.7" y="483.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1719.3" y="483.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1728.0" y="483.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1736.7" y="483.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1745.3" y="483.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1546.0" y="489.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1554.7" y="489.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1563.3" y="489.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1572.0" y="489.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1580.7" y="489.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1589.3" y="489.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1598.0" y="489.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1606.7" y="489.4" width="7.9" height="5.2" fill="#9AA5B1" fill-opacity="1.00"/>
+<rect x="1615.3" y="489.4" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.81"/>
+<rect x="1624.0" y="489.4" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1632.7" y="489.4" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1641.3" y="489.4" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1650.0" y="489.4" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1658.7" y="489.4" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1667.3" y="489.4" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1676.0" y="489.4" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1684.7" y="489.4" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.81"/>
+<rect x="1693.3" y="489.4" width="7.9" height="5.2" fill="#9AA5B1" fill-opacity="1.00"/>
+<rect x="1702.0" y="489.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1710.7" y="489.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1719.3" y="489.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1728.0" y="489.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1736.7" y="489.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1745.3" y="489.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1546.0" y="495.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1554.7" y="495.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1563.3" y="495.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1572.0" y="495.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1580.7" y="495.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1589.3" y="495.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1598.0" y="495.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1606.7" y="495.8" width="7.9" height="5.2" fill="#9AA5B1" fill-opacity="1.00"/>
+<rect x="1615.3" y="495.8" width="7.9" height="5.2" fill="#9AA5B1" fill-opacity="0.82"/>
+<rect x="1624.0" y="495.8" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.99"/>
+<rect x="1632.7" y="495.8" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1641.3" y="495.8" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1650.0" y="495.8" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1658.7" y="495.8" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1667.3" y="495.8" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1676.0" y="495.8" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.99"/>
+<rect x="1684.7" y="495.8" width="7.9" height="5.2" fill="#9AA5B1" fill-opacity="0.82"/>
+<rect x="1693.3" y="495.8" width="7.9" height="5.2" fill="#9AA5B1" fill-opacity="1.00"/>
+<rect x="1702.0" y="495.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1710.7" y="495.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1719.3" y="495.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1728.0" y="495.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1736.7" y="495.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1745.3" y="495.8" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1546.0" y="502.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1554.7" y="502.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1563.3" y="502.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1572.0" y="502.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1580.7" y="502.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1589.3" y="502.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1598.0" y="502.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1606.7" y="502.2" width="7.9" height="5.2" fill="#9AA5B1" fill-opacity="0.97"/>
+<rect x="1615.3" y="502.2" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.77"/>
+<rect x="1624.0" y="502.2" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.95"/>
+<rect x="1632.7" y="502.2" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1641.3" y="502.2" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1650.0" y="502.2" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1658.7" y="502.2" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1667.3" y="502.2" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="1.00"/>
+<rect x="1676.0" y="502.2" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.95"/>
+<rect x="1684.7" y="502.2" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.77"/>
+<rect x="1693.3" y="502.2" width="7.9" height="5.2" fill="#9AA5B1" fill-opacity="0.97"/>
+<rect x="1702.0" y="502.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1710.7" y="502.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1719.3" y="502.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1728.0" y="502.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1736.7" y="502.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1745.3" y="502.2" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1546.0" y="508.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1554.7" y="508.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1563.3" y="508.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1572.0" y="508.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1580.7" y="508.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1589.3" y="508.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1598.0" y="508.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1606.7" y="508.6" width="7.9" height="5.2" fill="#9AA5B1" fill-opacity="0.80"/>
+<rect x="1615.3" y="508.6" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.73"/>
+<rect x="1624.0" y="508.6" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.88"/>
+<rect x="1632.7" y="508.6" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.99"/>
+<rect x="1641.3" y="508.6" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.99"/>
+<rect x="1650.0" y="508.6" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.99"/>
+<rect x="1658.7" y="508.6" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.99"/>
+<rect x="1667.3" y="508.6" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.99"/>
+<rect x="1676.0" y="508.6" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.88"/>
+<rect x="1684.7" y="508.6" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.73"/>
+<rect x="1693.3" y="508.6" width="7.9" height="5.2" fill="#9AA5B1" fill-opacity="0.80"/>
+<rect x="1702.0" y="508.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1710.7" y="508.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1719.3" y="508.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1728.0" y="508.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1736.7" y="508.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1745.3" y="508.6" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1546.0" y="515.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1554.7" y="515.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1563.3" y="515.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1572.0" y="515.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1580.7" y="515.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1589.3" y="515.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1598.0" y="515.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1606.7" y="515.0" width="7.9" height="5.2" fill="#9AA5B1" fill-opacity="0.56"/>
+<rect x="1615.3" y="515.0" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.67"/>
+<rect x="1624.0" y="515.0" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.72"/>
+<rect x="1632.7" y="515.0" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.72"/>
+<rect x="1641.3" y="515.0" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.72"/>
+<rect x="1650.0" y="515.0" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.72"/>
+<rect x="1658.7" y="515.0" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.72"/>
+<rect x="1667.3" y="515.0" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.72"/>
+<rect x="1676.0" y="515.0" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.72"/>
+<rect x="1684.7" y="515.0" width="7.9" height="5.2" fill="#2F9E6B" fill-opacity="0.67"/>
+<rect x="1693.3" y="515.0" width="7.9" height="5.2" fill="#9AA5B1" fill-opacity="0.56"/>
+<rect x="1702.0" y="515.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1710.7" y="515.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1719.3" y="515.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1728.0" y="515.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1736.7" y="515.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1745.3" y="515.0" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1546.0" y="521.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1554.7" y="521.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1563.3" y="521.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1572.0" y="521.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1580.7" y="521.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1589.3" y="521.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1598.0" y="521.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1606.7" y="521.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.43"/>
+<rect x="1615.3" y="521.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.55"/>
+<rect x="1624.0" y="521.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.66"/>
+<rect x="1632.7" y="521.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.74"/>
+<rect x="1641.3" y="521.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.79"/>
+<rect x="1650.0" y="521.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.81"/>
+<rect x="1658.7" y="521.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.79"/>
+<rect x="1667.3" y="521.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.74"/>
+<rect x="1676.0" y="521.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.66"/>
+<rect x="1684.7" y="521.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.55"/>
+<rect x="1693.3" y="521.4" width="7.9" height="5.2" fill="#E8A33D" fill-opacity="0.43"/>
+<rect x="1702.0" y="521.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1710.7" y="521.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1719.3" y="521.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1728.0" y="521.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1736.7" y="521.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<rect x="1745.3" y="521.4" width="7.9" height="5.2" fill="#E4E7EB" fill-opacity="1.00"/>
+<text x="1546" y="541.8" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="500" fill="#52606D" text-anchor="start" >Energy calendar (month × hour)</text>
+<line x1="1552" y1="621.8" x2="1752" y2="621.8" stroke="#7B8794"/><line x1="1552" y1="557.8" x2="1552" y2="621.8" stroke="#7B8794"/>
+<polyline points="1562.0,578.3 1592.0,584.2 1622.0,586.9 1652.0,586.4 1682.0,582.7 1712.0,575.9 1742.0,565.8" fill="none" stroke="#B35A12" stroke-width="1.8"/>
+<circle cx="1562.0" cy="578.3" r="2.6" fill="#FFFFFF" stroke="#B35A12" stroke-width="1.4"/>
+<circle cx="1592.0" cy="584.2" r="2.6" fill="#FFFFFF" stroke="#B35A12" stroke-width="1.4"/>
+<circle cx="1622.0" cy="586.9" r="2.6" fill="#FFFFFF" stroke="#B35A12" stroke-width="1.4"/>
+<circle cx="1652.0" cy="586.4" r="2.6" fill="#FFFFFF" stroke="#B35A12" stroke-width="1.4"/>
+<circle cx="1682.0" cy="582.7" r="2.6" fill="#FFFFFF" stroke="#B35A12" stroke-width="1.4"/>
+<circle cx="1712.0" cy="575.9" r="2.6" fill="#FFFFFF" stroke="#B35A12" stroke-width="1.4"/>
+<circle cx="1742.0" cy="565.8" r="2.6" fill="#FFFFFF" stroke="#B35A12" stroke-width="1.4"/>
+<circle cx="1622.0" cy="586.9" r="4.5" fill="#B35A12"/>
+<text x="1546" y="637.8" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="500" fill="#52606D" text-anchor="start" >Capacity–cost curve (best marked)</text>
+<text x="1546" y="661.8" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="500" fill="#52606D" text-anchor="start" >10-yr ledger · carbon · storage</text>
+<text x="1546" y="677.8" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="500" fill="#52606D" text-anchor="start" >Hourly CSV / JSON / printable brief</text>
+<rect x="1530" y="723" width="240" height="145" rx="10" fill="#FFF6EC" stroke="#B35A12" stroke-width="1.4"/>
+<text x="1544" y="749" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#B35A12" text-anchor="start" >Accountable output</text>
+<text x="1546" y="775" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Every number from computation</text>
+<text x="1546" y="795" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Edits invalidate stale results</text>
+<text x="1546" y="815" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Saved plans side-by-side</text>
+<text x="1546" y="835" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.3" font-weight="400" fill="#52606D" text-anchor="start" >Sources & hashes traceable</text>
+<path d="M1480,535 L1528,535" fill="none" stroke="#1E7A57" stroke-width="1.8" marker-end="url(#ahd)"/>
+<rect x="1477.42" y="504" width="55.160000000000004" height="19" rx="9.5" fill="#FFFFFF" stroke="none"/>
+<text x="1505.0" y="518.5" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="500" fill="#1E7A57" text-anchor="middle" font-style="italic">results</text>
+<line x1="30" y1="904" x2="1770" y2="904" stroke="#E4E7EB" stroke-width="1"/>
+<text x="30" y="926" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="700" fill="#1F2933" text-anchor="start" >Key contributions</text>
+<g><circle cx="193.0" cy="921" r="13" fill="#B83232" stroke="#FFFFFF" stroke-width="2"/><text x="193.0" y="925.2" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">C1</text></g>
+<text x="214.0" y="926" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#1F2933" text-anchor="start" >Hourly coupling</text>
+<text x="214.0" y="946" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#52606D" text-anchor="start" >Load, PV and wind matched hour-by-hour under TOU prices,</text>
+<text x="214.0" y="963" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#52606D" text-anchor="start" >instead of annual energy × average price.</text>
+<g><circle cx="723.0" cy="921" r="13" fill="#B83232" stroke="#FFFFFF" stroke-width="2"/><text x="723.0" y="925.2" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">C2</text></g>
+<text x="744.0" y="926" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#1F2933" text-anchor="start" >Comfort-gated sizing</text>
+<text x="744.0" y="946" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#52606D" text-anchor="start" >AC load and unit count derived from heat–moisture physics with</text>
+<text x="744.0" y="963" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#52606D" text-anchor="start" >an explicit adequacy rule.</text>
+<g><circle cx="1253.0" cy="921" r="13" fill="#B83232" stroke="#FFFFFF" stroke-width="2"/><text x="1253.0" y="925.2" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">C3</text></g>
+<text x="1274.0" y="926" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#1F2933" text-anchor="start" >Policy-faithful economics</text>
+<text x="1274.0" y="946" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#52606D" text-anchor="start" >Official tariff incl. temperature-triggered critical peak,</text>
+<text x="1274.0" y="963" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#52606D" text-anchor="start" >lifecycle costs and provincial carbon factor.</text>
+<g><circle cx="193.0" cy="997" r="13" fill="#B83232" stroke="#FFFFFF" stroke-width="2"/><text x="193.0" y="1001.2" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">C4</text></g>
+<text x="214.0" y="1002" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#1F2933" text-anchor="start" >Honest decision semantics</text>
+<text x="214.0" y="1022" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#52606D" text-anchor="start" >Unknown ≠ excluded; service gaps flagged; grid-only baseline</text>
+<text x="214.0" y="1039" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#52606D" text-anchor="start" >always kept for comparison.</text>
+<g><circle cx="723.0" cy="997" r="13" fill="#B83232" stroke="#FFFFFF" stroke-width="2"/><text x="723.0" y="1001.2" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">C5</text></g>
+<text x="744.0" y="1002" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#1F2933" text-anchor="start" >LLM as interface, not calculator</text>
+<text x="744.0" y="1022" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#52606D" text-anchor="start" >On-premise LLM turns language into validated task edits;</text>
+<text x="744.0" y="1039" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#52606D" text-anchor="start" >deterministic tools compute every number.</text>
+<g><circle cx="1253.0" cy="997" r="13" fill="#B83232" stroke="#FFFFFF" stroke-width="2"/><text x="1253.0" y="1001.2" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">C6</text></g>
+<text x="1274.0" y="1002" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#1F2933" text-anchor="start" >Progressive computing</text>
+<text x="1274.0" y="1022" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#52606D" text-anchor="start" >Sub-second typical-week preview, then a full-year job with</text>
+<text x="1274.0" y="1039" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#52606D" text-anchor="start" >real progress for interactive use.</text>
+</svg>
