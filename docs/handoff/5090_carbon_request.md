@@ -431,3 +431,54 @@ v6 记录的全年 `hybrid/run` 平均约 94 秒、最长约 163 秒（5090）�
 2. **答辩备注（不改代码）。** 中档 8→5 台年用电完全不变，原因是当前模型按额定点计算、没有部分负荷效率曲线：只要冷量够，台数多少不影响用电。请在交接说明里写一句这个限制，评委若问“多装空调不费电吗”可直接回答。
 
 完成后普通推送即可，不需重跑物理计算。
+
+## 18. 第十轮：一句话输入接本地大模型的两个小接口（2026-10-08）
+
+第 17 节已复核：三份回放 `E:\` / `E:\\` / `/home/` 均为 0，`weather.py` 已从源头输出相对路径。✅ `feat/5060-product-ui` 已合并 `04764dc`（`faf79d7`）。
+
+背景：后端已有本地模型智能体（`hybrid/run` + `use_agent`），但它直接跑同步全年计算，前端无法显示进度，也无法让用户先确认模型改了哪些条件。下一轮前端会把“一句话描述”接到本地模型上。请**只加两个接口**，不改智能体现有路径、不改任何计算：
+
+### 18.1 `GET /api/operation/agent/status`
+
+返回本地模型是否可用（读取 `runtime/local_model_config.json`，向 loopback 端点发一次轻量探测，超时 ≤2 秒）：
+
+```json
+{"available": true, "mode": "local_model", "label": "本地大模型", "checked_at": "...", "reason": null}
+```
+
+不可用时 `available:false`，`reason` 写中文原因（如“未找到本地模型配置”“本地模型未启动”）。不返回模型文件路径、机器名或任何账号信息（匿名要求）。
+
+### 18.2 `POST /api/operation/agent/parse`
+
+请求：`{"request": "把空调换成每间3台，预算加到5万，不卖电", "current_task": <与 hybrid/jobs 相同结构的当前表单请求体>}`
+
+只做“理解并提出修改”，**不做任何计算**：
+
+```json
+{
+  "status": "ok",                       
+  "changes": [
+    {"field": "room.units_per_room", "from": 2, "to": 3, "label": "每间空调台数"},
+    {"field": "hybrid.budget_cny", "from": 30000, "to": 50000, "label": "预算"},
+    {"field": "hybrid.allow_export", "from": true, "to": false, "label": "多余电量卖给电网"}
+  ],
+  "unsupported": ["“换成格力”：设备目录中没有该品牌型号"],
+  "question": null,
+  "model": "local_model",
+  "latency_ms": 2300
+}
+```
+
+- `status` 取值：`ok` / `needs_clarification`（`question` 写中文追问）/ `unavailable`（模型不可用，前端退回规则识别）/ `failed`（模型输出不合法，`reason` 写中文）。
+- `changes` 只能包含 `current_task` 中已存在或手册已定义的字段；值必须通过与 `hybrid/jobs` 相同的校验（型号必须在设备目录中、数值在合法范围内）；模型输出不合法时返回 `failed`，**不得用规则结果冒充模型成功**。
+- 数值只能来自用户原话（如“5万”→50000）或相对修改（“预算翻倍”→按当前值计算），不得让模型编造报价、电价或结果数字。
+- 用户提到但系统不支持的内容放进 `unsupported`，不静默丢弃。
+- 目标耗时：5090 上 ≤10 秒；超过 20 秒返回 `failed`（超时）。
+- 测试：至少 6 条中文示例（台数、型号、预算、使用时段、卖电开关、光伏容量），各附期望 `changes`；1 条不支持内容；1 条需要追问；模型离线时 `status` 与 `unavailable`。
+- 手册补充两个接口的请求/响应示例。
+
+### 18.3 顺手对齐（很小）
+
+`storage_surplus_paths_contract.md` 示例里卖电价 0.30、运维 120 元/年，而 v9 回放用的是 0.25、300 元/年；`source_url` 指向发改委通知、`source` 却写证券研报。请把契约示例与 v9 回放统一，来源字段各自对应（研报放 `reference_url`，政策放 `policy_source`）。
+
+完成后普通推送到 `fix/5090-redesign-followup`，回复两个接口的实测耗时和测试结果。前端会按本节契约先行开发，离线或接口不存在时自动退回规则识别。

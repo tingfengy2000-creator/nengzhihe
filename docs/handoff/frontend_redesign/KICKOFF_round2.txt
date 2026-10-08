@@ -1,0 +1,8 @@
+你现在接手“能见度”（仓库包名仍为 nengzhihe / operation_planning）的前端第二轮小修。
+
+1. 拉取仓库 tingfengy2000-creator/nengzhihe，切到分支 feat/5060-product-ui 的最新提交（含 docs/handoff/frontend_redesign/PROMPT_round2.md），从这里新建分支 feat/frontend-round2。
+2. 完整阅读 docs/handoff/frontend_redesign/PROMPT_round2.md（本轮唯一任务书），再读其中第 1 节列出的文件；第一轮任务书 PROMPT.md 的原则、视觉规范、技术约束和诚实规则继续有效。
+3. 按 PROMPT_round2.md 第 3 节分 5 批提交并普通推送到 feat/frontend-round2；不改 main、不强推、不建 Release；后端只允许改 app.py 的示例白名单。
+4. 完成第 5 批后停下，回复：分支、各批提交 SHA、第 4 节验收自查结果、已知问题和需要 5090 处理的问题。
+
+最重要的原则：这是小修，不重做结构、不改风格；所有数字来自后端或回放文件；大模型只负责理解用户的话并提出表单修改，用户确认后仍由计算服务算出全部数字。
