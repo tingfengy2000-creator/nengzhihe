@@ -115,7 +115,7 @@ function numCards(vm) {
   if (!best) return '';
   const s0 = best.id === 'S0_grid';
   const why = best.economicsStatus && best.economicsStatus !== 'complete' ? '计价不完整' : '结果未给出';
-  const cov = isNum(best.coverage) ? `<b class="num">${fmt.pct(best.coverage)}</b>` : `<b>—</b><small>${why}</small>`;
+  const cov = isNum(best.coverage) ? `<b class="num">${fmt.pct(best.coverage)}</b>${s0 ? '<small>只用电网，不自己发电</small>' : ''}` : `<b>—</b><small>${why}</small>`;
   const capex = s0 ? '<b class="num">0</b><span class="u">元</span><small>只用电网，无需投入</small>' : isNum(best.capex) ? `<b class="num">${fmt.money(best.capex)}</b><span class="u">元</span>` : `<b>—</b><small>${why}</small>`;
   const pay = s0 ? '<b>—</b><small>只用电网，无需投入</small>' : isNum(best.paybackYears) ? `<b class="num">${fmt.d(best.paybackYears, 1)}</b><span class="u">年</span>` : best.economicsStatus === 'complete' ? '<b>不回本</b><small>按当前条件不回本</small>' : `<b>—</b><small>${why}</small>`;
   return `<div class="numcards">

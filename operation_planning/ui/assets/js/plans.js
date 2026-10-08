@@ -15,7 +15,7 @@ function planCard(p) {
     <h3>${esc(s.headline || p.label)}。</h3>
     <p class="tier-meta">${esc([s.place, s.room, s.schedule].filter(Boolean).join(' · '))}</p>
     <dl class="sample-kv">
-      <div><dt>空调一年用电</dt><dd><b class="num">${fmt.kwh(s.annualKwh)}</b> kWh · ${esc(s.service || '')}</dd></div>
+      <div><dt>空调一年用电</dt><dd>${s.annualKwh != null ? `<b class="num">${fmt.kwh(s.annualKwh)}</b> kWh${s.service ? ` · ${esc(s.service)}` : ''}` : '—'}</dd></div>
       <div><dt>${esc(s.recName || '推荐')}</dt><dd>${s.recTotal != null ? `<b class="num">${fmt.money(s.recTotal)}</b> 元` : '—'}${s.recName && s.recName !== '只用电网' ? ` · ${esc(fmt.delta(s.recIncremental).short)}` : ''}</dd></div>
       <div><dt>推荐状态</dt><dd>${esc(s.recStatus || '—')}</dd></div>
       ${s.tariff ? `<div><dt>电价</dt><dd>${esc(s.tariff)}</dd></div>` : ''}

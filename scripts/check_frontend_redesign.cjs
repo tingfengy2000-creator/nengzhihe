@@ -190,7 +190,7 @@ const ok = (cond, msg) => { checks++; if (!cond) { failures++; console.log('  �
     const recC = c.candidates.find((x) => x.scenario_id === c.recommendation.scenario_id);
     ok(ui.nc.length === 3, `数字卡应为 3 个：${ui.nc.length}`);
     if (recC.scenario_id === 'S0_grid') {
-      ok(/0\s*元/.test(ui.nc[1]) && /只用电网，无需投入/.test(ui.nc[1]) && /只用电网，无需投入/.test(ui.nc[2]), `只用电网推荐时数字卡应写“无需投入”：${ui.nc.slice(1).join(' | ')}`);
+      ok(/只用电网，不自己发电/.test(ui.nc[0]) && /0\s*元/.test(ui.nc[1]) && /只用电网，无需投入/.test(ui.nc[1]) && /只用电网，无需投入/.test(ui.nc[2]), `只用电网推荐时数字卡应写“无需投入”：${ui.nc.slice(1).join(' | ')}`);
     } else {
       ok(ui.nc[0].includes(`${Math.round(recC.load_coverage_rate * 100)}%`), `数字卡自发比例 ${ui.nc[0]} ≠ ${recC.load_coverage_rate}`);
       ok(ui.nc[1].includes(money(recC.capex_cny)), `数字卡初始投入 ${ui.nc[1]} ≠ ${money(recC.capex_cny)}`);
@@ -308,7 +308,7 @@ const ok = (cond, msg) => { checks++; if (!cond) { failures++; console.log('  �
     const st = await pm.evaluate(() => ({ old: !!localStorage.getItem('nzh.plans.v1'), mark: !!localStorage.getItem('nzh.plans.v1.migrated'), n: JSON.parse(localStorage.getItem('njd.plans.v1') || '[]').length }));
     ok(a1.length === 1 && a2.length === 1 && st.n === 1, `旧方案应只迁移一次：${a1.length}/${a2.length}/${st.n}`);
     ok(st.old && st.mark, `迁移后应保留旧键并写标记：${JSON.stringify(st)}`);
-    ok(/建议：加装光伏/.test(a1[0] || '') && /5,814/.test(a1[0] || '') && /—/.test(a1[0] || ''), `迁移方案显示：${(a1[0] || '').slice(0, 120)}`);
+    ok(/建议：加装光伏/.test(a1[0] || '') && /5,814/.test(a1[0] || '') && /空调一年用电 ?—/.test(a1[0] || '') && !/— kWh/.test(a1[0] || ''), `迁移方案显示：${(a1[0] || '').slice(0, 120)}`);
     await pm.evaluate(() => localStorage.clear());
     await pm.context().close();
   }
