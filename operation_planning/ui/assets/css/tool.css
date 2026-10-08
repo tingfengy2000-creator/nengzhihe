@@ -177,3 +177,17 @@ details.more[open] summary { margin-bottom: 14px; }
 .st-table td:first-child { white-space: nowrap; }
 .st-table td.r .muted { white-space: normal; display: inline-block; max-width: 9em; text-align: right; }
 @media (max-width: 1180px) { .surplus-grid { grid-template-columns: 1fr; } }
+
+/* 一句话输入：本地大模型的修改清单 */
+.proposal { margin-top: 12px; border: 1px solid var(--brand); border-radius: var(--r); padding: 14px 16px; background: var(--brand-weak); }
+.pr-title { display: flex; gap: 6px; align-items: center; font-weight: 700; margin-bottom: 8px; }
+.pr-title svg { width: 16px; height: 16px; color: var(--brand); }
+.pr-list { display: grid; gap: 6px; }
+.pr-list li { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: 14.5px; }
+.pr-list svg { width: 14px; height: 14px; color: var(--ink-3); }
+.pr-label { min-width: 8em; color: var(--ink-2); }
+.pr-from { color: var(--ink-3); text-decoration: line-through; }
+.pr-sub { font-size: 13.5px; font-weight: 600; margin-top: 10px; color: var(--ink-2); }
+.pr-un { font-size: 13.5px; color: var(--ink-2); padding-left: 16px; list-style: disc; }
+.field.flash .control input, .field.flash .control select, .field.flash .seg, .field.flash .check { box-shadow: 0 0 0 3px var(--warn-weak), 0 0 0 1px var(--warn); border-color: var(--warn); transition: box-shadow .3s; }
+.ask .row .tag svg { width: 14px; height: 14px; }

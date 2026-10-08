@@ -6,12 +6,17 @@
  *   python -m http.server 18799 --bind 127.0.0.1       # 另开终端，用于“未连接计算服务”检查
  *   node scripts/check_frontend_redesign.cjs           # 需要本机已安装 playwright（npm i -g playwright）
  *
+ * 一句话输入的本地大模型分支用脚本内启动的**仅测试用**桩服务检查：桩服务监听 127.0.0.1:18767，
+ * 只模拟 /api/operation/agent/status 与 /api/operation/agent/parse 的各种返回，其余请求原样转发给
+ * 18765 的计算服务。桩服务不提交到 operation_planning/，真实模型联调由 5090 在本机完成。
+ *
  * 只读检查：不调用任何计算接口（实时计算流程另由人工/截图核对），不写任何数据或结果文件。
  * 期望值直接从 docs/handoff/replay_viewer/replay_cases_ui_v9.json 读取并按页面的显示规则取整，
  * 与页面上渲染出的文字逐项比较。
  */
 const fs = require('fs');
 const path = require('path');
+const http = require('http');
 const { chromium } = require('playwright');
 
 const BASE = process.env.NJD_BASE || 'http://127.0.0.1:18765/';
@@ -28,6 +33,88 @@ const kwhF = (v) => (Math.abs(v) < 10 && v !== 0 ? new Intl.NumberFormat('zh-CN'
 const clean = (s) => String(s || '').replace(/\s+/g, ' ').trim();
 
 let failures = 0, checks = 0;
+
+/* ---------- 仅测试用桩服务：模拟 agent/status 与 agent/parse，其余转发到计算服务 ---------- */
+const stub = { status: 'available', parse: 'ok', parseCalls: 0, computeCalls: 0 };
+const PARSE_OK = { status: 'ok', changes: [{ field: 'room.units_per_room', from: 1, to: 3, label: '每间空调台数' }, { field: 'hybrid.budget_cny', from: null, to: 50000, label: '预算' }],
+  unsupported: ['“换成格力”：设备目录中没有该品牌型号'], question: null, model: 'local_model', latency_ms: 12 };
+function startStub(port = 18767) {
+  const target = new URL(BASE);
+  const server = http.createServer((req, res) => {
+    const send = (code, body) => { const d = Buffer.from(JSON.stringify(body)); res.writeHead(code, { 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': d.length }); res.end(d); };
+    if (req.url.startsWith('/api/operation/agent/status')) {
+      if (stub.status === '404') return send(404, { error: '路径不存在' });
+      if (stub.status === 'timeout') return setTimeout(() => send(200, { available: true }), 6000);
+      return send(200, { available: stub.status === 'available', mode: 'local_model', label: '本地大模型', checked_at: new Date().toISOString(), reason: stub.status === 'available' ? null : '本地模型未启动' });
+    }
+    if (req.url.startsWith('/api/operation/agent/parse')) {
+      stub.parseCalls++;
+      let body = ''; req.on('data', (c) => { body += c; });
+      req.on('end', () => {
+        const m = stub.parse;
+        if (m === '404') return send(404, { error: '路径不存在' });
+        if (m === 'timeout') return setTimeout(() => send(200, PARSE_OK), 30000);
+        if (m === 'ok') return send(200, PARSE_OK);
+        if (m === 'needs_clarification') return send(200, { status: 'needs_clarification', changes: [], unsupported: [], question: '请给出晚上使用时段的开始和结束时间，例如18:00到22:00。', model: 'local_model', latency_ms: 9 });
+        if (m === 'unavailable') return send(200, { status: 'unavailable', changes: [], unsupported: [], question: null, reason: '本地模型未启动', model: 'local_model', latency_ms: 1 });
+        return send(200, { status: 'failed', changes: [], unsupported: [], question: null, reason: '模型输出不符合契约', model: 'local_model', latency_ms: 5 });
+      });
+      return;
+    }
+    if (/\/api\/operation\/hybrid\/(jobs|run|preview)/.test(req.url) && req.method === 'POST') stub.computeCalls++;
+    const fwd = http.request({ host: target.hostname, port: target.port, path: req.url, method: req.method, headers: req.headers }, (r) => { res.writeHead(r.statusCode, r.headers); r.pipe(res); });
+    fwd.on('error', () => send(502, { error: 'stub forward failed' }));
+    req.pipe(fwd);
+  });
+  return new Promise((resolve) => server.listen(port, '127.0.0.1', () => resolve(server)));
+}
+
+async function checkAgent(browser) {
+  const server = await startStub();
+  const SB = 'http://127.0.0.1:18767/';
+  const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
+  const errs = []; page.on('pageerror', (e) => errs.push(e.message));
+  const open = async () => { await page.goto(SB + '#/tool/1'); await page.reload(); await page.waitForSelector('[data-ask] .tag'); await page.waitForTimeout(400); };
+  const ask = async (text) => { await page.fill('#askInput', text); await page.click('[data-action="ask"]'); };
+  const tagText = () => page.textContent('[data-ask] .tag');
+  // 状态：可用 → 标签“本地大模型理解”
+  stub.status = 'available'; await open();
+  await page.waitForFunction(() => /本地大模型理解/.test(document.querySelector('[data-ask] .tag').textContent), null, { timeout: 8000 }).catch(() => {});
+  ok(/本地大模型理解/.test(await tagText()), `可用时标签应为“本地大模型理解”：${await tagText()}`);
+  // ok：显示修改清单 → 采用 → 写入表单、高亮、不自动计算
+  stub.parse = 'ok'; stub.computeCalls = 0;
+  await ask('每间改成3台空调，预算加到5万，换成格力');
+  await page.waitForSelector('.proposal', { timeout: 10000 });
+  const prop = await page.textContent('.proposal');
+  ok(/每间空调台数/.test(prop) && /初始投入预算/.test(prop) && /没能处理/.test(prop) && /格力/.test(prop), `修改清单内容不全：${prop.slice(0, 120)}`);
+  await page.click('[data-action="agent-apply"]'); await page.waitForTimeout(400);
+  ok(await page.inputValue('[data-field="units_per_room"]') === '3' && await page.inputValue('[data-field="budget_cny"]') === '50000', '采用后表单未写入');
+  ok(await page.evaluate(() => !!document.querySelector('[data-wrap="units_per_room"].flash')), '被改动字段没有高亮');
+  await page.waitForTimeout(1500);
+  ok(stub.computeCalls === 0, `采用修改后不应自动计算（实际 ${stub.computeCalls} 次计算请求）`);
+  ok(!(await page.evaluate(() => /50,000|50000/.test(document.querySelector('[data-result-zone]').innerText))), '模型返回值出现在结果区');
+  // 取消
+  await ask('每间改成3台'); await page.waitForSelector('.proposal'); await page.click('[data-action="agent-cancel"]');
+  ok(!(await page.$('.proposal')), '取消后修改清单应消失');
+  // needs_clarification
+  stub.parse = 'needs_clarification'; await ask('把空调改成晚上使用'); await page.waitForTimeout(800);
+  ok(/需要补充/.test(await page.textContent('[data-ask-result]')) && /18:00/.test(await page.textContent('[data-ask-result]')), '追问没有显示');
+  // unavailable / failed / 404 / 超时 → 规则识别同一句话
+  for (const m of ['unavailable', 'failed', '404', 'timeout']) {
+    stub.parse = m; await open(); await page.fill('[data-field="start_hour"]', '8');
+    await ask('每天 9 点到 21 点'); await page.waitForFunction(() => /已改用规则识别/.test(document.querySelector('[data-ask-result]').textContent), null, { timeout: 40000 }).catch(() => {});
+    const t = await page.textContent('[data-ask-result]');
+    ok(/已改用规则识别/.test(t) && await page.inputValue('[data-field="start_hour"]') === '9', `${m}：应提示已改用规则识别并按规则填入（${t.slice(0, 60)}）`);
+  }
+  // 状态 404 / 超时 → “规则识别”，规则仍可用
+  for (const m of ['404', 'timeout', 'offline']) {
+    stub.status = m; await open(); await page.waitForTimeout(m === 'timeout' ? 4500 : 600);
+    ok(/规则识别/.test(await tagText()), `状态 ${m}：标签应为“规则识别”：${await tagText()}`);
+  }
+  ok(errs.length === 0, `一句话输入页面错误：${errs.join(' | ')}`);
+  await page.context().close();
+  server.close();
+}
 const ok = (cond, msg) => { checks++; if (!cond) { failures++; console.log('  ✗ ' + msg); } };
 
 (async () => {
@@ -37,6 +124,7 @@ const ok = (cond, msg) => { checks++; if (!cond) { failures++; console.log('  �
   const errors = [];
   page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
   page.on('pageerror', (e) => errors.push(e.message));
+  if (process.env.NJD_ONLY === 'agent') { await checkAgent(browser); await browser.close(); console.log(`\n${checks} 项检查，${failures} 项不通过`); process.exit(failures ? 1 : 0); }
 
   /* ---------- 1. 三档与三个状态变体：第 3 步方案卡、推荐、排除原因、容量比选、碳、粗算、储能 ---------- */
   for (const c of replay.cases) {
@@ -154,7 +242,11 @@ const ok = (cond, msg) => { checks++; if (!cond) { failures++; console.log('  �
   } catch (e) { ok(false, `静态服务器不可用（${STATIC}）：${e.message}`); }
   await p4.context().close();
 
-  /* ---------- 6. 控制台错误 ---------- */
+  /* ---------- 6. 一句话输入：本地大模型（桩服务）---------- */
+  console.log('一句话输入（桩服务）检查');
+  await checkAgent(browser);
+
+  /* ---------- 7. 控制台错误 ---------- */
   ok(errors.length === 0, `控制台错误：${errors.slice(0, 5).join(' | ')}`);
 
   await browser.close();

@@ -8,6 +8,7 @@ import * as samples from './samples.js';
 import * as plans from './plans.js';
 import * as about from './about.js';
 import * as demo from './demo.js';
+import * as agent from './agent.js';
 
 const VIEWS = { home, tool, samples, plans, about };
 
@@ -73,7 +74,7 @@ function renderMode() {
 }
 on('mode', renderMode);
 document.addEventListener('click', async (e) => {
-  if (e.target.closest('[data-action="reprobe"]')) { await data.probe(); toast(app.mode === 'live' ? '已连接本机计算服务' : '仍未连接计算服务'); }
+  if (e.target.closest('[data-action="reprobe"]')) { await data.probe(); agent.checkStatus(); toast(app.mode === 'live' ? '已连接本机计算服务' : '仍未连接计算服务'); }
   if (e.target.closest('[data-action="demo"]')) demo.start();
 });
 
@@ -102,4 +103,4 @@ on('go', go);
 
 renderMode();
 route();
-data.probe();
+data.probe().then(() => agent.checkStatus());

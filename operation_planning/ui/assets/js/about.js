@@ -82,6 +82,14 @@ export function show(root) {
         <ul class="notes big-notes">${BOUNDARIES.map((b) => `<li>${esc(b)}</li>`).join('')}<li>大档“工业厂房”是厂房空调分区的有界代理：只计厂房空调区，生产工艺、照明、插座等生产用电未计入，结果偏保守，不代表全厂能源方案。</li><li>典型周预览固定选择日期，只做物理匹配，不含费用和推荐，不外推全年。</li><li>页面不包含任何虚构的客户、试点、获奖、节能收益或现场精度。</li></ul>
         <h2 class="h3 group-title">术语对照</h2>
         <div class="tablewrap"><table class="table"><thead><tr><th>页面用语</th><th>技术名 / 字段</th><th>说明</th></tr></thead><tbody>${GLOSSARY.map(([a, b, c]) => `<tr><td>${esc(a)}</td><td class="mono">${esc(b)}</td><td style="white-space:normal">${esc(c)}</td></tr>`).join('')}</tbody></table></div>
+        <h2 class="h3 group-title">大模型在这里做什么</h2>
+        <ol class="method">
+          <li><b>理解你的话</b>：在「开始试算」的一句话描述里，本机运行的大模型把“每间改成 3 台空调、预算加到 5 万”这样的话，理解成具体要改的表单条件。</li>
+          <li><b>提出修改，由你确认</b>：页面列出“原值 → 新值”和没能处理的内容；你点“采用”后才写入表单，也可以取消。</li>
+          <li><b>数字仍由计算服务算出</b>：采用后不会自动计算；点击「计算」后，用电、发电、费用、碳和推荐全部由计算服务按同样的规则算出。大模型给出的内容从不作为结果数字。</li>
+          <li><b>本地运行，不上传数据</b>：只连接本机的模型服务；模型不可用时自动改用本地规则识别，表单照常可用。</li>
+        </ol>
+        <p class="hint">当前状态：<span data-agent-state>${app.agent ? (app.agent.available ? '本地大模型可用' : `本地大模型不可用（${esc(app.agent.reason || '')}），使用规则识别`) : '未检测'}</span>。</p>
         <h2 class="h3 group-title">分工</h2>
         <div class="about-grid two"><article class="card"><h3>后端计算与数值实验</h3><p>天气、热湿负荷、光伏、风机、逐时匹配、生命周期经济、碳与储能上限、实时接口与回放生成、性能与等价性验收。</p></article>
           <article class="card"><h3>前端产品化</h3><p>交互设计、数据适配层（不做数值计算）、图表与 3D 场景、导出与本机方案保存、诚实规则落地。</p></article></div>
@@ -96,3 +104,4 @@ export function show(root) {
   if (app.mode === 'live' && !wind) fetch('/api/operation/wind/profiles').then((r) => r.ok ? r.json() : null).then((j) => { wind = j && j.profiles && j.profiles[0]; render(data.samplesLoaded()); }).catch(() => {});
 }
 on('mode', () => { if (el && !el.hidden) show(el); });
+on('agent', () => { const n = el && el.querySelector('[data-agent-state]'); if (n) n.textContent = app.agent.available ? '本地大模型可用' : `本地大模型不可用（${app.agent.reason || ''}），使用规则识别`; });

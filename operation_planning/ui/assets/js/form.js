@@ -309,3 +309,57 @@ export function parseAsk(text) {
 }
 
 export const isNumStr = (v) => v !== '' && isNum(Number(v));
+
+/* ------------------------------------------------------------------ */
+/* 本地大模型提出的修改 → 表单字段（字段路径见 agent_parse.py FIELD_RULES）  */
+/* 只改输入条件；不触发计算。返回 null 表示这一项无法写入表单。            */
+/* ------------------------------------------------------------------ */
+const sv = (v) => (v == null ? '' : String(v));
+const AGENT_MAP = {
+  'room.units_per_room': { label: '每间空调台数', keys: ['units_per_room'], set: (f, v) => { f.units_per_room = sv(v); } },
+  'room.room_count': { label: '同类房间数', keys: ['room_count'], set: (f, v) => { f.room_count = sv(v); } },
+  'room.start_hour': { label: '每天开始使用', keys: ['start_hour'], set: (f, v) => { f.start_hour = sv(v); } },
+  'room.end_hour': { label: '每天结束使用', keys: ['end_hour'], set: (f, v) => { f.end_hour = sv(v); } },
+  'room.area_m2': { label: '单间面积', keys: ['area_m2'], set: (f, v) => { f.area_m2 = sv(v); } },
+  'room.equipment_id': { label: '空调型号', keys: ['equipment_id'], set: (f, v) => { f.equipment_id = sv(v); } },
+  'hybrid.budget_cny': { label: '初始投入预算', keys: ['budget_cny'], set: (f, v) => { f.budget_cny = sv(v); } },
+  'hybrid.budget_multiplier': { label: '初始投入预算（按倍数调整）', keys: ['budget_cny'], set: (f, v) => {
+    const cur = Number(f.budget_cny); if (f.budget_cny === '' || !Number.isFinite(cur)) return false;
+    f.budget_cny = String(Math.round(cur * Number(v))); } },
+  'hybrid.pv_capacity_kwp': { label: '光伏容量', keys: ['capacity_mode', 'capacities'], set: (f, v) => { f.capacity_mode = 'list'; f.capacities = sv(v); } },
+  'pv.capacity_kwp': { label: '光伏容量', keys: ['capacity_mode', 'capacities'], set: (f, v) => { f.capacity_mode = 'list'; f.capacities = sv(v); } },
+  'hybrid.allow_export': { label: '多余电量卖给电网', keys: ['allow_export'], set: (f, v) => { f.allow_export = v === true; } },
+  'hybrid.import_price_cny_per_kwh': { label: '固定购电价', keys: ['price_mode', 'import_price'], set: (f, v) => { f.price_mode = 'fixed'; f.import_price = sv(v); } },
+  'hybrid.export_price_cny_per_kwh': { label: '上网电价（卖电）', keys: ['ex_price'], set: (f, v) => { f.ex_price = sv(v); } },
+  'hybrid.tariff_escalation_rate': { label: '未来电价每年变化', keys: ['escalation_pct'], set: (f, v) => { if (!('escalation_pct' in f)) return false; f.escalation_pct = sv(Math.round(Number(v) * 10000) / 100); } },
+  'hybrid.wind.turbine_count': { label: '小风机台数', keys: ['wind_turbine_count'], set: (f, v) => { f.wind_turbine_count = sv(v); } },
+  'storage.quote.cny_per_kwh': { label: '储能单价', keys: ['st_price'], set: (f, v) => { f.st_price = sv(v); } },
+  'storage.capacities_kwh': { label: '储能可选容量', keys: ['storage_caps'], set: (f, v) => { if (!Array.isArray(v)) return false; f.storage_caps = v.join(', '); } }
+};
+export const agentLabel = (field, fallback) => (AGENT_MAP[field] ? AGENT_MAP[field].label : (fallback || '未知字段'));
+
+/** 显示用：把修改前后的值写成中文（不做任何计算）。 */
+export function agentValueText(field, v, options) {
+  if (v === null || v === undefined || v === '') return '未填写';
+  if (typeof v === 'boolean') return v ? '是' : '否';
+  if (Array.isArray(v)) return v.join('、');
+  if (field === 'room.equipment_id') { const e = ((options && options.equipment_models) || []).find((x) => x.equipment_id === v); return e ? `${e.brand} ${e.model}` : String(v); }
+  if (field === 'hybrid.tariff_escalation_rate') return `${Math.round(Number(v) * 10000) / 100}%`;
+  if (field === 'hybrid.budget_multiplier') return `× ${v}`;
+  const unit = { 'room.units_per_room': ' 台', 'room.room_count': ' 间', 'room.start_hour': ' 点', 'room.end_hour': ' 点', 'room.area_m2': ' ㎡', 'hybrid.budget_cny': ' 元',
+    'hybrid.pv_capacity_kwp': ' kWp', 'pv.capacity_kwp': ' kWp', 'hybrid.import_price_cny_per_kwh': ' 元/kWh', 'hybrid.export_price_cny_per_kwh': ' 元/kWh',
+    'hybrid.wind.turbine_count': ' 台', 'storage.quote.cny_per_kwh': ' 元/kWh' }[field] || '';
+  return `${v}${unit}`;
+}
+
+/** 把用户确认的修改写进表单副本；返回 { form, keys, skipped:[{label, why}] } */
+export function applyAgentChanges(form, changes) {
+  const f = JSON.parse(JSON.stringify(form)), keys = new Set(), skipped = [];
+  for (const c of changes) {
+    const m = AGENT_MAP[c.field];
+    if (!m) { skipped.push({ label: c.label || c.field, why: '表单里没有对应的条件' }); continue; }
+    if (m.set(f, c.to) === false) { skipped.push({ label: m.label, why: c.field === 'hybrid.budget_multiplier' ? '原来没有填写预算，无法按倍数调整' : '无法写入表单' }); continue; }
+    m.keys.forEach((k) => keys.add(k));
+  }
+  return { form: f, keys: [...keys], skipped };
+}

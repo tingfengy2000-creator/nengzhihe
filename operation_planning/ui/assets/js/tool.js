@@ -8,6 +8,8 @@ import { $, $$, esc, fmt, isNum, icon, toast, reduceMotion } from './util.js';
 import { app, on, emit } from './state.js';
 import * as data from './data.js';
 import { api, pollJob, ApiError } from './api.js';
+import { applyAgentChanges, agentLabel, agentValueText } from './form.js';
+import * as agent from './agent.js';
 import { FIELDS, FIELD, FIELD_PATH, blankForm, buildRequest, buildPreview, formFromRequest, quoteFieldsFrom, storageFieldsFrom, storageMetaFrom, parseAsk, validate, tariffList, tariffsForSite } from './form.js';
 import { lineChart, barChart, dayTicks } from './charts.js';
 import * as results from './results.js';
@@ -125,13 +127,7 @@ function step1Html() {
       <p class="hint">只把示例的条件填进表单，数字仍由你点击计算后实时算出。要直接看示例的完整结果，请到「示例」页打开。</p>
     </div>
 
-    <div class="card ask">
-      <label class="label" for="askInput">一句话描述（可选）</label>
-      <div class="ask-row"><input id="askInput" class="askinput" type="text" placeholder="例如：每天 9 点到 21 点，预算 60 万，装 40 kWp 光伏，不要风机" value="${esc(T.ask ? T.ask.text : '')}">
-        <button class="btn sm" type="button" data-action="ask">识别并填入</button></div>
-      <p class="hint">本地规则识别，只处理使用时段、使用日、预算、光伏容量、小风机台数与高度、电价、是否卖电；房间数、台数、面积、城市等请在下方表单修改。</p>
-      <div data-ask-result>${askResult()}</div>
-    </div>
+    <div class="card ask" data-ask>${askCardHtml()}</div>
 
     <form class="formcards" novalidate data-form>
       <fieldset class="card fcard"><legend><span class="fnum">1</span>建筑与房间</legend>
@@ -191,11 +187,38 @@ function quickButtons() {
   if (!s) return '<span class="hint">正在读取示例…</span>';
   return s.order.map((id) => { const c = s.cases.get(id); return `<button class="btn sm" type="button" data-quick-case="${id}">${esc((c.label || id).replace('状态变体：', '变体：'))}</button>`; }).join('');
 }
+/* ---------- 一句话输入：本地大模型理解（可用时）或本地规则识别 ---------- */
+const useModel = () => !!(app.agent && app.agent.available);
+function askCardHtml() {
+  const model = useModel(), busy = T.askBusy;
+  return `<div class="row" style="justify-content:space-between"><label class="label" for="askInput">一句话描述（可选）</label>
+      <span class="tag ${model ? 'brand' : 'unknown'}" title="${esc(model ? '由本机运行的大模型理解你的话，只提出表单修改' : (app.agent && app.agent.reason ? `本地大模型不可用：${app.agent.reason}` : '本地规则识别'))}">${icon(model ? 'spark' : 'info')}${model ? '本地大模型理解' : '规则识别'}</span></div>
+    <div class="ask-row"><input id="askInput" class="askinput" type="text" placeholder="例如：每间改成3台空调，预算加到5万，电价每年涨3%" value="${esc(T.askText || '')}"${busy ? ' disabled' : ''}>
+      <button class="btn sm" type="button" data-action="ask"${busy ? ' disabled' : ''}>${busy ? '正在理解…' : model ? '理解' : '识别并填入'}</button></div>
+    <p class="hint">${model ? '本地大模型只理解你的话并提出表单修改，你确认后才写入表单；不会自动计算，所有数字仍由计算服务算出。数据只在本机处理。' : '本地规则识别，只处理使用时段、使用日、预算、光伏容量、小风机台数与高度、电价、电价年涨幅、是否卖电；房间数、台数、面积、城市等请在下方表单修改。'}</p>
+    <div data-ask-result aria-live="polite">${busy ? '<p class="small muted">本地大模型正在理解这句话…</p>' : askResult()}</div>`;
+}
+function renderAsk() { const box = $('[data-ask]', el); if (box) box.innerHTML = askCardHtml(); }
+
+function proposalHtml(P) {
+  const rows = P.changes.map((c, i) => `<li><span class="pr-label">${esc(agentLabel(c.field, c.label))}</span><span class="pr-from">${esc(agentValueText(c.field, c.from, app.options))}</span>${icon('arrow')}<b class="pr-to">${esc(agentValueText(c.field, c.to, app.options))}</b></li>`).join('');
+  return `<div class="proposal" role="group" aria-label="我理解到的修改">
+    <p class="pr-title">${icon('spark')}我理解到的修改</p>
+    ${P.changes.length ? `<ul class="pr-list">${rows}</ul>` : '<p class="small muted">没有可以直接写入表单的修改。</p>'}
+    ${P.unsupported.length ? `<p class="pr-sub">没能处理：</p><ul class="pr-un">${P.unsupported.map((u) => `<li>${esc(u)}</li>`).join('')}</ul>` : ''}
+    <div class="row" style="margin-top:10px">${P.changes.length ? '<button class="btn primary sm" type="button" data-action="agent-apply">采用这些修改</button>' : ''}<button class="btn sm" type="button" data-action="agent-cancel">取消</button></div>
+    <p class="hint">采用后只修改表单条件，不会自动计算；请检查后点击「计算」。</p></div>`;
+}
+
 function askResult() {
   if (!T.ask) return '';
   const a = T.ask;
-  if (!a.applied.length && !a.rejected.length) return '<p class="hint">没有识别到可填入的条件。</p>';
-  return `<div class="ask-tags">${a.applied.map(([, , l]) => `<span class="tag ok">${icon('check')}${esc(l)}</span>`).join('')}${a.rejected.map(([t, why]) => `<span class="tag unknown">${icon('info')}${esc(t)}：${esc(why)}</span>`).join('')}</div>`;
+  if (a.kind === 'proposal') return proposalHtml(a);
+  if (a.kind === 'question') return `<div class="callout info">${icon('help')}<span><b>需要补充：</b>${esc(a.question || '')}</span></div>`;
+  if (a.kind === 'applied') return `<div class="ask-tags">${a.keys.length ? `<span class="tag ok">${icon('check')}已写入表单：${esc(a.labels.join('、'))}</span>` : ''}${a.skipped.map((x) => `<span class="tag unknown">${icon('info')}${esc(x.label)}：${esc(x.why)}</span>`).join('')}</div><p class="hint">条件已修改，请检查后点击「计算」。</p>`;
+  const fb = a.fallbackReason ? `<p class="small" style="color:var(--warn)">${icon('info')} 本地大模型暂不可用（${esc(a.fallbackReason)}），已改用规则识别。</p>` : '';
+  if (!a.applied.length && !a.rejected.length) return fb + '<p class="hint">没有识别到可填入的条件。</p>';
+  return fb + `<div class="ask-tags">${a.applied.map(([, , l]) => `<span class="tag ok">${icon('check')}${esc(l)}</span>`).join('')}${a.rejected.map(([t, why]) => `<span class="tag unknown">${icon('info')}${esc(t)}：${esc(why)}</span>`).join('')}</div>`;
 }
 
 /* ---------- 台数比选 ---------- */
@@ -470,13 +493,9 @@ function bind() {
     if (a === 'size') { sizeUnits(); return; }
     if (a === 'adopt-units') { setField('units_per_room', act.dataset.units, { rerender: true }); toast(`已采用每间 ${act.dataset.units} 台`); return; }
     if (a === 'stop-wait') { if (T.run && T.run.ctrl) T.run.ctrl.abort(); T.run = null; updateRun(); toast('已停止等待；计算服务会在后台算完本次任务'); return; }
-    if (a === 'ask') {
-      const text = $('#askInput', el).value; const r = parseAsk(text);
-      T.ask = Object.assign({ text }, r);
-      for (const [k, v] of r.applied) T.form[k] = v;
-      if (r.applied.length) markChanged();
-      renderStep(); return;
-    }
+    if (a === 'ask') { askSubmit(); return; }
+    if (a === 'agent-cancel') { T.ask = null; renderAsk(); return; }
+    if (a === 'agent-apply') { agentApply(); return; }
     if (a === 'sample-quote') {
       const s = data.samplesLoaded(); const c = s && s.cases.get('tier_small');
       if (!c) { toast('示例还没读取完，请稍候'); return; }
@@ -488,6 +507,49 @@ function bind() {
     const pc = t.closest('[data-pv-scen]'); if (pc) { T.pvScen = pc.dataset.pvScen; updateRun(); if (T.step !== 1) renderStep(); return; }
   });
   el.addEventListener('keydown', (e) => { if (e.key === 'Enter' && e.target.id === 'askInput') { e.preventDefault(); $('[data-action="ask"]', el).click(); } });
+}
+
+/* ---------- 一句话输入的处理 ---------- */
+function ruleAsk(text, fallbackReason) {
+  const r = parseAsk(text);
+  T.ask = Object.assign({ kind: 'rule', text, fallbackReason: fallbackReason || null }, r);
+  for (const [k, v] of r.applied) T.form[k] = v;
+  if (r.applied.length) { T.touched = true; markChanged(); }
+  const y = scrollY; renderStep(); scrollTo(0, y);
+  if (r.applied.length) flashFields(r.applied.map(([k]) => k));
+}
+async function askSubmit() {
+  const text = ($('#askInput', el).value || '').trim();
+  T.askText = text;
+  if (!text) { toast('请先输入一句话'); return; }
+  if (!useModel()) { ruleAsk(text); return; }
+  T.askBusy = true; T.ask = null; renderAsk();
+  const res = await agent.parse(text, buildRequest(T.form));
+  T.askBusy = false;
+  if (res.status === 'ok') T.ask = { kind: 'proposal', text, changes: res.changes, unsupported: res.unsupported };
+  else if (res.status === 'needs_clarification') T.ask = { kind: 'question', text, question: res.question || res.reason || '请补充更具体的条件。' };
+  else { ruleAsk(text, res.reason || (res.status === 'failed' ? '理解失败' : '不可用')); toast('本地大模型暂不可用，已改用规则识别'); return; }
+  renderAsk();
+}
+function agentApply() {
+  if (!T.ask || T.ask.kind !== 'proposal') return;
+  const { form, keys, skipped } = applyAgentChanges(T.form, T.ask.changes);
+  T.form = form;
+  const labels = [...new Set(T.ask.changes.filter((c) => !skipped.find((x) => x.label === agentLabel(c.field, c.label))).map((c) => agentLabel(c.field, c.label)))];
+  T.ask = { kind: 'applied', text: T.ask.text, keys, labels, skipped: skipped.concat(T.ask.unsupported.map((u) => ({ label: '没能处理', why: u }))) };
+  if (keys.length) { T.touched = true; markChanged(); }
+  const y = scrollY; renderStep(); scrollTo(0, y);
+  flashFields(keys);
+  toast(keys.length ? '已写入表单，请检查后点击「计算」' : '没有可写入的修改');
+}
+/** 被改动的字段高亮 3 秒 */
+function flashFields(keys) {
+  for (const k of keys) {
+    const w = $(`[data-wrap="${k}"]`, el); if (!w) continue;
+    const det = w.closest('details'); if (det) det.open = true;
+    w.classList.remove('flash'); void w.offsetWidth; w.classList.add('flash');
+    setTimeout(() => w.classList.remove('flash'), 3000);
+  }
 }
 
 /** 公开参考碳价：读计算服务 options.carbon_price_scenarios（数值、来源、“仅情景”说明），只作为输入情景填入。 */
@@ -535,6 +597,7 @@ export function show(root, args = []) {
   renderAll();
 }
 
+on('agent', () => { if (built && !el.hidden && T.step === 1) renderAsk(); });
 on('mode', () => {
   // 选项到达后：用户还没动过表单就按选项重建空白条件；否则只补齐缺失的型号与电价档案
   if (!T.form) return;
