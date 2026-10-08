@@ -310,5 +310,9 @@ v6运行时仍使用当时的公开抄录档案，代码保持 `verified=false/p
 
 本轮新增的是可复现的余电经济附加计算和电价档案核验，不是电池投资建议、并网审批或售电合同结算；四方案与主推荐保持原定义。第一阶段空调负荷仍为未校准冷却情景，屋顶可用面积、报价、外送资格和高温日气象代表性需用户/现场确认。没有在前端、PPT、视频或“乡艺有据”中扩大能力主张。
 
+## 第18节：本地模型状态与任务解析接口
+
+第18节接口契约和六个中文回放样例已独立记录在 `operation_planning/protocol/phase2b_round18_handoff_5090.md`；增量手册见 `docs/handoff/phase2b_realtime_api_manual_v8.md` 第6节。新增 `GET /api/operation/agent/status` 只探测 loopback 本地模型，`POST /api/operation/agent/parse` 只输出经过字段校验的修改建议，不执行计算。`ok`、`needs_clarification`、`unavailable`、`failed` 和 `unsupported` 均保持可见，不用确定性兜底冒充 Agent 成功。储能示例已与 v9 对齐：553.94/489.88 元/kWh、300 元/年、卖电0.25元/kWh；来源与政策字段见 `storage_surplus_paths_contract.md` 和 `docs/evidence/storage_surplus_quotes.md`。
+
 
 

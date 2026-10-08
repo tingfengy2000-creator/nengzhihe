@@ -36,6 +36,7 @@ from .hybrid import HybridScenario, hybrid_task_from_dict, run_hybrid_planning, 
 from .hybrid_agent import HybridPlanningAgent
 from .project_load import aggregate_project_load, project_load_context
 from .carbon import factor_catalog, carbon_price_scenarios
+from .agent_parse import local_model_status, parse_agent_request
 
 
 ROOT = Path(__file__).resolve().parent
@@ -679,6 +680,7 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:  # noqa: N802
         parsed = urlparse(self.path); path = parsed.path
         if path in ("/", "/index.html"): return self._send(HTTPStatus.OK, (UI / "index.html").read_bytes(), MIME[".html"])
+        if path == "/api/operation/agent/status": return self._send(HTTPStatus.OK, local_model_status())
         if path == "/api/operation/health": return self._send(HTTPStatus.OK, {"ok": True, "product": "能智核——公共建筑空调运行方案试算与优化智能体", "mode": "local_replay"})
         if path == "/api/operation/tariffs": return self._send(HTTPStatus.OK, _tariff_options())
         if path == "/api/operation/carbon/factors": return self._send(HTTPStatus.OK, factor_catalog())
@@ -750,6 +752,18 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:  # noqa: N802
         path = urlparse(self.path).path
+        if path == "/api/operation/agent/parse":
+            try:
+                payload = self._read_json()
+                request_text = payload.get("request")
+                current_task = payload.get("current_task")
+                if not isinstance(request_text, str) or not request_text.strip():
+                    raise ValueError("request必须是非空文本")
+                if not isinstance(current_task, dict):
+                    raise ValueError("current_task必须是对象")
+                return self._send(HTTPStatus.OK, parse_agent_request(request_text, current_task))
+            except Exception as exc:
+                return self._send(HTTPStatus.BAD_REQUEST, _api_error(exc, "request"))
         if path in ("/api/operation/thermal/size", "/api/operation/thermal/compare"):
             try:
                 result = _thermal_capacity_sweep(self._read_json())
