@@ -486,3 +486,17 @@ v6 记录的全年 `hybrid/run` 平均约 94 秒、最长约 163 秒（5090）�
 ### 18.4 补充：界面精简回放缺回本年限（很小）
 
 `replay_cases_ui_v9.json` 中各候选的 `economics` 没有 `simple_payback_years`（完整回放中有）。前端第二轮的“几年回本”数字卡要读它，否则示例模式只能显示“—”。请在精简脚本 `scripts/compact_replay_v9.py` 中保留 `economics.simple_payback_years` 与 `economics.annual_saving_after_maintenance_cny`，重生 `replay_cases_ui_v9.json`（体积仍须 ≤ 8 MB），与第 18 节一起推送。
+
+## 19. 第十一轮：电价年涨幅（小改，2026-10-08）
+
+用户决定：回答评委“电价变了结论还成立吗”。目前 10 年研究期按当前电价不变计算（`tariff_application: current_tariff_on_reference_weather`）。请加一个参数，不改其他算法：
+
+1. **请求字段** `hybrid.tariff_escalation_rate`（年涨幅，小数；默认 0；合法范围 -0.05～0.10，越界返回中文错误与 `field`）。同样接受于 `hybrid/jobs`、`hybrid/run`、`pv/run`。
+2. **口径**：第 y 年（y = 1…研究期）购电电价 = 当前分时电价 × (1 + g)^(y−1)，逐时电价结构不变。作用于所有方案的购电费用，**包括 S0**；上网（卖电）价格默认不随之变化（如需联动另加字段，本轮不做）。储能附加路径的“少交电费”按同一系数逐年计算；卖电粗算不变。
+3. **回显**：结果中返回 `tariff_escalation: {rate, applies_to: "grid_import", note}`，中文说明一句“各年电价按年涨幅等比调整，电价结构不变；不是电价预测”。
+4. **敏感性（推荐方案一行即可）**：对推荐方案与 S0 额外返回 `escalation_sensitivity`：在 g ∈ {−0.02, 0, 0.02, 0.04} 下的两方案 10 年总花费、差额与简单回本年限（只复用已算好的逐年电量，不重跑物理计算）。前端用它画一张小表：“电价每年变化多少时，结论是否改变”。
+5. **测试**：g=0 与现结果逐项一致；g>0 时 S0 与各方案购电费逐年按系数增长；越界报错；敏感性四档单调。
+6. **示例**：界面精简回放（与 18.4 一起重生）中三档带上 `escalation_sensitivity`；三档默认 g=0，结论不变。
+7. 手册补充字段说明与示例。
+
+与第 18 节一起在 `fix/5090-redesign-followup` 普通推送。
