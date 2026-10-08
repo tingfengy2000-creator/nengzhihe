@@ -1,0 +1,1194 @@
+{
+  "format_version": "thermal_size_v9_contract",
+  "source_endpoint": "/api/operation/thermal/size",
+  "source_commit": "0f7d10fbdd0391793cbdcbdc968241020d9c2cf5",
+  "machine_role": "5090",
+  "generated_utc": "2026-10-07T16:45:03+00:00",
+  "cases": {
+    "tier_small": {
+      "request": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "area_m2": 35,
+          "height_m": 3.0,
+          "orientation": "north",
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "ventilation_lps_person": 7.0,
+          "infiltration_ach": 0.35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "indoor_temp_c": 26.0,
+          "indoor_rh_percent": 60.0,
+          "cooling_setpoint_c": 26.0,
+          "rh_setpoint_percent": 60.0,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100.0,
+          "equipment_id": "midea_msagbu12_mox201",
+          "equipment_count": 2,
+          "room_count": 1,
+          "units_per_room": 2,
+          "default_shr": 0.75
+        },
+        "max_units": 30
+      },
+      "response": {
+        "status": "success",
+        "site_id": "guangzhou",
+        "year": 2024,
+        "weather_hash": "000fd1650cb811514c8e5eb7cf0325e3e96a0a75844c5b046c1098080e0c6557",
+        "input_contract": {
+          "room": {
+            "area_m2": 35,
+            "height_m": 3.0,
+            "orientation": "north",
+            "window_wall_ratio": 0.1,
+            "insulation_u_w_m2k": 0.3,
+            "people_count": 2,
+            "equipment_gain_w": 100,
+            "ventilation_lps_person": 7.0,
+            "infiltration_ach": 0.35,
+            "weekdays_only": true,
+            "start_hour": 8,
+            "end_hour": 18,
+            "indoor_temp_c": 26.0,
+            "indoor_rh_percent": 60.0,
+            "cooling_setpoint_c": 26.0,
+            "rh_setpoint_percent": 60.0,
+            "pre_cool_minutes": 60,
+            "thermal_mass_kj_per_m2": 100.0,
+            "equipment_id": "midea_msagbu12_mox201",
+            "equipment_count": 2,
+            "room_count": 1,
+            "units_per_room": 2,
+            "default_shr": 0.75
+          },
+          "cost": {
+            "study_years": 10,
+            "price_cny_per_kwh": null,
+            "calendar_start": null,
+            "discount_rate": 0.0,
+            "room_count": 1,
+            "units_per_room": 2,
+            "expected_life_years": null,
+            "warranty_years": null,
+            "quote_scope": "per_unit",
+            "quantity_semantics": "room_count × units_per_room; thermal energy is not multiplied by units_per_room again",
+            "quote": {},
+            "tariff_mapping": null
+          }
+        },
+        "max_units": 30,
+        "minimum_adequate_units_per_room": 2,
+        "candidates": [
+          {
+            "units_per_room": 1,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 589.6509961758363,
+            "annual_cooling_kwh": 2003.81335034173,
+            "capacity_shortfall_hours": 35.0,
+            "unmet_temp_degree_hours": 2.275700228140572,
+            "unmet_rh_percent_hours": 9.446325801704504
+          },
+          {
+            "units_per_room": 2,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.9712447186494,
+            "annual_cooling_kwh": 2001.491565322424,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 3,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 4,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 5,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 6,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 7,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 8,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 9,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 10,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 11,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 12,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 13,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 14,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 15,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 16,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 17,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 18,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 19,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 20,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 21,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 22,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 23,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 24,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 25,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 26,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 27,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 28,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 29,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 30,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 588.7442079077184,
+            "annual_cooling_kwh": 2000.7196401652589,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          }
+        ],
+        "adequacy_rule": {
+          "name": "occupied_hours_only_with_bounded_precooling",
+          "pre_cool_minutes": 60,
+          "service_metrics_exclude_precooling": true,
+          "thermal_mass_kj_per_m2": 100.0,
+          "description": "允许营业前预冷；预冷电量计入负荷，但冷量不足和温湿度服务指标仅在使用时段判定。有效热容为轻质办公参考假设，可由用户覆盖。"
+        },
+        "notes": [
+          "每个候选均为同一房间的独立热湿回放；未把room_count重复乘入。",
+          "额定点设备适配，不等同现场实测选型。"
+        ]
+      },
+      "minimum_adequate_units_per_room": 2
+    },
+    "tier_medium": {
+      "request": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "area_m2": 70,
+          "height_m": 3.6,
+          "orientation": "north",
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "people_count": 8,
+          "equipment_gain_w": 300,
+          "ventilation_lps_person": 7.0,
+          "infiltration_ach": 0.35,
+          "weekdays_only": false,
+          "start_hour": 9,
+          "end_hour": 21,
+          "indoor_temp_c": 26.0,
+          "indoor_rh_percent": 60.0,
+          "cooling_setpoint_c": 26.0,
+          "rh_setpoint_percent": 60.0,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100.0,
+          "equipment_id": "midea_msagbu12_mox201",
+          "equipment_count": 5,
+          "room_count": 20,
+          "units_per_room": 5,
+          "default_shr": 0.75
+        },
+        "max_units": 30
+      },
+      "response": {
+        "status": "success",
+        "site_id": "guangzhou",
+        "year": 2024,
+        "weather_hash": "000fd1650cb811514c8e5eb7cf0325e3e96a0a75844c5b046c1098080e0c6557",
+        "input_contract": {
+          "room": {
+            "area_m2": 70,
+            "height_m": 3.6,
+            "orientation": "north",
+            "window_wall_ratio": 0.1,
+            "insulation_u_w_m2k": 0.3,
+            "people_count": 8,
+            "equipment_gain_w": 300,
+            "ventilation_lps_person": 7.0,
+            "infiltration_ach": 0.35,
+            "weekdays_only": false,
+            "start_hour": 9,
+            "end_hour": 21,
+            "indoor_temp_c": 26.0,
+            "indoor_rh_percent": 60.0,
+            "cooling_setpoint_c": 26.0,
+            "rh_setpoint_percent": 60.0,
+            "pre_cool_minutes": 60,
+            "thermal_mass_kj_per_m2": 100.0,
+            "equipment_id": "midea_msagbu12_mox201",
+            "equipment_count": 5,
+            "room_count": 20,
+            "units_per_room": 5,
+            "default_shr": 0.75
+          },
+          "cost": {
+            "study_years": 10,
+            "price_cny_per_kwh": null,
+            "calendar_start": null,
+            "discount_rate": 0.0,
+            "room_count": 20,
+            "units_per_room": 5,
+            "expected_life_years": null,
+            "warranty_years": null,
+            "quote_scope": "per_unit",
+            "quantity_semantics": "room_count × units_per_room; thermal energy is not multiplied by units_per_room again",
+            "quote": {},
+            "tariff_mapping": null
+          }
+        },
+        "max_units": 30,
+        "minimum_adequate_units_per_room": 5,
+        "candidates": [
+          {
+            "units_per_room": 1,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 2136.17070567061,
+            "annual_cooling_kwh": 7260.466332791706,
+            "capacity_shortfall_hours": 2324.0,
+            "unmet_temp_degree_hours": 22.865456938415193,
+            "unmet_rh_percent_hours": 45185.375476503854
+          },
+          {
+            "units_per_room": 2,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 2687.8519795235993,
+            "annual_cooling_kwh": 9135.337432307972,
+            "capacity_shortfall_hours": 1638.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 13552.792687727973
+          },
+          {
+            "units_per_room": 3,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 2990.590798613835,
+            "annual_cooling_kwh": 10164.077539443371,
+            "capacity_shortfall_hours": 403.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 214.11296615159156
+          },
+          {
+            "units_per_room": 4,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 3011.8881851470437,
+            "annual_cooling_kwh": 10236.36441977063,
+            "capacity_shortfall_hours": 1.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 5,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 6,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 7,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 8,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 9,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 10,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 11,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 12,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 13,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 14,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 15,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 16,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 17,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 18,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 19,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 20,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 21,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 22,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 23,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 24,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 25,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 26,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 27,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 28,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 29,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 30,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 3011.896748503265,
+            "annual_cooling_kwh": 10236.393535181782,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          }
+        ],
+        "adequacy_rule": {
+          "name": "occupied_hours_only_with_bounded_precooling",
+          "pre_cool_minutes": 60,
+          "service_metrics_exclude_precooling": true,
+          "thermal_mass_kj_per_m2": 100.0,
+          "description": "允许营业前预冷；预冷电量计入负荷，但冷量不足和温湿度服务指标仅在使用时段判定。有效热容为轻质办公参考假设，可由用户覆盖。"
+        },
+        "notes": [
+          "每个候选均为同一房间的独立热湿回放；未把room_count重复乘入。",
+          "额定点设备适配，不等同现场实测选型。"
+        ]
+      },
+      "minimum_adequate_units_per_room": 5
+    },
+    "tier_large": {
+      "request": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "area_m2": 250,
+          "height_m": 6,
+          "orientation": "north",
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "people_count": 20,
+          "equipment_gain_w": 3000,
+          "ventilation_lps_person": 7.0,
+          "infiltration_ach": 0.35,
+          "weekdays_only": false,
+          "start_hour": 8,
+          "end_hour": 20,
+          "indoor_temp_c": 26.0,
+          "indoor_rh_percent": 60.0,
+          "cooling_setpoint_c": 26.0,
+          "rh_setpoint_percent": 60.0,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100.0,
+          "equipment_id": "midea_msagbu12_mox201",
+          "equipment_count": 14,
+          "room_count": 6,
+          "units_per_room": 14,
+          "default_shr": 0.75
+        },
+        "max_units": 30
+      },
+      "response": {
+        "status": "success",
+        "site_id": "guangzhou",
+        "year": 2024,
+        "weather_hash": "000fd1650cb811514c8e5eb7cf0325e3e96a0a75844c5b046c1098080e0c6557",
+        "input_contract": {
+          "room": {
+            "area_m2": 250,
+            "height_m": 6,
+            "orientation": "north",
+            "window_wall_ratio": 0.1,
+            "insulation_u_w_m2k": 0.3,
+            "people_count": 20,
+            "equipment_gain_w": 3000,
+            "ventilation_lps_person": 7.0,
+            "infiltration_ach": 0.35,
+            "weekdays_only": false,
+            "start_hour": 8,
+            "end_hour": 20,
+            "indoor_temp_c": 26.0,
+            "indoor_rh_percent": 60.0,
+            "cooling_setpoint_c": 26.0,
+            "rh_setpoint_percent": 60.0,
+            "pre_cool_minutes": 60,
+            "thermal_mass_kj_per_m2": 100.0,
+            "equipment_id": "midea_msagbu12_mox201",
+            "equipment_count": 14,
+            "room_count": 6,
+            "units_per_room": 14,
+            "default_shr": 0.75
+          },
+          "cost": {
+            "study_years": 10,
+            "price_cny_per_kwh": null,
+            "calendar_start": null,
+            "discount_rate": 0.0,
+            "room_count": 6,
+            "units_per_room": 14,
+            "expected_life_years": null,
+            "warranty_years": null,
+            "quote_scope": "per_unit",
+            "quantity_semantics": "room_count × units_per_room; thermal energy is not multiplied by units_per_room again",
+            "quote": {},
+            "tariff_mapping": null
+          }
+        },
+        "max_units": 30,
+        "minimum_adequate_units_per_room": 14,
+        "candidates": [
+          {
+            "units_per_room": 1,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 3474.870728669758,
+            "annual_cooling_kwh": 11812.046410988984,
+            "capacity_shortfall_hours": 3066.0,
+            "unmet_temp_degree_hours": 13868.161626855808,
+            "unmet_rh_percent_hours": 12781.109658870397
+          },
+          {
+            "units_per_room": 2,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 6255.079713542665,
+            "annual_cooling_kwh": 21262.24289306848,
+            "capacity_shortfall_hours": 2764.0,
+            "unmet_temp_degree_hours": 5766.953320941447,
+            "unmet_rh_percent_hours": 27863.320841115885
+          },
+          {
+            "units_per_room": 3,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 8106.667356826876,
+            "annual_cooling_kwh": 27555.12681374622,
+            "capacity_shortfall_hours": 2414.0,
+            "unmet_temp_degree_hours": 1157.3767161507014,
+            "unmet_rh_percent_hours": 38071.86218291503
+          },
+          {
+            "units_per_room": 4,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 9051.412429656713,
+            "annual_cooling_kwh": 30764.745994879366,
+            "capacity_shortfall_hours": 2172.0,
+            "unmet_temp_degree_hours": 28.24675128642122,
+            "unmet_rh_percent_hours": 34574.53905526732
+          },
+          {
+            "units_per_room": 5,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 9654.291354608617,
+            "annual_cooling_kwh": 32813.022855081734,
+            "capacity_shortfall_hours": 2020.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 25394.992267431102
+          },
+          {
+            "units_per_room": 6,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 10201.150076984282,
+            "annual_cooling_kwh": 34671.713994536934,
+            "capacity_shortfall_hours": 1829.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 17163.28067405647
+          },
+          {
+            "units_per_room": 7,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 10657.853836922832,
+            "annual_cooling_kwh": 36223.87826170599,
+            "capacity_shortfall_hours": 1573.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 10058.811762438929
+          },
+          {
+            "units_per_room": 8,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 11030.039829977935,
+            "annual_cooling_kwh": 37488.69221995419,
+            "capacity_shortfall_hours": 1389.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 4384.763182434851
+          },
+          {
+            "units_per_room": 9,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 11339.533986973036,
+            "annual_cooling_kwh": 38540.39092695049,
+            "capacity_shortfall_hours": 1079.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 1155.360176490073
+          },
+          {
+            "units_per_room": 10,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 11535.125148277133,
+            "annual_cooling_kwh": 39204.87995771142,
+            "capacity_shortfall_hours": 550.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 202.28120532749844
+          },
+          {
+            "units_per_room": 11,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 11605.390606131188,
+            "annual_cooling_kwh": 39443.50019165682,
+            "capacity_shortfall_hours": 137.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 31.712633274623144
+          },
+          {
+            "units_per_room": 12,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 11620.126254898218,
+            "annual_cooling_kwh": 39493.498598016704,
+            "capacity_shortfall_hours": 24.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.689454891374254
+          },
+          {
+            "units_per_room": 13,
+            "service_status": "service_gap",
+            "service_quality": "service_gap",
+            "annual_electric_kwh": 11623.167720129304,
+            "annual_cooling_kwh": 39503.77083820903,
+            "capacity_shortfall_hours": 6.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 14,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 11623.68880264478,
+            "annual_cooling_kwh": 39505.51680878247,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 15,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 11623.68880264478,
+            "annual_cooling_kwh": 39505.51680878247,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 16,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 11623.68880264478,
+            "annual_cooling_kwh": 39505.51680878247,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 17,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 11623.68880264478,
+            "annual_cooling_kwh": 39505.51680878247,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 18,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 11623.68880264478,
+            "annual_cooling_kwh": 39505.51680878247,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 19,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 11623.68880264478,
+            "annual_cooling_kwh": 39505.51680878247,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 20,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 11623.68880264478,
+            "annual_cooling_kwh": 39505.51680878247,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 21,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 11623.68880264478,
+            "annual_cooling_kwh": 39505.51680878247,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 22,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 11623.68880264478,
+            "annual_cooling_kwh": 39505.51680878247,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 23,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 11623.68880264478,
+            "annual_cooling_kwh": 39505.51680878247,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 24,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 11623.68880264478,
+            "annual_cooling_kwh": 39505.51680878247,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 25,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 11623.68880264478,
+            "annual_cooling_kwh": 39505.51680878247,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 26,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 11623.68880264478,
+            "annual_cooling_kwh": 39505.51680878247,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 27,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 11623.68880264478,
+            "annual_cooling_kwh": 39505.51680878247,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 28,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 11623.68880264478,
+            "annual_cooling_kwh": 39505.51680878247,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 29,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 11623.68880264478,
+            "annual_cooling_kwh": 39505.51680878247,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          },
+          {
+            "units_per_room": 30,
+            "service_status": "within_modeled_scope",
+            "service_quality": "within_modeled_scope",
+            "annual_electric_kwh": 11623.68880264478,
+            "annual_cooling_kwh": 39505.51680878247,
+            "capacity_shortfall_hours": 0.0,
+            "unmet_temp_degree_hours": 0.0,
+            "unmet_rh_percent_hours": 0.0
+          }
+        ],
+        "adequacy_rule": {
+          "name": "occupied_hours_only_with_bounded_precooling",
+          "pre_cool_minutes": 60,
+          "service_metrics_exclude_precooling": true,
+          "thermal_mass_kj_per_m2": 100.0,
+          "description": "允许营业前预冷；预冷电量计入负荷，但冷量不足和温湿度服务指标仅在使用时段判定。有效热容为轻质办公参考假设，可由用户覆盖。"
+        },
+        "notes": [
+          "每个候选均为同一房间的独立热湿回放；未把room_count重复乘入。",
+          "额定点设备适配，不等同现场实测选型。"
+        ]
+      },
+      "minimum_adequate_units_per_room": 14
+    }
+  }
+}

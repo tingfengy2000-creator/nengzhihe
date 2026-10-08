@@ -16,16 +16,22 @@
     "capacities_kwh": [0, 5, 10, 20, 50],
     "round_trip_efficiency": 0.90,
     "quote": {
-      "cny_per_kwh": 1800,
-      "installation_cny": 6000,
+      "cny_per_kwh": 553.94,
+      "installation_cny_per_kwh": 489.88,
       "maintenance_cny_per_year": 300,
       "life_years": 10,
-      "source": "用户示例报价"
+      "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+      "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+      "source_note": "2小时系统553.94 + 2小时EPC差额489.88；容量线性安装项，仅作示例拆分"
     },
     "export": {
       "price_cny_per_kwh": 0.25,
-      "connection_cny": 5000,
-      "source": "用户余电上网情景"
+      "connection_cny": 0,
+      "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+      "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+      "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+      "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+      "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网投入按0元粗算"
     }
   }
 }

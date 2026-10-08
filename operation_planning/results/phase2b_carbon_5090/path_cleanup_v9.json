@@ -1,0 +1,25 @@
+{
+  "scope": "round16 current v8/v9 replay artifacts only",
+  "replacement": {
+    "to": "operation_planning/data/weather_pv/guangzhou_2024.json",
+    "from_pattern": "machine absolute weather source path (redacted pattern)"
+  },
+  "files": [
+    {
+      "path": "operation_planning/results/phase2b_carbon_5090/replay_cases_v8.json",
+      "replaced": 0,
+      "remaining": 0,
+      "sha256": "301c52d94485b5195fba0bcc36d14a6fe9e10dbcf36c98e670531c980412a312"
+    },
+    {
+      "path": "docs/handoff/replay_viewer/replay_cases_v8.json",
+      "replaced": 0,
+      "remaining": 0,
+      "sha256": "a20e53236887e891102c89fb0ab041b48f4373f542f56eb954fae7ce922bfb79"
+    }
+  ],
+  "v9_full_remaining": 0,
+  "ui_v9_remaining": 0,
+  "historical_files_not_rewritten": true,
+  "note": "Older audit and handoff records retain historical machine paths for provenance; new v9 and UI artifacts are repository-relative."
+}

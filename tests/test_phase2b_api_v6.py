@@ -161,8 +161,10 @@ def real_short_http_probe() -> dict:
 
     try:
         options = request("GET", "/api/operation/options")
-        provisional = next(row for row in options["tariffs"]["tariffs"] if row["tariff_id"] == "guangzhou_industrial_lt1kv_202610")
-        assert provisional["provisional"] is True and provisional["verified"] is False
+        verified = next(row for row in options["tariffs"]["tariffs"] if row["tariff_id"] == "guangzhou_industrial_lt1kv_202610")
+        assert verified["provisional"] is False and verified["verified"] is True
+        assert "guangzhou" in verified["site_ids"]
+        assert options["carbon_price_scenarios"][0]["carbon_price_cny_per_t"] == 97.49
 
         thermal = request("POST", "/api/operation/thermal/size",
                           {"site_id": "guangzhou", "year": 2024, "room": payload["room"],

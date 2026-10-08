@@ -197,12 +197,16 @@ def _storage_economics(
     elif intervals.get("import_prices_cny_per_kwh") is not None:
         prices = _finite_nonnegative(intervals.get("import_prices_cny_per_kwh"), "储能分时购电价", len(intervals.get("load_kwh", [])))
     q = dict(quote or {})
-    parsed = {key: _quote_number(q, key) for key in ("cny_per_kwh", "installation_cny", "maintenance_cny_per_year")}
+    parsed = {key: _quote_number(q, key) for key in ("cny_per_kwh", "installation_cny", "installation_cny_per_kwh", "maintenance_cny_per_year")}
     life_raw = q.get("life_years")
     life = None if life_raw is None else int(life_raw)
     if life is not None and life < 1:
         raise ValueError("storage.quote.life_years必须是正整数")
-    missing = [key for key, value in parsed.items() if value is None] + (["life_years"] if life is None else [])
+    missing = [key for key, value in parsed.items() if key not in {"installation_cny", "installation_cny_per_kwh"} and value is None]
+    if parsed["installation_cny"] is None and parsed["installation_cny_per_kwh"] is None:
+        missing.append("installation_cny_or_installation_cny_per_kwh")
+    if life is None:
+        missing.append("life_years")
     result_rows: List[Dict[str, Any]] = []
     for row in upper.get("candidates", []):
         capacity = float(row["capacity_kwh"])
@@ -236,7 +240,10 @@ def _storage_economics(
             payback_reason = "缺少储能报价或分时购电价"
         else:
             economics_status = "complete"
-            capex = capacity * float(parsed["cny_per_kwh"]) + float(parsed["installation_cny"])
+            installation_fixed = parsed["installation_cny"]
+            installation_variable = parsed["installation_cny_per_kwh"]
+            installation_cost = float(installation_fixed) if installation_fixed is not None else capacity * float(installation_variable)
+            capex = capacity * float(parsed["cny_per_kwh"]) + installation_cost
             annual_net = float(annual_saving) - float(parsed["maintenance_cny_per_year"])
             # A replacement is needed only when another operating year remains;
             # a battery that reaches the research-period endpoint is not bought
@@ -250,7 +257,7 @@ def _storage_economics(
         direct_self = sum(_finite_nonnegative(intervals.get("self_use_kwh", []), "自用电量", len(intervals.get("load_kwh", []))))
         before_rate = direct_self / generation if generation > 1e-12 else None
         after_rate = min(1.0, (direct_self + recovered) / generation) if generation > 1e-12 else None
-        result_rows.append({**row, "economics_status": economics_status, "initial_investment_cny": capex, "annual_bill_saving_cny": annual_saving, "annual_saving_cny": annual_saving, "annual_net_benefit_cny": annual_net, "annual_net_saving_cny": annual_net, "study_period_total_cost_cny": total_spend, "study_period_total_spend_cny": total_spend, "study_period_net_benefit_cny": period_net, "simple_payback_years": payback, "payback_years": payback, "payback_status": payback_reason, "replacement_count": 0 if life is None else sum(1 for year in range(life, years, life)), "self_consumption_rate_before": before_rate, "self_consumption_rate_after": after_rate, "self_consumption_rate_delta": None if before_rate is None or after_rate is None else after_rate - before_rate, "economics_note": "研究期内净收益为不折现粗算；寿命到期且研究期仍继续时按同一初始投入更换，未计衰减与温度影响。"})
+        result_rows.append({**row, "economics_status": economics_status, "initial_investment_cny": capex, "installation_cny": parsed["installation_cny"], "installation_cny_per_kwh": parsed["installation_cny_per_kwh"], "annual_bill_saving_cny": annual_saving, "annual_saving_cny": annual_saving, "annual_net_benefit_cny": annual_net, "annual_net_saving_cny": annual_net, "study_period_total_cost_cny": total_spend, "study_period_total_spend_cny": total_spend, "study_period_net_benefit_cny": period_net, "simple_payback_years": payback, "payback_years": payback, "payback_status": payback_reason, "replacement_count": 0 if life is None else sum(1 for year in range(life, years, life)), "self_consumption_rate_before": before_rate, "self_consumption_rate_after": after_rate, "self_consumption_rate_delta": None if before_rate is None or after_rate is None else after_rate - before_rate, "quote_source": q.get("source"), "quote_source_url": q.get("source_url"), "quote_source_note": q.get("source_note"), "economics_note": "研究期内净收益为不折现粗算；寿命到期且研究期仍继续时按同一初始投入更换，未计衰减与温度影响。"})
     complete = [r for r in result_rows if r["economics_status"] == "complete"]
     complete_nonzero = [r for r in complete if float(r["capacity_kwh"]) > 0]
     recommendation = None
@@ -293,7 +300,7 @@ def _export_economics(intervals: Mapping[str, Sequence[Any]], *, export: Optiona
     years = int(study_years)
     annual_revenue = None if price is None else surplus * price
     study_revenue = None if price is None else surplus * price * years
-    row = {"surplus_kwh_year1": surplus, "sold_kwh_year1": surplus, "annual_sell_kwh": surplus, "price_cny_per_kwh": price, "connection_cny": connection, "connection_cost_assumed_zero": connection_missing, "connection_note": "未填写并网投入，按0元粗算" if connection_missing else "采用用户填写的并网投入", "source": req.get("source"), "economics_status": "complete" if price is not None else "incomplete", "annual_revenue_cny": annual_revenue, "annual_income_cny": annual_revenue, "study_period_revenue_cny": study_revenue, "study_period_income_cny": study_revenue, "simple_payback_years": None if price is None or price <= 0 or connection <= 0 else connection / (surplus * price) if surplus > 0 else None, "payback_status": None if price is not None and price > 0 and connection > 0 and surplus > 0 else ("无并网投入" if connection == 0 else "缺少上网电价或没有可卖余电"), "note": EXPORT_NOTE}
+    row = {"surplus_kwh_year1": surplus, "sold_kwh_year1": surplus, "annual_sell_kwh": surplus, "price_cny_per_kwh": price, "connection_cny": connection, "connection_cost_assumed_zero": connection_missing, "connection_note": "未填写并网投入，按0元粗算" if connection_missing else "采用用户填写的并网投入", "source": req.get("source"), "source_url": req.get("source_url"), "source_note": req.get("source_note"), "economics_status": "complete" if price is not None else "incomplete", "annual_revenue_cny": annual_revenue, "annual_income_cny": annual_revenue, "study_period_revenue_cny": study_revenue, "study_period_income_cny": study_revenue, "simple_payback_years": None if price is None or price <= 0 or connection <= 0 else connection / (surplus * price) if surplus > 0 else None, "payback_status": None if price is not None and price > 0 and connection > 0 and surplus > 0 else ("无并网投入" if connection == 0 else "缺少上网电价或没有可卖余电"), "note": EXPORT_NOTE}
     return {"status": "calculated", "study_years": years, "path": row, "options": [{"price_cny_per_kwh": price, "source": req.get("source")}]}
 
 

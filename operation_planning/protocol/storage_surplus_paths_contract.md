@@ -10,22 +10,28 @@
     "capacities_kwh": [0, 5, 10, 20, 50],
     "round_trip_efficiency": 0.90,
     "quote": {
-      "cny_per_kwh": 1200,
-      "installation_cny": 3000,
+      "cny_per_kwh": 553.94,
+      "installation_cny_per_kwh": 489.88,
       "maintenance_cny_per_year": 120,
       "life_years": 10,
-      "source": "示例报价，仅用于演示"
+      "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+      "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+      "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
     },
     "export": {
       "price_cny_per_kwh": 0.30,
       "connection_cny": 0,
-      "source": "用户情景；待当地电网批复"
+      "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+      "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+      "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+      "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+      "source_note": "公开行业案例以0.30元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价。"
     }
   }
 }
 ```
 
-`quote` 任一非零容量字段缺失时，该容量的 `economics_status` 为 `incomplete`；不把缺报价当作零元。容量 0 代表不安装，不承担储能固定费用。`export.price_cny_per_kwh` 缺失时保留余电物理量，但卖电金额为 `null`、状态为 `incomplete`；未填写 `connection_cny` 按 0，并显式写入结果。
+`quote.cny_per_kwh`、`quote.maintenance_cny_per_year`、`quote.life_years` 必须提供；安装费用二选一：旧兼容字段 `installation_cny` 表示一次性固定安装费，或新增 `installation_cny_per_kwh` 表示按容量线性计费。非零容量缺任一必要字段时，该容量的 `economics_status` 为 `incomplete`，不把缺报价当作零元。容量 0 代表不安装，不承担储能固定费用。`export.price_cny_per_kwh` 缺失时保留余电物理量，但卖电金额为 `null`、状态为 `incomplete`；未填写 `connection_cny` 按 0，并显式写入结果。
 
 ## 响应片段
 

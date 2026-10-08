@@ -117,5 +117,6 @@
     "replay_cases_v5.json",
     "replay_cases_v4.json",
     "replay_cases_v3.json"
-  ]
+  ],
+  "path_cleanup_note": "2026-10-08: repository-relative path substitution only; no physical results rerun."
 }

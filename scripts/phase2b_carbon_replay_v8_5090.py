@@ -36,6 +36,27 @@ TARIFF_ID = "guangzhou_industrial_lt1kv_202610"
 TARIFF_URL = "https://95598.csg.cn/#/gd/serviceInquire/information/detail/?infoId=8a592ed919684f97bc6abd030a79b807"
 WEATHER_REL = "operation_planning/data/weather_pv/guangzhou_2024.json"
 
+# The add-on cards are user scenarios, not procurement offers.  The storage
+# values below are derived from the public CNESA 2025 price summary: the
+# reported 2-hour system average (553.94 CNY/kWh) and 2-hour EPC average
+# (1043.82 CNY/kWh).  The difference is exposed as a capacity-scaled
+# installation component so the replay does not use one fixed installation
+# amount for every battery size.  This is an illustrative split, not a claim
+# that a single tender item quotes those two lines separately.
+STORAGE_QUOTE_SOURCE_URL = "https://www.esresearch.com.cn/report/info/detail/?id=6645"
+STORAGE_QUOTE_SOURCE_TITLE = "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）"
+STORAGE_SYSTEM_CNY_PER_KWH = 553.94
+STORAGE_EPC_CNY_PER_KWH = 1043.82
+STORAGE_INSTALL_CNY_PER_KWH = round(STORAGE_EPC_CNY_PER_KWH - STORAGE_SYSTEM_CNY_PER_KWH, 2)
+
+# Guangdong's 2025 policy requires market-based settlement for renewable
+# energy; no single fixed export price is guaranteed.  0.25 CNY/kWh is kept as
+# an explicit user sensitivity, with the policy source recorded alongside it.
+EXPORT_PRICE_SOURCE_URL = "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html"
+EXPORT_PRICE_SOURCE_TITLE = "国家发展改革委：关于深化新能源上网电价市场化改革的通知"
+EXPORT_PRICE_REFERENCE_URL = "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf"
+EXPORT_PRICE_REFERENCE_TITLE = "华福证券：分布式光伏行业深度（公开市场化余电示例）"
+
 
 def _sha(value: Any) -> str:
     raw = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
@@ -93,11 +114,19 @@ def _request_payload(room: RoomSpec, *, cap: float, requested: Sequence[float],
         "carbon": {"carbon_price_cny_per_t": None},
         "storage": {
             "capacities_kwh": [0, 5, 10, 20, 50], "round_trip_efficiency": 0.90,
-            "quote": {"cny_per_kwh": 1800, "installation_cny": 6000,
+            "quote": {"cny_per_kwh": STORAGE_SYSTEM_CNY_PER_KWH,
+                      "installation_cny_per_kwh": STORAGE_INSTALL_CNY_PER_KWH,
                       "maintenance_cny_per_year": 300, "life_years": 10,
-                      "source": "示例报价，仅用于演示，2026-10-07"},
-            "export": {"price_cny_per_kwh": 0.25, "connection_cny": 5000,
-                        "source": "用户情景，仅用于余电上网粗算，2026-10-07"},
+                      "source": STORAGE_QUOTE_SOURCE_TITLE,
+                      "source_url": STORAGE_QUOTE_SOURCE_URL,
+                      "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"},
+            "export": {"price_cny_per_kwh": 0.25,
+                        "connection_cny": 0,
+                        "source": EXPORT_PRICE_REFERENCE_TITLE,
+                        "source_url": EXPORT_PRICE_SOURCE_URL,
+                        "reference_url": EXPORT_PRICE_REFERENCE_URL,
+                        "policy_source": EXPORT_PRICE_SOURCE_TITLE,
+                        "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"},
         },
     }
     if fixed_capacity is not None:

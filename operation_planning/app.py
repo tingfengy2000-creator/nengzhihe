@@ -35,7 +35,7 @@ from .wind import WindTurbineProfile, WindScenario, WindQuote, generate_wind
 from .hybrid import HybridScenario, hybrid_task_from_dict, run_hybrid_planning, match_hybrid
 from .hybrid_agent import HybridPlanningAgent
 from .project_load import aggregate_project_load, project_load_context
-from .carbon import factor_catalog
+from .carbon import factor_catalog, carbon_price_scenarios
 
 
 ROOT = Path(__file__).resolve().parent
@@ -687,6 +687,7 @@ class Handler(BaseHTTPRequestHandler):
             years = sorted({int(year) for site in sites for year in site.get("cached_years", []) if str(year).isdigit()})
             return self._send(HTTPStatus.OK, {"status": "success", "cities": sites, "years": years,
                 "equipment_models": catalogue(), "tariffs": _tariff_options(), "carbon_factors": factor_catalog(),
+                "carbon_price_scenarios": carbon_price_scenarios(),
                 "units": {"area_m2": "m²", "height_m": "m", "power_kw": "kW", "energy_kwh": "kWh", "price_cny_per_kwh": "CNY/kWh"}})
         if path in ("/api/operation/cities", "/api/operation/years"):
             sites = available_sites()
