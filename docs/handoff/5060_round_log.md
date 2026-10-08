@@ -273,3 +273,103 @@ python -m operation_planning.run_server
 - 停止等待只停止轮询，计算服务没有取消接口，后台任务会继续算完。
 - 根目录 `AGENTS.md`（round4 合约，要求更新 CHANGELOG/REVIEW_INDEX 并推送 main）与本任务书冲突（第 11.2 节 A9 已提出）；本轮按任务书只在功能分支提交，未改 `CHANGELOG.md`、`docs/REVIEW_INDEX.md`。
 - 品牌“能见度”为暂定名，正式申报前需商标检索（任务书第 3 节）。
+
+## [5060回交] 前端第二轮小修：能见度（2026-10-08）
+
+按 `docs/handoff/frontend_redesign/PROMPT_round2.md` 执行（第一轮 `PROMPT.md` 的原则、视觉规范、技术约束和诚实规则继续有效），在 claude.ai/code 云端会话中完成并普通推送。
+
+```text
+起始SHA：fc05a6b（feat/5060-product-ui 最新提交，含 PROMPT_round2.md）
+分支：feat/frontend-round2（普通推送；未改 main，未强推，未建 Release/Tag，未合并，未开 PR）
+```
+
+### 提交拆分（远程 SHA）
+
+| 批次 | SHA | 内容 |
+| --- | --- | --- |
+| 1 | `1d2a27d` | 白名单加入 `replay_cases_ui_v9.json`；示例、首页、示例页、演示、关于、导出改读 v9（来源写 `format_version` 与源码提交）；删除 76 MB Worker 读取；第 2 步单间/项目合计读 `load_context.single_room_annual_kwh`；碳价按钮读 `options.carbon_price_scenarios`；默认电价按 `tariffs[].site_ids`；计价不完整金额按后端 `null`；`chart_recommended` 标为推荐 |
+| 2 | `991f030` | “多余的电去哪儿”卡片（替换原“储能理想上限”）、储能与卖电报价输入、汇总 CSV 与决策简报加入两条去路、演示第 6 幕（共 8 幕） |
+| 3 | `b13d364` | 一句话输入接本地大模型（`agent/status`、`agent/parse`，提出修改→用户确认→写入表单，不自动计算）、关于页“大模型在这里做什么”、验收脚本测试桩 |
+| 4 | `cf5ba9c` | 第 3 步三个数字卡、台数达标说明、自定义分时电价（`custom_user`）、电价年涨幅与敏感性表、`nzh.plans.v1` 一次性迁移、第 3 步结论句去重 |
+| 5 | `8f9e8b1` | 验收脚本补充第 4 节各项；卖电“回本”改用后端 `payback_status` 原文 |
+| 5 | `4640fd2` | 电价年涨幅表窄屏在容器内横向滑动（截图复查发现 390 宽表头被压成一字一行） |
+| 5 | `2041885` | 截图；验收脚本卖电标签比较忽略空白 |
+| 5 | `d1ff8e0` | 迁移方案缺年用电时只显示“—”；推荐只用电网时自发比例卡补“只用电网，不自己发电”（截图复查发现） |
+| 5 | 本记录所在提交 | 重拍受影响截图（`08_*`、`13_*`）、本记录 |
+
+### 修改文件
+
+- `operation_planning/app.py`：**唯一的后端改动**，`REPLAY_SAMPLES` 加入 `replay_cases_ui_v9.json`（精确文件名、只读，旧文件名保留）。
+- `operation_planning/ui/assets/js/`：`data.js`（v9 字段映射：`surplus_paths`、`simple_payback_years`、`tariff_escalation`、`escalation_sensitivity`、`tariff`）、`results.js`（数字卡、多余的电卡片、电价表、达标说明）、`form.js`（储能/卖电/自定义电价/年涨幅字段与请求、规则识别“电价每年涨3%”、模型修改映射）、`tool.js`（表单第 4、6 组、一句话输入卡）、`agent.js`（新增）、`export.js`（两条去路导出、方案迁移）、`charts.js`（正负柱图）、`demo.js`、`about.js`、`home.js`、`samples.js`、`story.js`、`main.js`、`util.js`；删除 `sample-worker.js`。
+- `operation_planning/ui/assets/css/tool.css`、`pages.css`。
+- `scripts/check_frontend_redesign.cjs`、`docs/handoff/screenshots/frontend_round2/`、本记录。
+- 未改动：算法、数据、回放与结果文件、`docs/handoff/5090_carbon_request.md`、`docs/handoff/frontend_redesign/` 下文件、`main`。
+
+### 接口使用变化
+
+| 接口 / 字段 | 用途 |
+| --- | --- |
+| `GET /samples/replay_cases_ui_v9.json` | 示例模式与首页示例（不再读取 v6） |
+| `GET /api/operation/agent/status`、`POST /api/operation/agent/parse` | 一句话输入；状态 404/超时/不可用时退回本地规则识别；`parse` 的 404、网络错误、超时视为不可用 |
+| 请求 `storage.capacities_kwh`、`storage.quote{…}`、`storage.export{…}` | 储能与卖电报价；来源字段只在用户未改示例报价时随请求发送；未填写的不补默认值 |
+| 请求 `pv.tariff_id="custom_user"` + `pv.custom_tariff` | 时段从所选官方档案复制（只读）、四个价格用户可改，带 `base_tariff_id` 与生效日期 |
+| 请求 `hybrid.tariff_escalation_rate` | 年涨幅（界面填 %，发送小数；为 0 时不发送） |
+| 响应 `surplus_paths`、`escalation_sensitivity`、`tariff_escalation`、`load_context.single_room_annual_kwh`、`options.carbon_price_scenarios`、`tariffs[].site_ids` | 只读显示 |
+
+是否影响数值：**否**。前端只做字段映射和显示；大模型只提出表单修改，确认后仍由计算服务算出全部数字，模型返回的内容不作为结果数字显示。
+
+### 截图
+
+`docs/handoff/screenshots/frontend_round2/`，云端无头 Chromium，1440、1024（1 倍）与 390（2 倍）× 浅色/深色，PNG 已量化为 256 色：
+
+| 前缀 | 内容 |
+| --- | --- |
+| `01_home` | 首页（1024） |
+| `02_sample_medium_step3` | 中档示例第 3 步全页 |
+| `03_numcards_medium` / `04_surplus_medium` / `05_escalation_medium` | 三个数字卡、多余的电去哪儿、电价变了结论还成立吗 |
+| `06_sample_medium_step2` | 第 2 步（单间与项目合计、达标说明） |
+| `07_surplus_small_not_recommended` | 小档：按当前报价不建议装储能 |
+| `08_variant_missing_pv_quote_step3` | 缺光伏报价变体：推荐只用电网，数字卡写“无需投入” |
+| `09_tool_step1_form` / `10_ask_proposal` | 第 1 步表单（自定义分时电价、年涨幅、储能与卖电）与一句话输入的修改提案 |
+| `11_samples` | 示例页（1024、390） |
+| `12_about` / `13_my_plans_migrated` | 关于页与迁移后的我的方案（1024） |
+| `14_live_custom_tariff_step3` / `15_live_escalation` | 实时计算：自定义分时电价 + 年涨幅 3%（1440 浅色、390 深色） |
+| `16_demo_scene6` | 演示第 6 幕“多余的电去哪儿” |
+
+`09`/`10` 中一句话输入的“本地大模型理解”提案由截图脚本拦截 `agent` 两个接口返回固定内容（与验收脚本桩服务同一契约），**不是真实模型输出**。
+
+### 第 4 节验收自查
+
+自动脚本 `node scripts/check_frontend_redesign.cjs`（需本机计算服务 18765、静态服务器 18799 与 playwright；脚本自带 18767 端口的大模型测试桩）：**955 项检查，0 项不通过**（第 5 批最后一次代码修改 d1ff8e0 后运行；第一轮为 334 项）。
+
+| # | 标准 | 结果 | 依据 |
+| --- | --- | --- | --- |
+| 1 | 第一轮 12 条仍通过 | 通过（同第一轮的说明） | 第一轮脚本全部检查保留（“储能理想上限”一项按 2.2 替换为多余的电卡片检查）；第一轮第 1 条“30 秒理解”仍无真人测试，第 4 条普通笔记本未测。 |
+| 2 | 示例数字与 v9 一致，含 `surplus_paths`；不再引用 v6 | 通过 | 六个案例逐项比较原有字段及数字卡、电价表、单间年用电、多余的电（每个发电方案）；脚本扫描 `assets/js` 全部文件与 8 个页面 HTML 均无 `replay_cases_v6`。 |
+| 3 | 储能卡片 | 通过 | 每个容量的投入、年少交电费、年净收益、回本、研究期净收益、自用比例前后与数据一致；最划算只标 `recommended_capacity_kwh>0` 的行；小档写 `recommendation_note`“按当前报价不建议装储能”；实时清空储能报价后各容量显示“条件不全：请填写储能报价”。 |
+| 4 | 卖电卡片 | 通过 | 电量、电价、每年/研究期收入、并网投入（未填写写“按 0 粗算”）、回本（无投入时用后端 `payback_status` 原文）；实时清空上网电价后只显示电量和“填写上网电价后可估算收入”。 |
+| 5 | 实时计算储能/卖电 | 通过 | 脚本实算小档 1 kWp：有报价时卡片完整；改储能单价后结果置灰；清空报价重算显示条件不全且无页面错误。 |
+| 6 | 一句话输入 | 通过（仅桩服务） | 桩服务覆盖 ok / needs_clarification / unavailable / failed / 404 / 超时与状态接口 404 / 超时 / 未启动；采用修改后计算次数为 0；提案只列字段与新旧值，模型文字不进入结果区。**真实本地模型未接入测试**（本机状态“本地模型未启动”）。 |
+| 7 | 三个数字卡 | 通过 | 推荐方案 `load_coverage_rate`、`capex_cny`、`simple_payback_years` 与数据一致；推荐只用电网时写“只用电网，无需投入”；缺失时“—”加原因。 |
+| 8 | `nzh.plans.v1` 迁移 | 通过 | 脚本写入一条第一轮格式方案，两次打开我的方案均只有 1 条；旧键保留、写入 `nzh.plans.v1.migrated`；缺少的字段显示“—”。 |
+| 9 | 无横向滚动、吸底栏、减少动态 | 通过 | 8 页 × 1440/1024/390 × 浅/深无横向滚动；吸底操作栏只在第 1 步，滚到底时位于最后一组表单之后，不遮挡（三种宽度实测），并加了聚焦时的底部留白；390 宽各表格在自身容器内横向滑动；减少动态效果下无动画/过渡。 |
+| 10 | 禁用技术词、机器路径 | 通过 | 主界面正则检查同第一轮；8 个页面 HTML 与示例的汇总 CSV、决策简报、完整 JSON 均不含盘符路径、`/home/`、`/root/`、`/tmp/`、用户名或账号；实时响应的天气 `source_file` 已是仓库相对路径。 |
+| 11 | 无控制台错误、离线 | 通过（同第一轮说明） | 全程 0 个页面错误；不请求外部地址。 |
+| 12 | 自定义分时电价与年涨幅 | 通过 | 实算请求含 `pv.tariff_id=custom_user`、`pv.custom_tariff`（峰段 1.5）与 `hybrid.tariff_escalation_rate=0.03`；结果写“电价：用户自定义电价（未经官方核验）”与“本次计算按每年 +3%”；示例电价表四行与 `escalation_sensitivity` 一致（总花费、差额方向、逐年累计回本年），推荐只用电网时为一句话，删去该字段后不显示。 |
+
+### 需要5090处理的问题
+
+1. **敏感性表不含用户本次涨幅**：`escalation_sensitivity.rates` 固定为 −2%/0/+2%/+4%；用户填 3% 时表中没有“本次”行，界面只写“本次计算按每年 +3%”。建议在 rates 中加入请求的涨幅（若不在列表内）。
+2. **自定义分时电价的生效期**：前端把所选官方档案的 `effective_start/end`（如 `guangzhou_industrial_lt1kv_202610` 为单月）原样带入 `custom_tariff`；请确认自定义档案按 `tariff_application` 用于全年的口径，并在结果 `tariff` 中回显用户的四个价格以便核对。
+3. **一句话输入未接真实模型验证**：本次只用测试桩验证契约；请在装有本地模型的机器上跑一次 `agent/status` 与 `agent/parse`，确认字段路径与 `FIELD_RULES` 一致（尤其 `hybrid.tariff_escalation_rate` 用小数、`storage.capacities_kwh` 为数组）。
+4. **只用电网方案也带 `surplus_paths`**：S0 的储能各档均为负净收益（无发电），前端不展示 S0；建议后端对无发电方案省略该字段或标 `not_applicable`。
+5. **卖电 `payback_status` 文字**：前端原样显示（如“无并网投入”）；如需统一措辞请在后端改。
+6. 第一轮第 1、6、7、8、10、13、14 条（预览缺口口径、并发、进度、英文说明字段、默认房间台数、not_provided、品牌）本轮未涉及，状态不变。
+
+### 已知问题与下一步
+
+- 真实本地大模型未测（见上）；模型不可用时的规则识别覆盖范围同第一轮，并新增“电价每年涨/降 x%”。
+- 演示第 6 幕会切换到试算视图展示卡片（与第 3、4 幕方式相同）。
+- 迁移的第一轮方案只能还原第一轮表单中仍存在的字段；条件对比中缺失项显示“未填写”。
+- 30 秒理解度、普通笔记本耗时、Firefox/Safari、读屏审计仍未做（同第一轮）。
+- 本轮按任务书只在功能分支提交，未改 `CHANGELOG.md`、`docs/REVIEW_INDEX.md`（与根目录 `AGENTS.md` round4 约定的冲突同第一轮说明）。
