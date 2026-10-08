@@ -137,9 +137,11 @@ const ok = (cond, msg) => { checks++; if (!cond) { failures++; console.log('  �
       const sweep = [...P.querySelectorAll('[data-sec="sweep"] tbody tr')].map((tr) => ({ text: tr.textContent, best: tr.classList.contains('is-best') }));
       const carbon = [...P.querySelectorAll('[data-sec="carbon"] tbody tr')].map((tr) => [...tr.children].map((td) => td.textContent));
       const rough = [...P.querySelectorAll('[data-sec="rough"] tbody tr')].map((tr) => [...tr.children].map((td) => td.textContent));
-      const storage = [...P.querySelectorAll('[data-sec="storage"] tbody tr')].map((tr) => [...tr.children].map((td) => td.textContent));
       const decision = P.querySelector('.big-decision .tag').textContent;
-      return { opts, sweep, carbon, rough, storage, decision };
+      const nc = [...P.querySelectorAll('.numcards > div')].map((d) => d.textContent.replace(/\s+/g, ' ').trim());
+      const esc = P.querySelector('[data-sec="escalation"]');
+      const escRows = esc ? [...esc.querySelectorAll('tbody tr')].map((tr) => [...tr.children].map((td) => td.textContent.replace(/\s+/g, ' ').trim())) : null;
+      return { opts, sweep, carbon, rough, decision, nc, esc: esc ? esc.textContent.replace(/\s+/g, ' ') : null, escRows };
     });
     const order = ['S0_grid', 'S1_pv', 'S2_wind', 'S3_pv_wind'];
     ok(ui.opts.map((o) => o.id).join() === order.join(), `四方案顺序（只用电网第一）：${ui.opts.map((o) => o.id)}`);
@@ -184,9 +186,63 @@ const ok = (cond, msg) => { checks++; if (!cond) { failures++; console.log('  �
       const e = cand.annual_offset_estimate.claimed_incremental_npv_vs_s0_cny;
       ok(!!ui.rough[i] && clean(ui.rough[i][5]) === (e == null ? '暂无法比较' : (delta(e) || '与基线相同')), `${cand.scenario_id} 粗算差额 ${ui.rough[i] && ui.rough[i][5]} ≠ ${delta(e)}`);
     });
-    // 储能：推荐方案（或第一个有上限的方案）各档挽回电量
-    const st = c.candidates.find((x) => x.scenario_id === c.recommendation.scenario_id && x.storage_upper_bound && x.storage_upper_bound.status === 'calculated') || c.candidates.find((x) => x.storage_upper_bound && x.storage_upper_bound.status === 'calculated');
-    if (st) st.storage_upper_bound.candidates.forEach((s, i) => ok(!!ui.storage[i] && clean(ui.storage[i][2]) === `${kwhF(s.recovered_kwh_year1)} kWh`, `储能 ${s.capacity_kwh} kWh 挽回 ${ui.storage[i] && ui.storage[i][2]}`));
+    // 三个数字卡：推荐方案 load_coverage_rate / capex_cny / simple_payback_years
+    const recC = c.candidates.find((x) => x.scenario_id === c.recommendation.scenario_id);
+    ok(ui.nc.length === 3, `数字卡应为 3 个：${ui.nc.length}`);
+    if (recC.scenario_id === 'S0_grid') {
+      ok(/0\s*元/.test(ui.nc[1]) && /只用电网，无需投入/.test(ui.nc[1]) && /只用电网，无需投入/.test(ui.nc[2]), `只用电网推荐时数字卡应写“无需投入”：${ui.nc.slice(1).join(' | ')}`);
+    } else {
+      ok(ui.nc[0].includes(`${Math.round(recC.load_coverage_rate * 100)}%`), `数字卡自发比例 ${ui.nc[0]} ≠ ${recC.load_coverage_rate}`);
+      ok(ui.nc[1].includes(money(recC.capex_cny)), `数字卡初始投入 ${ui.nc[1]} ≠ ${money(recC.capex_cny)}`);
+      const pb = recC.economics.simple_payback_years;
+      ok(pb == null ? /不回本|—/.test(ui.nc[2]) : ui.nc[2].includes(`${new Intl.NumberFormat('zh-CN', { maximumFractionDigits: 1 }).format(pb)}年`), `数字卡回本 ${ui.nc[2]} ≠ ${pb}`);
+    }
+    ok(/简单回本：初始投入 ÷ 每年净节省，不折现，仅供参考/.test(ui.nc[2] || ''), '数字卡缺少简单回本说明');
+    // 电价年涨幅敏感性
+    const es = c.escalation_sensitivity;
+    if (es.recommendation_scenario_id === 'S0_grid') ok(/推荐只用电网，无需投入/.test(ui.esc || '') && !ui.escRows.length, `只用电网推荐时电价表应为一句话：${(ui.esc || '').slice(0, 60)}`);
+    else {
+      ok(ui.escRows && ui.escRows.length === es.rows.length, `电价表行数 ${ui.escRows && ui.escRows.length} ≠ ${es.rows.length}`);
+      ok(/等比调整，不是电价预测/.test(ui.esc || ''), '电价表缺少“等比调整，不是电价预测”');
+      es.rows.forEach((r, i) => {
+        const row = (ui.escRows || [])[i] || [];
+        ok(row[1] === `${money(r.s0_total_cost_npv_cny)} 元` && row[2] === `${money(r.recommended_total_cost_npv_cny)} 元`, `电价 ${r.rate} 总花费 ${row[1]} / ${row[2]}`);
+        ok(row[3] === (delta(r.incremental_npv_vs_s0_cny) || '与基线相同'), `电价 ${r.rate} 差额 ${row[3]} ≠ ${delta(r.incremental_npv_vs_s0_cny)}`);
+        ok(r.cumulative_payback_year == null ? !/第 \d+ 年/.test(row[4]) : row[4].includes(`第 ${r.cumulative_payback_year} 年`), `电价 ${r.rate} 回本年 ${row[4]} ≠ ${r.cumulative_payback_year}`);
+      });
+    }
+    // 多余的电去哪儿：逐个发电方案切换，储能各档与卖电读 surplus_paths
+    const gens = await page.$$eval('[data-step-panel="3"] [data-sec="surplus"] [data-r-store]', (bs) => bs.map((b) => b.dataset.rStore));
+    ok(gens.length >= 1, '多余的电卡片缺少方案切换');
+    for (const sid of gens) {
+      await page.click(`[data-step-panel="3"] [data-r-store="${sid}"]`); await page.waitForTimeout(150);
+      const cand = c.candidates.find((x) => x.scenario_id === sid), sp = cand.surplus_paths, st = sp.storage, ex = sp.export.path;
+      const u = await page.evaluate(() => { const S = document.querySelector('[data-step-panel="3"] [data-sec="surplus"]');
+        return { head: S.querySelector('.sec-head').textContent.replace(/\s+/g, ' '), rows: [...S.querySelectorAll('.st-table tbody tr')].map((tr) => ({ best: tr.classList.contains('is-best') || /最划算/.test(tr.textContent), cells: [...tr.children].map((td) => td.textContent.replace(/\s+/g, ' ').trim()) })),
+          text: S.textContent.replace(/\s+/g, ' '), kv: [...S.querySelectorAll('.kv > div')].map((d) => d.textContent.replace(/\s+/g, ' ').trim()) }; });
+      ok(u.head.includes(kwhF(sp.surplus_kwh_year1)), `${sid} 多余电量 ≠ ${kwhF(sp.surplus_kwh_year1)}`);
+      ok(u.rows.length === st.candidates.length, `${sid} 储能行数 ${u.rows.length} ≠ ${st.candidates.length}`);
+      const sgn = (v) => `${Math.round(v) < 0 ? '−' : ''}${money(Math.abs(v))} 元`;
+      st.candidates.forEach((x, i) => {
+        const r = u.rows[i] || { cells: [] };
+        const pct0 = (v) => `${Math.round(v * 100)}%`, d1 = (v) => new Intl.NumberFormat('zh-CN', { maximumFractionDigits: 1 }).format(v);
+        if (x.economics_status === 'complete') {
+          ok(r.cells[1] === `${money(x.initial_investment_cny)} 元` && r.cells[2] === `${money(x.annual_bill_saving_cny)} 元` && r.cells[3] === sgn(x.annual_net_benefit_cny) && r.cells[5] === sgn(x.study_period_net_benefit_cny), `${sid} 储能 ${x.capacity_kwh} kWh 投入/年节省/年净收益/研究期净收益 ${r.cells.slice(1, 6).join(' / ')}`);
+          ok(r.cells[4] === (x.simple_payback_years != null ? `${d1(x.simple_payback_years)} 年` : (x.payback_status || '—')), `${sid} 储能 ${x.capacity_kwh} kWh 回本 ${r.cells[4]} ≠ ${x.simple_payback_years ?? x.payback_status}`);
+        } else ok(/条件不全/.test(r.cells.join(' ')), `${sid} 储能 ${x.capacity_kwh} kWh 计价不完整应显示条件不全`);
+        ok(r.cells[r.cells.length - 1] === `${pct0(x.self_consumption_rate_before)} → ${pct0(x.self_consumption_rate_after)}`, `${sid} 储能 ${x.capacity_kwh} kWh 自用比例 ${r.cells[r.cells.length - 1]}`);
+        ok(r.best === (st.recommended_capacity_kwh > 0 && x.capacity_kwh === st.recommended_capacity_kwh), `${sid} 储能 ${x.capacity_kwh} kWh 最划算标注应为 ${st.recommended_capacity_kwh > 0 && x.capacity_kwh === st.recommended_capacity_kwh}`);
+      });
+      if (st.recommended_capacity_kwh === 0) ok(/不建议装储能/.test(u.text), `${sid} 推荐 0 kWh 时应写“不建议装储能”`);
+      ok(u.kv[0] && u.kv[0].includes(kwhF(ex.sold_kwh_year1)) && u.kv.some((k) => k.includes(money(ex.annual_revenue_cny))) && u.kv.some((k) => k.includes(money(ex.study_period_revenue_cny))), `${sid} 卖电 ${u.kv.join(' | ')}`);
+      ok(u.kv.some((k) => k === `上网电价 ${ex.price_cny_per_kwh} 元/kWh`) && u.kv.some((k) => k === `并网投入 ${ex.connection_cost_assumed_zero ? '未填写，按 0 粗算' : money(ex.connection_cny) + ' 元'}`), `${sid} 卖电电价/并网投入 ${u.kv.join(' | ')}`);
+      ok(u.kv.some((k) => k === `回本 ${ex.simple_payback_years != null ? new Intl.NumberFormat('zh-CN', { maximumFractionDigits: 1 }).format(ex.simple_payback_years) + ' 年' : (ex.payback_status || '无额外投入')}`), `${sid} 卖电回本 ${u.kv.join(' | ')}`);
+      ok(/不叠加/.test(u.text) && /不含电池衰减/.test(u.text) && /以当地电网批复为准/.test(u.text), `${sid} 多余的电边界说明缺失`);
+    }
+    // 第 2 步单间与项目合计
+    await page.goto(BASE + '#/tool/2'); await page.waitForTimeout(300);
+    ok((await page.textContent('[data-step-panel="2"]')).includes(money(c.load_context.single_room_annual_kwh)), `单间年用电缺失 ${money(c.load_context.single_room_annual_kwh)}`);
+    await page.goto(BASE + '#/tool/3'); await page.waitForTimeout(200);
     // 第 2 步年用电与服务状态
     await page.goto(BASE + '#/tool/2'); await page.waitForTimeout(400);
     const s2 = await page.evaluate(() => ({ big: document.querySelector('[data-step-panel="2"] .num.big').textContent, tag: document.querySelector('[data-step-panel="2"] .decision .tag').textContent }));
@@ -203,8 +259,57 @@ const ok = (cond, msg) => { checks++; if (!cond) { failures++; console.log('  �
     if (id) { await page.goto(BASE + '#/samples/' + id); await page.waitForSelector('[data-step-panel="3"] .compare .opt'); }
     await page.goto(BASE + route); await page.waitForTimeout(2500);
     const text = await page.evaluate(() => { const v = [...document.querySelectorAll('[data-view]')].find((x) => !x.hidden); const c = v.cloneNode(true); c.querySelectorAll('.mono, [data-r-basis], select, option').forEach((n) => n.remove()); return c.innerText; });
-    const hit = text.split('\n').filter((l) => BAD.test(l) && !/replay_cases_v6\.json|replay_cases_ui_v9|replay_previews_v7\.json|docs\/handoff/.test(l));
+    const hit = text.split('\n').filter((l) => BAD.test(l) && !/replay_cases_ui_v9|replay_previews_v7\.json|docs\/handoff/.test(l));
     ok(hit.length === 0, `${route} 出现技术名：${hit.slice(0, 3).join(' | ')}`);
+  }
+
+  /* ---------- 2b. 不引用旧 v6 示例；页面与导出不含机器路径、用户名、账号 ---------- */
+  console.log('来源与匿名检查');
+  const PRIV = /[A-Za-z]:\\|\/home\/|\/Users\/|\/root\/|\/tmp\/|tingfengy|xiangyi|乡艺/;
+  for (const f of fs.readdirSync(path.join(ROOT, 'operation_planning/ui/assets/js'))) {
+    const t = fs.readFileSync(path.join(ROOT, 'operation_planning/ui/assets/js', f), 'utf8');
+    ok(!/replay_cases_v6/.test(t), `${f} 仍引用 replay_cases_v6`);
+  }
+  await page.goto(BASE + '#/samples/tier_medium'); await page.waitForSelector('[data-step-panel="3"] .compare .opt');
+  for (const r of ['#/', '#/tool/1', '#/tool/2', '#/tool/3', '#/tool/4', '#/samples', '#/plans', '#/about']) {
+    await page.goto(BASE + r); await page.waitForTimeout(r === '#/' ? 1500 : 400);
+    const html = await page.content();
+    ok(!/replay_cases_v6/.test(html), `${r} 页面出现 replay_cases_v6`);
+    ok(!PRIV.test(html), `${r} 页面出现机器路径或账号：${(html.match(PRIV) || [])[0]}`);
+  }
+  const grab = async (p, kind) => { await p.goto(BASE + '#/tool/4'); await p.waitForSelector(`[data-export="${kind}"]:not([disabled])`); const [d] = await Promise.all([p.waitForEvent('download'), p.click(`[data-export="${kind}"]`)]); return fs.readFileSync(await d.path(), 'utf8'); };
+  {
+    const sum = await grab(page, 'summary'), brief = await grab(page, 'brief'), js = await grab(page, 'json');
+    for (const [k, t] of [['方案汇总 CSV', sum], ['决策简报', brief], ['完整 JSON', js]]) ok(!PRIV.test(t), `${k} 含机器路径或账号：${(t.match(PRIV) || [])[0]}`);
+    ok(/多余的电去哪儿/.test(sum) && /,储能,20,/.test(sum) && /卖给电网/.test(sum), '方案汇总 CSV 缺少多余的电（储能/卖电）');
+    ok(/多余的电去哪儿/.test(brief), '决策简报缺少多余的电');
+    ok(/replay_cases_ui_v9/.test(js) && !/replay_cases_v6/.test(sum + brief + js), '导出来源应为 replay_cases_ui_v9');
+  }
+
+  /* ---------- 2c. 示例缺少 escalation_sensitivity 时隐藏电价表 ---------- */
+  console.log('电价表缺字段检查');
+  {
+    const pe = await (await browser.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
+    await pe.route('**/replay_cases_ui_v9.json', async (route) => { const r = await route.fetch(); const j = await r.json(); j.cases.forEach((c) => { delete c.escalation_sensitivity; }); await route.fulfill({ response: r, json: j }); });
+    await pe.goto(BASE + '#/samples/tier_medium'); await pe.waitForSelector('[data-step-panel="3"] .compare .opt', { timeout: 60000 });
+    ok(!(await pe.$('[data-step-panel="3"] [data-sec="escalation"]')), '缺少 escalation_sensitivity 时电价表应隐藏');
+    await pe.context().close();
+  }
+
+  /* ---------- 2d. 我的方案：nzh.plans.v1 一次性迁移 ---------- */
+  console.log('我的方案迁移检查');
+  {
+    const pm = await (await browser.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
+    await pm.goto(BASE + '#/');
+    await pm.evaluate(() => { localStorage.clear(); localStorage.setItem('nzh.plans.v1', JSON.stringify([{ id: 'pold1', savedAt: 1759000000000, mode: 'replay', caseId: 'tier_small', label: '旧方案甲', source: { kind: '示例回放' }, conditions: [{ key: 'room_count', label: '房间数', value: 2, text: '2 间' }, { key: 'units_per_room', label: '每间台数', value: 1, text: '1 台' }], conclusion: { headline: '建议：加装光伏', recommendation: '有条件推荐', totalCost: 5814.2, studyYears: 10 } }])); });
+    const count = async () => { await pm.goto(BASE + '#/plans'); await pm.reload(); await pm.waitForSelector('[data-plans]'); await pm.waitForTimeout(300); return pm.$$eval('[data-plans] .plan-card', (a) => a.map((x) => x.textContent.replace(/\s+/g, ' '))); };
+    const a1 = await count(), a2 = await count();
+    const st = await pm.evaluate(() => ({ old: !!localStorage.getItem('nzh.plans.v1'), mark: !!localStorage.getItem('nzh.plans.v1.migrated'), n: JSON.parse(localStorage.getItem('njd.plans.v1') || '[]').length }));
+    ok(a1.length === 1 && a2.length === 1 && st.n === 1, `旧方案应只迁移一次：${a1.length}/${a2.length}/${st.n}`);
+    ok(st.old && st.mark, `迁移后应保留旧键并写标记：${JSON.stringify(st)}`);
+    ok(/建议：加装光伏/.test(a1[0] || '') && /5,814/.test(a1[0] || '') && /—/.test(a1[0] || ''), `迁移方案显示：${(a1[0] || '').slice(0, 120)}`);
+    await pm.evaluate(() => localStorage.clear());
+    await pm.context().close();
   }
 
   /* ---------- 3. 1440/1024/390 × 浅色/深色：无横向滚动 ---------- */
@@ -241,6 +346,47 @@ const ok = (cond, msg) => { checks++; if (!cond) { failures++; console.log('  �
     ok(errs4.length === 0, `静态模式控制台错误：${errs4.join(' | ')}`);
   } catch (e) { ok(false, `静态服务器不可用（${STATIC}）：${e.message}`); }
   await p4.context().close();
+
+  /* ---------- 5b. 实时：储能/卖电报价、自定义分时电价、电价年涨幅 ---------- */
+  console.log('实时计算检查（储能、卖电、自定义电价、年涨幅）');
+  if (process.env.NJD_SKIP_LIVE) console.log('  （已跳过）');
+  else {
+    const pl = await (await browser.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
+    const errsL = []; pl.on('pageerror', (e) => errsL.push(e.message)); pl.on('console', (m) => { if (m.type() === 'error') errsL.push(m.text()); });
+    let lastReq = null; pl.on('request', (r) => { if (/\/api\/operation\/.*(run|jobs)$/.test(r.url()) && r.method() === 'POST') { try { lastReq = JSON.parse(r.postData()); } catch (e) {} } });
+    const compute = async () => { await pl.click('.actionbar [data-action="compute"]'); await pl.waitForFunction(() => location.hash === '#/tool/2', null, { timeout: 240000 }); await pl.goto(BASE + '#/tool/3'); await pl.waitForSelector('[data-step-panel="3"] [data-sec="surplus"]'); };
+    const zone = async () => clean(await pl.textContent('[data-step-panel="3"]'));
+    // 第 1 次：示例报价 + 自定义分时电价（峰段改 1.5）+ 年涨幅 3%
+    await pl.goto(BASE + '#/tool/1'); await pl.waitForSelector('[data-quick-case]'); await pl.click('[data-quick-case="tier_small"]');
+    await pl.fill('[data-field="capacities"]', '1');
+    await pl.click('[data-seg="price_mode"][data-val="tariff"]'); await pl.waitForTimeout(150);
+    await pl.selectOption('[data-field="tariff_id"]', 'custom_user'); await pl.waitForTimeout(200);
+    const pre = await pl.evaluate(() => ['tou_valley', 'tou_flat', 'tou_peak', 'tou_super'].map((k) => document.querySelector(`[data-field="${k}"]`).value));
+    ok(pre.every((v) => v !== '' && Number.isFinite(Number(v))), `自定义电价四个价格应默认填入官方档案价格：${pre}`);
+    ok(/未经官方核验/.test(await pl.textContent('#view-tool')), '自定义电价缺少“未经官方核验”标注');
+    await pl.fill('[data-field="tou_peak"]', '1.5'); await pl.fill('[data-field="escalation_pct"]', '3');
+    await compute();
+    const pv = (lastReq || {}).pv || {}, hy = (lastReq || {}).hybrid || {}, sto = (lastReq || {}).storage || {};
+    ok(pv.tariff_id === 'custom_user' && pv.custom_tariff && Array.isArray(pv.custom_tariff.periods) && pv.custom_tariff.periods.some((x) => x.name === 'peak' && x.price === 1.5), `请求缺少自定义电价：${JSON.stringify(pv.custom_tariff || null).slice(0, 120)}`);
+    ok(hy.tariff_escalation_rate === 0.03, `请求年涨幅应为 0.03：${hy.tariff_escalation_rate}`);
+    ok(sto.quote && sto.quote.cny_per_kwh > 0 && sto.export && sto.export.price_cny_per_kwh > 0, `请求缺少储能/卖电报价：${JSON.stringify(sto).slice(0, 120)}`);
+    let z = await zone();
+    ok(/用户自定义电价（未经官方核验）/.test(z), '结果未标注“用户自定义电价（未经官方核验）”');
+    ok(/电价变了，结论还成立吗？/.test(z) && /本次计算按每年 \+3%/.test(z), '结果缺少电价年涨幅表或未写本次 +3%');
+    ok(await pl.$$eval('[data-step-panel="3"] .st-table tbody tr', (a) => a.length) >= 2 && !/条件不全：请填写储能报价/.test(z), '有报价时储能表应完整');
+    ok(/每年收入/.test(z), '有上网电价时应显示卖电收入');
+    // 改报价 → 结果过期
+    await pl.goto(BASE + '#/tool/1'); await pl.fill('[data-field="st_price"]', '600'); await pl.goto(BASE + '#/tool/3'); await pl.waitForTimeout(400);
+    ok(await pl.evaluate(() => document.querySelector('[data-result-zone]').classList.contains('is-stale')), '修改储能报价后结果应标为过期');
+    // 第 2 次：清空储能与卖电报价 → 条件不全、只给电量，不报错
+    await pl.goto(BASE + '#/tool/1');
+    for (const k of ['st_price', 'st_install', 'st_maint', 'st_life', 'ex_price', 'ex_conn']) await pl.fill(`[data-field="${k}"]`, '');
+    await compute();
+    z = await zone();
+    ok(/条件不全：请填写储能报价/.test(z) && /填写上网电价后可估算收入/.test(z) && !/每年收入/.test(z), '无报价时应显示条件不全且卖电只给电量');
+    ok(errsL.length === 0, `实时计算页面错误：${errsL.slice(0, 3).join(' | ')}`);
+    await pl.context().close();
+  }
 
   /* ---------- 6. 一句话输入：本地大模型（桩服务）---------- */
   console.log('一句话输入（桩服务）检查');

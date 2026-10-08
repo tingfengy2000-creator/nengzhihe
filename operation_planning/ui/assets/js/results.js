@@ -272,7 +272,7 @@ function surplusBlock(vm) {
       <div><dt>每年收入</dt><dd><b class="num">${money(ex.annualRevenue)}</b></dd></div>
       <div><dt>${yt}收入</dt><dd><b class="num">${money(ex.studyRevenue)}</b></dd></div>
       <div><dt>并网投入</dt><dd>${ex.connectionAssumedZero ? '未填写，按 0 粗算' : money(ex.connection)}</dd></div>
-      <div><dt>回本</dt><dd>${isNum(ex.payback) ? `<b class="num">${fmt.d(ex.payback, 1)}</b> 年` : (!isNum(ex.connection) || ex.connection === 0 ? '无额外投入' : esc(ex.paybackStatus || '—'))}</dd></div>` : ''}
+      <div><dt>回本</dt><dd>${isNum(ex.payback) ? `<b class="num">${fmt.d(ex.payback, 1)}</b> 年` : esc(ex.paybackStatus || (!isNum(ex.connection) || ex.connection === 0 ? '无额外投入' : '—'))}</dd></div>` : ''}
     </dl>
     ${priced ? '' : `<div class="callout unknown">${icon('help')}<span>填写上网电价后可估算收入。</span></div>`}
     <ul class="notes"><li>${SURPLUS_NOTES.export}</li>${priced ? `<li>电价来源：${esc(ex.source || '用户填写')}${ex.sourceNote ? `。${esc(ex.sourceNote)}` : ''}${vm.kind === 'sample' ? '。示例价为敏感性情景，不是广东固定上网价。' : ''}</li>` : ''}</ul>`;
