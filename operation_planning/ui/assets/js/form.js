@@ -2,6 +2,7 @@
  * 表单值是用户输入（不是结果）。未填写的可选字段不发送，由计算服务使用其默认值；
  * 报价未填写时不补任何默认值——对应方案会显示“条件不全”。 */
 import { isNum } from './util.js';
+import { app } from './state.js';
 
 /* 字段：key、标签、类型、单位、分组；opt 表示可选（留空不发送） */
 export const FIELDS = [
@@ -38,6 +39,11 @@ export const FIELDS = [
   { key: 'price_mode', label: '电价', type: 'seg', group: 'price', options: [['tariff', '按电价档案'], ['fixed', '固定电价']] },
   { key: 'tariff_id', label: '电价档案', type: 'select', group: 'price' },
   { key: 'tariff_application', label: '档案用法', type: 'select', group: 'price', options: [['current_tariff_on_reference_weather', '把这份电价结构套用到所选天气年（情景）'], ['historical_weather_date', '严格按天气年份校验档案有效期']] },
+  { key: 'tou_valley', label: '谷段电价', type: 'number', unit: '元/kWh', min: 0, step: 0.0001, group: 'price', tou: 'valley' },
+  { key: 'tou_flat', label: '平段电价', type: 'number', unit: '元/kWh', min: 0, step: 0.0001, group: 'price', tou: 'flat' },
+  { key: 'tou_peak', label: '峰段电价', type: 'number', unit: '元/kWh', min: 0, step: 0.0001, group: 'price', tou: 'peak' },
+  { key: 'tou_super', label: '尖峰电价', type: 'number', unit: '元/kWh', min: 0, step: 0.0001, group: 'price', tou: 'super_peak' },
+  { key: 'escalation_pct', label: '未来电价每年变化', type: 'number', unit: '%', min: -5, max: 10, step: 0.5, group: 'price', hint: '−5～10；0 表示按现价不变。等比调整全部购电价，不是电价预测' },
   { key: 'import_price', label: '固定购电价', type: 'number', unit: '元/kWh', min: 0, step: 0.01, group: 'price' },
   { key: 'budget_cny', label: '初始投入预算', type: 'number', unit: '元', min: 0, step: 1000, group: 'price', opt: true, hint: '留空表示不设预算上限' },
   { key: 'study_years', label: '比较年限', type: 'int', unit: '年', min: 1, max: 40, group: 'price', opt: true, hint: '留空使用计算服务默认值' },
@@ -100,7 +106,7 @@ export function blankForm(options) {
     equipment_id: eq ? eq.equipment_id : '', units_per_room: '1', max_units: '20',
     roof_area_m2: '35', usable_fraction: '0.8', capacity_mode: 'auto', capacities: '', wind_turbine_count: '1', hub_height_m: '',
     price_mode: siteTariffs.length ? 'tariff' : 'fixed', tariff_id: siteTariffs.length ? siteTariffs[0] : '', tariff_application: 'current_tariff_on_reference_weather', import_price: '',
-    budget_cny: '', study_years: '', allow_export: false,
+    budget_cny: '', study_years: '', allow_export: false, escalation_pct: '0', tou_valley: '', tou_flat: '', tou_peak: '', tou_super: '', tou_base: '',
     ...Object.fromEntries(FIELDS.filter((f) => f.q).map((f) => [f.key, ''])),
     factor_id: '', carbon_price: '', storage_caps: '0, 5, 10, 20, 50',
     ...Object.fromEntries(FIELDS.filter((f) => f.sq).map((f) => [f.key, ''])),
@@ -112,6 +118,24 @@ export function blankForm(options) {
 export function tariffsForSite(options, siteId) {
   return tariffList(options).filter((t) => Array.isArray(t.site_ids) && t.site_ids.includes(siteId))
     .sort((a, b) => String(b.effective_start || '').localeCompare(String(a.effective_start || ''))).map((t) => t.tariff_id);
+}
+
+/** 自定义分时电价：沿用基准官方档案的时段与有效期，只替换四个价格（谷/平/峰/尖峰）。
+ *  返回 tariffs.custom_profile 需要的结构；价格来自用户输入，不做任何计算。 */
+export function customTariff(form, options) {
+  const base = tariffList(options).find((t) => t.tariff_id === form.tou_base) || null;
+  const price = { valley: form.tou_valley, flat: form.tou_flat, peak: form.tou_peak, super_peak: form.tou_super };
+  const periods = (base ? base.periods : []).map((p) => Object.assign({}, p, { price: price[p.name] !== '' && price[p.name] != null ? Number(price[p.name]) : p.price }));
+  return { base_tariff_id: base ? base.tariff_id : null, effective_start: base ? base.effective_start : null, effective_end: base ? base.effective_end : null,
+    periods, area: base ? `用户自定义（时段沿用：${base.area}）` : '用户自定义', version: 'user-supplied-v1' };
+}
+/** 选中“自定义分时电价”时：默认填入当前所选官方档案的四个价格 */
+export function prefillCustom(form, options, baseId) {
+  const base = tariffList(options).find((t) => t.tariff_id === baseId);
+  if (!base) return false;
+  form.tou_base = base.tariff_id;
+  for (const fd of FIELDS) if (fd.tou) { const p = (base.periods || []).find((x) => x.name === fd.tou); form[fd.key] = p ? String(p.price) : ''; }
+  return true;
 }
 
 export function tariffList(options) {
@@ -129,6 +153,7 @@ export function validate(form) {
     if (f.group === 'ac-size') continue;
     if ((f.q || f.sq) && form[f.key] === '') continue;
     if (f.key === 'import_price' && form.price_mode !== 'fixed') continue;
+    if (f.tou && !(form.price_mode === 'tariff' && form.tariff_id === 'custom_user')) continue;
     const v = n(form[f.key]);
     if (v === null) { if (!f.opt && !f.q) err[f.key] = '请填写'; continue; }
     if (Number.isNaN(v)) { err[f.key] = '请输入数字'; continue; }
@@ -170,6 +195,7 @@ export function buildRequest(form) {
   else if (form.capacity_mode === 'list') pv.requested_capacities_kwp = parseList(form.capacities);
   else pv.fixed_capacity_kwp = parseList(form.capacities)[0];
   if (form.price_mode === 'tariff') { pv.tariff_id = form.tariff_id; pv.tariff_application = form.tariff_application; }
+  if (form.price_mode === 'tariff' && form.tariff_id === 'custom_user') pv.custom_tariff = customTariff(form, app.options);
   if (form.study_years !== '') pv.study_years = n(form.study_years);
   const pq = quote(form, 'pv'); if (pq) pv.quote = pq;
   const wind = Object.assign({}, form._extras.wind || {}, { turbine_count: n(form.wind_turbine_count) });
@@ -178,6 +204,7 @@ export function buildRequest(form) {
   if (form.budget_cny !== '') hybrid.budget_cny = n(form.budget_cny);
   if (form.study_years !== '') hybrid.study_years = n(form.study_years);
   if (form.price_mode === 'fixed') hybrid.import_price_cny_per_kwh = n(form.import_price);
+  if (form.escalation_pct !== '' && n(form.escalation_pct) !== 0) hybrid.tariff_escalation_rate = n(form.escalation_pct) / 100;
   if (pq) hybrid.pv_quote = pq;
   const wq = quote(form, 'wind'); if (wq) hybrid.wind_quote = wq;
   const req = { site_id: form.site_id, year: n(form.year), room, pv, hybrid };
@@ -233,6 +260,11 @@ export function formFromRequest(req, options) {
   f.wind_turbine_count = s(wind.turbine_count ?? 0); f.hub_height_m = s(wind.hub_height_m ?? '');
   f._extras.wind = Object.fromEntries(Object.entries(wind).filter(([k]) => !['turbine_count', 'hub_height_m', 'site_id', 'year'].includes(k)));
   if (pv.tariff_id) { f.price_mode = 'tariff'; f.tariff_id = pv.tariff_id; f.tariff_application = pv.tariff_application || 'historical_weather_date'; }
+  if (pv.tariff_id === 'custom_user' && pv.custom_tariff) {
+    for (const p of pv.custom_tariff.periods || []) { const fd = FIELDS.find((x) => x.tou === p.name); if (fd && f[fd.key] === '') f[fd.key] = s(p.price); }
+    f.tou_base = pv.custom_tariff.base_tariff_id || '';
+  }
+  if (hy.tariff_escalation_rate != null) f.escalation_pct = s(Math.round(Number(hy.tariff_escalation_rate) * 10000) / 100);
   else { f.price_mode = 'fixed'; f.import_price = s(hy.import_price_cny_per_kwh ?? pv.import_price_cny_per_kwh ?? ''); }
   f.budget_cny = s(hy.budget_cny ?? ''); f.study_years = s(hy.study_years ?? pv.study_years ?? '');
   f.allow_export = !!(hy.allow_export ?? pv.allow_export);
@@ -297,6 +329,8 @@ export function parseAsk(text) {
   else if ((m = t.match(/(\d+)台(?:小)?风机/))) rejected.push([m[0], '小风机目前只支持 0 或 1 台']);
   if ((m = t.match(/(?:风机|轮毂)(?:安装)?(?:高度)?(\d+(?:\.\d+)?)(?:米|m)/))) applied.push(['hub_height_m', String(num(m[1])), '风机安装高度']);
   if ((m = t.match(/电价(?:为|是)?(\d+(?:\.\d+)?)元?/))) applied.push(['import_price', String(num(m[1])), '固定电价'], ['price_mode', 'fixed', '电价方式：固定电价']);
+  if ((m = t.match(/电价每?年(?:上?涨|上调|增长|提高)(\d+(?:\.\d+)?)%|年涨幅(?:为|是)?(\d+(?:\.\d+)?)%/))) applied.push(['escalation_pct', String(num(m[1] || m[2])), '未来电价每年变化']);
+  else if ((m = t.match(/电价每?年(?:下降|下调|降低|降)(\d+(?:\.\d+)?)%/))) applied.push(['escalation_pct', String(-num(m[1])), '未来电价每年变化']);
   if (/不(?:允许)?外送|不卖电|不上网/.test(t)) applied.push(['allow_export', false, '不卖电给电网']);
   else if (/允许外送|可以外送|余电上网|卖给电网|卖电/.test(t)) applied.push(['allow_export', true, '多余电量卖给电网']);
   const unsupported = [[/(\d+)间/, '房间数'], [/每间(\d+)台|(\d+)台空调/, '空调台数'], [/(\d+(?:\.\d+)?)(?:㎡|平方米|平米|m2)/, '面积'],

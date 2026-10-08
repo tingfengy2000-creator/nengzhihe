@@ -74,7 +74,7 @@ export const fmt = {
     return { text: `每减 1 吨多花 ${nf0.format(r)} 元`, dir: 'more' };
   },
   ts(t) { return String(t || '').replace('T', ' '); },
-  date(ms) { try { return new Date(ms).toLocaleString('zh-CN', { hour12: false }); } catch (e) { return String(ms); } },
+  date(ms) { if (ms == null || ms === '') return '—'; try { return new Date(ms).toLocaleString('zh-CN', { hour12: false }); } catch (e) { return String(ms); } },
   sha(s, n = 7) { return typeof s === 'string' && s ? s.slice(0, n) : '—'; }
 };
 

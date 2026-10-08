@@ -191,3 +191,21 @@ details.more[open] summary { margin-bottom: 14px; }
 .pr-un { font-size: 13.5px; color: var(--ink-2); padding-left: 16px; list-style: disc; }
 .field.flash .control input, .field.flash .control select, .field.flash .seg, .field.flash .check { box-shadow: 0 0 0 3px var(--warn-weak), 0 0 0 1px var(--warn); border-color: var(--warn); transition: box-shadow .3s; }
 .ask .row .tag svg { width: 14px; height: 14px; }
+
+/* 三个数字卡、自定义分时电价、达标说明 */
+.numcards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.numcards > div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.numcards span { font-size: 13.5px; color: var(--ink-2); }
+.numcards b { font-size: 30px; font-weight: 600; line-height: 1.15; letter-spacing: -.02em; }
+.numcards .u { font-size: 14px; color: var(--ink-3); display: inline; margin-left: 4px; }
+.numcards small { font-size: 12.5px; color: var(--ink-3); }
+.numcards small.fine { margin-top: 4px; }
+.custom-tou { margin-top: 14px; border: 1px dashed var(--line-strong); border-radius: var(--r); padding: 14px; }
+.tipq { margin-top: 10px; }
+.tipq summary { cursor: pointer; display: inline-flex; gap: 6px; align-items: center; font-size: 13.5px; color: var(--brand); font-weight: 600; }
+.tipq summary svg { width: 15px; height: 15px; }
+.tipq p { margin-top: 6px; max-width: 70ch; }
+@media (max-width: 760px) { .numcards { grid-template-columns: 1fr; } }
+html { scroll-padding-bottom: 110px; }
+.numcards > div { display: block; }
+.numcards > div > span:first-child, .numcards small { display: block; }

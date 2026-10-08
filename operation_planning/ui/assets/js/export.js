@@ -118,7 +118,38 @@ export function run(kind, T) {
 /* ------------------------------------------------------------------ */
 /* 我的方案                                                            */
 /* ------------------------------------------------------------------ */
-export const loadPlans = () => { const v = store.get(PLAN_KEY, []); return Array.isArray(v) ? v : []; };
+/* 第一轮“我的方案”（键 nzh.plans.v1）一次性迁移到 njd.plans.v1：旧键保留不删，
+ * 另写 nzh.plans.v1.migrated 标记；按 id 去重，避免重复迁移。旧方案缺少的新字段显示“—”。 */
+const OLD_KEY = 'nzh.plans.v1', OLD_MARK = 'nzh.plans.v1.migrated';
+const OLD_FORM_KEYS = ['site_id', 'year', 'area_m2', 'room_count', 'units_per_room', 'start_hour', 'end_hour', 'cooling_setpoint_c', 'rh_setpoint_percent', 'study_years', 'roof_area_m2', 'wind_turbine_count', 'hub_height_m', 'budget_cny', 'allow_export', 'orientation', 'window_wall_ratio', 'people_count'];
+function migrateOld(p) {
+  const conds = Array.isArray(p.conditions) ? p.conditions : [];
+  const form = {};
+  for (const c of conds) {
+    if (OLD_FORM_KEYS.includes(c.key)) form[c.key] = typeof c.value === 'boolean' ? c.value : String(c.value);
+    else if (c.key === 'pv_capacity_kwp' && c.value != null) { form.capacity_mode = 'list'; form.capacities = String(c.value); }
+    else if (c.key === 'import_price_cny_per_kwh' && c.value != null) { form.price_mode = 'fixed'; form.import_price = String(c.value); }
+  }
+  const con = p.conclusion || {};
+  return {
+    id: `${p.id || 'old'}_r1`, savedAt: p.savedAt || null, kind: p.mode === 'live' ? 'live' : 'sample', caseId: p.caseId || null, label: p.label || '第一轮方案',
+    source: `${(p.source && p.source.kind) || '旧版本'}（第一轮旧方案，已迁移）`, migratedFrom: OLD_KEY, form,
+    summary: { headline: con.headline || null, recStatus: con.recommendation || null, recName: null, recTotal: typeof con.totalCost === 'number' ? con.totalCost : null, studyYears: con.studyYears ?? null,
+      annualKwh: null, service: null, place: null, room: conds.filter((c) => ['room_count', 'units_per_room', 'area_m2'].includes(c.key)).map((c) => c.text).join(' · ') || null, schedule: null, tariff: null }
+  };
+}
+export function migratePlans() {
+  if (store.get(OLD_MARK, null)) return 0;
+  const old = store.get(OLD_KEY, null);
+  if (!Array.isArray(old) || !old.length) { if (Array.isArray(old)) store.set(OLD_MARK, { at: Date.now(), count: 0 }); return 0; }
+  const cur = store.get(PLAN_KEY, []); const list = Array.isArray(cur) ? cur : [];
+  const have = new Set(list.map((x) => x.id));
+  const add = old.map(migrateOld).filter((x) => !have.has(x.id));
+  if (!store.set(PLAN_KEY, list.concat(add).slice(0, 80))) return 0;
+  store.set(OLD_MARK, { at: Date.now(), count: add.length });
+  return add.length;
+}
+export const loadPlans = () => { migratePlans(); const v = store.get(PLAN_KEY, []); return Array.isArray(v) ? v : []; };
 export function savePlan(T) {
   if (!T.result || T.stale) { toast('条件已修改，请先重新计算'); return; }
   const vm = T.result.vm, rec = vm.byId[(vm.rec || {}).scenarioId];

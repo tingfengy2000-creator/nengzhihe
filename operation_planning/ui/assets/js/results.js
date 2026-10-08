@@ -14,6 +14,7 @@ let calInst = null, ui = { ringId: null, calSet: 'recommended', day: null, store
 let lastVM = null;
 
 /* 适用边界（随结果可见） */
+export const ADEQUACY_NOTE = '达标判据：允许上班前预冷 1 小时（预冷用电已计入），只在使用时段检查冷量是否够用。冷量够用后再加台数，模型里年用电基本不变（未计入低负荷时的效率变化）。';
 export const BOUNDARIES = [
   '空调负荷是城市级天气驱动的单房间模型情景，未经现场校准；只计空调用电，不含照明、插座、生产工艺和建筑总表负荷。',
   '小风机采用公开认证功率曲线和参考空气密度，没有按当地气压、温度修正，也没有现场测风。',
@@ -76,6 +77,7 @@ function step2(vm, T) {
           <div><dt>单间空调用电</dt><dd>${isNum(vm.load.singleRoomKwh) ? `<b class="num">${fmt.kwh(vm.load.singleRoomKwh)}</b> kWh/年` : '<span class="muted">— 结果未给出单间字段</span>'}</dd></div>
         </dl>
         <p class="hint">热湿模型按一间房计算，项目合计只在计算服务里按同类房间数聚合一次，页面不再相乘。</p>
+        <p class="hint">${ADEQUACY_NOTE}</p>
         <div class="callout info" style="margin-top:14px">${icon('info')}<span><b>两本账。</b>这里的空调用电和电费是“用电这本账”；空调设备本身的购置、安装是另一本账，不与后面光伏、风机的 10 年总花费相加。</span></div>
       </div>
     </div>
@@ -100,10 +102,42 @@ function decisionCard(vm) {
     <div class="row"><span class="tag ${rec.tone || 'unknown'}">${icon(rec.tone === 'warn' ? 'warn' : 'star')}${esc(rec.label || '—')}</span><span class="xsmall muted">${esc(rec.note || '')}</span></div>
     <h2 class="h2 decision-title">${esc(story.headline(vm))}。</h2>
     ${best ? `<p class="decision-sub">${yrs(vm)}总花费（折现）约 <b class="num">${fmt.money(best.totalCost)}</b> 元${best.id !== 'S0_grid' ? `，${esc(fmt.delta(best.incremental).text)}` : ''}。</p>` : ''}
+    ${numCards(vm)}
     <ul class="decision-alts">${alts.map((c) => `<li>${scenIcon(c.id)}<span>${esc(c.name)}</span><b>${c.id === 'S0_grid' ? `${fmt.money(c.totalCost)} 元（基线）` : c.admission.status === 'unknown' ? '条件不全，暂无法比较' : c.admission.status === 'excluded' ? `已排除：${esc(c.reasons.join('；') || c.constraintText)}` : c.admission.status === 'equivalent' ? `与「${esc(SCEN[c.equivalentTo] ? SCEN[c.equivalentTo].name : c.equivalentTo || '')}」相同` : esc(fmt.delta(c.incremental).text)}</b></li>`).join('')}</ul>
     ${rec.status === 'conditional_subset' ? `<div class="callout warn">${icon('warn')}<span>有方案条件不全（${esc(rec.unknown.map((id) => SCEN[id] ? SCEN[id].name : id).join('、'))}），推荐只在其余方案中比较；不能说它们已被击败。补全报价后重算即可一起比较。</span></div>` : ''}
     ${vm.service && vm.service.status === 'service_gap' ? `<div class="callout warn">${icon('warn')}<span>空调有缺口：结果不代表同等舒适度下的最优投资。</span></div>` : ''}
   </div>`;
+}
+
+/** 三个数字卡：读推荐方案的 load_coverage_rate、capex_cny、simple_payback_years；缺失时写原因。 */
+function numCards(vm) {
+  const best = vm.byId[(vm.rec || {}).scenarioId];
+  if (!best) return '';
+  const s0 = best.id === 'S0_grid';
+  const why = best.economicsStatus && best.economicsStatus !== 'complete' ? '计价不完整' : '结果未给出';
+  const cov = isNum(best.coverage) ? `<b class="num">${fmt.pct(best.coverage)}</b>` : `<b>—</b><small>${why}</small>`;
+  const capex = s0 ? '<b class="num">0</b><span class="u">元</span><small>只用电网，无需投入</small>' : isNum(best.capex) ? `<b class="num">${fmt.money(best.capex)}</b><span class="u">元</span>` : `<b>—</b><small>${why}</small>`;
+  const pay = s0 ? '<b>—</b><small>只用电网，无需投入</small>' : isNum(best.paybackYears) ? `<b class="num">${fmt.d(best.paybackYears, 1)}</b><span class="u">年</span>` : best.economicsStatus === 'complete' ? '<b>不回本</b><small>按当前条件不回本</small>' : `<b>—</b><small>${why}</small>`;
+  return `<div class="numcards">
+    <div><span>空调用电有多少是自己发的</span>${cov}</div>
+    <div><span>一开始要投入多少</span>${capex}</div>
+    <div><span>大概几年回本</span>${pay}<small class="fine">简单回本：初始投入 ÷ 每年净节省，不折现，仅供参考</small></div>
+  </div>`;
+}
+
+/** 电价年涨幅敏感性：读 escalation_sensitivity；推荐只用电网时只写一句。 */
+function escalationBlock(vm) {
+  const es = vm.escalation;
+  if (!es) return '';
+  const best = vm.byId[(vm.rec || {}).scenarioId];
+  if (!best || best.id === 'S0_grid' || es.recId === 'S0_grid') return `<section class="rsec" data-sec="escalation"><div class="callout info">${icon('info')}<span><b>电价变了，结论还成立吗？</b>推荐只用电网，无需投入。</span></div></section>`;
+  const cur = vm.tariffEscalation && isNum(vm.tariffEscalation.rate) ? vm.tariffEscalation.rate : null;
+  const pct = (r) => `${r > 0 ? '+' : r < 0 ? '−' : ''}${fmt.d(Math.abs(r) * 100, 1)}%`;
+  return `<section class="rsec" data-sec="escalation"><div class="sec-head"><div><p class="kicker">电价年涨幅</p><h3 class="h3">电价变了，结论还成立吗？</h3><p class="muted">按电价每年等比变化重算 ${yrs(vm)}总账（只调整购电价，电价结构不变），等比调整，不是电价预测。${cur != null ? `本次计算按每年 ${pct(cur)}。` : ''}</p></div></div>
+    <div class="tablewrap"><table class="table"><caption class="sr-only">电价每年变化时的 ${yrs(vm)}总账</caption><thead><tr><th>电价每年变化</th><th class="r">只用电网 ${yrs(vm)}总花费</th><th class="r">${esc(best.name)} ${yrs(vm)}总花费</th><th class="r">比只用电网</th><th>大约第几年回本（逐年累计）</th></tr></thead><tbody>
+    ${es.rows.map((r) => `<tr${cur != null && Math.abs(r.rate - cur) < 1e-9 ? ' class="is-best"' : ''}><td class="num">${pct(r.rate)}${cur != null && Math.abs(r.rate - cur) < 1e-9 ? ' <span class="tag brand">本次</span>' : ''}</td><td class="r num">${fmt.money(r.s0Total)} 元</td><td class="r num">${fmt.money(r.recTotal)} 元</td><td class="r">${esc(fmt.delta(r.incremental).short)}</td><td>${isNum(r.cumulativePayback) ? `第 <b class="num">${fmt.int(r.cumulativePayback)}</b> 年` : `<span class="muted">${esc(r.paybackNote ? r.paybackNote.split('；')[0] : '研究期内未回本')}</span>`}</td></tr>`).join('')}
+    </tbody></table></div>
+    <p class="chart-note">回本年份按逐年累计净节省（含电价变化、运维与更换）首次达到初始投入的年份；上面数字卡里的“几年回本”是按第 1 年节省的简单回本，不含后续电价变化。</p></section>`;
 }
 
 function sweepBlock(vm) {
@@ -264,8 +298,9 @@ function step3(vm, T) {
   <section class="rsec" data-sec="options"><div class="sec-head"><div><p class="kicker">${yrs(vm)}总账</p><h3 class="h3">四种供电方式，“只用电网”永远是第一列基线。</h3></div></div>
     <div class="compare animate">${priceTable(vm)}</div>
     <p class="chart-note">总花费为空调用电购电费加发电设备投入与运维的折现成本，不含空调设备本身。负的“比只用电网”= 多花，正的 = 省下；“条件不全”不是排除。${vm.tariff ? ` 电价：${esc(vm.tariff.title || vm.tariff.id)}${vm.tariff.provisional ? '（待核验）' : ''}。` : ''}</p>
-    ${vm.tariff && vm.tariff.provisional ? `<span class="pending">${icon('warn')}电价档案待核验</span>` : ''}
+    ${vm.tariff && vm.tariff.provisional ? `<span class="pending">${icon('warn')}电价档案待核验</span>` : ''}${vm.tariff && vm.tariff.custom ? `<span class="pending">${icon('warn')}用户自定义电价（未经官方核验）</span>` : ''}
   </section>
+  ${escalationBlock(vm)}
   ${sweepBlock(vm)}${calendarBlock(vm)}${whereBlock(vm)}${dayBlock(vm, T)}${carbonBlock(vm)}${roughBlock(vm)}${surplusBlock(vm)}`;
 }
 function drawStep3(panel, vm, T) {

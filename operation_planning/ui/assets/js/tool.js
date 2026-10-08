@@ -8,11 +8,12 @@ import { $, $$, esc, fmt, isNum, icon, toast, reduceMotion } from './util.js';
 import { app, on, emit } from './state.js';
 import * as data from './data.js';
 import { api, pollJob, ApiError } from './api.js';
-import { applyAgentChanges, agentLabel, agentValueText } from './form.js';
+import { applyAgentChanges, agentLabel, agentValueText, prefillCustom } from './form.js';
 import * as agent from './agent.js';
 import { FIELDS, FIELD, FIELD_PATH, blankForm, buildRequest, buildPreview, formFromRequest, quoteFieldsFrom, storageFieldsFrom, storageMetaFrom, parseAsk, validate, tariffList, tariffsForSite } from './form.js';
 import { lineChart, barChart, dayTicks } from './charts.js';
 import * as results from './results.js';
+import { ADEQUACY_NOTE } from './results.js';
 
 const T = {
   form: null, step: 1, errors: {},
@@ -77,7 +78,7 @@ function options(f) {
   if (f.key === 'site_id') { const list = (o && o.cities) || []; const opts = list.map((c) => [c.site_id, c.name]); if (!opts.find((x) => x[0] === T.form.site_id)) opts.push([T.form.site_id, T.form.site_id]); return opts; }
   if (f.key === 'year') { const c = ((o && o.cities) || []).find((x) => x.site_id === T.form.site_id); const ys = c ? c.cached_years.map(String) : []; if (!ys.includes(T.form.year)) ys.push(T.form.year); return ys.map((y) => [y, `${y} 年`]); }
   if (f.key === 'equipment_id') { const list = (o && o.equipment_models) || []; const opts = list.map((e) => [e.equipment_id, `${e.brand} ${e.model} · 额定制冷 ${fmt.d(e.rated_cooling_kw, 2)} kW · 能效比 ${fmt.d(e.cop, 2)}`]); if (!opts.find((x) => x[0] === T.form.equipment_id)) opts.push([T.form.equipment_id, T.form.equipment_id]); return opts; }
-  if (f.key === 'tariff_id') { const list = tariffList(o); const opts = list.map((t) => [t.tariff_id, `${t.area}（${t.effective_start}–${t.effective_end}）${t.verified ? '' : ' · 待核验'}`]); if (T.form.tariff_id && !opts.find((x) => x[0] === T.form.tariff_id)) opts.push([T.form.tariff_id, T.form.tariff_id]); return opts; }
+  if (f.key === 'tariff_id') { const list = tariffList(o); const opts = list.map((t) => [t.tariff_id, `${t.area}（${t.effective_start}–${t.effective_end}）${t.verified ? '' : ' · 待核验'}`]); if (list.length) opts.push(['custom_user', '自定义分时电价（时段沿用所选官方档案，价格自填）']); if (T.form.tariff_id && !opts.find((x) => x[0] === T.form.tariff_id)) opts.push([T.form.tariff_id, T.form.tariff_id]); return opts; }
   if (f.key === 'factor_id') {
     const fs = (((o && o.carbon_factors) || {}).factors) || [];
     return [['', '按城市所在省份（默认，最新年份电力平均）']].concat(fs.map((x) => [x.factor_id, `${x.region} ${x.data_year} · ${x.basis} · ${fmt.d(x.value_kgco2_per_kwh, 4)} kgCO₂/kWh`]));
@@ -105,8 +106,30 @@ function equipmentNote() {
   if (!e) return '';
   return `<p class="hint">来源：${esc(e.source_type === 'public_energy_label' ? '公开能效标识' : '厂家公开页面')}（额定工况，不是逐时性能曲线；价格需用户报价）。</p>`;
 }
+/** 自定义分时电价：四个价格输入 + 只读的时段说明（读基准官方档案的 periods）。 */
+function periodText(base) {
+  if (!base) return '';
+  const NAME = { valley: '谷', flat: '平', peak: '峰', super_peak: '尖峰' };
+  const by = {};
+  for (const p of base.periods || []) { (by[p.name] = by[p.name] || []).push(p); }
+  const seg = (ps) => ps.map((p) => `${p.start}–${p.end}`).join('、');
+  const parts = [];
+  if (by.valley) parts.push(`谷 ${seg(by.valley)}`);
+  if (by.peak) parts.push(`峰 ${seg(by.peak)}`);
+  if (by.super_peak) { const p0 = by.super_peak[0]; parts.push(`尖峰 ${seg(by.super_peak)}（${p0.months ? p0.months.join('、') + ' 月' : ''}${p0.high_temp_outside_months ? `，以及其他月份日最高气温≥${p0.high_temp_threshold_c}℃的高温日` : ''}）`); }
+  if (by.flat) parts.push('其余时段为平段');
+  return parts.join('；');
+}
+function customTariffHtml() {
+  const base = tariffList(app.options).find((t) => t.tariff_id === T.form.tou_base);
+  return `<div class="custom-tou">
+    <div class="grid-form">${fields(['tou_valley', 'tou_flat', 'tou_peak', 'tou_super'])}</div>
+    <p class="hint">时段沿用${base ? `「${esc(base.area)}」` : '所选官方档案'}：${esc(periodText(base))}。时段不可改；四个价格默认填入该官方档案的价格，可按你的实际电价修改。结果中标注“用户自定义电价（未经官方核验）”。</p></div>`;
+}
+
 function tariffNote() {
   if (T.form.price_mode !== 'tariff') return '<p class="hint">固定电价是你输入的情景，不是当地官方电价。</p>';
+  if (T.form.tariff_id === 'custom_user') return `<div class="tariff-note"><span class="tag warn">${icon('warn')}用户自定义电价（未经官方核验）</span></div>`;
   const t = tariffList(app.options).find((x) => x.tariff_id === T.form.tariff_id);
   if (!t) return '';
   return `<div class="tariff-note">${t.verified ? `<span class="tag ok">${icon('check')}已核验</span>` : `<span class="tag warn">${icon('warn')}待核验</span>`}
@@ -138,6 +161,7 @@ function step1Html() {
 
       <fieldset class="card fcard"><legend><span class="fnum">2</span>空调</legend>
         <div class="grid-form ac-grid">${fieldHtml('equipment_id')}${fieldHtml('units_per_room')}</div>
+        <details class="tipq"><summary>${icon('help')}<span>“达标”是怎么判断的？</span></summary><p class="hint">${ADEQUACY_NOTE}</p></details>
         ${equipmentNote()}
         <div class="sizing" data-sizing>${sizingHtml()}</div>
       </fieldset>
@@ -150,6 +174,8 @@ function step1Html() {
 
       <fieldset class="card fcard"><legend><span class="fnum">4</span>电价与预算</legend>
         <div class="grid-form">${fieldHtml('price_mode', 'span2')}${T.form.price_mode === 'tariff' ? fieldHtml('tariff_id', 'span2') + fieldHtml('tariff_application', 'span2') : fieldHtml('import_price')}</div>
+        ${T.form.price_mode === 'tariff' && T.form.tariff_id === 'custom_user' ? customTariffHtml() : ''}
+        <div class="grid-form" style="margin-top:16px">${fieldHtml('escalation_pct')}</div>
         ${tariffNote()}
         <div class="grid-form">${fields(['budget_cny', 'study_years'])}${fieldHtml('allow_export')}</div>
       </fieldset>
@@ -472,7 +498,9 @@ function bind() {
     const key = f.dataset.field;
     if (FIELD[key].type === 'check') setField(key, f.checked);
     else if (f.tagName === 'SELECT') {
+      const prev = T.form[key];
       T.form[key] = f.value;
+      if (key === 'tariff_id' && f.value === 'custom_user' && prev && prev !== 'custom_user') prefillCustom(T.form, app.options, prev);
       if (key === 'site_id') {
         const c = ((app.options || {}).cities || []).find((x) => x.site_id === T.form.site_id); if (c && !c.cached_years.includes(T.form.year)) T.form.year = c.cached_years[c.cached_years.length - 1];
         // 换城市：电价档案跟随该城市所在供电区域；没有可用档案时改为固定电价（需用户填写）
@@ -480,7 +508,7 @@ function bind() {
         if (st.length) { if (!st.includes(T.form.tariff_id)) { T.form.tariff_id = st[0]; T.form.price_mode = 'tariff'; } }
         else if (T.form.price_mode === 'tariff') { T.form.price_mode = 'fixed'; toast('这个城市暂无已登记的电价档案，请填写固定电价'); }
       }
-      setField(key, f.value, { rerender: ['site_id', 'tariff_id', 'equipment_id', 'price_mode'].includes(key) });
+      setField(key, f.value, { rerender: ['site_id', 'tariff_id', 'equipment_id', 'price_mode', 'tariff_application'].includes(key) });
       if (['site_id', 'tariff_id', 'equipment_id'].includes(key)) { const n = $(`[data-field="${key}"]`, el); if (n) n.focus({ preventScroll: true }); }
     }
   });

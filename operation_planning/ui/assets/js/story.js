@@ -50,7 +50,11 @@ export function headline(vm) {
   const best = vm.byId[rec.scenarioId];
   if (!best || rec.status === 'not_available') return '暂时给不出推荐';
   if (rec.status === 'conditional_subset') return `在条件齐全的方案中，「${best.name}」最省钱`;
-  return `建议：${best.verb}${best.id !== 'S0_grid' && isNum(best.pvKwp) && best.pvKwp > 0 ? `（光伏 ${fmt.d(best.pvKwp, 2)} kWp）` : ''}`;
+  // 一句话里方案名只出现一次：容量直接写进动词短语
+  const kwp = isNum(best.pvKwp) && best.pvKwp > 0 ? `${fmt.d(best.pvKwp, 2)} kWp ` : '';
+  if (best.id === 'S1_pv') return `建议：加装 ${kwp}光伏`;
+  if (best.id === 'S3_pv_wind') return `建议：加装 ${kwp}光伏和小风机`;
+  return `建议：${best.verb}`;
 }
 
 /** 容量比选摘要（比较后端的每行数值；最划算容量取后端 recommended_pv_capacity_kwp）。 */
