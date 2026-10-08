@@ -500,3 +500,19 @@ v6 记录的全年 `hybrid/run` 平均约 94 秒、最长约 163 秒（5090）�
 7. 手册补充字段说明与示例。
 
 与第 18 节一起在 `fix/5090-redesign-followup` 普通推送。
+
+## 20. 第十二轮：5060 对 `fix/5090-redesign-followup@290eb58` 的审查（2026-10-08）
+
+已合并到 `feat/5060-product-ui`。5060 本地复跑 `unittest discover`：31 项全部通过；离线时 `agent/status` 返回 `available:false`、`parse` 返回 `unavailable`，没有用规则冒充模型。✅ 精简回放 7.86 MB，含 `simple_payback_years`、`tariff_escalation`、四档 `escalation_sensitivity`。✅
+
+### 20.1 需要修正（前端第二轮依赖，请先做）
+
+1. **敏感性差额的正负号与候选字段相反。** 候选层 `incremental_npv_vs_s0_cny` 是“正数 = 比只用电网省”（小档 S1 为 +803），而 `escalation_sensitivity[].incremental_npv_vs_s0_cny` 在 g=0 时为 −803（推荐方案总成本 − S0）。同名字段两种符号，前端会把“省 803 元”显示成“多花 803 元”。请把敏感性里的字段**与候选层同号**（S0 总成本 − 推荐方案总成本，正数 = 省），并在测试中断言 g=0 行与候选层该字段逐位相等。
+2. **回本年限四档完全相同。** 敏感性各行的 `simple_payback_years` 都是按第 1 年节省计算（第 1 年不受涨幅影响），所以 −2% 与 +4% 显示同一个回本年限，评委会觉得表格有问题。请在每行增加 `cumulative_payback_year`：按逐年（含涨幅、维护、更换）累计净节省首次 ≥ 初始投入的年份；研究期内未回本为 `null` 并给 `payback_note`。原 `simple_payback_years` 保留，注明“按第 1 年节省”。
+3. **一句话理解补字段。** `FIELD_RULES` 还没有第 19 节的 `hybrid.tariff_escalation_rate`（“电价每年涨 3%” → 0.03），也没有风机台数。请加入 `hybrid.tariff_escalation_rate` 与风机台数字段（按手册实际路径），各补 1 条测试。另外现在只要句子里出现“电池 / 储能”就进入 `unsupported`，而储能报价已是正式输入：请把储能单价、可选容量列表也纳入可识别字段（或至少在提到储能报价时不再报“不支持”）。
+
+### 20.2 协作约定（不改代码）
+
+本轮分支把 `5090_carbon_request.md` 第 18.4、19 节的需求原文改写成了实现说明，`PROMPT_round2.md` 也被回退到了旧版本（合并时 5060 已保留需求原文）。以后请不要改写 `5090_carbon_request.md` 和 `docs/handoff/frontend_redesign/` 下的文件；实现说明写在 `operation_planning/protocol/` 的交接记录里即可。
+
+完成后普通推送到 `fix/5090-redesign-followup`。
