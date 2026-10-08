@@ -1,4 +1,4 @@
-import json, time, urllib.request, urllib.error
+import json, time, urllib.request, urllib.error, subprocess
 from pathlib import Path
 base='http://127.0.0.1:18766'
 task={'room':{'room_count':1,'units_per_room':2,'start_hour':8,'end_hour':18,'area_m2':35,'equipment_id':'midea_msagbu12_mox201'},'hybrid':{'budget_cny':30000,'allow_export':True,'pv_capacity_kwp':1}}
@@ -21,7 +21,8 @@ def post(path,payload,timeout=20):
  except urllib.error.HTTPError as e:
   body=json.loads(e.read().decode('utf-8')); code=e.code
  return round((time.perf_counter()-t)*1000,2),code,body
-out={"source_commit":"665f08346fd3c403858c318f65d923e83123cb97","endpoint":"loopback","status":None,"examples":[],"boundary":[]}
+source_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+out={"source_commit":source_commit,"endpoint":"loopback","status":None,"examples":[],"boundary":[]}
 ms,body=get('/api/operation/agent/status'); out['status']={'outer_latency_ms':ms,'response':body}
 for name,text,field,val in examples:
  ms,code,body=post('/api/operation/agent/parse',{'request':text,'current_task':task})
