@@ -1,0 +1,115 @@
+{
+  "source_commit": "d9fda1bf03b5a01cb13512f1d08771b010a5e570",
+  "captured_utc": "2026-10-08T16:39:19.285119+00:00",
+  "checks": {
+    "current_rate": 0.03,
+    "current_cost_equals_candidate": true,
+    "current_incremental_equals_candidate": true,
+    "current_row_count": 1,
+    "annual_intervals": 8784,
+    "s0_no_surplus_paths": true,
+    "wind_surplus_paths_retained": true,
+    "export_no_capex_status": "无需额外投入",
+    "custom_echo": {
+      "base_tariff_id": "guangzhou_industrial_lt1kv_202610",
+      "version": "user-supplied-v1",
+      "effective_start": "2026-10-01",
+      "effective_end": "2026-10-31",
+      "prices_cny_per_kwh": {
+        "valley": 0.31,
+        "peak": 1.35,
+        "super_peak": 1.68,
+        "flat": 0.81
+      },
+      "prices": {
+        "valley": 0.31,
+        "peak": 1.35,
+        "super_peak": 1.68,
+        "flat": 0.81
+      },
+      "periods": [
+        {
+          "name": "valley",
+          "start": "00:00",
+          "end": "08:00",
+          "price": 0.31
+        },
+        {
+          "name": "peak",
+          "start": "10:00",
+          "end": "12:00",
+          "price": 1.35
+        },
+        {
+          "name": "peak",
+          "start": "14:00",
+          "end": "19:00",
+          "price": 1.35
+        },
+        {
+          "name": "super_peak",
+          "start": "11:00",
+          "end": "12:00",
+          "price": 1.68,
+          "months": [
+            7,
+            8,
+            9
+          ],
+          "high_temp_threshold_c": 35,
+          "high_temp_outside_months": true
+        },
+        {
+          "name": "super_peak",
+          "start": "15:00",
+          "end": "17:00",
+          "price": 1.68,
+          "months": [
+            7,
+            8,
+            9
+          ],
+          "high_temp_threshold_c": 35,
+          "high_temp_outside_months": true
+        },
+        {
+          "name": "flat",
+          "start": "00:00",
+          "end": "24:00",
+          "price": 0.81
+        }
+      ],
+      "tariff_application": "current_tariff_on_reference_weather",
+      "note": "用户填写的分时价格回显；时段和生效期来自所选基准档案，未作官方核验。"
+    },
+    "annual_load_kwh": 316.30250780500177,
+    "total_cost_cny": 4115.565531341192,
+    "sensitivity_s0_costs": [
+      {
+        "rate": -0.02,
+        "is_current": false,
+        "s0_total_cost_npv_cny": 3283.569332264807
+      },
+      {
+        "rate": 0.0,
+        "is_current": false,
+        "s0_total_cost_npv_cny": 3590.02866265625
+      },
+      {
+        "rate": 0.02,
+        "is_current": false,
+        "s0_total_cost_npv_cny": 3930.981223714795
+      },
+      {
+        "rate": 0.03,
+        "is_current": true,
+        "s0_total_cost_npv_cny": 4115.565531341192
+      },
+      {
+        "rate": 0.04,
+        "is_current": false,
+        "s0_total_cost_npv_cny": 4310.226869834273
+      }
+    ]
+  }
+}

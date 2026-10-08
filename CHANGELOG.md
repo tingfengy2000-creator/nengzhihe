@@ -1,5 +1,11 @@
 # 变更记录
 
+## round21-local-5090 · 2026-10-09
+
+从前端第二轮13c26fe建立fix/5090-round21。补齐当前涨幅敏感性、自定义电价回显、无发电方案余电字段与中文回本状态；修复真机联调发现的解析别名、模糊预算与光伏单位保护，并消除非零涨幅敏感性二次计价。保留旧结果，不修改前端或需求原文。
+
+45项unittest及阶段二A/B专项通过。5090浏览器14种模型输入、关模型规则识别、3D和实际导出PDF均有记录；模型失败和前端问题如实保留。审核入口：docs/handoff/screenshots/frontend_round2/5090_local/acceptance.md；源码、命令与证据哈希：operation_planning/results/round21_local_5090/run_manifest.json。
+
 ## phase2a-interval-finalize · 2026-10-05
 
 基于 `1784cf4e64f30f54e5b4ad8cf8c7885df12b8269` 收尾阶段二A接口正确性：将 Open-Meteo 右标记的过去一小时辐照转换为左标记物理区间，保留真实末端边界并区分辐照与瞬时天气；按 pvlib 0.11.2 定义传入 `pdc0=pac0/eta_inv_nom`；分时电价按物理区间切分后计费。生命周期、固定负荷、0kWp、方向和 Agent 修改路径保留。

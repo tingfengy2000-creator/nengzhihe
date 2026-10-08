@@ -1,0 +1,10 @@
+{
+  "command": [
+    "nvidia-smi",
+    "--query-gpu=name,driver_version",
+    "--format=csv,noheader"
+  ],
+  "exit_code": 0,
+  "stdout": "NVIDIA GeForce RTX 5090, 610.88",
+  "stderr": ""
+}

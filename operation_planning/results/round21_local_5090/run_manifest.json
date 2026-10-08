@@ -1,0 +1,410 @@
+{
+  "run_id": "round21-local-5090-20261008-09",
+  "machine_role": "5090",
+  "gpu_evidence": "gpu_probe.json",
+  "base_commit": "13c26feee1e8d5de3ed121cfe1cb44f317c9ea5c",
+  "final_source_commit": "d9fda1bf03b5a01cb13512f1d08771b010a5e570",
+  "python": {
+    "executable": "C:\\Python314\\python.exe",
+    "version": "3.14.7"
+  },
+  "dependencies": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "pvlib": "0.11.2",
+    "windpowerlib": "0.2.2"
+  },
+  "model": {
+    "model_id": "nengzhihe-qwen3-4b-q4km",
+    "base_url": "http://127.0.0.1:18191/v1",
+    "seed": 20260930,
+    "timeout_seconds": 90
+  },
+  "model_call": {
+    "temperature": 0,
+    "max_tokens": 512,
+    "thinking": false,
+    "seed": 20260930,
+    "planning_in_parse": false
+  },
+  "browser": "Codex IAB on localhost; real UI form/adoption/calculation, no response stubs",
+  "runs": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "scripts.round21_http_evidence_server",
+        "--port",
+        "18765",
+        "--output",
+        "operation_planning\\results\\round21_local_5090\\confirmed"
+      ],
+      "source_commit": "0091dd85cca8e70ef4dd32586ec5359ba5c884da",
+      "workspace_status": "?? docs/handoff/screenshots/frontend_round2/5090_local/\n?? operation_planning/results/round21_local_5090/",
+      "start_utc": "2026-10-08T15:56:27.150932+00:00",
+      "last_record_utc": "2026-10-08T16:02:26.514763+00:00",
+      "status": "browser acceptance completed; daemon kept alive or stopped before next source",
+      "record_count": 73,
+      "output": "operation_planning/results/round21_local_5090/confirmed/http_events.jsonl"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "scripts.round21_http_evidence_server",
+        "--port",
+        "18765",
+        "--output",
+        "operation_planning\\results\\round21_local_5090\\final_economics"
+      ],
+      "source_commit": "d9fda1bf03b5a01cb13512f1d08771b010a5e570",
+      "workspace_status": "?? docs/handoff/screenshots/frontend_round2/5090_local/\n?? operation_planning/results/round21_local_5090/",
+      "start_utc": "2026-10-08T16:22:08.181312+00:00",
+      "last_record_utc": "2026-10-08T16:39:19.310359+00:00",
+      "status": "browser acceptance completed; daemon kept alive or stopped before next source",
+      "record_count": 7,
+      "output": "operation_planning/results/round21_local_5090/final_economics/http_events.jsonl"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "scripts.round21_http_evidence_server",
+        "--port",
+        "18765",
+        "--output",
+        "operation_planning\\results\\round21_local_5090\\final_guard"
+      ],
+      "source_commit": "47780963a6ad36866810d083c334979a0b147632",
+      "workspace_status": "?? docs/handoff/screenshots/frontend_round2/5090_local/\n?? operation_planning/results/round21_local_5090/",
+      "start_utc": "2026-10-08T16:05:09.504698+00:00",
+      "last_record_utc": "2026-10-08T16:17:10.323528+00:00",
+      "status": "browser acceptance completed; daemon kept alive or stopped before next source",
+      "record_count": 22,
+      "output": "operation_planning/results/round21_local_5090/final_guard/http_events.jsonl"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "scripts.round21_http_evidence_server",
+        "--port",
+        "18765",
+        "--output",
+        "operation_planning\\results\\round21_local_5090"
+      ],
+      "source_commit": "a8c392b752886c7fdf36144973e7cd937bfe4240",
+      "workspace_status": "",
+      "start_utc": "2026-10-08T15:51:06.966456+00:00",
+      "last_record_utc": "2026-10-08T15:54:41.722871+00:00",
+      "status": "browser acceptance completed; daemon kept alive or stopped before next source",
+      "record_count": 63,
+      "output": "operation_planning/results/round21_local_5090/http_events.jsonl"
+    }
+  ],
+  "regressions": [
+    {
+      "command": "python -X utf8 -m unittest discover -s tests -p test*.py",
+      "source_commit": "d9fda1bf03b5a01cb13512f1d08771b010a5e570",
+      "exit_code": 0,
+      "passed": 45,
+      "log": "operation_planning/results/round21_local_5090/final_economics_unittest.log",
+      "log_created_utc": "2026-10-08T16:22:08.470012+00:00",
+      "log_last_write_utc": "2026-10-08T16:22:08.505231+00:00",
+      "time_precision_note": "log filesystem creation and final write, not an independent process stopwatch"
+    },
+    {
+      "command": "python -X utf8 -m tests.test_phase2b_wind",
+      "source_commit": "d9fda1bf03b5a01cb13512f1d08771b010a5e570",
+      "exit_code": 0,
+      "passed": 13,
+      "log": "operation_planning/results/round21_local_5090/final_economics_wind.log",
+      "log_created_utc": "2026-10-08T16:22:09.592756+00:00",
+      "log_last_write_utc": "2026-10-08T16:22:09.594757+00:00",
+      "time_precision_note": "log filesystem creation and final write, not an independent process stopwatch"
+    },
+    {
+      "command": "python -X utf8 -m tests.test_phase2a_correctness",
+      "source_commit": "d9fda1bf03b5a01cb13512f1d08771b010a5e570",
+      "exit_code": 0,
+      "passed": "function runner PASS",
+      "log": "operation_planning/results/round21_local_5090/final_economics_phase2a.log",
+      "log_created_utc": "2026-10-08T16:22:10.646711+00:00",
+      "log_last_write_utc": "2026-10-08T16:22:10.646711+00:00",
+      "time_precision_note": "log filesystem creation and final write, not an independent process stopwatch"
+    },
+    {
+      "command": "python -X utf8 -m tests.test_phase2b_storage",
+      "source_commit": "d9fda1bf03b5a01cb13512f1d08771b010a5e570",
+      "exit_code": 0,
+      "passed": 6,
+      "log": "operation_planning/results/round21_local_5090/final_economics_storage.log",
+      "log_created_utc": "2026-10-08T16:22:10.777903+00:00",
+      "log_last_write_utc": "2026-10-08T16:22:10.786414+00:00",
+      "time_precision_note": "log filesystem creation and final write, not an independent process stopwatch"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "operation_planning/data/weather_pv/guangzhou_2024.json",
+      "sha256": "7a2854ff581fdeb15908726dd5b10a288adcc5ae072ab35cf6d316ef6a5cd356",
+      "distributed": true
+    },
+    {
+      "path": "runtime/local_model_config.json",
+      "sha256": "d4072d312438279ce237548ed8cfec26cc0263467ab11ae244853b6781cce328",
+      "distributed": false
+    }
+  ],
+  "model_off": {
+    "verified_project_pid": 9036,
+    "command": "powershell -NoProfile -ExecutionPolicy Bypass -File runtime/stop_model.ps1",
+    "exit_code": 0,
+    "restored_pid": 52424,
+    "restored_status": {
+      "available": true,
+      "mode": "local_model",
+      "label": "本地大模型",
+      "checked_at": "2026-10-08T16:39:19.303771Z",
+      "reason": null
+    }
+  },
+  "artifact_render": {
+    "input": "docs/handoff/screenshots/frontend_round2/5090_local/decision_brief_actual.html",
+    "engine": "Microsoft Edge 154 headless local HTML print",
+    "sandbox_attempt_exit": -2147483645,
+    "authorized_retry_exit": 0,
+    "pages": 3,
+    "all_pages_visually_checked": true,
+    "paper": "Letter default",
+    "known_layout_issue": "cross-page table header not repeated; third page has large unused tail",
+    "native_print_ui": "iframe print invoked; IAB native dialog blocked page input; not claimed native save acceptance"
+  },
+  "runner_limitations": [
+    "pytest unavailable; built-in unittest and existing module runners used",
+    "GET audit wrapper elapsed_ms may be a tiny negative artifact from an absent POST timer; use response.elapsed_ms for job timing, never GET wrapper time"
+  ],
+  "captured_utc": "2026-10-08T16:39:19.439665+00:00",
+  "output_hashes": [
+    {
+      "path": "operation_planning/results/round21_local_5090/browser_first_pass.json",
+      "bytes": 500353,
+      "sha256": "8688491df87c55ec8ffada405dedf7e81717ae08d9e69f781028dcbfa0c2a4b2"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/confirmed/browser_cases.json",
+      "bytes": 1096337,
+      "sha256": "c79f253074ff0eeb5f2ed758380a6ef2207727b09c01b954bf7b814d31719778"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/confirmed/http_events.jsonl",
+      "bytes": 1857352,
+      "sha256": "bc44f2496fc2b930a0959771021d86895d4b7658612fe2d29382aae9ce33dc1e"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/final_economics/actual_response_checks.json",
+      "bytes": 3028,
+      "sha256": "eadd39f37293c13275d919ee2b5d1fe5744ff169425cf607438ad411ff8feb47"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/final_economics/browser_result.json",
+      "bytes": 4781,
+      "sha256": "b26a0f6e29ebdac0142bf022381b38a0640834a6651e8ba39a58f61fe6f96bae"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/final_economics/http_events.jsonl",
+      "bytes": 189199,
+      "sha256": "04d5fecb3318ee2f9def623390c6e6488dad6d43f7d865e6b1c6074f2ac12dfd"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/final_economics/polled_complete_result.json",
+      "bytes": 13881440,
+      "sha256": "f58f0cfd09103856fc133640c41501e7fe45817e310de3e83cb084534015b386"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/final_economics/request.json",
+      "bytes": 5078,
+      "sha256": "6ca03705e571a3b58044cdf7e8d1c2eb32f3184c14ae02cf7190ec1935d64166"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/final_economics/result_dom.txt",
+      "bytes": 20246,
+      "sha256": "a700da67459d9125f6ce803a40b60a34f88874ca4658e84f1ba9e1c61ab7c956"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/final_economics_phase2a.log",
+      "bytes": 33,
+      "sha256": "2c7e06c1c077e22ed95f2bc3583650ef424288e6a3322b2b3d65bd171373c272"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/final_economics_storage.log",
+      "bytes": 109,
+      "sha256": "b952dcfedeb098924df82657c0a7eaafc54599572fb5786304cccc5bc23a2a67"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/final_economics_unittest.log",
+      "bytes": 149,
+      "sha256": "1e64796d513d6370f4e810b1ea218368a656849454bccf9a8eb9fea2fe83ffb7"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/final_economics_wind.log",
+      "bytes": 670,
+      "sha256": "8a9744dbd94b077282f53a4d6bf684e27dabaf703587f3fe3fba00897c172d6f"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/final_guard/browser_cases.json",
+      "bytes": 1215208,
+      "sha256": "4c261a279c276ee0969c053115ef739bcfb5d8fab9b81364afab6c70263146fe"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/final_guard/custom_tariff_browser.json",
+      "bytes": 4876,
+      "sha256": "9f2cac21a9105160454c3382789042e35409406249a4bbfa611250716827ed08"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/final_guard/home_3d_observation.json",
+      "bytes": 30325,
+      "sha256": "889d903dea9024d78e99a4689d895d0ac4c89225c80a0e834d30274ada7b9aa4"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/final_guard/http_events.jsonl",
+      "bytes": 583903,
+      "sha256": "70a1328b75708713634c2d0e44b124cbbe7e8427a38f94ab6a4304f43882e494"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/final_guard/rules_model_off.json",
+      "bytes": 25444,
+      "sha256": "c34c5d60b8584936609db2e6d8ac966c74e59917c91fd9a390d06339deb3271d"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/final_guard/rules_supported_expression.json",
+      "bytes": 19860,
+      "sha256": "3c19c26b62d75d37a0922da7f7d3da63db6096a1ba7e82cf61b73a25e6472c78"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/gpu_probe.json",
+      "bytes": 199,
+      "sha256": "afc397d20cbf5579e068a57b5c773b549b7c12e38b54bab5189085b06ce1352e"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/http_events.jsonl",
+      "bytes": 1633553,
+      "sha256": "1bda9af7f743e123a6f65d9e3b20465526114e1c5b551e0679fd2a2bc4ae4c30"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/model_restored_status.json",
+      "bytes": 151,
+      "sha256": "1a898c4b33d3aabf0d790c92e69b9f38c83cdc7d81456ec8d01e90805fe8adb4"
+    },
+    {
+      "path": "operation_planning/results/round21_local_5090/task_records.json",
+      "bytes": 553678,
+      "sha256": "1d2eb544754c99240e8e171d720439c2b7470fc7dced63a65349a2adab2d9ae2"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/acceptance.md",
+      "bytes": 10240,
+      "sha256": "21f84fa692b4b988337a33ea507fd60d3701119480ee5d153ec2f72bd65810a3"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/decision_brief_actual.html",
+      "bytes": 7894,
+      "sha256": "d1fcee2bb8733d817b253dd123e9087b3ffc04321a2b1ffb139daa23eb61222c"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/decision_brief_actual.pdf",
+      "bytes": 288504,
+      "sha256": "591aa70925af022da4a9adbf34636fc932f949cb29d09bf0fa0608e9058330d8"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/final_result.jpg",
+      "bytes": 61140,
+      "sha256": "4fe843a34763769c1ee794577aee3faf5584ba5e43eefbe0f4aef6624df2026c"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/first_01_units.jpg",
+      "bytes": 78347,
+      "sha256": "ba9b9d819ece76dcc2575e13ed71eee25cef54dfad69046460adcf18b495af00"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/first_03_brand.jpg",
+      "bytes": 78964,
+      "sha256": "020272e63e7dad520e347dd0be09585ae768059ff291d8592ebdce2e6844f913"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/first_04_budget.jpg",
+      "bytes": 81647,
+      "sha256": "28cf6d70caca2729da86e22225151ba70c02d208f5b780b371d45589d89f4802"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/first_09_escalation.jpg",
+      "bytes": 81468,
+      "sha256": "e7b12cab747c646f3525479574215975cba1d660ff1711af76276203b43012fa"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/first_10_storage.jpg",
+      "bytes": 85428,
+      "sha256": "1761c69ba91eb72d5e35c0e832a82e4488043c627ea8ce37cbc9ae3aa0fa74cc"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/home_3d.jpg",
+      "bytes": 68471,
+      "sha256": "33682055070ac758ab836ad3c194e00742310afd905704152bf789059435f422"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/nengzhihe-round21-01_units.jpg",
+      "bytes": 81445,
+      "sha256": "0238dd2c126689bc9dd43d0e5b441bd94c87631f4fcc67b349eb480352811a7e"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/nengzhihe-round21-03_brand.jpg",
+      "bytes": 79069,
+      "sha256": "c82e4bd320a262be3815ef302af0238555d99647c859cf0f108010d4461ef394"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/nengzhihe-round21-04_budget.jpg",
+      "bytes": 80514,
+      "sha256": "85a68a974330089c5a5757d6a0a3bc10abe32f3ade1d06dfc4c4caf1bc87c048"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/nengzhihe-round21-09_escalation.jpg",
+      "bytes": 80486,
+      "sha256": "a4df4e6f4a92e47a3d7d122ed855969c4f4c67746207f05fb453d42da8d14bbe"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/nengzhihe-round21-10_storage.jpg",
+      "bytes": 85422,
+      "sha256": "a30f1dd6529fa4655768f27f32039870d96ad54994f704f4204e532b1e7a8ebd"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/nengzhihe-round21-fresh.jpg",
+      "bytes": 74793,
+      "sha256": "a83c6f97f1b39bdc6ae50a82abf808f78ad6c16bf842cac8c825fd0197e51cf2"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/print_iframe_actual.html",
+      "bytes": 8015,
+      "sha256": "6dee46752a6be312982e68b150a323f53396252500a6b0ea399ca37e8e9099b6"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/print_page-1.png",
+      "bytes": 192661,
+      "sha256": "4bb6d9a2024481e0b2d1b9730e12b11627176cec92289d316aa155d13bc0b32f"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/print_page-2.png",
+      "bytes": 294779,
+      "sha256": "94d3dd01db517934ce5093e0e669410b41954e9a4d22ea4309d736c3b07fcf79"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/print_page-3.png",
+      "bytes": 131697,
+      "sha256": "1927c62f4b54824b647217ace4148e0d89cc964baa37ab887eb34050eff9316d"
+    },
+    {
+      "path": "docs/handoff/screenshots/frontend_round2/5090_local/rules_model_off.jpg",
+      "bytes": 82195,
+      "sha256": "56266fe6227c8b1a1c3c182f4a63e7980ea1727fce998f7b2e15e997948ed872"
+    }
+  ]
+}

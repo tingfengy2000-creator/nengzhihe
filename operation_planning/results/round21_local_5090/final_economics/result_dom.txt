@@ -1,0 +1,476 @@
+- link "跳到主要内容":
+  - /url: "#main"
+- navigation "主导航":
+  - link "能见度 首页":
+    - /url: "#/"
+    - text: 能见度
+  - link "首页":
+    - /url: "#/"
+  - link "开始试算":
+    - /url: "#/tool"
+  - link "示例":
+    - /url: "#/samples"
+  - link "我的方案":
+    - /url: "#/plans"
+  - link "关于数据":
+    - /url: "#/about"
+  - status "已连接本机计算服务：结果由后端实时计算":
+    - generic: 实时计算 · 本机服务
+  - button "主题：跟随系统，点击切换":
+  - button "一键演示":
+    - generic: 一键演示
+- main:
+  - paragraph: 开始试算
+  - heading "填上你的条件，实时算出全年每个小时。" [level=1]
+  - paragraph: 城市、房间、空调、屋顶、报价、电价、预算都可以改。点击计算后先看典型周预览，全年结果由本机计算服务算完后自动替换。
+  - navigation "试算步骤":
+    - link "1 场景 房间、空调、屋顶、电价":
+      - /url: "#/tool/1"
+      - generic: "1"
+      - generic: 场景
+      - generic: 房间、空调、屋顶、电价
+    - link "2 空调用电 一年用多少电、是否达标":
+      - /url: "#/tool/2"
+      - generic: "2"
+      - generic: 空调用电
+      - generic: 一年用多少电、是否达标
+    - link "3 比较方案 四种供电方式、碳、储能" [active]:
+      - /url: "#/tool/3"
+      - generic: "3"
+      - generic: 比较方案
+      - generic: 四种供电方式、碳、储能
+    - link "4 决策与导出 推荐理由、边界、导出":
+      - /url: "#/tool/4"
+      - generic: "4"
+      - generic: 决策与导出
+      - generic: 推荐理由、边界、导出
+  - text: 实时计算结果
+  - generic: 本机实时计算 · 2026/10/9 00:25:44
+  - text: 有条件推荐
+  - generic: 在条件齐全、可比较的方案中 10 年总花费最低
+  - heading "建议：暂不加装，只用电网。" [level=2]
+  - paragraph: 10 年总花费（折现）约 4,116 元。
+  - generic: 空调用电有多少是自己发的
+  - text: 0%
+  - generic: 只用电网，不自己发电
+  - generic: 一开始要投入多少
+  - text: 0元
+  - generic: 只用电网，无需投入
+  - generic: 大概几年回本
+  - text: —
+  - generic: 只用电网，无需投入
+  - generic: 简单回本：初始投入 ÷ 每年净节省，不折现，仅供参考
+  - list:
+    - generic: 加装光伏
+    - generic: 与「只用电网」相同
+    - generic: 加装小风机
+    - generic: 已排除：初始投入超过预算60000元
+    - generic: 光伏 + 小风机
+    - generic: 与「加装小风机」相同
+  - paragraph: 10 年总账
+  - heading "四种供电方式，“只用电网”永远是第一列基线。" [level=3]
+  - generic: 有条件推荐
+  - generic: 只用电网
+  - generic: 不加装发电设备
+  - generic: 10 年总花费（折现）
+  - generic: 4,116元
+  - generic: 比较基线
+  - text: 可比较
+  - generic: 年发电 0 kWh
+  - generic: 空调用电由自发电覆盖 0%
+  - generic: 第 1 年减碳 0 kg
+  - generic: 加装光伏
+  - generic: 加装光伏
+  - generic: 10 年总花费（折现）
+  - generic: 4,116元
+  - generic: 与基线相同
+  - generic: 与「只用电网」相同
+  - text: 与其他方案相同
+  - generic: 年发电 0 kWh
+  - generic: 空调用电由自发电覆盖 0%
+  - generic: 第 1 年减碳 0 kg
+  - generic: 加装小风机
+  - generic: 小风机 1 台
+  - generic: 10 年总花费（折现）
+  - generic: 93,659元
+  - text: 已排除：初始投入超过预算60000元
+  - text: 已排除
+  - generic: 年发电 910 kWh
+  - generic: 空调用电由自发电覆盖 9%
+  - generic: 第 1 年减碳 12 kg
+  - generic: 光伏 + 小风机
+  - generic: 小风机 1 台
+  - generic: 10 年总花费（折现）
+  - generic: 93,659元
+  - generic: 多花 89,543 元
+  - generic: 与「加装小风机」相同
+  - text: 与其他方案相同
+  - generic: 年发电 910 kWh
+  - generic: 空调用电由自发电覆盖 9%
+  - generic: 第 1 年减碳 12 kg
+  - paragraph: 总花费为空调用电购电费加发电设备投入与运维的折现成本，不含空调设备本身。负的“比只用电网”= 多花，正的 = 省下；“条件不全”不是排除。 电价：用户自定义电价（未经官方核验）。
+  - text: 用户自定义电价（未经官方核验）
+  - generic: 电价变了，结论还成立吗？推荐只用电网，无需投入。
+  - paragraph: 装多大最划算
+  - heading "这里不装光伏最划算。" [level=3]
+  - paragraph: 在 4 个候选容量里，没有一个比只用电网更省。
+  - img "光伏容量比选曲线":
+    - generic: "-2.5万"
+    - generic: "-2万"
+    - generic: "-1.5万"
+    - generic: "-1万"
+    - generic: "-5,000"
+    - generic: "0"
+    - generic: "0"
+    - generic: "2"
+    - generic: "4"
+    - generic: "6"
+    - generic: 光伏容量（kWp）
+    - generic: 10 年比只用电网省下（元；负数为多花）
+    - generic: 最划算 0 kWp
+  - table "光伏容量比选明细":
+    - caption: 光伏容量比选明细
+    - rowgroup:
+      - row "光伏容量 状态 10 年总花费 比只用电网 年发电 当时用上 发电当时用上比例 浪费比例 研究期减碳 每吨减碳":
+        - columnheader "光伏容量"
+        - columnheader "状态"
+        - columnheader "10 年总花费"
+        - columnheader "比只用电网"
+        - columnheader "年发电"
+        - columnheader "当时用上"
+        - columnheader "发电当时用上比例"
+        - columnheader "浪费比例"
+        - columnheader "研究期减碳"
+        - columnheader "每吨减碳"
+    - rowgroup:
+      - row "0 kWp 与其他方案相同 4,116 元 与基线相同 0 0 — — 0 t —":
+        - cell "0 kWp"
+        - cell "与其他方案相同":
+          - text: 与其他方案相同
+        - cell "4,116 元"
+        - cell "与基线相同"
+        - cell "0"
+        - cell "0"
+        - cell "—"
+        - cell "—"
+        - cell "0 t"
+        - cell "—"
+      - row "1 kWp 可比较 7,728 元 多花 3,612 元 1,107 13 1.2% 98.8% 0.06 t 每减 1 吨多花 62,314 元":
+        - cell "1 kWp"
+        - cell "可比较":
+          - text: 可比较
+        - cell "7,728 元"
+        - cell "多花 3,612 元"
+        - cell "1,107"
+        - cell "13"
+        - cell "1.2%"
+        - cell "98.8%"
+        - cell "0.06 t"
+        - cell "每减 1 吨多花 62,314 元"
+      - row "2 kWp 可比较 11,342 元 多花 7,226 元 2,214 27 1.2% 98.8% 0.12 t 每减 1 吨多花 62,564 元":
+        - cell "2 kWp"
+        - cell "可比较":
+          - text: 可比较
+        - cell "11,342 元"
+        - cell "多花 7,226 元"
+        - cell "2,214"
+        - cell "27"
+        - cell "1.2%"
+        - cell "98.8%"
+        - cell "0.12 t"
+        - cell "每减 1 吨多花 62,564 元"
+      - row "5.6 kWp 可比较 24,387 元 多花 20,271 元 6,199 72 1.2% 98.8% 0.31 t 每减 1 吨多花 64,877 元":
+        - cell "5.6 kWp"
+        - cell "可比较":
+          - text: 可比较
+        - cell "24,387 元"
+        - cell "多花 20,271 元"
+        - cell "6,199"
+        - cell "72"
+        - cell "1.2%"
+        - cell "98.8%"
+        - cell "0.31 t"
+        - cell "每减 1 吨多花 64,877 元"
+  - paragraph: 在有限个计价完整、满足屋顶与预算约束的“只装光伏”容量候选中，选 10 年比只用电网省下最多的一个；不是全局最优。 发电量与减碳为第 1 年；“比只用电网”为 10 年折现差额。
+  - paragraph: 全年能源日历
+  - heading "发电和空调用电，在哪些小时重合。" [level=3]
+  - group "日历视图":
+    - button "空调用电"
+    - button "光伏与风机发电"
+    - button "发电时空调在用吗" [pressed]
+  - group "日历数据":
+    - button "加装小风机：小风机 1 台" [pressed]
+    - button "光伏 + 小风机：小风机 1 台"
+  - generic: 发的电当时用上
+  - generic: 发了没人用（浪费）
+  - generic: 主要靠电网
+  - generic "全年逐小时能源日历，可横向滚动":
+    - generic "全年逐小时能源日历"
+  - paragraph: 颜色深浅按全年第 99 百分位归一、分类色只表示这一小时哪种去向最多，仅用于显示；悬停查看原始数值（kWh）。完整逐时数值可在第 4 步导出逐时 CSV。
+  - paragraph: 电去哪了
+  - heading "只有当时用上的电，才真正替代了电网。" [level=3]
+  - group "选择方案":
+    - button "加装小风机"
+    - button "光伏 + 小风机" [pressed]
+  - generic: 97%
+  - generic: 的小风机 1 台发电，发出来时没人用
+  - generic: 当时给空调用上
+  - generic: "28"
+  - generic: 发了没人用（浪费）
+  - generic: "882"
+  - generic: 空调仍需从电网买
+  - generic: "289"
+  - paragraph: 单位 kWh / 年（第 1 年）。环形图角度按发电量比例绘制，仅用于显示。
+  - paragraph: 典型日曲线
+  - heading "选一天，看用电和发电怎么错开。" [level=3]
+  - generic: 日期
+  - textbox "日期": 2024-07-15
+  - generic: 空调用电
+  - generic: 光伏发电
+  - generic: 风机发电
+  - img "2024-07-15 逐时用电与发电":
+    - generic: "0"
+    - generic: "0.5"
+    - generic: "1"
+    - generic: "1.5"
+    - generic: "2"
+    - generic: 0时
+    - generic: 6时
+    - generic: 12时
+    - generic: 18时
+    - generic: 23时
+  - paragraph: 取所选日期的 24 个逐时数值画线，仅用于显示；数据为日历当前所选方案。默认日期为夏季典型周首日（固定规则，不按结果挑选）。
+  - paragraph: 真实减碳
+  - heading "只按当时用上的电算减碳，再看每吨减碳多花还是省下。" [level=3]
+  - checkbox "显示碳价情景" [checked]
+  - text: 显示碳价情景
+  - table "各方案减碳":
+    - caption: 各方案减碳
+    - rowgroup:
+      - row "方案 第 1 年电网排放 第 1 年减碳 研究期累计减碳 每吨减碳 碳收益（情景，总额） 计入碳收益后比只用电网":
+        - columnheader "方案"
+        - columnheader "第 1 年电网排放"
+        - columnheader "第 1 年减碳"
+        - columnheader "研究期累计减碳"
+        - columnheader "每吨减碳"
+        - columnheader "碳收益（情景，总额）"
+        - columnheader "计入碳收益后比只用电网"
+    - rowgroup:
+      - row "只用电网 推荐 140 kg 0 kg 0 t 无减碳 — —":
+        - cell "只用电网 推荐":
+          - text: 只用电网
+          - generic: 推荐
+        - cell "140 kg"
+        - cell "0 kg"
+        - cell "0 t"
+        - cell "无减碳"
+        - cell "—"
+        - cell "—"
+      - row "加装光伏 140 kg 0 kg 0 t 无减碳 — —":
+        - cell "加装光伏"
+        - cell "140 kg"
+        - cell "0 kg"
+        - cell "0 t"
+        - cell "无减碳"
+        - cell "—"
+        - cell "—"
+      - row "加装小风机 128 kg 12 kg 0.12 t 每减 1 吨多花 735,978 元 — —":
+        - cell "加装小风机"
+        - cell "128 kg"
+        - cell "12 kg"
+        - cell "0.12 t"
+        - cell "每减 1 吨多花 735,978 元"
+        - cell "—"
+        - cell "—"
+      - row "光伏 + 小风机 128 kg 12 kg 0.12 t 每减 1 吨多花 735,978 元 — —":
+        - cell "光伏 + 小风机"
+        - cell "128 kg"
+        - cell "12 kg"
+        - cell "0.12 t"
+        - cell "每减 1 吨多花 735,978 元"
+        - cell "—"
+        - cell "—"
+  - generic: 未提供碳价；不计算碳收益情景。可在第 1 步「碳与储能」填写碳价情景后重新计算。
+  - term: 排放因子
+  - definition: 广东 2023 · 电力平均 · 0.4419 kgCO₂/kWh
+  - term: 来源
+  - definition:
+    - text: 生态环境部、国家统计局《关于发布2023年电力二氧化碳排放因子的公告（附件表3）》公告2025年第47号 ·
+    - link "公告":
+      - /url: https://www.mee.gov.cn/xxgk2018/xxgk/xxgk01/202512/t20251231_1139517.html
+    - text: ·
+    - link "附件":
+      - /url: https://www.mee.gov.cn/xxgk2018/xxgk/xxgk01/202512/W020251231726284332528.pdf
+  - term: 对照因子
+  - definition: 全国 2023 · 0.5306 kgCO₂/kWh（推荐方案第 1 年减碳按对照因子为 0 kg）
+  - list:
+    - listitem: 基于电网平均排放因子的情景估算，不是经核证的减排量。
+    - listitem: 不包含光伏、风机制造、运输、回收的隐含排放。
+    - listitem: 只有当时用上的自发电替代电网电；弃电不计入自用减碳。
+    - listitem: 外送电量单独列示，不并入自用减碳量。
+    - listitem: 每吨减碳为负数时表示在该成本口径下省钱，不是碳交易收入。
+  - paragraph: 粗算对照
+  - heading "常见的年度粗算，把浪费的电也算成了省钱。" [level=3]
+  - paragraph: 粗算把一年发电量直接抵一年用电量，不看发电时有没有人用电；只作对照，不参与推荐。
+  - table "粗算与逐小时对照":
+    - caption: 粗算与逐小时对照
+    - rowgroup:
+      - row "方案 粗算：空调用电被抵掉 逐小时：空调用电由自发电覆盖 粗算：第 1 年减碳 逐小时：第 1 年减碳 粗算：比只用电网 逐小时：比只用电网 结论":
+        - columnheader "方案"
+        - columnheader "粗算：空调用电被抵掉"
+        - columnheader "逐小时：空调用电由自发电覆盖"
+        - columnheader "粗算：第 1 年减碳"
+        - columnheader "逐小时：第 1 年减碳"
+        - columnheader "粗算：比只用电网"
+        - columnheader "逐小时：比只用电网"
+        - columnheader "结论"
+    - rowgroup:
+      - row "加装光伏 0% 0% 0 kg 0 kg 与基线相同 与基线相同 粗算偏保守":
+        - cell "加装光伏"
+        - cell "0%"
+        - cell "0%"
+        - cell "0 kg"
+        - cell "0 kg"
+        - cell "与基线相同"
+        - cell "与基线相同"
+        - cell "粗算偏保守":
+          - text: 粗算偏保守
+      - row "加装小风机 100% 9% 140 kg 12 kg 多花 86,310 元 已排除 粗算偏乐观":
+        - cell "加装小风机"
+        - cell "100%"
+        - cell "9%"
+        - cell "140 kg"
+        - cell "12 kg"
+        - cell "多花 86,310 元"
+        - cell "已排除"
+        - cell "粗算偏乐观":
+          - text: 粗算偏乐观
+      - row "光伏 + 小风机 100% 9% 140 kg 12 kg 多花 86,310 元 多花 89,543 元 粗算偏乐观":
+        - cell "光伏 + 小风机"
+        - cell "100%"
+        - cell "9%"
+        - cell "140 kg"
+        - cell "12 kg"
+        - cell "多花 86,310 元"
+        - cell "多花 89,543 元"
+        - cell "粗算偏乐观":
+          - text: 粗算偏乐观
+  - paragraph: 粗算电价口径：只用电网时的年购电费 ÷ 年用电量（分时电价按负荷加权平均）（有效电价 1.135 元/kWh）。
+  - paragraph: 多余的电
+  - heading "多余的电去哪儿？" [level=3]
+  - paragraph: 这个方案每年约有 882 度电自己用不完（小风机 1 台，第 1 年）。
+  - group "选择方案":
+    - button "加装小风机"
+    - button "光伏 + 小风机" [pressed]
+  - heading "存起来（储能）" [level=3]:
+    - text: 存起来（储能）
+  - table "各储能容量的投入与收益":
+    - caption: 各储能容量的投入与收益
+    - rowgroup:
+      - row "电池容量 初始投入 每年少交电费 每年净收益（扣运维） 几年回本 10 年净收益 自用比例":
+        - columnheader "电池容量"
+        - columnheader "初始投入"
+        - columnheader "每年少交电费"
+        - columnheader "每年净收益（扣运维）"
+        - columnheader "几年回本"
+        - columnheader "10 年净收益"
+        - columnheader "自用比例"
+    - rowgroup:
+      - row "0 kWh 不装 0 元 0 元 0 元 容量为0，不安装储能 0 元 3% → 3%":
+        - cell "0 kWh 不装"
+        - cell "0 元"
+        - cell "0 元"
+        - cell "0 元"
+        - cell "容量为0，不安装储能":
+          - generic: 容量为0，不安装储能
+        - cell "0 元"
+        - cell "3% → 3%"
+      - row "5 kWh 5,219 元 146 元 −154 元 年净收益不为正 −6,545 元 3% → 17%":
+        - cell "5 kWh"
+        - cell "5,219 元"
+        - cell "146 元"
+        - cell "−154 元"
+        - cell "年净收益不为正":
+          - generic: 年净收益不为正
+        - cell "−6,545 元"
+        - cell "3% → 17%"
+      - row "10 kWh 10,438 元 175 元 −125 元 年净收益不为正 −11,428 元 3% → 19%":
+        - cell "10 kWh"
+        - cell "10,438 元"
+        - cell "175 元"
+        - cell "−125 元"
+        - cell "年净收益不为正":
+          - generic: 年净收益不为正
+        - cell "−11,428 元"
+        - cell "3% → 19%"
+      - row "20 kWh 20,876 元 199 元 −101 元 年净收益不为正 −21,595 元 3% → 22%":
+        - cell "20 kWh"
+        - cell "20,876 元"
+        - cell "199 元"
+        - cell "−101 元"
+        - cell "年净收益不为正":
+          - generic: 年净收益不为正
+        - cell "−21,595 元"
+        - cell "3% → 22%"
+      - row "50 kWh 52,191 元 231 元 −69 元 年净收益不为正 −52,543 元 3% → 25%":
+        - cell "50 kWh"
+        - cell "52,191 元"
+        - cell "231 元"
+        - cell "−69 元"
+        - cell "年净收益不为正":
+          - generic: 年净收益不为正
+        - cell "−52,543 元"
+        - cell "3% → 25%"
+  - generic: 按当前报价不建议装储能
+  - paragraph: 10 年净收益（不折现）
+  - img "各储能容量的研究期净收益":
+    - generic: "-6万"
+    - generic: "-4万"
+    - generic: "-2万"
+    - generic: "0"
+    - generic: "0"
+    - generic: 0 kWh
+    - generic: −6,545
+    - generic: 5 kWh
+    - generic: −1.1万
+    - generic: 10 kWh
+    - generic: −2.2万
+    - generic: 20 kWh
+    - generic: −5.3万
+    - generic: 50 kWh
+  - list:
+    - listitem: 简单规则：多余电先充进电池、缺电时放出；不含电池衰减和温度影响，不做峰谷套利；净收益不折现。
+    - listitem: 只计算空调用电：下班后和周末楼里不用电，电池晚上没处放，所以容量越大不一定越划算。
+    - listitem: 储能报价来源：CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）（2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价）。
+  - heading "卖给电网（粗算）" [level=3]:
+    - text: 卖给电网（粗算）
+  - term: 每年卖出电量
+  - definition: 882 kWh
+  - term: 上网电价
+  - definition: 0.25 元/kWh
+  - term: 每年收入
+  - definition: 221 元
+  - term: 10 年收入
+  - definition: 2,206 元
+  - term: 并网投入
+  - definition: 0 元
+  - term: 回本
+  - definition: 无需额外投入
+  - list:
+    - listitem: 粗算：能否并网、上网电价和结算方式以当地电网批复为准。
+    - listitem: 电价来源：华福证券：分布式光伏行业深度（公开市场化余电示例）。公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复
+  - paragraph: 两条路从同一份多余电量分别估算，不叠加，也不改变上面的推荐方案。
+- contentinfo:
+  - generic: 能见度 · 低碳改造决策助手
+  - paragraph: 页面上的数字全部来自本机计算服务的实时结果或随仓库保存的回放文件，前端不复制计算公式。空调负荷是未经现场校准的城市级天气情景；只计空调用电；小风机未做当地气压与温度修正；报价、屋顶条件需现场确认。
+  - generic: 数据来源
+  - list:
+    - listitem: 天气：Open-Meteo 历史再分析逐时数据（仓库缓存）
+    - listitem: 排放因子：生态环境部、国家统计局公开公告
+    - listitem: 电价：公开电价档案（部分待核验）
+  - generic: 说明
+  - list:
+    - link "关于数据与边界":
+      - /url: "#/about"
+    - listitem: 作品匿名展示，不含个人信息
+    - listitem: 示例不代表真实客户、试点或节能收益
