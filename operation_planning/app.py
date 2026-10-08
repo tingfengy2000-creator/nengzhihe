@@ -43,11 +43,11 @@ ROOT = Path(__file__).resolve().parent
 UI = ROOT / "ui"
 # Read-only fixed replay samples for the 5060 UI.  Only these whitelisted
 # 5090 files are exposed (exact names, no paths); nothing is copied into ui/
-# so evidence cannot drift.  v6 cases and v7 typical-week previews back the
-# redesigned UI's sample mode.
+# so evidence cannot drift.  The compact v9 UI cases and v7 typical-week
+# previews back the UI's sample mode; v6 stays listed for older reviewers.
 REPLAY_DIR = ROOT.parent / "docs" / "handoff" / "replay_viewer"
 REPLAY_SAMPLES = frozenset({"replay_cases.json", "aircost_cases.json", "replay_cases_room_contract.json",
-                            "replay_cases_v6.json", "replay_previews_v7.json"})
+                            "replay_cases_v6.json", "replay_previews_v7.json", "replay_cases_ui_v9.json"})
 JOBS: dict[str, dict] = {}
 LOCK = threading.RLock()
 MIME = {

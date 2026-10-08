@@ -32,7 +32,7 @@ function buildScenes(s) {
 function render() {
   const box = $('#demo');
   box.innerHTML = `<div class="demo-bar container">
-    <div class="demo-top"><span class="demo-scene num">第 ${cur + 1} 幕 / ${scenes.length} · ${esc(scenes[cur].t)}</span><span class="xsmall demo-src">数据：示例回放 replay_cases_v6.json（小档、中档、大档）</span></div>
+    <div class="demo-top"><span class="demo-scene num">第 ${cur + 1} 幕 / ${scenes.length} · ${esc(scenes[cur].t)}</span><span class="xsmall demo-src">数据：示例回放 ${esc(data.sampleSourceText(data.samplesLoaded()))}（小档、中档、大档）</span></div>
     <p class="demo-cap" aria-live="polite">${esc(scenes[cur].cap)}</p>
     <div class="demo-ctrls">
       <button class="iconbtn" type="button" data-demo="prev" aria-label="上一幕">${icon('prev')}</button>

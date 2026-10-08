@@ -98,14 +98,10 @@ export function blankForm(options) {
   };
 }
 
-/** 所选城市所在供电区域的电价档案（按 options.tariffs.regions 的城市名匹配）；没有则返回空。 */
+/** 适用于所选城市的电价档案（按档案的 site_ids 匹配，最新生效的排在前面）；没有则返回空。 */
 export function tariffsForSite(options, siteId) {
-  const city = ((options && options.cities) || []).find((c) => c.site_id === siteId);
-  const regions = (((options || {}).tariffs || {}).regions) || [];
-  const ids = new Set(tariffList(options).map((t) => t.tariff_id));
-  if (!city) return [];
-  const reg = regions.find((r) => String(r.city || '').includes(city.name));
-  return reg ? (reg.supported_tariffs || []).filter((id) => ids.has(id)) : [];
+  return tariffList(options).filter((t) => Array.isArray(t.site_ids) && t.site_ids.includes(siteId))
+    .sort((a, b) => String(b.effective_start || '').localeCompare(String(a.effective_start || ''))).map((t) => t.tariff_id);
 }
 
 export function tariffList(options) {

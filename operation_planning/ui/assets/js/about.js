@@ -55,7 +55,7 @@ function sourcesHtml(s) {
         : `<p>${s && s.file.main_tariff ? `示例主电价档案 ${esc(s.file.main_tariff.tariff_id)}${s.file.main_tariff.provisional ? '（待核验）' : ''}，来源 <a href="${esc(s.file.main_tariff.source_url)}" target="_blank" rel="noopener noreferrer">公开抄录页面</a>。` : ''}连接计算服务后显示完整电价档案目录。</p>`}
       <p class="hint">标为“待核验”的档案是公开抄录、原始公告尚未核对；套用到参考天气年时是现行价格结构情景，不是真实账单。</p></article>
     <article class="card"><h3>${icon('layers')}示例回放</h3>
-      <p>${s ? `docs/handoff/replay_viewer/replay_cases_v6.json（${esc(s.file.format_version)}，${s.order.length} 个案例，源码提交 <span class="mono">${esc(fmt.sha((s.file.source || {}).source_commit, 10))}</span>，由实时接口 HTTP 调用生成）；典型周预览 replay_previews_v7.json（${esc((s.previewFile || {}).format_version || '')}）。` : '正在读取示例…'}示例只是起点，不代表真实客户、试点或节能收益。</p></article>
+      <p>${s ? `docs/handoff/replay_viewer/${esc(data.SAMPLE_FILE)}（${esc(s.file.format_version)}，${s.order.length} 个案例，源码提交 <span class="mono">${esc(fmt.sha((s.file.source || {}).source_commit, 10))}</span>，由实时接口 HTTP 调用生成的界面精简版；完整证据另存仓库）；典型周预览 replay_previews_v7.json（${esc((s.previewFile || {}).format_version || '')}）。` : '正在读取示例…'}示例只是起点，不代表真实客户、试点或节能收益。</p></article>
   </div>`;
 }
 

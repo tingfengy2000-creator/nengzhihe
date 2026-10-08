@@ -167,7 +167,7 @@ function step1Html() {
 
       <fieldset class="card fcard"><legend><span class="fnum">6</span>碳与储能（可选）</legend>
         <div class="grid-form">${fieldHtml('factor_id', 'span2')}${fieldHtml('carbon_price')}</div>
-        <div class="row" style="margin:6px 0 10px"><button class="btn sm" type="button" data-action="carbon-ref">使用公开参考碳价</button><span class="hint">生态环境部《全国碳市场发展报告（2025）》记载的 2024 年年底全国碳市场综合价格收盘价；只是情景，不代表项目可成交或具备减排量资格。</span></div>
+        ${carbonRefHtml()}
         <div class="grid-form">${fieldHtml('storage_caps', 'span2')}</div>
       </fieldset>
     </form>
@@ -394,7 +394,7 @@ function renderResbar() {
   bar.hidden = false;
   bar.innerHTML = `<div class="container">
     <span class="tag ${T.stale ? 'warn' : v.kind === 'live' ? 'ok' : 'brand'}">${icon(T.stale ? 'warn' : v.kind === 'live' ? 'bolt' : 'doc')}${T.stale ? '条件已修改，结果已失效' : v.kind === 'live' ? '实时计算结果' : '示例数据'}</span>
-    <span class="small">${esc(v.kind === 'live' ? `本机实时计算 · ${fmt.date(v.computedAt)}` : `${v.label} · 来自 replay_cases_v6.json`)}</span>
+    <span class="small">${esc(v.kind === 'live' ? `本机实时计算 · ${fmt.date(v.computedAt)}` : `${v.label} · 来自 ${data.sampleSourceText(data.samplesLoaded())}`)}</span>
     ${v.kind === 'sample' && !T.stale ? '<span class="xsmall muted">改任何条件后可点击「实时重算」</span>' : ''}
     ${T.stale ? `<button class="btn primary sm" type="button" data-action="compute" data-needs-live ${app.mode === 'live' ? '' : 'disabled'}>${icon('calc')}实时重算</button>` : ''}
   </div>`;
@@ -486,10 +486,18 @@ function bind() {
   el.addEventListener('keydown', (e) => { if (e.key === 'Enter' && e.target.id === 'askInput') { e.preventDefault(); $('[data-action="ask"]', el).click(); } });
 }
 
-/** 公开参考碳价：数值与来源由计算服务的碳模块记载（carbon.py REFERENCE_CARBON_PRICE_CNY_PER_T），
- *  计算结果会在 carbon_context.carbon_price_source 中回显来源；这里只作为输入情景填入。 */
-const REFERENCE_CARBON_PRICE = '97.49';
-function carbonRef() { setField('carbon_price', REFERENCE_CARBON_PRICE, { rerender: true }); toast('已填入公开参考碳价情景'); }
+/** 公开参考碳价：读计算服务 options.carbon_price_scenarios（数值、来源、“仅情景”说明），只作为输入情景填入。 */
+const carbonScenario = () => (((app.options || {}).carbon_price_scenarios) || [])[0] || null;
+function carbonRefHtml() {
+  const c = carbonScenario();
+  if (!c) return '<p class="hint" style="margin:6px 0 10px">连接计算服务后可选用公开参考碳价情景。</p>';
+  const v = c.carbon_price_cny_per_t ?? c.value_cny_per_t;
+  return `<div class="row" style="margin:6px 0 10px"><button class="btn sm" type="button" data-action="carbon-ref">使用公开参考碳价（${fmt.d(v, 2)} 元/吨）</button><span class="hint">来源：${esc(c.source_title || c.source || '')}${c.date ? `（${esc(c.date)}）` : ''}${c.source_url ? ` · <a href="${esc(c.source_url)}" target="_blank" rel="noopener noreferrer">原文</a>` : ''}。${esc(c.note || '仅为情景')}</span></div>`;
+}
+function carbonRef() {
+  const c = carbonScenario(); if (!c) return;
+  setField('carbon_price', String(c.carbon_price_cny_per_t ?? c.value_cny_per_t), { rerender: true }); toast('已填入公开参考碳价情景');
+}
 
 function startFromSample(caseId) {
   const s = data.samplesLoaded(); const c = s && s.cases.get(caseId); if (!c) return;

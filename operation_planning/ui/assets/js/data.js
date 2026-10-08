@@ -5,8 +5,7 @@
  *   - 本层不做任何数值计算：不聚合电量、不算费用/现值/碳、不推断房间配置、不外推全年；
  *     只做字段映射、状态翻译。所有数字原样来自后端或回放文件。
  *   - 契约里没有的字段返回 null，由界面显示“—”或“示例未记录”，不猜。
- *   - 计价不完整（economics_status ≠ complete）的方案不显示金额（回放里此类方案的
- *     total_cost_npv_cny 记为 0，0 不是真实花费）。
+ *   - 计价不完整（economics_status ≠ complete）的方案，后端给出的金额为 null，页面显示“—”。
  */
 import { app, emit } from './state.js';
 
@@ -68,37 +67,43 @@ export async function probe() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 示例回放读取（后台线程）                                              */
+/* 示例回放读取                                                         */
+/* 界面精简回放 replay_cases_ui_v9.json（约 7.9 MB）已由 5090 删去天气审计数组与各方案逐时，
+ * 直接读取即可；页面只读取，不改任何字段。                                */
 /* ------------------------------------------------------------------ */
-const sampleBases = () => servedByBackend()
-  ? [new URL('/samples/', location.href).href]                               // 本机计算服务的只读路由
-  : [new URL('../../docs/handoff/replay_viewer/', location.href).href];      // 仓库根目录静态服务
-const pending = {};
-function loadInWorker(which) {
-  if (pending[which]) return pending[which];
-  pending[which] = new Promise((resolve, reject) => {
-    let worker;
-    try { worker = new Worker(new URL('./sample-worker.js', import.meta.url)); } catch (e) { worker = null; }
-    if (!worker) { reject(new Error('浏览器不支持后台读取')); return; }
-    worker.onmessage = (e) => { worker.terminate(); if (e.data.ok) resolve(e.data); else reject(new Error(e.data.error)); };
-    worker.onerror = (e) => { worker.terminate(); reject(new Error(e.message || '后台读取失败')); };
-    worker.postMessage({ which, bases: sampleBases() });
-  }).catch((err) => { delete pending[which]; throw err; });
-  return pending[which];
+export const SAMPLE_FILE = 'replay_cases_ui_v9.json';
+export const PREVIEW_FILE = 'replay_previews_v7.json';
+export const SAMPLE_PATH = `docs/handoff/replay_viewer/${SAMPLE_FILE}`;
+const sampleBase = () => servedByBackend()
+  ? new URL('/samples/', location.href).href                                  // 本机计算服务的只读路由
+  : new URL('../../docs/handoff/replay_viewer/', location.href).href;          // 仓库根目录静态服务
+async function fetchSample(name) {
+  const res = await fetch(sampleBase() + name, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`示例文件读取失败：${name}（${res.status}）`);
+  return res.json();
 }
 
-let samplesCache = null;
-/** 读取示例：{ file, cases: Map(caseId → case), order: [caseId], previews: Map('tier_small_summer' → case), url } */
-export async function loadSamples() {
-  if (samplesCache) return samplesCache;
-  const [cs, pv] = await Promise.all([loadInWorker('cases'), loadInWorker('previews').catch(() => null)]);
-  const file = cs.data;
-  const cases = new Map((file.cases || []).map((c) => [c.case_id, c]));
-  const previews = new Map();
-  if (pv && pv.data) for (const p of pv.data.cases || []) previews.set(`${p.tier}_${p.season}`, p);
-  samplesCache = { file, cases, order: (file.cases || []).map((c) => c.case_id), previews, url: cs.url, previewFile: pv ? pv.data : null, previewUrl: pv ? pv.url : null };
-  emit('samples', samplesCache);
-  return samplesCache;
+let samplesCache = null, samplesPending = null;
+/** 读取示例：{ file, cases: Map(caseId → case), order: [caseId], previews: Map('tier_small_summer' → case) } */
+export function loadSamples() {
+  if (samplesCache) return Promise.resolve(samplesCache);
+  if (samplesPending) return samplesPending;
+  samplesPending = Promise.all([fetchSample(SAMPLE_FILE), fetchSample(PREVIEW_FILE).catch(() => null)]).then(([file, pv]) => {
+    const cases = new Map((file.cases || []).map((c) => [c.case_id, c]));
+    const previews = new Map();
+    if (pv) for (const p of pv.cases || []) previews.set(`${p.tier}_${p.season}`, p);
+    samplesCache = { file, cases, order: (file.cases || []).map((c) => c.case_id), previews, previewFile: pv };
+    emit('samples', samplesCache);
+    return samplesCache;
+  }).catch((err) => { samplesPending = null; throw err; });
+  return samplesPending;
+}
+/** 示例来源文字：文件名、格式版本、源码提交（全部读自文件本身）。 */
+export function sampleSourceText(s) {
+  const f = s && s.file;
+  if (!f) return SAMPLE_FILE;
+  const commit = (f.source || {}).source_commit;
+  return `${SAMPLE_FILE}（${f.format_version || ''}${commit ? `，源码提交 ${String(commit).slice(0, 7)}` : ''}）`;
 }
 export const samplesLoaded = () => samplesCache;
 
@@ -164,10 +169,44 @@ function mapStorage(s) {
   };
 }
 
+/** 多余电量的两条去路（surplus_paths）：储能与卖电，从同一份余电独立估算，只读字段。 */
+function mapSurplus(sp) {
+  if (!sp) return null;
+  const st = sp.storage || null, ex = (sp.export || {}).path || null;
+  return {
+    surplusKwh: num(sp.surplus_kwh_year1),
+    storage: st ? {
+      status: st.status || null, studyYears: num(st.study_years),
+      recommendedKwh: num(st.recommended_capacity_kwh), recommendationNote: st.recommendation_note || null,
+      candidates: (st.candidates || []).map((x) => ({
+        capacityKwh: num(x.capacity_kwh), recoveredKwh: num(x.recovered_kwh_year1), remainingKwh: num(x.remaining_surplus_kwh_year1 ?? x.remaining_curtailment_kwh_year1),
+        status: x.economics_status || null, investment: num(x.initial_investment_cny), annualBillSaving: num(x.annual_bill_saving_cny ?? x.annual_saving_cny),
+        annualNet: num(x.annual_net_benefit_cny ?? x.annual_net_saving_cny), payback: num(x.simple_payback_years ?? x.payback_years), paybackStatus: x.payback_status || null,
+        studyNet: num(x.study_period_net_benefit_cny), scBefore: num(x.self_consumption_rate_before), scAfter: num(x.self_consumption_rate_after),
+        replacementCount: num(x.replacement_count), quoteSource: x.quote_source || null, quoteSourceUrl: x.quote_source_url || null, quoteSourceNote: x.quote_source_note || null
+      }))
+    } : null,
+    export: ex ? {
+      status: ex.economics_status || (sp.export || {}).status || null, surplusKwh: num(ex.surplus_kwh_year1), soldKwh: num(ex.sold_kwh_year1 ?? ex.annual_sell_kwh),
+      price: num(ex.price_cny_per_kwh), connection: num(ex.connection_cny), connectionAssumedZero: ex.connection_cost_assumed_zero === true, connectionNote: ex.connection_note || null,
+      annualRevenue: num(ex.annual_revenue_cny ?? ex.annual_income_cny), studyRevenue: num(ex.study_period_revenue_cny ?? ex.study_period_income_cny),
+      payback: num(ex.simple_payback_years), paybackStatus: ex.payback_status || null, source: ex.source || null, sourceUrl: ex.source_url || null, sourceNote: ex.source_note || null
+    } : null
+  };
+}
+
+function mapEscalation(es) {
+  if (!es || !Array.isArray(es.rows) || !es.rows.length) return null;
+  return {
+    recId: es.recommendation_scenario_id || null,
+    rows: es.rows.map((r) => ({ rate: num(r.rate), s0Total: num(r.s0_total_cost_npv_cny), recTotal: num(r.recommended_total_cost_npv_cny), incremental: num(r.incremental_npv_vs_s0_cny),
+      cumulativePayback: num(r.cumulative_payback_year), paybackNote: r.payback_note || null, simplePayback: num(r.simple_payback_years), simplePaybackNote: r.simple_payback_note || null }))
+  };
+}
+
 function mapCandidate(c, recId) {
   const econ = c.economics || {};
   const economicsStatus = pick(c.economics_status, econ.status) || null;
-  const complete = economicsStatus === 'complete';
   const meta = SCEN[c.scenario_id] || { name: c.scenario_id, short: c.scenario_id, verb: c.scenario_id, order: 9 };
   return {
     id: c.scenario_id, name: meta.name, short: meta.short, verb: meta.verb, order: meta.order,
@@ -177,9 +216,11 @@ function mapCandidate(c, recId) {
     reasons: Array.isArray(c.constraint_reasons) ? c.constraint_reasons.slice() : [],
     equivalentTo: c.equivalent_to || null,
     economicsStatus,
-    totalCost: complete ? num(pick(c.total_cost_npv_cny, econ.total_cost_npv_cny)) : null,
-    incremental: complete ? num(pick(c.incremental_npv_vs_s0_cny, econ.incremental_npv_vs_s0_cny)) : null,
-    npv: complete ? num(pick(c.npv_cny, econ.npv_cny)) : null,
+    totalCost: num(pick(c.total_cost_npv_cny, econ.total_cost_npv_cny)),
+    incremental: num(pick(c.incremental_npv_vs_s0_cny, econ.incremental_npv_vs_s0_cny)),
+    npv: num(pick(c.npv_cny, econ.npv_cny)),
+    paybackYears: num(pick(c.simple_payback_years, econ.simple_payback_years)),
+    annualSaving: num(pick(c.annual_saving_after_maintenance_cny, econ.annual_saving_after_maintenance_cny)),
     capex: num(pick(c.capex_cny, econ.capex_cny)),
     yearly: Array.isArray(econ.yearly) ? econ.yearly : [],
     pvKwp: num(c.pv_capacity_kwp), windCount: num(c.wind_turbine_count),
@@ -189,6 +230,7 @@ function mapCandidate(c, recId) {
     carbon: mapCarbon(c.carbon),
     rough: mapRough(c.annual_offset_estimate),
     storage: mapStorage(c.storage_upper_bound),
+    surplus: mapSurplus(c.surplus_paths),
     isRec: c.scenario_id === recId,
     hourly: c.hourly ? mapHourly(c.hourly, c.scenario_id) : null
   };
@@ -206,15 +248,14 @@ export function mapHourly(h, scenarioId) {
 
 function mapSweep(rows) {
   return (rows || []).map((r) => {
-    const complete = (r.economics_status || null) === 'complete';
     return {
       kwp: num(r.requested_capacity_kwp),
       admission: mapAdmission(r.admission_status),
       constraintStatus: r.constraint_status || r.status || null,
       reasons: Array.isArray(r.constraint_reasons) ? r.constraint_reasons : [],
       economicsStatus: r.economics_status || null,
-      totalCost: complete ? num(r.total_cost_npv_cny) : null,
-      incremental: complete ? num(r.incremental_npv_vs_s0_cny) : null,
+      totalCost: num(r.total_cost_npv_cny),
+      incremental: num(r.incremental_npv_vs_s0_cny),
       gen: num(r.generation_kwh), selfUse: num(r.self_use_kwh), curtail: num(r.curtailment_kwh), gridImport: num(r.grid_import_kwh),
       selfUseRate: num(pick(r.self_use_rate, r.self_consumption_rate)), wasteRate: num(r.waste_rate),
       avoidedT: num(pick(r.avoided_tco2_study_period, r.carbon && r.carbon.avoided_tco2_study_period)),
@@ -280,6 +321,9 @@ function siteName(id) {
 }
 
 function tariffInfo(id, reportTariff, sampleMain) {
+  if (id === 'custom_user' || (reportTariff && reportTariff.tariff_id === 'custom_user')) {
+    return { id: 'custom_user', custom: true, title: '用户自定义电价（未经官方核验）', area: null, provisional: false, verified: false, sourceUrl: null, effective: null, priceType: 'TOU', notes: [] };
+  }
   if (reportTariff && reportTariff.tariff_id) {
     return { id: reportTariff.tariff_id, title: reportTariff.source_title || reportTariff.area || reportTariff.tariff_id, area: reportTariff.area || null,
       provisional: reportTariff.verified === false, verified: reportTariff.verified === true, sourceUrl: reportTariff.source_url || null,
@@ -308,7 +352,9 @@ function buildVM(src, ctx) {
     computedAt: ctx.computedAt || null, request, req: r,
     site: { id: r.siteId, name: siteName(r.siteId) }, year: r.year,
     roomCount: num(pick(plc.room_count, lc.room_count, src.room_count)), unitsPerRoom: num(pick(plc.units_per_room, lc.units_per_room, src.units_per_room)),
-    load: { annualKwh: num(pick(plc.electric_load_kwh, lc.electric_load_kwh)), scope: plc.scope || null, source: plc.source || null },
+    load: { annualKwh: num(pick(plc.electric_load_kwh, lc.electric_load_kwh)), singleRoomKwh: num(pick(lc.single_room_annual_kwh, plc.single_room_annual_kwh)), scope: plc.scope || null, source: plc.source || null, adequacyRule: lc.adequacy_rule || null },
+    tariffEscalation: src.tariff_escalation || null,
+    escalation: mapEscalation(src.escalation_sensitivity),
     service: mapService(lc.service_quality || src.service_quality),
     rec, candidates, byId,
     sweep: mapSweep(src.pv_capacity_sweep),
@@ -348,15 +394,15 @@ export function fromLive(report, request, extra = {}) {
   });
 }
 
-/** 示例回放：replay_cases_v6.json 中的一个 case。逐时数据用 chart_recommended 与 chart（S3）。 */
+/** 示例回放：replay_cases_ui_v9.json 中的一个 case。逐时数据用 chart_recommended（推荐方案）与 chart（S3）。 */
 export function fromSample(c, file) {
   const prov = (c.weather || {}).provenance || {};
   return buildVM(c, {
     kind: 'sample', caseId: c.case_id, label: c.label || c.case_id, sourceLabel: `示例 · ${c.label || c.case_id}`, request: c.request,
-    sampleMain: file && file.main_tariff,
+    sampleMain: file && file.main_tariff, reportTariff: c.tariff,
     hourly: { recommended: mapHourly(c.chart_recommended, (c.chart_recommended || {}).scenario_id), combo: mapHourly(c.chart, (c.chart || {}).scenario_id), byScenario: null },
     provenance: {
-      kind: '5090 回放文件', file: 'docs/handoff/replay_viewer/replay_cases_v6.json', formatVersion: file ? file.format_version : null,
+      kind: '5090 回放文件', file: SAMPLE_PATH, formatVersion: file ? file.format_version : null,
       sourceCommit: (c.source || {}).source_commit || null, calculationVersion: (c.source || {}).calculation_version || null,
       endpoint: (c.source || {}).endpoint || null, caseHash: c.case_hash || null,
       weatherHash: prov.hash || null, weatherSource: ((prov.context || {}).source) || null,

@@ -3,7 +3,7 @@
  * 按日期×小时排日历格、取某一天画曲线，均在图旁注明“仅用于显示”。 */
 import { $, $$, esc, fmt, isNum, icon, toast } from './util.js';
 import { app } from './state.js';
-import { SCEN } from './data.js';
+import { SCEN, sampleSourceText, samplesLoaded } from './data.js';
 import { barChart, lineChart, sweepChart, ring } from './charts.js';
 import { createCalendar } from './calendar.js';
 import { priceTable, scenIcon } from './home.js';
@@ -27,7 +27,7 @@ const yrs = (vm) => story.yearsText(vm.studyYears);
 const plain = (t) => String(t || '').replace(/avoided_kgco2/g, '自用减碳量');
 const PRICE_BASIS = { 'baseline annual import bill / annual load; load-weighted mean for TOU': '只用电网时的年购电费 ÷ 年用电量（分时电价按负荷加权平均）' };
 const genCands = (vm) => vm.candidates.filter(story.hasGen);
-const srcText = (vm) => vm.kind === 'live' ? `本机实时计算 · ${fmt.date(vm.computedAt)}` : `示例回放 replay_cases_v6.json · ${vm.label}`;
+const srcText = (vm) => vm.kind === 'live' ? `本机实时计算 · ${fmt.date(vm.computedAt)}` : `示例回放 ${sampleSourceText(samplesLoaded())} · ${vm.label}`;
 
 function hourlySets(vm) {
   const H = vm.hourly || {}, sets = [];
@@ -35,7 +35,7 @@ function hourlySets(vm) {
     for (const c of genCands(vm)) if (H.byScenario[c.id]) sets.push([c.id, `${c.isRec ? '推荐 · ' : ''}${c.name}：${story.scenLabel(c)}`, H.byScenario[c.id]]);
     if (!sets.length && H.byScenario.S0_grid) sets.push(['S0_grid', '只用电网', H.byScenario.S0_grid]);
   } else {
-    if (H.recommended) { const id = H.recommended.scenarioId; const c = vm.byId[id]; sets.push(['recommended', `${id === (vm.rec || {}).scenarioId ? '推荐 · ' : ''}${c ? c.name : id}${c ? '：' + story.scenLabel(c) : ''}`, H.recommended]); }
+    if (H.recommended) { const c = vm.byId[H.recommended.scenarioId]; sets.push(['recommended', `推荐 · ${c ? c.name : ''}${c && story.hasGen(c) ? '：' + story.scenLabel(c) : ''}`, H.recommended]); }
     if (H.combo) { const c = vm.byId.S3_pv_wind; sets.push(['combo', `光伏 + 小风机${c ? '：' + story.scenLabel(c) : ''}`, H.combo]); }
   }
   return sets;
@@ -47,9 +47,6 @@ const anyHourly = (vm) => { const s = hourlySets(vm); return s.length ? s[0][2] 
 /* ------------------------------------------------------------------ */
 function step2(vm, T) {
   const sv = vm.service || {};
-  const size = T.size && T.size.res && !T.size.error ? T.size.res : null;
-  const sizeRow = size && T.result.kind === 'live' ? (size.candidates || []).find((c) => c.units_per_room === vm.unitsPerRoom) : null;
-  const sizeMatches = sizeRow && T.size.formKey && T.result.form && JSON.stringify(T.result.form.units_per_room) === JSON.stringify(String(vm.unitsPerRoom));
   return `
   <section class="rsec">
     <div class="decision">
@@ -71,12 +68,12 @@ function step2(vm, T) {
         <p class="chart-note">把逐小时空调用电按月加总画柱，仅用于显示；年度数字以上方结果字段为准。</p>
       </div>
       <div class="card">
-        <h3>单房间与项目合计</h3>
+        <h3>单间与项目合计</h3>
         <dl class="kv">
           <div><dt>同类房间数</dt><dd class="num">${fmt.int(vm.roomCount)}</dd></div>
           <div><dt>每间空调台数</dt><dd class="num">${fmt.int(vm.unitsPerRoom)}</dd></div>
           <div><dt>项目合计空调用电</dt><dd><b class="num">${fmt.kwh(vm.load.annualKwh)}</b> kWh/年</dd></div>
-          <div><dt>单房间空调用电</dt><dd>${sizeMatches ? `<b class="num">${fmt.kwh(sizeRow.annual_electric_kwh)}</b> kWh/年<span class="hint">（来自「帮我算配几台」同条件的单房间结果）</span>` : '<span class="muted">本结果未单独给出单房间字段；可在第 1 步运行「帮我算配几台」查看同条件单房间用电。</span>'}</dd></div>
+          <div><dt>单间空调用电</dt><dd>${isNum(vm.load.singleRoomKwh) ? `<b class="num">${fmt.kwh(vm.load.singleRoomKwh)}</b> kWh/年` : '<span class="muted">— 结果未给出单间字段</span>'}</dd></div>
         </dl>
         <p class="hint">热湿模型按一间房计算，项目合计只在计算服务里按同类房间数聚合一次，页面不再相乘。</p>
         <div class="callout info" style="margin-top:14px">${icon('info')}<span><b>两本账。</b>这里的空调用电和电费是“用电这本账”；空调设备本身的购置、安装是另一本账，不与后面光伏、风机的 10 年总花费相加。</span></div>

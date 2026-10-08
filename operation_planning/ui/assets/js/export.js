@@ -3,7 +3,7 @@
  * 条件已修改（结果失效）时，导出与保存全部禁用（由调用方和这里双重检查）。
  * “我的方案”只保存在本机浏览器 localStorage（键 njd.plans.v1），读写失败时页面照常可用。 */
 import { esc, fmt, isNum, download, toast, store } from './util.js';
-import { SCEN } from './data.js';
+import { SCEN, SAMPLE_PATH, sampleSourceText, samplesLoaded } from './data.js';
 import * as story from './story.js';
 import { reasonsOf, boundariesOf } from './results.js';
 
@@ -53,7 +53,7 @@ export function briefHtml(T) {
   </style></head><body>
   <p class="k">能见度 · 低碳改造决策简报</p>
   <h1>${esc(story.headline(vm))}</h1>
-  <p class="note">来源：${esc(vm.kind === 'live' ? `本机实时计算（${fmt.date(vm.computedAt)}）` : `示例回放 replay_cases_v6.json · ${vm.label}`)}；生成时间 ${esc(fmt.date(Date.now()))}。简报只引用结果中的数值。</p>
+  <p class="note">来源：${esc(vm.kind === 'live' ? `本机实时计算（${fmt.date(vm.computedAt)}）` : `示例回放 ${sampleSourceText(samplesLoaded())} · ${vm.label}`)}；生成时间 ${esc(fmt.date(Date.now()))}。简报只引用结果中的数值。</p>
   ${rec ? `<p class="big">${y}总花费约 ${fmt.money(rec.totalCost)} 元（折现）${rec.id !== 'S0_grid' ? `，${esc(fmt.delta(rec.incremental).text)}` : ''}</p>` : ''}
   <p>推荐状态：${esc((vm.rec || {}).label || '')}——${esc((vm.rec || {}).note || '')}</p>
   ${vm.service && vm.service.status === 'service_gap' ? `<p class="warn">空调有缺口：全年 ${fmt.int(vm.service.shortfallHours)} 小时冷量不足，结论不代表同等舒适度下的最优投资。</p>` : `<p>空调服务状态：${esc((vm.service || {}).label || '')}（${esc((vm.service || {}).note || '')}）</p>`}
@@ -82,7 +82,7 @@ export function run(kind, T) {
   if (kind === 'json') {
     const body = vm.kind === 'live'
       ? { exported_from: '能见度 前端（当前显示的实时结果）', computed_at: new Date(vm.computedAt).toISOString(), request: vm.request, report: T.result.raw || null }
-      : { exported_from: '能见度 前端（当前显示的示例）', sample_file: 'docs/handoff/replay_viewer/replay_cases_v6.json', ui_note: '界面读取时省略了 weather.provenance.normalization 审计数组与 candidates[].hourly；完整原件见 sample_file。', case: T.result.raw || null };
+      : { exported_from: '能见度 前端（当前显示的示例）', sample_file: SAMPLE_PATH, ui_note: '示例为 5090 生成的界面精简回放（已删去天气审计数组与各方案逐时）；完整证据见该文件 display_contract.full_precision_results 所指的仓库路径。', case: T.result.raw || null };
     download(`${base(vm)}_完整结果.json`, 'application/json;charset=utf-8', JSON.stringify(body, null, 2)); return;
   }
 }
@@ -96,7 +96,7 @@ export function savePlan(T) {
   const vm = T.result.vm, rec = vm.byId[(vm.rec || {}).scenarioId];
   const plan = {
     id: `p${Date.now().toString(36)}`, savedAt: Date.now(), kind: vm.kind, caseId: vm.caseId, label: vm.label,
-    source: vm.kind === 'live' ? `本机实时计算 · ${fmt.date(vm.computedAt)}` : `示例回放 replay_cases_v6.json · ${vm.label}`,
+    source: vm.kind === 'live' ? `本机实时计算 · ${fmt.date(vm.computedAt)}` : `示例回放 ${sampleSourceText(samplesLoaded())} · ${vm.label}`,
     form: T.result.form, request: vm.request,
     summary: {
       place: story.placeText(vm), room: story.roomText(vm), schedule: story.scheduleText(vm.request),

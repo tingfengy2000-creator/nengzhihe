@@ -53,3 +53,4 @@
 body.demo-on { padding-bottom: 200px; }
 @media (max-width: 960px) { .sample-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .sample-grid, .about-grid { grid-template-columns: 1fr; } .demo-bar { padding: 12px 14px; } .demo-ctrls .btn span { display: none; } }
+.about-grid .card p, .source-note, .srcbar-note, .resbar .small { overflow-wrap: anywhere; }

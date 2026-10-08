@@ -1,5 +1,5 @@
 /* 能见度 · 首页（叙事页，按已批准的设计确认稿）
- * 首页所有数字来自当前选中的示例（replay_cases_v6.json / replay_previews_v7.json）
+ * 首页所有数字来自当前选中的示例（replay_cases_ui_v9.json / replay_previews_v7.json）
  * 或用户最近一次实时计算的结果，并在每段标明来源。 */
 import { $, $$, esc, fmt, isNum, icon, countUp, onVisible, reveal, reduceMotion } from './util.js';
 import { app, on, emit } from './state.js';
@@ -212,7 +212,7 @@ function setHtml(name, html) { const n = k(name); if (n) n.innerHTML = html; }
 function srcLine(v) {
   if (!v) return '';
   if (v.kind === 'live') return `来源：本机实时计算（${fmt.date(v.computedAt)}）· ${story.placeText(v)}`;
-  return `来源：示例回放 replay_cases_v6.json · ${v.label} · ${story.placeText(v)}`;
+  return `来源：示例回放 ${data.sampleSourceText(samples)} · ${v.label} · ${story.placeText(v)}`;
 }
 
 function renderHero() {
@@ -247,7 +247,7 @@ function renderFacts() {
 function renderCalendar() {
   const H = vm.hourly || {};
   const sets = [];
-  if (H.recommended) sets.push(['recommended', `${H.recommended.scenarioId === (vm.rec || {}).scenarioId ? '推荐方案' : SCEN[H.recommended.scenarioId] ? SCEN[H.recommended.scenarioId].name : '方案'}${vm.byId[H.recommended.scenarioId] ? '：' + story.scenLabel(vm.byId[H.recommended.scenarioId]) : ''}`]);
+  if (H.recommended) { const c = vm.byId[H.recommended.scenarioId]; sets.push(['recommended', `推荐方案：${c ? (story.hasGen(c) ? story.scenLabel(c) : c.name) : ''}`]); }
   if (H.combo) sets.push(['combo', `光伏 + 小风机${vm.byId.S3_pv_wind ? '：' + story.scenLabel(vm.byId.S3_pv_wind) : ''}`]);
   if (!sets.find((s) => s[0] === calSet)) calSet = sets.length ? sets[0][0] : null;
   $('[data-calset]', el).innerHTML = sets.map(([key, label]) => `<button type="button" data-calset-btn="${key}" aria-pressed="${key === calSet}">${esc(label)}</button>`).join('');

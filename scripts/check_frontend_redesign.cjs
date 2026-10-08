@@ -7,7 +7,7 @@
  *   node scripts/check_frontend_redesign.cjs           # 需要本机已安装 playwright（npm i -g playwright）
  *
  * 只读检查：不调用任何计算接口（实时计算流程另由人工/截图核对），不写任何数据或结果文件。
- * 期望值直接从 docs/handoff/replay_viewer/replay_cases_v6.json 读取并按页面的显示规则取整，
+ * 期望值直接从 docs/handoff/replay_viewer/replay_cases_ui_v9.json 读取并按页面的显示规则取整，
  * 与页面上渲染出的文字逐项比较。
  */
 const fs = require('fs');
@@ -17,7 +17,7 @@ const { chromium } = require('playwright');
 const BASE = process.env.NJD_BASE || 'http://127.0.0.1:18765/';
 const STATIC = process.env.NJD_STATIC || 'http://127.0.0.1:18799/operation_planning/ui/index.html';
 const ROOT = path.resolve(__dirname, '..');
-const replay = JSON.parse(fs.readFileSync(path.join(ROOT, 'docs/handoff/replay_viewer/replay_cases_v6.json'), 'utf8'));
+const replay = JSON.parse(fs.readFileSync(path.join(ROOT, 'docs/handoff/replay_viewer/replay_cases_ui_v9.json'), 'utf8'));
 
 const nf = new Intl.NumberFormat('zh-CN', { maximumFractionDigits: 0 });
 const money = (v) => nf.format(Math.round(v));
@@ -115,7 +115,7 @@ const ok = (cond, msg) => { checks++; if (!cond) { failures++; console.log('  �
     if (id) { await page.goto(BASE + '#/samples/' + id); await page.waitForSelector('[data-step-panel="3"] .compare .opt'); }
     await page.goto(BASE + route); await page.waitForTimeout(2500);
     const text = await page.evaluate(() => { const v = [...document.querySelectorAll('[data-view]')].find((x) => !x.hidden); const c = v.cloneNode(true); c.querySelectorAll('.mono, [data-r-basis], select, option').forEach((n) => n.remove()); return c.innerText; });
-    const hit = text.split('\n').filter((l) => BAD.test(l) && !/replay_cases_v6\.json|replay_previews_v7\.json|docs\/handoff/.test(l));
+    const hit = text.split('\n').filter((l) => BAD.test(l) && !/replay_cases_v6\.json|replay_cases_ui_v9|replay_previews_v7\.json|docs\/handoff/.test(l));
     ok(hit.length === 0, `${route} 出现技术名：${hit.slice(0, 3).join(' | ')}`);
   }
 

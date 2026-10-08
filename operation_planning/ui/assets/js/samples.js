@@ -1,6 +1,6 @@
 /* 能见度 · 示例
  * 三档（小：35㎡办公室；中：每天开放的图书馆阅读区；大：工业厂房空调分区代理）+ 三个状态变体。
- * 卡片上的结论与关键数字全部从 replay_cases_v6.json 读取；点「打开」显示完整结果（示例数据），
+ * 卡片上的结论与关键数字全部从 replay_cases_ui_v9.json 读取；点「打开」显示完整结果（示例数据），
  * 同时把示例条件填进表单，用户改任何条件后可实时重算。 */
 import { $, esc, fmt, icon } from './util.js';
 import * as data from './data.js';
@@ -54,6 +54,6 @@ export function show(root, args = []) {
     const tiers = s.order.filter((id) => TIER_TAG[id]), vars = s.order.filter((id) => !TIER_TAG[id]);
     $('[data-samples]', el).innerHTML = `<h2 class="h3 group-title">三档示例</h2><div class="sample-grid">${tiers.map((id) => card(data.fromSample(s.cases.get(id), s.file), id)).join('')}</div>
       <h2 class="h3 group-title">状态变体</h2><p class="muted small">与小档同一房间口径，固定 1 kWp 光伏，用来展示“已排除”“条件不全”等状态如何显示。</p><div class="sample-grid">${vars.map((id) => card(data.fromSample(s.cases.get(id), s.file), id)).join('')}</div>`;
-    $('[data-samples-src]', el).textContent = `来源：docs/handoff/replay_viewer/replay_cases_v6.json（${s.file.format_version}，源码提交 ${fmt.sha(((s.file.source || {}).source_commit), 10)}）。主电价档案 ${(s.file.main_tariff || {}).tariff_id || ''}${(s.file.main_tariff || {}).provisional ? '（待核验）' : ''}。示例不代表真实客户、试点或节能收益。`;
+    $('[data-samples-src]', el).textContent = `来源：docs/handoff/replay_viewer/${data.sampleSourceText(s)}。主电价档案 ${(s.file.main_tariff || {}).tariff_id || ''}${(s.file.main_tariff || {}).verified === false ? '（待核验）' : (s.file.main_tariff || {}).verified ? '（已核验）' : ''}。示例不代表真实客户、试点或节能收益。`;
   }).catch((err) => { $('[data-samples]', el).innerHTML = `<div class="callout bad">${icon('warn')}<span>示例数据读取失败：${esc(err.message)}</span></div>`; });
 }
