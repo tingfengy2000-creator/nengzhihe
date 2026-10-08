@@ -412,7 +412,11 @@ def _escalation_sensitivity(candidates: Sequence[Dict[str, Any]], recommendation
     baseline = next((item for item in candidates if float(item.get("capacity_kwp", -1.0)) == 0.0), None)
     selected_id = recommendation.get("capacity_kwp") if recommendation.get("status") == "conditional" else None
     selected = next((item for item in candidates if selected_id is not None and float(item.get("capacity_kwp", -1.0)) == float(selected_id)), None)
+    current_rate = float(scenario.tariff_escalation_rate)
     rates = [-0.02, 0.0, 0.02, 0.04]
+    if not any(math.isclose(current_rate, rate, rel_tol=0.0, abs_tol=1e-12) for rate in rates):
+        rates.append(current_rate)
+        rates.sort()
     rows: List[Dict[str, Any]] = []
     for rate in rates:
         s0_cost = None if baseline is None else _escalated_candidate_cost(baseline.get("economics") or {}, rate, scenario.discount_rate, scenario.study_years)
@@ -449,8 +453,8 @@ def _escalation_sensitivity(candidates: Sequence[Dict[str, Any]], recommendation
             candidate_incremental = (selected.get("economics") or {}).get("incremental_npv_vs_s0_cny", selected.get("incremental_npv_vs_s0_cny"))
             if candidate_incremental is not None:
                 incremental = float(candidate_incremental)
-        rows.append({"rate": rate, "s0_total_cost_npv_cny": s0_cost, "recommended_total_cost_npv_cny": candidate_cost, "incremental_npv_vs_s0_cny": incremental, "simple_payback_years": payback, "simple_payback_note": "按第1年节省，不含后续电价涨幅", "cumulative_payback_year": cumulative_payback, "payback_note": payback_note, "recommendation_scenario_id": selected_id})
-    return {"rates": rates, "recommendation_scenario_id": selected_id, "rows": rows, "note": "仅复用已计算的逐年电量与分时购电成本重算经济层；不重跑物理模型。incremental_npv_vs_s0_cny与候选层同号，正数表示相对S0节省。"}
+        rows.append({"rate": rate, "is_current": math.isclose(rate, current_rate, rel_tol=0.0, abs_tol=1e-12), "s0_total_cost_npv_cny": s0_cost, "recommended_total_cost_npv_cny": candidate_cost, "incremental_npv_vs_s0_cny": incremental, "simple_payback_years": payback, "simple_payback_note": "按第1年节省，不含后续电价涨幅", "cumulative_payback_year": cumulative_payback, "payback_note": payback_note, "recommendation_scenario_id": selected_id})
+    return {"rates": rates, "current_rate": current_rate, "recommendation_scenario_id": selected_id, "rows": rows, "note": "仅复用已计算的逐年电量与分时购电成本重算经济层；不重跑物理模型。incremental_npv_vs_s0_cny与候选层同号，正数表示相对S0节省。is_current标记用户本次涨幅。"}
 
 
 def _capacity_limit(scenario: PVScenario) -> Tuple[float, List[str]]:
@@ -520,6 +524,25 @@ def _price_vectors(scenario: PVScenario, timestamps: Sequence[str], interval_sec
     extra_hot_dates = [day for day in hot_dates if int(day[5:7]) not in super_peak_months]
     effective_super_peak_dates = [day for day in observed_dates if int(day[5:7]) in super_peak_months or day in extra_hot_dates]
     meta = profile_public_dict(tariff); meta.update({"interval_pricing": "constant average power; each physical interval split at tariff boundaries", "interval_examples": examples, "tariff_application": scenario.tariff_application, "tariff_application_note": ("published tariff benchmark applied to reference weather dates; not a historical 2024 bill" if apply_current else "tariff validity checked against weather dates"), "high_temp_days": hot_dates, "high_temp_day_count": len(hot_dates), "high_temp_super_peak_days": extra_hot_dates, "high_temp_super_peak_day_count": len(extra_hot_dates), "super_peak_day_count": len(effective_super_peak_dates), "super_peak_dates_in_window": effective_super_peak_dates, "high_temp_rule": "35°C以上日的11:00–12:00、15:00–17:00在7–9月之外按尖峰；无逐时温度时不启用"})
+    if scenario.tariff_id == "custom_user":
+        raw_custom = dict(scenario.custom_tariff or {})
+        echo_prices: Dict[str, Any] = {}
+        for period in raw_custom.get("periods", tariff.periods) or []:
+            name = str(period.get("name", "flat"))
+            if name not in echo_prices:
+                echo_prices[name] = period.get("price")
+        echo = {
+            "base_tariff_id": raw_custom.get("base_tariff_id"),
+            "version": raw_custom.get("version", tariff.version),
+            "effective_start": tariff.effective_start,
+            "effective_end": tariff.effective_end,
+            "prices_cny_per_kwh": echo_prices,
+            "prices": echo_prices,
+            "periods": [dict(period) for period in (raw_custom.get("periods", tariff.periods) or [])],
+            "tariff_application": scenario.tariff_application,
+            "note": "用户填写的分时价格回显；时段和生效期来自所选基准档案，未作官方核验。",
+        }
+        meta["custom_tariff_echo"] = echo
     return prices, meta
 
 
@@ -551,26 +574,30 @@ def run_pv_planning(load_result: Dict[str, Any], weather: Dict[str, Any], scenar
         row = _candidate_row(capacity, matched, generation, economics, include_selected_series)
         row["carbon"] = candidate_carbon(site_id=scenario.site_id, request=carbon, baseline_match=baseline, candidate_match=matched, yearly_matches=yearly_matches, economics=economics, annual_generation_kwh=matched["summary"]["pv_generation_kwh"], annual_load_kwh=matched["summary"]["load_kwh"], annual_import_price_cny_per_kwh=scenario.import_price_cny_per_kwh)
         row["annual_offset_estimate"] = row["carbon"].pop("annual_offset_estimate")
-        storage_intervals = {
-            "timestamps": matched["interval_kwh"].get("timestamps", generation.timestamps),
-            "interval_seconds": generation.interval_seconds,
-            "load_kwh": matched["interval_kwh"]["load"],
-            "generation_kwh": matched["interval_kwh"]["pv_generation"],
-            "self_use_kwh": matched["interval_kwh"]["self_use"],
-            "grid_import_kwh": matched["interval_kwh"]["grid_import"],
-            "curtailment_kwh": matched["interval_kwh"]["curtailment"],
-        }
-        paths = surplus_paths_from_match(storage_intervals, capacities_kwh=storage_capacities,
-                                         round_trip_efficiency=storage_eta, allow_export=scenario.allow_export,
-                                         storage_quote=storage_request.get("quote"), export=storage_request.get("export"),
-                                         import_prices=import_prices, study_years=scenario.study_years,
-                                         tariff_escalation_rate=scenario.tariff_escalation_rate)
-        factor = float(carbon_ctx["factor"]["value_kgco2_per_kwh"])
-        for storage_candidate in paths["storage"].get("candidates", []):
-            storage_candidate["additional_avoided_kgco2_year1"] = storage_candidate["recovered_kwh_year1"] * factor
-        row["surplus_paths"] = paths
-        # Backward-compatible field for v1/v2 replay consumers.
-        row["storage_upper_bound"] = paths["storage"]
+        # S0 has no generation and therefore no surplus path.  Omitting this
+        # field keeps the UI from presenting meaningless all-negative storage
+        # rows for the grid-only baseline.
+        if capacity > 1e-12:
+            storage_intervals = {
+                "timestamps": matched["interval_kwh"].get("timestamps", generation.timestamps),
+                "interval_seconds": generation.interval_seconds,
+                "load_kwh": matched["interval_kwh"]["load"],
+                "generation_kwh": matched["interval_kwh"]["pv_generation"],
+                "self_use_kwh": matched["interval_kwh"]["self_use"],
+                "grid_import_kwh": matched["interval_kwh"]["grid_import"],
+                "curtailment_kwh": matched["interval_kwh"]["curtailment"],
+            }
+            paths = surplus_paths_from_match(storage_intervals, capacities_kwh=storage_capacities,
+                                             round_trip_efficiency=storage_eta, allow_export=scenario.allow_export,
+                                             storage_quote=storage_request.get("quote"), export=storage_request.get("export"),
+                                             import_prices=import_prices, study_years=scenario.study_years,
+                                             tariff_escalation_rate=scenario.tariff_escalation_rate)
+            factor = float(carbon_ctx["factor"]["value_kgco2_per_kwh"])
+            for storage_candidate in paths["storage"].get("candidates", []):
+                storage_candidate["additional_avoided_kgco2_year1"] = storage_candidate["recovered_kwh_year1"] * factor
+            row["surplus_paths"] = paths
+            # Backward-compatible field for v1/v2 replay consumers.
+            row["storage_upper_bound"] = paths["storage"]
         candidates.append(row)
     baseline_candidate = next(x for x in candidates if x["capacity_kwp"] == 0.0); complete_nonzero = [x for x in candidates if x["capacity_kwp"] > 0 and x["economics"]["status"] == "complete"]; selected_key: Optional[float] = None
     if complete_nonzero:

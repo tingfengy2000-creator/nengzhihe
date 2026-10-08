@@ -220,6 +220,7 @@ _FIELD_HINTS = {
     "hybrid.budget_cny": ("预算", "元", "万元", "万", "花费", "成本"),
     "hybrid.budget_multiplier": ("预算", "翻倍", "减少", "下调", "增加", "提高", "一半", "三分之一"),
     "hybrid.pv_capacity_kwp": ("光伏", "kWp", "kwp", "千瓦", "容量"),
+    "pv.capacity_kwp": ("光伏", "kWp", "kwp", "千瓦", "容量"),
     "hybrid.allow_export": ("卖电", "外送", "上网", "余电"),
     "hybrid.import_price_cny_per_kwh": ("购电价", "电价", "每度", "元/kWh"),
     "hybrid.export_price_cny_per_kwh": ("卖电价", "外送价", "上网电价"),
@@ -401,11 +402,9 @@ def parse_agent_request(request_text: str, current_task: dict[str, Any]) -> dict
         if vague_period:
             changes = []
             question = "请给出晚上使用时段的开始和结束时间，例如18:00到22:00。"
-        if question is None:
-            unchanged = [item for item in changes if item.get("from") == item.get("to")]
-            if unchanged:
-                labels = "、".join(str(item.get("label") or item["field"]) for item in unchanged)
-                question = f"请明确{labels}要改成的数值或选项"
+        # An explicit request may already match the form (e.g. "关闭卖电"
+        # while export is off).  Equality is not evidence of ambiguity.  Keep
+        # the bounded proposal; genuine vague amounts are checked below.
         # Small local guard for vague natural-language amounts.  The model is
         # still the source of the interpretation; this only prevents an
         # unchanged value from being presented as a successful modification.

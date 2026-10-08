@@ -215,6 +215,7 @@ def _escalation_sensitivity(
     *,
     study_years: int,
     discount_rate: float,
+    current_rate: float = 0.0,
 ) -> Dict[str, Any]:
     """Compare the baseline S0 and selected candidate under four tariff rates.
 
@@ -223,7 +224,11 @@ def _escalation_sensitivity(
     import price by the same year factor, scaling that stored cost is exact
     (including TOU structures) and does not rerun generation or matching.
     """
+    current_rate = float(current_rate)
     rates = [-0.02, 0.0, 0.02, 0.04]
+    if not any(math.isclose(current_rate, rate, rel_tol=0.0, abs_tol=1e-12) for rate in rates):
+        rates.append(current_rate)
+        rates.sort()
     by_id = {str(candidate.get("scenario_id")): candidate for candidate in candidates}
     s0 = by_id.get("S0_grid")
     selected_id = recommendation.get("scenario_id")
@@ -284,6 +289,7 @@ def _escalation_sensitivity(
                 incremental = float(candidate_incremental)
         rows.append({
             "rate": rate,
+            "is_current": math.isclose(rate, current_rate, rel_tol=0.0, abs_tol=1e-12),
             "s0_total_cost_npv_cny": s0_cost,
             "recommended_scenario_id": selected_id,
             "recommended_total_cost_npv_cny": selected_cost,
@@ -295,9 +301,10 @@ def _escalation_sensitivity(
         })
     return {
         "rates": rates,
+        "current_rate": current_rate,
         "recommendation_scenario_id": selected_id,
         "rows": rows,
-        "note": "只缩放逐年购电成本，复用既有逐年电量和物理结果；上网价格不随电价年涨幅变化。incremental_npv_vs_s0_cny与候选层同号，正数表示相对S0节省。",
+        "note": "只缩放逐年购电成本，复用既有逐年电量和物理结果；上网价格不随电价年涨幅变化。incremental_npv_vs_s0_cny与候选层同号，正数表示相对S0节省；is_current标记用户本次涨幅。",
     }
 
 
@@ -393,18 +400,20 @@ def run_hybrid_planning(load_result: Dict[str, Any], weather: Dict[str, Any], pv
         row = {"scenario_id": sid, "pv_capacity_kwp": hybrid.pv_capacity_kwp if pv_on else 0.0, "wind_turbine_count": hybrid.wind.turbine_count if wind_on else 0, "generation_kwh": matched["summary"]["total_generation_kwh"], "pv_generation_kwh": matched["summary"]["pv_generation_kwh"], "wind_generation_kwh": matched["summary"]["wind_generation_kwh"], "self_use_kwh": matched["summary"]["self_use_kwh"], "grid_import_kwh": matched["summary"]["grid_import_kwh"], "grid_export_kwh": matched["summary"]["grid_export_kwh"], "curtailment_kwh": matched["summary"]["curtailment_kwh"], "load_coverage_rate": matched["summary"]["load_coverage_rate"], "economics": econ, "budget_ok": budget_ok, "constraint_status": status, "constraint_reasons": constraint_reasons, "wind_metadata": wind["metadata"]}
         row["carbon"] = candidate_carbon(site_id=hybrid.site_id, request=carbon, baseline_match=baseline, candidate_match=matched, yearly_matches=yearly_matches, economics=econ, annual_generation_kwh=matched["summary"]["total_generation_kwh"], annual_load_kwh=matched["summary"]["load_kwh"], annual_import_price_cny_per_kwh=hybrid.import_price_cny_per_kwh)
         row["annual_offset_estimate"] = row["carbon"].pop("annual_offset_estimate")
-        storage_intervals = storage_input_from_match(matched, import_prices=prices)
-        paths = surplus_paths_from_match(storage_intervals, capacities_kwh=storage_capacities,
-                                         round_trip_efficiency=storage_eta, allow_export=hybrid.allow_export,
-                                         storage_quote=storage_request.get("quote"), export=storage_request.get("export"),
-                                         import_prices=prices, study_years=hybrid.study_years,
-                                         tariff_escalation_rate=hybrid.tariff_escalation_rate)
-        factor = float(carbon_ctx["factor"]["value_kgco2_per_kwh"])
-        if paths["storage"].get("candidates") is not None:
-            for storage_candidate in paths["storage"]["candidates"]:
-                storage_candidate["additional_avoided_kgco2_year1"] = storage_candidate["recovered_kwh_year1"] * factor
-        row["surplus_paths"] = paths
-        row["storage_upper_bound"] = paths["storage"]
+        has_generation = (pv_on and hybrid.pv_capacity_kwp > 1e-12) or (wind_on and hybrid.wind.turbine_count > 0)
+        if has_generation:
+            storage_intervals = storage_input_from_match(matched, import_prices=prices)
+            paths = surplus_paths_from_match(storage_intervals, capacities_kwh=storage_capacities,
+                                             round_trip_efficiency=storage_eta, allow_export=hybrid.allow_export,
+                                             storage_quote=storage_request.get("quote"), export=storage_request.get("export"),
+                                             import_prices=prices, study_years=hybrid.study_years,
+                                             tariff_escalation_rate=hybrid.tariff_escalation_rate)
+            factor = float(carbon_ctx["factor"]["value_kgco2_per_kwh"])
+            if paths["storage"].get("candidates") is not None:
+                for storage_candidate in paths["storage"]["candidates"]:
+                    storage_candidate["additional_avoided_kgco2_year1"] = storage_candidate["recovered_kwh_year1"] * factor
+            row["surplus_paths"] = paths
+            row["storage_upper_bound"] = paths["storage"]
         if include_hourly: row["hourly"] = {"timestamps": times, "interval_seconds": intervals, "load_kwh": [r["load_kwh"] for r in matched["intervals"]], "pv_generation_kwh": [r["pv_generation_kwh"] for r in matched["intervals"]], "wind_generation_kwh": [r["wind_generation_kwh"] for r in matched["intervals"]], "self_use_kwh": [r["self_use_kwh"] for r in matched["intervals"]], "grid_import_kwh": [r["grid_import_kwh"] for r in matched["intervals"]], "grid_export_kwh": [r["grid_export_kwh"] for r in matched["intervals"]], "curtailment_kwh": [r["curtailment_kwh"] for r in matched["intervals"]], "wind_speed_hub_m_s": wind["wind_speed_hub_m_s"] if wind_on else [0.0] * len(times)}
         candidates.append(row)
     # Known hard exclusions do not block a decision among the survivors.
@@ -436,7 +445,7 @@ def run_hybrid_planning(load_result: Dict[str, Any], weather: Dict[str, Any], pv
         "unknown_scenario_ids": [x["scenario_id"] for x in unknown],
         "reason": ("已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。" if not unknown else
                     "仅能给出已核实子集内最优；仍有可能适用但报价/必要条件未知的候选，全候选结论未定，不能称它们已被其他方案击败。")}
-    escalation_sensitivity = _escalation_sensitivity(candidates, recommendation, study_years=hybrid.study_years, discount_rate=hybrid.discount_rate)
+    escalation_sensitivity = _escalation_sensitivity(candidates, recommendation, study_years=hybrid.study_years, discount_rate=hybrid.discount_rate, current_rate=hybrid.tariff_escalation_rate)
     service = load_result.get("summary", {}); gaps = {key: float(service.get(key, 0) or 0) for key in ("capacity_shortfall_hours", "unmet_temp_degree_hours", "unmet_rh_percent_hours")}; has_gap = any(value > 1e-9 for value in gaps.values())
     project_context = project_load_context(load_result)
     load_context = {"electric_load_kwh": baseline["summary"]["load_kwh"], "room_count": load.get("room_count"), "units_per_room": load.get("units_per_room"), "project_aggregation": load.get("project_aggregation"), "adequacy_rule": load.get("adequacy_rule"), "service_quality": {"status": "service_gap" if has_gap else "within_modeled_scope", "gaps": gaps, "scope": load.get("service_scope"), "note": "存在服务缺口时不代表同等服务水平下的投资最优。" if has_gap else "未校准的城市级空调负荷情景。"}, "single_room_annual_kwh": project_context.get("single_room_annual_kwh"), "single_room_service_quality": project_context.get("single_room_service_quality"), "project_load_context": project_context}

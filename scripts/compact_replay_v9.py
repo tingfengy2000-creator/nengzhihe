@@ -123,6 +123,14 @@ def _compact_candidate(candidate: Any, baseline: dict[str, Any] | None = None) -
         return candidate
     out = _sanitize(copy.deepcopy(candidate))
     _ensure_payback_fields(out, baseline)
+    # Apply the report's display contract to historical summaries without
+    # changing any stored physical or economic numbers.
+    if float(out.get("generation_kwh", 0.0) or 0.0) == 0.0 and out.get("scenario_id") == "S0_grid":
+        out.pop("surplus_paths", None)
+        out.pop("storage_upper_bound", None)
+    export_path = ((out.get("surplus_paths") or {}).get("export") or {}).get("path")
+    if isinstance(export_path, dict) and export_path.get("connection_cny") == 0:
+        export_path["payback_status"] = "无需额外投入"
     # The chart and chart_recommended fields carry the only UI time series.
     # Candidate.hourly duplicates all four scenarios and is evidence-only.
     out.pop("hourly", None)
@@ -198,8 +206,12 @@ def _ensure_escalation_fields(case: dict[str, Any]) -> None:
     selected = by_id.get(str(selected_id)) if selected_id is not None else None
     input_data = case.get("input") if isinstance(case.get("input"), dict) else {}
     hybrid = input_data.get("hybrid") if isinstance(input_data.get("hybrid"), dict) else {}
+    current_rate = float(hybrid.get("tariff_escalation_rate", input_data.get("tariff_escalation_rate", 0.0)) or 0.0)
     discount = float(hybrid.get("discount_rate", input_data.get("discount_rate", 0.0)) or 0.0)
     rates = [-0.02, 0.0, 0.02, 0.04]
+    if not any(abs(current_rate - rate) <= 1e-12 for rate in rates):
+        rates.append(current_rate)
+        rates.sort()
     rows = []
     for rate in rates:
         s0_cost = _candidate_total_cost(baseline, rate, discount) if baseline else None
@@ -212,9 +224,9 @@ def _ensure_escalation_fields(case: dict[str, Any]) -> None:
                 candidate_incremental = (selected.get("economics") or {}).get("incremental_npv_vs_s0_cny")
             if candidate_incremental is not None:
                 incremental = float(candidate_incremental)
-        rows.append({"rate": rate, "s0_total_cost_npv_cny": s0_cost, "recommended_scenario_id": selected_id, "recommended_total_cost_npv_cny": selected_cost, "incremental_npv_vs_s0_cny": incremental, "simple_payback_years": payback, "simple_payback_note": "按第1年节省，不含后续电价涨幅", "cumulative_payback_year": cumulative_payback, "payback_note": payback_note})
-    case["tariff_escalation"] = {"rate": 0.0, "applies_to": "grid_import", "note": "各年电价按年涨幅等比调整，电价结构不变；不是电价预测。"}
-    case["escalation_sensitivity"] = {"rates": rates, "recommendation_scenario_id": selected_id, "rows": rows, "note": "只复用完整回放中已计算的逐年购电成本；不重跑物理模型。"}
+        rows.append({"rate": rate, "is_current": abs(rate - current_rate) <= 1e-12, "s0_total_cost_npv_cny": s0_cost, "recommended_scenario_id": selected_id, "recommended_total_cost_npv_cny": selected_cost, "incremental_npv_vs_s0_cny": incremental, "simple_payback_years": payback, "simple_payback_note": "按第1年节省，不含后续电价涨幅", "cumulative_payback_year": cumulative_payback, "payback_note": payback_note})
+    case["tariff_escalation"] = {"rate": current_rate, "applies_to": "grid_import", "note": "各年电价按年涨幅等比调整，电价结构不变；不是电价预测。"}
+    case["escalation_sensitivity"] = {"rates": rates, "current_rate": current_rate, "recommendation_scenario_id": selected_id, "rows": rows, "note": "只复用完整回放中已计算的逐年购电成本；不重跑物理模型。is_current标记用户本次涨幅。"}
 
 
 def _compact_chart(chart: Any) -> Any:

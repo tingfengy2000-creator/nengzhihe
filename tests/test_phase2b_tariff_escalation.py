@@ -60,6 +60,29 @@ class TariffEscalationContractTests(unittest.TestCase):
         self.assertEqual(rec["rows"][1]["cumulative_payback_year"], 2)
         self.assertIn("第1年节省", rec["rows"][1]["simple_payback_note"])
 
+    def test_current_rate_is_added_and_marked(self):
+        def candidate(sid, capex, costs):
+            return {"scenario_id": sid, "economics": {"status": "complete", "capex_cny": capex,
+                    "incremental_npv_vs_s0_cny": 40.0 if sid == "S1_pv" else 0.0,
+                    "yearly": [{"year": 0, "grid_import_cost_cny": 0.0},
+                                *[{"year": i, "grid_import_cost_cny": value, "maintenance_cny": 0.0,
+                                   "replacement_cny": 0.0, "export_income_cny": 0.0, "residual_cny": 0.0}
+                                  for i, value in enumerate(costs, 1)]]}}
+        candidates = [candidate("S0_grid", 0.0, [100.0] * 2), candidate("S1_pv", 50.0, [70.0] * 2)]
+        report = _escalation_sensitivity(candidates, {"scenario_id": "S1_pv"}, study_years=2, discount_rate=0.0, current_rate=0.03)
+        self.assertIn(0.03, report["rates"])
+        current_rows = [row for row in report["rows"] if row["is_current"]]
+        self.assertEqual(len(current_rows), 1)
+        self.assertEqual(current_rows[0]["rate"], 0.03)
+
+    def test_pv_current_rate_is_marked(self):
+        candidates = [
+            {"capacity_kwp": 0.0, "economics": {"status": "complete", "capex_cny": 0.0, "yearly": [{"year": 1, "electricity_cost_cny": 100.0}]}},
+            {"capacity_kwp": 1.0, "economics": {"status": "complete", "capex_cny": 50.0, "incremental_npv_vs_s0_cny": 40.0, "yearly": [{"year": 1, "electricity_cost_cny": 70.0}]}},
+        ]
+        report = pv_escalation_sensitivity(candidates, {"status": "conditional", "capacity_kwp": 1.0}, PVScenario(study_years=1, tariff_escalation_rate=0.03))
+        self.assertEqual([row["rate"] for row in report["rows"] if row["is_current"]], [0.03])
+
     def test_pv_sensitivity_uses_candidate_sign_and_cumulative_payback(self):
         def candidate(capacity, capex, costs):
             return {"capacity_kwp": capacity, "incremental_npv_vs_s0_cny": 40.0 if capacity else 0.0,
@@ -83,6 +106,7 @@ class TariffEscalationContractTests(unittest.TestCase):
         case = result["cases"][0]
         self.assertEqual(case["tariff_escalation"]["rate"], 0.0)
         self.assertEqual(case["escalation_sensitivity"]["rates"], [-0.02, 0.0, 0.02, 0.04])
+        self.assertTrue(case["escalation_sensitivity"]["rows"][1]["is_current"])
         self.assertEqual(case["candidates"][1]["economics"]["simple_payback_years"], 2.0)
         self.assertIn("cumulative_payback_year", case["escalation_sensitivity"]["rows"][1])
 

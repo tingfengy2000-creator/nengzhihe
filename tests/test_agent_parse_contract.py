@@ -84,6 +84,25 @@ class AgentParseContractTests(unittest.TestCase):
         self.assertEqual(result["changes"], [])
         self.assertIn("预算", result["question"])
 
+    def test_public_pv_alias_is_supported_by_request_guard(self):
+        with patch("operation_planning.agent_parse._read_config", return_value={"model_id": "test"}), patch(
+            "operation_planning.agent_parse._model_parse",
+            return_value={"changes": [{"field": "pv.capacity_kwp", "to": 2}], "unsupported": [], "question": None},
+        ):
+            result = parse_agent_request("光伏改为2kWp", self.task)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["changes"][0]["to"], 2)
+
+    def test_explicit_existing_value_is_not_ambiguous(self):
+        self.task["hybrid"]["allow_export"] = False
+        with patch("operation_planning.agent_parse._read_config", return_value={"model_id": "test"}), patch(
+            "operation_planning.agent_parse._model_parse",
+            return_value={"changes": [{"field": "hybrid.allow_export", "to": False}], "unsupported": [], "question": None},
+        ):
+            result = parse_agent_request("关闭卖电", self.task)
+        self.assertEqual(result["status"], "ok")
+        self.assertIsNone(result["question"])
+
 
 if __name__ == "__main__":
     unittest.main()

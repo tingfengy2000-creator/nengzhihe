@@ -304,7 +304,17 @@ def _export_economics(intervals: Mapping[str, Sequence[Any]], *, export: Optiona
     years = int(study_years)
     annual_revenue = None if price is None else surplus * price
     study_revenue = None if price is None else surplus * price * years
-    row = {"surplus_kwh_year1": surplus, "sold_kwh_year1": surplus, "annual_sell_kwh": surplus, "price_cny_per_kwh": price, "connection_cny": connection, "connection_cost_assumed_zero": connection_missing, "connection_note": "未填写并网投入，按0元粗算" if connection_missing else "采用用户填写的并网投入", "source": req.get("source"), "source_url": req.get("source_url"), "source_note": req.get("source_note"), "economics_status": "complete" if price is not None else "incomplete", "annual_revenue_cny": annual_revenue, "annual_income_cny": annual_revenue, "study_period_revenue_cny": study_revenue, "study_period_income_cny": study_revenue, "simple_payback_years": None if price is None or price <= 0 or connection <= 0 else connection / (surplus * price) if surplus > 0 else None, "payback_status": None if price is not None and price > 0 and connection > 0 and surplus > 0 else ("无并网投入" if connection == 0 else "缺少上网电价或没有可卖余电"), "note": EXPORT_NOTE}
+    if connection == 0:
+        payback_status = "无需额外投入"
+    elif price is None:
+        payback_status = "缺少上网电价，无法计算回本"
+    elif price <= 0:
+        payback_status = "上网电价不为正，无法回本"
+    elif surplus <= 0:
+        payback_status = "没有可卖余电，无法回本"
+    else:
+        payback_status = None
+    row = {"surplus_kwh_year1": surplus, "sold_kwh_year1": surplus, "annual_sell_kwh": surplus, "price_cny_per_kwh": price, "connection_cny": connection, "connection_cost_assumed_zero": connection_missing, "connection_note": "未填写并网投入，按0元粗算" if connection_missing else "采用用户填写的并网投入", "source": req.get("source"), "source_url": req.get("source_url"), "source_note": req.get("source_note"), "economics_status": "complete" if price is not None else "incomplete", "annual_revenue_cny": annual_revenue, "annual_income_cny": annual_revenue, "study_period_revenue_cny": study_revenue, "study_period_income_cny": study_revenue, "simple_payback_years": None if price is None or price <= 0 or connection <= 0 else connection / (surplus * price) if surplus > 0 else None, "payback_status": payback_status, "note": EXPORT_NOTE}
     return {"status": "calculated", "study_years": years, "path": row, "options": [{"price_cny_per_kwh": price, "source": req.get("source")}]}
 
 
