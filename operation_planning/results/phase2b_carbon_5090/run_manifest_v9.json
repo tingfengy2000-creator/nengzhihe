@@ -29,7 +29,7 @@
         "note": "未校准的城市级空调负荷情景。"
       },
       "http_calls": 1,
-      "case_hash": "857435c5d506059f0aff64235542d4aa1a5ded25c88d25f0e7153496b68aa7c8"
+      "case_hash": "5801ae50dddf17f5991421e642f3a0de2c57f141be4254f936dfc7a32d664ca7"
     },
     {
       "case_id": "tier_medium",
@@ -47,7 +47,7 @@
         "note": "未校准的城市级空调负荷情景。"
       },
       "http_calls": 1,
-      "case_hash": "d61937944ea426a8f751bff78f20e36be2b00d74da5a76009fc2503088a4cbc7"
+      "case_hash": "4c6e7f9ca4ff5d54d64eca3f118fe194a582745ad083e7130c7b586e25f6d15e"
     },
     {
       "case_id": "tier_large",
@@ -65,7 +65,7 @@
         "note": "未校准的城市级空调负荷情景。"
       },
       "http_calls": 1,
-      "case_hash": "6594bb47514fe8ab204cc7f42c4847bfe7932d1f00c9ad84cd2c276cf0ce2943"
+      "case_hash": "7b6e77730857be0516734e4ef845843b932e1fff02d0fbad30c0597b0bdc8f90"
     },
     {
       "case_id": "variant_budget_insufficient",
@@ -83,7 +83,7 @@
         "note": "未校准的城市级空调负荷情景。"
       },
       "http_calls": 1,
-      "case_hash": "f571a50380adb40be298d6424f34dce56d3378b8a8109f3c401770104c7060d2"
+      "case_hash": "e5944311f01e6533502baf9936fd2e75e2e968ebe86b071963ec4333977ff92e"
     },
     {
       "case_id": "variant_missing_pv_quote",
@@ -101,7 +101,7 @@
         "note": "未校准的城市级空调负荷情景。"
       },
       "http_calls": 1,
-      "case_hash": "71bdc5ea37832e7d53cec40679eb75b354b74ae9b80ee9538685d1a705e8ed37"
+      "case_hash": "d87aa5c134250b930f629f802617353c8e42ce73502f800105adea0e33b27105"
     },
     {
       "case_id": "variant_roof_area_insufficient",
@@ -119,11 +119,11 @@
         "note": "未校准的城市级空调负荷情景。"
       },
       "http_calls": 1,
-      "case_hash": "ed3d9a17773b99f2697b41628455813ffcc38e785603e2c5c90390873c560bc1"
+      "case_hash": "c7a9af26ac212ce72d6aa278f4ae7dccee127fd94e5df63ce85d6321f3efb628"
     }
   ],
-  "package_file_sha256": "1869774859749e536a8b2870fdbaced285bf1c807a61f4bbb92a825a041c8a0c",
-  "viewer_file_sha256": "6004d0703890eab0356e2404df832aff1769bb07c2f188f67fbf03fe11f902ee",
+  "package_file_sha256": "ad0e58b43e1b4cb7a51a18c44df68af863d97d431dee179bb9fc6d1ab8565aa8",
+  "viewer_file_sha256": "291c3093b66f0559fa09c3de850c934f598d18b7ffae713b621c3a5e6d612209",
   "viewer_path": "docs/handoff/replay_viewer/replay_cases_ui_v9.json",
   "previous_replays_preserved": [
     "replay_cases_v8.json",
@@ -138,5 +138,6 @@
   "viewer_under_decimal_8mb": true,
   "thermal_size_file_sha256": "9be465fd09454dde7b6e904c46a6a241ff6dd1424eb5e214c48ca2b1c0e1e90f",
   "path_cleanup_file": "operation_planning/results/phase2b_carbon_5090/path_cleanup_v9.json",
-  "source_commit_note": "源码提交固定后重启本机服务，再通过HTTP生成；结果文件随后单独提交。"
+  "source_commit_note": "源码提交固定后重启本机服务，再通过HTTP生成；结果文件随后单独提交。",
+  "path_sanitization": "repository-relative weather provenance; no physical rerun; original HTTP response hashes retained"
 }

@@ -152,7 +152,10 @@ def _load_normalized(directory: Path, site_id: str, year: int, *, require_pv: bo
         context.notes.extend(["GHI/DNI/DHI按右标记源行转换为左区间均值。", "pvlib使用显式温度和10米风速，不使用默认20℃/0风速。"])
     else:
         context.notes.append("辐照右标记已转换为左区间；温度、湿度、压力和风速保留区间起点源值。")
-    return {"context": asdict(context), "time": hourly["time"], "hourly": hourly, "source_file": str(path), "boundary_file": str(boundary_path), "hash": _normalized_hash(path, boundary_path, normalized), "weather_normalization": normalized["_interval_semantics"], "interval_seconds": normalized["_interval_semantics"]["interval_seconds"], "pv_provenance": payload.get("_phase2_provenance", {})}
+    # Provenance is portable across checkouts and must not disclose the host
+    # path through thermal, PV or hybrid API responses.  File content hashes
+    # still refer to the same raw cache and boundary records.
+    return {"context": asdict(context), "time": hourly["time"], "hourly": hourly, "source_file": path.relative_to(BASE.parent).as_posix(), "boundary_file": boundary_path.relative_to(BASE.parent).as_posix(), "hash": _normalized_hash(path, boundary_path, normalized), "weather_normalization": normalized["_interval_semantics"], "interval_seconds": normalized["_interval_semantics"]["interval_seconds"], "pv_provenance": payload.get("_phase2_provenance", {})}
 
 
 def load_weather(site_id: str = "guangzhou", year: int = 2024) -> Dict[str, Any]:

@@ -1,25 +1,39 @@
 {
-  "scope": "round16 current v8/v9 replay artifacts only",
+  "scope": "round17 escaped-path sanitation for v8/v9 replay artifacts",
   "replacement": {
-    "to": "operation_planning/data/weather_pv/guangzhou_2024.json",
-    "from_pattern": "machine absolute weather source path (redacted pattern)"
+    "from_pattern": "escaped or decoded machine weather source path (six occurrences per file)",
+    "to": "operation_planning/data/weather_pv/guangzhou_2024.json"
   },
   "files": [
     {
+      "path": "operation_planning/results/phase2b_carbon_5090/replay_cases_v9.json",
+      "replaced": 6,
+      "remaining_decoded": 0,
+      "remaining_escaped": 0,
+      "sha256": "ad0e58b43e1b4cb7a51a18c44df68af863d97d431dee179bb9fc6d1ab8565aa8"
+    },
+    {
       "path": "operation_planning/results/phase2b_carbon_5090/replay_cases_v8.json",
-      "replaced": 0,
-      "remaining": 0,
-      "sha256": "301c52d94485b5195fba0bcc36d14a6fe9e10dbcf36c98e670531c980412a312"
+      "replaced": 6,
+      "remaining_decoded": 0,
+      "remaining_escaped": 0,
+      "sha256": "93026c8b0b93ce006ae24378afe1a18b5a46c9cd798f414fc0d729d3a0fdf20d"
     },
     {
       "path": "docs/handoff/replay_viewer/replay_cases_v8.json",
-      "replaced": 0,
-      "remaining": 0,
-      "sha256": "a20e53236887e891102c89fb0ab041b48f4373f542f56eb954fae7ce922bfb79"
+      "replaced": 6,
+      "remaining_decoded": 0,
+      "remaining_escaped": 0,
+      "sha256": "2e2fbbc86f109bf36fff4aaacaea154206d5923154f7a057ebb9857e3ca86464"
     }
   ],
   "v9_full_remaining": 0,
   "ui_v9_remaining": 0,
   "historical_files_not_rewritten": true,
-  "note": "Older audit and handoff records retain historical machine paths for provenance; new v9 and UI artifacts are repository-relative."
+  "note": "Older audit and handoff records retain historical machine paths for provenance; new v9 and UI artifacts are repository-relative.",
+  "v9_full_remaining_decoded": 0,
+  "v9_full_remaining_escaped": 0,
+  "ui_v9_remaining_decoded": 0,
+  "ui_v9_remaining_escaped": 0,
+  "source_fix": "operation_planning/weather.py now emits repository-relative source_file/boundary_file; replay bytes were sanitized without rerunning physics."
 }
