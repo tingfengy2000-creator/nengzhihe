@@ -5,7 +5,7 @@
 import { esc, fmt, isNum, download, toast, store } from './util.js';
 import { SCEN, SAMPLE_PATH, sampleSourceText, samplesLoaded } from './data.js';
 import * as story from './story.js';
-import { reasonsOf, boundariesOf } from './results.js';
+import { reasonsOf, boundariesOf, SURPLUS_NOTES, surplusCands } from './results.js';
 
 export const PLAN_KEY = 'njd.plans.v1';
 const stamp = () => new Date().toISOString().slice(0, 16).replace(/[-:T]/g, '');
@@ -16,6 +16,19 @@ const base = (vm) => `能见度_${vm.kind === 'live' ? '实时' : vm.caseId}_${s
 function summaryRows(vm) {
   const head = ['方案', '技术名', '状态', '状态说明/排除原因', '计价状态', '光伏容量_kWp', '风机台数', '10年总花费_折现_元', '比只用电网_元(负=多花,正=省下)', '净现金流现值_元(非利润)', '年发电_kWh', '当时用上_kWh', '浪费_kWh', '从电网买_kWh', '卖给电网_kWh', '空调用电自发电覆盖率', '第1年减碳_kgCO2', '研究期累计减碳_tCO2', '每吨减碳成本_元(负=省钱)', '粗算_比只用电网_元', '是否推荐'];
   return [head].concat(vm.candidates.map((c) => [c.name, c.id, c.admission.label, c.admission.status === 'equivalent' && c.equivalentTo ? `与${SCEN[c.equivalentTo] ? SCEN[c.equivalentTo].name : c.equivalentTo}相同` : c.reasons.join('；'), c.economicsStatus, c.pvKwp, c.windCount, c.totalCost, c.incremental, c.npv, c.gen, c.selfUse, c.curtail, c.gridImport, c.gridExport, c.coverage, c.carbon && c.carbon.avoidedKgY1, c.carbon && c.carbon.avoidedTStudy, c.carbon && c.carbon.costPerT, c.rough && c.rough.incremental, c.isRec ? '推荐' : '']));
+}
+
+/** 多余电量的两条去路（每个发电方案一组），只搬运 surplus_paths 字段。 */
+function surplusRows(vm) {
+  const out = [[], ['多余的电去哪儿（附加估算，不改变推荐；储能与卖电从同一份多余电量分别估算，不叠加）'],
+    ['方案', '去路', '电池容量_kWh', '计价状态', '初始投入_元', '每年少交电费_元', '每年净收益_元', '回本_年', '回本说明', '研究期净收益_元(不折现)', '自用比例_装前', '自用比例_装后', '每年卖电量_kWh', '上网电价_元每kWh', '每年收入_元', '研究期收入_元', '并网投入_元', '说明']];
+  for (const c of vm.candidates.filter((x) => x.surplus && x.gen > 0)) {
+    const sp = c.surplus;
+    if (sp.storage) for (const x of sp.storage.candidates) out.push([c.name, '储能', x.capacityKwh, x.status === 'complete' ? '完整' : '条件不全', x.investment, x.annualBillSaving, x.annualNet, x.payback, x.paybackStatus, x.studyNet, x.scBefore, x.scAfter, '', '', '', '', '', x.capacityKwh === sp.storage.recommendedKwh ? `最划算；${sp.storage.recommendationNote || ''}` : '']);
+    if (sp.export) { const e = sp.export; out.push([c.name, '卖给电网', '', e.status === 'complete' ? '完整' : '条件不全', '', '', '', e.payback, e.paybackStatus, '', '', '', e.soldKwh ?? e.surplusKwh, e.price, e.annualRevenue, e.studyRevenue, e.connectionAssumedZero ? '未填写（按0粗算）' : e.connection, [e.source, e.sourceNote].filter(Boolean).join('；')]); }
+  }
+  out.push(['边界', SURPLUS_NOTES.storage], ['边界', SURPLUS_NOTES.load], ['边界', SURPLUS_NOTES.export], ['边界', SURPLUS_NOTES.both]);
+  return out;
 }
 
 function hourlyCsv(vm) {
@@ -31,6 +44,20 @@ function hourlyCsv(vm) {
     cols.push(h.pv, h.wind, h.self, h.imp, h.curt);
   }
   return csv([head].concat(ts.map((_, i) => cols.map((c) => c[i]))));
+}
+
+function surplusBrief(vm) {
+  const rec = vm.byId[(vm.rec || {}).scenarioId];
+  const c = rec && rec.surplus && rec.gen > 0 ? rec : (surplusCands(vm)[0] || null);
+  if (!c) return '';
+  const sp = c.surplus, st = sp.storage, e = sp.export;
+  const m = (v) => (isNum(v) ? `${v < 0 ? '−' : ''}${fmt.money(Math.abs(v))}` : '—');
+  const rows = st ? st.candidates.map((x) => x.status !== 'complete' ? `<tr><td>${fmt.d(x.capacityKwh, 1)} kWh</td><td colspan="5">条件不全：请填写储能报价</td></tr>`
+    : `<tr${x.capacityKwh === st.recommendedKwh && st.recommendedKwh > 0 ? ' class="rec"' : ''}><td>${fmt.d(x.capacityKwh, 1)} kWh${x.capacityKwh === st.recommendedKwh && st.recommendedKwh > 0 ? '（最划算）' : ''}</td><td class="r">${m(x.investment)}</td><td class="r">${m(x.annualBillSaving)}</td><td class="r">${m(x.annualNet)}</td><td class="r">${isNum(x.payback) ? fmt.d(x.payback, 1) + ' 年' : esc(x.paybackStatus || '—')}</td><td class="r">${m(x.studyNet)}</td></tr>`).join('') : '';
+  return `<h2>多余的电去哪儿（${esc(c.name)}，每年约 ${fmt.kwh(sp.surplusKwh)} kWh 用不完）</h2>
+  ${st ? `<p>存起来（储能）${st.recommendedKwh === 0 ? `：${esc(st.recommendationNote || '按当前报价不建议装储能')}` : ''}</p><table><tr><th>电池容量</th><th class="r">初始投入（元）</th><th class="r">每年少交电费</th><th class="r">每年净收益</th><th class="r">回本</th><th class="r">研究期净收益（不折现）</th></tr>${rows}</table>` : ''}
+  ${e ? `<p>卖给电网（粗算）：每年约 ${fmt.kwh(e.soldKwh ?? e.surplusKwh)} kWh${isNum(e.price) && e.status === 'complete' ? `，上网电价 ${fmt.d(e.price, 3)} 元/kWh，每年收入约 ${m(e.annualRevenue)} 元，研究期 ${m(e.studyRevenue)} 元；并网投入 ${e.connectionAssumedZero ? '未填写，按 0 粗算' : m(e.connection) + ' 元'}。电价来源：${esc(e.source || '用户填写')}` : '；填写上网电价后可估算收入'}。</p>` : ''}
+  <p class="note">${[SURPLUS_NOTES.storage, SURPLUS_NOTES.load, SURPLUS_NOTES.export, SURPLUS_NOTES.both].map(esc).join(' ')}</p>`;
 }
 
 export function briefHtml(T) {
@@ -62,6 +89,7 @@ export function briefHtml(T) {
   <h2>四种供电方式（${y}总账）</h2><table><tr><th>方案</th><th>状态</th><th class="r">总花费（元）</th><th class="r">比只用电网</th><th class="r">年发电 kWh</th><th class="r">当时用上 kWh</th><th class="r">浪费 kWh</th><th class="r">第1年减碳 kg</th></tr>${opt}</table>
   <p class="note">负的“比只用电网”= 多花，正 = 省下；“条件不全”不是排除；总花费不含空调设备本身。</p>
   ${sweep ? `<h2>光伏容量比选</h2><table><tr><th>容量</th><th>状态</th><th class="r">比只用电网</th><th class="r">发电当时用上</th><th class="r">每吨减碳</th></tr>${sweep}</table><p class="note">${esc(story.basisPlain(vm))}</p>` : ''}
+  ${surplusBrief(vm)}
   <h2>减碳口径</h2><ul>${((vm.carbonContext || {}).scopeNotes || []).map((n) => `<li>${esc(n)}</li>`).join('')}</ul>
   <h2>适用边界</h2><ul>${boundariesOf(vm).map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
   <h2>依据</h2><p class="note">${esc([p.kind, p.file, p.sourceCommit && `源码 ${p.sourceCommit}`, p.calculationVersion, p.weatherHash && `天气哈希 ${p.weatherHash}`].filter(Boolean).join(' · '))}</p>
@@ -77,7 +105,7 @@ export function run(kind, T) {
     f.srcdoc = briefHtml(T); f.onload = () => { try { f.contentWindow.focus(); f.contentWindow.print(); } catch (e) { toast('浏览器阻止了打印，请改用“决策简报”下载后打印'); } setTimeout(() => f.remove(), 60000); };
     return;
   }
-  if (kind === 'summary') { download(`${base(vm)}_方案汇总.csv`, 'text/csv;charset=utf-8', csv(summaryRows(vm))); return; }
+  if (kind === 'summary') { download(`${base(vm)}_方案汇总.csv`, 'text/csv;charset=utf-8', csv(summaryRows(vm).concat(surplusRows(vm)))); return; }
   if (kind === 'hourly') { const t = hourlyCsv(vm); if (!t) { toast('这份结果没有逐时数据'); return; } download(`${base(vm)}_逐时.csv`, 'text/csv;charset=utf-8', t); return; }
   if (kind === 'json') {
     const body = vm.kind === 'live'

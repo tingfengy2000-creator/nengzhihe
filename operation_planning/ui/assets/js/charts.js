@@ -196,3 +196,34 @@ export function dayTicks(ts) {
   ts.forEach((t, i) => { if (/T00:00/.test(t)) out.push({ i, label: t.slice(5, 10).replace('-', '/') , anchor: 'start' }); });
   return out;
 }
+
+/* ------------------------------------------------------------------ */
+/* 正负柱：纵轴正负共用一条 0 线；正值青绿、负值暖红，每根柱标数值（不只靠颜色） */
+/* opts: { cats, values, unit, height, label, highlight }                 */
+/* ------------------------------------------------------------------ */
+export function signedBarChart(el, opts) {
+  const W = Math.max(300, Math.round(el.clientWidth || 600)), H = opts.height || 200;
+  const m = { l: 56, r: 10, t: 18, b: 26 };
+  const vals = opts.values.map((v) => (isNum(v) ? v : 0));
+  const ticks = niceTicks(Math.min(0, ...vals), Math.max(0, ...vals), 4);
+  const lo = ticks[0], hi = ticks[ticks.length - 1];
+  const Y = (v) => m.t + (1 - (v - lo) / (hi - lo || 1)) * (H - m.t - m.b);
+  const n = opts.cats.length, band = (W - m.l - m.r) / Math.max(1, n), bw = Math.min(46, band * 0.56);
+  let s = svg(W, H, opts.label);
+  for (const t of ticks) s += `<line class="${t === 0 ? 'baseline' : 'gridline'}" x1="${m.l}" x2="${W - m.r}" y1="${Y(t)}" y2="${Y(t)}"${t === 0 ? ' stroke-width="1.6"' : ''}/><text class="axis" x="${m.l - 8}" y="${Y(t) + 4}" text-anchor="end">${axisLabel(t)}</text>`;
+  opts.cats.forEach((c, i) => {
+    const v = vals[i], cx = m.l + band * i + band / 2, y0 = Y(0), y1 = Y(v);
+    const top = Math.min(y0, y1), h = Math.max(1.5, Math.abs(y1 - y0));
+    const col = v < 0 ? 'var(--more)' : 'var(--brand)';
+    s += `<rect x="${cx - bw / 2}" y="${top}" width="${bw}" height="${h}" rx="3" fill="${col}"${opts.highlight === i ? ' stroke="var(--ink)" stroke-width="2"' : ''}/>`;
+    s += `<text x="${cx}" y="${v < 0 ? top + h + 13 : top - 5}" text-anchor="middle" font-size="11.5" fill="var(--ink-2)" class="num">${v < 0 ? '−' : ''}${axisLabel(Math.abs(v))}</text>`;
+    s += `<text class="axis" x="${cx}" y="${H - 6}" text-anchor="middle">${esc(c)}</text>`;
+    s += `<rect class="hit" data-i="${i}" x="${m.l + band * i}" y="${m.t}" width="${band}" height="${H - m.t - m.b}" fill="transparent"/>`;
+  });
+  s += '</svg>';
+  el.innerHTML = s;
+  el.querySelectorAll('.hit').forEach((r) => {
+    r.addEventListener('pointermove', (ev) => { const i = +r.dataset.i; tip.show(`<b>${esc(opts.cats[i])}</b><div class="tt-row"><span>净收益</span><b class="num">${vals[i] < 0 ? '−' : ''}${fmt.money(Math.abs(vals[i]))} ${esc(opts.unit || '')}</b></div>`, ev.clientX, ev.clientY); });
+    r.addEventListener('pointerleave', () => tip.hide());
+  });
+}

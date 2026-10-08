@@ -8,7 +8,7 @@ import { $, $$, esc, fmt, isNum, icon, toast, reduceMotion } from './util.js';
 import { app, on, emit } from './state.js';
 import * as data from './data.js';
 import { api, pollJob, ApiError } from './api.js';
-import { FIELDS, FIELD, FIELD_PATH, blankForm, buildRequest, buildPreview, formFromRequest, quoteFieldsFrom, parseAsk, validate, tariffList, tariffsForSite } from './form.js';
+import { FIELDS, FIELD, FIELD_PATH, blankForm, buildRequest, buildPreview, formFromRequest, quoteFieldsFrom, storageFieldsFrom, storageMetaFrom, parseAsk, validate, tariffList, tariffsForSite } from './form.js';
 import { lineChart, barChart, dayTicks } from './charts.js';
 import * as results from './results.js';
 
@@ -165,10 +165,14 @@ function step1Html() {
         <details class="more"${quotesFilled() ? ' open' : ''}><summary>小风机报价（每台）</summary><div class="grid-form">${fields(FIELDS.filter((f) => f.group === 'wq').map((f) => f.key))}</div></details>
       </fieldset>
 
-      <fieldset class="card fcard"><legend><span class="fnum">6</span>碳与储能（可选）</legend>
+      <fieldset class="card fcard"><legend><span class="fnum">6</span>碳、储能与卖电（可选）</legend>
         <div class="grid-form">${fieldHtml('factor_id', 'span2')}${fieldHtml('carbon_price')}</div>
         ${carbonRefHtml()}
-        <div class="grid-form">${fieldHtml('storage_caps', 'span2')}</div>
+        <p class="sub-legend">多余的电存起来（储能）</p>
+        <div class="grid-form">${fieldHtml('storage_caps', 'span2')}${fields(['st_price', 'st_install', 'st_maint', 'st_life'])}</div>
+        <p class="sub-legend">多余的电卖给电网（粗算）</p>
+        <div class="grid-form">${fields(['ex_price', 'ex_conn'])}</div>
+        <p class="hint">储能与卖电只是附加估算，不改变四种供电方式的推荐；未填写的报价不补默认值，对应结果显示“条件不全”。“填入示例报价”会一并填入储能示例（CNESA 公开均价，示例拆分，非采购报价）与卖电示例（敏感性情景，不是广东固定上网价）。</p>
       </fieldset>
     </form>
 
@@ -476,7 +480,7 @@ function bind() {
     if (a === 'sample-quote') {
       const s = data.samplesLoaded(); const c = s && s.cases.get('tier_small');
       if (!c) { toast('示例还没读取完，请稍候'); return; }
-      Object.assign(T.form, quoteFieldsFrom(c.request)); markChanged(); renderStep(); toast('已填入示例报价（用户情景，非采购报价）'); return;
+      Object.assign(T.form, quoteFieldsFrom(c.request), storageFieldsFrom(c.request)); if ((c.request.storage || {}).capacities_kwh) T.form.storage_caps = c.request.storage.capacities_kwh.join(', '); T.form._extras.storageMeta = storageMetaFrom(c.request); T.touched = true; markChanged(); renderStep(); toast('已填入示例报价（光伏、风机、储能、卖电；示例情景，非采购报价）'); return;
     }
     if (a === 'carbon-ref') { carbonRef(); return; }
     const q = t.closest('[data-quick-case]'); if (q) { startFromSample(q.dataset.quickCase); return; }

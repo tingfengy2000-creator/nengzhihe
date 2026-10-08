@@ -163,3 +163,17 @@ details.more[open] summary { margin-bottom: 14px; }
 @keyframes recGlow { from { box-shadow: inset 0 3px 0 transparent; } to { box-shadow: inset 0 3px 0 var(--brand); } }
 @media (max-width: 960px) { .grid2, .where-card { grid-template-columns: 1fr; } .store-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .big-decision { padding: 20px; } .decision-alts li { grid-template-columns: 24px 1fr; } .decision-alts li b { grid-column: 2; } .stage-card { padding: 14px; } }
+
+/* 多余的电去哪儿 */
+.surplus-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.surplus-grid .card > h3 { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; }
+.surplus-grid .card > h3 svg { width: 19px; height: 19px; color: var(--brand); }
+.surplus-grid .callout { margin-top: 12px; }
+.st-table td.pos { color: var(--less); } .st-table td.neg { color: var(--more); }
+@media (max-width: 960px) { .surplus-grid { grid-template-columns: 1fr; } }
+.sub-legend { font-size: 14px; font-weight: 700; color: var(--ink-2); margin: 18px 0 10px; }
+.surplus-grid { grid-template-columns: minmax(0, 2.1fr) minmax(0, 1fr); }
+.st-table th, .st-table td { padding: 8px 9px; font-size: 13.5px; }
+.st-table td:first-child { white-space: nowrap; }
+.st-table td.r .muted { white-space: normal; display: inline-block; max-width: 9em; text-align: right; }
+@media (max-width: 1180px) { .surplus-grid { grid-template-columns: 1fr; } }

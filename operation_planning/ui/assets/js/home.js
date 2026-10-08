@@ -16,7 +16,7 @@ let vm = null, week = null, ringId = null, calSet = 'recommended';
 
 const TIER_IDS = ['tier_small', 'tier_medium', 'tier_large'];
 const TIER_TAG = { tier_small: '小档', tier_medium: '中档', tier_large: '大档' };
-const DEMO_SCENES = ['场景', '有人建议装光伏和风机', '能源日历', '装多大最划算', '10 年总账与每吨减碳成本', '换成图书馆或厂房再看', '导出决策简报'];
+const DEMO_SCENES = ['场景', '有人建议装光伏和风机', '能源日历', '装多大最划算', '10 年总账与每吨减碳成本', '多余的电去哪儿', '换成图书馆或厂房再看', '导出决策简报'];
 
 const SCEN_ICON = {
   S0_grid: '<svg class="icon" viewBox="0 0 48 48" fill="none" stroke="var(--c-grid)" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M24 4 14 44M24 4l10 40M17 30h14M15 38h18M19 20h10M8 14h32M12 14l12-10 12 10"/></svg>',

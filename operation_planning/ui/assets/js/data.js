@@ -110,7 +110,7 @@ export const samplesLoaded = () => samplesCache;
 /* ------------------------------------------------------------------ */
 /* 映射工具                                                            */
 /* ------------------------------------------------------------------ */
-const pick = (...vals) => { for (const v of vals) if (v !== undefined) return v; return undefined; };
+const pick = (...vals) => { for (const v of vals) if (v !== undefined && v !== null) return v; return vals.length ? vals[vals.length - 1] : undefined; };
 const num = (v) => (typeof v === 'number' && Number.isFinite(v) ? v : null);
 
 function mapAdmission(status) {

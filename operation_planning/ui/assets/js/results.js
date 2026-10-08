@@ -4,7 +4,7 @@
 import { $, $$, esc, fmt, isNum, icon, toast } from './util.js';
 import { app } from './state.js';
 import { SCEN, sampleSourceText, samplesLoaded } from './data.js';
-import { barChart, lineChart, sweepChart, ring } from './charts.js';
+import { barChart, lineChart, sweepChart, ring, signedBarChart } from './charts.js';
 import { createCalendar } from './calendar.js';
 import { priceTable, scenIcon } from './home.js';
 import * as story from './story.js';
@@ -193,30 +193,70 @@ function roughBlock(vm) {
     <p class="chart-note">粗算电价口径：${esc(PRICE_BASIS[(rows[0].rough || {}).priceBasis] || '计算服务给出的年度平均电价')}（有效电价 ${fmt.d((rows[0].rough || {}).effectivePrice, 3)} 元/kWh）。</p></div></section>`;
 }
 
-function storageBlock(vm) {
-  const cands = vm.candidates.filter((c) => c.storage && c.storage.status === 'calculated' && c.storage.candidates.length);
-  const na = vm.candidates.find((c) => c.storage && c.storage.status && c.storage.status !== 'calculated');
-  if (!cands.length) return `<section class="rsec" data-sec="storage"><div class="sec-head"><div><p class="kicker">储能理想上限</p><h3 class="h3">加电池最多能挽回多少浪费的电？</h3></div></div><div class="callout unknown">${icon('info')}<span>${na ? '本次条件下不适用（例如允许卖电时不计算储能上限）。' : '这份结果没有储能上限数据。'}</span></div></section>`;
-  if (!cands.find((c) => c.id === ui.storeScen)) ui.storeScen = (cands.find((c) => c.isRec) || cands[0]).id;
-  const c = vm.byId[ui.storeScen], list = c.storage.candidates;
-  if (!list.find((x) => x.capacityKwh === ui.storeCap)) ui.storeCap = list[list.length - 1].capacityKwh;
-  const s = list.find((x) => x.capacityKwh === ui.storeCap);
-  return `<section class="rsec" data-sec="storage"><div class="sec-head"><div><p class="kicker">储能理想上限</p><h3 class="h3">加电池最多能挽回多少浪费的电？</h3></div>
-    <div class="seg" role="group" aria-label="选择方案">${cands.map((x) => `<button type="button" data-r-store="${x.id}" aria-pressed="${x.id === ui.storeScen}">${esc(x.name)}</button>`).join('')}</div></div>
-    <div class="card">
-      <div class="callout warn">${icon('battery')}<span><b>理想上限，不含电池成本、寿命和替换，不是储能推荐。</b>按小时顺序理想调度：先供当时空调，再用原本浪费的电充电，不足时放电（充放效率按计算服务给定）。</span></div>
-      <div class="store-caps"><span class="label">电池容量</span><div class="seg" role="group" aria-label="电池容量档位">${list.map((x) => `<button type="button" data-r-cap="${x.capacityKwh}" aria-pressed="${x.capacityKwh === ui.storeCap}">${fmt.d(x.capacityKwh, 1)} kWh</button>`).join('')}</div></div>
-      <div class="store-grid">
-        <div><span>最多挽回</span><b class="num">${fmt.kwh(s.recoveredKwh)}</b><small>kWh / 第 1 年</small></div>
-        <div><span>仍然浪费</span><b class="num">${fmt.kwh(s.remainingCurtailKwh)}</b><small>kWh / 第 1 年</small></div>
-        <div><span>仍需从电网买</span><b class="num">${fmt.kwh(s.gridImportKwh)}</b><small>kWh / 第 1 年</small></div>
-        <div><span>额外减碳</span><b class="num">${fmt.kwh(s.extraAvoidedKg)}</b><small>kg / 第 1 年</small></div>
-      </div>
-      <div class="tablewrap"><table class="table"><caption class="sr-only">各容量档位理想上限</caption><thead><tr><th>电池容量</th><th class="r">充放功率上限</th><th class="r">最多挽回</th><th class="r">仍然浪费</th><th class="r">仍需从电网买</th><th class="r">额外减碳</th><th>守恒检查</th></tr></thead><tbody>
-      ${list.map((x) => `<tr${x.capacityKwh === ui.storeCap ? ' class="is-best"' : ''}><td class="num">${fmt.d(x.capacityKwh, 1)} kWh</td><td class="r num">${fmt.d(x.powerKw, 1)} kW</td><td class="r num">${fmt.kwh(x.recoveredKwh)} kWh</td><td class="r num">${fmt.kwh(x.remainingCurtailKwh)} kWh</td><td class="r num">${fmt.kwh(x.gridImportKwh)} kWh</td><td class="r num">${fmt.kwh(x.extraAvoidedKg)} kg</td><td>${x.conservationPassed ? `<span class="tag ok">${icon('check')}通过</span>` : '<span class="muted">—</span>'}</td></tr>`).join('')}
+/* ------------------------------------------------------------------ */
+/* 多余的电去哪儿：储能（为主）与卖给电网（粗算），读 surplus_paths      */
+/* ------------------------------------------------------------------ */
+export const SURPLUS_NOTES = {
+  storage: '简单规则：多余电先充进电池、缺电时放出；不含电池衰减和温度影响，不做峰谷套利；净收益不折现。',
+  load: '只计算空调用电：下班后和周末楼里不用电，电池晚上没处放，所以容量越大不一定越划算。',
+  export: '粗算：能否并网、上网电价和结算方式以当地电网批复为准。',
+  both: '两条路从同一份多余电量分别估算，不叠加，也不改变上面的推荐方案。'
+};
+export function surplusCands(vm) { return vm.candidates.filter((c) => story.hasGen(c) && c.surplus); }
+function surplusBlock(vm) {
+  const cands = surplusCands(vm);
+  if (!cands.length) return `<section class="rsec" data-sec="surplus"><div class="sec-head"><div><p class="kicker">多余的电</p><h3 class="h3">多余的电去哪儿？</h3></div></div><div class="callout unknown">${icon('info')}<span>这份结果没有发电方案的多余电量数据。</span></div></section>`;
+  if (!cands.find((c) => c.id === ui.storeScen)) ui.storeScen = ((story.hasGen(vm.byId[(vm.rec || {}).scenarioId]) && vm.byId[vm.rec.scenarioId].surplus) ? vm.rec.scenarioId : (story.focusScenario(vm) || cands[0]).id);
+  const c = vm.byId[ui.storeScen], sp = c.surplus, st = sp.storage, ex = sp.export;
+  const years = (st && st.studyYears) || vm.studyYears;
+  const yt = story.yearsText(years);
+  const money = (v) => (isNum(v) ? `${fmt.money(v)} 元` : '—');
+  const signed = (v) => (isNum(v) ? `${Math.round(v) < 0 ? '−' : ''}${fmt.money(Math.abs(v))} 元` : '—');
+  let left;
+  if (!st) left = `<div class="callout unknown">${icon('info')}<span>这个方案没有储能估算数据。</span></div>`;
+  else {
+    const rec = st.recommendedKwh;
+    left = `<div class="tablewrap"><table class="table st-table"><caption class="sr-only">各储能容量的投入与收益</caption><thead><tr><th>电池容量</th><th class="r">初始投入</th><th class="r">每年少交电费</th><th class="r">每年净收益（扣运维）</th><th class="r">几年回本</th><th class="r">${yt}净收益</th><th>自用比例</th></tr></thead><tbody>
+      ${st.candidates.map((x) => {
+        const best = isNum(rec) && x.capacityKwh === rec && rec > 0;
+        const cap = `<b class="num">${fmt.d(x.capacityKwh, 1)}</b> kWh${x.capacityKwh === 0 ? ' 不装' : ''}${best ? ' <span class="tag brand">最划算</span>' : ''}`;
+        if (x.status !== 'complete') return `<tr><td>${cap}</td><td colspan="5"><span class="tag unknown">${icon('help')}条件不全：请填写储能报价</span></td><td class="num">${fmt.pct(x.scBefore)} → ${fmt.pct(x.scAfter)}</td></tr>`;
+        return `<tr class="${best ? 'is-best' : ''}"><td>${cap}</td><td class="r num">${money(x.investment)}</td><td class="r num">${money(x.annualBillSaving)}</td><td class="r num">${signed(x.annualNet)}</td><td class="r">${isNum(x.payback) ? `<span class="num">${fmt.d(x.payback, 1)}</span> 年` : `<span class="muted">${esc(x.paybackStatus || '—')}</span>`}</td><td class="r num ${isNum(x.studyNet) ? (x.studyNet < 0 ? 'neg' : 'pos') : ''}">${signed(x.studyNet)}</td><td class="num">${fmt.pct(x.scBefore)} → ${fmt.pct(x.scAfter)}</td></tr>`;
+      }).join('')}
       </tbody></table></div>
-      <p class="chart-note">${esc(story.scenLabel(c))}；数值为计算服务给出的理想调度上限，只表示物理上最多能挪移多少电。</p>
-    </div></section>`;
+      ${isNum(rec) && rec > 0 ? (st.recommendationNote ? `<p class="hint">${esc(st.recommendationNote)}</p>` : '') : `<div class="callout ${rec === 0 ? 'info' : 'unknown'}">${icon(rec === 0 ? 'info' : 'help')}<span><b>${esc(st.recommendationNote || (rec === 0 ? '按当前报价不建议装储能' : '条件不全，暂不能判断'))}</b></span></div>`}
+      <p class="chart-title" style="margin-top:14px">${yt}净收益（不折现）</p><div class="chart" data-st-chart></div>
+      <ul class="notes"><li>${SURPLUS_NOTES.storage}</li><li>${SURPLUS_NOTES.load}</li>${(st.candidates.find((x) => x.quoteSource) || {}).quoteSource ? `<li>储能报价来源：${esc(st.candidates.find((x) => x.quoteSource).quoteSource)}${st.candidates.find((x) => x.quoteSourceNote) ? `（${esc(st.candidates.find((x) => x.quoteSourceNote).quoteSourceNote)}）` : '。示例拆分，非采购报价'}。</li>` : ''}</ul>`;
+  }
+  let right;
+  if (!ex) right = `<div class="callout unknown">${icon('info')}<span>这个方案没有卖电估算数据。</span></div>`;
+  else {
+    const priced = isNum(ex.price) && ex.status === 'complete';
+    right = `<dl class="kv">
+      <div><dt>每年卖出电量</dt><dd><b class="num">${fmt.kwh(ex.soldKwh ?? ex.surplusKwh)}</b> kWh</dd></div>
+      ${priced ? `<div><dt>上网电价</dt><dd><b class="num">${fmt.d(ex.price, 3)}</b> 元/kWh</dd></div>
+      <div><dt>每年收入</dt><dd><b class="num">${money(ex.annualRevenue)}</b></dd></div>
+      <div><dt>${yt}收入</dt><dd><b class="num">${money(ex.studyRevenue)}</b></dd></div>
+      <div><dt>并网投入</dt><dd>${ex.connectionAssumedZero ? '未填写，按 0 粗算' : money(ex.connection)}</dd></div>
+      <div><dt>回本</dt><dd>${isNum(ex.payback) ? `<b class="num">${fmt.d(ex.payback, 1)}</b> 年` : (!isNum(ex.connection) || ex.connection === 0 ? '无额外投入' : esc(ex.paybackStatus || '—'))}</dd></div>` : ''}
+    </dl>
+    ${priced ? '' : `<div class="callout unknown">${icon('help')}<span>填写上网电价后可估算收入。</span></div>`}
+    <ul class="notes"><li>${SURPLUS_NOTES.export}</li>${priced ? `<li>电价来源：${esc(ex.source || '用户填写')}${ex.sourceNote ? `。${esc(ex.sourceNote)}` : ''}${vm.kind === 'sample' ? '。示例价为敏感性情景，不是广东固定上网价。' : ''}</li>` : ''}</ul>`;
+  }
+  return `<section class="rsec" data-sec="surplus"><div class="sec-head"><div><p class="kicker">多余的电</p><h3 class="h3">多余的电去哪儿？</h3><p class="muted">这个方案每年约有 <b class="num">${fmt.kwh(sp.surplusKwh)}</b> 度电自己用不完（${esc(story.scenLabel(c))}，第 1 年）。</p></div>
+    <div class="seg" role="group" aria-label="选择方案">${cands.map((x) => `<button type="button" data-r-store="${x.id}" aria-pressed="${x.id === ui.storeScen}">${esc(x.name)}${x.isRec ? '（推荐）' : ''}</button>`).join('')}</div></div>
+    <div class="surplus-grid">
+      <div class="card"><h3>${icon('battery')}存起来（储能）</h3>${left}</div>
+      <div class="card soft"><h3>${icon('bolt')}卖给电网（粗算）</h3>${right}</div>
+    </div>
+    <p class="chart-note">${SURPLUS_NOTES.both}</p></section>`;
+}
+function drawSurplus(panel, vm) {
+  const box = $('[data-st-chart]', panel); if (!box || !ui.storeScen) return;
+  const st = vm.byId[ui.storeScen].surplus.storage;
+  const rows = st.candidates.filter((x) => x.status === 'complete' && isNum(x.studyNet));
+  if (!rows.some((x) => x.capacityKwh > 0)) { box.innerHTML = '<div class="empty-state">填写储能报价后显示各容量的净收益</div>'; return; }
+  signedBarChart(box, { cats: rows.map((x) => `${fmt.d(x.capacityKwh, 1)} kWh`), values: rows.map((x) => x.studyNet), unit: '元', height: 200, label: '各储能容量的研究期净收益', highlight: rows.findIndex((x) => x.capacityKwh === st.recommendedKwh && st.recommendedKwh > 0) });
 }
 
 function step3(vm, T) {
@@ -226,7 +266,7 @@ function step3(vm, T) {
     <p class="chart-note">总花费为空调用电购电费加发电设备投入与运维的折现成本，不含空调设备本身。负的“比只用电网”= 多花，正的 = 省下；“条件不全”不是排除。${vm.tariff ? ` 电价：${esc(vm.tariff.title || vm.tariff.id)}${vm.tariff.provisional ? '（待核验）' : ''}。` : ''}</p>
     ${vm.tariff && vm.tariff.provisional ? `<span class="pending">${icon('warn')}电价档案待核验</span>` : ''}
   </section>
-  ${sweepBlock(vm)}${calendarBlock(vm)}${whereBlock(vm)}${dayBlock(vm, T)}${carbonBlock(vm)}${roughBlock(vm)}${storageBlock(vm)}`;
+  ${sweepBlock(vm)}${calendarBlock(vm)}${whereBlock(vm)}${dayBlock(vm, T)}${carbonBlock(vm)}${roughBlock(vm)}${surplusBlock(vm)}`;
 }
 function drawStep3(panel, vm, T) {
   const sw = $('[data-sweep]', panel);
@@ -238,6 +278,7 @@ function drawStep3(panel, vm, T) {
   if (calRoot) { calInst = createCalendar(calRoot); const s = hourlySets(vm).find((x) => x[0] === ui.calSet); if (s) calInst.set(s[2]); }
   const rb = $('[data-ring]', panel); if (rb && ui.ringId) { const c = vm.byId[ui.ringId]; ring(rb, { self: c.selfUse, waste: c.curtail, total: c.gen }); }
   drawDay(panel, vm);
+  drawSurplus(panel, vm);
 }
 function drawDay(panel, vm) {
   const box = $('[data-day]', panel); if (!box) return;
@@ -328,7 +369,6 @@ export function render(panel, step, T) {
       const r = t.closest('[data-r-ring]'); if (r) { ui.ringId = r.dataset.rRing; rerender(); return; }
       const cs = t.closest('[data-r-calset]'); if (cs) { ui.calSet = cs.dataset.rCalset; rerender(); return; }
       const st = t.closest('[data-r-store]'); if (st) { ui.storeScen = st.dataset.rStore; ui.storeCap = null; rerender(); return; }
-      const cp = t.closest('[data-r-cap]'); if (cp) { ui.storeCap = Number(cp.dataset.rCap); rerender(); return; }
       if (t.closest('[data-r-basis]')) { import('./state.js').then((m) => m.emit('drawer', { title: '依据', html: basisHtml(V) })); return; }
       const ex = t.closest('[data-export]'); if (ex && !ex.disabled) { if (T.stale) { toast('条件已修改，请先重新计算'); return; } exp.run(ex.dataset.export, T); return; }
       const sv = t.closest('[data-action="save-plan"]'); if (sv && !sv.disabled) { if (T.stale) return; exp.savePlan(T); return; }

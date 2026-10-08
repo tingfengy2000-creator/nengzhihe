@@ -63,7 +63,13 @@ export const FIELDS = [
   // 碳与储能
   { key: 'factor_id', label: '电网排放因子', type: 'select', group: 'carbon' },
   { key: 'carbon_price', label: '碳价情景', type: 'number', unit: '元/吨', min: 0, step: 0.01, group: 'carbon', opt: true, hint: '留空表示不计碳收益情景' },
-  { key: 'storage_caps', label: '电池容量档位（kWh，逗号分隔）', type: 'text', group: 'carbon', opt: true, hint: '只算“最多能挽回多少浪费的电”的理想上限，不含电池成本；留空使用计算服务默认档位' }
+  { key: 'storage_caps', label: '储能可选容量（kWh，逗号分隔）', type: 'text', group: 'storage', opt: true, hint: '0 表示不装；留空使用计算服务默认档位' },
+  { key: 'st_price', label: '储能单价', type: 'number', unit: '元/kWh', min: 0, group: 'storage', sq: ['quote', 'cny_per_kwh'] },
+  { key: 'st_install', label: '储能安装费', type: 'number', unit: '元/kWh', min: 0, group: 'storage', sq: ['quote', 'installation_cny_per_kwh'] },
+  { key: 'st_maint', label: '储能年运维', type: 'number', unit: '元/年', min: 0, group: 'storage', sq: ['quote', 'maintenance_cny_per_year'] },
+  { key: 'st_life', label: '电池寿命', type: 'int', unit: '年', min: 1, max: 40, group: 'storage', sq: ['quote', 'life_years'] },
+  { key: 'ex_price', label: '上网电价（卖电）', type: 'number', unit: '元/kWh', min: 0, step: 0.01, group: 'storage', sq: ['export', 'price_cny_per_kwh'] },
+  { key: 'ex_conn', label: '并网投入', type: 'number', unit: '元', min: 0, group: 'storage', sq: ['export', 'connection_cny'], hint: '可留空；留空时计算服务按 0 粗算并写明' }
 ];
 export const FIELD = Object.fromEntries(FIELDS.map((f) => [f.key, f]));
 
@@ -74,7 +80,10 @@ export const FIELD_PATH = {
   'pv.requested_capacities_kwp': 'capacities', 'pv.capacity_kwp': 'capacities', 'pv.fixed_capacity_kwp': 'capacities',
   'pv.roof_area_m2': 'roof_area_m2', 'pv.usable_fraction': 'usable_fraction',
   'hybrid.budget_cny': 'budget_cny', 'pv.tariff_id': 'tariff_id', 'weather': 'year', 'hybrid.export_limit_kw': 'allow_export',
-  'max_units': 'max_units', 'carbon.factor_id': 'factor_id', 'carbon.carbon_price_cny_per_t': 'carbon_price'
+  'max_units': 'max_units', 'carbon.factor_id': 'factor_id', 'carbon.carbon_price_cny_per_t': 'carbon_price',
+  'storage': 'storage_caps', 'storage.capacities_kwh': 'storage_caps', 'storage.quote': 'st_price', 'storage.quote.cny_per_kwh': 'st_price',
+  'storage.quote.installation_cny_per_kwh': 'st_install', 'storage.quote.maintenance_cny_per_year': 'st_maint', 'storage.quote.life_years': 'st_life',
+  'storage.export': 'ex_price', 'storage.export.price_cny_per_kwh': 'ex_price', 'storage.export.connection_cny': 'ex_conn'
 };
 
 /** 空白条件（输入项的初始值，不是结果）。 */
@@ -93,8 +102,9 @@ export function blankForm(options) {
     price_mode: siteTariffs.length ? 'tariff' : 'fixed', tariff_id: siteTariffs.length ? siteTariffs[0] : '', tariff_application: 'current_tariff_on_reference_weather', import_price: '',
     budget_cny: '', study_years: '', allow_export: false,
     ...Object.fromEntries(FIELDS.filter((f) => f.q).map((f) => [f.key, ''])),
-    factor_id: '', carbon_price: '', storage_caps: '',
-    _extras: { room: {}, wind: {} }
+    factor_id: '', carbon_price: '', storage_caps: '0, 5, 10, 20, 50',
+    ...Object.fromEntries(FIELDS.filter((f) => f.sq).map((f) => [f.key, ''])),
+    _extras: { room: {}, wind: {}, storageMeta: null }
   };
 }
 
@@ -117,7 +127,7 @@ export function validate(form) {
   for (const f of FIELDS) {
     if (['select', 'seg', 'check', 'text'].includes(f.type)) continue;
     if (f.group === 'ac-size') continue;
-    if (f.q && form[f.key] === '') continue;
+    if ((f.q || f.sq) && form[f.key] === '') continue;
     if (f.key === 'import_price' && form.price_mode !== 'fixed') continue;
     const v = n(form[f.key]);
     if (v === null) { if (!f.opt && !f.q) err[f.key] = '请填写'; continue; }
@@ -175,7 +185,18 @@ export function buildRequest(form) {
   if (form.factor_id) carbon.factor_id = form.factor_id;
   if (form.carbon_price !== '') carbon.carbon_price_cny_per_t = n(form.carbon_price);
   if (Object.keys(carbon).length) req.carbon = carbon;
-  if (form.storage_caps) req.storage = { capacities_kwh: parseList(form.storage_caps) };
+  const storage = {};
+  if (form.storage_caps) storage.capacities_kwh = parseList(form.storage_caps);
+  for (const part of ['quote', 'export']) {
+    const obj = {};
+    for (const f of FIELDS) if (f.sq && f.sq[0] === part && form[f.key] !== '') obj[f.sq[1]] = n(form[f.key]);
+    if (!Object.keys(obj).length) continue;
+    // 示例报价的来源说明：只有数值与填入时完全相同才一并发送，用户改过数值就不再沿用示例来源
+    const meta = form._extras && form._extras.storageMeta && form._extras.storageMeta[part];
+    if (meta && Object.entries(meta.values).every(([k, v]) => obj[k] === v) && Object.keys(obj).every((k) => k in meta.values)) Object.assign(obj, meta.source);
+    storage[part] = obj;
+  }
+  if (Object.keys(storage).length) req.storage = storage;
   return req;
 }
 
@@ -220,7 +241,27 @@ export function formFromRequest(req, options) {
   const c = req.carbon || {};
   f.factor_id = c.factor_id || ''; f.carbon_price = c.carbon_price_cny_per_t != null ? s(c.carbon_price_cny_per_t) : '';
   f.storage_caps = req.storage && Array.isArray(req.storage.capacities_kwh) ? req.storage.capacities_kwh.join(', ') : '';
+  Object.assign(f, storageFieldsFrom(req));
+  f._extras.storageMeta = storageMetaFrom(req);
   return f;
+}
+
+/** 储能与卖电输入（来自请求体 storage.quote / storage.export）。 */
+export function storageFieldsFrom(req) {
+  const st = req.storage || {}, out = {};
+  for (const fd of FIELDS) if (fd.sq) { const src = st[fd.sq[0]] || {}; out[fd.key] = src[fd.sq[1]] != null ? String(src[fd.sq[1]]) : ''; }
+  return out;
+}
+/** 示例的储能/卖电来源说明（source、source_url、source_note 等），连同数值快照一起保存。 */
+export function storageMetaFrom(req) {
+  const st = req.storage || {}, meta = {};
+  for (const part of ['quote', 'export']) {
+    const o = st[part]; if (!o) continue;
+    const values = {}, source = {};
+    for (const [k, v] of Object.entries(o)) (typeof v === 'number' ? values : source)[k] = v;
+    meta[part] = { values, source };
+  }
+  return Object.keys(meta).length ? meta : null;
 }
 
 /** 示例报价（来自示例回放请求体中的用户情景报价，不是采购报价）。 */
