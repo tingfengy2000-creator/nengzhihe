@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "run_id": "phase2b-round20-sensitive-payback-and-parse-contract",
+  "source_commit": "pending-final-commit",
+  "machine_role": "5090-code-and-contract-validation",
+  "commands": [
+    "python -m unittest discover -s tests -p 'test*.py'",
+    "python scripts/compact_replay_v9.py --input operation_planning/results/phase2b_carbon_5090/replay_cases_v9.json --output docs/handoff/replay_viewer/replay_cases_ui_v9.json"
+  ],
+  "test_result": "34 tests passed",
+  "viewer_path": "docs/handoff/replay_viewer/replay_cases_ui_v9.json",
+  "viewer_sha256": "9ab63f08381618f7f4dc77a8eacc5a8b29241edd32fd89ce544b152b9b9f4a6b",
+  "viewer_bytes": 7861244,
+  "viewer_max_bytes": 8388608,
+  "physical_rerun": false,
+  "changes": [
+    "sensitivity incremental NPV sign aligned with candidate layer",
+    "cumulative payback year and payback note",
+    "agent parse tariff escalation, wind count and storage quote fields"
+  ]
+}

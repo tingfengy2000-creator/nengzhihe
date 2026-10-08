@@ -417,18 +417,40 @@ def _escalation_sensitivity(candidates: Sequence[Dict[str, Any]], recommendation
     for rate in rates:
         s0_cost = None if baseline is None else _escalated_candidate_cost(baseline.get("economics") or {}, rate, scenario.discount_rate, scenario.study_years)
         candidate_cost = None if selected is None else _escalated_candidate_cost(selected.get("economics") or {}, rate, scenario.discount_rate, scenario.study_years)
-        payback = None
+        payback = None; cumulative_payback = None; payback_note = "缺少完整经济数据，无法计算回本年限"
         if selected is not None and baseline is not None:
             se = baseline.get("economics") or {}; ce = selected.get("economics") or {}
-            srow = next((r for r in se.get("yearly", []) if int(r.get("year", -1)) == 1), None)
-            crow = next((r for r in ce.get("yearly", []) if int(r.get("year", -1)) == 1), None)
-            if srow and crow:
-                annual = float(srow.get("electricity_cost_cny", 0.0) or 0.0) - float(crow.get("electricity_cost_cny", 0.0) or 0.0) - float(crow.get("maintenance_cny", 0.0) or 0.0) + float(crow.get("export_income_cny", 0.0) or 0.0)
-                capex = ce.get("capex_cny")
-                if capex is not None and annual > 0:
-                    payback = float(capex) / annual
-        rows.append({"rate": rate, "s0_total_cost_npv_cny": s0_cost, "recommended_total_cost_npv_cny": candidate_cost, "incremental_npv_vs_s0_cny": None if s0_cost is None or candidate_cost is None else candidate_cost - s0_cost, "simple_payback_years": payback, "recommendation_scenario_id": selected_id})
-    return {"rates": rates, "recommendation_scenario_id": selected_id, "rows": rows, "note": "仅复用已计算的逐年电量与分时购电成本重算经济层；不重跑物理模型。"}
+            capex = ce.get("capex_cny")
+            if capex is not None and float(capex) > 0:
+                srows = {int(r.get("year", 0)): r for r in se.get("yearly", [])}; crows = {int(r.get("year", 0)): r for r in ce.get("yearly", [])}
+                srow = srows.get(1); crow = crows.get(1)
+                if srow and crow:
+                    annual = float(srow.get("electricity_cost_cny", 0.0) or 0.0) - float(crow.get("electricity_cost_cny", 0.0) or 0.0) - float(crow.get("maintenance_cny", 0.0) or 0.0) - float(crow.get("replacement_cny", 0.0) or 0.0) + float(crow.get("export_income_cny", 0.0) or 0.0) + float(crow.get("residual_cny", 0.0) or 0.0)
+                    if annual > 0:
+                        payback = float(capex) / annual
+                    cumulative = 0.0
+                    for year in range(1, int(scenario.study_years) + 1):
+                        sr = srows.get(year); cr = crows.get(year)
+                        if not sr or not cr:
+                            continue
+                        growth = (1.0 + float(rate)) ** (year - 1)
+                        cumulative += (float(sr.get("electricity_cost_cny", 0.0) or 0.0) - float(cr.get("electricity_cost_cny", 0.0) or 0.0)) * growth
+                        cumulative += -float(cr.get("maintenance_cny", 0.0) or 0.0) - float(cr.get("replacement_cny", 0.0) or 0.0) + float(cr.get("export_income_cny", 0.0) or 0.0) + float(cr.get("residual_cny", 0.0) or 0.0)
+                        if cumulative + 1e-9 >= float(capex):
+                            cumulative_payback = year; payback_note = f"第{year}年累计净节省达到初始投入；simple_payback_years按第1年节省"; break
+                    else:
+                        payback_note = "研究期内未回本；simple_payback_years按第1年节省"
+                else:
+                    payback_note = "缺少第1年数据，无法计算回本年限"
+            else:
+                payback_note = "无非零初始投入，不适用回本年限"
+        incremental = None if s0_cost is None or candidate_cost is None else s0_cost - candidate_cost
+        if rate == 0.0 and selected is not None:
+            candidate_incremental = (selected.get("economics") or {}).get("incremental_npv_vs_s0_cny", selected.get("incremental_npv_vs_s0_cny"))
+            if candidate_incremental is not None:
+                incremental = float(candidate_incremental)
+        rows.append({"rate": rate, "s0_total_cost_npv_cny": s0_cost, "recommended_total_cost_npv_cny": candidate_cost, "incremental_npv_vs_s0_cny": incremental, "simple_payback_years": payback, "simple_payback_note": "按第1年节省，不含后续电价涨幅", "cumulative_payback_year": cumulative_payback, "payback_note": payback_note, "recommendation_scenario_id": selected_id})
+    return {"rates": rates, "recommendation_scenario_id": selected_id, "rows": rows, "note": "仅复用已计算的逐年电量与分时购电成本重算经济层；不重跑物理模型。incremental_npv_vs_s0_cny与候选层同号，正数表示相对S0节省。"}
 
 
 def _capacity_limit(scenario: PVScenario) -> Tuple[float, List[str]]:
