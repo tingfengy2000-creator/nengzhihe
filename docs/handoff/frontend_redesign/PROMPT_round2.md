@@ -17,8 +17,8 @@
 1. 本文件。
 2. 第一轮回交记录：`docs/handoff/5060_round_log.md` 中“前端重构”一轮（实现决定、已知问题）。
 3. 5090 最新交接：`operation_planning/protocol/phase2b_round16_handoff_5090.md`（v8→v9 对比、精简回放字段、报价来源）、`operation_planning/protocol/storage_surplus_paths_contract.md`（储能/卖电请求与响应）、`docs/handoff/phase2b_realtime_api_manual_v8.md`。
-4. 需求文档 `docs/handoff/5090_carbon_request.md` 第 14–19 节（了解后端改了什么；第 18 节是两个模型接口的契约，第 19 节是电价年涨幅的契约）。
-5. 新示例数据：`docs/handoff/replay_viewer/replay_cases_ui_v9.json`（7.85 MB，三档 + 3 个状态变体）、`docs/handoff/replay_viewer/replay_previews_v7.json`（已按新口径重生）。
+4. 需求文档 `docs/handoff/5090_carbon_request.md` 第 14–20 节（第 18 节是两个模型接口的契约，第 19 节是电价年涨幅，第 20 节是正负号与累计回本的修正）；5090 实现记录见 `operation_planning/protocol/phase2b_round18_handoff_5090.md`、`phase2b_round19_handoff_5090.md`、`phase2b_round20_handoff_5090.md`。
+5. 新示例数据：`docs/handoff/replay_viewer/replay_cases_ui_v9.json`（7.86 MB，含回本年限、电价涨幅回显与四档敏感性；三档 + 3 个状态变体）、`docs/handoff/replay_viewer/replay_previews_v7.json`（已按新口径重生）。
 
 ## 2. 本轮要做的 7 件事
 
@@ -87,8 +87,8 @@
 ### 2.6 电价：自定义分时电价与年涨幅
 
 - **自定义分时电价**（后端已支持，`pv.tariff_id = "custom_user"` + `pv.custom_tariff`，格式见 `operation_planning/tariffs.py` 的 `custom_profile`）：第 1 步电价分组的档案选择中增加“自定义分时电价”。选中后显示四个价格输入（谷 / 平 / 峰 / 尖峰，元/kWh），默认填入当前所选官方档案的四个价格供修改；时段沿用官方时段（谷 0–8 点，峰 10–12、14–19 点，其余平段；尖峰按官方规则），界面只读显示时段说明。结果与简报中标注“用户自定义电价（未经官方核验）”。
-- **电价年涨幅**（契约见需求文档第 19 节，字段 `hybrid.tariff_escalation_rate`）：电价分组加一个输入“未来电价每年变化”（%，默认 0，范围 −5～10）。结果第 3 步在 10 年总账附近显示一张小表，读 `escalation_sensitivity`：电价每年 −2% / 0 / +2% / +4% 时，推荐方案与只用电网的 10 年总花费、差额、回本年限；标题“电价变了，结论还成立吗？”，注明“等比调整，不是电价预测”。字段缺失时不显示该表。
-- 一句话输入示例补充：“电价每年涨 3%”→ 修改年涨幅（模型或规则识别均可）。
+- **电价年涨幅**（契约见需求文档第 19 节，字段 `hybrid.tariff_escalation_rate`）：电价分组加一个输入“未来电价每年变化”（%，默认 0，范围 −5～10）。结果第 3 步在 10 年总账附近显示一张小表，读 `escalation_sensitivity`：电价每年 −2% / 0 / +2% / +4% 时，推荐方案与只用电网的 10 年总花费、差额（`incremental_npv_vs_s0_cny`，正数 = 比只用电网省，与候选层同号）、回本年份（读 `cumulative_payback_year`，按逐年累计节省计算；`simple_payback_years` 是按第 1 年节省的简单回本，只放在说明里）；推荐方案就是“只用电网”时不显示该表，改为一句“推荐只用电网，无需投入”；标题“电价变了，结论还成立吗？”，注明“等比调整，不是电价预测”。字段缺失时不显示该表。
+- 一句话输入示例补充：“电价每年涨 3%”→ 修改年涨幅（模型或规则识别均可）。本地模型现可识别的字段见 `operation_planning/agent_parse.py` 的 `FIELD_RULES`（含年涨幅、风机台数、储能单价与可选容量），修改清单里的字段名按这里显示为中文。
 
 ### 2.7 文字与匿名
 

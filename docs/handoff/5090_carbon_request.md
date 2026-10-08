@@ -516,3 +516,7 @@ v6 记录的全年 `hybrid/run` 平均约 94 秒、最长约 163 秒（5090）�
 本轮分支把 `5090_carbon_request.md` 第 18.4、19 节的需求原文改写成了实现说明，`PROMPT_round2.md` 也被回退到了旧版本（合并时 5060 已保留需求原文）。以后请不要改写 `5090_carbon_request.md` 和 `docs/handoff/frontend_redesign/` 下的文件；实现说明写在 `operation_planning/protocol/` 的交接记录里即可。
 
 完成后普通推送到 `fix/5090-redesign-followup`。
+
+### 20.3 复核结果（2026-10-08，`41f85e4`）
+
+5060 复跑 34 项测试全部通过。精简回放 6 案 g=0 行与候选层 `incremental_npv_vs_s0_cny` 逐位相等；`cumulative_payback_year` 随涨幅变化（小档 10/9/8/8 年）；解析字段已含年涨幅、风机台数、储能单价与容量；回放无机器路径。第 18–20 节通过，前端第二轮可以开始。
