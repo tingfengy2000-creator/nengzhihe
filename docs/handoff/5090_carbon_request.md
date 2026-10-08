@@ -482,3 +482,7 @@ v6 记录的全年 `hybrid/run` 平均约 94 秒、最长约 163 秒（5090）�
 `storage_surplus_paths_contract.md` 示例里卖电价 0.30、运维 120 元/年，而 v9 回放用的是 0.25、300 元/年；`source_url` 指向发改委通知、`source` 却写证券研报。请把契约示例与 v9 回放统一，来源字段各自对应（研报放 `reference_url`，政策放 `policy_source`）。
 
 完成后普通推送到 `fix/5090-redesign-followup`，回复两个接口的实测耗时和测试结果。前端会按本节契约先行开发，离线或接口不存在时自动退回规则识别。
+
+### 18.4 补充：界面精简回放缺回本年限（很小）
+
+`replay_cases_ui_v9.json` 中各候选的 `economics` 没有 `simple_payback_years`（完整回放中有）。前端第二轮的“几年回本”数字卡要读它，否则示例模式只能显示“—”。请在精简脚本 `scripts/compact_replay_v9.py` 中保留 `economics.simple_payback_years` 与 `economics.annual_saving_after_maintenance_cny`，重生 `replay_cases_ui_v9.json`（体积仍须 ≤ 8 MB），与第 18 节一起推送。
