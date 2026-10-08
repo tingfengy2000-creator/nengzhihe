@@ -24,6 +24,7 @@ WIND_PROPERTIES = {"turbine_count": {"type": "integer", "enum": [0, 1]},
                    "hub_height_max_m": {"type": "number", "exclusiveMinimum": 0}}
 HYBRID_PROPERTIES = {name: {"type": "number", "minimum": 0} for name in
                      ("budget_cny", "budget_multiplier", "pv_capacity_kwp", "import_price_cny_per_kwh")}
+HYBRID_PROPERTIES["tariff_escalation_rate"] = {"type": "number", "minimum": -0.05, "maximum": 0.10}
 HYBRID_PROPERTIES.update({"allow_export": {"type": "boolean"},
                           "export_price_cny_per_kwh": {"type": ["number", "null"], "minimum": 0},
                           "wind": {"type": "object", "properties": WIND_PROPERTIES, "additionalProperties": False}})
@@ -57,11 +58,12 @@ def validate_modifications(raw: Dict[str, Any]) -> Dict[str, Any]:
                 if key == "export_price_cny_per_kwh" and number is None: continue
                 if isinstance(number, bool) or not isinstance(number, (float, int)) or not math.isfinite(number):
                     raise ValueError(f"{key}必须为有限数值，不能使用公式字符串")
-                if number < 0 or (key in {"hub_height_m", "hub_height_max_m", "area_m2"} and number <= 0):
+                if (number < 0 and key != "tariff_escalation_rate") or (key in {"hub_height_m", "hub_height_max_m", "area_m2"} and number <= 0):
                     raise ValueError(f"{key}超出有效范围")
                 if key in {"start_hour", "end_hour", "turbine_count", "room_count", "units_per_room"} and int(number) != number:
                     raise ValueError(f"{key}必须为整数")
                 if key == "turbine_count" and number not in (0, 1): raise ValueError("只支持0或1台风机")
+                if key == "tariff_escalation_rate" and not -0.05 <= number <= 0.10: raise ValueError("tariff_escalation_rate必须在-0.05至0.10之间")
                 if key == "start_hour" and number > 23: raise ValueError("start_hour超出范围")
                 if key == "end_hour" and not 1 <= number <= 24: raise ValueError("end_hour超出范围")
                 if key in {"room_count", "units_per_room"} and number < 1: raise ValueError(f"{key}必须至少为1")
@@ -75,6 +77,9 @@ def rule_modifications(request: str) -> Dict[str, Any]:
     if m: h["budget_cny"] = float(m.group(1))
     if re.search(r"预算\s*(?:减少|下调)\s*三分之一", request): h["budget_multiplier"] = 2 / 3
     if re.search(r"预算\s*(?:减少|下调)\s*一半", request): h["budget_multiplier"] = .5
+    m = re.search(r"电价(?:年涨幅|涨幅|增长率)(?:改为|调整为|设为)?\s*(-?\d+(?:\.\d+)?)\s*%?", request)
+    if m:
+        raw_rate = float(m.group(1)); h["tariff_escalation_rate"] = raw_rate / 100.0 if abs(raw_rate) > 1 else raw_rate
     m = re.search(r"(?:塔架|轮毂|高度)最多\s*([0-9]+(?:\.[0-9]+)?)\s*米", request)
     if m: wind["hub_height_max_m"] = float(m.group(1))
     m = re.search(r"(?:塔架|轮毂|高度)(?:改为|调整为|设为)\s*([0-9]+(?:\.[0-9]+)?)\s*米", request)

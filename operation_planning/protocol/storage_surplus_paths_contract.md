@@ -1,4 +1,4 @@
-# surplus_paths 附加路径契约（第15.1节）
+# surplus_paths 附加路径契约（第15.1节 / v9示例）
 
 这是现有 `/api/operation/pv/run` 和 `/api/operation/hybrid/run` 的可选请求字段，不改变 S0–S3 候选、经济比较或主推荐。数值由后端 `storage.py` 计算，前端只读结果。
 
@@ -12,20 +12,20 @@
     "quote": {
       "cny_per_kwh": 553.94,
       "installation_cny_per_kwh": 489.88,
-      "maintenance_cny_per_year": 120,
+      "maintenance_cny_per_year": 300,
       "life_years": 10,
       "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
       "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
       "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
     },
     "export": {
-      "price_cny_per_kwh": 0.30,
+      "price_cny_per_kwh": 0.25,
       "connection_cny": 0,
       "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
       "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
       "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
       "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
-      "source_note": "公开行业案例以0.30元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价。"
+      "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网投入按0元粗算。"
     }
   }
 }

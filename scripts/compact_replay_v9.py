@@ -70,14 +70,117 @@ def _compact_weather(weather: Any) -> Any:
     return out
 
 
-def _compact_candidate(candidate: Any) -> Any:
+def _year_one(rows: Any) -> dict[str, Any] | None:
+    if not isinstance(rows, list):
+        return None
+    for row in rows:
+        if isinstance(row, dict) and int(row.get("year", -1)) == 1:
+            return row
+    return None
+
+
+def _ensure_payback_fields(candidate: dict[str, Any], baseline: dict[str, Any] | None) -> None:
+    """Carry the two UI payback fields without rerunning a physical model.
+
+    Older v9 summaries retained the yearly cash-flow rows but dropped these
+    two scalar fields.  They are reconstructed from the already stored year-1
+    rows using the same simple-payback definition used by ``hybrid._lifecycle``.
+    If a future full replay already contains either field, its authoritative
+    value is kept unchanged.
+    """
+    economics = candidate.get("economics")
+    if not isinstance(economics, dict):
+        return
+    if "simple_payback_years" in economics and "annual_saving_after_maintenance_cny" in economics:
+        return
+    row = _year_one(economics.get("yearly"))
+    base_econ = (baseline or {}).get("economics") if isinstance(baseline, dict) else None
+    base_row = _year_one(base_econ.get("yearly")) if isinstance(base_econ, dict) else None
+    annual = None
+    if row is not None and base_row is not None:
+        try:
+            annual = (
+                float(base_row.get("grid_import_cost_cny", 0.0))
+                - float(row.get("grid_import_cost_cny", 0.0))
+                - float(row.get("maintenance_cny", 0.0))
+                + float(row.get("export_income_cny", 0.0))
+            )
+        except (TypeError, ValueError):
+            annual = None
+    capex = candidate.get("capex_cny")
+    payback = None
+    if capex is not None and annual is not None and annual > 0:
+        try:
+            payback = float(capex) / annual
+        except (TypeError, ValueError, ZeroDivisionError):
+            payback = None
+    economics.setdefault("annual_saving_after_maintenance_cny", annual)
+    economics.setdefault("simple_payback_years", payback)
+
+
+def _compact_candidate(candidate: Any, baseline: dict[str, Any] | None = None) -> Any:
     if not isinstance(candidate, dict):
         return candidate
     out = _sanitize(copy.deepcopy(candidate))
+    _ensure_payback_fields(out, baseline)
     # The chart and chart_recommended fields carry the only UI time series.
     # Candidate.hourly duplicates all four scenarios and is evidence-only.
     out.pop("hourly", None)
     return out
+
+
+def _candidate_total_cost(candidate: dict[str, Any], rate: float, discount_rate: float) -> float | None:
+    economics = candidate.get("economics") or {}
+    yearly = economics.get("yearly")
+    capex = candidate.get("capex_cny", economics.get("capex_cny"))
+    if not isinstance(yearly, list) or capex is None:
+        return None
+    total = float(capex)
+    for row in yearly:
+        year = int(row.get("year", 0))
+        if year <= 0:
+            continue
+        import_key = "grid_import_cost_cny" if "grid_import_cost_cny" in row else "electricity_cost_cny"
+        if row.get(import_key) is None:
+            return None
+        growth = (1.0 + float(rate)) ** (year - 1)
+        cash_cost = float(row.get(import_key, 0.0) or 0.0) * growth
+        cash_cost += float(row.get("maintenance_cny", 0.0) or 0.0)
+        cash_cost += float(row.get("replacement_cny", 0.0) or 0.0)
+        cash_cost -= float(row.get("export_income_cny", 0.0) or 0.0)
+        cash_cost -= float(row.get("residual_cny", 0.0) or 0.0)
+        total += cash_cost / ((1.0 + float(discount_rate)) ** year)
+    return total
+
+
+def _ensure_escalation_fields(case: dict[str, Any]) -> None:
+    """Add the §19 display-only sensitivity from stored yearly economics.
+
+    This compact replay is derived from the already frozen full replay.  A
+    uniform tariff multiplier scales the stored time-of-use import cost, so no
+    physical trace is rerun while producing the four comparison rows.
+    """
+    candidates = case.get("candidates") if isinstance(case.get("candidates"), list) else []
+    recommendation = case.get("recommendation") if isinstance(case.get("recommendation"), dict) else {}
+    by_id = {str(item.get("scenario_id")): item for item in candidates if isinstance(item, dict) and item.get("scenario_id") is not None}
+    baseline = by_id.get("S0_grid")
+    selected_id = recommendation.get("scenario_id")
+    selected = by_id.get(str(selected_id)) if selected_id is not None else None
+    input_data = case.get("input") if isinstance(case.get("input"), dict) else {}
+    hybrid = input_data.get("hybrid") if isinstance(input_data.get("hybrid"), dict) else {}
+    discount = float(hybrid.get("discount_rate", input_data.get("discount_rate", 0.0)) or 0.0)
+    rates = [-0.02, 0.0, 0.02, 0.04]
+    rows = []
+    for rate in rates:
+        s0_cost = _candidate_total_cost(baseline, rate, discount) if baseline else None
+        selected_cost = _candidate_total_cost(selected, rate, discount) if selected else None
+        payback = None
+        if selected:
+            econ = selected.get("economics") or {}
+            payback = econ.get("simple_payback_years")
+        rows.append({"rate": rate, "s0_total_cost_npv_cny": s0_cost, "recommended_scenario_id": selected_id, "recommended_total_cost_npv_cny": selected_cost, "incremental_npv_vs_s0_cny": None if s0_cost is None or selected_cost is None else selected_cost - s0_cost, "simple_payback_years": payback})
+    case["tariff_escalation"] = {"rate": 0.0, "applies_to": "grid_import", "note": "各年电价按年涨幅等比调整，电价结构不变；不是电价预测。"}
+    case["escalation_sensitivity"] = {"rates": rates, "recommendation_scenario_id": selected_id, "rows": rows, "note": "只复用完整回放中已计算的逐年购电成本；不重跑物理模型。"}
 
 
 def _compact_chart(chart: Any) -> Any:
@@ -100,9 +203,11 @@ def compact_case(case: dict[str, Any]) -> dict[str, Any]:
     if "weather" in out:
         out["weather"] = _compact_weather(case.get("weather"))
     if isinstance(out.get("candidates"), list):
-        out["candidates"] = [_compact_candidate(x) for x in out["candidates"]]
+        baseline = out["candidates"][0] if out["candidates"] else None
+        out["candidates"] = [_compact_candidate(x, baseline) for x in out["candidates"]]
     out["chart"] = _compact_chart(out.get("chart"))
     out["chart_recommended"] = _compact_chart(out.get("chart_recommended"))
+    _ensure_escalation_fields(out)
     # Keep chart/chart_recommended at their real source resolution (8784 for a
     # leap year); do not silently truncate the calendar or alter physical data.
     out["ui_replay_contract"] = {

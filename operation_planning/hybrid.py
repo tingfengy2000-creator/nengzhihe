@@ -66,6 +66,9 @@ class HybridScenario:
     study_years: int = 10
     discount_rate: float = 0.0
     pv_annual_degradation: float = 0.005
+    # Annual escalation applied multiplicatively to grid-import prices.  It is
+    # a user scenario, not a forecast; export prices remain unchanged.
+    tariff_escalation_rate: float = 0.0
     pv_quote: PVQuote = field(default_factory=PVQuote)
     wind_quote: WindQuote = field(default_factory=WindQuote)
     # For a combined project this must be a project-level quote or an
@@ -85,6 +88,8 @@ class HybridScenario:
             raise ValueError("外送价必须是非负有限数")
         if self.study_years < 1 or not 0 <= float(self.discount_rate) < 1 or not 0 <= float(self.pv_annual_degradation) < 1:
             raise ValueError("研究年限、折现率或光伏衰减率无效")
+        if not math.isfinite(float(self.tariff_escalation_rate)) or not -0.05 <= float(self.tariff_escalation_rate) <= 0.10:
+            raise ValueError("hybrid.tariff_escalation_rate必须在-0.05到0.10之间")
         if self.shared_connection_cny is not None and (not math.isfinite(float(self.shared_connection_cny)) or self.shared_connection_cny < 0):
             raise ValueError("共享接入费必须是非负有限数")
 
@@ -162,6 +167,117 @@ def _connection_cost(scenario: HybridScenario, pv_on: bool, wind_on: bool, missi
     return 0.0
 
 
+def _repriced_match_summary(
+    match: Dict[str, Any],
+    import_prices: Sequence[float],
+    export_prices: Optional[Sequence[float]],
+) -> Dict[str, Any]:
+    """Reprice an already matched physical trace without rerunning physics.
+
+    Tariff escalation is a multiplicative change to every grid-import price,
+    so the physical interval quantities are unchanged.  Keeping the interval
+    trace here also makes this exact for time-of-use prices rather than using
+    an annual average.  ``match_hybrid`` calls used by this module retain
+    intervals for that reason.
+    """
+    summary = dict(match.get("summary") or {})
+    rows = list(match.get("intervals") or [])
+    if rows:
+        if len(rows) != len(import_prices):
+            raise ValueError("匹配结果和购电价格长度不一致")
+        if export_prices is not None and len(rows) != len(export_prices):
+            raise ValueError("匹配结果和外送价格长度不一致")
+        summary["import_cost_cny"] = sum(
+            float(row.get("grid_import_kwh", 0.0)) * float(import_prices[i])
+            for i, row in enumerate(rows)
+        )
+        summary["export_income_cny"] = (
+            sum(float(row.get("grid_export_kwh", 0.0)) * float(export_prices[i]) for i, row in enumerate(rows))
+            if export_prices is not None
+            else 0.0
+        )
+        return summary
+    # A compact match without rows cannot be repriced exactly for a TOU
+    # profile.  The lifecycle always supplies rows, but fail loudly instead
+    # of silently applying an annual average if a future caller omits them.
+    raise ValueError("电价重算需要逐时匹配记录")
+
+
+def _escalated_prices(prices: Sequence[float], rate: float, year: int) -> List[float]:
+    """Return year-y grid prices with a constant annual escalation."""
+    factor = (1.0 + float(rate)) ** max(0, int(year) - 1)
+    return [float(price) * factor for price in prices]
+
+
+def _escalation_sensitivity(
+    candidates: Sequence[Dict[str, Any]],
+    recommendation: Dict[str, Any],
+    *,
+    study_years: int,
+    discount_rate: float,
+) -> Dict[str, Any]:
+    """Compare the baseline S0 and selected candidate under four tariff rates.
+
+    Candidate yearly rows already contain the physical grid-import energy and
+    its current-price cost.  Since the scenario multiplies every interval
+    import price by the same year factor, scaling that stored cost is exact
+    (including TOU structures) and does not rerun generation or matching.
+    """
+    rates = [-0.02, 0.0, 0.02, 0.04]
+    by_id = {str(candidate.get("scenario_id")): candidate for candidate in candidates}
+    s0 = by_id.get("S0_grid")
+    selected_id = recommendation.get("scenario_id")
+    selected = by_id.get(str(selected_id)) if selected_id else None
+
+    def _total_cost(economics: Optional[Dict[str, Any]], rate: float) -> Optional[float]:
+        if not economics or economics.get("status") != "complete":
+            return None
+        capex = float(economics.get("capex_cny") or 0.0)
+        cashflows: List[float] = []
+        for row in economics.get("yearly", []):
+            year = int(row.get("year", 0))
+            if year <= 0:
+                continue
+            growth = (1.0 + float(rate)) ** (year - 1)
+            imp = float(row.get("grid_import_cost_cny", 0.0)) * growth
+            export = float(row.get("export_income_cny", 0.0))
+            maint = float(row.get("maintenance_cny", 0.0))
+            replacement = float(row.get("replacement_cny", 0.0))
+            residual = float(row.get("residual_cny", 0.0))
+            cashflows.append(-(imp + maint + replacement) + export + residual)
+        return -discounted_cashflow_npv(capex, cashflows, discount_rate)
+
+    def _payback(selected_econ: Optional[Dict[str, Any]], base_econ: Optional[Dict[str, Any]]) -> Optional[float]:
+        if not selected_econ or not base_econ or selected_econ.get("status") != "complete" or base_econ.get("status") != "complete":
+            return None
+        first = {int(row.get("year", 0)): row for row in selected_econ.get("yearly", [])}.get(1)
+        base_first = {int(row.get("year", 0)): row for row in base_econ.get("yearly", [])}.get(1)
+        if not first or not base_first:
+            return None
+        saving = float(base_first.get("grid_import_cost_cny", 0.0)) - float(first.get("grid_import_cost_cny", 0.0)) - float(first.get("maintenance_cny", 0.0)) + float(first.get("export_income_cny", 0.0))
+        capex = float(selected_econ.get("capex_cny") or 0.0)
+        return capex / saving if saving > 0 and capex > 0 else None
+
+    rows: List[Dict[str, Any]] = []
+    for rate in rates:
+        s0_cost = _total_cost((s0 or {}).get("economics"), rate)
+        selected_cost = _total_cost((selected or {}).get("economics"), rate)
+        rows.append({
+            "rate": rate,
+            "s0_total_cost_npv_cny": s0_cost,
+            "recommended_scenario_id": selected_id,
+            "recommended_total_cost_npv_cny": selected_cost,
+            "incremental_npv_vs_s0_cny": None if s0_cost is None or selected_cost is None else selected_cost - s0_cost,
+            "simple_payback_years": _payback((selected or {}).get("economics"), (s0 or {}).get("economics")),
+        })
+    return {
+        "rates": rates,
+        "recommendation_scenario_id": selected_id,
+        "rows": rows,
+        "note": "只缩放逐年购电成本，复用既有逐年电量和物理结果；上网价格不随电价年涨幅变化。",
+    }
+
+
 def _lifecycle(match: Dict[str, Any], baseline: Dict[str, Any], scenario: HybridScenario, *, pv_on: bool, wind_on: bool, load_series: Dict[str, Any], pv_generation: Dict[str, Any], wind_generation: Dict[str, Any], import_prices: Sequence[float], export_prices: Optional[Sequence[float]]) -> Dict[str, Any]:
     pv_on = pv_on and scenario.pv_capacity_kwp > 1e-12
     wind_on = wind_on and scenario.wind.turbine_count > 0
@@ -188,25 +304,38 @@ def _lifecycle(match: Dict[str, Any], baseline: Dict[str, Any], scenario: Hybrid
         return {"status": "incomplete", "missing": sorted(set(missing)), "capex_cny": capex, "yearly": [], "npv_cny": None, "total_cost_npv_cny": None, "incremental_npv_vs_s0_cny": None}
     rows: List[Dict[str, Any]] = [{"year": 0, "grid_import_cost_cny": 0.0, "export_income_cny": 0.0, "maintenance_cny": 0.0, "replacement_cny": 0.0, "residual_cny": 0.0, "capex_cny": capex, "net_cashflow_cny": -capex, "discounted_cny": -capex}]; year_end_cash: List[float] = []; pv_deg = 1.0
     for year in range(1, scenario.study_years + 1):
+        year_import_prices = _escalated_prices(import_prices, scenario.tariff_escalation_rate, year)
         # With no PV degradation the first-year physical match is invariant.
         # Reusing it avoids repeating an identical full-year loop for S0/S2;
         # the branch is algebraically the same as rematching the series.
         if not pv_on:
-            ym = baseline if not wind_on else match
+            physical_match = baseline if not wind_on else match
+            # Reprice the stored physical intervals so TOU tariffs remain
+            # exact; no generation or load matching is repeated here.
+            if abs(float(scenario.tariff_escalation_rate)) > 1e-15:
+                ym_summary = _repriced_match_summary(physical_match, year_import_prices, export_prices)
+            else:
+                ym_summary = dict(physical_match["summary"])
         else:
             pg = dict(pv_generation); pg["pv_ac_power_w"] = [float(value) * pv_deg for value in pv_generation.get("pv_ac_power_w", [])]
             wg = wind_generation if wind_on else {**wind_generation, "wind_power_w": [0.0] * len(load_series.get("timestamps", []))}
-            ym = match_hybrid(load_series, pg, wg, allow_export=scenario.allow_export, export_limit_kw=scenario.export_limit_kw, import_prices=import_prices, export_prices=export_prices, include_intervals=False)
-        imp = float(ym["summary"].get("import_cost_cny", 0.0)); export_income = float(ym["summary"].get("export_income_cny", 0.0))
+            ym = match_hybrid(load_series, pg, wg, allow_export=scenario.allow_export, export_limit_kw=scenario.export_limit_kw, import_prices=year_import_prices, export_prices=export_prices, include_intervals=True)
+            ym_summary = ym["summary"]
+        imp = float(ym_summary.get("import_cost_cny", 0.0)); export_income = float(ym_summary.get("export_income_cny", 0.0))
         maint = (float(pq.maintenance_cny_per_kwp_year or 0) * scenario.pv_capacity_kwp if pv_on else 0.0) + (float(wq.maintenance_cny_per_year or 0) if wind_on else 0.0); replacement = 0.0
         if pv_on and pq.inverter_replacement_year and year == int(pq.inverter_replacement_year): replacement += inverter_replacement_cost(scenario.pv_capacity_kwp, pq.inverter_cny_per_kwp, pq.inverter_replacement_fraction)
         if wind_on and wq.replacement_year and year == int(wq.replacement_year): replacement += float(wq.turbine_cny or 0.0) * float(wq.replacement_fraction)
         residual = 0.0 if year != scenario.study_years else (float(pv_assets or 0.0) * float(pq.residual_fraction) if pv_on else 0.0) + (float(wind_assets or 0.0) * float(wq.residual_fraction) if wind_on else 0.0)
         cash = -(imp + maint + replacement) + export_income + residual; year_end_cash.append(cash)
-        rows.append({"year": year, "grid_import_cost_cny": imp, "export_income_cny": export_income, "maintenance_cny": maint, "replacement_cny": replacement, "residual_cny": residual, "capex_cny": 0.0, "net_cashflow_cny": cash, "discounted_cny": discounted_year_end(cash, year, scenario.discount_rate), "grid_import_kwh": ym["summary"]["grid_import_kwh"], "self_use_kwh": ym["summary"]["self_use_kwh"], "pv_generation_kwh": ym["summary"]["pv_generation_kwh"], "wind_generation_kwh": ym["summary"]["wind_generation_kwh"], "total_generation_kwh": ym["summary"]["total_generation_kwh"], "grid_export_kwh": ym["summary"]["grid_export_kwh"], "curtailment_kwh": ym["summary"]["curtailment_kwh"]}); pv_deg *= 1.0 - float(scenario.pv_annual_degradation)
-    net_npv = discounted_cashflow_npv(capex, year_end_cash, scenario.discount_rate); baseline_npv = discounted_cashflow_npv(0.0, [-base_imp] * int(scenario.study_years), scenario.discount_rate)
+        rows.append({"year": year, "grid_import_cost_cny": imp, "export_income_cny": export_income, "maintenance_cny": maint, "replacement_cny": replacement, "residual_cny": residual, "capex_cny": 0.0, "net_cashflow_cny": cash, "discounted_cny": discounted_year_end(cash, year, scenario.discount_rate), "grid_import_kwh": ym_summary["grid_import_kwh"], "self_use_kwh": ym_summary["self_use_kwh"], "pv_generation_kwh": ym_summary["pv_generation_kwh"], "wind_generation_kwh": ym_summary["wind_generation_kwh"], "total_generation_kwh": ym_summary["total_generation_kwh"], "grid_export_kwh": ym_summary["grid_export_kwh"], "curtailment_kwh": ym_summary["curtailment_kwh"]}); pv_deg *= 1.0 - float(scenario.pv_annual_degradation)
+    net_npv = discounted_cashflow_npv(capex, year_end_cash, scenario.discount_rate)
+    baseline_cash = []
+    for year in range(1, int(scenario.study_years) + 1):
+        baseline_summary = _repriced_match_summary(baseline, _escalated_prices(import_prices, scenario.tariff_escalation_rate, year), export_prices) if abs(float(scenario.tariff_escalation_rate)) > 1e-15 else baseline["summary"]
+        baseline_cash.append(-float(baseline_summary.get("import_cost_cny", base_imp)))
+    baseline_npv = discounted_cashflow_npv(0.0, baseline_cash, scenario.discount_rate)
     total_grid = sum(float(row["grid_import_cost_cny"]) for row in rows[1:]); total_export = sum(float(row["export_income_cny"]) for row in rows[1:]); total_maint = sum(float(row["maintenance_cny"]) for row in rows[1:]); total_repl = sum(float(row["replacement_cny"]) for row in rows[1:]); total_residual = sum(float(row["residual_cny"]) for row in rows[1:]); annual_saving = base_imp - float(rows[1]["grid_import_cost_cny"]) - float(rows[1]["maintenance_cny"]) + float(rows[1]["export_income_cny"]) if len(rows) > 1 else None
-    return {"status": "complete", "capex_cny": capex, "npv_cny": net_npv, "total_cost_npv_cny": -net_npv, "incremental_npv_vs_s0_cny": net_npv - baseline_npv, "yearly": rows, "baseline_import_cost_cny": base_imp, "total_grid_import_cost_cny": total_grid, "total_export_income_cny": total_export, "total_maintenance_cny": total_maint, "total_replacement_cny": total_repl, "total_residual_cny": total_residual, "total_lifecycle_spend_cny": float(capex) + total_grid - total_export + total_maint + total_repl - total_residual, "annual_saving_after_maintenance_cny": annual_saving, "simple_payback_years": float(capex) / annual_saving if annual_saving and annual_saving > 0 else None, "discount_rate": scenario.discount_rate, "pv_annual_degradation": scenario.pv_annual_degradation, "cashflow_convention": "capex at t=0; operating and residual values at year end"}
+    return {"status": "complete", "capex_cny": capex, "npv_cny": net_npv, "total_cost_npv_cny": -net_npv, "incremental_npv_vs_s0_cny": net_npv - baseline_npv, "yearly": rows, "baseline_import_cost_cny": base_imp, "total_grid_import_cost_cny": total_grid, "total_export_income_cny": total_export, "total_maintenance_cny": total_maint, "total_replacement_cny": total_repl, "total_residual_cny": total_residual, "total_lifecycle_spend_cny": float(capex) + total_grid - total_export + total_maint + total_repl - total_residual, "annual_saving_after_maintenance_cny": annual_saving, "simple_payback_years": float(capex) / annual_saving if annual_saving and annual_saving > 0 else None, "discount_rate": scenario.discount_rate, "pv_annual_degradation": scenario.pv_annual_degradation, "tariff_escalation_rate": scenario.tariff_escalation_rate, "cashflow_convention": "capex at t=0; operating and residual values at year end; grid-import prices follow the explicit annual escalation scenario"}
 
 
 def run_hybrid_planning(load_result: Dict[str, Any], weather: Dict[str, Any], pv_scenario: PVScenario, hybrid: HybridScenario, profile: Optional[WindTurbineProfile] = None, *, include_hourly: bool = True, carbon: Optional[Dict[str, Any]] = None, storage: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
@@ -245,7 +374,8 @@ def run_hybrid_planning(load_result: Dict[str, Any], weather: Dict[str, Any], pv
         paths = surplus_paths_from_match(storage_intervals, capacities_kwh=storage_capacities,
                                          round_trip_efficiency=storage_eta, allow_export=hybrid.allow_export,
                                          storage_quote=storage_request.get("quote"), export=storage_request.get("export"),
-                                         import_prices=prices, study_years=hybrid.study_years)
+                                         import_prices=prices, study_years=hybrid.study_years,
+                                         tariff_escalation_rate=hybrid.tariff_escalation_rate)
         factor = float(carbon_ctx["factor"]["value_kgco2_per_kwh"])
         if paths["storage"].get("candidates") is not None:
             for storage_candidate in paths["storage"]["candidates"]:
@@ -282,8 +412,9 @@ def run_hybrid_planning(load_result: Dict[str, Any], weather: Dict[str, Any], pv
         "eligible_scenario_ids": [x["scenario_id"] for x in eligible], "excluded_scenario_ids": [x["scenario_id"] for x in excluded],
         "unknown_scenario_ids": [x["scenario_id"] for x in unknown],
         "reason": ("已知硬约束不满足的候选已排除；在其余已核实可行且计价完整的有限候选中按相对S0增量NPV比较。" if not unknown else
-                   "仅能给出已核实子集内最优；仍有可能适用但报价/必要条件未知的候选，全候选结论未定，不能称它们已被其他方案击败。")}
+                    "仅能给出已核实子集内最优；仍有可能适用但报价/必要条件未知的候选，全候选结论未定，不能称它们已被其他方案击败。")}
+    escalation_sensitivity = _escalation_sensitivity(candidates, recommendation, study_years=hybrid.study_years, discount_rate=hybrid.discount_rate)
     service = load_result.get("summary", {}); gaps = {key: float(service.get(key, 0) or 0) for key in ("capacity_shortfall_hours", "unmet_temp_degree_hours", "unmet_rh_percent_hours")}; has_gap = any(value > 1e-9 for value in gaps.values())
     project_context = project_load_context(load_result)
     load_context = {"electric_load_kwh": baseline["summary"]["load_kwh"], "room_count": load.get("room_count"), "units_per_room": load.get("units_per_room"), "project_aggregation": load.get("project_aggregation"), "adequacy_rule": load.get("adequacy_rule"), "service_quality": {"status": "service_gap" if has_gap else "within_modeled_scope", "gaps": gaps, "scope": load.get("service_scope"), "note": "存在服务缺口时不代表同等服务水平下的投资最优。" if has_gap else "未校准的城市级空调负荷情景。"}, "single_room_annual_kwh": project_context.get("single_room_annual_kwh"), "single_room_service_quality": project_context.get("single_room_service_quality"), "project_load_context": project_context}
-    return {"status": "success", "calculation_version": "phase2b-carbon-5090-v1", "scenario": asdict(hybrid), "carbon_context": carbon_ctx, "storage_context": {"enabled": True, "capacities_kwh": list(storage_capacities), "round_trip_efficiency": storage_eta, "quote": storage_request.get("quote"), "export": storage_request.get("export"), "note": "surplus_paths附加粗算：储能理想调度与卖电独立计算，不改变主推荐"}, "tariff": tariff_meta, "profile": asdict(profile), "load_context": load_context, "weather_provenance": {"source_file": weather.get("source_file"), "hash": weather.get("hash"), "context": weather.get("context"), "normalization": weather.get("weather_normalization"), "wind_input": "reuse normalized 10m wind_speed_10m; instantaneous interval-start semantics"}, "baseline": baseline["summary"], "candidate_constraints": {"pv_capacity_limit_kwp": roof_limit, "roof_area_m2": pv_scenario.roof_area_m2, "usable_fraction": pv_scenario.usable_fraction, "budget_cny": hybrid.budget_cny, "shared_connection_cny": hybrid.shared_connection_cny}, "candidates": candidates, "recommendation": recommendation, "notes": ["S0=只购电，S1=仅光伏，S2=仅风电，S3=风光组合；同一小时级负荷与天气。", "经济字段区分total_cost_npv_cny与incremental_npv_vs_s0_cny；初始投入在t=0。", "组合接入费只采用shared_connection_cny或两个组件报价均明确为0，不再自动取max。", "风机档案为SWCC认证系统输出；当地温度/气压未参与风电输出修正。", "储能与卖电为同一余电的独立附加路径；储能不含衰减、温度影响和峰谷套利，不改变主推荐。", "当前负荷仅为第一阶段未校准城市级空调情景。"]}
+    return {"status": "success", "calculation_version": "phase2b-carbon-5090-v1", "scenario": asdict(hybrid), "tariff_escalation": {"rate": hybrid.tariff_escalation_rate, "applies_to": "grid_import", "note": "各年电价按年涨幅等比调整，电价结构不变；不是电价预测。"}, "escalation_sensitivity": escalation_sensitivity, "carbon_context": carbon_ctx, "storage_context": {"enabled": True, "capacities_kwh": list(storage_capacities), "round_trip_efficiency": storage_eta, "quote": storage_request.get("quote"), "export": storage_request.get("export"), "note": "surplus_paths附加粗算：储能理想调度与卖电独立计算，不改变主推荐"}, "tariff": tariff_meta, "profile": asdict(profile), "load_context": load_context, "weather_provenance": {"source_file": weather.get("source_file"), "hash": weather.get("hash"), "context": weather.get("context"), "normalization": weather.get("weather_normalization"), "wind_input": "reuse normalized 10m wind_speed_10m; instantaneous interval-start semantics"}, "baseline": baseline["summary"], "candidate_constraints": {"pv_capacity_limit_kwp": roof_limit, "roof_area_m2": pv_scenario.roof_area_m2, "usable_fraction": pv_scenario.usable_fraction, "budget_cny": hybrid.budget_cny, "shared_connection_cny": hybrid.shared_connection_cny}, "candidates": candidates, "recommendation": recommendation, "notes": ["S0=只购电，S1=仅光伏，S2=仅风电，S3=风光组合；同一小时级负荷与天气。", "经济字段区分total_cost_npv_cny与incremental_npv_vs_s0_cny；初始投入在t=0。", "组合接入费只采用shared_connection_cny或两个组件报价均明确为0，不再自动取max。", "风机档案为SWCC认证系统输出；当地温度/气压未参与风电输出修正。", "储能与卖电为同一余电的独立附加路径；储能不含衰减、温度影响和峰谷套利，不改变主推荐。", "当前负荷仅为第一阶段未校准城市级空调情景。", "电价年涨幅是用户情景参数，不是电价预测。"]}

@@ -1,0 +1,29 @@
+{
+  "run_id": "round18-agent-parse-http-20261008T0121Z",
+  "source_commit": "b14c53ce707d2ea118a672829f2aa1fe7154785a",
+  "scope": "read-only agent status and parse endpoints; no planning calculation",
+  "environment": {
+    "machine_role": "5090",
+    "endpoint": "http://127.0.0.1:18766",
+    "local_model": "loopback configured model",
+    "python": "C:/Python314/python.exe"
+  },
+  "command": "python scripts/verify_agent_parse_round18.py",
+  "started_at_utc": "2026-10-08T01:21:00Z",
+  "finished_at_utc": "2026-10-08T01:22:00Z",
+  "exit_status": 0,
+  "result_file": "operation_planning/results/phase2b_agent_round18/agent_parse_http_results.json",
+  "result_sha256": "8f958c6f2efd2b6228d43d8a980d3b3072205d86891610d68ccffacb79035d1a",
+  "checks": {
+    "six_supported_examples": 6,
+    "unsupported_boundary": true,
+    "clarification_boundary": true,
+    "invalid_request_boundary": true,
+    "offline_contract": "unit test with patched unavailable config",
+    "all_live_assertions_pass": true
+  },
+  "notes": [
+    "latency_ms is model parse response timing; outer_latency_ms includes HTTP loopback",
+    "status probe uses a separate ≤2s probe; no model path, account or machine identifier returned"
+  ]
+}

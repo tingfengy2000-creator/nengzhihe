@@ -94,3 +94,120 @@
 ## 5. 证据与限制
 
 年度 v8 HTTP回放（含6个案例、输入/输出哈希、报价和余电字段）见 `operation_planning/results/phase2b_carbon_5090/replay_cases_v8.json`，查看版见 `docs/handoff/replay_viewer/replay_cases_v8.json`，运行清单见同目录 `run_manifest_v8.json`。三档只是固定示例；用户输入、屋顶可用面积、报价、并网条件和空调负荷适用性仍需确认。系统不声称现场精度、真实节能、售电资格或电池投资回报。
+
+## 6. 只读任务理解接口（第18节增量）
+
+这两个接口只负责探测本地模型和把中文请求解析为**待核验修改项**；它们不调用热湿、光伏、风电、匹配或生命周期计算。解析成功也不等于规划任务成功，后续仍须将 `changes` 合并到权威任务对象并经过原有校验。
+
+### 6.1 `GET /api/operation/agent/status`
+
+服务端只探测配置指定的 loopback `/v1/models`，超时或配置缺失都返回可读的离线状态，不泄露模型路径、机器路径或账号信息。
+
+在线响应：
+
+```json
+{
+  "available": true,
+  "mode": "local_model",
+  "label": "本地大模型",
+  "checked_at": "2026-10-08T01:23:45Z",
+  "reason": null
+}
+```
+
+离线响应：
+
+```json
+{
+  "available": false,
+  "mode": "local_model",
+  "label": "本地大模型",
+  "checked_at": "2026-10-08T01:23:45Z",
+  "reason": "本地模型未启动"
+}
+```
+
+### 6.2 `POST /api/operation/agent/parse`
+
+请求必须同时提供非空中文 `request` 和完整的 `current_task` 对象。接口只接受当前任务词汇表中的字段，模型返回的 `from` 会被服务端用 `current_task` 的值覆盖，防止模型伪造旧值。当前允许的修改路径包括：
+
+`room.units_per_room`、`room.room_count`、`room.start_hour`、`room.end_hour`、`room.area_m2`、`room.equipment_id`、`hybrid.budget_cny`、`hybrid.budget_multiplier`、`hybrid.pv_capacity_kwp`（兼容表单路径 `pv.capacity_kwp`）、`hybrid.allow_export`、`hybrid.import_price_cny_per_kwh`、`hybrid.export_price_cny_per_kwh`。
+
+成功且无追问：
+
+```json
+{
+  "status": "ok",
+  "changes": [
+    {"field": "hybrid.budget_cny", "from": 90000, "to": 60000, "label": "预算"}
+  ],
+  "unsupported": [],
+  "question": null,
+  "model": "local_model",
+  "latency_ms": 182.4
+}
+```
+
+有不支持内容时不能静默丢弃；即使其他修改可解析，也必须在 `unsupported` 中列出原意：
+
+```json
+{
+  "status": "ok",
+  "changes": [],
+  "unsupported": ["把储能设置为每天自动套利"],
+  "question": null,
+  "model": "local_model",
+  "latency_ms": 205.1
+}
+```
+
+缺少关键参数或原话存在冲突时返回 `needs_clarification`，不得自行猜测：
+
+```json
+{
+  "status": "needs_clarification",
+  "changes": [],
+  "unsupported": [],
+  "question": "请给出晚上使用时段的开始和结束时间，例如18:00到22:00。",
+  "model": "local_model",
+  "latency_ms": 190.7
+}
+```
+
+空请求、错误的 `current_task` 或模型输出结构非法时返回 `failed`，并给出中文 `reason`；本地模型未配置、未启动或请求超时时返回 `unavailable`，例如：
+
+```json
+{
+  "status": "unavailable",
+  "changes": [],
+  "unsupported": [],
+  "question": null,
+  "reason": "未找到本地模型配置",
+  "model": "local_model",
+  "latency_ms": 0.3
+}
+```
+
+六个中文契约样例（示意请求文本；数值修改必须由用户原话或已确认相对量提供）：
+
+| 场景 | 中文请求 | 预期状态 | 关键响应 |
+|---|---|---|---|
+| 台数 | `每间改成3台空调` | `ok` | `room.units_per_room=3` |
+| 型号 | `型号换成midea_gaia12` | `ok` | `room.equipment_id=midea_gaia12`；目录外品牌进入 `unsupported` |
+| 预算 | `预算改为60000元，其他条件不变` | `ok` | `hybrid.budget_cny=60000` |
+| 使用时段 | `使用时间改为18:00到22:00` | `ok` | `room.start_hour=18`、`room.end_hour=22` |
+| 卖电开关 | `不卖电，余电全部弃用` | `ok` | `hybrid.allow_export=false` |
+| 光伏容量 | `光伏容量改为2kWp` | `ok` | `hybrid.pv_capacity_kwp=2` 或 `pv.capacity_kwp=2` |
+
+另外四类边界样例：
+
+| 场景 | 中文请求 | 预期状态 | 关键响应 |
+|---|---|---|---|
+| 不支持能力 | `请把储能每天按峰谷价自动套利并保证回本` | `ok`（有不支持项） | `unsupported` 列出储能套利/回本承诺，不能伪造 `changes` |
+| 信息不足追问 | `把空调改成晚上使用` | `needs_clarification` | `question` 请求开始/结束时间 |
+| 本地离线 | 任意非空请求，模型未启动 | `unavailable` | `reason=本地模型未启动`；不调用规划计算 |
+| 输入无效 | `request=""` 或缺少 `current_task` | `failed` | 中文 `reason`；HTTP入口当前统一带 `field=request`，message说明具体缺失项 |
+
+`unsupported`、`needs_clarification`、`unavailable` 和 `failed` 都是可见状态，不得由确定性兜底结果改写为 Agent 成功。真正的计算仍使用 `/api/operation/pv/run`、`/api/operation/hybrid/run` 或异步任务；参数校验、报价缺失、外送价缺失及服务缺口的原有错误语义继续有效。
+
+界面精简回放 `replay_cases_ui_v9.json` 的每个候选 `economics` 还保留 `simple_payback_years` 和 `annual_saving_after_maintenance_cny`；缺报价或年净节省不为正时回本年限为 `null`。这两个字段由精简脚本从已有第1年现金流恢复，不触发重新计算。

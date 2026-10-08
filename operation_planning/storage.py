@@ -186,11 +186,14 @@ def _storage_economics(
     quote: Optional[Mapping[str, Any]],
     import_prices: Optional[Sequence[Any]],
     study_years: int,
+    tariff_escalation_rate: float = 0.0,
 ) -> Dict[str, Any]:
     """Attach simple, undiscounted economics to ideal dispatch rows."""
     years = int(study_years)
     if years < 1:
         raise ValueError("storage.study_years必须是正整数")
+    if not math.isfinite(float(tariff_escalation_rate)) or not -0.05 <= float(tariff_escalation_rate) <= 0.10:
+        raise ValueError("tariff_escalation_rate必须在-0.05至0.10之间")
     prices = None
     if import_prices is not None:
         prices = _finite_nonnegative(import_prices, "储能分时购电价", len(intervals.get("load_kwh", [])))
@@ -250,14 +253,15 @@ def _storage_economics(
             # again solely at the endpoint.
             replacements = sum(capex for year in range(life, years, life)) if life else 0.0
             total_spend = capex + float(parsed["maintenance_cny_per_year"]) * years + replacements
-            period_net = float(annual_net) * years - capex - replacements
+            gross_period_saving = sum(float(annual_saving) * ((1.0 + float(tariff_escalation_rate)) ** (year - 1)) for year in range(1, years + 1))
+            period_net = gross_period_saving - float(parsed["maintenance_cny_per_year"]) * years - capex - replacements
             payback = capex / annual_net if annual_net > 0 and capex > 0 and capex / annual_net <= life else None
             payback_reason = None if payback is not None else ("年净收益不为正" if annual_net <= 0 else "回本年限超过电池寿命")
         generation = sum(_finite_nonnegative(intervals.get("generation_kwh", []), "发电量", len(intervals.get("load_kwh", []))))
         direct_self = sum(_finite_nonnegative(intervals.get("self_use_kwh", []), "自用电量", len(intervals.get("load_kwh", []))))
         before_rate = direct_self / generation if generation > 1e-12 else None
         after_rate = min(1.0, (direct_self + recovered) / generation) if generation > 1e-12 else None
-        result_rows.append({**row, "economics_status": economics_status, "initial_investment_cny": capex, "installation_cny": parsed["installation_cny"], "installation_cny_per_kwh": parsed["installation_cny_per_kwh"], "annual_bill_saving_cny": annual_saving, "annual_saving_cny": annual_saving, "annual_net_benefit_cny": annual_net, "annual_net_saving_cny": annual_net, "study_period_total_cost_cny": total_spend, "study_period_total_spend_cny": total_spend, "study_period_net_benefit_cny": period_net, "simple_payback_years": payback, "payback_years": payback, "payback_status": payback_reason, "replacement_count": 0 if life is None else sum(1 for year in range(life, years, life)), "self_consumption_rate_before": before_rate, "self_consumption_rate_after": after_rate, "self_consumption_rate_delta": None if before_rate is None or after_rate is None else after_rate - before_rate, "quote_source": q.get("source"), "quote_source_url": q.get("source_url"), "quote_source_note": q.get("source_note"), "economics_note": "研究期内净收益为不折现粗算；寿命到期且研究期仍继续时按同一初始投入更换，未计衰减与温度影响。"})
+        result_rows.append({**row, "economics_status": economics_status, "initial_investment_cny": capex, "installation_cny": parsed["installation_cny"], "installation_cny_per_kwh": parsed["installation_cny_per_kwh"], "annual_bill_saving_cny": annual_saving, "annual_saving_cny": annual_saving, "annual_net_benefit_cny": annual_net, "annual_net_saving_cny": annual_net, "study_period_total_cost_cny": total_spend, "study_period_total_spend_cny": total_spend, "study_period_net_benefit_cny": period_net, "simple_payback_years": payback, "payback_years": payback, "payback_status": payback_reason, "replacement_count": 0 if life is None else sum(1 for year in range(life, years, life)), "self_consumption_rate_before": before_rate, "self_consumption_rate_after": after_rate, "self_consumption_rate_delta": None if before_rate is None or after_rate is None else after_rate - before_rate, "quote_source": q.get("source"), "quote_source_url": q.get("source_url"), "quote_source_note": q.get("source_note"), "tariff_escalation_rate": tariff_escalation_rate, "economics_note": "研究期内净收益为不折现粗算；按放电所在小时分时购电价节省，各年按显式电价年涨幅情景调整；寿命到期且研究期仍继续时按同一初始投入更换，未计衰减与温度影响。"})
     complete = [r for r in result_rows if r["economics_status"] == "complete"]
     complete_nonzero = [r for r in complete if float(r["capacity_kwh"]) > 0]
     recommendation = None
@@ -314,10 +318,11 @@ def surplus_paths_from_match(
     export: Optional[Mapping[str, Any]] = None,
     import_prices: Optional[Sequence[Any]] = None,
     study_years: int = 10,
+    tariff_escalation_rate: float = 0.0,
 ) -> Dict[str, Any]:
     """Build the additive ``surplus_paths`` response contract."""
     upper = ideal_storage_upper_bound(intervals, capacities_kwh=capacities_kwh, round_trip_efficiency=round_trip_efficiency, allow_export=allow_export)
-    upper = _storage_economics(upper, intervals, quote=storage_quote, import_prices=import_prices, study_years=study_years)
+    upper = _storage_economics(upper, intervals, quote=storage_quote, import_prices=import_prices, study_years=study_years, tariff_escalation_rate=tariff_escalation_rate)
     export_result = _export_economics(intervals, export=export, study_years=study_years)
     generation = _finite_nonnegative(intervals.get("generation_kwh", []), "发电量", len(intervals.get("load_kwh", [])))
     self_use = _finite_nonnegative(intervals.get("self_use_kwh", []), "自用电量", len(intervals.get("load_kwh", [])))

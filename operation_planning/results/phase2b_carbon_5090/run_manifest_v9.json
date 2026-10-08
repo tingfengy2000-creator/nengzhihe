@@ -123,7 +123,7 @@
     }
   ],
   "package_file_sha256": "ad0e58b43e1b4cb7a51a18c44df68af863d97d431dee179bb9fc6d1ab8565aa8",
-  "viewer_file_sha256": "291c3093b66f0559fa09c3de850c934f598d18b7ffae713b621c3a5e6d612209",
+  "viewer_file_sha256": "b52034b12bf2e79266090f3793d576a9d73cced38430eebda63054894fc56946",
   "viewer_path": "docs/handoff/replay_viewer/replay_cases_ui_v9.json",
   "previous_replays_preserved": [
     "replay_cases_v8.json",
@@ -133,7 +133,7 @@
     "replay_cases_v4.json",
     "replay_cases_v3.json"
   ],
-  "viewer_bytes": 7847479,
+  "viewer_bytes": 7849491,
   "viewer_max_bytes": 8000000,
   "viewer_under_decimal_8mb": true,
   "thermal_size_file_sha256": "9be465fd09454dde7b6e904c46a6a241ff6dd1424eb5e214c48ca2b1c0e1e90f",

@@ -1,0 +1,236 @@
+{
+  "source_commit": "b14c53ce707d2ea118a672829f2aa1fe7154785a",
+  "endpoint": "loopback",
+  "status": {
+    "outer_latency_ms": 31.93,
+    "response": {
+      "available": true,
+      "mode": "local_model",
+      "label": "本地大模型",
+      "checked_at": "2026-10-08T01:21:38.052827Z",
+      "reason": null
+    }
+  },
+  "examples": [
+    {
+      "id": "units",
+      "request": "每间改成3台空调",
+      "http_status": 200,
+      "outer_latency_ms": 419.65,
+      "response": {
+        "status": "ok",
+        "changes": [
+          {
+            "field": "room.units_per_room",
+            "from": 2,
+            "to": 3,
+            "label": "每间空调台数"
+          }
+        ],
+        "unsupported": [],
+        "question": null,
+        "model": "local_model",
+        "latency_ms": 394.33
+      },
+      "assertions": {
+        "status_ok": true,
+        "expected_field_value": true
+      }
+    },
+    {
+      "id": "model",
+      "request": "型号换成midea_gaia12",
+      "http_status": 200,
+      "outer_latency_ms": 213.16,
+      "response": {
+        "status": "ok",
+        "changes": [
+          {
+            "field": "room.equipment_id",
+            "from": "midea_msagbu12_mox201",
+            "to": "midea_gaia12",
+            "label": "空调型号"
+          }
+        ],
+        "unsupported": [],
+        "question": null,
+        "model": "local_model",
+        "latency_ms": 212.09
+      },
+      "assertions": {
+        "status_ok": true,
+        "expected_field_value": true
+      }
+    },
+    {
+      "id": "budget",
+      "request": "预算改为50000元",
+      "http_status": 200,
+      "outer_latency_ms": 332.09,
+      "response": {
+        "status": "ok",
+        "changes": [
+          {
+            "field": "hybrid.budget_cny",
+            "from": 30000,
+            "to": 50000.0,
+            "label": "预算"
+          }
+        ],
+        "unsupported": [],
+        "question": null,
+        "model": "local_model",
+        "latency_ms": 319.39
+      },
+      "assertions": {
+        "status_ok": true,
+        "expected_field_value": true
+      }
+    },
+    {
+      "id": "period",
+      "request": "使用时间改为18:00到22:00",
+      "http_status": 200,
+      "outer_latency_ms": 296.09,
+      "response": {
+        "status": "ok",
+        "changes": [
+          {
+            "field": "room.start_hour",
+            "from": 8,
+            "to": 18,
+            "label": "使用开始时间"
+          },
+          {
+            "field": "room.end_hour",
+            "from": 18,
+            "to": 22,
+            "label": "使用结束时间"
+          }
+        ],
+        "unsupported": [],
+        "question": null,
+        "model": "local_model",
+        "latency_ms": 294.84
+      },
+      "assertions": {
+        "status_ok": true,
+        "expected_field_value": true
+      }
+    },
+    {
+      "id": "export",
+      "request": "不卖电，余电全部弃用",
+      "http_status": 200,
+      "outer_latency_ms": 188.18,
+      "response": {
+        "status": "ok",
+        "changes": [
+          {
+            "field": "hybrid.allow_export",
+            "from": true,
+            "to": false,
+            "label": "多余电量卖给电网"
+          }
+        ],
+        "unsupported": [],
+        "question": null,
+        "model": "local_model",
+        "latency_ms": 186.98
+      },
+      "assertions": {
+        "status_ok": true,
+        "expected_field_value": true
+      }
+    },
+    {
+      "id": "pv",
+      "request": "光伏容量改为2kWp",
+      "http_status": 200,
+      "outer_latency_ms": 229.1,
+      "response": {
+        "status": "ok",
+        "changes": [
+          {
+            "field": "hybrid.pv_capacity_kwp",
+            "from": 1,
+            "to": 2,
+            "label": "光伏容量"
+          }
+        ],
+        "unsupported": [],
+        "question": null,
+        "model": "local_model",
+        "latency_ms": 205.56
+      },
+      "assertions": {
+        "status_ok": true,
+        "expected_field_value": true
+      }
+    }
+  ],
+  "boundary": [
+    {
+      "id": "unsupported",
+      "http_status": 200,
+      "outer_latency_ms": 340.65,
+      "response": {
+        "status": "ok",
+        "changes": [],
+        "unsupported": [
+          "“储能”：本接口只理解既有空调、光伏和风光任务字段"
+        ],
+        "question": null,
+        "model": "local_model",
+        "latency_ms": 327.8
+      },
+      "assertions": {
+        "unsupported_nonempty": true,
+        "no_changes": true
+      }
+    },
+    {
+      "id": "clarification",
+      "http_status": 200,
+      "outer_latency_ms": 268.9,
+      "response": {
+        "status": "needs_clarification",
+        "changes": [],
+        "unsupported": [],
+        "question": "请给出晚上使用时段的开始和结束时间，例如18:00到22:00。",
+        "model": "local_model",
+        "latency_ms": 255.54
+      },
+      "assertions": {
+        "needs_clarification": true,
+        "question_nonempty": true
+      }
+    },
+    {
+      "id": "invalid",
+      "http_status": 400,
+      "outer_latency_ms": 0.99,
+      "response": {
+        "status": "failed",
+        "error": "request必须是非空文本",
+        "message": "request必须是非空文本",
+        "field": "request"
+      },
+      "assertions": {
+        "http_400": true
+      }
+    }
+  ],
+  "all_live_assertions_pass": true,
+  "offline_test": "tests.test_agent_parse_contract uses patched config/model to verify fail-closed clarification; live status probe remains available",
+  "measured_parse_latency_ms": [
+    394.33,
+    212.09,
+    319.39,
+    294.84,
+    186.98,
+    205.56
+  ],
+  "max_parse_latency_ms": 394.33,
+  "min_parse_latency_ms": 186.98
+}
