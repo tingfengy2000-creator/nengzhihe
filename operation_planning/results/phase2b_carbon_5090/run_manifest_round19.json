@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "source_commit": "pending-local-commit",
+  "run_id": "phase2b-round19-compact-replay",
+  "machine_role": "5090-code-derivation",
+  "started_utc": "2026-10-08T00:00:00+00:00",
+  "ended_utc": "2026-10-08T00:00:00+00:00",
+  "commands": [
+    "python -m unittest discover -s tests -p 'test*.py'",
+    "python scripts/compact_replay_v9.py --input operation_planning/results/phase2b_carbon_5090/replay_cases_v9.json --output docs/handoff/replay_viewer/replay_cases_ui_v9.json"
+  ],
+  "test_result": "31 tests passed",
+  "source_full_replay": "operation_planning/results/phase2b_carbon_5090/replay_cases_v9.json",
+  "viewer_path": "docs/handoff/replay_viewer/replay_cases_ui_v9.json",
+  "viewer_sha256": "ea12d2e8be337f18213c84b871e6e1ca3884f5c12ee7782c804e6e29df9c8027",
+  "viewer_bytes": 7856874,
+  "viewer_max_bytes": 8388608,
+  "rate_default": 0.0,
+  "sensitivity_rates": [
+    -0.02,
+    0.0,
+    0.02,
+    0.04
+  ],
+  "physical_rerun": false,
+  "note": "Sensitivity and §18.4 scalar fields are derived from frozen yearly economics; no physical trace was rerun."
+}

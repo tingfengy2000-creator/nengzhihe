@@ -486,3 +486,15 @@ v6 记录的全年 `hybrid/run` 平均约 94 秒、最长约 163 秒（5090）�
 `replay_cases_ui_v9.json` 的候选 `economics` 必须保留 `simple_payback_years` 与 `annual_saving_after_maintenance_cny`，供前端“几年回本”卡读取。完整回放已有逐年现金流时，精简脚本可从已保存的第1年基准/候选现金流恢复这两个标量，不得重跑物理模型；若报价缺失或年净节省不为正，`simple_payback_years` 保持 `null`。重生后文件仍须不超过8 MB。
 
 完成后普通推送到 `fix/5090-redesign-followup`，回复两个接口的实测耗时和测试结果。前端会按本节契约先行开发，离线或接口不存在时自动退回规则识别。
+
+## 19. 第十一轮：电价年涨幅情景（2026-10-08）
+
+本轮在第18节接口和精简回放基础上增加一个可选的用户情景参数，不改变发电或逐时供需结果：
+
+- `hybrid.tariff_escalation_rate`（同样可由 `pv/run` 的 `pv` 或共享 `hybrid` 对象传入），合法范围 `-0.05` 至 `0.10`，默认 `0`；越界返回中文错误并定位字段。
+- 第 `y` 年购电价格按 `当前分时价格 × (1+g)^(y-1)` 调整，电价结构保持不变；只作用于 `grid_import`，上网价格不随之变化。报告回显 `tariff_escalation`，并注明这是情景参数而非电价预测。
+- 光伏、风光生命周期逐年重算或重计购电费用，发电、自用、购电电量和外送/弃电物理量不因价格变化而改变。储能附加路径按相同系数计算逐年少交电费，卖电粗算保持不变。
+- 报告增加 `escalation_sensitivity`：`g ∈ {-0.02, 0, 0.02, 0.04}`，列出 S0 与当前推荐方案的研究期总成本现值、相对 S0 差额和简单回本年限；只复用已保存的逐年购电成本，不重跑物理模型。
+- `g=0` 契约测试逐项比较结果；同时覆盖负涨幅、越界、储能附加路径和四档敏感性单调性。精简回放 `replay_cases_ui_v9.json` 的6个案例默认 `g=0`，每案带 `tariff_escalation` 与四档 `escalation_sensitivity`，并继续保留 `simple_payback_years` 与 `annual_saving_after_maintenance_cny`。
+
+实现与验证文件：`operation_planning/pv.py`、`operation_planning/hybrid.py`、`operation_planning/storage.py`、`operation_planning/app.py`、`operation_planning/task_changes.py`、`scripts/compact_replay_v9.py`；契约测试为 `tests/test_phase2b_tariff_escalation.py`。本轮不重跑完整物理回放，精简文件由既有完整结果派生，原始回放目录保留。

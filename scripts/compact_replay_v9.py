@@ -129,6 +129,60 @@ def _compact_candidate(candidate: Any, baseline: dict[str, Any] | None = None) -
     return out
 
 
+def _candidate_total_cost(candidate: dict[str, Any], rate: float, discount_rate: float) -> float | None:
+    economics = candidate.get("economics") or {}
+    yearly = economics.get("yearly")
+    capex = candidate.get("capex_cny", economics.get("capex_cny"))
+    if not isinstance(yearly, list) or capex is None:
+        return None
+    total = float(capex)
+    for row in yearly:
+        year = int(row.get("year", 0))
+        if year <= 0:
+            continue
+        import_key = "grid_import_cost_cny" if "grid_import_cost_cny" in row else "electricity_cost_cny"
+        if row.get(import_key) is None:
+            return None
+        growth = (1.0 + float(rate)) ** (year - 1)
+        cash_cost = float(row.get(import_key, 0.0) or 0.0) * growth
+        cash_cost += float(row.get("maintenance_cny", 0.0) or 0.0)
+        cash_cost += float(row.get("replacement_cny", 0.0) or 0.0)
+        cash_cost -= float(row.get("export_income_cny", 0.0) or 0.0)
+        cash_cost -= float(row.get("residual_cny", 0.0) or 0.0)
+        total += cash_cost / ((1.0 + float(discount_rate)) ** year)
+    return total
+
+
+def _ensure_escalation_fields(case: dict[str, Any]) -> None:
+    """Add the §19 display-only sensitivity from stored yearly economics.
+
+    This compact replay is derived from the already frozen full replay.  A
+    uniform tariff multiplier scales the stored time-of-use import cost, so no
+    physical trace is rerun while producing the four comparison rows.
+    """
+    candidates = case.get("candidates") if isinstance(case.get("candidates"), list) else []
+    recommendation = case.get("recommendation") if isinstance(case.get("recommendation"), dict) else {}
+    by_id = {str(item.get("scenario_id")): item for item in candidates if isinstance(item, dict) and item.get("scenario_id") is not None}
+    baseline = by_id.get("S0_grid")
+    selected_id = recommendation.get("scenario_id")
+    selected = by_id.get(str(selected_id)) if selected_id is not None else None
+    input_data = case.get("input") if isinstance(case.get("input"), dict) else {}
+    hybrid = input_data.get("hybrid") if isinstance(input_data.get("hybrid"), dict) else {}
+    discount = float(hybrid.get("discount_rate", input_data.get("discount_rate", 0.0)) or 0.0)
+    rates = [-0.02, 0.0, 0.02, 0.04]
+    rows = []
+    for rate in rates:
+        s0_cost = _candidate_total_cost(baseline, rate, discount) if baseline else None
+        selected_cost = _candidate_total_cost(selected, rate, discount) if selected else None
+        payback = None
+        if selected:
+            econ = selected.get("economics") or {}
+            payback = econ.get("simple_payback_years")
+        rows.append({"rate": rate, "s0_total_cost_npv_cny": s0_cost, "recommended_scenario_id": selected_id, "recommended_total_cost_npv_cny": selected_cost, "incremental_npv_vs_s0_cny": None if s0_cost is None or selected_cost is None else selected_cost - s0_cost, "simple_payback_years": payback})
+    case["tariff_escalation"] = {"rate": 0.0, "applies_to": "grid_import", "note": "各年电价按年涨幅等比调整，电价结构不变；不是电价预测。"}
+    case["escalation_sensitivity"] = {"rates": rates, "recommendation_scenario_id": selected_id, "rows": rows, "note": "只复用完整回放中已计算的逐年购电成本；不重跑物理模型。"}
+
+
 def _compact_chart(chart: Any) -> Any:
     """Keep the full source-resolution chart but use UI precision for numbers."""
     if not isinstance(chart, dict):
@@ -153,6 +207,7 @@ def compact_case(case: dict[str, Any]) -> dict[str, Any]:
         out["candidates"] = [_compact_candidate(x, baseline) for x in out["candidates"]]
     out["chart"] = _compact_chart(out.get("chart"))
     out["chart_recommended"] = _compact_chart(out.get("chart_recommended"))
+    _ensure_escalation_fields(out)
     # Keep chart/chart_recommended at their real source resolution (8784 for a
     # leap year); do not silently truncate the calendar or alter physical data.
     out["ui_replay_contract"] = {

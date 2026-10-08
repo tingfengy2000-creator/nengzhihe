@@ -84,6 +84,8 @@ def _api_error(exc: Exception, field: str | None = None) -> dict:
             "预算": "hybrid.budget_cny",
             "电价档案": "pv.tariff_id",
             "电价": "pv.tariff_id",
+            "tariff_escalation_rate": "hybrid.tariff_escalation_rate",
+            "电价年涨幅": "hybrid.tariff_escalation_rate",
             "天气": "weather",
             "房间": "room",
             "设备型号": "room.equipment_id",
@@ -817,7 +819,11 @@ class Handler(BaseHTTPRequestHandler):
                     # interpret and validate the requested change; no final
                     # report is computed before the model invokes tools.
                     normalized_room, _, _ = _thermal_inputs(payload)
-                    task = {"site_id": site_id, "year": year, "room": asdict(normalized_room), "pv": payload.get("pv") or {}, "carbon": payload.get("carbon"), "weather": payload.get("weather"), "pv_weather": payload.get("pv_weather")}
+                    agent_pv = dict(payload.get("pv") or {})
+                    if "tariff_escalation_rate" not in agent_pv and isinstance(payload.get("hybrid"), dict):
+                        if "tariff_escalation_rate" in payload["hybrid"]:
+                            agent_pv["tariff_escalation_rate"] = payload["hybrid"]["tariff_escalation_rate"]
+                    task = {"site_id": site_id, "year": year, "room": asdict(normalized_room), "pv": agent_pv, "carbon": payload.get("carbon"), "weather": payload.get("weather"), "pv_weather": payload.get("pv_weather")}
                     agent_output = PVPlanningAgent().run(str(payload.get("request", "按现有空调负荷比较光伏容量")), task)
                     if agent_output.get("status") != "success":
                         return self._send(HTTPStatus.UNPROCESSABLE_ENTITY, {"status": agent_output.get("status", "failed"), "agent": agent_output, "error": agent_output.get("error") or agent_output.get("question", "Agent未完成任务")})
@@ -832,6 +838,15 @@ class Handler(BaseHTTPRequestHandler):
                     pv_weather_data = payload.get("pv_weather") or load_pv_weather(site_id, year)
                     load_result = aggregate_project_load(simulate_room(load_weather_data, room))
                     pv_input = dict(payload.get("pv") or {})
+                    # §19 accepts the shared escalation control either in the
+                    # PV object or in the hybrid object used by the combined
+                    # endpoint.  Keep one authoritative scenario field.
+                    if "tariff_escalation_rate" not in pv_input:
+                        shared_hybrid = payload.get("hybrid") or {}
+                        if "tariff_escalation_rate" in shared_hybrid:
+                            pv_input["tariff_escalation_rate"] = shared_hybrid["tariff_escalation_rate"]
+                    if "tariff_escalation_rate" not in pv_input and "tariff_escalation_rate" in payload:
+                        pv_input["tariff_escalation_rate"] = payload["tariff_escalation_rate"]
                     # The PV endpoint accepts the same bounded sweep contract
                     # as hybrid.  ``auto_capacity`` is resolved to explicit
                     # candidates before the PV engine is called.
