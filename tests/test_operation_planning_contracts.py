@@ -53,6 +53,10 @@ def test_verified_tariff_rates_and_jump_safe_integration():
 
 def test_first_stage_weather_and_heat_moisture_response():
     weather = load_weather("guangzhou", 2024)
+    drive_prefix = "E:" + chr(92)
+    assert not weather["source_file"].startswith((drive_prefix, "/", "\\"))
+    assert weather["source_file"].replace("\\", "/").startswith("operation_planning/")
+    assert not weather["boundary_file"].startswith(("E:\\", "/", "\\"))
     result_60 = simulate_room(weather, RoomSpec(rh_setpoint_percent=60, cooling_setpoint_c=26, equipment_id="midea_msagbu12_mox201"))
     result_50 = simulate_room(weather, RoomSpec(rh_setpoint_percent=50, cooling_setpoint_c=26, equipment_id="midea_msagbu12_mox201"))
     assert len(result_60["rows"]) >= 8760

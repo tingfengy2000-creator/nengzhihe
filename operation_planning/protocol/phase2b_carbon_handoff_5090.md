@@ -290,6 +290,8 @@ v6运行时仍使用当时的公开抄录档案，代码保持 `verified=false/p
 
 非零储能容量缺任一报价字段时为 `incomplete`；容量0不承担电池固定费用、维护、更换或残值。外送开启时储能仍独立计算，卖电路径也独立计算，不将两者误作联合调度。`storage_upper_bound` 作为旧字段继续保留以兼容历史回放，但新审阅应读取 `surplus_paths.storage`。
 
+台数变化不改变当前回放用电的限制：模型采用额定点功率和COP，没有部分负荷效率曲线；在冷量已满足时，不把额外台数的部分负荷效率差异计入电量。
+
 请求/响应完整字段、缺价状态和手算守恒见 `operation_planning/protocol/storage_surplus_paths_contract.md`、`tests/test_phase2b_storage.py`；v8 HTTP回放及哈希见 `operation_planning/results/phase2b_carbon_5090/replay_cases_v8.json`、`run_manifest_v8.json`。v8生成后以清单的 `source_commit`、逐案例哈希和包哈希为准，旧 v3–v7 文件不覆盖。
 
 最终5090回放（source `9ce2d2c43e0978c329bdc2d55cf4a30cd9165b53`）的三档主卡仍分别推荐 1/40/50 kWp；S1 年1物理余电分别为 700.185、19740.361、22470.873 kWh。以示例 5 kWh 电池报价计算，年分时购电节省为 123.721、1151.028、1036.800 元，10年粗算净收益为 -16762.794、-6489.721、-7632.004 元（已含初始投入和维护）；以 0.25 元/kWh 的卖电情景，年粗收入为 175.046、4935.090、5617.718 元。上述两条是同一余电的独立附加估算，不叠加进入主方案NPV。六次HTTP调用总耗时 35006.113 ms（均值 5834.352 ms，最大 9821.556 ms）；这只是5090运行记录，不是用户人工等待承诺。

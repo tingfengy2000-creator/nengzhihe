@@ -16,6 +16,8 @@
     {
       "case_id": "tier_small",
       "recommended_pv_capacity_kwp": 1.0,
+      "units_per_room": 6,
+      "annual_load_kwh": 588.7442079077184,
       "service_quality": {
         "status": "within_modeled_scope",
         "gaps": {
@@ -27,11 +29,13 @@
         "note": "未校准的城市级空调负荷情景。"
       },
       "http_calls": 1,
-      "case_hash": "c9cd64a8ad70adaa89f8a37a71f176a2aa6c199dce85f815627364d1aa817b05"
+      "case_hash": "8fd3d400e87cc757026343528834c494f2c2157c34a3e5cd9b5734ac92cba521"
     },
     {
       "case_id": "tier_medium",
       "recommended_pv_capacity_kwp": 40.0,
+      "units_per_room": 8,
+      "annual_load_kwh": 60237.93497006549,
       "service_quality": {
         "status": "within_modeled_scope",
         "gaps": {
@@ -43,11 +47,13 @@
         "note": "未校准的城市级空调负荷情景。"
       },
       "http_calls": 1,
-      "case_hash": "3823389b862e0e9e58303335a82ee65b0ba9a9f488fc9649e34b49cd477a8e58"
+      "case_hash": "c2d3768794bb6eb584f1cfe9e5bc138f01ba708ab66f77e7823a6bff97c20162"
     },
     {
       "case_id": "tier_large",
       "recommended_pv_capacity_kwp": 50.0,
+      "units_per_room": 14,
+      "annual_load_kwh": 69742.13281586867,
       "service_quality": {
         "status": "within_modeled_scope",
         "gaps": {
@@ -59,11 +65,13 @@
         "note": "未校准的城市级空调负荷情景。"
       },
       "http_calls": 1,
-      "case_hash": "517cc47a0215279d94718f27de91dcf06af8fa307fefbf863dd1cfc584f19478"
+      "case_hash": "963af3652dcfb449d7c9501ed6db68b14032dbbcd74459db39c3170e14fb07ad"
     },
     {
       "case_id": "variant_budget_insufficient",
       "recommended_pv_capacity_kwp": 1.0,
+      "units_per_room": 6,
+      "annual_load_kwh": 588.7442079077184,
       "service_quality": {
         "status": "within_modeled_scope",
         "gaps": {
@@ -75,11 +83,13 @@
         "note": "未校准的城市级空调负荷情景。"
       },
       "http_calls": 1,
-      "case_hash": "d2cbf1a8417a7295b50b5173c894d608195bea25e82dd280a9789c536a51128e"
+      "case_hash": "598e5d693399c94e4afee8b265dfaa16ce9861dae3f79831cc92764e21d2ccec"
     },
     {
       "case_id": "variant_missing_pv_quote",
       "recommended_pv_capacity_kwp": 1.0,
+      "units_per_room": 6,
+      "annual_load_kwh": 588.7442079077184,
       "service_quality": {
         "status": "within_modeled_scope",
         "gaps": {
@@ -91,11 +101,13 @@
         "note": "未校准的城市级空调负荷情景。"
       },
       "http_calls": 1,
-      "case_hash": "6c51a666cc957951b568e21eefbd11bd0ad60dc50778edf8cfc9fde2c5d52462"
+      "case_hash": "ff4c38a70df8e64db6ba2e6b49e380c7093da26b45a257c1c459d384015cc06a"
     },
     {
       "case_id": "variant_roof_area_insufficient",
       "recommended_pv_capacity_kwp": 1.0,
+      "units_per_room": 6,
+      "annual_load_kwh": 588.7442079077184,
       "service_quality": {
         "status": "within_modeled_scope",
         "gaps": {
@@ -107,16 +119,17 @@
         "note": "未校准的城市级空调负荷情景。"
       },
       "http_calls": 1,
-      "case_hash": "3090008f0ad76d59271746b55a432e87000a73308f4a0ab8c919dbd15270c99a"
+      "case_hash": "5a53fffc9dacf89c30e2326cb5a4eb8f5cb177476fcca6296e64e36c4e1114c0"
     }
   ],
-  "package_file_sha256": "301c52d94485b5195fba0bcc36d14a6fe9e10dbcf36c98e670531c980412a312",
-  "viewer_file_sha256": "a20e53236887e891102c89fb0ab041b48f4373f542f56eb954fae7ce922bfb79",
+  "package_file_sha256": "93026c8b0b93ce006ae24378afe1a18b5a46c9cd798f414fc0d729d3a0fdf20d",
+  "viewer_file_sha256": "2e2fbbc86f109bf36fff4aaacaea154206d5923154f7a057ebb9857e3ca86464",
   "viewer_path": "docs/handoff/replay_viewer/replay_cases_v8.json",
   "previous_replays_preserved": [
     "replay_cases_v5.json",
     "replay_cases_v4.json",
     "replay_cases_v3.json"
   ],
-  "path_cleanup_note": "2026-10-08: repository-relative path substitution only; no physical results rerun."
+  "path_cleanup_note": "2026-10-08: repository-relative path substitution only; no physical results rerun.",
+  "path_sanitization": "repository-relative weather provenance; no physical rerun; original HTTP response hashes retained"
 }
