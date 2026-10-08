@@ -247,34 +247,57 @@ def _escalation_sensitivity(
             cashflows.append(-(imp + maint + replacement) + export + residual)
         return -discounted_cashflow_npv(capex, cashflows, discount_rate)
 
-    def _payback(selected_econ: Optional[Dict[str, Any]], base_econ: Optional[Dict[str, Any]]) -> Optional[float]:
+    def _payback_details(selected_econ: Optional[Dict[str, Any]], base_econ: Optional[Dict[str, Any]], rate: float) -> tuple[Optional[float], Optional[int], str]:
         if not selected_econ or not base_econ or selected_econ.get("status") != "complete" or base_econ.get("status") != "complete":
-            return None
-        first = {int(row.get("year", 0)): row for row in selected_econ.get("yearly", [])}.get(1)
-        base_first = {int(row.get("year", 0)): row for row in base_econ.get("yearly", [])}.get(1)
-        if not first or not base_first:
-            return None
-        saving = float(base_first.get("grid_import_cost_cny", 0.0)) - float(first.get("grid_import_cost_cny", 0.0)) - float(first.get("maintenance_cny", 0.0)) + float(first.get("export_income_cny", 0.0))
+            return None, None, "缺少完整经济数据，无法计算回本年限"
         capex = float(selected_econ.get("capex_cny") or 0.0)
-        return capex / saving if saving > 0 and capex > 0 else None
+        if capex <= 0:
+            return None, None, "无非零初始投入，不适用回本年限"
+        selected_rows = {int(row.get("year", 0)): row for row in selected_econ.get("yearly", [])}
+        base_rows = {int(row.get("year", 0)): row for row in base_econ.get("yearly", [])}
+        first = selected_rows.get(1); base_first = base_rows.get(1)
+        if not first or not base_first:
+            return None, None, "缺少第1年数据，无法计算回本年限"
+        first_saving = float(base_first.get("grid_import_cost_cny", 0.0)) - float(first.get("grid_import_cost_cny", 0.0)) - float(first.get("maintenance_cny", 0.0)) - float(first.get("replacement_cny", 0.0)) + float(first.get("export_income_cny", 0.0)) + float(first.get("residual_cny", 0.0))
+        simple = capex / first_saving if first_saving > 0 else None
+        cumulative = 0.0
+        for year in range(1, int(study_years) + 1):
+            row = selected_rows.get(year); base_row = base_rows.get(year)
+            if not row or not base_row:
+                continue
+            growth = (1.0 + float(rate)) ** (year - 1)
+            cumulative += (float(base_row.get("grid_import_cost_cny", 0.0)) - float(row.get("grid_import_cost_cny", 0.0))) * growth
+            cumulative += -float(row.get("maintenance_cny", 0.0) or 0.0) - float(row.get("replacement_cny", 0.0) or 0.0) + float(row.get("export_income_cny", 0.0) or 0.0) + float(row.get("residual_cny", 0.0) or 0.0)
+            if cumulative + 1e-9 >= capex:
+                return simple, year, f"第{year}年累计净节省达到初始投入；simple_payback_years按第1年节省"
+        return simple, None, "研究期内未回本；simple_payback_years按第1年节省"
 
     rows: List[Dict[str, Any]] = []
     for rate in rates:
         s0_cost = _total_cost((s0 or {}).get("economics"), rate)
         selected_cost = _total_cost((selected or {}).get("economics"), rate)
+        simple_payback, cumulative_payback, payback_note = _payback_details((selected or {}).get("economics"), (s0 or {}).get("economics"), rate)
+        incremental = None if s0_cost is None or selected_cost is None else s0_cost - selected_cost
+        if rate == 0.0 and selected is not None:
+            candidate_incremental = (selected.get("economics") or {}).get("incremental_npv_vs_s0_cny", selected.get("incremental_npv_vs_s0_cny"))
+            if candidate_incremental is not None:
+                incremental = float(candidate_incremental)
         rows.append({
             "rate": rate,
             "s0_total_cost_npv_cny": s0_cost,
             "recommended_scenario_id": selected_id,
             "recommended_total_cost_npv_cny": selected_cost,
-            "incremental_npv_vs_s0_cny": None if s0_cost is None or selected_cost is None else selected_cost - s0_cost,
-            "simple_payback_years": _payback((selected or {}).get("economics"), (s0 or {}).get("economics")),
+            "incremental_npv_vs_s0_cny": incremental,
+            "simple_payback_years": simple_payback,
+            "simple_payback_note": "按第1年节省，不含后续电价涨幅",
+            "cumulative_payback_year": cumulative_payback,
+            "payback_note": payback_note,
         })
     return {
         "rates": rates,
         "recommendation_scenario_id": selected_id,
         "rows": rows,
-        "note": "只缩放逐年购电成本，复用既有逐年电量和物理结果；上网价格不随电价年涨幅变化。",
+        "note": "只缩放逐年购电成本，复用既有逐年电量和物理结果；上网价格不随电价年涨幅变化。incremental_npv_vs_s0_cny与候选层同号，正数表示相对S0节省。",
     }
 
 

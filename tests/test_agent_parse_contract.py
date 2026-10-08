@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-from operation_planning.agent_parse import _normalise_changes, parse_agent_request
+from operation_planning.agent_parse import _normalise_changes, _unsupported_feature_notes, parse_agent_request
 
 
 class AgentParseContractTests(unittest.TestCase):
@@ -19,7 +19,10 @@ class AgentParseContractTests(unittest.TestCase):
                 "budget_cny": 30000,
                 "allow_export": True,
                 "pv_capacity_kwp": 1,
+                "tariff_escalation_rate": 0.0,
+                "wind": {"turbine_count": 0},
             },
+            "storage": {"quote": {"cny_per_kwh": 553.94}, "capacities_kwh": [0, 5, 10]},
         }
 
     def test_six_supported_chinese_examples_have_bounded_fields(self):
@@ -56,6 +59,20 @@ class AgentParseContractTests(unittest.TestCase):
     def test_unsupported_field_fails_closed(self):
         with self.assertRaises(ValueError):
             _normalise_changes([{"field": "hybrid.secret_result", "to": 1}], self.task)
+
+    def test_tariff_escalation_is_a_supported_change(self):
+        changes = _normalise_changes([{"field": "hybrid.tariff_escalation_rate", "to": 0.03}], self.task)
+        self.assertEqual(changes[0]["field"], "hybrid.tariff_escalation_rate")
+        self.assertEqual(changes[0]["to"], 0.03)
+
+    def test_wind_count_and_storage_quote_are_supported_changes(self):
+        wind = _normalise_changes([{"field": "hybrid.wind.turbine_count", "to": 1}], self.task)
+        storage = _normalise_changes([{"field": "storage.quote.cny_per_kwh", "to": 600.0}], self.task)
+        capacities = _normalise_changes([{"field": "storage.capacities_kwh", "to": [0, 5, 10]}], self.task)
+        self.assertEqual(wind[0]["from"], 0)
+        self.assertEqual(storage[0]["from"], 553.94)
+        self.assertEqual(capacities[0]["to"], [0, 5, 10])
+        self.assertEqual(_unsupported_feature_notes("储能单价553.94元/kWh，容量列表0、5、10kWh"), [])
 
     def test_vague_budget_returns_clarification_without_calculation(self):
         with patch("operation_planning.agent_parse._read_config", return_value={"_endpoint": "http://127.0.0.1:1/v1", "model_id": "test"}), patch(

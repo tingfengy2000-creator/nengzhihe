@@ -45,6 +45,10 @@ FIELD_RULES: dict[str, dict[str, Any]] = {
     "hybrid.allow_export": {"kind": "boolean", "label": "多余电量卖给电网"},
     "hybrid.import_price_cny_per_kwh": {"kind": "number", "minimum": 0, "label": "购电价格"},
     "hybrid.export_price_cny_per_kwh": {"kind": "nullable_number", "minimum": 0, "label": "外送电价"},
+    "hybrid.tariff_escalation_rate": {"kind": "number", "minimum": -0.05, "maximum": 0.10, "label": "电价年涨幅"},
+    "hybrid.wind.turbine_count": {"kind": "integer", "minimum": 0, "maximum": 1, "label": "风机台数"},
+    "storage.quote.cny_per_kwh": {"kind": "number", "minimum": 0, "label": "储能单价"},
+    "storage.capacities_kwh": {"kind": "number_list", "minimum": 0, "label": "储能容量列表"},
 }
 
 
@@ -111,6 +115,13 @@ def _validate_value(field: str, value: Any) -> None:
         return
     if kind == "nullable_number" and value is None:
         return
+    if kind == "number_list":
+        if not isinstance(value, list) or not value:
+            raise ValueError(f"{field}必须是非空数值列表")
+        for item in value:
+            if isinstance(item, bool) or not isinstance(item, (int, float)) or not math.isfinite(float(item)) or float(item) < float(rule.get("minimum", 0)):
+                raise ValueError(f"{field}必须是非负有限数值列表")
+        return
     if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(float(value)):
         raise ValueError(f"{field}必须为有限数值")
     if rule.get("exclusive_minimum") and value <= rule["minimum"]:
@@ -127,13 +138,30 @@ def _nested_changes(changes: list[dict[str, Any]]) -> dict[str, Any]:
     nested: dict[str, Any] = {}
     for item in changes:
         field, value = item["field"], item["to"]
-        group, name = field.split(".", 1)
-        nested.setdefault(group, {})[name] = value
+        parts = field.split(".")
+        group = parts[0]
+        target = nested.setdefault(group, {})
+        for part in parts[1:-1]:
+            target = target.setdefault(part, {})
+        target[parts[-1]] = value
     # Validate all fields shared with the planning schema.  equipment_id is
     # intentionally checked above because it is a catalogue selection, not a
     # thermal numeric parameter in task_changes.py.
-    common = {g: {k: v for k, v in vals.items() if g in {"room", "hybrid"} and f"{g}.{k}" in FIELD_RULES and k != "equipment_id"}
-              for g, vals in nested.items()}
+    common: dict[str, dict[str, Any]] = {}
+    for group, values in nested.items():
+        if group not in {"room", "hybrid"} or not isinstance(values, dict):
+            continue
+        allowed: dict[str, Any] = {}
+        for key, value in values.items():
+            full = f"{group}.{key}"
+            if full in FIELD_RULES and key != "equipment_id":
+                allowed[key] = value
+            elif isinstance(value, dict):
+                nested_allowed = {child: child_value for child, child_value in value.items() if f"{full}.{child}" in FIELD_RULES}
+                if nested_allowed:
+                    allowed[key] = nested_allowed
+        if allowed:
+            common[group] = allowed
     common = {g: vals for g, vals in common.items() if vals}
     if common:
         validate_modifications(common)
@@ -195,6 +223,10 @@ _FIELD_HINTS = {
     "hybrid.allow_export": ("卖电", "外送", "上网", "余电"),
     "hybrid.import_price_cny_per_kwh": ("购电价", "电价", "每度", "元/kWh"),
     "hybrid.export_price_cny_per_kwh": ("卖电价", "外送价", "上网电价"),
+    "hybrid.tariff_escalation_rate": ("电价", "涨幅", "增长率", "每年"),
+    "hybrid.wind.turbine_count": ("风机", "风电", "台"),
+    "storage.quote.cny_per_kwh": ("储能", "电池", "储能单价", "元/kWh"),
+    "storage.capacities_kwh": ("储能", "电池", "容量列表", "kWh"),
 }
 
 
@@ -220,9 +252,9 @@ def _unsupported_brand_notes(request_text: str) -> list[str]:
 
 def _unsupported_feature_notes(request_text: str) -> list[str]:
     notes = []
-    for term, label in (("电池", "储能电池"), ("储能", "储能"), ("风电", "风电设备"), ("风机", "风电设备"), ("其他电器", "其他电器")):
+    for term, label in (("储能套利", "储能峰谷套利"), ("峰谷套利", "峰谷套利"), ("保证回本", "回本保证"), ("其他电器", "其他电器")):
         if term in request_text:
-            notes.append(f"“{label}”：本接口只理解既有空调、光伏和风光任务字段")
+            notes.append(f"“{label}”：本接口不承诺自动套利或收益保证")
     return notes
 
 

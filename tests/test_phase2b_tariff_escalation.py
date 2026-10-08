@@ -2,7 +2,7 @@ import copy
 import unittest
 
 from operation_planning.hybrid import HybridScenario, _escalation_sensitivity
-from operation_planning.pv import PVScenario, lifecycle_compare
+from operation_planning.pv import PVScenario, lifecycle_compare, _escalation_sensitivity as pv_escalation_sensitivity
 from operation_planning.storage import surplus_paths_from_match
 from operation_planning.task_changes import validate_modifications
 from scripts.compact_replay_v9 import build
@@ -44,16 +44,36 @@ class TariffEscalationContractTests(unittest.TestCase):
     def test_hybrid_sensitivity_four_rates_monotonic_baseline_cost(self):
         def candidate(sid, capex, costs):
             return {"scenario_id": sid, "economics": {"status": "complete", "capex_cny": capex,
+                    "incremental_npv_vs_s0_cny": 40.0 if sid == "S1_pv" else 0.0,
                     "yearly": [{"year": 0, "grid_import_cost_cny": 0.0},
                                 *[{"year": i, "grid_import_cost_cny": value, "maintenance_cny": 0.0,
                                    "replacement_cny": 0.0, "export_income_cny": 0.0, "residual_cny": 0.0}
                                   for i, value in enumerate(costs, 1)]]}}
         candidates = [candidate("S0_grid", 0.0, [100.0] * 3), candidate("S1_pv", 50.0, [70.0] * 3)]
+        candidates[1]["incremental_npv_vs_s0_cny"] = 40.0
         rec = _escalation_sensitivity(candidates, {"scenario_id": "S1_pv"}, study_years=3, discount_rate=0.0)
         self.assertEqual(rec["rates"], [-0.02, 0.0, 0.02, 0.04])
         costs = [row["s0_total_cost_npv_cny"] for row in rec["rows"]]
         self.assertEqual(costs, sorted(costs))
         self.assertEqual(rec["rows"][1]["recommended_total_cost_npv_cny"], 260.0)
+        self.assertEqual(rec["rows"][1]["incremental_npv_vs_s0_cny"], 40.0)
+        self.assertEqual(rec["rows"][1]["cumulative_payback_year"], 2)
+        self.assertIn("第1年节省", rec["rows"][1]["simple_payback_note"])
+
+    def test_pv_sensitivity_uses_candidate_sign_and_cumulative_payback(self):
+        def candidate(capacity, capex, costs):
+            return {"capacity_kwp": capacity, "incremental_npv_vs_s0_cny": 40.0 if capacity else 0.0,
+                    "economics": {"status": "complete", "capex_cny": capex,
+                                  "incremental_npv_vs_s0_cny": 40.0 if capacity else 0.0, "yearly": [
+                        {"year": 0, "electricity_cost_cny": 0.0},
+                        *[{"year": i, "electricity_cost_cny": value, "maintenance_cny": 0.0,
+                           "replacement_cny": 0.0, "export_income_cny": 0.0, "residual_cny": 0.0}
+                          for i, value in enumerate(costs, 1)]
+                    ]}}
+        candidates = [candidate(0, 0, [100.0] * 3), candidate(1, 50, [70.0] * 3)]
+        rec = pv_escalation_sensitivity(candidates, {"status": "conditional", "capacity_kwp": 1}, PVScenario(study_years=3))
+        self.assertEqual(rec["rows"][1]["incremental_npv_vs_s0_cny"], 40.0)
+        self.assertEqual(rec["rows"][1]["cumulative_payback_year"], 2)
 
     def test_compact_replay_has_sensitivity_contract(self):
         source = {"cases": [{"recommendation": {"scenario_id": "S1_pv"}, "input": {},
@@ -64,6 +84,7 @@ class TariffEscalationContractTests(unittest.TestCase):
         self.assertEqual(case["tariff_escalation"]["rate"], 0.0)
         self.assertEqual(case["escalation_sensitivity"]["rates"], [-0.02, 0.0, 0.02, 0.04])
         self.assertEqual(case["candidates"][1]["economics"]["simple_payback_years"], 2.0)
+        self.assertIn("cumulative_payback_year", case["escalation_sensitivity"]["rows"][1])
 
 
 if __name__ == "__main__":
