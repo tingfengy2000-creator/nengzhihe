@@ -174,7 +174,7 @@ def _normalise_changes(raw: Any, current_task: dict[str, Any]) -> list[dict[str,
         current_budget = _get_path(current_task, "hybrid.budget_cny")
         if isinstance(current_budget, bool) or not isinstance(current_budget, (int, float)) or not math.isfinite(float(current_budget)):
             raise ValueError("原预算未知，不能执行相对预算修改")
-        effective = float(current_budget) * float(relative["to"])
+        effective = round(float(current_budget) * float(relative["to"]), 2)
         if absolute is not None and not math.isclose(float(absolute["to"]), effective, rel_tol=1e-8, abs_tol=0.01):
             raise ValueError("预算绝对值与相对修改结果不一致，请确认")
         out = [item for item in out if item["field"] not in {"hybrid.budget_multiplier", "hybrid.budget_cny"}]
@@ -185,8 +185,8 @@ def _normalise_changes(raw: Any, current_task: dict[str, Any]) -> list[dict[str,
 _FIELD_HINTS = {
     "room.units_per_room": ("台", "每间", "设备数量", "空调数量"),
     "room.room_count": ("房间", "办公室", "间"),
-    "room.start_hour": ("时段", "点", "开始", "晚上", "上午", "早上"),
-    "room.end_hour": ("时段", "点", "结束", "晚上", "上午", "早上"),
+    "room.start_hour": ("时段", "时间", "点", "到", "开始", "晚上", "上午", "早上", ":"),
+    "room.end_hour": ("时段", "时间", "点", "到", "结束", "晚上", "上午", "早上", ":"),
     "room.area_m2": ("面积", "平方米", "㎡", "m²", "m2"),
     "room.equipment_id": ("型号", "设备", "空调", "换成", "更换"),
     "hybrid.budget_cny": ("预算", "元", "万元", "万", "花费", "成本"),
@@ -243,7 +243,9 @@ def _collapse_budget_changes(changes: list[dict[str, Any]], current_task: dict[s
     original = _get_path(current_task, "hybrid.budget_cny")
     if not isinstance(original, (int, float)) or isinstance(original, bool):
         raise ValueError("原预算未知，不能解释相对预算修改")
-    relative = float(original) * float(multiplier["to"])
+    # Keep ordinary currency inputs readable after a model emits a decimal
+    # multiplier such as 1.6666666666666663.
+    relative = round(float(original) * float(multiplier["to"]), 2)
     if absolute is not None and not math.isclose(float(absolute["to"]), relative, rel_tol=1e-8, abs_tol=.01):
         raise ValueError("预算绝对值与相对修改结果不一致，请确认")
     target = float(absolute["to"]) if absolute is not None else relative
@@ -276,7 +278,8 @@ def _model_parse(config: dict[str, Any], request_text: str, current_task: dict[s
     system = (
         "你是能智核的只读任务理解器。只把用户原话解释成修改建议，不做任何热湿、发电、匹配、费用或推荐计算。"
         "只允许使用给定字段；不支持的内容写入unsupported，不能静默丢弃。数字只能来自用户原话或相对修改；"
-        "预算相对修改可返回budget_multiplier；如果请求只有‘降低一些/适当增加’而没有数值或比例，必须question追问，不能把当前值当新值。只返回JSON对象changes、unsupported、question。"
+        "预算相对修改可返回budget_multiplier；如果请求只有‘降低一些/适当增加’而没有数值或比例，必须question追问，不能把当前值当新值。"
+        "时间范围‘18:00到22:00’必须同时返回room.start_hour=18和room.end_hour=22，不能只返回一端。只返回JSON对象changes、unsupported、question。"
     )
     user = json.dumps({"request": request_text, "current_task": current_task, "allowed_fields": fields,
                        "equipment_options": sorted(_equipment_ids())}, ensure_ascii=False)
@@ -328,13 +331,21 @@ def parse_agent_request(request_text: str, current_task: dict[str, Any]) -> dict
         return {"status": "unavailable", "changes": [], "unsupported": [], "question": None, "reason": str(exc), "model": "local_model", "latency_ms": elapsed()}
     try:
         raw = _model_parse(config, request_text, current_task)
-        changes = _normalise_changes(raw.get("changes", []), current_task)
         unsupported = [str(x) for x in raw.get("unsupported", [])]
-        unsupported.extend(note for note in _unsupported_brand_notes(request_text) + _unsupported_feature_notes(request_text) if note not in unsupported)
+        feature_notes = _unsupported_brand_notes(request_text) + _unsupported_feature_notes(request_text)
+        unsupported.extend(note for note in feature_notes if note not in unsupported)
+        # When the whole request is outside the supported vocabulary, retain
+        # the transparent unsupported result even if the small model emitted a
+        # stray malformed default field.  Mixed requests still go through the
+        # strict validator below and cannot silently drop supported edits.
+        has_supported_hint = any(str(h).lower() in request_text.lower() for hints in _FIELD_HINTS.values() for h in hints)
+        if feature_notes and not has_supported_hint:
+            changes = []
+        else:
+            changes = _normalise_changes(raw.get("changes", []), current_task)
         # For a request that is entirely outside this read-only vocabulary,
         # return a transparent unsupported result even if the model echoed a
         # stray default field.  It is never applied to a task.
-        has_supported_hint = any(str(h).lower() in request_text.lower() for hints in _FIELD_HINTS.values() for h in hints)
         if unsupported and not has_supported_hint:
             changes = []
         else:
@@ -354,6 +365,10 @@ def parse_agent_request(request_text: str, current_task: dict[str, Any]) -> dict
             raise ValueError("question字段无效")
         if isinstance(question, str) and not question.strip():
             question = None
+        vague_period = ("晚上使用" in request_text or "晚上用" in request_text) and not any(ch.isdigit() for ch in request_text)
+        if vague_period:
+            changes = []
+            question = "请给出晚上使用时段的开始和结束时间，例如18:00到22:00。"
         if question is None:
             unchanged = [item for item in changes if item.get("from") == item.get("to")]
             if unchanged:
