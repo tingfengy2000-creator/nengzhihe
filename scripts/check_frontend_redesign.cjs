@@ -235,8 +235,9 @@ const ok = (cond, msg) => { checks++; if (!cond) { failures++; console.log('  �
       });
       if (st.recommended_capacity_kwh === 0) ok(/不建议装储能/.test(u.text), `${sid} 推荐 0 kWh 时应写“不建议装储能”`);
       ok(u.kv[0] && u.kv[0].includes(kwhF(ex.sold_kwh_year1)) && u.kv.some((k) => k.includes(money(ex.annual_revenue_cny))) && u.kv.some((k) => k.includes(money(ex.study_period_revenue_cny))), `${sid} 卖电 ${u.kv.join(' | ')}`);
-      ok(u.kv.some((k) => k === `上网电价 ${ex.price_cny_per_kwh} 元/kWh`) && u.kv.some((k) => k === `并网投入 ${ex.connection_cost_assumed_zero ? '未填写，按 0 粗算' : money(ex.connection_cny) + ' 元'}`), `${sid} 卖电电价/并网投入 ${u.kv.join(' | ')}`);
-      ok(u.kv.some((k) => k === `回本 ${ex.simple_payback_years != null ? new Intl.NumberFormat('zh-CN', { maximumFractionDigits: 1 }).format(ex.simple_payback_years) + ' 年' : (ex.payback_status || '无额外投入')}`), `${sid} 卖电回本 ${u.kv.join(' | ')}`);
+      const ns = (t) => t.replace(/\s+/g, '');
+      ok(u.kv.some((k) => ns(k) === ns(`上网电价 ${ex.price_cny_per_kwh} 元/kWh`)) && u.kv.some((k) => ns(k) === ns(`并网投入 ${ex.connection_cost_assumed_zero ? '未填写，按 0 粗算' : money(ex.connection_cny) + ' 元'}`)), `${sid} 卖电电价/并网投入 ${u.kv.join(' | ')}`);
+      ok(u.kv.some((k) => ns(k) === ns(`回本 ${ex.simple_payback_years != null ? new Intl.NumberFormat('zh-CN', { maximumFractionDigits: 1 }).format(ex.simple_payback_years) + ' 年' : (ex.payback_status || '无额外投入')}`)), `${sid} 卖电回本 ${u.kv.join(' | ')}`);
       ok(/不叠加/.test(u.text) && /不含电池衰减/.test(u.text) && /以当地电网批复为准/.test(u.text), `${sid} 多余的电边界说明缺失`);
     }
     // 第 2 步单间与项目合计
