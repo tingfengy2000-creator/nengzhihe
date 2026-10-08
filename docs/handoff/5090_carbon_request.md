@@ -411,3 +411,23 @@ v6 记录的全年 `hybrid/run` 平均约 94 秒、最长约 163 秒（5090）�
 ### 16.4 输出
 
 继续在 `fix/5090-redesign-followup` 普通推送；交接说明补 v8→v9 对比表、精简回放字段表、路径清理清单、报价来源。
+
+## 17. 第九轮：5060 对 `fix/5090-redesign-followup@3ff4bbe`（v9）的审查（2026-10-08）
+
+`feat/5060-product-ui` 已合并 `3ff4bbe`。5060 本地复跑 `test_phase2b_p1_fields / storage / api_v6`：15 passed。
+
+### 17.1 已通过
+
+- 三档台数按新判据：小 2、中 5、大 14（均有 `thermal_size_v9.json` 实测）。✅
+- 界面精简回放 7.85 MB，0 处绝对路径；`chart_recommended` 六案均与推荐一致；`single_room_annual_kwh`、碳价情景、`site_ids` 已加。✅
+- 储能报价改为 CNESA 公开均价 + 容量线性安装费，中/大档 20 kWh 约 7 年回本、10 年净收益为正，小档不建议装；卖电 0.25 元/kWh 已标为敏感性情景并附政策边界。✅
+
+### 17.2 仍需处理（很小）
+
+1. **路径扫描有漏报。** `path_cleanup_v9.json` 写 `v9_full_remaining: 0`，但 5060 实测 `operation_planning/results/phase2b_carbon_5090/replay_cases_v9.json` 仍有 6 处 `"source_file": "E:\\比赛\\nengzhihe\\..."`；v8 两个文件也各仍 6 处（清单写 replaced 0 / remaining 0）。疑似扫描时没考虑 JSON 里反斜杠被转义成 `\\`。请：
+   - **从源头修**：`weather.py` 第 155 行 `source_file`/`boundary_file` 改为相对仓库根目录的路径（实时接口响应也就不再带机器路径）；
+   - 对上述 3 个文件做字符串替换并更新哈希；扫描同时匹配 `E:\` 与 `E:\\` 两种写法；
+   - 非 JSON 文件里还有约 16 个含 `E:\比赛` 的文档（交接记录、AGENTS.md 等），本轮不用改，正式提交打包时由 5060 统一处理。
+2. **答辩备注（不改代码）。** 中档 8→5 台年用电完全不变，原因是当前模型按额定点计算、没有部分负荷效率曲线：只要冷量够，台数多少不影响用电。请在交接说明里写一句这个限制，评委若问“多装空调不费电吗”可直接回答。
+
+完成后普通推送即可，不需重跑物理计算。
