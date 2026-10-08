@@ -401,7 +401,7 @@ def _escalated_candidate_cost(economics: Dict[str, Any], rate: float, discount_r
         import_cost = row.get("electricity_cost_cny")
         if import_cost is None:
             return None
-        growth = (1.0 + float(rate)) ** (year - 1)
+        growth = ((1.0 + float(rate)) / (1.0 + float(economics.get("tariff_escalation_rate", 0.0)))) ** (year - 1)
         cash = -(float(import_cost) * growth + float(row.get("maintenance_cny", 0.0) or 0.0) + float(row.get("replacement_cny", 0.0) or 0.0))
         cash += float(row.get("export_income_cny", 0.0) or 0.0) + float(row.get("residual_cny", 0.0) or 0.0)
         total += discounted_year_end(cash, year, discount_rate)
@@ -437,8 +437,9 @@ def _escalation_sensitivity(candidates: Sequence[Dict[str, Any]], recommendation
                         sr = srows.get(year); cr = crows.get(year)
                         if not sr or not cr:
                             continue
-                        growth = (1.0 + float(rate)) ** (year - 1)
-                        cumulative += (float(sr.get("electricity_cost_cny", 0.0) or 0.0) - float(cr.get("electricity_cost_cny", 0.0) or 0.0)) * growth
+                        base_growth = ((1.0 + float(rate)) / (1.0 + float(se.get("tariff_escalation_rate", 0.0)))) ** (year - 1)
+                        selected_growth = ((1.0 + float(rate)) / (1.0 + float(ce.get("tariff_escalation_rate", 0.0)))) ** (year - 1)
+                        cumulative += float(sr.get("electricity_cost_cny", 0.0) or 0.0) * base_growth - float(cr.get("electricity_cost_cny", 0.0) or 0.0) * selected_growth
                         cumulative += -float(cr.get("maintenance_cny", 0.0) or 0.0) - float(cr.get("replacement_cny", 0.0) or 0.0) + float(cr.get("export_income_cny", 0.0) or 0.0) + float(cr.get("residual_cny", 0.0) or 0.0)
                         if cumulative + 1e-9 >= float(capex):
                             cumulative_payback = year; payback_note = f"第{year}年累计净节省达到初始投入；simple_payback_years按第1年节省"; break
@@ -449,7 +450,7 @@ def _escalation_sensitivity(candidates: Sequence[Dict[str, Any]], recommendation
             else:
                 payback_note = "无非零初始投入，不适用回本年限"
         incremental = None if s0_cost is None or candidate_cost is None else s0_cost - candidate_cost
-        if rate == 0.0 and selected is not None:
+        if math.isclose(rate, current_rate, rel_tol=0.0, abs_tol=1e-12) and selected is not None:
             candidate_incremental = (selected.get("economics") or {}).get("incremental_npv_vs_s0_cny", selected.get("incremental_npv_vs_s0_cny"))
             if candidate_incremental is not None:
                 incremental = float(candidate_incremental)

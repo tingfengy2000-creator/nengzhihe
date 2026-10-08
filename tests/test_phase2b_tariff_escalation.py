@@ -83,6 +83,27 @@ class TariffEscalationContractTests(unittest.TestCase):
         report = pv_escalation_sensitivity(candidates, {"status": "conditional", "capacity_kwp": 1.0}, PVScenario(study_years=1, tariff_escalation_rate=0.03))
         self.assertEqual([row["rate"] for row in report["rows"] if row["is_current"]], [0.03])
 
+    def test_nonzero_current_rate_is_not_applied_twice(self):
+        for engine in ("hybrid", "pv"):
+            field = "grid_import_cost_cny" if engine == "hybrid" else "electricity_cost_cny"
+            def candidate(sid, capacity, capex, first_cost):
+                return {"scenario_id": sid, "capacity_kwp": capacity, "economics": {
+                    "status": "complete", "capex_cny": capex, "tariff_escalation_rate": .03,
+                    "yearly": [{"year": 1, field: first_cost}, {"year": 2, field: first_cost * 1.03}]}}
+            candidates = [candidate("S0_grid", 0, 0, 100), candidate("S1_pv", 1, 50, 70)]
+            if engine == "hybrid":
+                report = _escalation_sensitivity(candidates, {"scenario_id": "S1_pv"}, study_years=2, discount_rate=0, current_rate=.03)
+            else:
+                report = pv_escalation_sensitivity(candidates, {"status": "conditional", "capacity_kwp": 1}, PVScenario(study_years=2, tariff_escalation_rate=.03))
+            current = next(row for row in report["rows"] if row["is_current"])
+            flat = next(row for row in report["rows"] if row["rate"] == 0)
+            with self.subTest(engine=engine):
+                self.assertAlmostEqual(current["s0_total_cost_npv_cny"], 203)
+                self.assertAlmostEqual(current["recommended_total_cost_npv_cny"], 192.1)
+                self.assertAlmostEqual(current["incremental_npv_vs_s0_cny"], 10.9)
+                self.assertAlmostEqual(flat["s0_total_cost_npv_cny"], 200)
+                self.assertAlmostEqual(flat["recommended_total_cost_npv_cny"], 190)
+
     def test_pv_sensitivity_uses_candidate_sign_and_cumulative_payback(self):
         def candidate(capacity, capex, costs):
             return {"capacity_kwp": capacity, "incremental_npv_vs_s0_cny": 40.0 if capacity else 0.0,

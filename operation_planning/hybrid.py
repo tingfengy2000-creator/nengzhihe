@@ -243,7 +243,7 @@ def _escalation_sensitivity(
             year = int(row.get("year", 0))
             if year <= 0:
                 continue
-            growth = (1.0 + float(rate)) ** (year - 1)
+            growth = ((1.0 + float(rate)) / (1.0 + float(economics.get("tariff_escalation_rate", 0.0)))) ** (year - 1)
             imp = float(row.get("grid_import_cost_cny", 0.0)) * growth
             export = float(row.get("export_income_cny", 0.0))
             maint = float(row.get("maintenance_cny", 0.0))
@@ -270,8 +270,9 @@ def _escalation_sensitivity(
             row = selected_rows.get(year); base_row = base_rows.get(year)
             if not row or not base_row:
                 continue
-            growth = (1.0 + float(rate)) ** (year - 1)
-            cumulative += (float(base_row.get("grid_import_cost_cny", 0.0)) - float(row.get("grid_import_cost_cny", 0.0))) * growth
+            base_growth = ((1.0 + float(rate)) / (1.0 + float(base_econ.get("tariff_escalation_rate", 0.0)))) ** (year - 1)
+            selected_growth = ((1.0 + float(rate)) / (1.0 + float(selected_econ.get("tariff_escalation_rate", 0.0)))) ** (year - 1)
+            cumulative += float(base_row.get("grid_import_cost_cny", 0.0)) * base_growth - float(row.get("grid_import_cost_cny", 0.0)) * selected_growth
             cumulative += -float(row.get("maintenance_cny", 0.0) or 0.0) - float(row.get("replacement_cny", 0.0) or 0.0) + float(row.get("export_income_cny", 0.0) or 0.0) + float(row.get("residual_cny", 0.0) or 0.0)
             if cumulative + 1e-9 >= capex:
                 return simple, year, f"第{year}年累计净节省达到初始投入；simple_payback_years按第1年节省"
@@ -283,7 +284,7 @@ def _escalation_sensitivity(
         selected_cost = _total_cost((selected or {}).get("economics"), rate)
         simple_payback, cumulative_payback, payback_note = _payback_details((selected or {}).get("economics"), (s0 or {}).get("economics"), rate)
         incremental = None if s0_cost is None or selected_cost is None else s0_cost - selected_cost
-        if rate == 0.0 and selected is not None:
+        if math.isclose(rate, current_rate, rel_tol=0.0, abs_tol=1e-12) and selected is not None:
             candidate_incremental = (selected.get("economics") or {}).get("incremental_npv_vs_s0_cny", selected.get("incremental_npv_vs_s0_cny"))
             if candidate_incremental is not None:
                 incremental = float(candidate_incremental)
