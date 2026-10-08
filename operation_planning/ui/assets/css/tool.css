@@ -209,3 +209,6 @@ details.more[open] summary { margin-bottom: 14px; }
 html { scroll-padding-bottom: 110px; }
 .numcards > div { display: block; }
 .numcards > div > span:first-child, .numcards small { display: block; }
+/* 电价年涨幅表：窄屏在容器内横向滑动，表头不被压成一字一行 */
+.esc-table { min-width: 560px; }
+.esc-table td:first-child { white-space: nowrap; }
