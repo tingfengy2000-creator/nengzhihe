@@ -55,10 +55,13 @@ function surplusBrief(vm) {
   const rows = st ? st.candidates.map((x) => x.status !== 'complete' ? `<tr><td>${fmt.d(x.capacityKwh, 1)} kWh</td><td colspan="5">条件不全：请填写储能报价</td></tr>`
     : `<tr${x.capacityKwh === st.recommendedKwh && st.recommendedKwh > 0 ? ' class="rec"' : ''}><td>${fmt.d(x.capacityKwh, 1)} kWh${x.capacityKwh === st.recommendedKwh && st.recommendedKwh > 0 ? '（最划算）' : ''}</td><td class="r">${m(x.investment)}</td><td class="r">${m(x.annualBillSaving)}</td><td class="r">${m(x.annualNet)}</td><td class="r">${isNum(x.payback) ? fmt.d(x.payback, 1) + ' 年' : esc(x.paybackStatus || '—')}</td><td class="r">${m(x.studyNet)}</td></tr>`).join('') : '';
   return `<h2>多余的电去哪儿（${esc(c.name)}，每年约 ${fmt.kwh(sp.surplusKwh)} kWh 用不完）</h2>
-  ${st ? `<p>存起来（储能）${st.recommendedKwh === 0 ? `：${esc(st.recommendationNote || '按当前报价不建议装储能')}` : ''}</p><table><tr><th>电池容量</th><th class="r">初始投入（元）</th><th class="r">每年少交电费</th><th class="r">每年净收益</th><th class="r">回本</th><th class="r">研究期净收益（不折现）</th></tr>${rows}</table>` : ''}
+  ${st ? `<p>存起来（储能）${st.recommendedKwh === 0 ? `：${esc(st.recommendationNote || '按当前报价不建议装储能')}` : ''}</p><table><thead><tr><th>电池容量</th><th class="r">初始投入（元）</th><th class="r">每年少交电费</th><th class="r">每年净收益</th><th class="r">回本</th><th class="r">研究期净收益（不折现）</th></tr></thead><tbody>${rows}</tbody></table>` : ''}
   ${e ? `<p>卖给电网（粗算）：每年约 ${fmt.kwh(e.soldKwh ?? e.surplusKwh)} kWh${isNum(e.price) && e.status === 'complete' ? `，上网电价 ${fmt.d(e.price, 3)} 元/kWh，每年收入约 ${m(e.annualRevenue)} 元，研究期 ${m(e.studyRevenue)} 元；并网投入 ${e.connectionAssumedZero ? '未填写，按 0 粗算' : m(e.connection) + ' 元'}。电价来源：${esc(e.source || '用户填写')}` : '；填写上网电价后可估算收入'}。</p>` : ''}
   <p class="note">${[SURPLUS_NOTES.storage, SURPLUS_NOTES.load, SURPLUS_NOTES.export, SURPLUS_NOTES.both].map(esc).join(' ')}</p>`;
 }
+
+/** 后端说明里夹带的字段名换成中文（与结果页一致）。 */
+const plainNote = (t) => String(t || '').replace(/avoided_kgco2/g, '自用减碳量');
 
 export function briefHtml(T) {
   const vm = T.result.vm, rec = vm.byId[(vm.rec || {}).scenarioId];
@@ -76,7 +79,11 @@ export function briefHtml(T) {
   .k{color:#0E7C73;font-weight:700;letter-spacing:.1em;font-size:12px}.big{font-size:20px;font-weight:800;margin:10px 0}
   table{border-collapse:collapse;width:100%;font-size:12.5px}td,th{border-bottom:1px solid #e3e7e6;padding:5px 6px;text-align:left}th{background:#f2f4f3}.r{text-align:right}tr.rec td{background:#e6f3f1;font-weight:600}
   .note{color:#5F6B69;font-size:12px}.warn{background:#FFF3DC;padding:8px 10px;border-radius:6px}ul{padding-left:18px}
-  @media print{body{margin:0;max-width:none}h2{break-after:avoid}table{break-inside:auto}tr{break-inside:avoid}}
+  thead{display:table-header-group}tr,td,th{break-inside:avoid;page-break-inside:avoid}
+  @page{size:A4;margin:14mm 13mm}
+  @media print{body{margin:0;max-width:none;font-size:12.5px;line-height:1.5}h1{font-size:21px}h2{font-size:14.5px;margin:16px 0 6px;break-after:avoid;page-break-after:avoid}
+    .big{font-size:17px;margin:6px 0}p,ol,ul{margin:4px 0}li{margin:0}table{font-size:11.5px;break-inside:auto}td,th{padding:3px 5px}.note{font-size:11px}
+    .tail{break-inside:avoid;page-break-inside:avoid}}
   </style></head><body>
   <p class="k">能见度 · 低碳改造决策简报</p>
   <h1>${esc(story.headline(vm))}</h1>
@@ -84,15 +91,15 @@ export function briefHtml(T) {
   ${rec ? `<p class="big">${y}总花费约 ${fmt.money(rec.totalCost)} 元（折现）${rec.id !== 'S0_grid' ? `，${esc(fmt.delta(rec.incremental).text)}` : ''}</p>` : ''}
   <p>推荐状态：${esc((vm.rec || {}).label || '')}——${esc((vm.rec || {}).note || '')}</p>
   ${vm.service && vm.service.status === 'service_gap' ? `<p class="warn">空调有缺口：全年 ${fmt.int(vm.service.shortfallHours)} 小时冷量不足，结论不代表同等舒适度下的最优投资。</p>` : `<p>空调服务状态：${esc((vm.service || {}).label || '')}（${esc((vm.service || {}).note || '')}）</p>`}
-  <h2>条件</h2><table>${conds.map(([k, v]) => `<tr><th style="width:28%">${esc(k)}</th><td>${esc(v)}</td></tr>`).join('')}<tr><th>空调一年用电（项目合计）</th><td>${fmt.kwh(vm.load.annualKwh)} kWh</td></tr></table>
+  <h2>条件</h2><table><tbody>${conds.map(([k, v]) => `<tr><th style="width:28%">${esc(k)}</th><td>${esc(v)}</td></tr>`).join('')}<tr><th>空调一年用电（项目合计）</th><td>${fmt.kwh(vm.load.annualKwh)} kWh</td></tr></tbody></table>
   <h2>推荐理由</h2><ol>${reasonsOf(vm).map((r) => `<li>${esc(r)}</li>`).join('')}</ol>
-  <h2>四种供电方式（${y}总账）</h2><table><tr><th>方案</th><th>状态</th><th class="r">总花费（元）</th><th class="r">比只用电网</th><th class="r">年发电 kWh</th><th class="r">当时用上 kWh</th><th class="r">浪费 kWh</th><th class="r">第1年减碳 kg</th></tr>${opt}</table>
+  <h2>四种供电方式（${y}总账）</h2><table><thead><tr><th>方案</th><th>状态</th><th class="r">总花费（元）</th><th class="r">比只用电网</th><th class="r">年发电 kWh</th><th class="r">当时用上 kWh</th><th class="r">浪费 kWh</th><th class="r">第1年减碳 kg</th></tr></thead><tbody>${opt}</tbody></table>
   <p class="note">负的“比只用电网”= 多花，正 = 省下；“条件不全”不是排除；总花费不含空调设备本身。</p>
-  ${sweep ? `<h2>光伏容量比选</h2><table><tr><th>容量</th><th>状态</th><th class="r">比只用电网</th><th class="r">发电当时用上</th><th class="r">每吨减碳</th></tr>${sweep}</table><p class="note">${esc(story.basisPlain(vm))}</p>` : ''}
+  ${sweep ? `<h2>光伏容量比选</h2><table><thead><tr><th>容量</th><th>状态</th><th class="r">比只用电网</th><th class="r">发电当时用上</th><th class="r">每吨减碳</th></tr></thead><tbody>${sweep}</tbody></table><p class="note">${esc(story.basisPlain(vm))}</p>` : ''}
   ${surplusBrief(vm)}
-  <h2>减碳口径</h2><ul>${((vm.carbonContext || {}).scopeNotes || []).map((n) => `<li>${esc(n)}</li>`).join('')}</ul>
-  <h2>适用边界</h2><ul>${boundariesOf(vm).map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
-  <h2>依据</h2><p class="note">${esc([p.kind, p.file, p.sourceCommit && `源码 ${p.sourceCommit}`, p.calculationVersion, p.weatherHash && `天气哈希 ${p.weatherHash}`].filter(Boolean).join(' · '))}</p>
+  <h2>减碳口径</h2><ul>${((vm.carbonContext || {}).scopeNotes || []).map((n) => `<li>${esc(plainNote(n))}</li>`).join('')}</ul>
+  <div class="tail"><h2>适用边界</h2><ul>${boundariesOf(vm).map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
+  <h2>依据</h2><p class="note">${esc([p.kind, p.file, p.sourceCommit && `源码 ${p.sourceCommit}`, p.calculationVersion, p.weatherHash && `天气哈希 ${p.weatherHash}`].filter(Boolean).join(' · '))}</p></div>
   </body></html>`;
 }
 

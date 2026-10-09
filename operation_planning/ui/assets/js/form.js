@@ -259,13 +259,14 @@ export function formFromRequest(req, options) {
   else { f.capacity_mode = 'auto'; f.capacities = ''; }
   f.wind_turbine_count = s(wind.turbine_count ?? 0); f.hub_height_m = s(wind.hub_height_m ?? '');
   f._extras.wind = Object.fromEntries(Object.entries(wind).filter(([k]) => !['turbine_count', 'hub_height_m', 'site_id', 'year'].includes(k)));
+  // 电价口径原样取自请求：有电价档案就用档案与应用方式；只有请求确实没给档案时才用固定价。
   if (pv.tariff_id) { f.price_mode = 'tariff'; f.tariff_id = pv.tariff_id; f.tariff_application = pv.tariff_application || 'historical_weather_date'; }
+  else { f.price_mode = 'fixed'; f.import_price = s(hy.import_price_cny_per_kwh ?? pv.import_price_cny_per_kwh ?? ''); }
   if (pv.tariff_id === 'custom_user' && pv.custom_tariff) {
     for (const p of pv.custom_tariff.periods || []) { const fd = FIELDS.find((x) => x.tou === p.name); if (fd && f[fd.key] === '') f[fd.key] = s(p.price); }
     f.tou_base = pv.custom_tariff.base_tariff_id || '';
   }
   if (hy.tariff_escalation_rate != null) f.escalation_pct = s(Math.round(Number(hy.tariff_escalation_rate) * 10000) / 100);
-  else { f.price_mode = 'fixed'; f.import_price = s(hy.import_price_cny_per_kwh ?? pv.import_price_cny_per_kwh ?? ''); }
   f.budget_cny = s(hy.budget_cny ?? ''); f.study_years = s(hy.study_years ?? pv.study_years ?? '');
   f.allow_export = !!(hy.allow_export ?? pv.allow_export);
   const pq = hy.pv_quote || pv.quote || {}, wq = hy.wind_quote || {};
