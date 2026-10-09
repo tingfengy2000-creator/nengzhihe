@@ -1,0 +1,6 @@
+你现在接手“能见度”（仓库包名仍为 nengzhihe / operation_planning）的前端第三轮收尾小修。
+
+1. 拉取仓库 tingfengy2000-creator/nengzhihe，切到分支 feat/5060-product-ui 的最新提交（含 docs/handoff/frontend_redesign/PROMPT_round3.md），新建分支 feat/frontend-round3。
+2. 开工前先设置提交身份：git config user.name "tingfengy2000-creator"；git config user.email "tingfengy2000-creator@users.noreply.github.com"。本轮所有提交的作者和提交者都必须是这个账号，提交信息里不加 AI 署名或 Co-Authored-By 行。
+3. 完整阅读 PROMPT_round3.md（本轮唯一任务书）及其中列出的文件；前两轮任务书的原则和诚实规则继续有效。按第 3 节分 4 批普通推送；不改 main、不强推、不建 Release；后端一律不改。
+4. 完成后停下，回复：分支、各批 SHA、提交身份自查、逐项验收、已知问题和需要 5090 处理的问题。
