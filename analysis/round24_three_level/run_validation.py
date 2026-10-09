@@ -106,7 +106,7 @@ def select_rooms(z):
         e=pd.read_csv(io.BytesIO(z.read(f'dataset/Envilog/E{i:02d}.csv')))
         gi=pd.DatetimeIndex(pd.to_datetime(g.datetime,dayfirst=True)).tz_localize('Asia/Kolkata')
         ei=pd.DatetimeIndex(pd.to_datetime(e.datetime,dayfirst=True)).tz_localize('Asia/Kolkata')
-        if len(g)!=27360 or gi.has_duplicates or not gi.is_monotonic_increasing or not (np.diff(gi.asi8)==60_000_000_000).all():reasons.append('invalid minute grid')
+        if len(g)!=27360 or gi.has_duplicates or not gi.is_monotonic_increasing or not (np.diff(gi.as_unit('ns').asi8)==60_000_000_000).all():reasons.append('invalid minute grid')
         if ei.has_duplicates or not ei.is_monotonic_increasing:reasons.append('indoor timestamp duplicate/out-of-order; not silently repaired')
         if e.isna().any().any() or g.isna().any().any():reasons.append('missing source measurements')
         if len(rooms)>=3:reasons.append('after first three metadata/quality-eligible rooms; no outcome inspection for selection')
@@ -262,7 +262,7 @@ def cu_layer():
     path=ROOT/'working/round23/sources/2019Floor2.csv'
     columns=pd.read_csv(path,nrows=0).columns; ac=[c for c in columns if '_AC' in c]
     d=pd.read_csv(path,usecols=['Date']+ac);idx=pd.DatetimeIndex(pd.to_datetime(d.pop('Date'))).tz_localize('Asia/Bangkok')
-    if len(d)!=525600 or idx.has_duplicates or not (np.diff(idx.asi8)==60_000_000_000).all():raise ValueError('CU grid invalid')
+    if len(d)!=525600 or idx.has_duplicates or not (np.diff(idx.as_unit('ns').asi8)==60_000_000_000).all():raise ValueError('CU grid invalid')
     a=d.to_numpy(float);valid=np.isfinite(a).all(axis=1)&(a>=0).all(axis=1)
     power=pd.Series(np.where(valid,a.sum(axis=1),np.nan),index=idx)
     validcounts=power.resample('D').count();weekday=validcounts.index.weekday<5
