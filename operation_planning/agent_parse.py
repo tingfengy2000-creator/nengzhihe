@@ -261,9 +261,11 @@ def _request_mentions_field(request_text: str, field: str) -> bool:
     if field == "hybrid.tariff_escalation_rate":
         return any(token in text for token in ("年涨幅", "年增长率")) or ("电价" in text and any(token in text for token in ("每年", "年涨", "年降", "涨幅", "增长率")))
     if field == "hybrid.import_price_cny_per_kwh":
-        return any(token in text for token in ("购电价", "购电价格", "每度", "电网电价")) or ("电价" in text and not _request_mentions_field(text, "hybrid.tariff_escalation_rate"))
+        base_price_edit = any(token in text for token in ("购电价", "购电价格", "每度", "电网电价")) or ("电价" in text and
+            (bool(re.search(r"\d+(?:\.\d+)?\s*元", text)) or any(token in text for token in ("改为", "设为", "设置", "调为", "调到", "变成", "调高", "调低"))))
+        return base_price_edit and not _request_mentions_field(text, "hybrid.tariff_escalation_rate")
     if field == "hybrid.allow_export":
-        return any(token in text for token in ("卖电", "外送", "上网", "余电", "卖给电网")) and any(token in text for token in ("关闭", "开启", "停止", "允许", "禁止", "不", "卖给", "启用"))
+        return any(token in text for token in ("卖电", "外送", "上网", "余电", "卖给电网")) and any(token in text for token in ("关闭", "开启", "打开", "停止", "允许", "禁止", "不", "卖给", "启用"))
     if field in _FIELD_HINTS:
         return any(str(hint).lower() in text for hint in _FIELD_HINTS[field])
     # Unknown fields in a mentioned subsystem still fail schema validation;
@@ -323,9 +325,13 @@ def _unsupported_brand_notes(request_text: str) -> list[str]:
 
 def _unsupported_feature_notes(request_text: str) -> list[str]:
     notes = []
+    if re.search(r"峰谷(?:电价)?(?:自动)?套利|峰谷电价.{0,8}套利", request_text):
+        notes.append("“峰谷套利”：本接口不承诺自动套利或收益保证")
     for term, label in (("储能套利", "储能峰谷套利"), ("峰谷套利", "峰谷套利"), ("保证回本", "回本保证"), ("其他电器", "其他电器")):
         if term in request_text:
-            notes.append(f"“{label}”：本接口不承诺自动套利或收益保证")
+            note = f"“{label}”：本接口不承诺自动套利或收益保证"
+            if note not in notes:
+                notes.append(note)
     return notes
 
 

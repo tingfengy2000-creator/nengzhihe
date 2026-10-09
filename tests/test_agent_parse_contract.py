@@ -193,11 +193,13 @@ class AgentParseContractTests(unittest.TestCase):
         result = self._parse_proposal("让储能按峰谷电价自动套利并保证回本", [
             {"field": "hybrid.allow_export", "to": True},
             {"field": "storage.quote.cny_per_kwh", "to": 100},
+            {"field": "hybrid.import_price_cny_per_kwh", "to": .66},
         ])
         self.assertEqual(result["status"], "ok")
         self.assertEqual(result["changes"], [])
         self.assertTrue(result["unsupported"])
-        self.assertEqual(len(result["dropped"]), 2)
+        self.assertEqual(len(result["dropped"]), 3)
+        self.assertTrue(any("峰谷套利" in note for note in result["unsupported"]))
 
     def test_requested_unknown_field_is_not_silently_dropped(self):
         result = self._parse_proposal("光伏装5kWp", [{"field": "pv.requested_capacities_kwp", "to": 5}])
