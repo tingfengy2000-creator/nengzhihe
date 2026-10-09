@@ -304,10 +304,13 @@ def madrid_layer():
         if general.empty:reason.append('no unambiguous general active-energy meter')
         if general.SENSOR.nunique()!=1:reason.append('general meter ambiguous/renamed or absent; no parent-child summation')
         if gas.SENSOR.nunique()!=1:reason.append('gas meter ambiguous or absent')
-        for x,label,units in [(general,'electricity',{'kWh'}),(gas,'gas',{'kWh','m3'})]:
-            if len(x)!=12 or set(x.month)!={float(i) for i in range(1,13)} or x.month.duplicated().any():reason.append(label+' missing/duplicate months')
+        for x,label,units in [(general,'electricity',{'kWh'}),(gas[gas.month.isin([1,2,12])],'gas winter',{'kWh','m3'})]:
+            required=set(range(1,13)) if label=='electricity' else {1,2,12}
+            if len(x)!=len(required) or set(x.month)!=required or x.month.duplicated().any():reason.append(label+' missing/duplicate months')
             if x.value.isna().any() or (x.value<0).any():reason.append(label+' nonnumeric/missing/negative readings')
             if not set(x.UNIDADES).issubset(units):reason.append(label+' unsupported units')
+            if label=='gas winter' and not (x.value>0).any():reason.append('no observed positive winter gas usage')
+        if gas.month.duplicated().any():reason.append('duplicate gas-month scope')
         all_buildings.append({'building':name,'included':not reason,'reasons':list(dict.fromkeys(reason)),
           'electricity_records':len(general),'gas_records':len(gas),'electricity_sensors':general.SENSOR.nunique(),'gas_sensors':gas.SENSOR.nunique()})
         if not reason:selected.append((name,general.sort_values('month'),gas.sort_values('month')))
@@ -333,7 +336,7 @@ def madrid_layer():
         stats.append(s)
         for month in range(1,13):
             records.append({'building':name,'month':month,'electricity_kwh':e[month-1],
-              'gas_value':float(gas.set_index('month').value.loc[month]),'gas_units':gas.UNIDADES.iloc[0],
+              'gas_value':float(gas.set_index('month').value.get(month,np.nan)),'gas_units':gas.UNIDADES.iloc[0],
               'baseline_monthly_kwh':baseline,'signed_excess_kwh':delta[month-1],'positive_excess_kwh':positive[month-1],
               'positive_excess_fraction':fraction[month-1],'model_cooling_fraction':float(monthly.loc[month,'model_cooling_fraction']),
               'cdd18':float(monthly.loc[month,'cdd18'])})

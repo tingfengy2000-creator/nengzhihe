@@ -1,5 +1,5 @@
 {
-  "version": "round24-three-layer-v1",
+  "version": "round24-three-layer-v2-gas-eligibility",
   "request_source": "feat/5060-product-ui@7db47e3 section 24",
   "frozen_product_source": "e7f0cf1d0eed5464835897c1d51db84040cb16a0",
   "room_selection": "First three ascending HouseID with one AC, non-inverter split, tonnage/setpoint/phase present, complete minute current and monotonic unique indoor timestamps; no selection by model fit",
@@ -24,7 +24,8 @@
   "cu_normalization": "hourly energy divided by same day's mean hourly energy, then average across common complete weekdays",
   "cu_sensitivity": "OLS daily energy on daily mean outdoor temperature divided by mean daily energy; measured and model use same accepted dates",
   "madrid_year": 2024,
-  "madrid_selection": "Centros administrativos; same EDIFICIO must have one unambiguous general active kWh meter and gas kWh/m3 records, each with exactly one finite nonnegative record per month; renamed/ambiguous/submeter scopes excluded",
+  "madrid_selection": "Centros administrativos; same EDIFICIO must have one unambiguous general active kWh meter, exactly one finite nonnegative record per month; one gas kWh/m3 meter with valid January/February/December measurements and positive winter use; missing gas summer values retained as missing, not zero; renamed/ambiguous/submeter scopes excluded",
+  "eligibility_amendment": "Before Madrid model or seasonal outcomes were computed, initial complete-12-month gas requirement yielded zero eligible buildings because summer gas records are missing. Gas is only an eligibility indicator, not used for energy comparison; amended to observed winter gas use. Initial selection and failed run preserved in attempts/0a47319.",
   "gas_boundary": "gas metering alone does not establish predominant gas heating or absence of electric heating",
   "baseline_months": [4, 5, 10, 11],
   "summer_months": [6, 7, 8],
