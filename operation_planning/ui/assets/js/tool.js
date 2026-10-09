@@ -245,8 +245,9 @@ function askResult() {
   if (a.kind === 'question') return `<div class="callout info">${icon('help')}<span><b>需要补充：</b>${esc(a.question || '')}</span></div>`;
   if (a.kind === 'applied') return `<div class="ask-tags">${a.keys.length ? `<span class="tag ok">${icon('check')}已写入表单：${esc(a.labels.join('、'))}</span>` : ''}${a.skipped.map((x) => `<span class="tag unknown">${icon('info')}${esc(x.label)}：${esc(x.why)}</span>`).join('')}</div><p class="hint">条件已修改，请检查后点击「计算」。</p>`;
   const fb = a.fallbackReason ? `<p class="small" style="color:var(--warn)">${icon('info')} 本地大模型暂不可用（${esc(a.fallbackReason)}），已改用规则识别。</p>` : '';
-  if (!a.applied.length && !a.rejected.length) return fb + '<p class="hint">没有识别到可填入的条件。</p>';
-  return fb + `<div class="ask-tags">${a.applied.map(([, , l]) => `<span class="tag ok">${icon('check')}${esc(l)}</span>`).join('')}${a.rejected.map(([t, why]) => `<span class="tag unknown">${icon('info')}${esc(t)}：${esc(why)}</span>`).join('')}</div>`;
+  const un = (a.unrecognized || []).length ? `<p class="ask-unrec">${icon('help')}<span><b>没能识别：</b>${a.unrecognized.map((x) => `“${esc(x)}”`).join('、')}。这些内容没有写入表单，请在表单里手动修改。</span></p>` : '';
+  if (!a.applied.length && !a.rejected.length) return fb + '<p class="hint">没有识别到可填入的条件。</p>' + un;
+  return fb + `<div class="ask-tags">${a.applied.map(([, , l]) => `<span class="tag ok">${icon('check')}${esc(l)}</span>`).join('')}${a.rejected.map(([t, why]) => `<span class="tag unknown">${icon('info')}${esc(t)}：${esc(why)}</span>`).join('')}</div>` + un;
 }
 
 /* ---------- 台数比选 ---------- */

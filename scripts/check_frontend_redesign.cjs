@@ -134,6 +134,23 @@ async function checkAgent(browser) {
     stub.status = m; await open(); await page.waitForTimeout(m === 'timeout' ? 4500 : 600);
     ok(/规则识别/.test(await tagText()), `状态 ${m}：标签应为“规则识别”：${await tagText()}`);
   }
+  // 规则识别（模型未启动）：三项全部写入；没命中的片段列为“没能识别”
+  stub.status = 'offline'; await open();
+  await ask('预算改为60000元，使用时段改为18点到22点，电价每年涨3%'); await page.waitForTimeout(500);
+  {
+    const v = await Promise.all(['budget_cny', 'start_hour', 'end_hour', 'escalation_pct'].map((k) => page.inputValue(`[data-field="${k}"]`)));
+    ok(v.join() === '60000,18,22,3', `规则识别应写入预算/时段/年涨幅：${v.join()}`);
+    ok(!/没能识别/.test(await page.textContent('[data-ask-result]')), '三项都识别时不应出现“没能识别”');
+  }
+  for (const [txt, want] of [['预算改成6万', '60000'], ['预算调到6万元，其他条件不变', '60000'], ['预算60,000元', '60000']]) {
+    await page.fill('[data-field="budget_cny"]', ''); await ask(txt); await page.waitForTimeout(300);
+    ok(await page.inputValue('[data-field="budget_cny"]') === want && !/没能识别/.test(await page.textContent('[data-ask-result]')), `规则识别“${txt}”应写入预算 ${want}`);
+  }
+  await ask('预算改为50000元，换成格力空调和朝南的窗户'); await page.waitForTimeout(300);
+  {
+    const t = await page.textContent('[data-ask-result]');
+    ok(await page.inputValue('[data-field="budget_cny"]') === '50000' && /没能识别：/.test(t) && /换成格力空调/.test(t) && /朝南的窗户/.test(t) && /手动修改/.test(t), `应列出没能识别的片段：${t.slice(0, 120)}`);
+  }
   ok(errs.length === 0, `一句话输入页面错误：${errs.join(' | ')}`);
   await page.context().close();
   server.close();

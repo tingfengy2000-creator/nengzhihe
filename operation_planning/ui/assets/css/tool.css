@@ -213,3 +213,5 @@ html { scroll-padding-bottom: 110px; }
 .esc-table { min-width: 560px; }
 .esc-table td:first-child { white-space: nowrap; }
 .pr-dropped { font-size: 13px; color: var(--ink-3); margin-top: 8px; }
+.ask-unrec { display: flex; gap: 6px; align-items: flex-start; margin-top: 8px; font-size: 13.5px; color: var(--warn); }
+.ask-unrec svg { width: 16px; height: 16px; flex: none; margin-top: 2px; }

@@ -309,37 +309,49 @@ export function quoteFieldsFrom(req) {
 /* 一句话输入：本地规则，只处理使用时段、预算、光伏容量、风机台数/高度、   */
 /* 电价、是否外送；房间数、台数、面积、城市等提示“请在表单修改”。         */
 /* ------------------------------------------------------------------ */
+/* 句子按逗号、顿号、分号、句号和“和”切成片段；没有被任何规则命中的片段列为“没能识别”，提醒用户在表单手动修改。 */
+const ASK_SPLIT = /[，、；;。！!？?]|,(?!\d{3})|和/;
+const ASK_FILLER = /^(?:其他|其余|别的)?(?:条件|参数)?(?:都|均)?(?:保持)?不变$|^(?:请|麻烦|帮我|谢谢|好的|就这样|然后|另外|还有|并且|同时)$/;
 export function parseAsk(text) {
-  const applied = [], rejected = [];
+  const applied = [], rejected = [], spans = [];
   const t = String(text || '').replace(/\s+/g, '');
-  if (!t) return { applied, rejected };
+  if (!t) return { applied, rejected, unrecognized: [] };
   const num = (x) => Number(String(x).replace(/,/g, ''));
+  const mm = (re) => { const r = t.match(re); if (r) spans.push([r.index, r.index + r[0].length]); return r; };
   let m;
-  if ((m = t.match(/(\d{1,2})(?:[:：]00)?点?(?:到|至|-|—|~)(\d{1,2})(?:[:：]00)?点/))) {
+  if ((m = mm(/(\d{1,2})(?:[:：]00)?点?(?:到|至|-|—|~)(\d{1,2})(?:[:：]00)?点/))) {
     const a = num(m[1]), b = num(m[2]);
     if (a >= 0 && a <= 23 && b >= 1 && b <= 24 && b > a) applied.push(['start_hour', String(a), '开始使用'], ['end_hour', String(b), '结束使用']);
     else rejected.push([m[0], '时段不合法']);
   }
-  if (/每天|天天|全周|周末也/.test(t)) applied.push(['weekdays_only', 'false', '使用日：每天']);
-  else if (/工作日/.test(t)) applied.push(['weekdays_only', 'true', '使用日：工作日']);
-  if ((m = t.match(/预算(?:为|是|约|有)?(\d+(?:\.\d+)?)(万|w|W)?(?:元)?/))) applied.push(['budget_cny', String(Math.round(num(m[1]) * (m[2] ? 10000 : 1))), '预算']);
-  if ((m = t.match(/(\d+(?:\.\d+)?)(?:kWp|kwp|KWP|千瓦)(?:的)?光伏|光伏(\d+(?:\.\d+)?)(?:kWp|kwp|KWP|千瓦)/))) applied.push(['capacities', String(num(m[1] || m[2])), '光伏容量'], ['capacity_mode', 'list', '光伏容量方式：指定候选容量']);
-  if (/不装(?:小)?风机|不要(?:小)?风机/.test(t)) applied.push(['wind_turbine_count', '0', '小风机：不装']);
-  else if ((m = t.match(/([01一])台(?:小)?风机/))) applied.push(['wind_turbine_count', m[1] === '0' ? '0' : '1', `小风机：${m[1] === '0' ? '不装' : '1 台'}`]);
-  else if ((m = t.match(/(\d+)台(?:小)?风机/))) rejected.push([m[0], '小风机目前只支持 0 或 1 台']);
-  if ((m = t.match(/(?:风机|轮毂)(?:安装)?(?:高度)?(\d+(?:\.\d+)?)(?:米|m)/))) applied.push(['hub_height_m', String(num(m[1])), '风机安装高度']);
-  if ((m = t.match(/电价(?:为|是)?(\d+(?:\.\d+)?)元?/))) applied.push(['import_price', String(num(m[1])), '固定电价'], ['price_mode', 'fixed', '电价方式：固定电价']);
-  if ((m = t.match(/电价每?年(?:上?涨|上调|增长|提高)(\d+(?:\.\d+)?)%|年涨幅(?:为|是)?(\d+(?:\.\d+)?)%/))) applied.push(['escalation_pct', String(num(m[1] || m[2])), '未来电价每年变化']);
-  else if ((m = t.match(/电价每?年(?:下降|下调|降低|降)(\d+(?:\.\d+)?)%/))) applied.push(['escalation_pct', String(-num(m[1])), '未来电价每年变化']);
-  if (/不(?:允许)?外送|不卖电|不上网/.test(t)) applied.push(['allow_export', false, '不卖电给电网']);
-  else if (/允许外送|可以外送|余电上网|卖给电网|卖电/.test(t)) applied.push(['allow_export', true, '多余电量卖给电网']);
+  if (mm(/每天|天天|全周|周末也/)) applied.push(['weekdays_only', 'false', '使用日：每天']);
+  else if (mm(/工作日/)) applied.push(['weekdays_only', 'true', '使用日：工作日']);
+  if ((m = mm(/预算(?:改为|改成|调到|调为|调整为|调整到|设为|设置为|定为|提高到|增加到|加到|降到|降低到|减到|为|是|约|有)?(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)(万|w|W)?(?:元)?/))) applied.push(['budget_cny', String(Math.round(num(m[1]) * (m[2] ? 10000 : 1))), '预算']);
+  if ((m = mm(/(\d+(?:\.\d+)?)(?:kWp|kwp|KWP|千瓦)(?:的)?光伏|光伏(\d+(?:\.\d+)?)(?:kWp|kwp|KWP|千瓦)/))) applied.push(['capacities', String(num(m[1] || m[2])), '光伏容量'], ['capacity_mode', 'list', '光伏容量方式：指定候选容量']);
+  if (mm(/不装(?:小)?风机|不要(?:小)?风机/)) applied.push(['wind_turbine_count', '0', '小风机：不装']);
+  else if ((m = mm(/([01一])台(?:小)?风机/))) applied.push(['wind_turbine_count', m[1] === '0' ? '0' : '1', `小风机：${m[1] === '0' ? '不装' : '1 台'}`]);
+  else if ((m = mm(/(\d+)台(?:小)?风机/))) rejected.push([m[0], '小风机目前只支持 0 或 1 台']);
+  if ((m = mm(/(?:风机|轮毂)(?:安装)?(?:高度)?(\d+(?:\.\d+)?)(?:米|m)/))) applied.push(['hub_height_m', String(num(m[1])), '风机安装高度']);
+  if ((m = mm(/电价(?:改为|改成|调到|调为|为|是)?(\d+(?:\.\d+)?)元?/))) applied.push(['import_price', String(num(m[1])), '固定电价'], ['price_mode', 'fixed', '电价方式：固定电价']);
+  if ((m = mm(/电价每?年(?:上?涨|上调|增长|提高)(\d+(?:\.\d+)?)%|年涨幅(?:为|是)?(\d+(?:\.\d+)?)%/))) applied.push(['escalation_pct', String(num(m[1] || m[2])), '未来电价每年变化']);
+  else if ((m = mm(/电价每?年(?:下降|下调|降低|降)(\d+(?:\.\d+)?)%/))) applied.push(['escalation_pct', String(-num(m[1])), '未来电价每年变化']);
+  if (mm(/不(?:允许)?外送|不卖电|不上网/)) applied.push(['allow_export', false, '不卖电给电网']);
+  else if (mm(/允许外送|可以外送|余电上网|卖给电网|卖电/)) applied.push(['allow_export', true, '多余电量卖给电网']);
   const unsupported = [[/(\d+)间/, '房间数'], [/每间(\d+)台|(\d+)台空调/, '空调台数'], [/(\d+(?:\.\d+)?)(?:㎡|平方米|平米|m2)/, '面积'],
     [/广州|北京|哈尔滨|上海|深圳|成都|杭州|武汉|西安|南京/, '城市'], [/(\d+)人/, '人数'], [/(\d+)度|(\d+)℃/, '温度']];
   for (const [re, name] of unsupported) {
     const hit = t.match(re);
-    if (hit && !(name === '面积' && /屋顶/.test(t.slice(Math.max(0, hit.index - 4), hit.index)))) rejected.push([hit[0], `${name}请在表单修改`]);
+    if (hit && !(name === '面积' && /屋顶/.test(t.slice(Math.max(0, hit.index - 4), hit.index)))) { rejected.push([hit[0], `${name}请在表单修改`]); spans.push([hit.index, hit.index + hit[0].length]); }
   }
-  return { applied, rejected };
+  // 没被任何规则命中的片段
+  const unrecognized = [];
+  let pos = 0;
+  for (const part of t.split(ASK_SPLIT)) {
+    const a = t.indexOf(part, pos), b = a + part.length; pos = b;
+    if (!part || ASK_FILLER.test(part) || !/[一-龥A-Za-z0-9]/.test(part)) continue;
+    if (!spans.some(([x, y]) => x < b && y > a)) unrecognized.push(part);
+  }
+  return { applied, rejected, unrecognized };
 }
 
 export const isNumStr = (v) => v !== '' && isNum(Number(v));
