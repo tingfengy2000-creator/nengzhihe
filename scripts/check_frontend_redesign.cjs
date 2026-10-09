@@ -327,6 +327,21 @@ const ok = (cond, msg) => { checks++; if (!cond) { failures++; console.log('  �
     ok(/replay_cases_ui_v9/.test(js) && !/replay_cases_v6/.test(sum + brief + js), '导出来源应为 replay_cases_ui_v9');
   }
 
+  /* ---------- 2b'. 打印简报：表头重复、行不跨页、无空白页 ---------- */
+  console.log('打印简报检查');
+  for (const id of ['tier_small', 'tier_medium', 'tier_large']) {
+    await page.goto(BASE + '#/samples/' + id); await page.waitForSelector('[data-step-panel="3"] .compare .opt');
+    const html = await grab(page, 'brief');
+    const tables = html.match(/<table>[\s\S]*?<\/table>/g) || [];
+    ok(tables.length >= 3 && tables.filter((t) => /<th class="r">/.test(t)).every((t) => /^<table><thead><tr>/.test(t)), `${id} 简报表格应有 thead`);
+    ok(/thead\{display:table-header-group\}/.test(html) && /tr,td,th\{break-inside:avoid/.test(html) && !/page-break-before|break-before:page/.test(html), `${id} 简报打印样式缺少重复表头/行不拆分，或有强制分页`);
+    const pp = await ctx.newPage(); await pp.setContent(html, { waitUntil: 'load' }); await pp.emulateMedia({ media: 'print' });
+    const pdf = await pp.pdf({ format: 'A4', preferCSSPageSize: true, printBackground: true }); await pp.close();
+    const pages = (pdf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) || []).length;
+    ok(pages >= 1 && pages <= 2, `${id} 简报 A4 应为 1–2 页（实际 ${pages} 页）`);
+    ok(!/avoided_kgco2/.test(html), `${id} 简报出现后端字段名`);
+  }
+
   /* ---------- 2c. 示例缺少 escalation_sensitivity 时隐藏电价表 ---------- */
   console.log('电价表缺字段检查');
   {
@@ -425,6 +440,23 @@ const ok = (cond, msg) => { checks++; if (!cond) { failures++; console.log('  �
     await compute();
     z = await zone();
     ok(/条件不全：请填写储能报价/.test(z) && /填写上网电价后可估算收入/.test(z) && !/每年收入/.test(z), '无报价时应显示条件不全且卖电只给电量');
+    // 第三轮第 4 项：三档示例条件载入后直接计算，10 年总花费与回放一致（≤1 元），电价口径与示例相同
+    for (const id of ['tier_small', 'tier_medium', 'tier_large']) {
+      const c = replay.cases.find((x) => x.case_id === id);
+      await pl.goto(BASE + '#/tool/1'); await pl.waitForSelector('[data-quick-case]'); await pl.click(`[data-quick-case="${id}"]`); await pl.waitForTimeout(200);
+      ok(await pl.evaluate(() => document.querySelector('[data-seg="price_mode"][data-val="tariff"]').getAttribute('aria-pressed') === 'true') && await pl.inputValue('[data-field="tariff_id"]') === c.request.pv.tariff_id,
+        `${id} 示例条件应使用回放的电价档案 ${c.request.pv.tariff_id}`);
+      await pl.click('.actionbar [data-action="compute"]'); await pl.waitForFunction(() => location.hash === '#/tool/2', null, { timeout: 240000 });
+      await pl.goto(BASE + '#/tool/4'); await pl.waitForSelector('[data-export="json"]:not([disabled])');
+      const [d] = await Promise.all([pl.waitForEvent('download'), pl.click('[data-export="json"]')]);
+      const J = JSON.parse(fs.readFileSync(await d.path(), 'utf8')), rep = J.report || {};
+      ok(J.request.pv.tariff_id === c.request.pv.tariff_id && J.request.pv.tariff_application === c.request.pv.tariff_application, `${id} 请求电价口径与回放不同`);
+      for (const rc of c.candidates) {
+        const lc = (rep.candidates || []).find((x) => x.scenario_id === rc.scenario_id);
+        const a = rc.total_cost_npv_cny ?? (rc.economics || {}).total_cost_npv_cny, b = lc && (lc.total_cost_npv_cny ?? (lc.economics || {}).total_cost_npv_cny);
+        ok(a != null && b != null && Math.abs(a - b) <= 1, `${id} ${rc.scenario_id} 重算总花费 ${b} 与回放 ${a} 相差超过 1 元`);
+      }
+    }
     ok(errsL.length === 0, `实时计算页面错误：${errsL.slice(0, 3).join(' | ')}`);
     await pl.context().close();
   }

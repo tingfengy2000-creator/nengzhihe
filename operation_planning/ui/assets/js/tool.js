@@ -244,7 +244,7 @@ function askResult() {
   if (a.kind === 'failed') return `<div class="callout warn">${icon('warn')}<span><b>本地大模型没能可靠理解这句话，请换个说法或直接修改表单。</b>${a.reason ? `<br><span class="small">原因：${esc(a.reason)}</span>` : ''}</span></div>`;
   if (a.kind === 'question') return `<div class="callout info">${icon('help')}<span><b>需要补充：</b>${esc(a.question || '')}</span></div>`;
   if (a.kind === 'applied') return `<div class="ask-tags">${a.keys.length ? `<span class="tag ok">${icon('check')}已写入表单：${esc(a.labels.join('、'))}</span>` : ''}${a.skipped.map((x) => `<span class="tag unknown">${icon('info')}${esc(x.label)}：${esc(x.why)}</span>`).join('')}</div><p class="hint">条件已修改，请检查后点击「计算」。</p>`;
-  const fb = a.fallbackReason ? `<p class="small" style="color:var(--warn)">${icon('info')} 本地大模型暂不可用（${esc(a.fallbackReason)}），已改用规则识别。</p>` : '';
+  const fb = a.fallbackReason ? `<p class="ask-unrec">${icon('info')}<span>本地大模型暂不可用（${esc(a.fallbackReason)}），已改用规则识别。</span></p>` : '';
   const un = (a.unrecognized || []).length ? `<p class="ask-unrec">${icon('help')}<span><b>没能识别：</b>${a.unrecognized.map((x) => `“${esc(x)}”`).join('、')}。这些内容没有写入表单，请在表单里手动修改。</span></p>` : '';
   if (!a.applied.length && !a.rejected.length) return fb + '<p class="hint">没有识别到可填入的条件。</p>' + un;
   return fb + `<div class="ask-tags">${a.applied.map(([, , l]) => `<span class="tag ok">${icon('check')}${esc(l)}</span>`).join('')}${a.rejected.map(([t, why]) => `<span class="tag unknown">${icon('info')}${esc(t)}：${esc(why)}</span>`).join('')}</div>` + un;
@@ -261,7 +261,7 @@ function sizingHtml() {
   else if (S && S.res) {
     const r = S.res, min = r.minimum_adequate_units_per_room, stale = S.formKey !== sizeKey();
     body = `<div class="sizing-res${stale ? ' is-stale' : ''}">
-      ${stale ? `<p class="small" style="color:var(--warn)">${icon('warn')} 条件已修改，下面的比选对应修改前的条件，请重新比选。</p>` : ''}
+      ${stale ? `<p class="ask-unrec">${icon('warn')}<span>条件已修改，下面的比选对应修改前的条件，请重新比选。</span></p>` : ''}
       <p class="sizing-head">${isNum(min) ? `每间至少 <b class="num">${min}</b> 台，全年在模型范围内没有冷量或除湿缺口。` : `试到 ${esc(r.max_units)} 台仍有缺口，可提高“最多试到”或换型号。`}</p>
       <div class="chart" data-size-chart></div>
       <div class="tablewrap"><table class="table size-table"><caption class="sr-only">每间台数比选</caption><thead><tr><th>每间台数</th><th>服务状态</th><th class="r">全年空调用电（单房间，kWh）</th><th class="r">冷量不足小时</th></tr></thead><tbody>
