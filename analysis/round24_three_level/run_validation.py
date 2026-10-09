@@ -57,7 +57,7 @@ def normalized_weather(site):
     p={**raw,'hourly':{k:list(np.asarray(v)[mask]) for k,v in h.items()}}
     b={'hourly':{k:list(np.asarray(v)[boundary]) for k,v in h.items()}}
     n=normalize_preceding_hour_payload(p,calendar_start=start.isoformat(),calendar_end=end.isoformat(),boundary_payload=b)
-    idx=pd.DatetimeIndex(n['time']).tz_localize(tz)
+    idx=pd.DatetimeIndex(n['time']).tz_localize(tz).as_unit('ns')
     if site=='madrid_2024':idx=idx.tz_convert('Europe/Madrid')
     frame=pd.DataFrame({v:n['hourly'][v] for v in VARS},index=idx)
     if not np.isfinite(frame.to_numpy(float)).all():raise ValueError('Weather missing/nonfinite')
@@ -79,7 +79,7 @@ def minute_weather(hourly,minute_index):
     midx=minute_index.asi8.astype(float)
     # The final source boundary supplies interpolation, not a copied last row.
     raw=json.loads((RAW/'hyderabad_2019_weather.json').read_text(encoding='utf-8'))
-    bidx=pd.DatetimeIndex(raw['hourly']['time']).tz_localize('Asia/Kolkata')
+    bidx=pd.DatetimeIndex(raw['hourly']['time']).tz_localize('Asia/Kolkata').as_unit('ns')
     h={}
     for v in VARS:
         if v=='shortwave_radiation':
@@ -104,8 +104,8 @@ def select_rooms(z):
             selection.append({'house_id':i,'included':False,'reasons':reasons});continue
         g=pd.read_csv(io.BytesIO(z.read(f'dataset/Garud/G{i:02d}.csv')))
         e=pd.read_csv(io.BytesIO(z.read(f'dataset/Envilog/E{i:02d}.csv')))
-        gi=pd.DatetimeIndex(pd.to_datetime(g.datetime,dayfirst=True)).tz_localize('Asia/Kolkata')
-        ei=pd.DatetimeIndex(pd.to_datetime(e.datetime,dayfirst=True)).tz_localize('Asia/Kolkata')
+        gi=pd.DatetimeIndex(pd.to_datetime(g.datetime,dayfirst=True)).tz_localize('Asia/Kolkata').as_unit('ns')
+        ei=pd.DatetimeIndex(pd.to_datetime(e.datetime,dayfirst=True)).tz_localize('Asia/Kolkata').as_unit('ns')
         if len(g)!=27360 or gi.has_duplicates or not gi.is_monotonic_increasing or not (np.diff(gi.as_unit('ns').asi8)==60_000_000_000).all():reasons.append('invalid minute grid')
         if ei.has_duplicates or not ei.is_monotonic_increasing:reasons.append('indoor timestamp duplicate/out-of-order; not silently repaired')
         if e.isna().any().any() or g.isna().any().any():reasons.append('missing source measurements')
@@ -141,7 +141,7 @@ def simulate_labelled(w,room,eq,status):
     return result
 
 def room_outputs(result,g,e,baseline):
-    rows=result['rows']; idx=pd.DatetimeIndex([r['timestamp'] for r in rows])
+    rows=result['rows']; idx=pd.DatetimeIndex([r['timestamp'] for r in rows]).tz_convert('Asia/Kolkata').as_unit('ns')
     phase=g['R'].reindex(idx).to_numpy(float)
     status=g['AC Status'].reindex(idx).to_numpy(float)
     proxy=np.maximum(phase-baseline,0)/1000*230*.9*status/60000 # W / (60 min * 1000)
@@ -244,7 +244,9 @@ def rooms_layer():
 def office_result(site):
     w,h=normalized_weather(site);result=tm.simulate_room(w,tm.RoomSpec())
     p=WORK/(site+'_office_full.json');p.write_text(json.dumps(result,ensure_ascii=False,allow_nan=False),encoding='utf-8')
-    idx=pd.DatetimeIndex([r['timestamp'] for r in result['rows']])
+    # Named zones plus nanosecond storage avoid pandas 3 mixed-resolution
+    # alignment corner cases. UTC instants/physical intervals remain identical.
+    idx=pd.DatetimeIndex([r['timestamp'] for r in result['rows']]).tz_convert(h.index.tz).as_unit('ns')
     m=pd.DataFrame({'model_kwh':[r['electric_power_w']/1000 for r in result['rows']],
                     'outdoor_temp_c':h.temperature_2m.to_numpy()},index=idx)
     write(site+'_model_context.json',{'room':result['room'],'equipment':result['equipment'],'response_hash':sha(p),
@@ -261,7 +263,7 @@ def relative_slope(y,t):
 def cu_layer():
     path=ROOT/'working/round23/sources/2019Floor2.csv'
     columns=pd.read_csv(path,nrows=0).columns; ac=[c for c in columns if '_AC' in c]
-    d=pd.read_csv(path,usecols=['Date']+ac);idx=pd.DatetimeIndex(pd.to_datetime(d.pop('Date'))).tz_localize('Asia/Bangkok')
+    d=pd.read_csv(path,usecols=['Date']+ac);idx=pd.DatetimeIndex(pd.to_datetime(d.pop('Date'))).tz_localize('Asia/Bangkok').as_unit('ns')
     if len(d)!=525600 or idx.has_duplicates or not (np.diff(idx.as_unit('ns').asi8)==60_000_000_000).all():raise ValueError('CU grid invalid')
     a=d.to_numpy(float);valid=np.isfinite(a).all(axis=1)&(a>=0).all(axis=1)
     power=pd.Series(np.where(valid,a.sum(axis=1),np.nan),index=idx)
