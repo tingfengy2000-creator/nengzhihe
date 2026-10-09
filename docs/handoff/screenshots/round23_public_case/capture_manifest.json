@@ -1,0 +1,45 @@
+{
+  "capture_kind": "Real browser rendering of frozen UI and existing replay. Not new model execution or measured building calibration.",
+  "product_source_commit": "e7f0cf1d0eed5464835897c1d51db84040cb16a0",
+  "server_command": "C:/Python314/python.exe -X utf8 -c \"from operation_planning.app import serve; serve(port=18770)\"",
+  "browser_urls": [
+    "http://127.0.0.1:18770/",
+    "http://127.0.0.1:18770/#/samples",
+    "http://127.0.0.1:18770/#/tool/3",
+    "http://127.0.0.1:18770/#/about"
+  ],
+  "replay_file": "docs/handoff/replay_viewer/replay_cases_ui_v9.json",
+  "replay_sha256": "7d79175b8e4fabe4799caf64760e07aca0ecc5ee9d20e4b850ec1ac3a323be7a",
+  "replay_source_commit": "0f7d10fbdd0391793cbdcbdc968241020d9c2cf5",
+  "replay_calculation_version": "phase2b-carbon-5090-v9-http",
+  "ui_code_hashes": {
+    "operation_planning/ui/index.html": "c794ea641da3965c9ec4c601e8d9d99cd79994179a6e97d423a415c209d99490",
+    "operation_planning/ui/index.v1-baseline.html": "00b0a33ffab9f1f420e086730e7fabecf1d80ea355c99e64d5c97c147f95448f"
+  },
+  "screenshots": [
+    {
+      "file": "01_frozen_home.jpg",
+      "sha256": "00bac5f4dc3fafc7982cf1a3197d3432e14b2f91b1b3da0d701e4531602f906a",
+      "bytes": 68653,
+      "file_saved_utc": "2026-10-09T01:18:46.985568+00:00"
+    },
+    {
+      "file": "02_frozen_scenario_comparison.jpg",
+      "sha256": "fd7d0fa43d342ca0202cc230197b0e59e36131116510bd2e5b1e08f1bce7c336",
+      "bytes": 77432,
+      "file_saved_utc": "2026-10-09T01:21:15.035991+00:00"
+    },
+    {
+      "file": "03_tariff_layout_observation.jpg",
+      "sha256": "eb273df59ae582976ab278da22d044d4615610015f64857cb064cb1ae5db8d31",
+      "bytes": 45113,
+      "file_saved_utc": "2026-10-09T01:22:22.082145+00:00"
+    },
+    {
+      "file": "04_frozen_model_boundary.jpg",
+      "sha256": "b70ef8a42899e23a88c4de289ea276400f1aa0b556cdf50bd70c5003c0e0ea64",
+      "bytes": 70246,
+      "file_saved_utc": "2026-10-09T01:23:16.586976+00:00"
+    }
+  ]
+}

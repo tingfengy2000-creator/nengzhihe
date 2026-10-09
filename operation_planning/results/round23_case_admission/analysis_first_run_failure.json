@@ -1,0 +1,7 @@
+{
+  "recorded_utc": "2026-10-09T01:13:07.818043+00:00",
+  "command": "python -X utf8 -m analysis.round23_real_case.inspect_sources",
+  "exit_status": 1,
+  "reason": "Madrid numeric parser rejected SIN DATOS O INFORMACIÓN INCOMPLETA; fixed audit to flag source missing markers and exclude incomplete meters, not replace with zero.",
+  "source_sha256_before_fix": "preliminary uncommitted analysis; backend source unchanged"
+}

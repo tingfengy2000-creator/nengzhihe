@@ -1,0 +1,22 @@
+{
+  "file": "2019Floor2.csv",
+  "sha256": "ae19902ef0ff1058e4cc185cae9e9213b618d0d6ab11de3801d52bc81e9ddb77",
+  "dataset_version": 6,
+  "rows": 525600,
+  "measurement_columns": 36,
+  "ac_channels": 16,
+  "first_timestamp": "2019-01-01 00:00:00",
+  "last_timestamp": "2019-12-31 23:59:00",
+  "timestamp_scope": "naive timestamps; building in Bangkok, local-clock interpretation; source has no explicit UTC offset",
+  "step_seconds": 60,
+  "duplicates": 0,
+  "all_16_ac_joint_valid_minutes": 495619,
+  "joint_coverage_fraction": 0.9429585235920852,
+  "observed_joint_ac_energy_kwh": 186741.80866666665,
+  "full_year_ac_energy_kwh": null,
+  "full_year_energy_reason": "Missing minutes exist. Partial observed integral is not an annual electricity bill or imputed annual total.",
+  "complete_ac_channels": 0,
+  "largest_ac_observed_kw": 55.33,
+  "source_equipment_matches_catalogue": false,
+  "power_interval_approximation": "Rectangular integration: P(sample in kW)*1/60h, only over valid minutes. Source supplies minutely power, not billing register differences."
+}

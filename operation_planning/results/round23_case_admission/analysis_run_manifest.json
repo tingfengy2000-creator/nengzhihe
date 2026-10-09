@@ -1,0 +1,59 @@
+{
+  "run_id": "round23-public-source-admission-5090",
+  "source_commit": "d20238634ccb7e936e27411f667ebf10f7dacb05",
+  "analysis_source_sha256": "f867b5f67fd72543004e0a1b64f880c4e2d449a76ec78de834055f567b97d1fc",
+  "workspace_status": "?? analysis/round23_real_case/README.md\n?? docs/handoff/screenshots/round23_public_case/\n?? operation_planning/protocol/round23_public_case_handoff.md\n?? operation_planning/results/round23_case_admission/",
+  "machine_role": "5090",
+  "gpu_probe_command": "nvidia-smi --query-gpu=name,driver_version --format=csv,noheader",
+  "gpu_probe_result": "NVIDIA GeForce RTX 5090, 610.88",
+  "python": "3.14.7",
+  "numpy": "2.5.3",
+  "pandas": "3.0.6",
+  "python_executable_name": "python.exe",
+  "command": "python -X utf8 -m analysis.round23_real_case.inspect_sources",
+  "started_utc": "2026-10-09T01:30:07.705217+00:00",
+  "ended_utc": "2026-10-09T01:30:12.482115+00:00",
+  "elapsed_seconds": 4.77690309996251,
+  "exit_status": 0,
+  "input_hashes": {
+    "2019Floor2.csv": "ae19902ef0ff1058e4cc185cae9e9213b618d0d6ab11de3801d52bc81e9ddb77",
+    "cu_metadata.json": "ea3bcb978122331e93d45fa2d46b48c079ae24ce63fc9d6d34e0c451156c83a1",
+    "cu_paper.pdf": "9d36e50841e304325b10912ec546fe5ea33032a18bee8ca2d56b1370d26dce11",
+    "madrid_dictionary.pdf": "089f9520b4e8e6e41ab04d5fd6002620ec6f99e48ac5a359e1f9d8684843cad1",
+    "madrid_monthly.csv": "3346b8bf8f5b46fe77180e993c255f530f2a9d4056b42dfac245b69a9a755578"
+  },
+  "frozen_backend_hashes": {
+    "operation_planning/thermal_model.py": "9dabd6aad487f27db71b61f0ed755714e26205f0daa903fe3fb1f97b19736a7c",
+    "operation_planning/pv.py": "1a28593d14daaad7fdbcc6585ec522fe8aa7c49458e5a78cbc36fe8968060316",
+    "operation_planning/hybrid.py": "b2cbad2d1b3882053a31b1252919528023bb2781868ec4e3f44485286b28fc8a",
+    "operation_planning/agent_parse.py": "01f662bf76b4c719fb1f7d2fe292a4ee5676e6eb5e8a8b2d640e6ab68ae1c48e",
+    "operation_planning/app.py": "3375aee5a58c7cced5e5cc99a81e9f1360088cd81c3157f9e62ad06df2998df5"
+  },
+  "output_hashes": {
+    "operation_planning/results/round23_case_admission/acquisition_20261009T010529723748.json": "12f0686ae8b3e9102646e5d7a43bcab8b808c8ec1d33d1a1cb218c028c823aec",
+    "operation_planning/results/round23_case_admission/acquisition_manifest.json": "522dd2873fae469704b9812249d84242b1a0669a0df137d27ea346c308d91f85",
+    "operation_planning/results/round23_case_admission/admission_summary.json": "b86cb01b50e867abb94f8b6b37af89e7342947a05eb5c03abeabbffa108b9726",
+    "operation_planning/results/round23_case_admission/analysis_first_run_failure.json": "2e01454d48524e7386be873f4ac30560af362d4ee6ee740ead8df3b9287e3e43",
+    "operation_planning/results/round23_case_admission/cu_channel_quality.csv": "a2237ea2d3d0e8cad73080e31f47d98d5eefed4351121ccccc88e43b0b3e1b49",
+    "operation_planning/results/round23_case_admission/cu_floor2_ac_observed_months.csv": "c039ae79409445ab09488f96538ab9ffee5abec71879572072cf45c2e496da3f",
+    "operation_planning/results/round23_case_admission/cu_measured_week_hourly.csv": "806828d7aa975f094085081d9b1d050ef7dfa0ed7012ecfd615cc12a73316b28",
+    "operation_planning/results/round23_case_admission/cu_monthly_coverage.csv": "4c62745946f1bdcb4cd9cb00a5a29126b865f7ecbfacff1f4a1ef09a4da17d9b",
+    "operation_planning/results/round23_case_admission/cu_summary.json": "9d77d192ed393a105174a41d52e50218e7b4b00c781e6a2c055adb6b08a167b6",
+    "operation_planning/results/round23_case_admission/madrid_candidate_meters.csv": "3b94c0f12c773e49072a23a22ed18571965f5402af97a6e85fe7fa989bd68e71",
+    "operation_planning/results/round23_case_admission/madrid_selected_12_months.csv": "22710fa57f316c9812faf25684d4e00e8f9fc33197d9e6eac54a3dd5627c87d8",
+    "operation_planning/results/round23_case_admission/madrid_summary.json": "dd74b3a2da5610c3e93c802e367c50cf991846d3471539a9bcbec89b62058abc"
+  },
+  "checks": {
+    "cu_exact_525600_minute_axis": "pass",
+    "madrid_exact_12_unique_months": "pass",
+    "no_unknown_to_zero": "pass",
+    "bill_vs_model_calibration": "not_admissible",
+    "model_backend_modified": false
+  },
+  "preflight_failures": [
+    "Direct external downloads returned HTTP 403; ordinary configured public network downloader succeeded.",
+    "fitz unavailable in both examined Python runtimes; existing bundled pypdf used to read documents.",
+    "CU strict timestamp parser expected T but file uses space; changed only audit parser to ISO8601 and verified exact minute axis."
+  ],
+  "evidence_kind": "Measured public data profiling and derived integrals; zero new thermal/PV/wind/model experiments"
+}

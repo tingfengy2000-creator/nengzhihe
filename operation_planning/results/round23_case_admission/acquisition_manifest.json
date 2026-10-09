@@ -1,0 +1,35 @@
+{
+  "recorded_utc": "2026-10-09T01:02:41.115292+00:00",
+  "sources": [
+    {
+      "file": "cu_metadata.json",
+      "url": "https://api.figshare.com/v2/articles/11726517",
+      "error": "HTTP Error 403: Forbidden",
+      "action": "failed"
+    },
+    {
+      "file": "madrid_monthly.csv",
+      "url": "https://datos.madrid.es/dataset/300430-0-consumo-energia-edificios/resource/300430-0-consumo-energia-edificios-csv/download/datos-abiertos_consumo-energia-edificios.csv",
+      "error": "HTTP Error 403: Forbidden",
+      "action": "failed"
+    },
+    {
+      "file": "madrid_dictionary.pdf",
+      "url": "https://datos.madrid.es/dataset/300430-0-consumo-energia-edificios/resource/300430-2-consumo-energia-edificios/download/estructura_ds_consumo_energc3ada_edificios_municipales.pdf",
+      "error": "HTTP Error 403: Forbidden",
+      "action": "failed"
+    },
+    {
+      "file": "working/round23/sources/cu_paper.pdf",
+      "url": "https://vtechworks.lib.vt.edu/bitstream/10919/100834/1/s41597-020-00582-3.pdf",
+      "resolved_url": "https://vtechworks.lib.vt.edu/server/api/core/bitstreams/7963ec4a-079c-448d-abb7-e4b86a442704/content",
+      "sha256": "9d36e50841e304325b10912ec546fe5ea33032a18bee8ca2d56b1370d26dce11",
+      "bytes": 4435291,
+      "action": "downloaded",
+      "downloaded_utc": "2026-10-09T01:02:41.115013+00:00",
+      "content_type": "application/pdf;charset=UTF-8",
+      "last_modified": "Wed, 11 Nov 2020 14:32:01 GMT"
+    }
+  ],
+  "scope": "public-source eligibility, not bill calibration; raw files not committed"
+}

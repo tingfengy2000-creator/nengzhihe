@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "monthly-meter",
+      "title": "一个公共建筑的12个月实际电量",
+      "queries": [
+        {
+          "id": "madrid-2024",
+          "source": {
+            "label": "Ayuntamiento de Madrid 月度能源监测",
+            "links": [
+              {
+                "label": "官方数据与许可",
+                "url": "https://datos.gob.es/en/catalogo/l01280796-consumo-de-energia-en-edificios-municipales-datos-mensuales"
+              }
+            ],
+            "files": [
+              {
+                "label": "madrid_selected_12_months.csv"
+              }
+            ],
+            "metricDefinitions": [
+              {
+                "label": "12月计量和",
+                "definition": "214,828.03516 kWh是Casa Consistorial - Casa de la Villa所选一般有功传感器2024年12个月记录的总和。"
+              }
+            ],
+            "filters": [
+              "年份：2024",
+              "用途：行政建筑",
+              "计量类型：有功电量",
+              "单位：kWh",
+              "选取：完整一般计量点按建筑与传感器名称排序取首个"
+            ],
+            "caveats": [
+              "该来源未提供电费发票、空调分项或对应设备参数，不能校准只计算制冷除湿用电的模型。",
+              "一般电力范围依据传感器名称，未独立核实全楼表计边界。"
+            ]
+          },
+          "reportingPeriod": "2024年1月至12月",
+          "methods": [
+            {
+              "language": "calculation",
+              "code": "sum(12 recorded monthly kWh values) = 214828.03516 kWh"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ac-coverage",
+      "title": "实际空调记录仍有缺测",
+      "queries": [
+        {
+          "id": "cu-2019-floor2",
+          "source": {
+            "label": "CU-BEMS v6 2019二层",
+            "links": [
+              {
+                "label": "原论文",
+                "url": "https://www.nature.com/articles/s41597-020-00582-3"
+              },
+              {
+                "label": "原数据",
+                "url": "https://doi.org/10.6084/m9.figshare.11726517"
+              }
+            ],
+            "files": [
+              {
+                "label": "cu_summary.json"
+              },
+              {
+                "label": "cu_channel_quality.csv"
+              }
+            ],
+            "metricDefinitions": [
+              {
+                "label": "共同有效分钟覆盖率",
+                "definition": "16个空调通道同时有有限非负功率值的分钟，占全年525,600分钟的比例，为94.295852%。"
+              }
+            ],
+            "filters": [
+              "楼层：2",
+              "年份：2019",
+              "通道：16个空调功率通道"
+            ],
+            "caveats": [
+              "完整时间轴不等于完整测量值；缺失分钟未补零。",
+              "二层部分大型压缩机和多空调共享区域不能直接套用现有参考小型空调房间。",
+              "本轮未进行模型拟合或计算精度指标。"
+            ]
+          },
+          "reportingPeriod": "2019年1月1日至12月31日",
+          "methods": [
+            {
+              "language": "calculation",
+              "code": "495619 / 525600 * 100 = 94.29585235920852%"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

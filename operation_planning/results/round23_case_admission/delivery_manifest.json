@@ -1,0 +1,135 @@
+{
+  "source_commit": "d20238634ccb7e936e27411f667ebf10f7dacb05",
+  "frozen_product_commit": "e7f0cf1d0eed5464835897c1d51db84040cb16a0",
+  "recorded_utc": "2026-10-09T01:34:23.450710+00:00",
+  "status": "PUBLIC_MEASURED_EVIDENCE_READY / CALIBRATION_NOT_ESTABLISHED",
+  "artifact_hashes": {
+    "analysis/round23_real_case/public_case_admission.ipynb": {
+      "sha256": "f5e1534805c1918961c673ffecd84dcf1664970d2da0fad9d34b25098d1e1372",
+      "bytes": 7485
+    },
+    "docs/handoff/screenshots/round23_public_case/01_frozen_home.jpg": {
+      "sha256": "00bac5f4dc3fafc7982cf1a3197d3432e14b2f91b1b3da0d701e4531602f906a",
+      "bytes": 68653
+    },
+    "docs/handoff/screenshots/round23_public_case/02_frozen_scenario_comparison.jpg": {
+      "sha256": "fd7d0fa43d342ca0202cc230197b0e59e36131116510bd2e5b1e08f1bce7c336",
+      "bytes": 77432
+    },
+    "docs/handoff/screenshots/round23_public_case/03_tariff_layout_observation.jpg": {
+      "sha256": "eb273df59ae582976ab278da22d044d4615610015f64857cb064cb1ae5db8d31",
+      "bytes": 45113
+    },
+    "docs/handoff/screenshots/round23_public_case/04_frozen_model_boundary.jpg": {
+      "sha256": "b70ef8a42899e23a88c4de289ea276400f1aa0b556cdf50bd70c5003c0e0ea64",
+      "bytes": 70246
+    },
+    "docs/handoff/screenshots/round23_public_case/acceptance.md": {
+      "sha256": "68ef593118ebaf1208ed7448d000c72ce0fe86c42cbda6e3c96621d626beac4b",
+      "bytes": 2012
+    },
+    "docs/handoff/screenshots/round23_public_case/capture_manifest.json": {
+      "sha256": "f090f45669e75156a7b5fd4b2d5c5100f08bfb35fbe7d1e94381cdd9c3c26ff3",
+      "bytes": 2012
+    },
+    "operation_planning/results/round23_case_admission/acquisition_20261009T010529723748.json": {
+      "sha256": "12f0686ae8b3e9102646e5d7a43bcab8b808c8ec1d33d1a1cb218c028c823aec",
+      "bytes": 3369
+    },
+    "operation_planning/results/round23_case_admission/acquisition_manifest.json": {
+      "sha256": "522dd2873fae469704b9812249d84242b1a0669a0df137d27ea346c308d91f85",
+      "bytes": 1591
+    },
+    "operation_planning/results/round23_case_admission/admission_summary.json": {
+      "sha256": "b86cb01b50e867abb94f8b6b37af89e7342947a05eb5c03abeabbffa108b9726",
+      "bytes": 2777
+    },
+    "operation_planning/results/round23_case_admission/analysis_first_run_failure.json": {
+      "sha256": "2e01454d48524e7386be873f4ac30560af362d4ee6ee740ead8df3b9287e3e43",
+      "bytes": 433
+    },
+    "operation_planning/results/round23_case_admission/analysis_run_manifest.json": {
+      "sha256": "4f886729d2453b4df54b6ac742383075da9a9992e339e1cfe05d9da35f892f1d",
+      "bytes": 4641
+    },
+    "operation_planning/results/round23_case_admission/cu_channel_quality.csv": {
+      "sha256": "a2237ea2d3d0e8cad73080e31f47d98d5eefed4351121ccccc88e43b0b3e1b49",
+      "bytes": 3008
+    },
+    "operation_planning/results/round23_case_admission/cu_floor2_ac_observed_months.csv": {
+      "sha256": "c039ae79409445ab09488f96538ab9ffee5abec71879572072cf45c2e496da3f",
+      "bytes": 835
+    },
+    "operation_planning/results/round23_case_admission/cu_measured_week_hourly.csv": {
+      "sha256": "806828d7aa975f094085081d9b1d050ef7dfa0ed7012ecfd615cc12a73316b28",
+      "bytes": 12697
+    },
+    "operation_planning/results/round23_case_admission/cu_monthly_coverage.csv": {
+      "sha256": "4c62745946f1bdcb4cd9cb00a5a29126b865f7ecbfacff1f4a1ef09a4da17d9b",
+      "bytes": 28293
+    },
+    "operation_planning/results/round23_case_admission/cu_summary.json": {
+      "sha256": "9d77d192ed393a105174a41d52e50218e7b4b00c781e6a2c055adb6b08a167b6",
+      "bytes": 1086
+    },
+    "operation_planning/results/round23_case_admission/figures/measured_page-1.png": {
+      "sha256": "43d0fe6ddba2b0284260d4a8e03280fde92c44c5b45464a2f90e5bd887df3b86",
+      "bytes": 91314
+    },
+    "operation_planning/results/round23_case_admission/figures/measured_page-2.png": {
+      "sha256": "0e2e27c22e1b39c431a01b5ab7c6b14d94b0af11a8e9bb4357c3d9d4af10c02f",
+      "bytes": 109079
+    },
+    "operation_planning/results/round23_case_admission/figures/measured_page-3.png": {
+      "sha256": "3047a7a0d6af31799eb5f58bc320e8bd4618ac46058c6a4f94eacd4086d4d3b3",
+      "bytes": 93997
+    },
+    "operation_planning/results/round23_case_admission/figures/public_measured_evidence.pdf": {
+      "sha256": "fe98e3194d17c4fb79fdec43767be27e7ae1608b712f8e8383c68ae156cec793",
+      "bytes": 80958
+    },
+    "operation_planning/results/round23_case_admission/figures/render_manifest.json": {
+      "sha256": "c1a2dcab46a95e2b256cfc756ed372dc8421609b912feede9b7972a8a898c8a3",
+      "bytes": 1190
+    },
+    "operation_planning/results/round23_case_admission/inline_sources_receipt.json": {
+      "sha256": "60fbd45600a3144505660d35f5e5d6115dd23153777e2ced6c603d0b811566bf",
+      "bytes": 3601
+    },
+    "operation_planning/results/round23_case_admission/madrid_candidate_meters.csv": {
+      "sha256": "3b94c0f12c773e49072a23a22ed18571965f5402af97a6e85fe7fa989bd68e71",
+      "bytes": 3003
+    },
+    "operation_planning/results/round23_case_admission/madrid_selected_12_months.csv": {
+      "sha256": "22710fa57f316c9812faf25684d4e00e8f9fc33197d9e6eac54a3dd5627c87d8",
+      "bytes": 2226
+    },
+    "operation_planning/results/round23_case_admission/madrid_summary.json": {
+      "sha256": "dd74b3a2da5610c3e93c802e367c50cf991846d3471539a9bcbec89b62058abc",
+      "bytes": 1274
+    },
+    "operation_planning/results/round23_case_admission/publish_scope_check.json": {
+      "sha256": "adff8f0811d052012d8c00d7c21cdc805e882f658f47c0f3db3bea5f2cb7fc49",
+      "bytes": 429
+    },
+    "operation_planning/results/round23_case_admission/verification.json": {
+      "sha256": "a0e08931bca3082cc002777f2a412a3f1af0a8ead43ebf3d5759c18b95dd90ec",
+      "bytes": 2090
+    }
+  },
+  "visual_qa": {
+    "pdf_pages": 3,
+    "pages_reviewed": [
+      1,
+      2,
+      3
+    ],
+    "page_2_decimal_tick_labels_corrected": true,
+    "issue_count_remaining_in_pdf": 0,
+    "screenshots_reviewed": 4,
+    "frontend_issue": "about data page source column narrow at current viewport; recorded only"
+  },
+  "pdf_raster_command": "pdftoppm -png -r 110 operation_planning/results/round23_case_admission/figures/public_measured_evidence.pdf operation_planning/results/round23_case_admission/figures/measured_page",
+  "bytes_included": 720844,
+  "raw_sources_excluded": "working/round23/sources/: public CSV/PDF and temporary redirect originals remain local; source hashes and downloader committed"
+}

@@ -1,0 +1,66 @@
+{
+  "recorded_utc": "2026-10-09T01:05:29.723781+00:00",
+  "sources": [
+    {
+      "file": "working/round23/sources/cu_metadata.json",
+      "url": "https://api.figshare.com/v2/articles/11726517",
+      "resolved_url": "https://api.figshare.com/v2/articles/11726517",
+      "sha256": "ea3bcb978122331e93d45fa2d46b48c079ae24ce63fc9d6d34e0c451156c83a1",
+      "bytes": 9804,
+      "action": "downloaded",
+      "downloaded_utc": "2026-10-09T01:04:48.381047+00:00",
+      "content_type": "application/json",
+      "last_modified": null
+    },
+    {
+      "file": "working/round23/sources/madrid_monthly.csv",
+      "url": "https://datos.madrid.es/dataset/300430-0-consumo-energia-edificios/resource/300430-0-consumo-energia-edificios-csv/download/datos-abiertos_consumo-energia-edificios.csv",
+      "resolved_url": "https://datos.madrid.es/dataset/300430-0-consumo-energia-edificios/resource/300430-0-consumo-energia-edificios-csv/download/datos-abiertos_consumo-energia-edificios.csv",
+      "sha256": "3346b8bf8f5b46fe77180e993c255f530f2a9d4056b42dfac245b69a9a755578",
+      "bytes": 10055231,
+      "action": "downloaded",
+      "downloaded_utc": "2026-10-09T01:04:53.010272+00:00",
+      "content_type": "text/csv; charset=utf-8",
+      "last_modified": "Wed, 07 Oct 2026 11:18:23 GMT"
+    },
+    {
+      "file": "working/round23/sources/madrid_dictionary.pdf",
+      "url": "https://datos.madrid.es/dataset/300430-0-consumo-energia-edificios/resource/300430-2-consumo-energia-edificios/download/estructura_ds_consumo_energc3ada_edificios_municipales.pdf",
+      "resolved_url": "https://datos.madrid.es/dataset/300430-0-consumo-energia-edificios/resource/300430-2-consumo-energia-edificios/download/estructura_ds_consumo_energc3ada_edificios_municipales.pdf",
+      "sha256": "089f9520b4e8e6e41ab04d5fd6002620ec6f99e48ac5a359e1f9d8684843cad1",
+      "bytes": 167499,
+      "action": "downloaded",
+      "downloaded_utc": "2026-10-09T01:04:54.011875+00:00",
+      "content_type": "application/pdf",
+      "last_modified": "Mon, 16 Feb 2026 03:03:12 GMT"
+    },
+    {
+      "file": "working/round23/sources/cu_paper.pdf",
+      "url": "https://vtechworks.lib.vt.edu/bitstream/10919/100834/1/s41597-020-00582-3.pdf",
+      "sha256": "9d36e50841e304325b10912ec546fe5ea33032a18bee8ca2d56b1370d26dce11",
+      "bytes": 4435291,
+      "action": "existing bytes reused"
+    },
+    {
+      "file": "working/round23/sources/2019Floor2.csv",
+      "url": "https://ndownloader.figshare.com/files/21350226",
+      "resolved_url": "https://s3-eu-west-1.amazonaws.com/pfigshare-u-files/21350226/2019Floor2.csv",
+      "sha256": "ae19902ef0ff1058e4cc185cae9e9213b618d0d6ab11de3801d52bc81e9ddb77",
+      "bytes": 95782259,
+      "action": "downloaded",
+      "downloaded_utc": "2026-10-09T01:05:29.603565+00:00",
+      "content_type": "text/csv",
+      "last_modified": "Sun, 18 Apr 2021 03:05:15 GMT",
+      "license": {
+        "value": 1,
+        "name": "CC BY 4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "dataset_version": 6,
+      "declared_md5": "2fa6b68e788afaf55f4395a6b918092b",
+      "actual_md5": "2fa6b68e788afaf55f4395a6b918092b"
+    }
+  ],
+  "scope": "public-source eligibility, not bill calibration; raw files not committed",
+  "redirect_query_redacted": true
+}

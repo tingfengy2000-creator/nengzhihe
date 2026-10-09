@@ -1,0 +1,22 @@
+{
+  "sha256": "3346b8bf8f5b46fe77180e993c255f530f2a9d4056b42dfac245b69a9a755578",
+  "raw_rows": 35803,
+  "year": 2024,
+  "selection_rule": "2024 administrative-building active energy in kWh; exactly 12 unique months; finite nonnegative values; general-meter name; first lexical building/sensor. No model fit used.",
+  "selection_amendment": "ID criterion unavailable because all 305 scoped 2024 rows have missing ID; use EDIFICIO+SENSOR without inventing IDs.",
+  "scoped_rows": 305,
+  "scoped_nonnull_id_rows": 0,
+  "scoped_nonnumeric_energy_rows": 13,
+  "candidate_meter_count": 28,
+  "complete_candidate_meter_count": 19,
+  "selected_building": "Casa Consistorial - Casa de la Villa",
+  "selected_sensor": "[Casa Consistorial - Casa de la Villa][0015] Electricidad General (Activa)",
+  "monthly_rows": 12,
+  "annual_meter_energy_kwh": 214828.03516,
+  "invoice_available": false,
+  "bill_amount_available": false,
+  "ac_submeter_available": false,
+  "scope": "One sensor named general active electricity; meter boundary from naming only, not independently audited full building inclusion.",
+  "calibration_admissible": false,
+  "reason": "No matching cooling-only submeter, room/AC specifications, operating schedule, invoice or tariff breakdown."
+}

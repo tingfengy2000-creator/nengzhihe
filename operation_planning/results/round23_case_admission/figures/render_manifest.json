@@ -1,0 +1,19 @@
+{
+  "source_commit": "d20238634ccb7e936e27411f667ebf10f7dacb05",
+  "script_sha256": "546525b414fac67ad3b9c679cde2ef73274090d9313d5128029de8af0d68fd9b",
+  "recorded_utc": "2026-10-09T01:30:13.161464+00:00",
+  "python": "3.12.14",
+  "reportlab": "4.4.9",
+  "renderer": "ReportLab PDF; Poppler page rasterization separately recorded",
+  "input_hashes": {
+    "cu_channel_quality.csv": "a2237ea2d3d0e8cad73080e31f47d98d5eefed4351121ccccc88e43b0b3e1b49",
+    "cu_floor2_ac_observed_months.csv": "c039ae79409445ab09488f96538ab9ffee5abec71879572072cf45c2e496da3f",
+    "cu_measured_week_hourly.csv": "806828d7aa975f094085081d9b1d050ef7dfa0ed7012ecfd615cc12a73316b28",
+    "cu_monthly_coverage.csv": "4c62745946f1bdcb4cd9cb00a5a29126b865f7ecbfacff1f4a1ef09a4da17d9b",
+    "madrid_candidate_meters.csv": "3b94c0f12c773e49072a23a22ed18571965f5402af97a6e85fe7fa989bd68e71",
+    "madrid_selected_12_months.csv": "22710fa57f316c9812faf25684d4e00e8f9fc33197d9e6eac54a3dd5627c87d8"
+  },
+  "pdf_sha256": "fe98e3194d17c4fb79fdec43767be27e7ae1608b712f8e8383c68ae156cec793",
+  "pages": 3,
+  "figure_scope": "public measured records and completeness; no fitted model or field-trial claim"
+}

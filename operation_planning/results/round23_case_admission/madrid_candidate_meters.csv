@@ -1,0 +1,29 @@
+﻿building,sensor,rows,months,complete_12_month_meter,missing_or_nonnumeric_values,invalid_source_tokens,general_meter_name
+Casa Consistorial - Casa de la Villa,[Casa Consistorial - Casa de la Villa][0015] Electricidad General (Activa),12,12,True,0,,True
+Complejo Albarracín 33 - Movilidad y Sede IAM,[Albarracin 33 - Movilidad y Sede IAM][1341] Electricidad General (Activa),12,12,True,0,,True
+Edificio Anexo al Escenario del Auditorio Cerro Almodovar,[Edificio Anexo al Escenario del Auditorio Cerro Almodóvar][5066] Electricidad General (Activa),7,7,False,7,SIN DATOS O INFORMACIÓN INCOMPLETA,True
+JMD Arganzuela,[JMD Arganzuela][0083] Electricidad General (Activa),12,12,True,0,,True
+JMD Barajas,[JMD Barajas][1326] Electricidad General (Activa),12,12,True,0,,True
+JMD Carabanchel,[JMD Carabanchel][0763] Electricidad General (Activa),12,12,True,0,,True
+JMD Centro,[JMD Centro][0772][Contador TL] Activa,12,12,False,2,SIN DATOS O INFORMACIÓN INCOMPLETA,False
+JMD Chamartín,[JMD Chamartín][1054] Electricidad General (Activa),12,12,True,0,,True
+JMD Chamberí,[JMD Chamberí][0079] Electricidad General (Activa),12,12,True,0,,True
+JMD Ciudad Lineal,[JMD Ciudad Lineal][1104] Electricidad General (Activa),12,12,True,0,,True
+JMD Fuencarral,[JMD Fuencarral] [1082] Consumo General,12,12,True,0,,True
+JMD Hortaleza,[JMD Hortaleza][1380] Consumo total,12,12,True,0,,True
+JMD Latina,[JMD Latina][0547] Electricidad General (activa),12,12,False,1,SIN DATOS O INFORMACIÓN INCOMPLETA,True
+JMD Moratalaz,[JMD Moratalaz][0199] Centro de Servicios Sociales (Ed.Anexo),10,10,False,0,,False
+JMD Moratalaz,[JMD Moratalaz][0199] Electricidad General (Activa),12,12,True,0,,True
+JMD Puente de Vallecas,[JMD Puente de Vallecas][0153] Electricidad General (Activa),12,12,True,0,,True
+JMD Retiro,[JMD Retiro][1547][Contador] Activa,12,12,False,3,SIN DATOS O INFORMACIÓN INCOMPLETA,False
+JMD San Blas,[JMD San Blas][1947] Electricidad General (activa),4,4,False,0,,True
+JMD San Blas-Canillejas,[JMD San Blas][1947] Electricidad General (activa),8,8,False,0,,True
+JMD Tetuán,[JMD Tetuan][0038] Consumo Total,12,12,True,0,,True
+JMD Usera,[JMD Usera][1092] Electricidad General (Activa),12,12,True,0,,True
+JMD Vicálvaro,[JMD Vicálvaro][1352] Electricidad General (Activa),12,12,True,0,,True
+JMD Villa de Vallecas,[JMD Villa de Vallecas][1383] Electricidad General (Activa),12,12,True,0,,True
+JMD Villaverde,[JMD Villaverde][1109] Consumo total,12,12,True,0,,True
+Sede AG Hacienda,[Sede AG Hacienda][1174][Contador TL] Activa,12,12,True,0,,False
+Sede AG Hacienda y Personal - Tesoreria del Ayuntamiento,[Sede AG Hacienda y Personal - Tesoreria del Ayuntamiento][1962] Electricidad General (Activa),2,2,False,0,,True
+Sede AG Hacienda y Personal - Tesoreria del Ayuntamiento,[Tesoreria Municipal (Barquillo)][1962] Electricidad General (Activa),10,10,False,0,,True
+Sede AG Seguridad y Emergencias,[Sede AG Seguridad y Emergencias][1057] Electricidad General (Activa),12,12,True,0,,True

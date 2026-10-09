@@ -1,0 +1,85 @@
+{
+  "scope": "11 source/accounting checks; not model-accuracy or field-performance evidence",
+  "source_commit": "d20238634ccb7e936e27411f667ebf10f7dacb05",
+  "script_sha256": "690e1026b34f78e7efa1c2bd33376aa708bebc241b7821e7783758935dcdd31f",
+  "checks": [
+    {
+      "check": "minute_axis_and_column_count",
+      "status": "pass",
+      "actual": {
+        "rows": 525600,
+        "columns": 36,
+        "duplicates": 0
+      }
+    },
+    {
+      "check": "monthly_expected_minutes",
+      "status": "pass",
+      "actual": 525600
+    },
+    {
+      "check": "monthly_observed_integral_reconciles",
+      "status": "pass",
+      "actual": 186741.80866666668
+    },
+    {
+      "check": "unknown_annual_energy_is_null",
+      "status": "pass",
+      "actual": {
+        "annual": null,
+        "complete_channels": 0
+      }
+    },
+    {
+      "check": "missing_months_not_zero",
+      "status": "pass",
+      "actual": {
+        "incomplete_months": 11
+      }
+    },
+    {
+      "check": "week_preserves_missing_hours",
+      "status": "pass",
+      "actual": {
+        "hour_intervals": 168,
+        "incomplete_hours": 2
+      }
+    },
+    {
+      "check": "12_unique_months",
+      "status": "pass",
+      "actual": 12
+    },
+    {
+      "check": "decimal_source_sum",
+      "status": "pass",
+      "actual": "214828.03516"
+    },
+    {
+      "check": "no_fabricated_bill_or_AC_split",
+      "status": "pass",
+      "actual": {
+        "invoice_available": false,
+        "ac_submeter_available": false
+      }
+    },
+    {
+      "check": "download_matches_publisher_md5",
+      "status": "pass",
+      "actual": "2fa6b68e788afaf55f4395a6b918092b"
+    },
+    {
+      "check": "frozen_backend_unchanged",
+      "status": "pass",
+      "actual": [
+        "operation_planning/thermal_model.py",
+        "operation_planning/pv.py",
+        "operation_planning/hybrid.py",
+        "operation_planning/agent_parse.py",
+        "operation_planning/app.py"
+      ]
+    }
+  ],
+  "pass": 11,
+  "fail": 0
+}

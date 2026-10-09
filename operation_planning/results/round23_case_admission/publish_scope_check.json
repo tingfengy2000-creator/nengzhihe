@@ -1,0 +1,10 @@
+{
+  "recorded_utc": "2026-10-09T01:36:07.468271+00:00",
+  "files_scanned": 35,
+  "credential_pattern_findings": [],
+  "large_raw_sources_included": false,
+  "model_weights_included": false,
+  "new_private_data_included": false,
+  "manual_review": "Public named building measurements and local product screenshots only; original third-party PDFs/CSV and redirect signatures remain ignored.",
+  "raw_git_ignored": true
+}

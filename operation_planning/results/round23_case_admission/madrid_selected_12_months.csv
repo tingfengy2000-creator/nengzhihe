@@ -1,0 +1,13 @@
+﻿year,month,building,sensor,consumption_raw,energy_kwh,sensor_type,unit,class,source_building_id,billing_amount_eur,ac_submeter_kwh
+2024,1,Casa Consistorial - Casa de la Villa,[Casa Consistorial - Casa de la Villa][0015] Electricidad General (Activa),21116,21116.0,EXTERNO,kWh,Energía activa,,,
+2024,2,Casa Consistorial - Casa de la Villa,[Casa Consistorial - Casa de la Villa][0015] Electricidad General (Activa),"20039,00586",20039.00586,EXTERNO,kWh,Energía activa,,,
+2024,3,Casa Consistorial - Casa de la Villa,[Casa Consistorial - Casa de la Villa][0015] Electricidad General (Activa),"16793,00391",16793.00391,EXTERNO,kWh,Energía activa,,,
+2024,4,Casa Consistorial - Casa de la Villa,[Casa Consistorial - Casa de la Villa][0015] Electricidad General (Activa),"15291,00293",15291.00293,EXTERNO,kWh,Energía activa,,,
+2024,5,Casa Consistorial - Casa de la Villa,[Casa Consistorial - Casa de la Villa][0015] Electricidad General (Activa),"13478,00293",13478.00293,EXTERNO,kWh,Energía activa,,,
+2024,6,Casa Consistorial - Casa de la Villa,[Casa Consistorial - Casa de la Villa][0015] Electricidad General (Activa),16101,16101.0,EXTERNO,kWh,Energía activa,,,
+2024,7,Casa Consistorial - Casa de la Villa,[Casa Consistorial - Casa de la Villa][0015] Electricidad General (Activa),"20174,00195",20174.00195,EXTERNO,kWh,Energía activa,,,
+2024,8,Casa Consistorial - Casa de la Villa,[Casa Consistorial - Casa de la Villa][0015] Electricidad General (Activa),21579,21579.0,EXTERNO,kWh,Energía activa,,,
+2024,9,Casa Consistorial - Casa de la Villa,[Casa Consistorial - Casa de la Villa][0015] Electricidad General (Activa),"15203,00488",15203.00488,EXTERNO,kWh,Energía activa,,,
+2024,10,Casa Consistorial - Casa de la Villa,[Casa Consistorial - Casa de la Villa][0015] Electricidad General (Activa),"13983,00488",13983.00488,EXTERNO,kWh,Energía activa,,,
+2024,11,Casa Consistorial - Casa de la Villa,[Casa Consistorial - Casa de la Villa][0015] Electricidad General (Activa),"17415,00391",17415.00391,EXTERNO,kWh,Energía activa,,,
+2024,12,Casa Consistorial - Casa de la Villa,[Casa Consistorial - Casa de la Villa][0015] Electricidad General (Activa),"23656,00391",23656.00391,EXTERNO,kWh,Energía activa,,,
