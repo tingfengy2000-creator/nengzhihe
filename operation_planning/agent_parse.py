@@ -231,12 +231,72 @@ _FIELD_HINTS = {
 }
 
 
+def _request_mentions_field(request_text: str, field: str) -> bool:
+    """Check the subject of an edit, not a generic unit such as 台/元/kWh.
+
+    This gate only removes unrelated model proposals. It never synthesizes
+    a value or fills in a missing requested edit.
+    """
+    text = request_text.lower()
+    storage = any(token in text for token in ("储能", "电池"))
+    pv = any(token in text for token in ("光伏", "太阳能", "kwp"))
+    wind = any(token in text for token in ("风机", "风电"))
+    if field in {"pv.capacity_kwp", "hybrid.pv_capacity_kwp"}:
+        return pv
+    if field == "hybrid.wind.turbine_count":
+        return wind
+    if field in {"hybrid.budget_cny", "hybrid.budget_multiplier"}:
+        return any(token in text for token in ("预算", "资金上限", "投资上限"))
+    if field == "room.units_per_room":
+        return ("空调" in text and any(token in text for token in ("台", "数量"))) or ("每间" in text and "台" in text) or "设备数量" in text
+    if field == "room.room_count":
+        return any(token in text for token in ("房间数", "办公室数", "间数", "同类房间")) or bool(re.search(r"(?:\d+|[一二三四五六七八九十两]+)\s*间(?:房|办公室)", text))
+    if field == "room.equipment_id":
+        named_equipment = any(token in text for token in ("美的", "大金", "格力", "海尔", "三菱", "奥克斯", "志高", "midea", "daikin", "gaia", "msag", "ftx"))
+        return "型号" in text or (named_equipment and any(token in text for token in ("空调", "换", "改", "设备")))
+    if field == "storage.quote.cny_per_kwh":
+        return storage and any(token in text for token in ("单价", "报价", "价格", "元/kwh", "元每度"))
+    if field == "storage.capacities_kwh":
+        return (storage or "容量列表" in text) and any(token in text for token in ("容量", "电量列表"))
+    if field == "hybrid.tariff_escalation_rate":
+        return any(token in text for token in ("年涨幅", "年增长率")) or ("电价" in text and any(token in text for token in ("每年", "年涨", "年降", "涨幅", "增长率")))
+    if field == "hybrid.import_price_cny_per_kwh":
+        return any(token in text for token in ("购电价", "购电价格", "每度", "电网电价")) or ("电价" in text and not _request_mentions_field(text, "hybrid.tariff_escalation_rate"))
+    if field == "hybrid.allow_export":
+        return any(token in text for token in ("卖电", "外送", "上网", "余电", "卖给电网")) and any(token in text for token in ("关闭", "开启", "停止", "允许", "禁止", "不", "卖给", "启用"))
+    if field in _FIELD_HINTS:
+        return any(str(hint).lower() in text for hint in _FIELD_HINTS[field])
+    # Unknown fields in a mentioned subsystem still fail schema validation;
+    # they are not silently converted to a supported field or value.
+    if field.lower() in text:
+        return True
+    return ((field.startswith("pv.") and pv) or (field.startswith("hybrid.wind.") and wind)
+            or (field.startswith("storage.") and storage)
+            or (field.startswith("room.") and any(t in text for t in ("空调", "房间", "型号"))))
+
+
+def _filter_unmentioned_changes(request_text: str, raw: Any) -> tuple[list[dict[str, Any]], list[dict[str, str]]]:
+    if not isinstance(raw, list):
+        raise ValueError("模型返回的changes必须是数组")
+    kept, dropped = [], []
+    for item in raw:
+        if not isinstance(item, dict) or set(item) - {"field", "to", "label", "from"} or not {"field", "to"} <= set(item):
+            raise ValueError("模型返回的修改项结构无效")
+        if not isinstance(item["field"], str):
+            raise ValueError("模型返回的修改字段必须为文本")
+        if _request_mentions_field(request_text, item["field"]):
+            kept.append(item)
+        elif not any(row["field"] == item["field"] for row in dropped):
+            dropped.append({"field": item["field"], "reason": "用户未提及"})
+    return kept, dropped
+
+
 def _assert_request_supports_changes(request_text: str, changes: list[dict[str, Any]]) -> None:
     """Reject model hallucinations such as inventing a budget for “加电池”."""
     text = request_text.lower()
     for item in changes:
         field = item["field"]
-        if not any(str(hint).lower() in text for hint in _FIELD_HINTS[field]):
+        if not _request_mentions_field(request_text, field):
             raise ValueError(f"模型修改了用户未提及的字段：{field}")
         # The task schema stores installed PV capacity in kWp. Reject a model
         # that silently converts an explicit kWp amount into W (2 -> 2000).
@@ -324,6 +384,11 @@ def _model_parse(config: dict[str, Any], request_text: str, current_task: dict[s
         "预算相对修改可返回budget_multiplier；如果请求只有‘降低一些/适当增加’而没有数值或比例，必须question追问，不能把当前值当新值。"
         "时间范围‘18:00到22:00’必须同时返回room.start_hour=18和room.end_hour=22，不能只返回一端。只返回JSON对象changes、unsupported、question。"
         "选择型号时room.equipment_id必须填写equipment_options中的equipment_id，不要填写品牌名或型号展示名。"
+        "只修改用户明确要求的字段，不要顺带改变型号、时段、报价或电价。当前值只是上下文，不需要回显。"
+        "风机当前只支持0或1台；用户明确要求超限数量时也如实返回该数量交由程序校验，不得擅自改成1台。"
+        '少样本示例1：用户“光伏改为2kWp”→{"changes":[{"field":"pv.capacity_kwp","to":2}],"unsupported":[],"question":null}。'
+        '少样本示例2：用户“风机改为0台”或“不要风机”→{"changes":[{"field":"hybrid.wind.turbine_count","to":0}],"unsupported":[],"question":null}。'
+        '少样本示例3：用户“电价每年涨3%”→{"changes":[{"field":"hybrid.tariff_escalation_rate","to":0.03}],"unsupported":[],"question":null}。'
     )
     user = json.dumps({"request": request_text, "current_task": current_task, "allowed_fields": fields,
                        "equipment_options": [{"equipment_id": item["equipment_id"], "brand": item["brand"], "model": item["model"]}
@@ -364,41 +429,34 @@ def parse_agent_request(request_text: str, current_task: dict[str, Any]) -> dict
     """Interpret one sentence; never invokes a planning/calculation function."""
     started = time.perf_counter()
     elapsed = lambda: round((time.perf_counter() - started) * 1000.0, 2)
+    dropped: list[dict[str, str]] = []
+    unsupported: list[str] = []
     if not isinstance(request_text, str) or not request_text.strip():
-        return {"status": "failed", "changes": [], "unsupported": [], "question": None, "reason": "request必须是非空文本", "model": "local_model", "latency_ms": elapsed()}
+        return {"status": "failed", "changes": [], "dropped": [], "unsupported": [], "question": None, "reason": "request必须是非空文本", "model": "local_model", "latency_ms": elapsed()}
     if not isinstance(current_task, dict):
-        return {"status": "failed", "changes": [], "unsupported": [], "question": None, "reason": "current_task必须是对象", "model": "local_model", "latency_ms": elapsed()}
+        return {"status": "failed", "changes": [], "dropped": [], "unsupported": [], "question": None, "reason": "current_task必须是对象", "model": "local_model", "latency_ms": elapsed()}
     try:
         config = _read_config()
     except FileNotFoundError:
-        return {"status": "unavailable", "changes": [], "unsupported": [], "question": None, "reason": "未找到本地模型配置", "model": "local_model", "latency_ms": elapsed()}
+        return {"status": "unavailable", "changes": [], "dropped": [], "unsupported": [], "question": None, "reason": "未找到本地模型配置", "model": "local_model", "latency_ms": elapsed()}
     except ValueError as exc:
-        return {"status": "unavailable", "changes": [], "unsupported": [], "question": None, "reason": str(exc), "model": "local_model", "latency_ms": elapsed()}
+        return {"status": "unavailable", "changes": [], "dropped": [], "unsupported": [], "question": None, "reason": str(exc), "model": "local_model", "latency_ms": elapsed()}
     try:
         raw = _model_parse(config, request_text, current_task)
         unsupported = [str(x) for x in raw.get("unsupported", [])]
         feature_notes = _unsupported_brand_notes(request_text) + _unsupported_feature_notes(request_text)
         unsupported.extend(note for note in feature_notes if note not in unsupported)
-        # When the whole request is outside the supported vocabulary, retain
-        # the transparent unsupported result even if the small model emitted a
-        # stray malformed default field.  Mixed requests still go through the
-        # strict validator below and cannot silently drop supported edits.
-        has_supported_hint = any(str(h).lower() in request_text.lower() for hints in _FIELD_HINTS.values() for h in hints)
-        if feature_notes and not has_supported_hint:
-            changes = []
-        else:
-            changes = _normalise_changes(raw.get("changes", []), current_task)
-        # For a request that is entirely outside this read-only vocabulary,
-        # return a transparent unsupported result even if the model echoed a
-        # stray default field.  It is never applied to a task.
-        if unsupported and not has_supported_hint:
-            changes = []
-        else:
-            _assert_request_supports_changes(request_text, changes)
+        kept, dropped = _filter_unmentioned_changes(request_text, raw.get("changes", []))
+        # A requested catalogue-external brand is unsupported, not permission
+        # to substitute an existing catalogue model. Other valid edits survive.
+        if _unsupported_brand_notes(request_text):
+            kept = [item for item in kept if item["field"] != "room.equipment_id"]
+        changes = _normalise_changes(kept, current_task)
+        _assert_request_supports_changes(request_text, changes)
         changes = _collapse_budget_changes(changes, current_task)
         conflict = _budget_language_conflict(request_text, current_task, changes)
         if conflict:
-            return {"status": "needs_clarification", "changes": [], "unsupported": unsupported,
+            return {"status": "needs_clarification", "changes": [], "dropped": dropped, "unsupported": unsupported,
                     "question": conflict, "reason": conflict, "model": "local_model", "latency_ms": elapsed()}
         for note in _unsupported_brand_notes(request_text):
             # A model suggestion for an unavailable brand is not a valid
@@ -424,12 +482,14 @@ def parse_agent_request(request_text: str, current_task: dict[str, Any]) -> dict
         if vague_budget and not any(ch.isdigit() for ch in request_text):
             changes = []
             question = "预算要调整为多少元，或减少/增加多少比例？"
+        if not changes and not unsupported and not question:
+            raise ValueError("模型未返回可采用的请求修改；未用规则补造，请重新说明")
         status = "needs_clarification" if question else "ok"
-        return {"status": status, "changes": changes, "unsupported": unsupported, "question": question,
+        return {"status": status, "changes": changes, "dropped": dropped, "unsupported": unsupported, "question": question,
                 "model": "local_model", "latency_ms": elapsed()}
     except (urllib.error.URLError, TimeoutError, OSError):
-        return {"status": "unavailable", "changes": [], "unsupported": [], "question": None, "reason": "本地模型未启动", "model": "local_model", "latency_ms": elapsed()}
+        return {"status": "unavailable", "changes": [], "dropped": dropped, "unsupported": unsupported, "question": None, "reason": "本地模型未启动", "model": "local_model", "latency_ms": elapsed()}
     except Exception as exc:
         reason = str(exc) or "模型输出不合法"
-        return {"status": "failed", "changes": [], "unsupported": [], "question": None, "reason": reason,
+        return {"status": "failed", "changes": [], "dropped": dropped, "unsupported": unsupported, "question": None, "reason": reason,
                 "model": "local_model", "latency_ms": elapsed()}

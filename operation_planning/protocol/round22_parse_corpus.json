@@ -1,0 +1,2180 @@
+{
+  "protocol": "round22-paired-parse-v1",
+  "scope": "read-only parsing and task patch validation, not adopted-and-calculated browser success",
+  "attempts_per_case_per_phase": 1,
+  "retry": false,
+  "rule_fallback": false,
+  "cases": [
+    {
+      "id": "01_units",
+      "request": "每间改成3台空调，其他条件不变",
+      "current_task": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "indoor_temp_c": 26,
+          "indoor_rh_percent": 60,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100,
+          "default_shr": 0.75,
+          "room_count": 1,
+          "units_per_room": 2,
+          "area_m2": 35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "cooling_setpoint_c": 26,
+          "rh_setpoint_percent": 60,
+          "equipment_id": "midea_msagbu12_mox201",
+          "height_m": 3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "ventilation_lps_person": 7,
+          "infiltration_ach": 0.35,
+          "orientation": "north"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "allow_export": false,
+          "usable_fraction": 0.8,
+          "requested_capacities_kwp": [
+            0,
+            1,
+            2,
+            5.6
+          ],
+          "study_years": 10,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "allow_export": false,
+          "wind": {
+            "source_height_m": 10,
+            "hellman_exponent": 0.14,
+            "turbine_count": 1,
+            "hub_height_m": 9
+          },
+          "budget_cny": 90000,
+          "study_years": 10,
+          "import_price_cny_per_kwh": 0.66,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          },
+          "wind_quote": {
+            "turbine_cny": 45000,
+            "tower_cny": 15000,
+            "foundation_cny": 10000,
+            "installation_cny": 12000,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_year": 1200,
+            "residual_fraction": 0.05
+          }
+        },
+        "storage": {
+          "capacities_kwh": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "quote": {
+            "cny_per_kwh": 553.94,
+            "installation_cny_per_kwh": 489.88,
+            "maintenance_cny_per_year": 300,
+            "life_years": 10,
+            "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+            "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+            "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
+          },
+          "export": {
+            "price_cny_per_kwh": 0.25,
+            "connection_cny": 0,
+            "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+            "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+            "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+            "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+            "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"
+          }
+        }
+      },
+      "expected_kind": "edit",
+      "expected_changes": {
+        "room.units_per_room": 3
+      },
+      "origin": "operation_planning/results/round21_local_5090/confirmed/http_events.jsonl:61",
+      "historical_round21_status": "ok",
+      "historical_round21_adopted": true
+    },
+    {
+      "id": "02_catalog",
+      "request": "把空调型号换成美的GAIA-12HRFN8",
+      "current_task": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "indoor_temp_c": 26,
+          "indoor_rh_percent": 60,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100,
+          "default_shr": 0.75,
+          "room_count": 1,
+          "units_per_room": 2,
+          "area_m2": 35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "cooling_setpoint_c": 26,
+          "rh_setpoint_percent": 60,
+          "equipment_id": "midea_msagbu12_mox201",
+          "height_m": 3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "ventilation_lps_person": 7,
+          "infiltration_ach": 0.35,
+          "orientation": "north"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "allow_export": false,
+          "usable_fraction": 0.8,
+          "requested_capacities_kwp": [
+            0,
+            1,
+            2,
+            5.6
+          ],
+          "study_years": 10,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "allow_export": false,
+          "wind": {
+            "source_height_m": 10,
+            "hellman_exponent": 0.14,
+            "turbine_count": 1,
+            "hub_height_m": 9
+          },
+          "budget_cny": 90000,
+          "study_years": 10,
+          "import_price_cny_per_kwh": 0.66,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          },
+          "wind_quote": {
+            "turbine_cny": 45000,
+            "tower_cny": 15000,
+            "foundation_cny": 10000,
+            "installation_cny": 12000,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_year": 1200,
+            "residual_fraction": 0.05
+          }
+        },
+        "storage": {
+          "capacities_kwh": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "quote": {
+            "cny_per_kwh": 553.94,
+            "installation_cny_per_kwh": 489.88,
+            "maintenance_cny_per_year": 300,
+            "life_years": 10,
+            "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+            "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+            "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
+          },
+          "export": {
+            "price_cny_per_kwh": 0.25,
+            "connection_cny": 0,
+            "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+            "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+            "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+            "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+            "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"
+          }
+        }
+      },
+      "expected_kind": "edit",
+      "expected_changes": {
+        "room.equipment_id": "midea_gaia12"
+      },
+      "origin": "operation_planning/results/round21_local_5090/confirmed/http_events.jsonl:67",
+      "historical_round21_status": "ok",
+      "historical_round21_adopted": true
+    },
+    {
+      "id": "03_brand",
+      "request": "把空调改成格力三匹，其他条件不变",
+      "current_task": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "indoor_temp_c": 26,
+          "indoor_rh_percent": 60,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100,
+          "default_shr": 0.75,
+          "room_count": 1,
+          "units_per_room": 2,
+          "area_m2": 35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "cooling_setpoint_c": 26,
+          "rh_setpoint_percent": 60,
+          "equipment_id": "midea_msagbu12_mox201",
+          "height_m": 3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "ventilation_lps_person": 7,
+          "infiltration_ach": 0.35,
+          "orientation": "north"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "allow_export": false,
+          "usable_fraction": 0.8,
+          "requested_capacities_kwp": [
+            0,
+            1,
+            2,
+            5.6
+          ],
+          "study_years": 10,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "allow_export": false,
+          "wind": {
+            "source_height_m": 10,
+            "hellman_exponent": 0.14,
+            "turbine_count": 1,
+            "hub_height_m": 9
+          },
+          "budget_cny": 90000,
+          "study_years": 10,
+          "import_price_cny_per_kwh": 0.66,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          },
+          "wind_quote": {
+            "turbine_cny": 45000,
+            "tower_cny": 15000,
+            "foundation_cny": 10000,
+            "installation_cny": 12000,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_year": 1200,
+            "residual_fraction": 0.05
+          }
+        },
+        "storage": {
+          "capacities_kwh": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "quote": {
+            "cny_per_kwh": 553.94,
+            "installation_cny_per_kwh": 489.88,
+            "maintenance_cny_per_year": 300,
+            "life_years": 10,
+            "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+            "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+            "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
+          },
+          "export": {
+            "price_cny_per_kwh": 0.25,
+            "connection_cny": 0,
+            "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+            "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+            "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+            "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+            "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"
+          }
+        }
+      },
+      "expected_kind": "unsupported",
+      "expected_changes": {},
+      "origin": "operation_planning/results/round21_local_5090/confirmed/http_events.jsonl:73",
+      "historical_round21_status": "ok",
+      "historical_round21_adopted": false
+    },
+    {
+      "id": "04_budget",
+      "request": "预算翻倍，其他条件不变",
+      "current_task": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "indoor_temp_c": 26,
+          "indoor_rh_percent": 60,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100,
+          "default_shr": 0.75,
+          "room_count": 1,
+          "units_per_room": 2,
+          "area_m2": 35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "cooling_setpoint_c": 26,
+          "rh_setpoint_percent": 60,
+          "equipment_id": "midea_msagbu12_mox201",
+          "height_m": 3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "ventilation_lps_person": 7,
+          "infiltration_ach": 0.35,
+          "orientation": "north"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "allow_export": false,
+          "usable_fraction": 0.8,
+          "requested_capacities_kwp": [
+            0,
+            1,
+            2,
+            5.6
+          ],
+          "study_years": 10,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "allow_export": false,
+          "wind": {
+            "source_height_m": 10,
+            "hellman_exponent": 0.14,
+            "turbine_count": 1,
+            "hub_height_m": 9
+          },
+          "budget_cny": 90000,
+          "study_years": 10,
+          "import_price_cny_per_kwh": 0.66,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          },
+          "wind_quote": {
+            "turbine_cny": 45000,
+            "tower_cny": 15000,
+            "foundation_cny": 10000,
+            "installation_cny": 12000,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_year": 1200,
+            "residual_fraction": 0.05
+          }
+        },
+        "storage": {
+          "capacities_kwh": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "quote": {
+            "cny_per_kwh": 553.94,
+            "installation_cny_per_kwh": 489.88,
+            "maintenance_cny_per_year": 300,
+            "life_years": 10,
+            "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+            "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+            "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
+          },
+          "export": {
+            "price_cny_per_kwh": 0.25,
+            "connection_cny": 0,
+            "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+            "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+            "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+            "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+            "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"
+          }
+        }
+      },
+      "expected_kind": "edit",
+      "expected_changes": {
+        "hybrid.budget_cny": 180000
+      },
+      "origin": "operation_planning/results/round21_local_5090/confirmed/http_events.jsonl:19",
+      "historical_round21_status": "ok",
+      "historical_round21_adopted": true
+    },
+    {
+      "id": "05_hours",
+      "request": "把使用时段改为18:00到22:00，其他条件不变",
+      "current_task": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "indoor_temp_c": 26,
+          "indoor_rh_percent": 60,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100,
+          "default_shr": 0.75,
+          "room_count": 1,
+          "units_per_room": 2,
+          "area_m2": 35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "cooling_setpoint_c": 26,
+          "rh_setpoint_percent": 60,
+          "equipment_id": "midea_msagbu12_mox201",
+          "height_m": 3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "ventilation_lps_person": 7,
+          "infiltration_ach": 0.35,
+          "orientation": "north"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "allow_export": false,
+          "usable_fraction": 0.8,
+          "requested_capacities_kwp": [
+            0,
+            1,
+            2,
+            5.6
+          ],
+          "study_years": 10,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "allow_export": false,
+          "wind": {
+            "source_height_m": 10,
+            "hellman_exponent": 0.14,
+            "turbine_count": 1,
+            "hub_height_m": 9
+          },
+          "budget_cny": 90000,
+          "study_years": 10,
+          "import_price_cny_per_kwh": 0.66,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          },
+          "wind_quote": {
+            "turbine_cny": 45000,
+            "tower_cny": 15000,
+            "foundation_cny": 10000,
+            "installation_cny": 12000,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_year": 1200,
+            "residual_fraction": 0.05
+          }
+        },
+        "storage": {
+          "capacities_kwh": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "quote": {
+            "cny_per_kwh": 553.94,
+            "installation_cny_per_kwh": 489.88,
+            "maintenance_cny_per_year": 300,
+            "life_years": 10,
+            "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+            "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+            "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
+          },
+          "export": {
+            "price_cny_per_kwh": 0.25,
+            "connection_cny": 0,
+            "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+            "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+            "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+            "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+            "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"
+          }
+        }
+      },
+      "expected_kind": "edit",
+      "expected_changes": {
+        "room.start_hour": 18,
+        "room.end_hour": 22
+      },
+      "origin": "operation_planning/results/round21_local_5090/confirmed/http_events.jsonl:25",
+      "historical_round21_status": "ok",
+      "historical_round21_adopted": true
+    },
+    {
+      "id": "06_export",
+      "request": "关闭余电卖给电网，其他条件不变",
+      "current_task": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "indoor_temp_c": 26,
+          "indoor_rh_percent": 60,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100,
+          "default_shr": 0.75,
+          "room_count": 1,
+          "units_per_room": 2,
+          "area_m2": 35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "cooling_setpoint_c": 26,
+          "rh_setpoint_percent": 60,
+          "equipment_id": "midea_msagbu12_mox201",
+          "height_m": 3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "ventilation_lps_person": 7,
+          "infiltration_ach": 0.35,
+          "orientation": "north"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "allow_export": true,
+          "usable_fraction": 0.8,
+          "requested_capacities_kwp": [
+            0,
+            1,
+            2,
+            5.6
+          ],
+          "study_years": 10,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "allow_export": true,
+          "wind": {
+            "source_height_m": 10,
+            "hellman_exponent": 0.14,
+            "turbine_count": 1,
+            "hub_height_m": 9
+          },
+          "budget_cny": 90000,
+          "study_years": 10,
+          "import_price_cny_per_kwh": 0.66,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          },
+          "wind_quote": {
+            "turbine_cny": 45000,
+            "tower_cny": 15000,
+            "foundation_cny": 10000,
+            "installation_cny": 12000,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_year": 1200,
+            "residual_fraction": 0.05
+          }
+        },
+        "storage": {
+          "capacities_kwh": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "quote": {
+            "cny_per_kwh": 553.94,
+            "installation_cny_per_kwh": 489.88,
+            "maintenance_cny_per_year": 300,
+            "life_years": 10,
+            "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+            "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+            "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
+          },
+          "export": {
+            "price_cny_per_kwh": 0.25,
+            "connection_cny": 0,
+            "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+            "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+            "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+            "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+            "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"
+          }
+        }
+      },
+      "expected_kind": "edit",
+      "expected_changes": {
+        "hybrid.allow_export": false
+      },
+      "origin": "operation_planning/results/round21_local_5090/confirmed/http_events.jsonl:31",
+      "historical_round21_status": "ok",
+      "historical_round21_adopted": true
+    },
+    {
+      "id": "07_pv",
+      "request": "光伏改为2kWp，其他条件不变",
+      "current_task": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "indoor_temp_c": 26,
+          "indoor_rh_percent": 60,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100,
+          "default_shr": 0.75,
+          "room_count": 1,
+          "units_per_room": 2,
+          "area_m2": 35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "cooling_setpoint_c": 26,
+          "rh_setpoint_percent": 60,
+          "equipment_id": "midea_msagbu12_mox201",
+          "height_m": 3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "ventilation_lps_person": 7,
+          "infiltration_ach": 0.35,
+          "orientation": "north"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "allow_export": false,
+          "usable_fraction": 0.8,
+          "requested_capacities_kwp": [
+            0,
+            1,
+            2,
+            5.6
+          ],
+          "study_years": 10,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "allow_export": false,
+          "wind": {
+            "source_height_m": 10,
+            "hellman_exponent": 0.14,
+            "turbine_count": 1,
+            "hub_height_m": 9
+          },
+          "budget_cny": 90000,
+          "study_years": 10,
+          "import_price_cny_per_kwh": 0.66,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          },
+          "wind_quote": {
+            "turbine_cny": 45000,
+            "tower_cny": 15000,
+            "foundation_cny": 10000,
+            "installation_cny": 12000,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_year": 1200,
+            "residual_fraction": 0.05
+          }
+        },
+        "storage": {
+          "capacities_kwh": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "quote": {
+            "cny_per_kwh": 553.94,
+            "installation_cny_per_kwh": 489.88,
+            "maintenance_cny_per_year": 300,
+            "life_years": 10,
+            "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+            "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+            "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
+          },
+          "export": {
+            "price_cny_per_kwh": 0.25,
+            "connection_cny": 0,
+            "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+            "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+            "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+            "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+            "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"
+          }
+        }
+      },
+      "expected_kind": "edit",
+      "expected_changes": {
+        "pv.capacity_kwp": 2
+      },
+      "origin": "operation_planning/results/round21_local_5090/final_guard/http_events.jsonl:3",
+      "historical_round21_status": "failed",
+      "historical_round21_adopted": false
+    },
+    {
+      "id": "08_wind",
+      "request": "风机改为0台，其他条件不变",
+      "current_task": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "indoor_temp_c": 26,
+          "indoor_rh_percent": 60,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100,
+          "default_shr": 0.75,
+          "room_count": 1,
+          "units_per_room": 2,
+          "area_m2": 35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "cooling_setpoint_c": 26,
+          "rh_setpoint_percent": 60,
+          "equipment_id": "midea_msagbu12_mox201",
+          "height_m": 3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "ventilation_lps_person": 7,
+          "infiltration_ach": 0.35,
+          "orientation": "north"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "allow_export": false,
+          "usable_fraction": 0.8,
+          "requested_capacities_kwp": [
+            0,
+            1,
+            2,
+            5.6
+          ],
+          "study_years": 10,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "allow_export": false,
+          "wind": {
+            "source_height_m": 10,
+            "hellman_exponent": 0.14,
+            "turbine_count": 1,
+            "hub_height_m": 9
+          },
+          "budget_cny": 90000,
+          "study_years": 10,
+          "import_price_cny_per_kwh": 0.66,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          },
+          "wind_quote": {
+            "turbine_cny": 45000,
+            "tower_cny": 15000,
+            "foundation_cny": 10000,
+            "installation_cny": 12000,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_year": 1200,
+            "residual_fraction": 0.05
+          }
+        },
+        "storage": {
+          "capacities_kwh": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "quote": {
+            "cny_per_kwh": 553.94,
+            "installation_cny_per_kwh": 489.88,
+            "maintenance_cny_per_year": 300,
+            "life_years": 10,
+            "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+            "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+            "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
+          },
+          "export": {
+            "price_cny_per_kwh": 0.25,
+            "connection_cny": 0,
+            "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+            "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+            "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+            "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+            "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"
+          }
+        }
+      },
+      "expected_kind": "edit",
+      "expected_changes": {
+        "hybrid.wind.turbine_count": 0
+      },
+      "origin": "operation_planning/results/round21_local_5090/final_guard/http_events.jsonl:5",
+      "historical_round21_status": "failed",
+      "historical_round21_adopted": false
+    },
+    {
+      "id": "09_escalation",
+      "request": "电价每年涨3%，其他条件不变",
+      "current_task": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "indoor_temp_c": 26,
+          "indoor_rh_percent": 60,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100,
+          "default_shr": 0.75,
+          "room_count": 1,
+          "units_per_room": 2,
+          "area_m2": 35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "cooling_setpoint_c": 26,
+          "rh_setpoint_percent": 60,
+          "equipment_id": "midea_msagbu12_mox201",
+          "height_m": 3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "ventilation_lps_person": 7,
+          "infiltration_ach": 0.35,
+          "orientation": "north"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "allow_export": false,
+          "usable_fraction": 0.8,
+          "requested_capacities_kwp": [
+            0,
+            1,
+            2,
+            5.6
+          ],
+          "study_years": 10,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "allow_export": false,
+          "wind": {
+            "source_height_m": 10,
+            "hellman_exponent": 0.14,
+            "turbine_count": 1,
+            "hub_height_m": 9
+          },
+          "budget_cny": 90000,
+          "study_years": 10,
+          "import_price_cny_per_kwh": 0.66,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          },
+          "wind_quote": {
+            "turbine_cny": 45000,
+            "tower_cny": 15000,
+            "foundation_cny": 10000,
+            "installation_cny": 12000,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_year": 1200,
+            "residual_fraction": 0.05
+          }
+        },
+        "storage": {
+          "capacities_kwh": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "quote": {
+            "cny_per_kwh": 553.94,
+            "installation_cny_per_kwh": 489.88,
+            "maintenance_cny_per_year": 300,
+            "life_years": 10,
+            "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+            "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+            "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
+          },
+          "export": {
+            "price_cny_per_kwh": 0.25,
+            "connection_cny": 0,
+            "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+            "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+            "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+            "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+            "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"
+          }
+        }
+      },
+      "expected_kind": "edit",
+      "expected_changes": {
+        "hybrid.tariff_escalation_rate": 0.03
+      },
+      "origin": "operation_planning/results/round21_local_5090/confirmed/http_events.jsonl:45",
+      "historical_round21_status": "ok",
+      "historical_round21_adopted": true
+    },
+    {
+      "id": "10_storage",
+      "request": "储能单价改为600元/kWh，容量列表改为0、5、10kWh",
+      "current_task": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "indoor_temp_c": 26,
+          "indoor_rh_percent": 60,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100,
+          "default_shr": 0.75,
+          "room_count": 1,
+          "units_per_room": 2,
+          "area_m2": 35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "cooling_setpoint_c": 26,
+          "rh_setpoint_percent": 60,
+          "equipment_id": "midea_msagbu12_mox201",
+          "height_m": 3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "ventilation_lps_person": 7,
+          "infiltration_ach": 0.35,
+          "orientation": "north"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "allow_export": false,
+          "usable_fraction": 0.8,
+          "requested_capacities_kwp": [
+            0,
+            1,
+            2,
+            5.6
+          ],
+          "study_years": 10,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "allow_export": false,
+          "wind": {
+            "source_height_m": 10,
+            "hellman_exponent": 0.14,
+            "turbine_count": 1,
+            "hub_height_m": 9
+          },
+          "budget_cny": 90000,
+          "study_years": 10,
+          "import_price_cny_per_kwh": 0.66,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          },
+          "wind_quote": {
+            "turbine_cny": 45000,
+            "tower_cny": 15000,
+            "foundation_cny": 10000,
+            "installation_cny": 12000,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_year": 1200,
+            "residual_fraction": 0.05
+          }
+        },
+        "storage": {
+          "capacities_kwh": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "quote": {
+            "cny_per_kwh": 553.94,
+            "installation_cny_per_kwh": 489.88,
+            "maintenance_cny_per_year": 300,
+            "life_years": 10,
+            "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+            "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+            "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
+          },
+          "export": {
+            "price_cny_per_kwh": 0.25,
+            "connection_cny": 0,
+            "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+            "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+            "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+            "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+            "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"
+          }
+        }
+      },
+      "expected_kind": "edit",
+      "expected_changes": {
+        "storage.quote.cny_per_kwh": 600,
+        "storage.capacities_kwh": [
+          0,
+          5,
+          10
+        ]
+      },
+      "origin": "operation_planning/results/round21_local_5090/confirmed/http_events.jsonl:51",
+      "historical_round21_status": "ok",
+      "historical_round21_adopted": true
+    },
+    {
+      "id": "11_unsupported",
+      "request": "让储能按峰谷电价自动套利并保证回本",
+      "current_task": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "indoor_temp_c": 26,
+          "indoor_rh_percent": 60,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100,
+          "default_shr": 0.75,
+          "room_count": 1,
+          "units_per_room": 2,
+          "area_m2": 35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "cooling_setpoint_c": 26,
+          "rh_setpoint_percent": 60,
+          "equipment_id": "midea_msagbu12_mox201",
+          "height_m": 3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "ventilation_lps_person": 7,
+          "infiltration_ach": 0.35,
+          "orientation": "north"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "allow_export": false,
+          "usable_fraction": 0.8,
+          "requested_capacities_kwp": [
+            0,
+            1,
+            2,
+            5.6
+          ],
+          "study_years": 10,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "allow_export": false,
+          "wind": {
+            "source_height_m": 10,
+            "hellman_exponent": 0.14,
+            "turbine_count": 1,
+            "hub_height_m": 9
+          },
+          "budget_cny": 90000,
+          "study_years": 10,
+          "import_price_cny_per_kwh": 0.66,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          },
+          "wind_quote": {
+            "turbine_cny": 45000,
+            "tower_cny": 15000,
+            "foundation_cny": 10000,
+            "installation_cny": 12000,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_year": 1200,
+            "residual_fraction": 0.05
+          }
+        },
+        "storage": {
+          "capacities_kwh": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "quote": {
+            "cny_per_kwh": 553.94,
+            "installation_cny_per_kwh": 489.88,
+            "maintenance_cny_per_year": 300,
+            "life_years": 10,
+            "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+            "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+            "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
+          },
+          "export": {
+            "price_cny_per_kwh": 0.25,
+            "connection_cny": 0,
+            "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+            "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+            "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+            "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+            "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"
+          }
+        }
+      },
+      "expected_kind": "unsupported",
+      "expected_changes": {},
+      "origin": "operation_planning/results/round21_local_5090/confirmed/http_events.jsonl:57",
+      "historical_round21_status": "failed",
+      "historical_round21_adopted": false
+    },
+    {
+      "id": "12_question",
+      "request": "预算调低一些",
+      "current_task": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "indoor_temp_c": 26,
+          "indoor_rh_percent": 60,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100,
+          "default_shr": 0.75,
+          "room_count": 1,
+          "units_per_room": 2,
+          "area_m2": 35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "cooling_setpoint_c": 26,
+          "rh_setpoint_percent": 60,
+          "equipment_id": "midea_msagbu12_mox201",
+          "height_m": 3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "ventilation_lps_person": 7,
+          "infiltration_ach": 0.35,
+          "orientation": "north"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "allow_export": false,
+          "usable_fraction": 0.8,
+          "requested_capacities_kwp": [
+            0,
+            1,
+            2,
+            5.6
+          ],
+          "study_years": 10,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "allow_export": false,
+          "wind": {
+            "source_height_m": 10,
+            "hellman_exponent": 0.14,
+            "turbine_count": 1,
+            "hub_height_m": 9
+          },
+          "budget_cny": 90000,
+          "study_years": 10,
+          "import_price_cny_per_kwh": 0.66,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          },
+          "wind_quote": {
+            "turbine_cny": 45000,
+            "tower_cny": 15000,
+            "foundation_cny": 10000,
+            "installation_cny": 12000,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_year": 1200,
+            "residual_fraction": 0.05
+          }
+        },
+        "storage": {
+          "capacities_kwh": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "quote": {
+            "cny_per_kwh": 553.94,
+            "installation_cny_per_kwh": 489.88,
+            "maintenance_cny_per_year": 300,
+            "life_years": 10,
+            "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+            "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+            "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
+          },
+          "export": {
+            "price_cny_per_kwh": 0.25,
+            "connection_cny": 0,
+            "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+            "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+            "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+            "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+            "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"
+          }
+        }
+      },
+      "expected_kind": "clarification",
+      "expected_changes": {},
+      "origin": "operation_planning/results/round21_local_5090/confirmed/http_events.jsonl:59",
+      "historical_round21_status": "needs_clarification",
+      "historical_round21_adopted": false
+    },
+    {
+      "id": "13_pv_units",
+      "request": "光伏装机设置为2千瓦，其他条件不变",
+      "current_task": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "indoor_temp_c": 26,
+          "indoor_rh_percent": 60,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100,
+          "default_shr": 0.75,
+          "room_count": 1,
+          "units_per_room": 2,
+          "area_m2": 35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "cooling_setpoint_c": 26,
+          "rh_setpoint_percent": 60,
+          "equipment_id": "midea_msagbu12_mox201",
+          "height_m": 3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "ventilation_lps_person": 7,
+          "infiltration_ach": 0.35,
+          "orientation": "north"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "allow_export": false,
+          "usable_fraction": 0.8,
+          "requested_capacities_kwp": [
+            0,
+            1,
+            2,
+            5.6
+          ],
+          "study_years": 10,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "allow_export": false,
+          "wind": {
+            "source_height_m": 10,
+            "hellman_exponent": 0.14,
+            "turbine_count": 1,
+            "hub_height_m": 9
+          },
+          "budget_cny": 90000,
+          "study_years": 10,
+          "import_price_cny_per_kwh": 0.66,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          },
+          "wind_quote": {
+            "turbine_cny": 45000,
+            "tower_cny": 15000,
+            "foundation_cny": 10000,
+            "installation_cny": 12000,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_year": 1200,
+            "residual_fraction": 0.05
+          }
+        },
+        "storage": {
+          "capacities_kwh": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "quote": {
+            "cny_per_kwh": 553.94,
+            "installation_cny_per_kwh": 489.88,
+            "maintenance_cny_per_year": 300,
+            "life_years": 10,
+            "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+            "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+            "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
+          },
+          "export": {
+            "price_cny_per_kwh": 0.25,
+            "connection_cny": 0,
+            "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+            "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+            "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+            "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+            "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"
+          }
+        }
+      },
+      "expected_kind": "edit",
+      "expected_changes": {
+        "pv.capacity_kwp": 2
+      },
+      "origin": "operation_planning/results/round21_local_5090/final_guard/http_events.jsonl:7",
+      "historical_round21_status": "ok",
+      "historical_round21_adopted": true
+    },
+    {
+      "id": "14_wind_words",
+      "request": "风机数量设为零台，其他条件不变",
+      "current_task": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "indoor_temp_c": 26,
+          "indoor_rh_percent": 60,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100,
+          "default_shr": 0.75,
+          "room_count": 1,
+          "units_per_room": 2,
+          "area_m2": 35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "cooling_setpoint_c": 26,
+          "rh_setpoint_percent": 60,
+          "equipment_id": "midea_msagbu12_mox201",
+          "height_m": 3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "ventilation_lps_person": 7,
+          "infiltration_ach": 0.35,
+          "orientation": "north"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "allow_export": false,
+          "usable_fraction": 0.8,
+          "requested_capacities_kwp": [
+            0,
+            1,
+            2,
+            5.6
+          ],
+          "study_years": 10,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "allow_export": false,
+          "wind": {
+            "source_height_m": 10,
+            "hellman_exponent": 0.14,
+            "turbine_count": 1,
+            "hub_height_m": 9
+          },
+          "budget_cny": 90000,
+          "study_years": 10,
+          "import_price_cny_per_kwh": 0.66,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          },
+          "wind_quote": {
+            "turbine_cny": 45000,
+            "tower_cny": 15000,
+            "foundation_cny": 10000,
+            "installation_cny": 12000,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_year": 1200,
+            "residual_fraction": 0.05
+          }
+        },
+        "storage": {
+          "capacities_kwh": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "quote": {
+            "cny_per_kwh": 553.94,
+            "installation_cny_per_kwh": 489.88,
+            "maintenance_cny_per_year": 300,
+            "life_years": 10,
+            "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+            "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+            "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
+          },
+          "export": {
+            "price_cny_per_kwh": 0.25,
+            "connection_cny": 0,
+            "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+            "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+            "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+            "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+            "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"
+          }
+        }
+      },
+      "expected_kind": "edit",
+      "expected_changes": {
+        "hybrid.wind.turbine_count": 0
+      },
+      "origin": "operation_planning/results/round21_local_5090/final_guard/http_events.jsonl:13",
+      "historical_round21_status": "failed",
+      "historical_round21_adopted": false
+    },
+    {
+      "id": "15_no_wind",
+      "request": "不要风机了",
+      "current_task": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "indoor_temp_c": 26,
+          "indoor_rh_percent": 60,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100,
+          "default_shr": 0.75,
+          "room_count": 1,
+          "units_per_room": 2,
+          "area_m2": 35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "cooling_setpoint_c": 26,
+          "rh_setpoint_percent": 60,
+          "equipment_id": "midea_msagbu12_mox201",
+          "height_m": 3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "ventilation_lps_person": 7,
+          "infiltration_ach": 0.35,
+          "orientation": "north"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "allow_export": false,
+          "usable_fraction": 0.8,
+          "requested_capacities_kwp": [
+            0,
+            1,
+            2,
+            5.6
+          ],
+          "study_years": 10,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "allow_export": false,
+          "wind": {
+            "source_height_m": 10,
+            "hellman_exponent": 0.14,
+            "turbine_count": 1,
+            "hub_height_m": 9
+          },
+          "budget_cny": 90000,
+          "study_years": 10,
+          "import_price_cny_per_kwh": 0.66,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          },
+          "wind_quote": {
+            "turbine_cny": 45000,
+            "tower_cny": 15000,
+            "foundation_cny": 10000,
+            "installation_cny": 12000,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_year": 1200,
+            "residual_fraction": 0.05
+          }
+        },
+        "storage": {
+          "capacities_kwh": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "quote": {
+            "cny_per_kwh": 553.94,
+            "installation_cny_per_kwh": 489.88,
+            "maintenance_cny_per_year": 300,
+            "life_years": 10,
+            "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+            "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+            "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
+          },
+          "export": {
+            "price_cny_per_kwh": 0.25,
+            "connection_cny": 0,
+            "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+            "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+            "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+            "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+            "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"
+          }
+        }
+      },
+      "expected_kind": "edit",
+      "expected_changes": {
+        "hybrid.wind.turbine_count": 0
+      },
+      "origin": "section22_new_sentence"
+    },
+    {
+      "id": "16_two_wind",
+      "request": "装两台风机",
+      "current_task": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "indoor_temp_c": 26,
+          "indoor_rh_percent": 60,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100,
+          "default_shr": 0.75,
+          "room_count": 1,
+          "units_per_room": 2,
+          "area_m2": 35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "cooling_setpoint_c": 26,
+          "rh_setpoint_percent": 60,
+          "equipment_id": "midea_msagbu12_mox201",
+          "height_m": 3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "ventilation_lps_person": 7,
+          "infiltration_ach": 0.35,
+          "orientation": "north"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "allow_export": false,
+          "usable_fraction": 0.8,
+          "requested_capacities_kwp": [
+            0,
+            1,
+            2,
+            5.6
+          ],
+          "study_years": 10,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "allow_export": false,
+          "wind": {
+            "source_height_m": 10,
+            "hellman_exponent": 0.14,
+            "turbine_count": 1,
+            "hub_height_m": 9
+          },
+          "budget_cny": 90000,
+          "study_years": 10,
+          "import_price_cny_per_kwh": 0.66,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          },
+          "wind_quote": {
+            "turbine_cny": 45000,
+            "tower_cny": 15000,
+            "foundation_cny": 10000,
+            "installation_cny": 12000,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_year": 1200,
+            "residual_fraction": 0.05
+          }
+        },
+        "storage": {
+          "capacities_kwh": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "quote": {
+            "cny_per_kwh": 553.94,
+            "installation_cny_per_kwh": 489.88,
+            "maintenance_cny_per_year": 300,
+            "life_years": 10,
+            "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+            "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+            "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
+          },
+          "export": {
+            "price_cny_per_kwh": 0.25,
+            "connection_cny": 0,
+            "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+            "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+            "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+            "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+            "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"
+          }
+        }
+      },
+      "expected_kind": "out_of_range",
+      "expected_changes": {
+        "hybrid.wind.turbine_count": 2
+      },
+      "origin": "section22_new_sentence"
+    },
+    {
+      "id": "17_pv5",
+      "request": "光伏装 5kWp",
+      "current_task": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "indoor_temp_c": 26,
+          "indoor_rh_percent": 60,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100,
+          "default_shr": 0.75,
+          "room_count": 1,
+          "units_per_room": 2,
+          "area_m2": 35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "cooling_setpoint_c": 26,
+          "rh_setpoint_percent": 60,
+          "equipment_id": "midea_msagbu12_mox201",
+          "height_m": 3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "ventilation_lps_person": 7,
+          "infiltration_ach": 0.35,
+          "orientation": "north"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "allow_export": false,
+          "usable_fraction": 0.8,
+          "requested_capacities_kwp": [
+            0,
+            1,
+            2,
+            5.6
+          ],
+          "study_years": 10,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "allow_export": false,
+          "wind": {
+            "source_height_m": 10,
+            "hellman_exponent": 0.14,
+            "turbine_count": 1,
+            "hub_height_m": 9
+          },
+          "budget_cny": 90000,
+          "study_years": 10,
+          "import_price_cny_per_kwh": 0.66,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          },
+          "wind_quote": {
+            "turbine_cny": 45000,
+            "tower_cny": 15000,
+            "foundation_cny": 10000,
+            "installation_cny": 12000,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_year": 1200,
+            "residual_fraction": 0.05
+          }
+        },
+        "storage": {
+          "capacities_kwh": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "quote": {
+            "cny_per_kwh": 553.94,
+            "installation_cny_per_kwh": 489.88,
+            "maintenance_cny_per_year": 300,
+            "life_years": 10,
+            "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+            "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+            "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
+          },
+          "export": {
+            "price_cny_per_kwh": 0.25,
+            "connection_cny": 0,
+            "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+            "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+            "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+            "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+            "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"
+          }
+        }
+      },
+      "expected_kind": "edit",
+      "expected_changes": {
+        "pv.capacity_kwp": 5
+      },
+      "origin": "section22_new_sentence"
+    },
+    {
+      "id": "18_budget6",
+      "request": "预算改为6万",
+      "current_task": {
+        "site_id": "guangzhou",
+        "year": 2024,
+        "room": {
+          "indoor_temp_c": 26,
+          "indoor_rh_percent": 60,
+          "pre_cool_minutes": 60,
+          "thermal_mass_kj_per_m2": 100,
+          "default_shr": 0.75,
+          "room_count": 1,
+          "units_per_room": 2,
+          "area_m2": 35,
+          "weekdays_only": true,
+          "start_hour": 8,
+          "end_hour": 18,
+          "cooling_setpoint_c": 26,
+          "rh_setpoint_percent": 60,
+          "equipment_id": "midea_msagbu12_mox201",
+          "height_m": 3,
+          "people_count": 2,
+          "equipment_gain_w": 100,
+          "window_wall_ratio": 0.1,
+          "insulation_u_w_m2k": 0.3,
+          "ventilation_lps_person": 7,
+          "infiltration_ach": 0.35,
+          "orientation": "north"
+        },
+        "pv": {
+          "roof_area_m2": 35,
+          "allow_export": false,
+          "usable_fraction": 0.8,
+          "requested_capacities_kwp": [
+            0,
+            1,
+            2,
+            5.6
+          ],
+          "study_years": 10,
+          "quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          }
+        },
+        "hybrid": {
+          "allow_export": false,
+          "wind": {
+            "source_height_m": 10,
+            "hellman_exponent": 0.14,
+            "turbine_count": 1,
+            "hub_height_m": 9
+          },
+          "budget_cny": 90000,
+          "study_years": 10,
+          "import_price_cny_per_kwh": 0.66,
+          "pv_quote": {
+            "module_cny_per_kwp": 1800,
+            "inverter_cny_per_kwp": 600,
+            "structure_cny_per_kwp": 500,
+            "installation_cny_per_kwp": 800,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_kwp_year": 30,
+            "inverter_replacement_year": 12,
+            "inverter_replacement_fraction": 0.15,
+            "residual_fraction": 0.05
+          },
+          "wind_quote": {
+            "turbine_cny": 45000,
+            "tower_cny": 15000,
+            "foundation_cny": 10000,
+            "installation_cny": 12000,
+            "grid_connection_cny": 0,
+            "maintenance_cny_per_year": 1200,
+            "residual_fraction": 0.05
+          }
+        },
+        "storage": {
+          "capacities_kwh": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "quote": {
+            "cny_per_kwh": 553.94,
+            "installation_cny_per_kwh": 489.88,
+            "maintenance_cny_per_year": 300,
+            "life_years": 10,
+            "source": "CNESA Datalink：2025年储能中标价格分析（2小时系统与EPC均价）",
+            "source_url": "https://www.esresearch.com.cn/report/info/detail/?id=6645",
+            "source_note": "2小时系统均价553.94 + 2小时EPC均价1043.82的差额作为容量线性安装项；仅为示例拆分，非单一采购报价"
+          },
+          "export": {
+            "price_cny_per_kwh": 0.25,
+            "connection_cny": 0,
+            "source": "华福证券：分布式光伏行业深度（公开市场化余电示例）",
+            "source_url": "https://www.ndrc.gov.cn/xwdt/tzgg/202502/t20250209_1396067.html",
+            "reference_url": "https://pdf.dfcfw.com/pdf/H3_AP202406141636236987_1.pdf",
+            "policy_source": "国家发展改革委：关于深化新能源上网电价市场化改革的通知",
+            "source_note": "公开行业案例以0.25元/kWh作市场化余电示例；政策要求市场化结算，不代表广东固定上网价；小档并网/计量投入按0元粗算，需现场批复"
+          }
+        }
+      },
+      "expected_kind": "edit",
+      "expected_changes": {
+        "hybrid.budget_cny": 60000
+      },
+      "origin": "section22_new_sentence"
+    }
+  ],
+  "frozen_note": "WindScenario and shared schema only support turbine_count 0/1; two turbines must remain rejected. No physical model changes."
+}
