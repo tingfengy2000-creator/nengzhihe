@@ -33,8 +33,10 @@ export async function checkStatus() {
 }
 
 /**
- * 请求理解。返回 { status: 'ok'|'needs_clarification'|'unavailable'|'failed', changes, unsupported, question, reason }。
- * 404、网络错误、超时都折算为 unavailable（由界面改用规则识别）。
+ * 请求理解。返回 { status: 'ok'|'needs_clarification'|'unavailable'|'failed', changes, dropped, unsupported, question, reason }。
+ * 404、其他 HTTP 错误、网络错误、超时都折算为 unavailable（服务问题，由界面改用规则识别）；
+ * 只有接口正常返回 status=failed 才是“模型没能可靠理解”，界面不改用规则识别。
+ * dropped（第 22 节）：模型多带、用户原话没提到而被后端剔除的字段 [{field, reason}]。
  */
 export async function parse(text, currentTask) {
   try {
@@ -42,16 +44,17 @@ export async function parse(text, currentTask) {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ request: text, current_task: currentTask })
     }, PARSE_TIMEOUT_MS);
-    if (r.status === 404) return { status: 'unavailable', reason: '理解接口不存在', changes: [], unsupported: [] };
+    if (r.status === 404) return { status: 'unavailable', reason: '理解接口不存在', changes: [], dropped: [], unsupported: [] };
     const b = r.body || {};
-    if (!r.ok) return { status: 'failed', reason: b.message || b.error || `理解接口返回 ${r.status}`, changes: [], unsupported: [] };
+    if (!r.ok) return { status: 'unavailable', reason: `理解接口出错（HTTP ${r.status}）`, changes: [], dropped: [], unsupported: [] };
     const status = ['ok', 'needs_clarification', 'unavailable', 'failed'].includes(b.status) ? b.status : 'failed';
     return {
       status, reason: b.reason || b.message || null, question: b.question || null,
       changes: Array.isArray(b.changes) ? b.changes.filter((c) => c && typeof c.field === 'string') : [],
+      dropped: Array.isArray(b.dropped) ? b.dropped.filter((d) => d && typeof d.field === 'string') : [],
       unsupported: Array.isArray(b.unsupported) ? b.unsupported.map(String) : []
     };
   } catch (e) {
-    return { status: 'unavailable', reason: e.name === 'AbortError' ? '本地大模型响应超时' : '无法连接理解接口', changes: [], unsupported: [] };
+    return { status: 'unavailable', reason: e.name === 'AbortError' ? '本地大模型响应超时' : '无法连接理解接口', changes: [], dropped: [], unsupported: [] };
   }
 }

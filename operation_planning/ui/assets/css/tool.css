@@ -212,3 +212,4 @@ html { scroll-padding-bottom: 110px; }
 /* 电价年涨幅表：窄屏在容器内横向滑动，表头不被压成一字一行 */
 .esc-table { min-width: 560px; }
 .esc-table td:first-child { white-space: nowrap; }
+.pr-dropped { font-size: 13px; color: var(--ink-3); margin-top: 8px; }

@@ -386,6 +386,21 @@ export function agentValueText(field, v, options) {
   return `${v}${unit}`;
 }
 
+/** 修改清单的“原值”：年涨幅未填写即默认 0%；光伏容量按表单当前模式说明（自动比选/候选列表），不写“未填写”。 */
+export function agentFromText(field, v, form, options) {
+  const f = form || {};
+  if (field === 'hybrid.tariff_escalation_rate') {
+    const pct = f.escalation_pct === '' || f.escalation_pct == null ? 0 : Number(f.escalation_pct);
+    if ((v === null || v === undefined || v === '' || Number(v) === 0) && (!Number.isFinite(pct) || pct === 0)) return '0%（默认）';
+  }
+  if (field === 'hybrid.pv_capacity_kwp' || field === 'pv.capacity_kwp') {
+    if (f.capacity_mode === 'auto') return '自动比选';
+    const list = String(f.capacities || '').split(/[,，、\s]+/).filter(Boolean);
+    if (list.length > 1 && (v === null || v === undefined || v === '' || Array.isArray(v))) return `候选 ${list.join('、')} kWp`;
+  }
+  return agentValueText(field, v, options);
+}
+
 /** 把用户确认的修改写进表单副本；返回 { form, keys, skipped:[{label, why}] } */
 export function applyAgentChanges(form, changes) {
   const f = JSON.parse(JSON.stringify(form)), keys = new Set(), skipped = [];

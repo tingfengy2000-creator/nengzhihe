@@ -36,8 +36,12 @@ let failures = 0, checks = 0;
 
 /* ---------- 仅测试用桩服务：模拟 agent/status 与 agent/parse，其余转发到计算服务 ---------- */
 const stub = { status: 'available', parse: 'ok', parseCalls: 0, computeCalls: 0 };
-const PARSE_OK = { status: 'ok', changes: [{ field: 'room.units_per_room', from: 1, to: 3, label: '每间空调台数' }, { field: 'hybrid.budget_cny', from: null, to: 50000, label: '预算' }],
+const PARSE_OK = { status: 'ok', changes: [{ field: 'room.units_per_room', from: 1, to: 3, label: '每间空调台数' }, { field: 'hybrid.budget_cny', from: null, to: 50000, label: '预算' },
+  { field: 'hybrid.tariff_escalation_rate', from: null, to: 0.03, label: '电价年涨幅' }, { field: 'pv.capacity_kwp', from: null, to: 2, label: '光伏容量' }],
+  dropped: [{ field: 'room.equipment_id', reason: '用户未提及' }],
   unsupported: ['“换成格力”：设备目录中没有该品牌型号'], question: null, model: 'local_model', latency_ms: 12 };
+const PARSE_PLAIN = { status: 'ok', changes: [{ field: 'room.units_per_room', from: 1, to: 3, label: '每间空调台数' }], unsupported: [], question: null, model: 'local_model', latency_ms: 8 };
+const FAILED_REASON = '模型给出的光伏容量单位与原话不一致';
 function startStub(port = 18767) {
   const target = new URL(BASE);
   const server = http.createServer((req, res) => {
@@ -55,9 +59,11 @@ function startStub(port = 18767) {
         if (m === '404') return send(404, { error: '路径不存在' });
         if (m === 'timeout') return setTimeout(() => send(200, PARSE_OK), 30000);
         if (m === 'ok') return send(200, PARSE_OK);
+        if (m === 'ok_plain') return send(200, PARSE_PLAIN);
+        if (m === 'http500') return send(500, { error: '内部错误' });
         if (m === 'needs_clarification') return send(200, { status: 'needs_clarification', changes: [], unsupported: [], question: '请给出晚上使用时段的开始和结束时间，例如18:00到22:00。', model: 'local_model', latency_ms: 9 });
         if (m === 'unavailable') return send(200, { status: 'unavailable', changes: [], unsupported: [], question: null, reason: '本地模型未启动', model: 'local_model', latency_ms: 1 });
-        return send(200, { status: 'failed', changes: [], unsupported: [], question: null, reason: '模型输出不符合契约', model: 'local_model', latency_ms: 5 });
+        return send(200, { status: 'failed', changes: [], dropped: [], unsupported: [], question: null, reason: FAILED_REASON, model: 'local_model', latency_ms: 5 });
       });
       return;
     }
@@ -87,24 +93,41 @@ async function checkAgent(browser) {
   await page.waitForSelector('.proposal', { timeout: 10000 });
   const prop = await page.textContent('.proposal');
   ok(/每间空调台数/.test(prop) && /初始投入预算/.test(prop) && /没能处理/.test(prop) && /格力/.test(prop), `修改清单内容不全：${prop.slice(0, 120)}`);
+  ok(/已忽略：空调型号（用户未提及）/.test(prop), `ok + dropped 应列出“已忽略：空调型号（用户未提及）”：${prop.slice(0, 200)}`);
+  const fromOf = (label) => page.evaluate((l) => { const li = [...document.querySelectorAll('.proposal .pr-list li')].find((x) => x.querySelector('.pr-label').textContent === l); return li ? li.querySelector('.pr-from').textContent : null; }, label);
+  ok(await fromOf('未来电价每年变化') === '0%（默认）', `年涨幅原值应为“0%（默认）”：${await fromOf('未来电价每年变化')}`);
+  ok(await fromOf('光伏容量') === '自动比选', `自动比选时光伏容量原值应为“自动比选”：${await fromOf('光伏容量')}`);
+  ok(!/未填写/.test(await fromOf('未来电价每年变化') + await fromOf('光伏容量')), '默认值/自动比选不应显示“未填写”');
   await page.click('[data-action="agent-apply"]'); await page.waitForTimeout(400);
   ok(await page.inputValue('[data-field="units_per_room"]') === '3' && await page.inputValue('[data-field="budget_cny"]') === '50000', '采用后表单未写入');
+  ok(await page.inputValue('[data-field="escalation_pct"]') === '3' && await page.inputValue('[data-field="capacities"]') === '2', '采用后年涨幅/光伏容量未写入');
   ok(await page.evaluate(() => !!document.querySelector('[data-wrap="units_per_room"].flash')), '被改动字段没有高亮');
   await page.waitForTimeout(1500);
   ok(stub.computeCalls === 0, `采用修改后不应自动计算（实际 ${stub.computeCalls} 次计算请求）`);
   ok(!(await page.evaluate(() => /50,000|50000/.test(document.querySelector('[data-result-zone]').innerText))), '模型返回值出现在结果区');
-  // 取消
-  await ask('每间改成3台'); await page.waitForSelector('.proposal'); await page.click('[data-action="agent-cancel"]');
+  // 取消；响应不带 dropped 时不显示“已忽略”
+  stub.parse = 'ok_plain';
+  await ask('每间改成3台'); await page.waitForSelector('.proposal');
+  ok(!/已忽略/.test(await page.textContent('.proposal')), '响应没有 dropped 时不应显示“已忽略”');
+  await page.click('[data-action="agent-cancel"]');
   ok(!(await page.$('.proposal')), '取消后修改清单应消失');
   // needs_clarification
   stub.parse = 'needs_clarification'; await ask('把空调改成晚上使用'); await page.waitForTimeout(800);
   ok(/需要补充/.test(await page.textContent('[data-ask-result]')) && /18:00/.test(await page.textContent('[data-ask-result]')), '追问没有显示');
-  // unavailable / failed / 404 / 超时 → 规则识别同一句话
-  for (const m of ['unavailable', 'failed', '404', 'timeout']) {
+  // failed → “没能可靠理解”并显示原因，不改用规则识别、不改表单
+  stub.parse = 'failed'; stub.parseCalls = 0; await open(); await page.fill('[data-field="start_hour"]', '8');
+  await ask('每天 9 点到 21 点'); await page.waitForFunction(() => /没能可靠理解/.test(document.querySelector('[data-ask-result]').textContent), null, { timeout: 10000 }).catch(() => {});
+  {
+    const t = await page.textContent('[data-ask-result]');
+    ok(/本地大模型没能可靠理解这句话，请换个说法或直接修改表单/.test(t) && t.includes(FAILED_REASON), `failed 应显示“没能可靠理解”和原因：${t.slice(0, 80)}`);
+    ok(!/已改用规则识别|暂不可用/.test(t) && await page.inputValue('[data-field="start_hour"]') === '8' && stub.parseCalls === 1, `failed 不应触发规则识别：${t.slice(0, 60)}`);
+  }
+  // unavailable / 404 / 超时 / HTTP 500 → “暂不可用，已改用规则识别”，规则识别同一句话
+  for (const m of ['unavailable', '404', 'timeout', 'http500']) {
     stub.parse = m; await open(); await page.fill('[data-field="start_hour"]', '8');
     await ask('每天 9 点到 21 点'); await page.waitForFunction(() => /已改用规则识别/.test(document.querySelector('[data-ask-result]').textContent), null, { timeout: 40000 }).catch(() => {});
     const t = await page.textContent('[data-ask-result]');
-    ok(/已改用规则识别/.test(t) && await page.inputValue('[data-field="start_hour"]') === '9', `${m}：应提示已改用规则识别并按规则填入（${t.slice(0, 60)}）`);
+    ok(/本地大模型暂不可用/.test(t) && /已改用规则识别/.test(t) && !/没能可靠理解/.test(t) && await page.inputValue('[data-field="start_hour"]') === '9', `${m}：应提示暂不可用、已改用规则识别并按规则填入（${t.slice(0, 60)}）`);
   }
   // 状态 404 / 超时 → “规则识别”，规则仍可用
   for (const m of ['404', 'timeout', 'offline']) {

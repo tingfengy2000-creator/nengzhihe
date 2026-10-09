@@ -8,7 +8,7 @@ import { $, $$, esc, fmt, isNum, icon, toast, reduceMotion } from './util.js';
 import { app, on, emit } from './state.js';
 import * as data from './data.js';
 import { api, pollJob, ApiError } from './api.js';
-import { applyAgentChanges, agentLabel, agentValueText, prefillCustom } from './form.js';
+import { applyAgentChanges, agentLabel, agentValueText, agentFromText, prefillCustom } from './form.js';
 import * as agent from './agent.js';
 import { FIELDS, FIELD, FIELD_PATH, blankForm, buildRequest, buildPreview, formFromRequest, quoteFieldsFrom, storageFieldsFrom, storageMetaFrom, parseAsk, validate, tariffList, tariffsForSite } from './form.js';
 import { lineChart, barChart, dayTicks } from './charts.js';
@@ -227,10 +227,11 @@ function askCardHtml() {
 function renderAsk() { const box = $('[data-ask]', el); if (box) box.innerHTML = askCardHtml(); }
 
 function proposalHtml(P) {
-  const rows = P.changes.map((c, i) => `<li><span class="pr-label">${esc(agentLabel(c.field, c.label))}</span><span class="pr-from">${esc(agentValueText(c.field, c.from, app.options))}</span>${icon('arrow')}<b class="pr-to">${esc(agentValueText(c.field, c.to, app.options))}</b></li>`).join('');
+  const rows = P.changes.map((c, i) => `<li><span class="pr-label">${esc(agentLabel(c.field, c.label))}</span><span class="pr-from">${esc(agentFromText(c.field, c.from, T.form, app.options))}</span>${icon('arrow')}<b class="pr-to">${esc(agentValueText(c.field, c.to, app.options))}</b></li>`).join('');
   return `<div class="proposal" role="group" aria-label="我理解到的修改">
     <p class="pr-title">${icon('spark')}我理解到的修改</p>
     ${P.changes.length ? `<ul class="pr-list">${rows}</ul>` : '<p class="small muted">没有可以直接写入表单的修改。</p>'}
+    ${(P.dropped || []).length ? `<p class="pr-dropped">已忽略：${P.dropped.map((d) => `${esc(agentLabel(d.field, '其他条件'))}（${esc(d.reason || '用户未提及')}）`).join('、')}</p>` : ''}
     ${P.unsupported.length ? `<p class="pr-sub">没能处理：</p><ul class="pr-un">${P.unsupported.map((u) => `<li>${esc(u)}</li>`).join('')}</ul>` : ''}
     <div class="row" style="margin-top:10px">${P.changes.length ? '<button class="btn primary sm" type="button" data-action="agent-apply">采用这些修改</button>' : ''}<button class="btn sm" type="button" data-action="agent-cancel">取消</button></div>
     <p class="hint">采用后只修改表单条件，不会自动计算；请检查后点击「计算」。</p></div>`;
@@ -240,6 +241,7 @@ function askResult() {
   if (!T.ask) return '';
   const a = T.ask;
   if (a.kind === 'proposal') return proposalHtml(a);
+  if (a.kind === 'failed') return `<div class="callout warn">${icon('warn')}<span><b>本地大模型没能可靠理解这句话，请换个说法或直接修改表单。</b>${a.reason ? `<br><span class="small">原因：${esc(a.reason)}</span>` : ''}</span></div>`;
   if (a.kind === 'question') return `<div class="callout info">${icon('help')}<span><b>需要补充：</b>${esc(a.question || '')}</span></div>`;
   if (a.kind === 'applied') return `<div class="ask-tags">${a.keys.length ? `<span class="tag ok">${icon('check')}已写入表单：${esc(a.labels.join('、'))}</span>` : ''}${a.skipped.map((x) => `<span class="tag unknown">${icon('info')}${esc(x.label)}：${esc(x.why)}</span>`).join('')}</div><p class="hint">条件已修改，请检查后点击「计算」。</p>`;
   const fb = a.fallbackReason ? `<p class="small" style="color:var(--warn)">${icon('info')} 本地大模型暂不可用（${esc(a.fallbackReason)}），已改用规则识别。</p>` : '';
@@ -554,9 +556,10 @@ async function askSubmit() {
   T.askBusy = true; T.ask = null; renderAsk();
   const res = await agent.parse(text, buildRequest(T.form));
   T.askBusy = false;
-  if (res.status === 'ok') T.ask = { kind: 'proposal', text, changes: res.changes, unsupported: res.unsupported };
+  if (res.status === 'ok') T.ask = { kind: 'proposal', text, changes: res.changes, dropped: res.dropped || [], unsupported: res.unsupported };
   else if (res.status === 'needs_clarification') T.ask = { kind: 'question', text, question: res.question || res.reason || '请补充更具体的条件。' };
-  else { ruleAsk(text, res.reason || (res.status === 'failed' ? '理解失败' : '不可用')); toast('本地大模型暂不可用，已改用规则识别'); return; }
+  else if (res.status === 'failed') T.ask = { kind: 'failed', text, reason: res.reason || null };
+  else { ruleAsk(text, res.reason || '不可用'); toast('本地大模型暂不可用，已改用规则识别'); return; }
   renderAsk();
 }
 function agentApply() {
