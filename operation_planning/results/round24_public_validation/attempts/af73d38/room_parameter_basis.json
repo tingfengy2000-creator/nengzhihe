@@ -1,0 +1,248 @@
+[
+  {
+    "house_id": 2,
+    "phase": "R",
+    "tonnage": 1.5,
+    "star_rating": 3,
+    "setpoint_c": 25.0,
+    "room": {
+      "area_m2": 20,
+      "height_m": 3.0,
+      "orientation": "south",
+      "window_wall_ratio": 0.25,
+      "insulation_u_w_m2k": 0.75,
+      "people_count": 4,
+      "equipment_gain_w": 300.0,
+      "ventilation_lps_person": 7.0,
+      "infiltration_ach": 0.35,
+      "weekdays_only": false,
+      "start_hour": 0,
+      "end_hour": 24,
+      "indoor_temp_c": 26.6,
+      "indoor_rh_percent": 41.0,
+      "cooling_setpoint_c": 25.0,
+      "rh_setpoint_percent": 60.0,
+      "pre_cool_minutes": 0,
+      "thermal_mass_kj_per_m2": 100.0,
+      "equipment_id": "hyderabad_house_2_reference",
+      "equipment_count": 1,
+      "room_count": 1,
+      "units_per_room": null,
+      "default_shr": 0.75
+    },
+    "equipment": {
+      "equipment_id": "hyderabad_house_2_reference",
+      "brand": "unknown",
+      "model": "source tonnage + reference COP",
+      "combination": "MSAGBU-12HRFN8室内机 + MOX201-12HFN8室外机",
+      "rated_cooling_kw": 5.275279263,
+      "rated_input_kw": 1.5515527244117646,
+      "cop": 3.4,
+      "shr": null,
+      "operating_range": {
+        "indoor_c": [
+          17,
+          30
+        ],
+        "outdoor_c": [
+          -15,
+          50
+        ],
+        "capacity_range_kw": [
+          1.37,
+          4.31
+        ],
+        "rated_condition": "manufacturer rated point"
+      },
+      "price_cny": null,
+      "installation_cny": null,
+      "maintenance_cny_per_year": null,
+      "expected_life_years": 10,
+      "source": "ACDetails.csv tonnage; COP3.4 reference, not BEE-star conversion",
+      "source_type": "public_manufacturer_page",
+      "limitations": [
+        "no measured COP/SHR/part-load map",
+        "whole-house phase current; not AC submeter"
+      ]
+    },
+    "baseline_ma_dev_OFF_median": 648.0,
+    "initialization": "first indoor observation 2-3 minutes after start used as initial approximation; first hour excluded from temperature scoring",
+    "supported_changes": [
+      "tonnage from ACDetails",
+      "reported homeowner setpoint, not time-varying remote-control log",
+      "actual AC ON/OFF labels as schedule",
+      "initial T/RH",
+      "20m2 paper average, not individually measured"
+    ],
+    "unknowns": [
+      "individual room area/height/orientation/U/mass/occupancy/ventilation/internal gains",
+      "voltage/PF/COP/SHR/part-load performance",
+      "room microclimate and thermostat changes"
+    ],
+    "schedule_boundary": "label ON does not mean compressor continuously ON; frozen demand model not compressor cycling model"
+  },
+  {
+    "house_id": 6,
+    "phase": "R",
+    "tonnage": 1.0,
+    "star_rating": 3,
+    "setpoint_c": 22.0,
+    "room": {
+      "area_m2": 20,
+      "height_m": 3.0,
+      "orientation": "south",
+      "window_wall_ratio": 0.25,
+      "insulation_u_w_m2k": 0.75,
+      "people_count": 4,
+      "equipment_gain_w": 300.0,
+      "ventilation_lps_person": 7.0,
+      "infiltration_ach": 0.35,
+      "weekdays_only": false,
+      "start_hour": 0,
+      "end_hour": 24,
+      "indoor_temp_c": 31.6,
+      "indoor_rh_percent": 36.0,
+      "cooling_setpoint_c": 22.0,
+      "rh_setpoint_percent": 60.0,
+      "pre_cool_minutes": 0,
+      "thermal_mass_kj_per_m2": 100.0,
+      "equipment_id": "hyderabad_house_6_reference",
+      "equipment_count": 1,
+      "room_count": 1,
+      "units_per_room": null,
+      "default_shr": 0.75
+    },
+    "equipment": {
+      "equipment_id": "hyderabad_house_6_reference",
+      "brand": "unknown",
+      "model": "source tonnage + reference COP",
+      "combination": "MSAGBU-12HRFN8室内机 + MOX201-12HFN8室外机",
+      "rated_cooling_kw": 3.516852842,
+      "rated_input_kw": 1.0343684829411766,
+      "cop": 3.4,
+      "shr": null,
+      "operating_range": {
+        "indoor_c": [
+          17,
+          30
+        ],
+        "outdoor_c": [
+          -15,
+          50
+        ],
+        "capacity_range_kw": [
+          1.37,
+          4.31
+        ],
+        "rated_condition": "manufacturer rated point"
+      },
+      "price_cny": null,
+      "installation_cny": null,
+      "maintenance_cny_per_year": null,
+      "expected_life_years": 10,
+      "source": "ACDetails.csv tonnage; COP3.4 reference, not BEE-star conversion",
+      "source_type": "public_manufacturer_page",
+      "limitations": [
+        "no measured COP/SHR/part-load map",
+        "whole-house phase current; not AC submeter"
+      ]
+    },
+    "baseline_ma_dev_OFF_median": 1383.0,
+    "initialization": "first indoor observation 2-3 minutes after start used as initial approximation; first hour excluded from temperature scoring",
+    "supported_changes": [
+      "tonnage from ACDetails",
+      "reported homeowner setpoint, not time-varying remote-control log",
+      "actual AC ON/OFF labels as schedule",
+      "initial T/RH",
+      "20m2 paper average, not individually measured"
+    ],
+    "unknowns": [
+      "individual room area/height/orientation/U/mass/occupancy/ventilation/internal gains",
+      "voltage/PF/COP/SHR/part-load performance",
+      "room microclimate and thermostat changes"
+    ],
+    "schedule_boundary": "label ON does not mean compressor continuously ON; frozen demand model not compressor cycling model"
+  },
+  {
+    "house_id": 9,
+    "phase": "R",
+    "tonnage": 1.5,
+    "star_rating": 3,
+    "setpoint_c": 27.0,
+    "room": {
+      "area_m2": 20,
+      "height_m": 3.0,
+      "orientation": "south",
+      "window_wall_ratio": 0.25,
+      "insulation_u_w_m2k": 0.75,
+      "people_count": 4,
+      "equipment_gain_w": 300.0,
+      "ventilation_lps_person": 7.0,
+      "infiltration_ach": 0.35,
+      "weekdays_only": false,
+      "start_hour": 0,
+      "end_hour": 24,
+      "indoor_temp_c": 34.7,
+      "indoor_rh_percent": 39.0,
+      "cooling_setpoint_c": 27.0,
+      "rh_setpoint_percent": 60.0,
+      "pre_cool_minutes": 0,
+      "thermal_mass_kj_per_m2": 100.0,
+      "equipment_id": "hyderabad_house_9_reference",
+      "equipment_count": 1,
+      "room_count": 1,
+      "units_per_room": null,
+      "default_shr": 0.75
+    },
+    "equipment": {
+      "equipment_id": "hyderabad_house_9_reference",
+      "brand": "unknown",
+      "model": "source tonnage + reference COP",
+      "combination": "MSAGBU-12HRFN8室内机 + MOX201-12HFN8室外机",
+      "rated_cooling_kw": 5.275279263,
+      "rated_input_kw": 1.5515527244117646,
+      "cop": 3.4,
+      "shr": null,
+      "operating_range": {
+        "indoor_c": [
+          17,
+          30
+        ],
+        "outdoor_c": [
+          -15,
+          50
+        ],
+        "capacity_range_kw": [
+          1.37,
+          4.31
+        ],
+        "rated_condition": "manufacturer rated point"
+      },
+      "price_cny": null,
+      "installation_cny": null,
+      "maintenance_cny_per_year": null,
+      "expected_life_years": 10,
+      "source": "ACDetails.csv tonnage; COP3.4 reference, not BEE-star conversion",
+      "source_type": "public_manufacturer_page",
+      "limitations": [
+        "no measured COP/SHR/part-load map",
+        "whole-house phase current; not AC submeter"
+      ]
+    },
+    "baseline_ma_dev_OFF_median": 1179.0,
+    "initialization": "first indoor observation 2-3 minutes after start used as initial approximation; first hour excluded from temperature scoring",
+    "supported_changes": [
+      "tonnage from ACDetails",
+      "reported homeowner setpoint, not time-varying remote-control log",
+      "actual AC ON/OFF labels as schedule",
+      "initial T/RH",
+      "20m2 paper average, not individually measured"
+    ],
+    "unknowns": [
+      "individual room area/height/orientation/U/mass/occupancy/ventilation/internal gains",
+      "voltage/PF/COP/SHR/part-load performance",
+      "room microclimate and thermostat changes"
+    ],
+    "schedule_boundary": "label ON does not mean compressor continuously ON; frozen demand model not compressor cycling model"
+  }
+]

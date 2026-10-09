@@ -1,0 +1,4 @@
+building,baseline_monthly_kwh,summer_signed_increment_kwh,summer_positive_excess_fraction,winter_positive_excess_fraction,signed_increment_cdd18_correlation_12_months,positive_excess_shape_correlation,gas_units,gas_winter_positive,meter,gas_meter
+JMD Arganzuela,27287.3369175,64422.3837775,0.56706541253,0.25433326722,0.782993764703,0.797151000972,kWh,True,[JMD Arganzuela][0083] Electricidad General (Activa),[JMD Arganzuela][0083] Gas General
+JMD Chamberí,9027.75695825,17302.7437753,0.569314160224,0.193783077761,0.763286884462,0.799966422751,kWh,True,[JMD Chamberí][0079] Electricidad General (Activa),[JMD Chamberí][0079] Gas General
+JMD Moratalaz,21568.2421875,47708.2382875,0.772296167897,0,0.936253374506,0.932218524458,kWh,True,[JMD Moratalaz][0199] Electricidad General (Activa),[JMD Moratalaz][0199] Gas General

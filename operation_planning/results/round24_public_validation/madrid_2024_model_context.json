@@ -1,0 +1,67 @@
+{
+  "room": {
+    "area_m2": 35.0,
+    "height_m": 3.0,
+    "orientation": "south",
+    "window_wall_ratio": 0.25,
+    "insulation_u_w_m2k": 0.75,
+    "people_count": 4,
+    "equipment_gain_w": 300.0,
+    "ventilation_lps_person": 7.0,
+    "infiltration_ach": 0.35,
+    "weekdays_only": true,
+    "start_hour": 8,
+    "end_hour": 18,
+    "indoor_temp_c": 26.0,
+    "indoor_rh_percent": 60.0,
+    "cooling_setpoint_c": 26.0,
+    "rh_setpoint_percent": 60.0,
+    "pre_cool_minutes": 60,
+    "thermal_mass_kj_per_m2": 100.0,
+    "equipment_id": "midea_msagbu12_mox201",
+    "equipment_count": 1,
+    "room_count": 1,
+    "units_per_room": 1,
+    "default_shr": 0.75
+  },
+  "equipment": {
+    "equipment_id": "midea_msagbu12_mox201",
+    "brand": "美的",
+    "model": "MSAGBU-12HRFN8 / MOX201-12HFN8",
+    "combination": "MSAGBU-12HRFN8室内机 + MOX201-12HFN8室外机",
+    "rated_cooling_kw": 3.52,
+    "rated_input_kw": 1.034,
+    "cop": 3.4,
+    "shr": null,
+    "operating_range": {
+      "indoor_c": [
+        17,
+        30
+      ],
+      "outdoor_c": [
+        -15,
+        50
+      ],
+      "capacity_range_kw": [
+        1.37,
+        4.31
+      ],
+      "rated_condition": "manufacturer rated point"
+    },
+    "price_cny": null,
+    "installation_cny": null,
+    "maintenance_cny_per_year": null,
+    "expected_life_years": 10,
+    "source": "https://www.midea.com/it/hvac/monosplit/xtreme/climatizzatore-xtreme-msagbu-12hrfn8-mox201-12hfn8",
+    "source_type": "public_manufacturer_page",
+    "limitations": [
+      "SHR and price are not published for this exact comparison; user quote required",
+      "rated input is not a full hourly power curve",
+      "country-market specification may differ from a China quote"
+    ]
+  },
+  "response_hash": "f2cde314c05f5b2aac67253588915480c62668defc10d801adcd789a90e81b34",
+  "full_response_file": "working/round24/model_outputs/madrid_2024_office_full.json",
+  "physical_hours": 8784,
+  "scope": "one uncalibrated default office room, not matched building size; cooling-only; no fitting"
+}

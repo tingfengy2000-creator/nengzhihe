@@ -1,0 +1,9 @@
+{
+  "start_utc": "2026-10-09T02:45:13.504728+00:00",
+  "source_commit": "0a473190e99ed9804e19520308ddcca94f8b0198",
+  "error_type": "ValueError",
+  "error": "Insufficient gas-metered office buildings",
+  "command": [
+    "analysis\\round24_three_level\\run_validation.py"
+  ]
+}

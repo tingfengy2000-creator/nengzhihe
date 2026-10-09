@@ -1,0 +1,111 @@
+{
+  "recorded_utc": "2026-10-09T02:36:57.720696+00:00",
+  "sources": [
+    {
+      "file": "working/round24/sources/hyderabad_metadata.json",
+      "url": "https://api.figshare.com/v2/articles/16869439",
+      "bytes": 5085,
+      "sha256": "da347c3fd3c8dd259355bc1c5521db2638051745065a2400c3c8ba720ecad52d",
+      "action": "reused"
+    },
+    {
+      "file": "working/round24/sources/dataset.zip",
+      "url": "https://ndownloader.figshare.com/files/38686209",
+      "bytes": 1802819,
+      "sha256": "ae841ec127b84063078c1f6cf9e980583338c2eb3351cc8f0a1a13b4edbf56d6",
+      "action": "reused",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "version": 3
+    },
+    {
+      "file": "working/round24/sources/hyderabad_2019_weather.json",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=17.385&longitude=78.4867&timezone=Asia%2FKolkata&start_date=2019-05-10&end_date=2019-05-29&models=era5&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cshortwave_radiation",
+      "bytes": 18667,
+      "sha256": "25e90aaa0bc4755c8000a8e0c0320c7c1e8dff1957d6230ce2b8990ff2488c8c",
+      "action": "downloaded",
+      "request_parameters": {
+        "latitude": 17.385,
+        "longitude": 78.4867,
+        "timezone": "Asia/Kolkata",
+        "start_date": "2019-05-10",
+        "end_date": "2019-05-29",
+        "models": "era5",
+        "hourly": "temperature_2m,relative_humidity_2m,surface_pressure,shortwave_radiation"
+      },
+      "license": "CC BY 4.0; Open-Meteo attribution required",
+      "scope": "ERA5 city reference reanalysis, not on-site measured weather"
+    },
+    {
+      "file": "working/round24/sources/bangkok_2019_weather.json",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=13.7563&longitude=100.5018&timezone=Asia%2FBangkok&start_date=2019-01-01&end_date=2020-01-01&models=era5&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cshortwave_radiation",
+      "bytes": 342400,
+      "sha256": "e4c06618f08bf387f8709f6f202ca584fefae305e0f840003dcd113761de6c26",
+      "action": "downloaded",
+      "request_parameters": {
+        "latitude": 13.7563,
+        "longitude": 100.5018,
+        "timezone": "Asia/Bangkok",
+        "start_date": "2019-01-01",
+        "end_date": "2020-01-01",
+        "models": "era5",
+        "hourly": "temperature_2m,relative_humidity_2m,surface_pressure,shortwave_radiation"
+      },
+      "license": "CC BY 4.0; Open-Meteo attribution required",
+      "scope": "ERA5 city reference reanalysis, not on-site measured weather"
+    },
+    {
+      "file": "working/round24/sources/madrid_2024_weather.json",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=40.4168&longitude=-3.7038&timezone=UTC&start_date=2023-12-31&end_date=2025-01-01&models=era5&hourly=temperature_2m%2Crelative_humidity_2m%2Csurface_pressure%2Cshortwave_radiation",
+      "bytes": 332767,
+      "sha256": "d06f5e952e5a5c52b475a8823ce643ce5feb7f19fd41444ccacbd632ca23d787",
+      "action": "downloaded",
+      "request_parameters": {
+        "latitude": 40.4168,
+        "longitude": -3.7038,
+        "timezone": "UTC",
+        "start_date": "2023-12-31",
+        "end_date": "2025-01-01",
+        "models": "era5",
+        "hourly": "temperature_2m,relative_humidity_2m,surface_pressure,shortwave_radiation"
+      },
+      "license": "CC BY 4.0; Open-Meteo attribution required",
+      "scope": "ERA5 city reference reanalysis, not on-site measured weather"
+    },
+    {
+      "file": "working/round23/sources/2019Floor2.csv",
+      "bytes": 95782259,
+      "sha256": "ae19902ef0ff1058e4cc185cae9e9213b618d0d6ab11de3801d52bc81e9ddb77",
+      "action": "reused exact round23 downloaded bytes"
+    },
+    {
+      "file": "working/round23/sources/madrid_monthly.csv",
+      "bytes": 10055231,
+      "sha256": "3346b8bf8f5b46fe77180e993c255f530f2a9d4056b42dfac245b69a9a755578",
+      "action": "reused exact round23 downloaded bytes"
+    },
+    {
+      "file": "working/round23/sources/cu_metadata.json",
+      "bytes": 9804,
+      "sha256": "ea3bcb978122331e93d45fa2d46b48c079ae24ce63fc9d6d34e0c451156c83a1",
+      "action": "reused exact round23 downloaded bytes"
+    },
+    {
+      "file": "working/round23/sources/madrid_dictionary.pdf",
+      "bytes": 167499,
+      "sha256": "089f9520b4e8e6e41ab04d5fd6002620ec6f99e48ac5a359e1f9d8684843cad1",
+      "action": "reused exact round23 downloaded bytes"
+    },
+    {
+      "file": "working/round23/sources/cu_paper.pdf",
+      "bytes": 4435291,
+      "sha256": "9d36e50841e304325b10912ec546fe5ea33032a18bee8ca2d56b1370d26dce11",
+      "action": "reused exact round23 downloaded bytes"
+    }
+  ],
+  "prior_failed_attempt": "Sandbox socket WinError10013; public download rerun with normal authorised network access",
+  "raw_data_committed": false
+}

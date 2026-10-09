@@ -1,0 +1,17 @@
+{
+  "site": "hyderabad_2019",
+  "requested_model": "era5",
+  "response_model_identifier": "not returned; explicit single-model request recorded",
+  "api_timezone": "Asia/Kolkata",
+  "analysis_timezone": "Asia/Kolkata",
+  "grid_latitude": 17.5,
+  "grid_longitude": 78.5,
+  "rows": 456,
+  "first_interval_start": "2019-05-10T00:00:00+05:30",
+  "last_interval_end": "2019-05-29T00:00:00+05:30",
+  "interval_hours": 1,
+  "hash": "25e90aaa0bc4755c8000a8e0c0320c7c1e8dff1957d6230ce2b8990ff2488c8c",
+  "boundary": "independent actual next-hour response row; no wrap/copy/zero",
+  "radiation": "right-labelled preceding-hour source shifted to physical interval, other variables retained at start",
+  "dst": "Europe/Madrid offset preserved; repeated local clock hours have different offsets"
+}

@@ -54,7 +54,9 @@ def main():
               'prior_failed_attempt':'Sandbox socket WinError10013; public download rerun with normal authorised network access',
               'raw_data_committed':False}
     p=OUT/'source_manifest.json'
-    if p.exists() and json.loads(p.read_text(encoding='utf-8'))['sources']!=rows:
+    previous=json.loads(p.read_text(encoding='utf-8'))['sources'] if p.exists() else None
+    fingerprint=lambda sources:{s['file']:(s['sha256'],s['bytes']) for s in sources}
+    if previous is not None and fingerprint(previous)!=fingerprint(rows):
         raise RuntimeError('Preserve previous manifest; use a new output directory for a different acquisition')
     if not p.exists(): p.write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 

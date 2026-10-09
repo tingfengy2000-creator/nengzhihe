@@ -1,0 +1,328 @@
+{
+  "selected_house_ids": [
+    2,
+    6,
+    9
+  ],
+  "dates": "2019-05-10 through 2019-05-28 IST",
+  "licence": "figshare v3 CC0",
+  "source_year": "2019 from all selected CSV timestamps; paper body 2021 is inconsistent",
+  "rooms_with_individually_complete_physical_parameters": 0,
+  "proxy_not_submeter": true,
+  "untuned_precedes_fitting": true,
+  "limited_fit": {
+    "mass": 200,
+    "u": 1.5,
+    "development_score": 2.4147981422844804
+  },
+  "rooms": [
+    {
+      "house_id": 2,
+      "untuned_all": {
+        "n_days": 19,
+        "proxy_observed_total_kwh": 74.58608130000002,
+        "model_total_kwh": 98.53661417612425,
+        "nmbe_percent_model_minus_proxy": 33.895222265697605,
+        "cvrmse_percent": 43.816716073511124,
+        "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+        "pearson": 0.6215130196748472,
+        "temperature_samples": 1487,
+        "temperature_rmse_c": 3.7178197882474096,
+        "temperature_bias_c": -1.852052334057171,
+        "temperature_mae_c": 3.4539697736906727
+      },
+      "untuned_development": {
+        "n_days": 9,
+        "proxy_observed_total_kwh": 27.609615150000003,
+        "model_total_kwh": 38.530669377451765,
+        "nmbe_percent_model_minus_proxy": 44.4996641174958,
+        "cvrmse_percent": 52.61401182872332,
+        "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+        "pearson": 0.6989975006553905,
+        "temperature_samples": 564,
+        "temperature_rmse_c": 3.5777962404911396,
+        "temperature_bias_c": -0.8937942482030163,
+        "temperature_mae_c": 3.260820883456178
+      },
+      "untuned_evaluation": {
+        "n_days": 10,
+        "proxy_observed_total_kwh": 46.97646615,
+        "model_total_kwh": 60.00594479867248,
+        "nmbe_percent_model_minus_proxy": 30.817981182956604,
+        "cvrmse_percent": 40.39816458816834,
+        "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+        "pearson": 0.2545720131838269,
+        "temperature_samples": 923,
+        "temperature_rmse_c": 3.800843058931727,
+        "temperature_bias_c": -2.437596819887879,
+        "temperature_mae_c": 3.571993580941219
+      },
+      "full_response_hash": "c2e07424eaaeb5bb43c04c2cb380f9d1941663fa66cf4fb3d095cf7e1a36c921",
+      "limited_fit_evaluation": {
+        "n_days": 10,
+        "proxy_observed_total_kwh": 46.97646615,
+        "model_total_kwh": 69.906531418494,
+        "nmbe_percent_model_minus_proxy": 54.23534885951964,
+        "cvrmse_percent": 58.21708257276559,
+        "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+        "pearson": 0.3945684601106751,
+        "temperature_samples": 923,
+        "temperature_rmse_c": 3.3027273009532254,
+        "temperature_bias_c": -2.453235549073486,
+        "temperature_mae_c": 3.0040301944170085
+      },
+      "limited_fit_all": {
+        "n_days": 19,
+        "proxy_observed_total_kwh": 74.58608130000002,
+        "model_total_kwh": 115.97156728111173,
+        "nmbe_percent_model_minus_proxy": 58.56947956686529,
+        "cvrmse_percent": 66.20261485587513,
+        "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+        "pearson": 0.6343956231384422,
+        "temperature_samples": 1487,
+        "temperature_rmse_c": 3.1367835590819553,
+        "temperature_bias_c": -1.8299006496924994,
+        "temperature_mae_c": 2.862005513378685
+      },
+      "limited_fit_response_hash": "a7d112fa5df40a94281ca89db93067bb18e6a5b40bc8d3c05ad2828d781fe28d",
+      "multiplier_sensitivity_untuned_evaluation": [
+        {
+          "multiplier": 0.9,
+          "n_days": 10,
+          "proxy_observed_total_kwh": 42.278819535,
+          "model_total_kwh": 60.00594479867248,
+          "nmbe_percent_model_minus_proxy": 46.58788032674191,
+          "cvrmse_percent": 52.69107634692693,
+          "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+          "pearson": 0.2545720131838269
+        },
+        {
+          "multiplier": 1,
+          "n_days": 10,
+          "proxy_observed_total_kwh": 46.97646615,
+          "model_total_kwh": 60.00594479867248,
+          "nmbe_percent_model_minus_proxy": 30.817981182956604,
+          "cvrmse_percent": 40.39816458816834,
+          "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+          "pearson": 0.2545720131838269
+        },
+        {
+          "multiplier": 1.1,
+          "n_days": 10,
+          "proxy_observed_total_kwh": 51.67411276500001,
+          "model_total_kwh": 60.00594479867248,
+          "nmbe_percent_model_minus_proxy": 17.915336428950443,
+          "cvrmse_percent": 32.161107797554614,
+          "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+          "pearson": 0.25457201318382694
+        }
+      ]
+    },
+    {
+      "house_id": 6,
+      "untuned_all": {
+        "n_days": 19,
+        "proxy_observed_total_kwh": 76.97220825000001,
+        "model_total_kwh": 113.46472477185762,
+        "nmbe_percent_model_minus_proxy": 50.04387872794298,
+        "cvrmse_percent": 53.462415896987146,
+        "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+        "pearson": 0.8905881101719365,
+        "temperature_samples": 1716,
+        "temperature_rmse_c": 5.727411194387164,
+        "temperature_bias_c": -4.222631459897196,
+        "temperature_mae_c": 4.8743143891383145
+      },
+      "untuned_development": {
+        "n_days": 9,
+        "proxy_observed_total_kwh": 24.178817850000005,
+        "model_total_kwh": 42.9124813856314,
+        "nmbe_percent_model_minus_proxy": 87.1646066748682,
+        "cvrmse_percent": 88.96439837794176,
+        "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+        "pearson": 0.9457187412590164,
+        "temperature_samples": 631,
+        "temperature_rmse_c": 5.334392270778218,
+        "temperature_bias_c": -3.616828169970452,
+        "temperature_mae_c": 4.509859067370349
+      },
+      "untuned_evaluation": {
+        "n_days": 10,
+        "proxy_observed_total_kwh": 52.7933904,
+        "model_total_kwh": 70.55224338622624,
+        "nmbe_percent_model_minus_proxy": 37.37600242015279,
+        "cvrmse_percent": 39.29747133292979,
+        "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+        "pearson": 0.8333232897704332,
+        "temperature_samples": 1085,
+        "temperature_rmse_c": 5.944038999751201,
+        "temperature_bias_c": -4.574946552932933,
+        "temperature_mae_c": 5.086269511751757
+      },
+      "full_response_hash": "1530798fe817907cf5c7a86e9c806d803abf331f87ff38cd77bacd4909ba2a1a",
+      "limited_fit_evaluation": {
+        "n_days": 10,
+        "proxy_observed_total_kwh": 52.7933904,
+        "model_total_kwh": 81.49671722615669,
+        "nmbe_percent_model_minus_proxy": 60.41018604934365,
+        "cvrmse_percent": 59.98169648560796,
+        "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+        "pearson": 0.8079029924036671,
+        "temperature_samples": 1085,
+        "temperature_rmse_c": 5.085137275759731,
+        "temperature_bias_c": -4.525798695338951,
+        "temperature_mae_c": 4.526036057938633
+      },
+      "limited_fit_all": {
+        "n_days": 19,
+        "proxy_observed_total_kwh": 76.97220825000001,
+        "model_total_kwh": 130.26919321990763,
+        "nmbe_percent_model_minus_proxy": 73.08862491852302,
+        "cvrmse_percent": 75.04083986859197,
+        "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+        "pearson": 0.8940095580694323,
+        "temperature_samples": 1716,
+        "temperature_rmse_c": 4.611033871853652,
+        "temperature_bias_c": -3.8311498493214535,
+        "temperature_mae_c": 3.9363902423852037
+      },
+      "limited_fit_response_hash": "e42e99e563a4e213c5a748f50147f66c9163be59de4a2d602fc57a8abf898bc1",
+      "multiplier_sensitivity_untuned_evaluation": [
+        {
+          "multiplier": 0.9,
+          "n_days": 10,
+          "proxy_observed_total_kwh": 47.51405136,
+          "model_total_kwh": 70.55224338622624,
+          "nmbe_percent_model_minus_proxy": 53.87457059029322,
+          "cvrmse_percent": 53.747580962748934,
+          "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+          "pearson": 0.833323289770433
+        },
+        {
+          "multiplier": 1,
+          "n_days": 10,
+          "proxy_observed_total_kwh": 52.7933904,
+          "model_total_kwh": 70.55224338622624,
+          "nmbe_percent_model_minus_proxy": 37.37600242015279,
+          "cvrmse_percent": 39.29747133292979,
+          "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+          "pearson": 0.8333232897704332
+        },
+        {
+          "multiplier": 1.1,
+          "n_days": 10,
+          "proxy_observed_total_kwh": 58.07272944000001,
+          "model_total_kwh": 70.55224338622624,
+          "nmbe_percent_model_minus_proxy": 23.877173917310593,
+          "cvrmse_percent": 28.58821327220901,
+          "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+          "pearson": 0.8333232897704334
+        }
+      ]
+    },
+    {
+      "house_id": 9,
+      "untuned_all": {
+        "n_days": 19,
+        "proxy_observed_total_kwh": 70.61480355000002,
+        "model_total_kwh": 62.46315909651995,
+        "nmbe_percent_model_minus_proxy": -12.185141297875209,
+        "cvrmse_percent": 26.642798079371822,
+        "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+        "pearson": 0.9551839789686299,
+        "temperature_samples": 1274,
+        "temperature_rmse_c": 3.1863956091659555,
+        "temperature_bias_c": 0.9964143626752396,
+        "temperature_mae_c": 1.9315477601981588
+      },
+      "untuned_development": {
+        "n_days": 9,
+        "proxy_observed_total_kwh": 22.569799950000004,
+        "model_total_kwh": 21.017410583275414,
+        "nmbe_percent_model_minus_proxy": -7.737942035082865,
+        "cvrmse_percent": 34.01266486967488,
+        "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+        "pearson": 0.9212117024477796,
+        "temperature_samples": 420,
+        "temperature_rmse_c": 3.698590980799753,
+        "temperature_bias_c": 1.5010663102225932,
+        "temperature_mae_c": 2.249692141586417
+      },
+      "untuned_evaluation": {
+        "n_days": 10,
+        "proxy_observed_total_kwh": 48.0450036,
+        "model_total_kwh": 41.44574851324454,
+        "nmbe_percent_model_minus_proxy": -15.261744411546918,
+        "cvrmse_percent": 23.861471490715655,
+        "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+        "pearson": 0.9569112534629987,
+        "temperature_samples": 854,
+        "temperature_rmse_c": 2.901515679977862,
+        "temperature_bias_c": 0.7482248802749016,
+        "temperature_mae_c": 1.7750833103350812
+      },
+      "full_response_hash": "afad0bc29d803bb3c280ead89ea3890c5f7519eea8981d679e5930e086159994",
+      "limited_fit_evaluation": {
+        "n_days": 10,
+        "proxy_observed_total_kwh": 48.0450036,
+        "model_total_kwh": 48.783567837646444,
+        "nmbe_percent_model_minus_proxy": 1.708038025244868,
+        "cvrmse_percent": 19.695274256170883,
+        "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+        "pearson": 0.9294851026747365,
+        "temperature_samples": 854,
+        "temperature_rmse_c": 2.2637963119928193,
+        "temperature_bias_c": 0.6544110234084,
+        "temperature_mae_c": 1.5064336945250638
+      },
+      "limited_fit_all": {
+        "n_days": 19,
+        "proxy_observed_total_kwh": 70.61480355000002,
+        "model_total_kwh": 74.67005989068392,
+        "nmbe_percent_model_minus_proxy": 6.061828603091553,
+        "cvrmse_percent": 24.98723570490917,
+        "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+        "pearson": 0.9355300270104308,
+        "temperature_samples": 1274,
+        "temperature_rmse_c": 2.6204722300422896,
+        "temperature_bias_c": 0.9781121275984623,
+        "temperature_mae_c": 1.7175893128959918
+      },
+      "limited_fit_response_hash": "07f26b94f774d452d20ff520f88c98795c32947cd50915dc1bed57f5aa93fa3c",
+      "multiplier_sensitivity_untuned_evaluation": [
+        {
+          "multiplier": 0.9,
+          "n_days": 10,
+          "proxy_observed_total_kwh": 43.24050324,
+          "model_total_kwh": 41.44574851324454,
+          "nmbe_percent_model_minus_proxy": -4.611814778262011,
+          "cvrmse_percent": 17.348731430670927,
+          "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+          "pearson": 0.9569112534629987
+        },
+        {
+          "multiplier": 1,
+          "n_days": 10,
+          "proxy_observed_total_kwh": 48.0450036,
+          "model_total_kwh": 41.44574851324454,
+          "nmbe_percent_model_minus_proxy": -15.261744411546918,
+          "cvrmse_percent": 23.861471490715655,
+          "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+          "pearson": 0.9569112534629987
+        },
+        {
+          "multiplier": 1.1,
+          "n_days": 10,
+          "proxy_observed_total_kwh": 52.84950396000001,
+          "model_total_kwh": 41.44574851324454,
+          "nmbe_percent_model_minus_proxy": -23.975323202416394,
+          "cvrmse_percent": 31.146098155685415,
+          "denominator": "n-1 descriptive convention; no fitted-parameter DOF correction, not formal ASHRAE14 calibration",
+          "pearson": 0.956911253462999
+        }
+      ]
+    }
+  ],
+  "calibration_established": false,
+  "label_dependency": "ON/OFF labels manually derived from current and room T; conditional temperature comparison not an independent thermostat experiment"
+}

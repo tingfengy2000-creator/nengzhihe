@@ -1,0 +1,9 @@
+{
+  "start_utc": "2026-10-09T02:42:53.060252+00:00",
+  "source_commit": "9bcdda903c9951e4d7c6f4cfaeda84aa38494738",
+  "error_type": "ValueError",
+  "error": "No suitable 2-4-room subset",
+  "command": [
+    "analysis\\round24_three_level\\run_validation.py"
+  ]
+}

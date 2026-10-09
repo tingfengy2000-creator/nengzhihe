@@ -1,0 +1,11 @@
+{
+  "start_utc": "2026-10-09T02:46:28.913605+00:00",
+  "source_commit": "e5686405b877b8a67e8ed984c2f9f3e0b8e56537",
+  "error_type": "ValueError",
+  "error": "Mixed timezones detected. Pass utc=True in to_datetime or tz='UTC' in DatetimeIndex to convert to a common timezone.",
+  "command": [
+    "analysis\\round24_three_level\\run_validation.py",
+    "--layer",
+    "madrid"
+  ]
+}

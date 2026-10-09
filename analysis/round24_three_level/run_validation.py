@@ -355,7 +355,15 @@ def madrid_layer():
        'calibration_established':False,'scope':'one city, selected general meters, gas-matched administrative buildings; seasonal proxies only'})
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--layer',choices=['rooms','cu','madrid','all'],default='all');args=p.parse_args()
+    global OUT
+    p=argparse.ArgumentParser();p.add_argument('--layer',choices=['rooms','cu','madrid','all'],default='all')
+    p.add_argument('--output-dir',help='New repository-relative directory for an independent rerun; published evidence never overwritten')
+    args=p.parse_args()
+    if args.output_dir:
+        OUT=(ROOT/args.output_dir).resolve()
+        if not OUT.is_relative_to(ROOT):raise ValueError('Output must remain inside this repository')
+    if list(OUT.glob('run_manifest_*.json')):
+        raise ValueError('Completed evidence exists; rerun with --output-dir working/round24/reproduce_NEW_ID')
     OUT.mkdir(parents=True,exist_ok=True);WORK.mkdir(parents=True,exist_ok=True)
     start=datetime.now(timezone.utc).isoformat();tic=time.perf_counter()
     paths=list((ROOT/'operation_planning').glob('*.py'));before={x.relative_to(ROOT).as_posix():sha(x) for x in paths}

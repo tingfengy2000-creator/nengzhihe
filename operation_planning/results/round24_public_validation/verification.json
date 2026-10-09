@@ -1,0 +1,122 @@
+{
+  "checks": [
+    {
+      "name": "publisher_MD5",
+      "status": "passed",
+      "detail": "v3 CC0 archive matches publisher"
+    },
+    {
+      "name": "metadata_quality_selection",
+      "status": "passed",
+      "detail": "3 rooms; individual physical parameter completeness remains zero"
+    },
+    {
+      "name": "preceding_hour_interval",
+      "status": "passed",
+      "detail": "raw 01:00 mean assigned to [00:00,01:00], no shift of instantaneous T"
+    },
+    {
+      "name": "known_current_proxy_unit",
+      "status": "passed",
+      "detail": "1000mA above baseline for 60min at 230V/PF0.9 -> 0.207kWh (proxy)"
+    },
+    {
+      "name": "NMBE_CVRMSE_hand_example",
+      "status": "passed",
+      "detail": "n-1 explicit; not official calibration pass/fail"
+    },
+    {
+      "name": "room_2_untuned_daily_integral",
+      "status": "passed",
+      "detail": 1.425348727934761e-11
+    },
+    {
+      "name": "room_2_limited_fit_daily_integral",
+      "status": "passed",
+      "detail": 1.7337242752546445e-12
+    },
+    {
+      "name": "room_2_temperature_pairs_finite",
+      "status": "passed",
+      "detail": "1487 exact operating sample instants"
+    },
+    {
+      "name": "room_6_untuned_daily_integral",
+      "status": "passed",
+      "detail": 1.233502189279534e-11
+    },
+    {
+      "name": "room_6_limited_fit_daily_integral",
+      "status": "passed",
+      "detail": 7.645439836778678e-12
+    },
+    {
+      "name": "room_6_temperature_pairs_finite",
+      "status": "passed",
+      "detail": "1716 exact operating sample instants"
+    },
+    {
+      "name": "room_9_untuned_daily_integral",
+      "status": "passed",
+      "detail": 1.0054179711005418e-11
+    },
+    {
+      "name": "room_9_limited_fit_daily_integral",
+      "status": "passed",
+      "detail": 3.922195901395753e-12
+    },
+    {
+      "name": "room_9_temperature_pairs_finite",
+      "status": "passed",
+      "detail": "1274 exact operating sample instants"
+    },
+    {
+      "name": "finite_development_only_fit",
+      "status": "passed",
+      "detail": "9 development days, 10 later dates, shared two-parameter grid, no iterations after evaluation"
+    },
+    {
+      "name": "CU_no_missing_as_zero",
+      "status": "passed",
+      "detail": "198/261 complete weekdays; all 16 channels"
+    },
+    {
+      "name": "CU_daily_normalized_shape_mean",
+      "status": "passed",
+      "detail": "both 24-hour normalized profile means equal 1"
+    },
+    {
+      "name": "Madrid_leap_DST_physical_intervals",
+      "status": "passed",
+      "detail": "8784 physical hours, local calendar 2024; UTC monotonic; DST offsets retained"
+    },
+    {
+      "name": "Madrid_complete_electricity_and_observed_winter_gas",
+      "status": "passed",
+      "detail": "3 buildings x 12 electric months; winter gas present, summer missing NOT zero"
+    },
+    {
+      "name": "Madrid_normalized_denominators",
+      "status": "passed",
+      "detail": "12-month positive excess and model fractions each sum to 1; positive excess not proven AC"
+    },
+    {
+      "name": "signed_excess_is_not_clipped_for_correlation",
+      "status": "passed",
+      "detail": "negative month-baseline values retained"
+    },
+    {
+      "name": "frozen_product_unchanged",
+      "status": "passed",
+      "detail": "all top-level operation_planning/*.py byte hashes match run"
+    },
+    {
+      "name": "analysis_schedule_patch_restored",
+      "status": "passed",
+      "detail": "no persistent runtime monkeypatch"
+    }
+  ],
+  "count": 23,
+  "all_passed": true,
+  "scope": "independent analysis contracts and evidence reconciliation, NOT model accuracy tests"
+}

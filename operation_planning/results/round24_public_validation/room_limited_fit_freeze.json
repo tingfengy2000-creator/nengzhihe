@@ -1,0 +1,43 @@
+{
+  "selected": {
+    "mass": 200,
+    "u": 1.5,
+    "development_score": 2.4147981422844804
+  },
+  "all_development_trials": [
+    {
+      "mass": 50,
+      "u": 0.75,
+      "development_score": 2.933742261762348
+    },
+    {
+      "mass": 50,
+      "u": 1.5,
+      "development_score": 2.7994266082953767
+    },
+    {
+      "mass": 100,
+      "u": 0.75,
+      "development_score": 2.686509613830745
+    },
+    {
+      "mass": 100,
+      "u": 1.5,
+      "development_score": 2.645548877416983
+    },
+    {
+      "mass": 200,
+      "u": 0.75,
+      "development_score": 2.5166636363902324
+    },
+    {
+      "mass": 200,
+      "u": 1.5,
+      "development_score": 2.4147981422844804
+    }
+  ],
+  "selection_data_end": "2019-05-18T24:00 Asia/Kolkata",
+  "evaluation_used_for_selection": false,
+  "frozen_utc": "2026-10-09T02:47:39.468602+00:00",
+  "note": "only two assumed envelope parameters; shared fit across rooms, still proxy-based and no independently measured room area"
+}

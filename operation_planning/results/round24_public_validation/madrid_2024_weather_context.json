@@ -1,0 +1,17 @@
+{
+  "site": "madrid_2024",
+  "requested_model": "era5",
+  "response_model_identifier": "not returned; explicit single-model request recorded",
+  "api_timezone": "GMT",
+  "analysis_timezone": "Europe/Madrid",
+  "grid_latitude": 40.5,
+  "grid_longitude": -3.75,
+  "rows": 8784,
+  "first_interval_start": "2024-01-01T00:00:00+01:00",
+  "last_interval_end": "2025-01-01T00:00:00+01:00",
+  "interval_hours": 1,
+  "hash": "d06f5e952e5a5c52b475a8823ce643ce5feb7f19fd41444ccacbd632ca23d787",
+  "boundary": "independent actual next-hour response row; no wrap/copy/zero",
+  "radiation": "right-labelled preceding-hour source shifted to physical interval, other variables retained at start",
+  "dst": "Europe/Madrid offset preserved; repeated local clock hours have different offsets"
+}

@@ -1,0 +1,46 @@
+{
+  "floor": 2,
+  "ac_channels": [
+    "z1_AC1(kW)",
+    "z2_AC1(kW)",
+    "z2_AC2(kW)",
+    "z2_AC3(kW)",
+    "z2_AC4(kW)",
+    "z2_AC5(kW)",
+    "z2_AC6(kW)",
+    "z2_AC7(kW)",
+    "z2_AC8(kW)",
+    "z2_AC9(kW)",
+    "z2_AC10(kW)",
+    "z2_AC11(kW)",
+    "z2_AC12(kW)",
+    "z2_AC13(kW)",
+    "z2_AC14(kW)",
+    "z4_AC1(kW)"
+  ],
+  "year": 2019,
+  "source_license": "CC BY 4.0, figshare v6",
+  "accepted_weekdays": 198,
+  "all_weekdays": 261,
+  "incomplete_weekdays_excluded": 63,
+  "normalized_hourly_shape_correlation": 0.9478538322357675,
+  "normalized_shape_rmse": 0.404180935437561,
+  "measured_relative_sensitivity": {
+    "daily_energy_mean_kwh": 675.8166102693602,
+    "slope_kwh_per_c": 38.45334486214556,
+    "relative_slope_per_c": 0.056899082203409015,
+    "pearson": 0.38989131637072183,
+    "n_days": 198,
+    "confounders": "weekday-only, no occupancy/solar/season adjustment; descriptive association, not causal cooling coefficient"
+  },
+  "model_relative_sensitivity": {
+    "daily_energy_mean_kwh": 8.357850494484909,
+    "slope_kwh_per_c": 0.8129810163023939,
+    "relative_slope_per_c": 0.09727154330396977,
+    "pearson": 0.9078192464751846,
+    "n_days": 198,
+    "confounders": "weekday-only, no occupancy/solar/season adjustment; descriptive association, not causal cooling coefficient"
+  },
+  "calibration_established": false,
+  "validation_scope": "floor-level AC weekday shape and temperature association only; scale removed, unknown zones/schedule/capacity remain"
+}

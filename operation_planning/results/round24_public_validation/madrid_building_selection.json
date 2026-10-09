@@ -1,0 +1,358 @@
+[
+  {
+    "building": "Casa Consistorial - Casa de la Villa",
+    "included": false,
+    "reasons": [
+      "no same-name gas measurement",
+      "gas meter ambiguous or absent",
+      "gas winter missing/duplicate months",
+      "no observed positive winter gas usage"
+    ],
+    "electricity_records": 12,
+    "gas_records": 0,
+    "electricity_sensors": 1,
+    "gas_sensors": 0
+  },
+  {
+    "building": "Complejo Albarracín 33 - Movilidad y Sede IAM",
+    "included": false,
+    "reasons": [
+      "no same-name gas measurement",
+      "gas meter ambiguous or absent",
+      "gas winter missing/duplicate months",
+      "no observed positive winter gas usage"
+    ],
+    "electricity_records": 12,
+    "gas_records": 0,
+    "electricity_sensors": 1,
+    "gas_sensors": 0
+  },
+  {
+    "building": "Edificio Anexo al Escenario del Auditorio Cerro Almodovar",
+    "included": false,
+    "reasons": [
+      "no same-name gas measurement",
+      "gas meter ambiguous or absent",
+      "electricity missing/duplicate months",
+      "electricity nonnumeric/missing/negative readings",
+      "gas winter missing/duplicate months",
+      "no observed positive winter gas usage"
+    ],
+    "electricity_records": 7,
+    "gas_records": 0,
+    "electricity_sensors": 1,
+    "gas_sensors": 0
+  },
+  {
+    "building": "Edificio Movilidad",
+    "included": false,
+    "reasons": [
+      "no unambiguous general active-energy meter",
+      "general meter ambiguous/renamed or absent; no parent-child summation",
+      "electricity missing/duplicate months",
+      "gas winter nonnumeric/missing/negative readings"
+    ],
+    "electricity_records": 0,
+    "gas_records": 12,
+    "electricity_sensors": 0,
+    "gas_sensors": 1
+  },
+  {
+    "building": "JMD Arganzuela",
+    "included": true,
+    "reasons": [],
+    "electricity_records": 12,
+    "gas_records": 12,
+    "electricity_sensors": 1,
+    "gas_sensors": 1
+  },
+  {
+    "building": "JMD Barajas",
+    "included": false,
+    "reasons": [
+      "gas winter nonnumeric/missing/negative readings",
+      "no observed positive winter gas usage"
+    ],
+    "electricity_records": 12,
+    "gas_records": 12,
+    "electricity_sensors": 1,
+    "gas_sensors": 1
+  },
+  {
+    "building": "JMD Carabanchel",
+    "included": false,
+    "reasons": [
+      "gas winter nonnumeric/missing/negative readings",
+      "no observed positive winter gas usage"
+    ],
+    "electricity_records": 12,
+    "gas_records": 12,
+    "electricity_sensors": 1,
+    "gas_sensors": 1
+  },
+  {
+    "building": "JMD Centro",
+    "included": false,
+    "reasons": [
+      "electricity nonnumeric/missing/negative readings",
+      "gas winter nonnumeric/missing/negative readings"
+    ],
+    "electricity_records": 12,
+    "gas_records": 12,
+    "electricity_sensors": 1,
+    "gas_sensors": 1
+  },
+  {
+    "building": "JMD Chamartín",
+    "included": false,
+    "reasons": [
+      "gas winter nonnumeric/missing/negative readings",
+      "no observed positive winter gas usage"
+    ],
+    "electricity_records": 12,
+    "gas_records": 12,
+    "electricity_sensors": 1,
+    "gas_sensors": 1
+  },
+  {
+    "building": "JMD Chamberí",
+    "included": true,
+    "reasons": [],
+    "electricity_records": 12,
+    "gas_records": 12,
+    "electricity_sensors": 1,
+    "gas_sensors": 1
+  },
+  {
+    "building": "JMD Ciudad Lineal",
+    "included": false,
+    "reasons": [
+      "gas winter nonnumeric/missing/negative readings"
+    ],
+    "electricity_records": 12,
+    "gas_records": 12,
+    "electricity_sensors": 1,
+    "gas_sensors": 1
+  },
+  {
+    "building": "JMD Fuencarral",
+    "included": false,
+    "reasons": [
+      "no same-name gas measurement",
+      "gas meter ambiguous or absent",
+      "gas winter missing/duplicate months",
+      "no observed positive winter gas usage"
+    ],
+    "electricity_records": 12,
+    "gas_records": 0,
+    "electricity_sensors": 1,
+    "gas_sensors": 0
+  },
+  {
+    "building": "JMD Hortaleza",
+    "included": false,
+    "reasons": [
+      "gas winter nonnumeric/missing/negative readings"
+    ],
+    "electricity_records": 12,
+    "gas_records": 12,
+    "electricity_sensors": 1,
+    "gas_sensors": 1
+  },
+  {
+    "building": "JMD Latina",
+    "included": false,
+    "reasons": [
+      "electricity nonnumeric/missing/negative readings",
+      "gas winter nonnumeric/missing/negative readings"
+    ],
+    "electricity_records": 12,
+    "gas_records": 12,
+    "electricity_sensors": 1,
+    "gas_sensors": 1
+  },
+  {
+    "building": "JMD Moratalaz",
+    "included": true,
+    "reasons": [],
+    "electricity_records": 12,
+    "gas_records": 12,
+    "electricity_sensors": 1,
+    "gas_sensors": 1
+  },
+  {
+    "building": "JMD Puente de Vallecas",
+    "included": false,
+    "reasons": [
+      "no same-name gas measurement",
+      "gas meter ambiguous or absent",
+      "gas winter missing/duplicate months",
+      "no observed positive winter gas usage"
+    ],
+    "electricity_records": 12,
+    "gas_records": 0,
+    "electricity_sensors": 1,
+    "gas_sensors": 0
+  },
+  {
+    "building": "JMD Retiro",
+    "included": false,
+    "reasons": [
+      "electricity nonnumeric/missing/negative readings",
+      "gas winter nonnumeric/missing/negative readings"
+    ],
+    "electricity_records": 12,
+    "gas_records": 12,
+    "electricity_sensors": 1,
+    "gas_sensors": 1
+  },
+  {
+    "building": "JMD San Blas",
+    "included": false,
+    "reasons": [
+      "electricity missing/duplicate months",
+      "gas winter missing/duplicate months",
+      "gas winter nonnumeric/missing/negative readings",
+      "no observed positive winter gas usage"
+    ],
+    "electricity_records": 4,
+    "gas_records": 4,
+    "electricity_sensors": 1,
+    "gas_sensors": 1
+  },
+  {
+    "building": "JMD San Blas-Canillejas",
+    "included": false,
+    "reasons": [
+      "electricity missing/duplicate months",
+      "gas winter missing/duplicate months",
+      "gas winter nonnumeric/missing/negative readings",
+      "no observed positive winter gas usage"
+    ],
+    "electricity_records": 8,
+    "gas_records": 8,
+    "electricity_sensors": 1,
+    "gas_sensors": 1
+  },
+  {
+    "building": "JMD Tetuán",
+    "included": false,
+    "reasons": [
+      "gas winter nonnumeric/missing/negative readings"
+    ],
+    "electricity_records": 12,
+    "gas_records": 12,
+    "electricity_sensors": 1,
+    "gas_sensors": 1
+  },
+  {
+    "building": "JMD Usera",
+    "included": false,
+    "reasons": [
+      "no same-name gas measurement",
+      "gas meter ambiguous or absent",
+      "gas winter missing/duplicate months",
+      "no observed positive winter gas usage"
+    ],
+    "electricity_records": 12,
+    "gas_records": 0,
+    "electricity_sensors": 1,
+    "gas_sensors": 0
+  },
+  {
+    "building": "JMD Vicálvaro",
+    "included": false,
+    "reasons": [
+      "no same-name gas measurement",
+      "gas meter ambiguous or absent",
+      "gas winter missing/duplicate months",
+      "no observed positive winter gas usage"
+    ],
+    "electricity_records": 12,
+    "gas_records": 0,
+    "electricity_sensors": 1,
+    "gas_sensors": 0
+  },
+  {
+    "building": "JMD Villa de Vallecas",
+    "included": false,
+    "reasons": [
+      "no same-name gas measurement",
+      "gas meter ambiguous or absent",
+      "gas winter missing/duplicate months",
+      "no observed positive winter gas usage"
+    ],
+    "electricity_records": 12,
+    "gas_records": 0,
+    "electricity_sensors": 1,
+    "gas_sensors": 0
+  },
+  {
+    "building": "JMD Villaverde",
+    "included": false,
+    "reasons": [
+      "gas winter nonnumeric/missing/negative readings"
+    ],
+    "electricity_records": 12,
+    "gas_records": 12,
+    "electricity_sensors": 1,
+    "gas_sensors": 1
+  },
+  {
+    "building": "Sede AG Hacienda",
+    "included": false,
+    "reasons": [
+      "no same-name gas measurement",
+      "gas meter ambiguous or absent",
+      "gas winter missing/duplicate months",
+      "no observed positive winter gas usage"
+    ],
+    "electricity_records": 12,
+    "gas_records": 0,
+    "electricity_sensors": 1,
+    "gas_sensors": 0
+  },
+  {
+    "building": "Sede AG Hacienda y Personal - Tesoreria del Ayuntamiento",
+    "included": false,
+    "reasons": [
+      "no same-name gas measurement",
+      "general meter ambiguous/renamed or absent; no parent-child summation",
+      "gas meter ambiguous or absent",
+      "gas winter missing/duplicate months",
+      "no observed positive winter gas usage"
+    ],
+    "electricity_records": 12,
+    "gas_records": 0,
+    "electricity_sensors": 2,
+    "gas_sensors": 0
+  },
+  {
+    "building": "Sede AG Seguridad y Emergencias",
+    "included": false,
+    "reasons": [
+      "no same-name gas measurement",
+      "gas meter ambiguous or absent",
+      "gas winter missing/duplicate months",
+      "no observed positive winter gas usage"
+    ],
+    "electricity_records": 12,
+    "gas_records": 0,
+    "electricity_sensors": 1,
+    "gas_sensors": 0
+  },
+  {
+    "building": "Sede IAM",
+    "included": false,
+    "reasons": [
+      "no unambiguous general active-energy meter",
+      "general meter ambiguous/renamed or absent; no parent-child summation",
+      "electricity missing/duplicate months",
+      "gas winter nonnumeric/missing/negative readings"
+    ],
+    "electricity_records": 0,
+    "gas_records": 12,
+    "electricity_sensors": 0,
+    "gas_sensors": 1
+  }
+]

@@ -1,0 +1,97 @@
+[
+  {
+    "house_id": 1,
+    "included": false,
+    "reasons": [
+      "more than one AC; primary-phase scope ambiguous"
+    ]
+  },
+  {
+    "house_id": 2,
+    "included": true,
+    "reasons": [],
+    "indoor_duplicate_rows": 0,
+    "indoor_monotonic": true,
+    "minute_records": 27360,
+    "indoor_records": 5472
+  },
+  {
+    "house_id": 3,
+    "included": false,
+    "reasons": [
+      "indoor timestamp duplicate/out-of-order; not silently repaired"
+    ],
+    "indoor_duplicate_rows": 2,
+    "indoor_monotonic": false,
+    "minute_records": 27360,
+    "indoor_records": 5472
+  },
+  {
+    "house_id": 4,
+    "included": false,
+    "reasons": [
+      "more than one AC; primary-phase scope ambiguous"
+    ]
+  },
+  {
+    "house_id": 5,
+    "included": false,
+    "reasons": [
+      "more than one AC; primary-phase scope ambiguous"
+    ]
+  },
+  {
+    "house_id": 6,
+    "included": true,
+    "reasons": [],
+    "indoor_duplicate_rows": 0,
+    "indoor_monotonic": true,
+    "minute_records": 27360,
+    "indoor_records": 5472
+  },
+  {
+    "house_id": 7,
+    "included": false,
+    "reasons": [
+      "not requested non-inverter split subset"
+    ]
+  },
+  {
+    "house_id": 8,
+    "included": false,
+    "reasons": [
+      "indoor timestamp duplicate/out-of-order; not silently repaired"
+    ],
+    "indoor_duplicate_rows": 2,
+    "indoor_monotonic": false,
+    "minute_records": 27360,
+    "indoor_records": 5472
+  },
+  {
+    "house_id": 9,
+    "included": true,
+    "reasons": [],
+    "indoor_duplicate_rows": 0,
+    "indoor_monotonic": true,
+    "minute_records": 27360,
+    "indoor_records": 5472
+  },
+  {
+    "house_id": 10,
+    "included": false,
+    "reasons": [
+      "not requested non-inverter split subset"
+    ]
+  },
+  {
+    "house_id": 11,
+    "included": false,
+    "reasons": [
+      "after first three metadata/quality-eligible rooms; no outcome inspection for selection"
+    ],
+    "indoor_duplicate_rows": 0,
+    "indoor_monotonic": true,
+    "minute_records": 27360,
+    "indoor_records": 5472
+  }
+]

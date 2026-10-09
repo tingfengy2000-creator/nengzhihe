@@ -1,0 +1,42 @@
+{
+  "year": 2024,
+  "all_administrative_building_names": 28,
+  "included_buildings": 3,
+  "excluded_building_names": 25,
+  "buildings": [
+    "JMD Arganzuela",
+    "JMD Chamberí",
+    "JMD Moratalaz"
+  ],
+  "transition_baseline_months": [
+    4,
+    5,
+    10,
+    11
+  ],
+  "summer_months": [
+    6,
+    7,
+    8
+  ],
+  "signed_increment_vs_cdd18_correlation": {
+    "min": 0.7632868844621559,
+    "median": 0.7829937647027593,
+    "max": 0.9362533745063831
+  },
+  "positive_excess_shape_correlation": {
+    "min": 0.7971510009716336,
+    "median": 0.799966422750567,
+    "max": 0.9322185244576532
+  },
+  "summer_positive_excess_fraction": {
+    "min": 0.5670654125304904,
+    "median": 0.5693141602239122,
+    "max": 0.7722961678965874
+  },
+  "model_summer_cooling_fraction": 0.7413186970031118,
+  "winter_excess_warning_buildings": 2,
+  "gas_boundary": "Gas metering does NOT prove predominant gas heating; winter electricity excess and other seasonal loads remain visible",
+  "calibration_established": false,
+  "scope": "one city, selected general meters, gas-matched administrative buildings; seasonal proxies only"
+}

@@ -1,0 +1,17 @@
+{
+  "site": "bangkok_2019",
+  "requested_model": "era5",
+  "response_model_identifier": "not returned; explicit single-model request recorded",
+  "api_timezone": "Asia/Bangkok",
+  "analysis_timezone": "Asia/Bangkok",
+  "grid_latitude": 13.75,
+  "grid_longitude": 100.5,
+  "rows": 8760,
+  "first_interval_start": "2019-01-01T00:00:00+07:00",
+  "last_interval_end": "2020-01-01T00:00:00+07:00",
+  "interval_hours": 1,
+  "hash": "e4c06618f08bf387f8709f6f202ca584fefae305e0f840003dcd113761de6c26",
+  "boundary": "independent actual next-hour response row; no wrap/copy/zero",
+  "radiation": "right-labelled preceding-hour source shifted to physical interval, other variables retained at start",
+  "dst": "Europe/Madrid offset preserved; repeated local clock hours have different offsets"
+}
