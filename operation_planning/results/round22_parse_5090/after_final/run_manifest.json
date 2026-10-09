@@ -1,0 +1,51 @@
+{
+  "run_id": "after_final",
+  "phase": "after",
+  "source_commit": "0736bd168327072ff2035ed2f6c8cc066f32be8d",
+  "workspace_status": "?? operation_planning/results/round22_parse_5090/",
+  "parser_sha256": "73bc8b9f82420015a588b8118010588dca1646bc679f0fa2bb1410e9601807b8",
+  "corpus_sha256": "cc0d9002b9f11472ee146237fd8f12aa238a47ce0fa6efbabf04a3f746da50d6",
+  "start_utc": "2026-10-09T00:39:45.726828+00:00",
+  "end_utc": "2026-10-09T00:39:50.497839+00:00",
+  "model_status": {
+    "available": true,
+    "mode": "local_model",
+    "label": "本地大模型",
+    "checked_at": "2026-10-09T00:39:45.740702Z",
+    "reason": null
+  },
+  "model_config_sha256": "d4072d312438279ce237548ed8cfec26cc0263467ab11ae244853b6781cce328",
+  "model_sampling": {
+    "temperature": 0,
+    "seed": 20260930,
+    "max_tokens": 512,
+    "thinking": false
+  },
+  "attempts_per_sentence": 1,
+  "rule_fallback": false,
+  "numerical_calculation_invocations": 0,
+  "command": [
+    "python",
+    "-X",
+    "utf8",
+    "-m",
+    "scripts.round22_parse_evaluation",
+    "run",
+    "--corpus",
+    "operation_planning\\protocol\\round22_parse_corpus.json",
+    "--output",
+    "operation_planning\\results\\round22_parse_5090\\after_final",
+    "--phase",
+    "after",
+    "--port",
+    "18770"
+  ],
+  "cases_sha256": "4e2244162aafb3fc1c1fd591a4377a97842b6c65cf7aa4a1807dad9ae0c323c8",
+  "summary": {
+    "all": 18,
+    "correct_edits": 14,
+    "supported_edit_tasks": 14,
+    "all_expectations_met": 18
+  },
+  "exit_status": "completed"
+}

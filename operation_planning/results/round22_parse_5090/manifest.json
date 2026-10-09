@@ -1,0 +1,273 @@
+{
+  "run_id": "round22-paired-parse-5090-20261009",
+  "machine_role": "5090",
+  "actual_gpu_probe": "gpu_probe.json",
+  "baseline_source_commit": "feaeb2d28025030908149cf0f486bf94b7fbf06b",
+  "final_source_commit": "f50880f784f51f0f3f493517670950319a58786b",
+  "python": {
+    "version": "3.14.7",
+    "executable": "C:\\Python314\\python.exe"
+  },
+  "model": {
+    "model_id": "nengzhihe-qwen3-4b-q4km",
+    "endpoint": "http://127.0.0.1:18191/v1",
+    "config_sha256": "d4072d312438279ce237548ed8cfec26cc0263467ab11ae244853b6781cce328",
+    "sampling": {
+      "temperature": 0,
+      "seed": 20260930,
+      "max_tokens": 512,
+      "thinking": false
+    }
+  },
+  "paired_corpus_sha256": "cc0d9002b9f11472ee146237fd8f12aa238a47ce0fa6efbabf04a3f746da50d6",
+  "same_request_hashes_before_after": true,
+  "run_manifests": [
+    "before\\run_manifest.json",
+    "after\\run_manifest.json",
+    "after_final\\run_manifest.json",
+    "after_frozen\\run_manifest.json"
+  ],
+  "runs": [
+    {
+      "source_commit": "feaeb2d28025030908149cf0f486bf94b7fbf06b",
+      "start_utc": "2026-10-09T00:35:49.678574+00:00",
+      "end_utc": "2026-10-09T00:35:58.940217+00:00",
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "-m",
+        "scripts.round22_parse_evaluation",
+        "run",
+        "--corpus",
+        "operation_planning\\protocol\\round22_parse_corpus.json",
+        "--output",
+        "operation_planning\\results\\round22_parse_5090\\before",
+        "--phase",
+        "before",
+        "--port",
+        "18770"
+      ],
+      "exit_status": "completed"
+    },
+    {
+      "source_commit": "f0a2de914591ed7a9da8f30052c0d6983d58a7fe",
+      "start_utc": "2026-10-09T00:38:47.690344+00:00",
+      "end_utc": "2026-10-09T00:38:54.570560+00:00",
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "-m",
+        "scripts.round22_parse_evaluation",
+        "run",
+        "--corpus",
+        "operation_planning\\protocol\\round22_parse_corpus.json",
+        "--output",
+        "operation_planning\\results\\round22_parse_5090\\after",
+        "--phase",
+        "after",
+        "--port",
+        "18770"
+      ],
+      "exit_status": "completed"
+    },
+    {
+      "source_commit": "0736bd168327072ff2035ed2f6c8cc066f32be8d",
+      "start_utc": "2026-10-09T00:39:45.726828+00:00",
+      "end_utc": "2026-10-09T00:39:50.497839+00:00",
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "-m",
+        "scripts.round22_parse_evaluation",
+        "run",
+        "--corpus",
+        "operation_planning\\protocol\\round22_parse_corpus.json",
+        "--output",
+        "operation_planning\\results\\round22_parse_5090\\after_final",
+        "--phase",
+        "after",
+        "--port",
+        "18770"
+      ],
+      "exit_status": "completed"
+    },
+    {
+      "source_commit": "f50880f784f51f0f3f493517670950319a58786b",
+      "start_utc": "2026-10-09T00:41:39.988045+00:00",
+      "end_utc": "2026-10-09T00:41:44.978771+00:00",
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "-m",
+        "scripts.round22_parse_evaluation",
+        "run",
+        "--corpus",
+        "operation_planning\\protocol\\round22_parse_corpus.json",
+        "--output",
+        "operation_planning\\results\\round22_parse_5090\\after_frozen",
+        "--phase",
+        "after",
+        "--port",
+        "18770"
+      ],
+      "exit_status": "completed"
+    }
+  ],
+  "regressions": [
+    {
+      "command": "python -X utf8 -m unittest discover -s tests -p 'test*.py'",
+      "exit_code": 0,
+      "result": "57 passed; 24 parse contracts",
+      "log": "regression_unittest.txt",
+      "source_commit": "f50880f784f51f0f3f493517670950319a58786b"
+    },
+    {
+      "command": "python -X utf8 -m tests.test_phase2b_wind",
+      "exit_code": 0,
+      "result": "13 passed",
+      "log": "regression_wind.txt",
+      "source_commit": "f50880f784f51f0f3f493517670950319a58786b"
+    },
+    {
+      "command": "python -X utf8 -m tests.test_phase2a_correctness",
+      "exit_code": 0,
+      "result": "PASS function runner",
+      "log": "regression_phase2a.txt",
+      "source_commit": "f50880f784f51f0f3f493517670950319a58786b"
+    },
+    {
+      "command": "python -X utf8 -m tests.test_phase2b_storage",
+      "exit_code": 0,
+      "result": "6 passed",
+      "log": "regression_storage.txt",
+      "source_commit": "f50880f784f51f0f3f493517670950319a58786b"
+    }
+  ],
+  "development_notes": [
+    "First contract test command failed because of a multiline with-statement syntax error; fixed before model evaluation. This was not a model failure.",
+    "The first after phase had an unintended echoed base price for the unsupported arbitrage sentence. It remains in after/cases.json.",
+    "After adding a subject-scoped base-price guard, mixed budget/price/growth contracts were strengthened; final full phase is after_frozen.",
+    "No retries inside a phase. No offline rules, deterministic substitute model values, or selection of a best per-sentence result."
+  ],
+  "numeric_scope": {
+    "parse_planning_invocations": 0,
+    "physical_algorithms_changed": false,
+    "existing_replays_changed": false,
+    "full_hourly_responses_committed_this_round": 0,
+    "old_full_responses_preserved": true
+  },
+  "summary": {
+    "before": {
+      "all_sentences": 18,
+      "correct_executable_edits": 9,
+      "supported_edit_sentences": 14,
+      "ok": 10,
+      "unsupported_only": 1,
+      "clarification": 1,
+      "failed": 7,
+      "contract_expectations_met_including_rejection": 12,
+      "http_latency_ms": {
+        "min": 418.57,
+        "median": 484.0125,
+        "max": 830.806
+      }
+    },
+    "after": {
+      "all_sentences": 18,
+      "correct_executable_edits": 14,
+      "supported_edit_sentences": 14,
+      "ok": 16,
+      "unsupported_only": 2,
+      "clarification": 1,
+      "failed": 1,
+      "contract_expectations_met_including_rejection": 18,
+      "http_latency_ms": {
+        "min": 198.576,
+        "median": 234.4155,
+        "max": 480.685
+      }
+    }
+  },
+  "recorded_utc": "2026-10-09T00:44:22.475790+00:00",
+  "artifacts": [
+    {
+      "path": "after/cases.json",
+      "bytes": 25135,
+      "sha256": "fa1af93cae90c62ceec8e3ff5488e1088d4bb6215a8da611ef7c4ee7808b5820"
+    },
+    {
+      "path": "after/run_manifest.json",
+      "bytes": 1556,
+      "sha256": "9d019b8480a12d4a0283d302ea1c84e59d647627549ae07145065c6ba4bb7f41"
+    },
+    {
+      "path": "after_final/cases.json",
+      "bytes": 25008,
+      "sha256": "4e2244162aafb3fc1c1fd591a4377a97842b6c65cf7aa4a1807dad9ae0c323c8"
+    },
+    {
+      "path": "after_final/run_manifest.json",
+      "bytes": 1568,
+      "sha256": "7962d71b52ac713f21c0adf828ffade86f6657c7290565f7c5205c570c65c37f"
+    },
+    {
+      "path": "after_frozen/cases.json",
+      "bytes": 25010,
+      "sha256": "9e661de9556f056ceff2d54a9a88b23653a2e61e77c4e93edffdbf1c1daae38f"
+    },
+    {
+      "path": "after_frozen/run_manifest.json",
+      "bytes": 1570,
+      "sha256": "c365677788796de45091aae46f919eadafa270aec9839a243d543e4ab2a10c6d"
+    },
+    {
+      "path": "before/cases.json",
+      "bytes": 23793,
+      "sha256": "421696327f6343015d91f0764008e8ed141cce1a3ca3e780f52ee5f92bd27ebd"
+    },
+    {
+      "path": "before/run_manifest.json",
+      "bytes": 1606,
+      "sha256": "99887e9bce3366aa49542c96f73e5a71e28209a1130de2e0df0b3e7f9557ad66"
+    },
+    {
+      "path": "comparison.json",
+      "bytes": 10354,
+      "sha256": "adbe14e1ddec69b1875a87697cd9de677e19cc54f9c4bafb96253c34f2c94732"
+    },
+    {
+      "path": "comparison.md",
+      "bytes": 3654,
+      "sha256": "d7e5a258ef7a96d7f3ef68d702e8caf83ec6e8463108b6b1d3ac5228207440bc"
+    },
+    {
+      "path": "gpu_probe.json",
+      "bytes": 254,
+      "sha256": "5c27d72daa393190797c18980a6c8697e8f34a930a45c0b36717732976aabd27"
+    },
+    {
+      "path": "regression_phase2a.txt",
+      "bytes": 33,
+      "sha256": "2c7e06c1c077e22ed95f2bc3583650ef424288e6a3322b2b3d65bd171373c272"
+    },
+    {
+      "path": "regression_storage.txt",
+      "bytes": 109,
+      "sha256": "b952dcfedeb098924df82657c0a7eaafc54599572fb5786304cccc5bc23a2a67"
+    },
+    {
+      "path": "regression_unittest.txt",
+      "bytes": 161,
+      "sha256": "f4297f53101c7a2de18caddb698f8e786d2d60bc7d29c59f3d0814c128c82dc5"
+    },
+    {
+      "path": "regression_wind.txt",
+      "bytes": 670,
+      "sha256": "8a9744dbd94b077282f53a4d6bf684e27dabaf703587f3fe3fba00897c172d6f"
+    }
+  ]
+}

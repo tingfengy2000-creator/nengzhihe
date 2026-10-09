@@ -1,0 +1,964 @@
+[
+  {
+    "id": "01_units",
+    "request": "每间改成3台空调，其他条件不变",
+    "request_sha256": "569c71e33216cb46d0c3502e02e91a0f205ce95751e6a95f8c39f6376144c76d",
+    "http_status": 200,
+    "response": {
+      "status": "ok",
+      "changes": [
+        {
+          "field": "room.units_per_room",
+          "from": 2,
+          "to": 3,
+          "label": "每间空调台数"
+        }
+      ],
+      "dropped": [],
+      "unsupported": [],
+      "question": null,
+      "model": "local_model",
+      "latency_ms": 577.82
+    },
+    "response_sha256": "06aea43577ad8e86172d75c9a07b129e913fd3829f4283ae2aa8185d3e710940",
+    "model_call": {
+      "request": "每间改成3台空调，其他条件不变",
+      "model_id": "nengzhihe-qwen3-4b-q4km",
+      "raw": {
+        "changes": [
+          {
+            "field": "room.units_per_room",
+            "to": 3
+          }
+        ],
+        "unsupported": [],
+        "question": null
+      }
+    },
+    "elapsed_ms": 578.745,
+    "expected_kind": "edit",
+    "expected_changes": {
+      "room.units_per_room": 3
+    },
+    "expectation_met": true,
+    "task_patch": [
+      {
+        "field": "room.units_per_room",
+        "from": 2,
+        "to": 3,
+        "label": "每间空调台数"
+      }
+    ]
+  },
+  {
+    "id": "02_catalog",
+    "request": "把空调型号换成美的GAIA-12HRFN8",
+    "request_sha256": "d799b96276c9ef465b936f3a211b69a5d1d7370b4b0e785d8ec1b8d383e7ef4b",
+    "http_status": 200,
+    "response": {
+      "status": "ok",
+      "changes": [
+        {
+          "field": "room.equipment_id",
+          "from": "midea_msagbu12_mox201",
+          "to": "midea_gaia12",
+          "label": "空调型号"
+        }
+      ],
+      "dropped": [],
+      "unsupported": [],
+      "question": null,
+      "model": "local_model",
+      "latency_ms": 356.16
+    },
+    "response_sha256": "c9cd9dad35a013c2f3aa135c92f36e9709403e76dcf6c9d71d751a1abeee301e",
+    "model_call": {
+      "request": "把空调型号换成美的GAIA-12HRFN8",
+      "model_id": "nengzhihe-qwen3-4b-q4km",
+      "raw": {
+        "changes": [
+          {
+            "field": "room.equipment_id",
+            "to": "midea_gaia12"
+          }
+        ],
+        "unsupported": [],
+        "question": null
+      }
+    },
+    "elapsed_ms": 371.176,
+    "expected_kind": "edit",
+    "expected_changes": {
+      "room.equipment_id": "midea_gaia12"
+    },
+    "expectation_met": true,
+    "task_patch": [
+      {
+        "field": "room.equipment_id",
+        "from": "midea_msagbu12_mox201",
+        "to": "midea_gaia12",
+        "label": "空调型号"
+      }
+    ]
+  },
+  {
+    "id": "03_brand",
+    "request": "把空调改成格力三匹，其他条件不变",
+    "request_sha256": "aed289cbbc2198fcfd5407291be74752aea07f5e541ef760e40e3f256ff8d9b5",
+    "http_status": 200,
+    "response": {
+      "status": "ok",
+      "changes": [],
+      "dropped": [],
+      "unsupported": [
+        "“格力”：设备目录中没有该品牌型号"
+      ],
+      "question": null,
+      "model": "local_model",
+      "latency_ms": 348.7
+    },
+    "response_sha256": "0cfc80cdc6c3be79b4d301bd2696a636151283b19fea35aa3420e6c141f0f114",
+    "model_call": {
+      "request": "把空调改成格力三匹，其他条件不变",
+      "model_id": "nengzhihe-qwen3-4b-q4km",
+      "raw": {
+        "changes": [
+          {
+            "field": "room.equipment_id",
+            "to": "midea_gaia12"
+          }
+        ],
+        "unsupported": [],
+        "question": null
+      }
+    },
+    "elapsed_ms": 349.79,
+    "expected_kind": "unsupported",
+    "expected_changes": {},
+    "expectation_met": true,
+    "task_patch": []
+  },
+  {
+    "id": "04_budget",
+    "request": "预算翻倍，其他条件不变",
+    "request_sha256": "75ed751203aa2a3974ca967141643ed222d226d207e59b091851cd2543b1b59f",
+    "http_status": 200,
+    "response": {
+      "status": "ok",
+      "changes": [
+        {
+          "field": "hybrid.budget_cny",
+          "from": 90000,
+          "to": 180000.0,
+          "label": "预算"
+        }
+      ],
+      "dropped": [],
+      "unsupported": [],
+      "question": null,
+      "model": "local_model",
+      "latency_ms": 332.86
+    },
+    "response_sha256": "a74b12b22527762170ce387c2f4a9ef2d42bdf19b3f0d726fa81cb06a90ab5a9",
+    "model_call": {
+      "request": "预算翻倍，其他条件不变",
+      "model_id": "nengzhihe-qwen3-4b-q4km",
+      "raw": {
+        "changes": [
+          {
+            "field": "hybrid.budget_multiplier",
+            "to": 2
+          }
+        ],
+        "unsupported": [],
+        "question": null
+      }
+    },
+    "elapsed_ms": 333.947,
+    "expected_kind": "edit",
+    "expected_changes": {
+      "hybrid.budget_cny": 180000
+    },
+    "expectation_met": true,
+    "task_patch": [
+      {
+        "field": "hybrid.budget_cny",
+        "from": 90000,
+        "to": 180000.0,
+        "label": "预算"
+      }
+    ]
+  },
+  {
+    "id": "05_hours",
+    "request": "把使用时段改为18:00到22:00，其他条件不变",
+    "request_sha256": "eb80c7627cd27c8ee8b51a86346da58fbd0b0389eee08220ec3c3f32e4a50605",
+    "http_status": 200,
+    "response": {
+      "status": "ok",
+      "changes": [
+        {
+          "field": "room.start_hour",
+          "from": 8,
+          "to": 18,
+          "label": "使用开始时间"
+        },
+        {
+          "field": "room.end_hour",
+          "from": 18,
+          "to": 22,
+          "label": "使用结束时间"
+        }
+      ],
+      "dropped": [],
+      "unsupported": [],
+      "question": null,
+      "model": "local_model",
+      "latency_ms": 388.49
+    },
+    "response_sha256": "dd8ece7696ef573a269f0d2501bb717287ecfee341abb590c6c0f137f10e4f36",
+    "model_call": {
+      "request": "把使用时段改为18:00到22:00，其他条件不变",
+      "model_id": "nengzhihe-qwen3-4b-q4km",
+      "raw": {
+        "changes": [
+          {
+            "field": "room.start_hour",
+            "to": 18
+          },
+          {
+            "field": "room.end_hour",
+            "to": 22
+          }
+        ],
+        "unsupported": [],
+        "question": null
+      }
+    },
+    "elapsed_ms": 389.92,
+    "expected_kind": "edit",
+    "expected_changes": {
+      "room.start_hour": 18,
+      "room.end_hour": 22
+    },
+    "expectation_met": true,
+    "task_patch": [
+      {
+        "field": "room.start_hour",
+        "from": 8,
+        "to": 18,
+        "label": "使用开始时间"
+      },
+      {
+        "field": "room.end_hour",
+        "from": 18,
+        "to": 22,
+        "label": "使用结束时间"
+      }
+    ]
+  },
+  {
+    "id": "06_export",
+    "request": "关闭余电卖给电网，其他条件不变",
+    "request_sha256": "cb29e7b3b778a08834e9668f6a175605b0ee48f25882127605e177235c1c2e25",
+    "http_status": 200,
+    "response": {
+      "status": "ok",
+      "changes": [
+        {
+          "field": "hybrid.allow_export",
+          "from": true,
+          "to": false,
+          "label": "多余电量卖给电网"
+        }
+      ],
+      "dropped": [],
+      "unsupported": [],
+      "question": null,
+      "model": "local_model",
+      "latency_ms": 328.38
+    },
+    "response_sha256": "c2a7d6ac610bd625d18b0012e2448a621cb3c56d70621ae0f3dd7d96675b68c5",
+    "model_call": {
+      "request": "关闭余电卖给电网，其他条件不变",
+      "model_id": "nengzhihe-qwen3-4b-q4km",
+      "raw": {
+        "changes": [
+          {
+            "field": "hybrid.allow_export",
+            "to": false
+          }
+        ],
+        "unsupported": [],
+        "question": null
+      }
+    },
+    "elapsed_ms": 329.415,
+    "expected_kind": "edit",
+    "expected_changes": {
+      "hybrid.allow_export": false
+    },
+    "expectation_met": true,
+    "task_patch": [
+      {
+        "field": "hybrid.allow_export",
+        "from": true,
+        "to": false,
+        "label": "多余电量卖给电网"
+      }
+    ]
+  },
+  {
+    "id": "07_pv",
+    "request": "光伏改为2kWp，其他条件不变",
+    "request_sha256": "6c958556c50dbfa70d41ddedc67a9dfba62038811cf18eb0fa93ff1ee9a1d0fb",
+    "http_status": 200,
+    "response": {
+      "status": "ok",
+      "changes": [
+        {
+          "field": "pv.capacity_kwp",
+          "from": null,
+          "to": 2,
+          "label": "光伏容量"
+        }
+      ],
+      "dropped": [],
+      "unsupported": [],
+      "question": null,
+      "model": "local_model",
+      "latency_ms": 336.46
+    },
+    "response_sha256": "621fd6b1247bb00d0383df21251a337172c02f672dd3d3f12527d0cab04360fc",
+    "model_call": {
+      "request": "光伏改为2kWp，其他条件不变",
+      "model_id": "nengzhihe-qwen3-4b-q4km",
+      "raw": {
+        "changes": [
+          {
+            "field": "pv.capacity_kwp",
+            "to": 2
+          }
+        ],
+        "unsupported": [],
+        "question": null
+      }
+    },
+    "elapsed_ms": 337.654,
+    "expected_kind": "edit",
+    "expected_changes": {
+      "pv.capacity_kwp": 2
+    },
+    "expectation_met": true,
+    "task_patch": [
+      {
+        "field": "pv.capacity_kwp",
+        "from": null,
+        "to": 2,
+        "label": "光伏容量"
+      }
+    ]
+  },
+  {
+    "id": "08_wind",
+    "request": "风机改为0台，其他条件不变",
+    "request_sha256": "149cd9561c187ed1a52cebb9fc43ed3b13ccaf6acc8c39aeecc4ea9b7260f570",
+    "http_status": 200,
+    "response": {
+      "status": "ok",
+      "changes": [
+        {
+          "field": "hybrid.wind.turbine_count",
+          "from": 1,
+          "to": 0,
+          "label": "风机台数"
+        }
+      ],
+      "dropped": [],
+      "unsupported": [],
+      "question": null,
+      "model": "local_model",
+      "latency_ms": 333.69
+    },
+    "response_sha256": "d71d9a415e0c7c3c4da470b4cb9ef79fc4d99ff74802f30d8fc692c4f4ea2131",
+    "model_call": {
+      "request": "风机改为0台，其他条件不变",
+      "model_id": "nengzhihe-qwen3-4b-q4km",
+      "raw": {
+        "changes": [
+          {
+            "field": "hybrid.wind.turbine_count",
+            "to": 0
+          }
+        ],
+        "unsupported": [],
+        "question": null
+      }
+    },
+    "elapsed_ms": 334.747,
+    "expected_kind": "edit",
+    "expected_changes": {
+      "hybrid.wind.turbine_count": 0
+    },
+    "expectation_met": true,
+    "task_patch": [
+      {
+        "field": "hybrid.wind.turbine_count",
+        "from": 1,
+        "to": 0,
+        "label": "风机台数"
+      }
+    ]
+  },
+  {
+    "id": "09_escalation",
+    "request": "电价每年涨3%，其他条件不变",
+    "request_sha256": "cb06993ca773b1ecb0fb05c8b2d7eb51ec6f2baeb39e5f96c70b74103f6e0157",
+    "http_status": 200,
+    "response": {
+      "status": "ok",
+      "changes": [
+        {
+          "field": "hybrid.tariff_escalation_rate",
+          "from": null,
+          "to": 0.03,
+          "label": "电价年涨幅"
+        }
+      ],
+      "dropped": [],
+      "unsupported": [],
+      "question": null,
+      "model": "local_model",
+      "latency_ms": 349.0
+    },
+    "response_sha256": "a5908662b7dca187d0c66d7d1b11a7bbfbbe6d6ba9078aed284344bb02636770",
+    "model_call": {
+      "request": "电价每年涨3%，其他条件不变",
+      "model_id": "nengzhihe-qwen3-4b-q4km",
+      "raw": {
+        "changes": [
+          {
+            "field": "hybrid.tariff_escalation_rate",
+            "to": 0.03
+          }
+        ],
+        "unsupported": [],
+        "question": null
+      }
+    },
+    "elapsed_ms": 350.131,
+    "expected_kind": "edit",
+    "expected_changes": {
+      "hybrid.tariff_escalation_rate": 0.03
+    },
+    "expectation_met": true,
+    "task_patch": [
+      {
+        "field": "hybrid.tariff_escalation_rate",
+        "from": null,
+        "to": 0.03,
+        "label": "电价年涨幅"
+      }
+    ]
+  },
+  {
+    "id": "10_storage",
+    "request": "储能单价改为600元/kWh，容量列表改为0、5、10kWh",
+    "request_sha256": "48a25529e2b839c2810dca7c05bf6f9400005a6852f6d48f3bb75cc2cf8534ca",
+    "http_status": 200,
+    "response": {
+      "status": "ok",
+      "changes": [
+        {
+          "field": "storage.quote.cny_per_kwh",
+          "from": 553.94,
+          "to": 600,
+          "label": "储能单价"
+        },
+        {
+          "field": "storage.capacities_kwh",
+          "from": [
+            0,
+            5,
+            10,
+            20,
+            50
+          ],
+          "to": [
+            0,
+            5,
+            10
+          ],
+          "label": "储能容量列表"
+        }
+      ],
+      "dropped": [],
+      "unsupported": [],
+      "question": null,
+      "model": "local_model",
+      "latency_ms": 399.78
+    },
+    "response_sha256": "678f1893f142c0bbcad377ce4e65a34120b911d36333c749ea75432e10b472a6",
+    "model_call": {
+      "request": "储能单价改为600元/kWh，容量列表改为0、5、10kWh",
+      "model_id": "nengzhihe-qwen3-4b-q4km",
+      "raw": {
+        "changes": [
+          {
+            "field": "storage.quote.cny_per_kwh",
+            "to": 600
+          },
+          {
+            "field": "storage.capacities_kwh",
+            "to": [
+              0,
+              5,
+              10
+            ]
+          }
+        ],
+        "unsupported": [],
+        "question": null
+      }
+    },
+    "elapsed_ms": 400.727,
+    "expected_kind": "edit",
+    "expected_changes": {
+      "storage.quote.cny_per_kwh": 600,
+      "storage.capacities_kwh": [
+        0,
+        5,
+        10
+      ]
+    },
+    "expectation_met": true,
+    "task_patch": [
+      {
+        "field": "storage.quote.cny_per_kwh",
+        "from": 553.94,
+        "to": 600,
+        "label": "储能单价"
+      },
+      {
+        "field": "storage.capacities_kwh",
+        "from": [
+          0,
+          5,
+          10,
+          20,
+          50
+        ],
+        "to": [
+          0,
+          5,
+          10
+        ],
+        "label": "储能容量列表"
+      }
+    ]
+  },
+  {
+    "id": "11_unsupported",
+    "request": "让储能按峰谷电价自动套利并保证回本",
+    "request_sha256": "129e853d7921cb9b42d7f4a63cfd599daaad465e7d4a91fe69b261ec6d409257",
+    "http_status": 200,
+    "response": {
+      "status": "ok",
+      "changes": [
+        {
+          "field": "hybrid.import_price_cny_per_kwh",
+          "from": 0.66,
+          "to": 0.66,
+          "label": "购电价格"
+        }
+      ],
+      "dropped": [
+        {
+          "field": "hybrid.allow_export",
+          "reason": "用户未提及"
+        },
+        {
+          "field": "hybrid.export_price_cny_per_kwh",
+          "reason": "用户未提及"
+        },
+        {
+          "field": "hybrid.tariff_escalation_rate",
+          "reason": "用户未提及"
+        }
+      ],
+      "unsupported": [
+        "“回本保证”：本接口不承诺自动套利或收益保证"
+      ],
+      "question": null,
+      "model": "local_model",
+      "latency_ms": 507.71
+    },
+    "response_sha256": "9b97d867f26d37f72382d8f9a8a28d8329785159e478c8bd9ebdedf73eb34f70",
+    "model_call": {
+      "request": "让储能按峰谷电价自动套利并保证回本",
+      "model_id": "nengzhihe-qwen3-4b-q4km",
+      "raw": {
+        "changes": [
+          {
+            "field": "hybrid.allow_export",
+            "to": true
+          },
+          {
+            "field": "hybrid.import_price_cny_per_kwh",
+            "to": 0.66
+          },
+          {
+            "field": "hybrid.export_price_cny_per_kwh",
+            "to": 0.25
+          },
+          {
+            "field": "hybrid.tariff_escalation_rate",
+            "to": 0.05
+          }
+        ],
+        "unsupported": [],
+        "question": null
+      }
+    },
+    "elapsed_ms": 508.864,
+    "expected_kind": "unsupported",
+    "expected_changes": {},
+    "expectation_met": false,
+    "task_patch": [
+      {
+        "field": "hybrid.import_price_cny_per_kwh",
+        "from": 0.66,
+        "to": 0.66,
+        "label": "购电价格"
+      }
+    ]
+  },
+  {
+    "id": "12_question",
+    "request": "预算调低一些",
+    "request_sha256": "d4f7e808e8204580de0c2adf6e6635c2e22ef9069f7e6029850367dbcc540eb1",
+    "http_status": 200,
+    "response": {
+      "status": "needs_clarification",
+      "changes": [],
+      "dropped": [],
+      "unsupported": [],
+      "question": "预算要调整为多少元，或减少/增加多少比例？",
+      "model": "local_model",
+      "latency_ms": 338.74
+    },
+    "response_sha256": "a4c3de90ca8b7fef349bed2168b5e6805c8c41ab2a282766878a89549f6961c6",
+    "model_call": {
+      "request": "预算调低一些",
+      "model_id": "nengzhihe-qwen3-4b-q4km",
+      "raw": {
+        "changes": [
+          {
+            "field": "hybrid.budget_multiplier",
+            "to": 0.95
+          }
+        ],
+        "unsupported": [],
+        "question": null
+      }
+    },
+    "elapsed_ms": 339.657,
+    "expected_kind": "clarification",
+    "expected_changes": {},
+    "expectation_met": true,
+    "task_patch": []
+  },
+  {
+    "id": "13_pv_units",
+    "request": "光伏装机设置为2千瓦，其他条件不变",
+    "request_sha256": "dcee72c584b8f56818ca69c7cc191819659fac5548a62ac26d89fee10f3e9d82",
+    "http_status": 200,
+    "response": {
+      "status": "ok",
+      "changes": [
+        {
+          "field": "pv.capacity_kwp",
+          "from": null,
+          "to": 2,
+          "label": "光伏容量"
+        }
+      ],
+      "dropped": [],
+      "unsupported": [],
+      "question": null,
+      "model": "local_model",
+      "latency_ms": 328.97
+    },
+    "response_sha256": "0506e95152f447a3694c5907779182512b72a116765d322c0efc442baeb19f58",
+    "model_call": {
+      "request": "光伏装机设置为2千瓦，其他条件不变",
+      "model_id": "nengzhihe-qwen3-4b-q4km",
+      "raw": {
+        "changes": [
+          {
+            "field": "pv.capacity_kwp",
+            "to": 2
+          }
+        ],
+        "unsupported": [],
+        "question": null
+      }
+    },
+    "elapsed_ms": 329.979,
+    "expected_kind": "edit",
+    "expected_changes": {
+      "pv.capacity_kwp": 2
+    },
+    "expectation_met": true,
+    "task_patch": [
+      {
+        "field": "pv.capacity_kwp",
+        "from": null,
+        "to": 2,
+        "label": "光伏容量"
+      }
+    ]
+  },
+  {
+    "id": "14_wind_words",
+    "request": "风机数量设为零台，其他条件不变",
+    "request_sha256": "0acba2765d3e3e117437bdd0d7e0e47c714b5c3b03ffa34c2b08446f7e1fa3bd",
+    "http_status": 200,
+    "response": {
+      "status": "ok",
+      "changes": [
+        {
+          "field": "hybrid.wind.turbine_count",
+          "from": 1,
+          "to": 0,
+          "label": "风机台数"
+        }
+      ],
+      "dropped": [],
+      "unsupported": [],
+      "question": null,
+      "model": "local_model",
+      "latency_ms": 357.35
+    },
+    "response_sha256": "185bbbe2a5acd36c4af04c7cd426e38fff5101abf670618e10f10490521cca08",
+    "model_call": {
+      "request": "风机数量设为零台，其他条件不变",
+      "model_id": "nengzhihe-qwen3-4b-q4km",
+      "raw": {
+        "changes": [
+          {
+            "field": "hybrid.wind.turbine_count",
+            "to": 0
+          }
+        ],
+        "unsupported": [],
+        "question": null
+      }
+    },
+    "elapsed_ms": 358.454,
+    "expected_kind": "edit",
+    "expected_changes": {
+      "hybrid.wind.turbine_count": 0
+    },
+    "expectation_met": true,
+    "task_patch": [
+      {
+        "field": "hybrid.wind.turbine_count",
+        "from": 1,
+        "to": 0,
+        "label": "风机台数"
+      }
+    ]
+  },
+  {
+    "id": "15_no_wind",
+    "request": "不要风机了",
+    "request_sha256": "1768438112bc11a321a1e4a17f8cbad71bce28744ca3760b3807253d9d544a24",
+    "http_status": 200,
+    "response": {
+      "status": "ok",
+      "changes": [
+        {
+          "field": "hybrid.wind.turbine_count",
+          "from": 1,
+          "to": 0,
+          "label": "风机台数"
+        }
+      ],
+      "dropped": [],
+      "unsupported": [],
+      "question": null,
+      "model": "local_model",
+      "latency_ms": 332.56
+    },
+    "response_sha256": "6f3cb87cc536f4b3771ae1aeced2b01d767fc5021048566a9359ada35f730998",
+    "model_call": {
+      "request": "不要风机了",
+      "model_id": "nengzhihe-qwen3-4b-q4km",
+      "raw": {
+        "changes": [
+          {
+            "field": "hybrid.wind.turbine_count",
+            "to": 0
+          }
+        ],
+        "unsupported": [],
+        "question": null
+      }
+    },
+    "elapsed_ms": 333.648,
+    "expected_kind": "edit",
+    "expected_changes": {
+      "hybrid.wind.turbine_count": 0
+    },
+    "expectation_met": true,
+    "task_patch": [
+      {
+        "field": "hybrid.wind.turbine_count",
+        "from": 1,
+        "to": 0,
+        "label": "风机台数"
+      }
+    ]
+  },
+  {
+    "id": "16_two_wind",
+    "request": "装两台风机",
+    "request_sha256": "b4e879e3a408f8ad083b05fdd9f7c2107f62ea26a7a7baf7dad01a4af44b7ef2",
+    "http_status": 200,
+    "response": {
+      "status": "failed",
+      "changes": [],
+      "dropped": [],
+      "unsupported": [],
+      "question": null,
+      "reason": "hybrid.wind.turbine_count超出范围",
+      "model": "local_model",
+      "latency_ms": 351.23
+    },
+    "response_sha256": "f17af78e1c7db5e205021d99acbf2475c978bc4f376e9d05f443dd2ea9ea1942",
+    "model_call": {
+      "request": "装两台风机",
+      "model_id": "nengzhihe-qwen3-4b-q4km",
+      "raw": {
+        "changes": [
+          {
+            "field": "hybrid.wind.turbine_count",
+            "to": 2
+          }
+        ],
+        "unsupported": [],
+        "question": null
+      }
+    },
+    "elapsed_ms": 352.256,
+    "expected_kind": "out_of_range",
+    "expected_changes": {
+      "hybrid.wind.turbine_count": 2
+    },
+    "expectation_met": true,
+    "task_patch": []
+  },
+  {
+    "id": "17_pv5",
+    "request": "光伏装 5kWp",
+    "request_sha256": "3e8fc6cc34f8a099974635187759c2cdca97008609f26ab2f83de00d15140d50",
+    "http_status": 200,
+    "response": {
+      "status": "ok",
+      "changes": [
+        {
+          "field": "pv.capacity_kwp",
+          "from": null,
+          "to": 5,
+          "label": "光伏容量"
+        }
+      ],
+      "dropped": [],
+      "unsupported": [],
+      "question": null,
+      "model": "local_model",
+      "latency_ms": 345.55
+    },
+    "response_sha256": "94752e609bb4ad9b03d79a0bd4955b41bb4fc9c7152941d31e9bd633b1738ae8",
+    "model_call": {
+      "request": "光伏装 5kWp",
+      "model_id": "nengzhihe-qwen3-4b-q4km",
+      "raw": {
+        "changes": [
+          {
+            "field": "pv.capacity_kwp",
+            "to": 5
+          }
+        ],
+        "unsupported": [],
+        "question": null
+      }
+    },
+    "elapsed_ms": 346.645,
+    "expected_kind": "edit",
+    "expected_changes": {
+      "pv.capacity_kwp": 5
+    },
+    "expectation_met": true,
+    "task_patch": [
+      {
+        "field": "pv.capacity_kwp",
+        "from": null,
+        "to": 5,
+        "label": "光伏容量"
+      }
+    ]
+  },
+  {
+    "id": "18_budget6",
+    "request": "预算改为6万",
+    "request_sha256": "0d1d6f3d9ba78ffdd7794b0a381967106e379fb85cbeeff6bc054e110419b060",
+    "http_status": 200,
+    "response": {
+      "status": "ok",
+      "changes": [
+        {
+          "field": "hybrid.budget_cny",
+          "from": 90000,
+          "to": 60000,
+          "label": "预算"
+        }
+      ],
+      "dropped": [],
+      "unsupported": [],
+      "question": null,
+      "model": "local_model",
+      "latency_ms": 342.18
+    },
+    "response_sha256": "c839d22386e42d2b54c53acd5889abfeb7504687bd501d654dc217f23f39a855",
+    "model_call": {
+      "request": "预算改为6万",
+      "model_id": "nengzhihe-qwen3-4b-q4km",
+      "raw": {
+        "changes": [
+          {
+            "field": "hybrid.budget_cny",
+            "to": 60000
+          }
+        ],
+        "unsupported": [],
+        "question": null
+      }
+    },
+    "elapsed_ms": 343.368,
+    "expected_kind": "edit",
+    "expected_changes": {
+      "hybrid.budget_cny": 60000
+    },
+    "expectation_met": true,
+    "task_patch": [
+      {
+        "field": "hybrid.budget_cny",
+        "from": 90000,
+        "to": 60000,
+        "label": "预算"
+      }
+    ]
+  }
+]

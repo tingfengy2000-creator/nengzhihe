@@ -1,0 +1,269 @@
+{
+  "scope": "paired HTTP parse-only; no browser adoption/full-year recalculation rate is claimed",
+  "original14": {
+    "before": {
+      "all_sentences": 14,
+      "correct_executable_edits": 8,
+      "supported_edit_sentences": 11,
+      "ok": 9,
+      "unsupported_only": 1,
+      "clarification": 1,
+      "failed": 4,
+      "contract_expectations_met_including_rejection": 10,
+      "http_latency_ms": {
+        "min": 418.57,
+        "median": 475.26300000000003,
+        "max": 830.806
+      }
+    },
+    "after": {
+      "all_sentences": 14,
+      "correct_executable_edits": 11,
+      "supported_edit_sentences": 11,
+      "ok": 13,
+      "unsupported_only": 2,
+      "clarification": 1,
+      "failed": 0,
+      "contract_expectations_met_including_rejection": 14,
+      "http_latency_ms": {
+        "min": 216.618,
+        "median": 243.451,
+        "max": 480.685
+      }
+    }
+  },
+  "all18": {
+    "before": {
+      "all_sentences": 18,
+      "correct_executable_edits": 9,
+      "supported_edit_sentences": 14,
+      "ok": 10,
+      "unsupported_only": 1,
+      "clarification": 1,
+      "failed": 7,
+      "contract_expectations_met_including_rejection": 12,
+      "http_latency_ms": {
+        "min": 418.57,
+        "median": 484.0125,
+        "max": 830.806
+      }
+    },
+    "after": {
+      "all_sentences": 18,
+      "correct_executable_edits": 14,
+      "supported_edit_sentences": 14,
+      "ok": 16,
+      "unsupported_only": 2,
+      "clarification": 1,
+      "failed": 1,
+      "contract_expectations_met_including_rejection": 18,
+      "http_latency_ms": {
+        "min": 198.576,
+        "median": 234.4155,
+        "max": 480.685
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "01_units",
+      "request": "每间改成3台空调，其他条件不变",
+      "before": "正确修改：room.units_per_room=3",
+      "after": "正确修改：room.units_per_room=3",
+      "before_correct_edit": true,
+      "after_correct_edit": true,
+      "dropped_after": [],
+      "request_sha256": "569c71e33216cb46d0c3502e02e91a0f205ce95751e6a95f8c39f6376144c76d"
+    },
+    {
+      "id": "02_catalog",
+      "request": "把空调型号换成美的GAIA-12HRFN8",
+      "before": "正确修改：room.equipment_id=midea_gaia12",
+      "after": "正确修改：room.equipment_id=midea_gaia12",
+      "before_correct_edit": true,
+      "after_correct_edit": true,
+      "dropped_after": [],
+      "request_sha256": "d799b96276c9ef465b936f3a211b69a5d1d7370b4b0e785d8ec1b8d383e7ef4b"
+    },
+    {
+      "id": "03_brand",
+      "request": "把空调改成格力三匹，其他条件不变",
+      "before": "不支持，未产生修改",
+      "after": "不支持，未产生修改",
+      "before_correct_edit": false,
+      "after_correct_edit": false,
+      "dropped_after": [],
+      "request_sha256": "aed289cbbc2198fcfd5407291be74752aea07f5e541ef760e40e3f256ff8d9b5"
+    },
+    {
+      "id": "04_budget",
+      "request": "预算翻倍，其他条件不变",
+      "before": "正确修改：hybrid.budget_cny=180000.0",
+      "after": "正确修改：hybrid.budget_cny=180000.0",
+      "before_correct_edit": true,
+      "after_correct_edit": true,
+      "dropped_after": [],
+      "request_sha256": "75ed751203aa2a3974ca967141643ed222d226d207e59b091851cd2543b1b59f"
+    },
+    {
+      "id": "05_hours",
+      "request": "把使用时段改为18:00到22:00，其他条件不变",
+      "before": "正确修改：room.start_hour=18; room.end_hour=22",
+      "after": "正确修改：room.start_hour=18; room.end_hour=22",
+      "before_correct_edit": true,
+      "after_correct_edit": true,
+      "dropped_after": [],
+      "request_sha256": "eb80c7627cd27c8ee8b51a86346da58fbd0b0389eee08220ec3c3f32e4a50605"
+    },
+    {
+      "id": "06_export",
+      "request": "关闭余电卖给电网，其他条件不变",
+      "before": "正确修改：hybrid.allow_export=False",
+      "after": "正确修改：hybrid.allow_export=False",
+      "before_correct_edit": true,
+      "after_correct_edit": true,
+      "dropped_after": [],
+      "request_sha256": "cb29e7b3b778a08834e9668f6a175605b0ee48f25882127605e177235c1c2e25"
+    },
+    {
+      "id": "07_pv",
+      "request": "光伏改为2kWp，其他条件不变",
+      "before": "failed：模型光伏容量与用户明确输入的数值/单位不一致，请重新说明容量",
+      "after": "正确修改：pv.capacity_kwp=2",
+      "before_correct_edit": false,
+      "after_correct_edit": true,
+      "dropped_after": [],
+      "request_sha256": "6c958556c50dbfa70d41ddedc67a9dfba62038811cf18eb0fa93ff1ee9a1d0fb"
+    },
+    {
+      "id": "08_wind",
+      "request": "风机改为0台，其他条件不变",
+      "before": "failed：模型修改了用户未提及的字段：room.equipment_id",
+      "after": "正确修改：hybrid.wind.turbine_count=0",
+      "before_correct_edit": false,
+      "after_correct_edit": true,
+      "dropped_after": [],
+      "request_sha256": "149cd9561c187ed1a52cebb9fc43ed3b13ccaf6acc8c39aeecc4ea9b7260f570"
+    },
+    {
+      "id": "09_escalation",
+      "request": "电价每年涨3%，其他条件不变",
+      "before": "正确修改：hybrid.tariff_escalation_rate=0.03",
+      "after": "正确修改：hybrid.tariff_escalation_rate=0.03",
+      "before_correct_edit": true,
+      "after_correct_edit": true,
+      "dropped_after": [],
+      "request_sha256": "cb06993ca773b1ecb0fb05c8b2d7eb51ec6f2baeb39e5f96c70b74103f6e0157"
+    },
+    {
+      "id": "10_storage",
+      "request": "储能单价改为600元/kWh，容量列表改为0、5、10kWh",
+      "before": "正确修改：storage.quote.cny_per_kwh=600; storage.capacities_kwh=[0, 5, 10]",
+      "after": "正确修改：storage.quote.cny_per_kwh=600; storage.capacities_kwh=[0, 5, 10]",
+      "before_correct_edit": true,
+      "after_correct_edit": true,
+      "dropped_after": [],
+      "request_sha256": "48a25529e2b839c2810dca7c05bf6f9400005a6852f6d48f3bb75cc2cf8534ca"
+    },
+    {
+      "id": "11_unsupported",
+      "request": "让储能按峰谷电价自动套利并保证回本",
+      "before": "failed：模型修改了用户未提及的字段：hybrid.allow_export",
+      "after": "不支持，未产生修改",
+      "before_correct_edit": false,
+      "after_correct_edit": false,
+      "dropped_after": [
+        {
+          "field": "hybrid.allow_export",
+          "reason": "用户未提及"
+        },
+        {
+          "field": "hybrid.import_price_cny_per_kwh",
+          "reason": "用户未提及"
+        },
+        {
+          "field": "hybrid.export_price_cny_per_kwh",
+          "reason": "用户未提及"
+        },
+        {
+          "field": "hybrid.tariff_escalation_rate",
+          "reason": "用户未提及"
+        }
+      ],
+      "request_sha256": "129e853d7921cb9b42d7f4a63cfd599daaad465e7d4a91fe69b261ec6d409257"
+    },
+    {
+      "id": "12_question",
+      "request": "预算调低一些",
+      "before": "追问，未产生修改",
+      "after": "追问，未产生修改",
+      "before_correct_edit": false,
+      "after_correct_edit": false,
+      "dropped_after": [],
+      "request_sha256": "d4f7e808e8204580de0c2adf6e6635c2e22ef9069f7e6029850367dbcc540eb1"
+    },
+    {
+      "id": "13_pv_units",
+      "request": "光伏装机设置为2千瓦，其他条件不变",
+      "before": "正确修改：pv.capacity_kwp=2",
+      "after": "正确修改：pv.capacity_kwp=2",
+      "before_correct_edit": true,
+      "after_correct_edit": true,
+      "dropped_after": [],
+      "request_sha256": "dcee72c584b8f56818ca69c7cc191819659fac5548a62ac26d89fee10f3e9d82"
+    },
+    {
+      "id": "14_wind_words",
+      "request": "风机数量设为零台，其他条件不变",
+      "before": "failed：模型修改了用户未提及的字段：room.equipment_id",
+      "after": "正确修改：hybrid.wind.turbine_count=0",
+      "before_correct_edit": false,
+      "after_correct_edit": true,
+      "dropped_after": [],
+      "request_sha256": "0acba2765d3e3e117437bdd0d7e0e47c714b5c3b03ffa34c2b08446f7e1fa3bd"
+    },
+    {
+      "id": "15_no_wind",
+      "request": "不要风机了",
+      "before": "failed：模型修改了用户未提及的字段：room.equipment_id",
+      "after": "正确修改：hybrid.wind.turbine_count=0",
+      "before_correct_edit": false,
+      "after_correct_edit": true,
+      "dropped_after": [],
+      "request_sha256": "1768438112bc11a321a1e4a17f8cbad71bce28744ca3760b3807253d9d544a24"
+    },
+    {
+      "id": "16_two_wind",
+      "request": "装两台风机",
+      "before": "failed：hybrid.wind.turbine_count超出范围",
+      "after": "failed：hybrid.wind.turbine_count超出范围",
+      "before_correct_edit": false,
+      "after_correct_edit": false,
+      "dropped_after": [],
+      "request_sha256": "b4e879e3a408f8ad083b05fdd9f7c2107f62ea26a7a7baf7dad01a4af44b7ef2"
+    },
+    {
+      "id": "17_pv5",
+      "request": "光伏装 5kWp",
+      "before": "failed：不支持的修改字段：pv.requested_capacities_kwp",
+      "after": "正确修改：pv.capacity_kwp=5",
+      "before_correct_edit": false,
+      "after_correct_edit": true,
+      "dropped_after": [],
+      "request_sha256": "3e8fc6cc34f8a099974635187759c2cdca97008609f26ab2f83de00d15140d50"
+    },
+    {
+      "id": "18_budget6",
+      "request": "预算改为6万",
+      "before": "正确修改：hybrid.budget_cny=60000",
+      "after": "正确修改：hybrid.budget_cny=60000",
+      "before_correct_edit": true,
+      "after_correct_edit": true,
+      "dropped_after": [],
+      "request_sha256": "0d1d6f3d9ba78ffdd7794b0a381967106e379fb85cbeeff6bc054e110419b060"
+    }
+  ],
+  "historical_round21": "8 adopted-and-calculated, 1 catalogue unsupported, 1 clarification, 4 failed; historical records are preserved and are a different observation level",
+  "limitation": "two turbines remains outside the existing 0/1-turbine model; its safe rejection is never counted as an executable edit",
+  "timing_limit": "same host/model/sampling; sequential phase and prompt/KV cache warmth differ, so timing is observational, not a speedup claim"
+}
