@@ -251,6 +251,11 @@ def _request_mentions_field(request_text: str, field: str) -> bool:
         return ("空调" in text and any(token in text for token in ("台", "数量"))) or ("每间" in text and "台" in text) or "设备数量" in text
     if field == "room.room_count":
         return any(token in text for token in ("房间数", "办公室数", "间数", "同类房间")) or bool(re.search(r"(?:\d+|[一二三四五六七八九十两]+)\s*间(?:房|办公室)", text))
+    if field in {"room.start_hour", "room.end_hour"}:
+        return any(token in text for token in ("时段", "使用时间", "运行时间", "开始时间", "结束时间", "晚上", "上午", "早上")) or bool(re.search(r"\d+\s*(?:点|时|[:：]\d+)", text))
+    if field == "room.area_m2":
+        area_mentioned = any(token in text for token in ("面积", "平方米", "㎡", "m²", "m2"))
+        return area_mentioned and ("屋顶" not in text or any(token in text for token in ("房间面积", "办公室面积")))
     if field == "room.equipment_id":
         named_equipment = any(token in text for token in ("美的", "大金", "格力", "海尔", "三菱", "奥克斯", "志高", "midea", "daikin", "gaia", "msag", "ftx"))
         return "型号" in text or (named_equipment and any(token in text for token in ("空调", "换", "改", "设备")))
@@ -261,9 +266,10 @@ def _request_mentions_field(request_text: str, field: str) -> bool:
     if field == "hybrid.tariff_escalation_rate":
         return any(token in text for token in ("年涨幅", "年增长率")) or ("电价" in text and any(token in text for token in ("每年", "年涨", "年降", "涨幅", "增长率")))
     if field == "hybrid.import_price_cny_per_kwh":
-        base_price_edit = any(token in text for token in ("购电价", "购电价格", "每度", "电网电价")) or ("电价" in text and
-            (bool(re.search(r"\d+(?:\.\d+)?\s*元", text)) or any(token in text for token in ("改为", "设为", "设置", "调为", "调到", "变成", "调高", "调低"))))
-        return base_price_edit and not _request_mentions_field(text, "hybrid.tariff_escalation_rate")
+        price_subject = r"(?:购电价(?:格)?|电网电价|电价|每度(?:电)?)"
+        price_edit = r"(?:改为|设为|设置为?|调为|调到|变成|调高|调低|提高|降低|采用|按)"
+        return bool(re.search(price_subject + r"\s*(?:" + price_edit + r")?\s*\d+(?:\.\d+)?\s*(?:元|块)", text)
+                    or re.search(price_subject + r"\s*" + price_edit, text))
     if field == "hybrid.allow_export":
         return any(token in text for token in ("卖电", "外送", "上网", "余电", "卖给电网")) and any(token in text for token in ("关闭", "开启", "打开", "停止", "允许", "禁止", "不", "卖给", "启用"))
     if field in _FIELD_HINTS:

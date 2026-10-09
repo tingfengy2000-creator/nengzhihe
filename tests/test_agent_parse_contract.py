@@ -189,6 +189,26 @@ class AgentParseContractTests(unittest.TestCase):
         self.assertEqual(len(result["changes"]), 1)
         self.assertEqual(result["dropped"][0]["field"], "hybrid.import_price_cny_per_kwh")
 
+    def test_mixed_budget_and_growth_do_not_authorize_price_or_hours(self):
+        result = self._parse_proposal("预算改到6万，电价每年涨3%", [
+            {"field": "hybrid.budget_cny", "to": 60000},
+            {"field": "hybrid.tariff_escalation_rate", "to": .03},
+            {"field": "hybrid.import_price_cny_per_kwh", "to": .03},
+            {"field": "room.start_hour", "to": 6},
+        ])
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual({x["field"] for x in result["changes"]}, {"hybrid.budget_cny", "hybrid.tariff_escalation_rate"})
+        self.assertEqual(len(result["dropped"]), 2)
+
+    def test_explicit_base_price_and_growth_both_survive(self):
+        result = self._parse_proposal("购电价改为0.8元/kWh，电价每年涨3%", [
+            {"field": "hybrid.import_price_cny_per_kwh", "to": .8},
+            {"field": "hybrid.tariff_escalation_rate", "to": .03},
+        ])
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(len(result["changes"]), 2)
+        self.assertEqual(result["dropped"], [])
+
     def test_unsupported_only_content_survives_stray_proposals(self):
         result = self._parse_proposal("让储能按峰谷电价自动套利并保证回本", [
             {"field": "hybrid.allow_export", "to": True},
