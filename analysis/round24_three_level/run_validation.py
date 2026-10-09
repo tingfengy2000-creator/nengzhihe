@@ -246,7 +246,7 @@ def office_result(site):
     p=WORK/(site+'_office_full.json');p.write_text(json.dumps(result,ensure_ascii=False,allow_nan=False),encoding='utf-8')
     # Named zones plus nanosecond storage avoid pandas 3 mixed-resolution
     # alignment corner cases. UTC instants/physical intervals remain identical.
-    idx=pd.DatetimeIndex([r['timestamp'] for r in result['rows']]).tz_convert(h.index.tz).as_unit('ns')
+    idx=pd.DatetimeIndex(pd.to_datetime([r['timestamp'] for r in result['rows']],utc=True)).tz_convert(h.index.tz).as_unit('ns')
     m=pd.DataFrame({'model_kwh':[r['electric_power_w']/1000 for r in result['rows']],
                     'outdoor_temp_c':h.temperature_2m.to_numpy()},index=idx)
     write(site+'_model_context.json',{'room':result['room'],'equipment':result['equipment'],'response_hash':sha(p),
